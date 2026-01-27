@@ -1,0 +1,107 @@
+:root {
+    --primary: #2663eb;
+    --gold: #d4af37;
+    --bg: #f5f7fa;
+    --card: #ffffff;
+    --text: #1f2933;
+    --muted: #6b7280;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, Arial, sans-serif;
+    background: var(--bg);
+}
+
+/* CAROUSEL */
+.carousel {
+    max-width: 900px;
+    margin: 60px auto;
+    overflow: hidden;
+    position: relative;
+}
+
+/* TRACK */
+.carousel-track {
+    display: flex;
+    transition: transform 0.45s ease;
+}
+
+/* SLIDE */
+.carousel-slide {
+    min-width: 100%;
+    padding: 0 16px;
+}
+
+/* CARD */
+.story-card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 36px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.story-card h2 {
+    margin-top: 0;
+    font-weight: 500;
+}
+
+.story-card p {
+    color: var(--text);
+    line-height: 1.65;
+    margin-bottom: 16px;
+}
+
+.quote {
+    border-left: 4px solid var(--gold);
+    padding-left: 16px;
+    margin: 28px 0;
+    font-style: italic;
+    color: #374151;
+}
+
+/* CONTROLS */
+.carousel-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.carousel-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--primary);
+    font-size: 30px;
+}
+
+.carousel-btn:focus {
+    outline: 2px solid var(--gold);
+}
+
+/* DOTS */
+.carousel-dots {
+    display: flex;
+    gap: 10px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #cbd5e1;
+    cursor: pointer;
+}
+
+.dot.active {
+    background: var(--gold);
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    .story-card {
+	padding: 24px;
+    }
+}
+
