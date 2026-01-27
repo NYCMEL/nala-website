@@ -11,25 +11,31 @@
 
 	<link rel="stylesheet" href="carousel.css">
     </head>
+
     <body class="p-4">
-
 	<div class="container">
-	    <h2 class="mb-4">MTK-carousel</h2>
-	    <div id="carousel-container"></div>
+	    <div class="row">
+		<div class="col-md-12">
+		    <div class="container">
+			<h2 class="mb-4">MTK-carousel</h2>
+			<div id="carousel-container"></div>
+		    </div>
+
+		    <div class="mtk-carousel" id="mtk-carousel-root">
+			<div class="mtk-carousel-viewport">
+			    <div class="mtk-carousel-track"></div>
+			</div>
+
+			<button class="mtk-carousel-btn prev" aria-label="Previous"> ‹ </button>
+			<button class="mtk-carousel-btn next" aria-label="Next"> › </button>
+
+			<div class="mtk-carousel-dots"></div>
+
+			<script src="carousel.config.js"></script>
+			<script src="carousel.js"></script>
+		    </div>
+		</div>
+	    </div>
 	</div>
-
-	<script src="carousel.config.js"></script>
-
-	<script>
-	 fetch("carousel.html")
-	     .then(r => r.text())
-	     .then(html => {
-		 document.getElementById("carousel-container").innerHTML = html;
-		 const s = document.createElement("script");
-		 s.src = "js/mtk-carousel.js";
-		 document.body.appendChild(s);
-	     });
-	</script>
-
     </body>
 </html>
