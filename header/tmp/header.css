@@ -4,7 +4,7 @@
   justify-content: space-between;
   /* Logo left, right section right */
   height: var(--header-height);
-  padding: 0 1.5rem;
+  padding: 0.5em 1.0rem;
   width: 100%;
   box-shadow: var(--md-shadow);
   transition: background 0.3s, color 0.3s; }
@@ -15,7 +15,7 @@
     background-color: #212121;
     color: #f5f5f5; }
   .mtk-header .mtk-logo img {
-    height: 40px; }
+    height: 60px; }
   .mtk-header .mtk-right {
     display: flex;
     align-items: center; }
