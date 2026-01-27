@@ -13,5 +13,6 @@ MTK-header content comes from a global variable window.app.header from MTK-heade
 MTK-header on menu & button should publish click event using _pubsub.js
 MTK-header on menu click, switch active to this item
 MTK-header should wait for elements to be loaded into DOM before proceeding
+MTK-header first right menu item should display a dropdown with 2 items (use dummy text for now)
 
 create SCSS, HTML, MTK-header.config.js json, vanilla javascript and a minimal index.html
