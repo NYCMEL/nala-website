@@ -10,7 +10,7 @@ window.app.carousel = {
 	  id: "slide-1",
 	  html: `
 <div class="p-4">
-    <article class="story-card">
+    <article class="story-card p-5">
 	<h2 align="center">From Side Job to a Real Future</h2>
 
 	<p>
@@ -49,25 +49,43 @@ window.app.carousel = {
     {
       id: "slide-2",
       html: `
-        <div class="p-4 text-center bg-light">
-          <h3>Lorem Ipsum Two</h3>
-          <p>
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-            nisi ut aliquip ex ea commodo consequat.
-          </p>
-        </div>
+    <article class="story-card p-5">
+    <h2 align="center">A Second Career That Fits My Life</h2>
+
+    <p>
+	After spending years in a career that no longer felt fulfilling, I wanted
+	something practical and flexible.
+    </p>
+
+    <div class="quote">
+	The step-by-step structure made learning approachable and rewarding.
+    </div>
+
+    <p>
+	I now earn extra income while maintaining balance with my family and schedule.
+    </p>
+</article>
       `
     },
     {
       id: "slide-3",
       html: `
-        <div class="p-4 text-center">
-          <h3>Lorem Ipsum Three</h3>
-          <p>
-            Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur.
-          </p>
-        </div>
+<article class="story-card p-5">
+    <h2>Confidence Through Real Skills</h2>
+
+    <p>
+	Starting something new later in life can be intimidating, but the support
+	and clarity of this program made all the difference.
+    </p>
+
+    <div class="quote">
+	I finally feel confident knowing I have skills that matter.
+    </div>
+
+    <p>
+	This experience gave me control over my future and the confidence to grow.
+    </p>
+</article>
       `
     }
   ]
