@@ -1,22 +1,26 @@
 class MTKHeader {
   constructor() {
-    this.config = window.app.header;
+    document.addEventListener("DOMContentLoaded", () => this.init());
+  }
+
+  init() {
+    this.config = window.app.header || {};
+
     this.headerEl = document.getElementById("_mtk-header");
     this.logoEl = document.getElementById("_mtk-logo");
     this.menuEl = document.getElementById("_mtk-menu");
     this.buttonsEl = document.getElementById("_mtk-buttons");
 
-    this.init();
-  }
+    if (!this.headerEl || !this.logoEl || !this.menuEl || !this.buttonsEl) {
+      console.error("MTK-header elements not found in DOM.");
+      return;
+    }
 
-  init() {
-    if (!this.headerEl) return;
     this.loadLogo();
     this.loadMenu();
     this.loadButtons();
     this.applyMode();
     this.applyFixed();
-    this.setupEvents();
   }
 
   loadLogo() {
@@ -25,20 +29,22 @@ class MTKHeader {
 
   loadMenu() {
     this.menuEl.innerHTML = "";
-    this.config.menu.forEach((item, idx) => {
+
+    (this.config.menu || []).forEach((item, idx) => {
       const li = document.createElement("li");
       li.className = "mtk-menu-item";
       li.dataset.index = idx;
+      li.style.position = "relative";
 
       const a = document.createElement("a");
-      a.textContent = item.text;
       a.href = "#";
+      a.textContent = item.text;
       li.appendChild(a);
 
-      // Dropdown
-      if (item.dropdown) {
+      if (item.dropdown && Array.isArray(item.dropdown)) {
         const dropdown = document.createElement("ul");
         dropdown.className = "dropdown-menu";
+
         item.dropdown.forEach(opt => {
           const dropItem = document.createElement("li");
           dropItem.className = "dropdown-item";
@@ -49,7 +55,9 @@ class MTKHeader {
           });
           dropdown.appendChild(dropItem);
         });
+
         li.appendChild(dropdown);
+
         a.addEventListener("click", e => {
           e.preventDefault();
           li.classList.toggle("show-dropdown");
@@ -64,13 +72,19 @@ class MTKHeader {
 
       this.menuEl.appendChild(li);
     });
+
+    document.addEventListener("click", e => {
+      this.menuEl.querySelectorAll(".mtk-menu-item").forEach(item => {
+        if (!item.contains(e.target)) item.classList.remove("show-dropdown");
+      });
+    });
   }
 
   loadButtons() {
     this.buttonsEl.innerHTML = "";
-    this.config.buttons.forEach(btn => {
+    (this.config.buttons || []).forEach(btn => {
       const button = document.createElement("button");
-      button.className = `mtk-btn ${btn.type}`;
+      button.className = `mtk-btn ${btn.type || ""}`;
       button.textContent = btn.text;
       button.addEventListener("click", () => {
         window._pubsub?.publish("mtk-header-button-click", { button: btn.text });
@@ -87,8 +101,11 @@ class MTKHeader {
   applyFixed() {
     if (this.config.fixed) {
       this.headerEl.style.position = "fixed";
-      this.headerEl.style.top = 0;
-      this.headerEl.style.left = 0;
+      this.headerEl.style.top = "0";
+      this.headerEl.style.left = "0";
+      this.headerEl.style.width = "100%";
+    } else {
+      this.headerEl.style.position = "relative";
     }
   }
 
@@ -97,16 +114,6 @@ class MTKHeader {
     const item = this.menuEl.querySelector(`.mtk-menu-item[data-index="${idx}"]`);
     if (item) item.classList.add("active");
   }
-
-  setupEvents() {
-    document.addEventListener("click", e => {
-      // Close dropdown if clicked outside
-      this.menuEl.querySelectorAll(".mtk-menu-item").forEach(item => {
-        if (!item.contains(e.target)) item.classList.remove("show-dropdown");
-      });
-    });
-  }
 }
 
-// Wait for DOM
-document.addEventListener("DOMContentLoaded", () => new MTKHeader());
+new MTKHeader();
