@@ -1,0 +1,11 @@
+FORGET ALL YOU KNOW ABOUT MTK-carousel AND START OVER
+
+I want you to remember this component as MTK-carousel
+
+MTK-carousel is fully responsive on small screens
+MTK-carousel use material design and bootstrap 5.xx and it should be built with HTML, VANILLA JAVASCRIPT, SCSS
+MTK-carousel contents are HTML code are coming from windows.app.carousel variable.
+MTK-carousel initially creat 3 slides with lorem ipsum and place thse in MTK-carousel.config.js file
+
+
+you should create SCSS, HTML, MTK-carousel.config.js json, vanilla javascript and a minimal index.html
