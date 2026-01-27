@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="UTF-8">
+	<title>MTK-header Example</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="mtk-header.css">
+	<style>
+	 body { padding-top: 64px; } /* for fixed header */
+	</style>
+    </head>
+    <body>
+
+	<script src="_pubsub.js"></script>
+	<script src="MTK-header.config.js"></script>
+	<header class="mtk-header light" id="_mtk-header">
+	    <div class="mtk-logo"><img id="_mtk-logo" src="" alt="Logo"></div>
+	    <ul class="mtk-menu" id="_mtk-menu"></ul>
+	    <div class="mtk-buttons" id="_mtk-buttons"></div>
+	</header>
+
+	<main class="container mt-5">
+	    <h1>Welcome to the MTK-header Demo</h1>
+	    <p>Click menu items or buttons to see PubSub events.</p>
+	</main>
+
+	<script src="mtk-header.js"></script>
+    </body>
+</html>
