@@ -1,16 +1,27 @@
-<div class="container">
-    <div class="row">
-	<div class="col-md-12">
+<header class="mtk-header light" id="_mtk-header">
+    <div class="container d-flex align-items-center justify-content-between">
+	<!-- Logo -->
+	<div class="mtk-logo">
+	    <img src="https://via.placeholder.com/120x40?text=Logo" alt="Logo" id="_mtk-logo">
+	</div>
 
-	    <header class="mtk-header light" id="_mtk-header">
-		<div class="mtk-logo">
-		    <img src="" alt="Logo" id="_mtk-logo">
-		</div>
-		<div class="mtk-right">
-		    <ul class="mtk-menu" id="_mtk-menu"></ul>
-		    <div class="mtk-buttons" id="_mtk-buttons"></div>
-		</div>
-	    </header>
+	<!-- Right side: Menu + Buttons -->
+	<div class="mtk-right d-flex align-items-center">
+	    <ul class="mtk-menu list-unstyled d-flex mb-0" id="_mtk-menu">
+		<li class="mtk-menu-item position-relative">
+		    <a href="#" class="dropdown-toggle">Features</a>
+		    <ul class="dropdown-menu">
+			<li class="dropdown-item">Option 1</li>
+			<li class="dropdown-item">Option 2</li>
+		    </ul>
+		</li>
+		<li class="mtk-menu-item"><a href="#">Pricing</a></li>
+		<li class="mtk-menu-item"><a href="#">About</a></li>
+	    </ul>
+	    <div class="mtk-buttons d-flex ms-3" id="_mtk-buttons">
+		<button class="mtk-btn secondary">Login</button>
+		<button class="mtk-btn primary">Sign Up</button>
+	    </div>
 	</div>
     </div>
-</div>
+</header>
