@@ -24,7 +24,8 @@
       .mtk-header .mtk-right .mtk-menu .mtk-menu-item {
         position: relative;
         margin-left: 1.5rem;
-        cursor: pointer; }
+        cursor: pointer;
+        border-bottom: 2px transparent gold; }
         .mtk-header .mtk-right .mtk-menu .mtk-menu-item a {
           text-decoration: none;
           color: inherit;
@@ -33,7 +34,7 @@
           transition: color 0.2s; }
         .mtk-header .mtk-right .mtk-menu .mtk-menu-item.active > a {
           font-weight: 600;
-          border-bottom: 2px solid #2196f3; }
+          border-bottom: 2px solid gold; }
         .mtk-header .mtk-right .mtk-menu .mtk-menu-item .dropdown-menu {
           display: none;
           position: absolute;

@@ -28,6 +28,7 @@
 		position: relative;
 		margin-left: 1.5rem;
 		cursor: pointer;
+		border-bottom: 2px transparent gold;
 
 		a {
 		    text-decoration: none;
@@ -39,7 +40,7 @@
 
 		&.active > a {
 		    font-weight: 600;
-		    border-bottom: 2px solid #2196f3;
+		    border-bottom: 2px solid gold;
 		}
 
 		.dropdown-menu {
