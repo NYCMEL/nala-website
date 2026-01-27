@@ -21,7 +21,7 @@ body {
   min-width: 100px; }
 
 #_header-1 .navbar-toggler {
-  border: 1px lime solid; }
+  background: #f0f0f0; }
 
 #_header-1 .navbar-brand > img {
   height: 60px !important; }
