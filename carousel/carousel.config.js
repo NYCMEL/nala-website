@@ -10,7 +10,7 @@ window.app.carousel = {
 	  id: "slide-1",
 	  html: `
 <div class="p-4">
-    <article class="story-card p-5">
+    <article class="story-card">
 	<h2 align="center">From Side Job to a Real Future</h2>
 
 	<p>
@@ -49,7 +49,7 @@ window.app.carousel = {
     {
       id: "slide-2",
       html: `
-    <article class="story-card p-5">
+    <article class="story-card">
     <h2 align="center">A Second Career That Fits My Life</h2>
 
     <p>
@@ -70,7 +70,7 @@ window.app.carousel = {
     {
       id: "slide-3",
       html: `
-<article class="story-card p-5">
+<article class="story-card">
     <h2>Confidence Through Real Skills</h2>
 
     <p>
