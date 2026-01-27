@@ -1,0 +1,63 @@
+I want to create a STANDALONE web component named `MTK-pager`.
+Remeber it in your memory as MTK-pager
+
+PURPOSE
+MTK-pager is a lightweight page/section manager used to switch visible content
+inside a single container without page reloads.
+
+TECH STACK
+- Vanilla JavaScript only
+- Optional jQuery allowed ONLY for HTML loading
+- Material Design & Bootstrap
+- No frameworks
+- No build tools
+- No globals except `MTK-pager`
+
+CONTAINER
+- Example:
+  <PAGER id="MTK-pager"></PAGER>
+
+BEHAVIOR
+1. `MTK-pager` must initialize immediately when loaded.
+2. `MTK-pager` must safely detect if the container exists.
+   - If not found, log a clear error and do nothing.
+3. `MTK-pager` manages multiple sections internally.
+4. Each section:
+   - Is a block element <PAGER-SECTION>
+   - Has an id format `MTK-pager-{sectionId}`
+   - Has class `MTK-pager-section`
+5. Only ONE section is visible at a time.
+6. Visibility is controlled using an `.active` class.
+7. Calling `MTK-pager.show(sectionId)`:
+   - Hides all existing sections
+   - If section already exists:
+     - Activates it
+   - If section does NOT exist:
+     - Creates it
+     - Appends it to `MTK-pager`
+
+8. `MTK-pager.show(sectionId)` must always work even if called multiple times.
+9. The component must expose ONLY ONE public API:
+   - `MTK-pager.show(sectionId)`
+10. Internal state must be private.
+11. Use defensive coding.
+12. Log useful debug messages during actions
+13. Do NOT pollute the global scope.
+
+14. `MTK-pager` gets content url from a external JSON variable app.pager from file MTK-pager.config.js
+15. `MTK-pager` should make sure that <PAGER> exist on the page before proceeding
+
+
+OPTIONAL
+- If jQuery exists, use `$("#MTK-pager-{id}").load(...)`
+- If jQuery does not exist, fail gracefully
+
+STYLE ASSUMPTIONS
+- `. MTK-pager-section { display: none; }`
+- `. MTK-pager-section.active { display: block; }`
+
+DELIVERABLE
+- One JavaScript file: `MTK-pager.js`
+- One HTML file: `MTK-pager.html`
+- One SCSS file: `MTK-pager.scss`
+- One CSS file: `MTK-pager.css`

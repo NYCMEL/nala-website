@@ -1,0 +1,102 @@
+<div class="_register-surface" id="_register-root">
+    <h1 class="_register-title">
+	Please register now...
+	<div style="font-size:16px;color:#666;font-weight:normal">
+	    <i>All fields are required</i>
+	</div>
+    </h1>
+
+    <form id="_register-form" novalidate>
+
+	<!-- First / Last -->
+	<div class="_register-row">
+	    <div class="_register-input">
+		<input id="_register-firstName" required />
+		<label for="_register-firstName">First Name</label>
+		<span class="_register-helper">First Name</span>
+	    </div>
+
+	    <div class="_register-input">
+		<input id="_register-lastName" required />
+		<label for="_register-lastName">Last Name</label>
+		<span class="_register-helper">Last Name</span>
+	    </div>
+	</div>
+
+	<!-- Email -->
+	<div class="_register-input">
+	    <input id="_register-email" type="email" required />
+	    <label for="_register-email">Your Email</label>
+	    <span class="_register-helper">example@example.com</span>
+	</div>
+
+	<div class="_register-input">
+	    <input id="_register-email2" type="email" required />
+	    <label for="_register-email2">Repeat Email</label>
+	</div>
+
+	<!-- Phone -->
+	<div class="_register-input">
+	    <input id="_register-phone" type="tel" required />
+	    <label for="_register-phone">Contact Phone Number</label>
+	</div>
+
+	<!-- Address -->
+	<div class="_register-input">
+	    <input id="_register-address1" required />
+	    <label for="_register-address1">Address</label>
+	    <span class="_register-helper">Street Address</span>
+	</div>
+
+	<div class="_register-input">
+	    <input id="_register-address2" required />
+	    <label for="_register-address2">Address</label>
+	    <span class="_register-helper">Street Address Line 2</span>
+	</div>
+
+	<!-- City / State / Zip -->
+	<div class="_register-row">
+	    <div class="_register-input">
+		<input id="_register-city" required />
+		<label for="_register-city">City</label>
+	    </div>
+
+	    <div class="_register-input">
+		<input id="_register-state" required />
+		<label for="_register-state">State</label>
+	    </div>
+
+	    <div class="_register-input">
+		<input id="_register-zip" required />
+		<label for="_register-zip">Zip Code</label>
+	    </div>
+	</div>
+
+	<!-- Age -->
+	<div class="_register-input">
+	    <select id="_register-age" required>
+		<option value="1" disabled selected></option>
+		<option value="1">Under 30</option>
+		<option value="2">Under 50</option>
+		<option value="3">Over 50</option>
+	    </select>
+	    <label for="_register-age">Age Group</label>
+	</div>
+
+	<!-- Education -->
+	<div class="_register-input">
+	    <select id="_register-education" required>
+		<option value="" disabled selected></option>
+		<option value="1">High School</option>
+		<option value="2">College</option>
+		<option value="3">Advanced</option>
+	    </select>
+	    <label for="_register-education">Education Level</label>
+	</div>
+
+	<button id="_register-submit" class="_register-button">
+	    Register
+	</button>
+
+    </form>
+</div>

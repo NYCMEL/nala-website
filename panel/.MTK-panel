@@ -1,0 +1,28 @@
+I want to create a 2 column panels with bootstrap col-md-* coming from
+app.panels[] JSON variable in MTK-panel.config.js file
+
+Remeber this component as MTK-panel
+
+Use material design animation on start.
+
+<MTK-panel id="panel-1">
+   HTML content is inline here...	   
+</MTK-panel>
+
+MTK-panel can have a background in JSON variable
+MTK-panel can have an intial height and when content exceeds this height, over flow with scroll bar
+
+left and right sides can have their own background colors
+
+PANEL content is inline and not in json variable
+
+left and right should overflow independent of one another and show scrollbar based on content height
+
+remove all box shadows
+
+use container and not container-fluid in template
+
+left and right column widths from json variable as "col-md-??"
+
+Create: SCSS, CSS, HTML, Vanilla js, samle variable, sample index.html file to show usage
+

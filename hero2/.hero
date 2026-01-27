@@ -1,0 +1,84 @@
+Create a modern Material Design + Bootstrap hero component named MTK-hero.
+
+ASSUMPTIONS
+- Use Bootstrap 5
+- Use vanilla JavaScript only
+- No frameworks
+- No shadows, no borders, no rounded corners
+- Follow Material Design motion principles
+- Component must be fully JSON-driven
+- Component must be load-order safe
+
+CORE REQUIREMENTS
+- Component name: MTK-hero
+- Full page width
+- Fully responsive
+- Background color: #fafafa
+- Uses a Bootstrap container (not container-fluid)
+
+LAYOUT
+- Two-column layout
+- Left side class: .MTK-hero-lhs
+- Right side class: .MTK-hero-rhs
+- Desktop order:
+  - Left: Card with title and description
+  - Right: Image
+- Mobile order:
+  - Right side (image) appears first
+  - Left side (card) appears second
+
+CARD REQUIREMENTS
+- Card is on the left side
+- Card background is the same as MTK-hero background (#fafafa)
+- No border
+- No box shadow
+- Title and description only
+
+IMAGE REQUIREMENTS
+- Image is on the right side
+- Responsive image
+- Uses img-fluid
+
+DATA AND CONFIGURATION
+- All content must come from JSON
+- JSON source is window.app.hero
+- JSON must be defined in a separate file named MTK-hero.config.js
+- JSON supports:
+  - title
+  - description
+  - image
+  - lhsCol (Bootstrap col-md-??)
+  - rhsCol (Bootstrap col-md-??)
+
+FILES TO CREATE
+1. MTK-hero.config.js (JSON config)
+2. MTK-hero.html (optional static structure support)
+3. MTK-hero.scss
+4. MTK-hero.css (compiled from SCSS)
+5. MTK-hero.js (full, production-ready)
+
+JAVASCRIPT BEHAVIOR
+- Must wait for #MTK-hero to appear in the DOM before running
+- Must wait for window.app.hero to exist before rendering
+- Must dynamically inject HTML if #MTK-hero is empty
+- Must not throw errors if load order changes
+- Must wait for .animate-fade-up elements before triggering animations
+- Must use an IIFE to avoid polluting global scope
+
+ANIMATION
+- Material Design style fade-up animation
+- Use class .animate-fade-up
+- Animation triggers by adding .active
+- Animation applied only after DOM + data are ready
+
+OUTPUT REQUIREMENTS
+- Provide complete code for:
+  - JSON config
+  - HTML
+  - SCSS
+  - CSS
+  - JavaScript
+- Code must be clean, readable, and production-ready
+- Do not use em dashes
+- Do not omit error handling
+- Do not assume script load order

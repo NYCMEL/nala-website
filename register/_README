@@ -1,0 +1,21 @@
+PAYLOAD FOR REGISTERATION FORM
+
+{
+  "component": "_register",
+  "formId": "_register-form",
+  "timestamp": 1736959200000,
+  "data": {
+    "_register-firstName": "John",
+    "_register-lastName": "Doe",
+    "_register-email": "john@example.com",
+    "_register-email2": "john@example.com",
+    "_register-phone": "5551234567",
+    "_register-address1": "123 Main St",
+    "_register-address2": "Suite 200",
+    "_register-city": "Austin",
+    "_register-state": "TX",
+    "_register-zip": "78701",
+    "_register-age": "Under 50",
+    "_register-education": "College"
+  }
+}

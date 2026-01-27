@@ -1,0 +1,50 @@
+.mtk-header {
+  background-color: #121212;
+  color: #ffffff;
+  z-index: 1030;
+  margin-bottom: 100px !important;
+  border: 2px red solid; }
+
+.mtk-header.is-fixed {
+  position: fixed;
+  top: 0;
+  width: 100%; }
+
+.mtk-header .navbar {
+  padding: 0.75rem 0; }
+
+.mtk-header .navbar-brand {
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none; }
+
+.mtk-header .nav-link {
+  color: #cccccc;
+  margin: 0 0.5rem;
+  position: relative; }
+
+.mtk-header .nav-link:hover {
+  color: #ffffff; }
+
+.mtk-header .nav-link.active {
+  color: gold !important; }
+
+.mtk-header .nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: -6px;
+  height: 2px;
+  background-color: #bb86fc; }
+
+.mtk-header .mtk-btn {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #bb86fc;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px; }
+
+.mtk-header .mtk-btn.primary {
+  background-color: #bb86fc;
+  color: #000; }

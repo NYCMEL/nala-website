@@ -1,0 +1,27 @@
+body {
+    background: #FFF;
+}
+
+.mtk-panel {
+  padding: 0;
+  margin-bottom: 24px;
+  overflow: hidden;
+  animation: mtk-panel-enter 420ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+}
+
+.mtk-panel-row {
+  display: flex;
+  width: 100%;
+}
+
+.mtk-panel-row > div {
+  padding: 16px;
+  overflow-y: auto;
+}
+
+@keyframes mtk-panel-enter {
+  to {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,47 @@
+i want to create a modern material design regiseration form
+i want you to remember this component as _register
+
+make a separate html, css, scss, vanilla js files
+
+form should have the following fields:
+- title: NALA Locksmith Registeration Form     
+- First Name: label "First Name", helper:First Name, required
+- Middle initial (labeled M.I.)
+- Last Name: label "Last Name", helper:Lirst Name,required
+- Email: label "Your Email", helper:example@example.com, required
+- Email2: label "Repeat Email", required
+- Phone number label "Contact Phone Number", helper:Phone Number, required
+- Address1: label "Address", helper: Street Addresss, required
+- Address2: label "Address", helper: Street Addresss Line 2, required
+
+- City: label "City", helper:City, required
+- State: label "State", helper: State, required
+- ZipCode: label "Zip Code", helper:First Name, required
+- Age: label "Age Group", required
+  dropdown:
+	Under 30
+	Under 50
+	Over 50
+
+- Education Level: label "Education Level", required
+  dropdown:
+      High Scholl
+     College
+     Advanced
+
+First Name, Middle Initial and Last Name on the same line 
+City, State and Zipcode on same line
+
+use _PubSub.js to publish all click events and include element ids
+
+mark all required fields with a red "*"
+
+if any field is empty, place the focus there on submit
+
+disable submit button unless all fields have values
+
+on submit publish a JSON file including all fields
+
+all age and education dropdowns select the first option
+
+in _register.js use PubSub and not _PubSub

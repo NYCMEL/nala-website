@@ -1,0 +1,79 @@
+.mtk-lessons {
+    margin: 2rem auto;
+    font-family: Roboto, Arial, sans-serif;
+}
+
+/* Base item - NO SHADOW */
+.mtk-item {
+    border-radius: 4px;
+    background: #ffffff;
+    overflow: hidden;
+    font-size: 14px;
+    margin: 0;
+    border-bottom: 2px #f8f9fa solid;
+}
+
+/* PART cards only */
+.mtk-part {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Header row */
+.mtk-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 7px 9px;
+    user-select: none;
+
+    &.locked {
+	opacity: 0.45;
+	cursor: not-allowed;
+    }
+}
+
+.mtk-icon {
+    width: 24px;
+    font-size: 20px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.mtk-title {
+    font-weight: 500;
+
+    max-width: 230px;          /* required */
+    white-space: nowrap;  /* required */
+    overflow: hidden;     /* required */
+    text-overflow: ellipsis;
+}
+
+/* Nested children */
+.mtk-children {
+    padding-left: 32px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+}
+
+.mtk-item.expanded > .mtk-children {
+    max-height: 2000px;
+}
+
+.bg-blue-white-radial {
+    background: radial-gradient(
+	circle at top,
+	#1e88e5 0%,
+	#e3f2fd 40%,
+	#ffffff 75%
+    );
+}
+
+.bg-blue-white-overlay {
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(25, 118, 210, 0.15),
+      rgba(255, 255, 255, 1)
+    );
+}

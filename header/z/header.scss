@@ -1,0 +1,64 @@
+$bg-dark: #121212;
+$text-light: #ffffff;
+$accent: #bb86fc;
+
+.mtk-header {
+  background-color: $bg-dark;
+  color: $text-light;
+  z-index: 1030;
+  margin-bottom: 100px!important;
+  border:2px red solid;
+
+  &.is-fixed {
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+
+  .navbar {
+    padding: 0.75rem 0;
+  }
+
+  .navbar-brand {
+    color: $text-light;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .nav-link {
+    color: #cccccc;
+    margin: 0 0.5rem;
+    position: relative;
+
+    &:hover {
+      color: $text-light;
+    }
+
+    &.active {
+	color: gold!important;
+    }
+
+    &.active::after {
+      content: "";
+      position: absolute;
+      left: 10%;
+      right: 10%;
+      bottom: -6px;
+      height: 2px;
+      background-color: $accent;
+    }
+  }
+
+  .mtk-btn {
+    background: transparent;
+    color: $text-light;
+    border: 1px solid $accent;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+
+    &.primary {
+      background-color: $accent;
+      color: #000;
+    }
+  }
+}

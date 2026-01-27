@@ -1,0 +1,11 @@
+create a simple html, css, scss and Vanilla JS component from the following picture (I will upload)
+use bootstrap container and Material Design animation
+apply Material design animation, styles etc.
+
+Remember this component as MTK-ready
+
+create HTML, CSS, SCSS, Vanila JS and a simple index.html for demo
+
+all content from MTK-ready.config.js file variable window.app.ready
+
+make sure component is available before applying js code

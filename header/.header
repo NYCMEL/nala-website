@@ -1,0 +1,18 @@
+FORGET ALL YOU KNOW ABOUT MTK-HEADER AND START OVER
+
+I want to create an modern material design and bootstrap application header
+I want you to remember this component as MTK-header
+
+MTK-header is fully responsive
+MTK-header can be fixed to top of the page or not
+MTK-header use material design and bootstrap 5.xx and it should be built with HTML, VANILLA JAVASCRIPT, CSS & SCSS
+MTK-header has a logo on the left side and few menu items and buttons.
+MTK-header buttons and menus are placed on the right side
+MTK-header content comes from a global variable window.app.header from MTK-header.config.js file
+MTK-header on menu & button should publish click event using _pubsub.js
+MTK-header on menu click, switch active to this item
+MTK-header should wait for elements to be loaded into DOM before proceeding
+
+create CSS, SCSS, HTML, MTK-header.config.js json, vanilla javascript and a minimal index.html in separate files with names like: MTK-header.scss, MTK-header.html etc.
+
+also create a minimal index.html file

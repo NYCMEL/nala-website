@@ -1,0 +1,102 @@
+FORGET ALL YOU KNOW ABOUT MTK-lessons COMPONENT
+
+You are a senior frontend engineer and UI architect.
+
+FORGET ALL PREVIOUS CONTEXT.
+
+I want to create a modern Material Design + Bootstrap 5 expandable lessons component.
+Remember this component name as MTK-lessons.
+
+GOALS
+- Fully JSON driven
+- Vanilla JavaScript only
+- Uses HTML, CSS, SCSS, and JS in separate files
+- Fully responsive
+- Clean Material Design look
+- Fast and readable code
+- No frameworks other than Bootstrap 5 styles
+
+DATA
+All content must come from this global variable:
+
+window.app.lessons = {
+  "parts": [
+    {
+      "title": "Part I Title",
+      "access": true,
+      "modules": [
+        {
+          "title": "Module 1",
+          "free": true,
+          "lessons": [
+            {
+              "title": "Lesson 1",
+              "resources": [
+                {
+                  "description": "Intro video",
+                  "url": "https://example.com/video-1"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+BEHAVIOR REQUIREMENTS
+1. On initial load, ONLY PARTS are visible
+2. Each PART shows a "+" icon to the left of its title
+3. Clicking "+" or title expands ONLY that PART and reveals its MODULES
+4. MODULES are hidden until their parent PART is expanded
+5. LESSONS are hidden until their parent MODULE is expanded
+6. RESOURCES are hidden until their parent LESSON is expanded
+7. Clicking again collapses the section
+8. Icons toggle between "+" and "−"
+9. DOM hierarchy must be REAL nesting, not visual hacks
+
+HIERARCHY (MANDATORY)
+PART
+ └─ MODULE
+     └─ LESSON
+         └─ RESOURCE
+
+ACCESS RULES
+- If part.access === false, the PART is visible but locked
+- Locked parts cannot be expanded
+- Locked parts show a visual disabled state
+
+FILES TO GENERATE
+- MTK-lessons.html
+- MTK-lessons.scss
+- MTK-lessons.css (compiled output)
+- MTK-lessons.js
+- MTK-lessons.config.js
+- index.html (minimal demo page)
+
+TECHNICAL REQUIREMENTS
+- JS "MUST WAIT FOR DOM" to be ready before rendering
+- No jQuery
+- No inline HTML generation outside JS
+- Clean separation of concerns
+- Reusable render functions per level
+- Use event delegation where appropriate
+
+UI REQUIREMENTS
+- Material-style expandable cards
+- Smooth expand/collapse animation
+- Clear indentation per hierarchy level
+- Plus icon always aligned left of title
+- Mobile-friendly spacing and font sizes
+
+OUTPUT FORMAT
+- Show each file fully
+- Label each file clearly
+- Do NOT skip any file
+- Do NOT shorten code
+- Do NOT flatten hierarchy
+- Do NOT show everything expanded by default
+- create the MTK-lessons.config.js file with 13 parts
+
+If anything conflicts, prioritize hierarchy correctness and clarity.

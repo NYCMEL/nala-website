@@ -1,0 +1,29 @@
+body {
+  /* font-family: fl!important; */
+  /* font-family: far!important; */
+  font-family: Arial !important; }
+
+.course-card {
+  border: 1px #cecece solid;
+  border-radius: 5px; }
+
+.mtk-hidden {
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none; }
+
+.mtk-visible {
+  opacity: 1;
+  transform: translateY(0); }
+
+.mtk-animate {
+  transition: opacity 220ms cubic-bezier(0.4, 0, 0.2, 1), transform 220ms cubic-bezier(0.4, 0, 0.2, 1); }
+
+.ellipsis {
+  width: 200px;
+  /* required */
+  white-space: nowrap;
+  /* required */
+  overflow: hidden;
+  /* required */
+  text-overflow: ellipsis; }

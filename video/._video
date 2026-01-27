@@ -1,0 +1,10 @@
+i want to create a modern video player using material design and bootstrap 
+i want you to remember this component as _video
+
+_video has a title and html body; same as a card
+_video can have 2 sides. Front and back with similar content
+_video is fully responsive
+
+all content comes from a _video.data.js file and consumed as variable window.app.video
+
+create html, css, scss and vanilla js for _video

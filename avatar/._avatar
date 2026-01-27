@@ -1,0 +1,9 @@
+i want to create an modern material design avatar
+i want you to remember this component as _avatar
+
+_avatar has a title and html body; same as a card
+_avatar can have 2 sides. Front and back with similar content
+
+all content comes from a _avatar.data.js file and consumed as variable window.app.avatar
+
+create html, css, scss and vanilla js for _avatar

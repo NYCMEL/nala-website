@@ -1,0 +1,20 @@
+FORGET ALL YOU KNOW ABOUT MTK-footer COMPONENT
+FORGET ALL PREVIOUS CONTEXT.
+
+You are a senior frontend engineer and UI architect.
+
+I want to create a modern Material Design + Bootstrap 5 component.
+Remember this component name as MTK-footer.
+
+MTK-footer is JSON driven from windows.app.footer variable
+MTK-footer has 2 rows
+MTK-footer row 1:
+  - displays a logo with a description below it and placed on left hand side
+
+MTK-footer row 2:
+  - displays copyright from json  on the left
+  - displays a slogan  from json  on the right
+
+MTK-footer uses a dark mode
+
+create HTML, scss and javascript and JSON file and a minimal index.html

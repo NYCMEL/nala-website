@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Material Design Hero</title>
+	
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	
+	<style>
+	 /* Body */
+	 body {
+	     margin: 0;
+	     font-family: 'Roboto', Arial, sans-serif;
+	     background-color: #f5f5f5;
+	 }
+
+	 /* _hero */
+	 #_hero {
+	     position: relative;
+	     display: flex;
+	     align-items: center;
+	     justify-content: center;
+	     min-height: 70vh;
+	     color: #fff;
+	     text-align: center;
+	     overflow: hidden;
+	     border-radius: 12px;
+	     box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+	     margin: 2rem auto;
+	     max-width: 1200px;
+
+	     /* Background image */
+	     background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f');
+	     background-size: cover;
+	     background-position: center;
+	     filter: brightness(0.5) contrast(0.9); /* fade image */
+	 }
+
+	 /* Dark overlay for stronger contrast */
+	 #_hero::before {
+	     content: '';
+	     position: absolute;
+	     top: 0; left: 0;
+	     width: 100%; height: 100%;
+	     background-color: rgba(0,0,0,0.6); /* darker overlay for better text contrast */
+	     z-index: 1;
+	 }
+
+	 /* Container content above overlay */
+	 #_hero .container {
+	     position: relative;
+	     z-index: 2;
+	 }
+
+	 /* Hero Title */
+	 #_hero ._hero-title {
+	     font-size: 3rem;
+	     font-weight: 700;
+	     margin-bottom: 0.5rem;
+	     text-shadow: 2px 2px 8px rgba(0,0,0,0.7); /* text shadow for readability */
+	 }
+
+	 /* Hero Subtitle */
+	 #_hero ._hero-subtitle {
+	     font-size: 1.25rem;
+	     margin-bottom: 1.5rem;
+	     text-shadow: 1px 1px 6px rgba(0,0,0,0.7);
+	 }
+
+	 /* Hero Button */
+	 #_hero ._hero-btn {
+	     font-size: 1.1rem;
+	     padding: 0.75rem 1.5rem;
+	     border-radius: 8px;
+	     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+	     transition: transform 0.3s ease, box-shadow 0.3s ease;
+	     border: none;
+	     background-color: #ffca28; /* bright button color */
+	     color: #000; /* text on button */
+	     font-weight: 600;
+	 }
+
+	 #_hero ._hero-btn:hover {
+	     transform: translateY(-3px);
+	     box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+	 }
+
+	 /* Responsive tweaks */
+	 @media (max-width: 768px) {
+	     #_hero ._hero-title {
+		 font-size: 2rem;
+	     }
+
+	     #_hero ._hero-subtitle {
+		 font-size: 1rem;
+	     }
+	 }
+	</style>
+    </head>
+    <body>
+
+	<!-- Material Design Hero -->
+	<div id="_hero">
+	    <div class="container">
+		<div class="row">
+		    <div class="col-md-12 hero-content text-center">
+			<h1 class="_hero-title">Welcome to Our Platform</h1>
+			<p class="_hero-subtitle">Delivering Excellence in Every Step</p>
+			<button class="btn _hero-btn">Get Started</button>
+		    </div>
+		</div>
+	    </div>
+	</div>
+
+	<!-- Bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Optional Hero Button JS -->
+	<script>
+	 document.addEventListener('DOMContentLoaded', () => {
+	     const heroBtn = document.querySelector('#_hero ._hero-btn');
+	     heroBtn.addEventListener('click', () => {
+		 alert('Hero button clicked! 🚀');
+	     });
+	 });
+	</script>
+
+    </body>
+</html>

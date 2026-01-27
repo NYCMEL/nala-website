@@ -1,0 +1,86 @@
+body {
+  /* background: #f1f5f9; */
+  font-family: Roboto, system-ui, sans-serif; }
+
+._register-surface {
+  max-width: 760px;
+  margin: 48px auto;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 20px; }
+
+._register-title {
+  text-align: center;
+  margin-bottom: 32px;
+  color: #2663eb; }
+
+._register-row {
+  display: flex;
+  gap: 20px; }
+
+._register-input {
+  position: relative;
+  flex: 1;
+  margin-bottom: 28px; }
+
+._register-input input,
+._register-input select {
+  width: 100%;
+  padding: 16px 12px 10px;
+  border: none;
+  border-bottom: 2px solid #d1d5db;
+  background: transparent;
+  font-size: 16px;
+  color: #1f2937; }
+
+._register-input input:focus,
+._register-input select:focus {
+  outline: none;
+  border-bottom-color: #2663eb; }
+
+._register-input input:focus + label,
+._register-input input:not(:placeholder-shown) + label,
+._register-input input:valid + label,
+._register-input select:focus + label,
+._register-input select:not(:placeholder-shown) + label,
+._register-input select:valid + label {
+  transform: translateY(-18px);
+  font-size: 12px;
+  color: #2663eb; }
+
+._register-input label {
+  position: absolute;
+  left: 12px;
+  top: 16px;
+  color: #6b7280;
+  pointer-events: none;
+  transition: 0.2s ease; }
+
+._register-helper {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 6px; }
+
+._register-button {
+  width: 100%;
+  padding: 20px;
+  background: #2663eb;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 500;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(38, 99, 235, 0.4);
+  transition: opacity 0.2s ease, box-shadow 0.2s ease; }
+
+._register-button:hover {
+  opacity: 0.95; }
+
+/* Required field asterisk */
+/* ._register-input input[required] + label::after, */
+/* ._register-input select[required] + label::after { */
+/*   content: " *"; */
+/*   color: #dc2626; */
+/*   font-weight: 600; */
+/* } */

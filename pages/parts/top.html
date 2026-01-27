@@ -1,0 +1,56 @@
+<button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
+
+<style>
+ #scrollTopBtn {
+     position: fixed;
+     bottom: 1.25rem;
+     right: 1.25rem;
+     width: 48px;
+     height: 48px;
+     border-radius: 50%;
+     border: none;
+     background: #6200ee;
+     color: #fff;
+     font-size: 20px;
+     cursor: pointer;
+     box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+     opacity: 0;
+     visibility: hidden;
+     transform: scale(0.8);
+     transition: opacity 0.3s ease, transform 0.3s ease;
+     z-index: 9999;
+ }
+
+ #scrollTopBtn.show {
+     opacity: 1;
+     visibility: visible;
+     transform: scale(1);
+ }
+
+ #scrollTopBtn:hover {
+     box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+ }
+</style>
+
+<script>
+ (function () {
+     const btn = document.getElementById("scrollTopBtn");
+     if (!btn) return;
+
+     window.addEventListener("scroll", () => {
+	 if (window.scrollY > 300) {
+	     btn.classList.add("show");
+	 } else {
+	     btn.classList.remove("show");
+	 }
+     });
+
+     btn.addEventListener("click", () => {
+	 window.scrollTo({
+	     top: 0,
+	     behavior: "smooth"
+	 });
+     });
+ })();
+</script>
+

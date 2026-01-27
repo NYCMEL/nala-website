@@ -1,0 +1,10 @@
+i want to create an modern material design stats component from the image i will provide
+i want you to remember this component as _stats
+
+_stats is fully responsive
+_stats use material design and bootstrap 5.xx and it should be built with html, vanilla javascript, css & scss
+_stats content comes from a global variable app.stats in form of JSON
+_stats numbers should animate a scroll and increase from 0 to their max
+
+create css, scss, html, json(sample) and vanilla javascript in separate files with names like: _stats.scss, _stats.html etc.
+

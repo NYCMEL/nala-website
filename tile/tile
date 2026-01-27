@@ -1,0 +1,32 @@
+Create a modern Material Design tile component named MTK-tile using HTML, CSS, SCSS, and vanilla JavaScript only.
+
+MTK-tile behaves like a card with a title and HTML body.
+It supports front and back sides with a smooth 3D flip animation.
+
+All content AND background colors come from window.app.tiles.
+Each tile mounts into a container with id "MTK-" + tiles[].id.
+
+Front and back each define:
+- title
+- body (HTML string)
+- bgColor (applied directly to that side)
+
+Flip behavior:
+- Hover flips to back
+- Mouse out flips to front
+- Click toggles flip for touch devices
+
+Use Material Design styling:
+- Rounded corners
+- Elevation via box-shadow
+- Smooth cubic-bezier animation
+
+Deliver:
+- HTML structure
+- SCSS
+- Compiled CSS
+- Vanilla JS renderer
+- Simple full index.html demo
+
+No frameworks.
+No em dash characters.

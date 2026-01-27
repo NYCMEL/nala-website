@@ -1,0 +1,12 @@
+I will upload thumbback.png image file
+
+i want to create a modern material design application _client page from thumbback.png image
+i want you to remember this component as _client
+i want to use icons from thumbback.png file
+
+create a json named _client.data.js for all contents
+
+use PubSub.js to publish all click events and include element ids
+
+make a separate html, css, scss, vanilla js files
+
