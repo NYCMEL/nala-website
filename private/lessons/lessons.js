@@ -79,7 +79,33 @@ waitForElement("#mtk-lessons").then(root => {
 
 		lesson.resources.forEach(res => {
 		    const resNode = createItem(res.description);
-		    lessonNode.children.appendChild(resNode.item);
+		    const url = res.url;
+
+		    const link = document.createElement("a");
+		    link.href = url;
+		    link.textContent = resNode.item.textContent;
+		    link.classList.add("mtk-resource-link");
+		    link.style.display = "block";
+
+		    link.addEventListener("click", (e) => {
+			e.preventDefault();
+
+			const target = document.getElementById("MTK-resource");
+			if (!target) return;
+
+			fetch(url)
+			    .then(r => r.text())
+			    .then(html => {
+				target.innerHTML = html;
+			    })
+			    .catch(() => {
+				target.innerHTML = "<p>Unable to load resource.</p>";
+			    });
+		    });
+
+		    // Replace the original node with the link
+		    resNode.item.replaceWith(link);
+		    lessonNode.children.appendChild(link);
 		});
 	    });
 	});
