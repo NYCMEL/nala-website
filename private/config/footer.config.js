@@ -2,7 +2,7 @@ window.app = window.app || {};
 
 window.app.footer = {
     brand: {
-	logo: "/Melify/tools/webcomponents/footer/img/footer-logo.png",
+	logo: "../img/footer-logo.png",
 	description: "North American Locksmith Association - Empowering locksmiths with professional education and industry connections since 1985."
     },
 
