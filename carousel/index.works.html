@@ -9,7 +9,7 @@
 	    rel="stylesheet"
 	>
 
-	<link rel="stylesheet" href="css/mtk-carousel.css">
+	<link rel="stylesheet" href="carousel.css">
     </head>
     <body class="p-4">
 
@@ -18,10 +18,10 @@
 	    <div id="carousel-container"></div>
 	</div>
 
-	<script src="js/MTK-carousel.config.js"></script>
+	<script src="carousel.config.js"></script>
 
 	<script>
-	 fetch("mtk-carousel.html")
+	 fetch("carousel.html")
 	     .then(r => r.text())
 	     .then(html => {
 		 document.getElementById("carousel-container").innerHTML = html;
