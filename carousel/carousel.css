@@ -1,3 +1,7 @@
+.carousel-card {
+  padding-left: 40px;
+  padding-right: 40px; }
+
 .mtk-carousel {
   position: relative;
   width: 100%;

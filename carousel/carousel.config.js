@@ -10,7 +10,7 @@ window.app.carousel = {
 	  id: "slide-1",
 	  html: `
 <div class="p-4">
-    <article class="story-card">
+    <article class="carousel-card">
 	<h2 align="center">From Side Job to a Real Future</h2>
 
 	<p>
@@ -49,7 +49,8 @@ window.app.carousel = {
     {
       id: "slide-2",
       html: `
-    <article class="story-card">
+<div class="p-4">
+    <article class="carousel-card">
     <h2 align="center">A Second Career That Fits My Life</h2>
 
     <p>
@@ -65,12 +66,14 @@ window.app.carousel = {
 	I now earn extra income while maintaining balance with my family and schedule.
     </p>
 </article>
+</div>
       `
     },
     {
       id: "slide-3",
       html: `
-<article class="story-card">
+<div class="p-4">
+<article class="carousel-card">
     <h2>Confidence Through Real Skills</h2>
 
     <p>
@@ -86,6 +89,7 @@ window.app.carousel = {
 	This experience gave me control over my future and the confidence to grow.
     </p>
 </article>
+</div>
       `
     }
   ]
