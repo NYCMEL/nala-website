@@ -7,23 +7,30 @@ body {
   font-size: 18px;
   background-color: #000 !important;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
-  #_header-1 a.nav-link {
-    border-bottom: 2px solid transparent;
-    color: #FFF; }
-  #_header-1 a.nav-link.active {
-    border-bottom: 2px solid gold;
-    color: gold; }
-  #_header-1 .btn {
-    font-size: 18px;
-    min-width: 100px; }
-  #_header-1 .navbar-toggler {
-    border: 1px lime solid; }
-  #_header-1 .navbar-brand > img {
-    height: 60px !important; }
-  #_header-1 .btn-outline-primary {
-    min-width: 100px;
-    border-color: #007bff;
-    color: #007bff; }
-    #_header-1 .btn-outline-primary:hover {
-      background-color: #007bff;
-      color: #fff; }
+
+#_header-1 a.nav-link {
+  border-bottom: 2px solid transparent;
+  color: #FFF; }
+
+#_header-1 a.nav-link.active {
+  border-bottom: 2px solid gold;
+  color: gold; }
+
+#_header-1 .btn {
+  font-size: 18px;
+  min-width: 100px; }
+
+#_header-1 .navbar-toggler {
+  background: #ebebeb; }
+
+#_header-1 .navbar-brand > img {
+  height: 60px !important; }
+
+#_header-1 .btn-outline-primary {
+  min-width: 100px;
+  border-color: #007bff;
+  color: #007bff; }
+
+#_header-1 .btn-outline-primary:hover {
+  background-color: #007bff;
+  color: #fff; }
