@@ -3,7 +3,7 @@ window.app = window.app || {};
 window.app.header = {
     fixed: true,
     
-    logo: { text: "MyApp", img: "/Melify/tools/webcomponents/img/logo-nala-association.webp" },
+    logo: { text: "MyApp", img: "../img/logo-nala-association.webp" },
     
     menu: [
 	{ cname:"header", id: "home", label: "Home", href: "#home", active: true },
