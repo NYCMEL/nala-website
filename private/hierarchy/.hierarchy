@@ -1,6 +1,6 @@
-FORGET ALL PREVIOUS CONTEXT for mtk-component
+FORGET ALL PREVIOUS CONTEXT for mtk-hierarchy
 
-Create a reusable UI component named mtk-component using:
+Create a reusable UI hierarchy named mtk-hierarchy using:
 - HTML
 - SCSS
 - Vanilla JavaScript
@@ -9,20 +9,20 @@ Create a reusable UI component named mtk-component using:
 - Material Design icons
 
 Rules:
-- The component is wrapped in a block element <mtk-component class="mtk-component">.
-- The root element uses .mtk-component.
-- All styles are scoped to .mtk-component.
+- The hierarchy is wrapped in a block element <mtk-hierarchy class="mtk-hierarchy">.
+- The root element uses .mtk-hierarchy.
+- All styles are scoped to .mtk-hierarchy.
 - No global styles or IDs.
 - publish click events using wc.publish
-- subscribe to all 4-mtk-component everns using wc.subscribe
+- subscribe to all 4-mtk-hierarchy everns using wc.subscribe
 
 Data:
-- The component is JSON driven.
-- Read config from window.app.component.
+- The hierarchy is JSON driven.
+- Read config from window.app.hierarchy.
 
 Behavior:
 - WAIT for element to be available inside DOM
-- Use one namespace only: window.MTKComponent.
+- Use one namespace only: window.MTKHierarchy.
 
 Restrictions:
 - No frameworks.
@@ -37,9 +37,19 @@ Accessibility:
 - Visible focus states.
 
 Output, Create exactly four files:
-- mtk-component.config.js (JSON FILE)
-- mtk-component.scss
-- mtk-component.html
-- mtk-component.js
+- mtk-hierarchy.config.js (JSON FILE)
+- mtk-hierarchy.scss
+- mtk-hierarchy.html
+- mtk-hierarchy.js
 - index.html
 
+mtk-hierarchy UI structure:
+- main screen has 2 sections, insude a bootstrap container
+  A lhs (.mtk-hierarchy-lhs)
+  A rhs (.mtk-hierarchy-rhs)
+
+  lhs:
+    - col-md-4
+
+  rhs:
+    - col-md-8
