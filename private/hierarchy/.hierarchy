@@ -66,9 +66,10 @@ mtk-hierarchy UI structure:
     "modules": [
         {
 	    "title": "Module title",
-	    "free": true,
+	    "access": true,
 	    "lessons": [
 		{
+		    "access": true,
 		    "title": "Lesson title",
 		    "resources": [
 			{
@@ -86,3 +87,4 @@ mtk-hierarchy UI structure:
   - initially all collapsed
   - resources are all links
   - clicking on links should wc.publish a message
+  - show disabled elements based on "access" variable in json
