@@ -84,12 +84,11 @@ mtk-hierarchy UI structure:
     ]
 }]
   - clicking on resource links should just publish a message and not navigate anywhere
-  - create 5 elemnts in config file
-    - and a random number of lessons from 2 to 6 and random "access" settings for lessons
+  - create 5 elemnts in config file and a random number of lessons from 2 to 6 and random "access" settings for lessons
   - generate a file/folder structure view with expand/collapse
   - initially all collapsed
   - resources are all links
   - clicking on links should wc.publish a message
   - show disabled elements based on "access" variable in json
   - use folder & file icons from material design (open/close) instead of chevron
-  - use cards for modules
+  - use cards for topmost element from config file
