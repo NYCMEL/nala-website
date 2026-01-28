@@ -46,8 +46,9 @@ Output, Create exactly four files:
 *** USE MATERIAL DESIGN styles and colors
 
 Create a video player
+  - should be a JS class
   - should have controls
   - should occupy entire parent
-  - Should accept a URL as argument
+  - Should accept a URL and a label as argument
   - display video and allow user to click play, maximize etc.
   - do not allow download
