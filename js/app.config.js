@@ -9,7 +9,6 @@ window.app = {
 	subscriptions: {
 	    {id:0, part:"Part-I"},
 	    {id:3, part:"Part-III"}
-
 	]
     }
 }
