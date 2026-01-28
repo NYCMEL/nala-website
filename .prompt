@@ -23,7 +23,6 @@ Data:
 Behavior:
 - WAIT for element to be available inside DOM
 - Use one namespace only: window.MTKComponent.
-- Support light and dark mode via CSS variables.
 
 Restrictions:
 - No frameworks.
@@ -44,3 +43,7 @@ Output, Create exactly four files:
 - mtk-component.js
 - index.html
 
+#######################################################
+# example:
+#    mtk-component has a group of 3 buttons 
+#######################################################
