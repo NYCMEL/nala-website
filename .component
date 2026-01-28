@@ -46,8 +46,9 @@ Output, Create exactly four files:
 #######################################################
 # example:
 #  
-#  mtk-component has a group of 3 buttons
-#   - primary
-#   - warning
-#   - danger
+#  about my mtk-component
+#   - it has a group of 3 buttons
+#     - primary
+#     - warning
+#     - danger
 #######################################################
