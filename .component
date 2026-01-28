@@ -16,10 +16,11 @@ Rules:
 - No global styles or IDs.
 - publish click events using wc.publish
 - subscribe to all 4-mtk-component everns using wc.subscribe
+- create a onMessage function to be passed to wc.subscribe function
 
 Data:
 - The component is JSON driven.
-- Read config from window.app.component.
+- any and all data must come from mtk-component.config.js file
 
 Behavior:
 - MUST WAIT for element to be available inside DOM
