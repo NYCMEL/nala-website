@@ -1,55 +1,67 @@
 window.app = window.app || {};
 
 window.app.hierarchy = [
-    {
-	title: "Course Alpha",
-	access: true,
-	modules: [
-	    {
-		title: "Module 1",
-		access: true,
-		lessons: [
-		    {
-			title: "Lesson 1",
-			access: true,
-			resources: [
-			    { description: "Intro Video", url: "https://vimeo.com/827172729" }
-			]
-		    },
-		    {
-			title: "Lesson 2",
-			access: false,
-			resources: [
-			    { description: "Slides", url: "https://example.com/slides" }
-			]
-		    }
-		]
-	    },
-	    {
-		title: "Module 2",
-		access: true,
-		lessons: [
-		    {
-			title: "Lesson A",
-			access: true,
-			resources: [
-			    { description: "Video", url: "https://vimeo.com/827172729" }
-			]
-		    },
-		    {
-			title: "Lesson B",
-			access: true,
-			resources: [
-			    { description: "Reference PDF", url: "https://example.com/pdf" }
-			]
-		    },
-		    {
-			title: "Lesson C",
-			access: false,
-			resources: []
-		    }
-		]
-	    }
-	]
-    },
+  {
+    title: "Material Design Fundamentals",
+    access: true,
+    modules: [
+      {
+        title: "Foundations",
+        access: true,
+        lessons: [
+          {
+            title: "Introduction",
+            access: true,
+            resources: [
+              {
+                description: "Intro Video",
+                url: "https://vimeo.com/827172729"
+              }
+            ]
+          },
+          {
+            title: "Design Principles",
+            access: false,
+            resources: [
+              {
+                description: "Principles PDF",
+                url: "https://example.com/principles"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        title: "Color and Typography",
+        access: true,
+        lessons: [
+          {
+            title: "Color System",
+            access: true,
+            resources: [
+              {
+                description: "Color Demo",
+                url: "https://example.com/colors"
+              }
+            ]
+          },
+          {
+            title: "Typography Scale",
+            access: true,
+            resources: [
+              {
+                description: "Typography Guide",
+                url: "https://example.com/type"
+              }
+            ]
+          },
+          {
+            title: "Accessibility",
+            access: false,
+            resources: []
+          }
+        ]
+      }
+    ]
+  }
 ];

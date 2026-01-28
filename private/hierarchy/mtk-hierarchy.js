@@ -1,49 +1,51 @@
 (function () {
-  const NAMESPACE = "MTKHierarchy";
+  const NS = "MTKHierarchy";
 
-  window[NAMESPACE] = {
+  window[NS] = {
     init() {
-      const root = document.querySelector("mtk-hierarchy");
-      if (!root || !window.app || !window.app.hierarchy) return;
+      const host = document.querySelector("mtk-hierarchy");
+      if (!host || !window.app || !window.app.hierarchy) return;
 
-      this.root = root;
-      this.lhs = root.querySelector(".mtk-hierarchy-lhs");
-      this.rhs = root.querySelector(".mtk-rhs-content");
+      this.host = host;
+      this.lhs = host.querySelector(".mtk-hierarchy-lhs");
+      this.rhs = host.querySelector(".mtk-rhs-content");
 
-      this.renderTree(window.app.hierarchy);
-      this.subscribeEvents();
+      this.render(window.app.hierarchy);
+      this.subscribe();
     },
 
-    subscribeEvents() {
-      wc.subscribe("mtk-hierarchy:resource:click", (data) => {
-        this.rhs.textContent = "Resource selected: " + data.description;
-      });
-
+    subscribe() {
+      wc.subscribe("mtk-hierarchy:init", () => {});
       wc.subscribe("mtk-hierarchy:folder:open", () => {});
       wc.subscribe("mtk-hierarchy:folder:close", () => {});
-      wc.subscribe("mtk-hierarchy:init", () => {});
+      wc.subscribe("mtk-hierarchy:resource:click", (data) => {
+        this.rhs.textContent = "Selected resource: " + data.description;
+      });
     },
 
-    renderTree(data) {
+    render(data) {
       const ul = document.createElement("ul");
       ul.className = "mtk-tree";
 
       data.forEach(course => {
-        ul.appendChild(this.buildNode(course, "course"));
+        const card = document.createElement("div");
+        card.className = "mtk-course-card";
+        card.appendChild(this.buildNode(course));
+        ul.appendChild(card);
       });
 
       this.lhs.appendChild(ul);
     },
 
-    buildNode(item, type) {
+    buildNode(item) {
       const li = document.createElement("li");
       li.className = "mtk-node";
 
-      const button = document.createElement("button");
-      button.className = "mtk-btn";
-      button.type = "button";
-      button.setAttribute("aria-expanded", "false");
-      button.setAttribute("aria-disabled", item.access ? "false" : "true");
+      const btn = document.createElement("button");
+      btn.className = "mtk-btn";
+      btn.type = "button";
+      btn.setAttribute("aria-expanded", "false");
+      btn.setAttribute("aria-disabled", item.access ? "false" : "true");
 
       const icon = document.createElement("span");
       icon.className = "material-icons mtk-icon";
@@ -52,62 +54,53 @@
       const label = document.createElement("span");
       label.textContent = item.title;
 
-      button.appendChild(icon);
-      button.appendChild(label);
-      li.appendChild(button);
+      btn.append(icon, label);
+      li.appendChild(btn);
 
       const children = document.createElement("ul");
       children.className = "mtk-children";
 
-      button.addEventListener("click", () => {
+      btn.addEventListener("click", () => {
         if (!item.access) return;
 
         const open = children.dataset.open === "true";
         children.dataset.open = open ? "false" : "true";
-        button.setAttribute("aria-expanded", String(!open));
+        btn.setAttribute("aria-expanded", String(!open));
         icon.textContent = open ? "folder" : "folder_open";
 
-        wc.publish(`mtk-hierarchy:folder:${open ? "close" : "open"}`, item);
+        wc.publish(
+          "mtk-hierarchy:folder:" + (open ? "close" : "open"),
+          item
+        );
       });
 
       if (item.modules) {
-        item.modules.forEach(m => {
-          const wrapper = document.createElement("li");
-          const card = document.createElement("div");
-          card.className = "mtk-module-card";
-          card.appendChild(this.buildNode(m, "module"));
-          wrapper.appendChild(card);
-          children.appendChild(wrapper);
-        });
+        item.modules.forEach(m => children.appendChild(this.buildNode(m)));
       }
 
       if (item.lessons) {
-        item.lessons.forEach(lesson => {
-          children.appendChild(this.buildNode(lesson, "lesson"));
-        });
+        item.lessons.forEach(l => children.appendChild(this.buildNode(l)));
       }
 
       if (item.resources) {
-        item.resources.forEach(res => {
+        item.resources.forEach(r => {
           const resLi = document.createElement("li");
           const resBtn = document.createElement("button");
 
           resBtn.className = "mtk-btn";
           resBtn.type = "button";
-          resBtn.setAttribute("aria-disabled", "false");
 
           const resIcon = document.createElement("span");
           resIcon.className = "material-icons mtk-icon";
           resIcon.textContent = "description";
 
           const resLabel = document.createElement("span");
-          resLabel.textContent = res.description;
+          resLabel.textContent = r.description;
 
-          resBtn.appendChild(resIcon);
-          resBtn.appendChild(resLabel);
+          resBtn.append(resIcon, resLabel);
 
           resBtn.addEventListener("click", () => {
-            wc.publish("mtk-hierarchy:resource:click", res);
+            wc.publish("mtk-hierarchy:resource:click", r);
           });
 
           resLi.appendChild(resBtn);
@@ -115,7 +108,7 @@
         });
       }
 
-      if (children.children.length > 0) {
+      if (children.children.length) {
         li.appendChild(children);
       }
 
@@ -126,7 +119,7 @@
   const wait = setInterval(() => {
     if (document.querySelector("mtk-hierarchy")) {
       clearInterval(wait);
-      window[NAMESPACE].init();
+      window[NS].init();
       wc.publish("mtk-hierarchy:init", {});
     }
   }, 50);

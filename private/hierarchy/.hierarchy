@@ -92,3 +92,4 @@ mtk-hierarchy UI structure:
   - show disabled elements based on "access" variable in json
   - use folder & file icons from material design (open/close) instead of chevron
   - use cards for topmost element from config file
+***  MUST USE MATERIAL DESIGN styles, colors, etc.
