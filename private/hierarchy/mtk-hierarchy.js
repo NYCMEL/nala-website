@@ -1,130 +1,132 @@
 (function () {
-  const NS = "MTKHierarchy";
+    const NS = "MTKHierarchy";
 
-  window[NS] = {
-    init() {
-      const host = document.querySelector("mtk-hierarchy");
-      if (!host || !window.app || !window.app.hierarchy) return;
+    window[NS] = {
+	init() {
+	    const host = document.querySelector("mtk-hierarchy");
+	    if (!host || !window.app || !window.app.hierarchy) return;
 
-      this.host = host;
-      this.lhs = host.querySelector(".mtk-hierarchy-lhs");
-      this.rhs = host.querySelector(".mtk-hierarchy-rhs");
+	    this.host = host;
+	    this.lhs = host.querySelector(".mtk-hierarchy-lhs");
+	    this.rhs = host.querySelector(".mtk-hierarchy-rhs");
 
-      this.render(window.app.hierarchy);
-      this.subscribe();
-    },
+	    this.render(window.app.hierarchy);
+	    this.subscribe();
+	},
 
-    subscribe() {
-      // subscribe to all four hierarchy events
-      wc.subscribe("mtk-hierarchy:init", () => {});
-      wc.subscribe("mtk-hierarchy:folder:open", (data) => {});
-      wc.subscribe("mtk-hierarchy:folder:close", (data) => {});
-      wc.subscribe("mtk-hierarchy:resource:click", (data) => {});
-    },
+	subscribe() {
+	    wc.subscribe("4-mtk-hierarchy:init", () => {});
+	    wc.subscribe("4-mtk-hierarchy:folder:open", () => {});
+	    wc.subscribe("4-mtk-hierarchy:folder:close", () => {});
+	    wc.subscribe("4-mtk-hierarchy:resource:click", () => {});
+	},
 
-    render(data) {
-      const ul = document.createElement("ul");
-      ul.className = "mtk-tree";
+	render(data) {
+	    const ul = document.createElement("ul");
+	    ul.className = "mtk-tree";
 
-      data.forEach(course => {
-        const card = document.createElement("div");
-        card.className = "mtk-course-card";
-        card.appendChild(this.buildNode(course, true));
-        ul.appendChild(card);
-      });
+	    data.forEach(course => {
+		const card = document.createElement("div");
+		card.className = "mtk-course-card";
+		card.appendChild(this.buildNode(course, true));
+		ul.appendChild(card);
+	    });
 
-      this.lhs.appendChild(ul);
-    },
+	    this.lhs.appendChild(ul);
+	},
 
-    buildNode(item, isCourse = false) {
-      const li = document.createElement("li");
-      li.className = "mtk-node";
+	buildNode(item, isCourse = false) {
+	    const li = document.createElement("li");
+	    li.className = "mtk-node";
 
-      const btn = document.createElement("button");
-      btn.className = "mtk-btn";
-      btn.type = "button";
-      btn.setAttribute("aria-expanded", "false");
-      btn.setAttribute("aria-disabled", item.access ? "false" : "true");
+	    const btn = document.createElement("button");
+	    btn.className = "mtk-btn";
+	    btn.type = "button";
+	    btn.setAttribute("aria-expanded", "false");
+	    btn.setAttribute("aria-disabled", item.access ? "false" : "true");
 
-      const icon = document.createElement("span");
-      icon.className = "material-icons mtk-icon";
-      icon.textContent = "folder";
+	    const icon = document.createElement("span");
+	    icon.className = "material-icons mtk-icon";
+	    icon.textContent = "folder"; // default closed icon
 
-      const label = document.createElement("span");
-      label.textContent = item.title;
+	    const label = document.createElement("span");
+	    label.textContent = item.title;
 
-      btn.append(icon, label);
-      li.appendChild(btn);
+	    btn.append(icon, label);
+	    li.appendChild(btn);
 
-      const children = document.createElement("ul");
-      children.className = "mtk-children";
+	    const children = document.createElement("ul");
+	    children.className = "mtk-children";
+	    children.dataset.open = "false";
 
-      btn.addEventListener("click", () => {
-        if (!item.access) return;
+	    // Toggle expand/collapse
+	    btn.addEventListener("click", () => {
+		if (!item.access) return;
 
-        const open = children.dataset.open === "true";
-        children.dataset.open = open ? "false" : "true";
-        btn.setAttribute("aria-expanded", String(!open));
-        icon.textContent = open ? "folder" : "folder_open";
+		const isOpen = children.dataset.open === "true";
+		children.dataset.open = !isOpen;
 
-        const eventName = "mtk-hierarchy:folder:" + (open ? "close" : "open");
-        wc.log(eventName, item);  // same arguments as publish
-        wc.publish(eventName, item);
-      });
+		btn.setAttribute("aria-expanded", String(!isOpen));
+		icon.textContent = !isOpen ? "folder_open" : "folder";
 
-      // Add modules
-      if (item.modules) {
-        item.modules.forEach(mod => children.appendChild(this.buildNode(mod)));
-      }
+		const eventName = "mtk-hierarchy:folder:" + (isOpen ? "close" : "open");
+		wc.log(eventName, item);
+		wc.publish(eventName, item);
+	    });
 
-      // Add lessons
-      if (item.lessons) {
-        item.lessons.forEach(lesson => children.appendChild(this.buildNode(lesson)));
-      }
+	    // Add modules
+	    if (item.modules) {
+		item.modules.forEach(mod => children.appendChild(this.buildNode(mod)));
+	    }
 
-      // Add resources
-      if (item.resources) {
-        item.resources.forEach(res => {
-          const resLi = document.createElement("li");
-          const resBtn = document.createElement("button");
-          resBtn.className = "mtk-btn";
-          resBtn.type = "button";
+	    // Add lessons
+	    if (item.lessons) {
+		item.lessons.forEach(lesson => children.appendChild(this.buildNode(lesson)));
+	    }
 
-          const resIcon = document.createElement("span");
-          resIcon.className = "material-icons mtk-icon";
-          resIcon.textContent = "description";
+	    // Add resources
+	    if (item.resources) {
+		item.resources.forEach(res => {
+		    const resLi = document.createElement("li");
+		    const resBtn = document.createElement("button");
+		    resBtn.className = "mtk-btn";
+		    resBtn.type = "button";
 
-          const resLabel = document.createElement("span");
-          resLabel.textContent = res.description;
+		    const resIcon = document.createElement("span");
+		    resIcon.className = "material-icons mtk-icon";
+		    resIcon.textContent = "description";
 
-          resBtn.append(resIcon, resLabel);
+		    const resLabel = document.createElement("span");
+		    resLabel.textContent = res.description;
 
-          resBtn.addEventListener("click", () => {
-            wc.log("mtk-hierarchy:resource:click", res); // same arguments as publish
-            wc.publish("mtk-hierarchy:resource:click", res);
-          });
+		    resBtn.append(resIcon, resLabel);
 
-          resLi.appendChild(resBtn);
-          children.appendChild(resLi);
-        });
-      }
+		    resBtn.addEventListener("click", () => {
+			wc.log("mtk-hierarchy:resource:click", res);
+			wc.publish("mtk-hierarchy:resource:click", res);
+		    });
 
-      if (children.children.length) {
-        li.appendChild(children);
-      }
+		    resLi.appendChild(resBtn);
+		    children.appendChild(resLi);
+		});
+	    }
 
-      return li;
-    }
-  };
+	    if (children.children.length) {
+		li.appendChild(children);
+	    }
 
-  // Wait for mtk-hierarchy element to exist
-  const wait = setInterval(() => {
-    const el = document.querySelector("mtk-hierarchy");
-    if (el) {
-      clearInterval(wait);
-      window[NS].init();
-      wc.log("mtk-hierarchy:init", {}); // same as publish
-      wc.publish("mtk-hierarchy:init", {});
-    }
-  }, 50);
+	    return li;
+	}
+    };
+
+    // Wait for mtk-hierarchy element to exist
+    const wait = setInterval(() => {
+	const el = document.querySelector("mtk-hierarchy");
+	if (el) {
+	    clearInterval(wait);
+	    window[NS].init();
+	    wc.log("mtk-hierarchy:init", {});
+	    wc.publish("mtk-hierarchy:init", {});
+	}
+    }, 50);
 })();
