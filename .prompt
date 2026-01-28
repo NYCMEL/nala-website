@@ -13,13 +13,14 @@ Rules:
 - The root element uses .mtk-component.
 - All styles are scoped to .mtk-component.
 - No global styles or IDs.
+- all click events should general wc.publish event
 
 Data:
 - The component is JSON driven.
 - Read config from window.app.component.
 
 Behavior:
-- Initialize on DOMContentLoaded.
+- WAIT for element to be available inside DOM
 - Use one namespace only: window.MTKComponent.
 - Support light and dark mode via CSS variables.
 
