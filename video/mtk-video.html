@@ -1,5 +1,14 @@
-<mtk-video class="mtk-video">
-    <div class="mtk-video-container">
-	<video title="Lesson I Video" class="mtk-video-player" tabindex="0" controls controlsList="nodownload"></video>
-    </div>
-</mtk-video>
+<div class="container" style="height:500px;">
+    <mtk-video class="mtk-video"></mtk-video>
+</div>
+
+<script src="wc.js"></script>
+<script src="mtk-video.js"></script>
+
+<script>
+ // Load video dynamically
+ window.MTKVideoInstance.load(
+     "https://www.w3schools.com/html/mov_bbb.mp4",
+     "Big Buck Bunny - Sample Video"
+ );
+</script>
