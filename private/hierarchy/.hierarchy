@@ -92,3 +92,4 @@ mtk-hierarchy UI structure:
   - clicking on links should wc.publish a message
   - show disabled elements based on "access" variable in json
   - use folder & file icons from material design (open/close) instead of chevron
+  - use cards for modules
