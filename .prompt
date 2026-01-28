@@ -13,7 +13,8 @@ Rules:
 - The root element uses .mtk-component.
 - All styles are scoped to .mtk-component.
 - No global styles or IDs.
-- all click events should general wc.publish event
+- publish click events using wc.publish
+- subscribe to all mtk-component everns using wc.subscribe
 
 Data:
 - The component is JSON driven.
