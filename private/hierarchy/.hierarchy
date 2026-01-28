@@ -83,7 +83,7 @@ mtk-hierarchy UI structure:
         }
     ]
 }]
-  - create 5 elemnts in config file
+  - create 5 elemnts in config file and a random number of lessons from 1 to 5
   - generate a file/folder structure view with expand/collapse
   - initially all collapsed
   - resources are all links
