@@ -19,7 +19,7 @@
 	switch(msg) 
 	{
 	    case "mtk-hierarchy:resource:click":
-	    alert("A")
+	    wc.log(data);
 	    break;
 
 	    case "header.menu.click":
