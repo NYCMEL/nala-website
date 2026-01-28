@@ -476,7 +476,13 @@ wc.fetch = function(url) {
 }));
 
 ////////////////////////////////////////////////////////////////////////////////////
-//// REPLACED BY PUBSUB
+//// Subscriber: 
+//// PubSub.subscribe("MEL", function(msg, data) {
+////    wc.log(">>>>>>", msg, data);
+//// });
+//// 
+//// Publisher:
+//// wc.publish("MEL", {id: 1234, name: "Mel"})
 ////////////////////////////////////////////////////////////////////////////////////
 window.publish = PubSub.publish;
 wc.publish     = PubSub.publish;
