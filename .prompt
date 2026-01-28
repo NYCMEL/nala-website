@@ -1,24 +1,43 @@
-FORGET ALL YOU KNOW ABOUT MTK-component component
-FORGET ALL PREVIOUS CONTEXT.
+FORGET ALL PREVIOUS CONTEXT for MTK-component
 
-I am a senior frontend engineer and UI architect.
-I want to create a new component with simple scss, html and vanilla javascript
+Create a reusable UI component named MTK-component using:
+- HTML
+- SCSS
+- Vanilla JavaScript
+- Bootstrap 5 (layout only)
+- Modern Material Design
+- Material Design icons
 
-MY FRAMEWORK:
- - modern Material Design
- - Bootstrap-5 
+Rules:
+- The component is wrapped in <MTK-component class="mtk-component">.
+- The root element uses .mtk-component.
+- All styles are scoped to .mtk-component.
+- No global styles or IDs.
 
-Remember this component name as MTK-component.
+Data:
+- The component is JSON driven.
+- Read config from window.app.component.
 
-MTK-component is enclosed in a <MTK-component> tag
-MTK-component scss is enclosed in a .mtk-component class
+Behavior:
+- Initialize on DOMContentLoaded.
+- Use one namespace only: window.MTKComponent.
+- Support light and dark mode via CSS variables.
 
-MTK-component is JSON driven from windows.app.component variable
-MTK-component can uses dark or light mode
+Restrictions:
+- No frameworks.
+- No jQuery.
+- No Bootstrap JavaScript.
+- No external libraries.
+- ADA compliant CODE
 
-you should create the folllowing files:
- - scss
- - html
- - vanilla js
- - minimal html
+Accessibility:
+- Use semantic HTML.
+- Keyboard accessible.
+- Visible focus states.
+
+Output, Create exactly four files:
+- MTK-component.scss
+- MTK-component.html
+- MTK-component.js
+- index.html
 
