@@ -2,7 +2,8 @@
     const topics = [
 	"header.menu.click",
 	"header.button.click",
-	"MTK-parts.click"
+	"MTK-parts.click",
+	"mtk-hierarchy:resource:click"
     ];
 
     topics.forEach(topic => {
@@ -17,6 +18,10 @@
 	
 	switch(msg) 
 	{
+	    case "mtk-hierarchy:resource:click":
+	    alert("A")
+	    break;
+
 	    case "header.menu.click":
 	    MTKPager.show(data.id);
 	    break;
