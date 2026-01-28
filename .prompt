@@ -9,7 +9,7 @@ Create a reusable UI component named mtk-component using:
 - Material Design icons
 
 Rules:
-- The component is wrapped in <mtk-component class="mtk-component">.
+- The component is wrapped in a block element <mtk-component class="mtk-component">.
 - The root element uses .mtk-component.
 - All styles are scoped to .mtk-component.
 - No global styles or IDs.
