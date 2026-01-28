@@ -97,19 +97,19 @@ wc.timeout = function(func, wait, times) {
 /////////////////////////////////////////////////////////////////////////////////
 //// wc.fetch("https://nala-test.com/api/curriculum.json");
 /////////////////////////////////////////////////////////////////////////////////
-wc.fetch = function(url) {
-    wc.log("_wc: fetch", url);
-
-    fetch(url).then(response => {
-	if (!response.ok) {
-	    throw new Error("HTTP error " + response.status);
-	} return response.json();
-    }).then(data => {
-	wc.log("Curriculum JSON:", data);
-    }).catch(error => {
-	wc.error("Fetch failed:", error);
-    });
-}
+//wc.fetch = function(url) {
+//    wc.log("_wc: fetch", url);
+//
+//    fetch(url).then(response => {
+//	if (!response.ok) {
+//	    throw new Error("HTTP error " + response.status);
+//	} return response.json();
+//    }).then(data => {
+//	wc.log("Curriculum JSON:", data);
+//    }).catch(error => {
+//	wc.error("Fetch failed:", error);
+//    });
+//}
 
 /////////////////////////////////////////////////////////////////////////////////
 //// PubSub
