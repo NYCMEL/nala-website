@@ -68,7 +68,7 @@
 		btn.setAttribute("aria-expanded", String(!open));
 		icon.textContent = open ? "folder" : "folder_open";
 
-		console.log("mtk-hierarchy:folder:" + (open ? "close" : "open"), item);
+		wc.log("mtk-hierarchy:folder:" + (open ? "close" : "open"), item);
 		wc.publish("mtk-hierarchy:folder:" + (open ? "close" : "open"), item);
 	    });
 
@@ -98,7 +98,7 @@
 		    resBtn.append(resIcon, resLabel);
 
 		    resBtn.addEventListener("click", () => {
-			console.log("mtk-hierarchy:resource:click", r)
+			wc.log("mtk-hierarchy:resource:click", r)
 			wc.publish("mtk-hierarchy:resource:click", r);
 		    });
 
@@ -120,7 +120,7 @@
 	    clearInterval(wait);
 	    window[NS].init();
 
-	    console.log("mtk-hierarchy:init", {})
+	    wc.log("mtk-hierarchy:init", {})
 	    wc.publish("mtk-hierarchy:init", {});
 	}
     }, 50);
