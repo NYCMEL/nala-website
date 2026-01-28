@@ -6,7 +6,7 @@
     ];
 
     topics.forEach(topic => {
-	wc.log("_febe:", topic);
+	wc.log("_febe: subscribed to", topic);
 	
 	PubSub.subscribe(topic, onMessage);
     });
