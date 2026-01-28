@@ -1,10 +1,52 @@
-i want to create a modern video player using material design and bootstrap 
-i want you to remember this component as _video
+FORGET ALL PREVIOUS CONTEXT for mtk-video
 
-_video has a title and html body; same as a card
-_video can have 2 sides. Front and back with similar content
-_video is fully responsive
+Create a reusable UI video named mtk-video using:
+- HTML
+- SCSS
+- Vanilla JavaScript
+- Bootstrap 5 (layout only)
+- Modern Material Design
+- Material Design icons
 
-all content comes from a _video.data.js file and consumed as variable window.app.video
+Rules:
+- The video is wrapped in a block element <mtk-video class="mtk-video">.
+- The root element uses .mtk-video.
+- All styles are scoped to .mtk-video.
+- No global styles or IDs.
+- publish click events using wc.publish
+- subscribe to all 4-mtk-video everns using wc.subscribe
 
-create html, css, scss and vanilla js for _video
+Data:
+- The video is JSON driven.
+- Read config from window.app.video.
+
+Behavior:
+- WAIT for element to be available inside DOM
+- Use one namespace only: window.MTKVideo.
+
+Restrictions:
+- No frameworks.
+- No jQuery.
+- No Bootstrap JavaScript.
+- No external libraries.
+- ADA compliant CODE
+
+Accessibility:
+- Use semantic HTML.
+- Keyboard accessible.
+- Visible focus states.
+
+Output, Create exactly four files:
+- mtk-video.config.js (JSON FILE)
+- mtk-video.scss
+- mtk-video.html
+- mtk-video.js
+- index.html
+
+*** USE MATERIAL DESIGN styles and colors
+
+Create a video player
+  - should have controls
+  - should occupy entire parent
+  - Should accept a URL as argument
+  - display video and allow user to click play, maximize etc.
