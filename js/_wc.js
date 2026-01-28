@@ -111,13 +111,9 @@ wc.fetch = function(url) {
     });
 }
 
-/**
- * Copyright (c) 2010,2011,2012,2013,2014 Morgan Roderick http://roderick.dk
- * License: MIT - http://mrgnrdrck.mit-license.org
- *
- * https://github.com/mroderick/PubSubJS
- */
-
+/////////////////////////////////////////////////////////////////////////////////
+//// PubSub
+/////////////////////////////////////////////////////////////////////////////////
 (function (root, factory){
     'use strict';
 
@@ -488,7 +484,7 @@ wc.publishSync = PubSub.publishSync;
 wc.subscribe   = PubSub.subscribe;
 
 /////////////////////////////////////////////////////////////////////////////////
-//// INCLUDE HTML 
+//// <wc-include href="..." />
 /////////////////////////////////////////////////////////////////////////////////
 class Include extends HTMLElement {
     constructor() { super(); }
