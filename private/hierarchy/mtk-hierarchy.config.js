@@ -22,46 +22,29 @@ function randomLessons(min = 2, max = 5) {
   return lessons;
 }
 
-window.app.hierarchy = [
-  {
-    title: "Material Design Fundamentals",
+function generateModules() {
+  const moduleNames = [
+    "Foundations",
+    "Color and Typography",
+    "Components",
+    "Layouts",
+    "Navigation",
+    "Motion",
+    "Theming"
+  ];
+  return moduleNames.map(name => ({
+    title: name,
     access: true,
-    modules: [
-      {
-        title: "Foundations",
-        access: true,
-        lessons: randomLessons()
-      },
-      {
-        title: "Color and Typography",
-        access: true,
-        lessons: randomLessons()
-      },
-      {
-        title: "Components",
-        access: true,
-        lessons: randomLessons()
-      },
-      {
-        title: "Layouts",
-        access: true,
-        lessons: randomLessons()
-      },
-      {
-        title: "Navigation",
-        access: true,
-        lessons: randomLessons()
-      },
-      {
-        title: "Motion",
-        access: true,
-        lessons: randomLessons()
-      },
-      {
-        title: "Theming",
-        access: true,
-        lessons: randomLessons()
-      }
-    ]
-  }
-];
+    lessons: randomLessons()
+  }));
+}
+
+// Generate 5 courses
+window.app.hierarchy = [];
+for (let c = 1; c <= 5; c++) {
+  window.app.hierarchy.push({
+    title: `Course ${c} - Material Design`,
+    access: true,
+    modules: generateModules()
+  });
+}
