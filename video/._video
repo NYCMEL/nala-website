@@ -52,3 +52,4 @@ Create a video player
   - Should accept a URL and a label as argument
   - display video and allow user to click play, maximize etc.
   - do not allow download
+  
