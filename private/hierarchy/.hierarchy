@@ -49,10 +49,13 @@ mtk-hierarchy UI structure:
   A lhs (.mtk-hierarchy-lhs)
   A rhs (.mtk-hierarchy-rhs)
 
+  lhs and rhs height should occupy parent element's height
+  lhs and rhs should have overflow auto (scrollable)
+
   rhs:
     - col-md-8 (add a border)
     - can deisplay a video or from link
-    - display a set of images from link
+    - display a set of images from link, one below another
 
   lhs:
     - col-md-4 (add a border)
