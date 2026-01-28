@@ -26,15 +26,14 @@ Behavior:
 
 Restrictions:
 - No frameworks.
-- No jQuery.
-- No Bootstrap JavaScript.
+- No Bootstrap.
 - No external libraries.
-- ADA compliant CODE
 
 Accessibility:
 - Use semantic HTML.
 - Keyboard accessible.
 - Visible focus states.
+- ADA compliant
 
 Output, Create exactly four files:
 - mtk-component.config.js (JSON FILE)
