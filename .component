@@ -35,7 +35,7 @@ Accessibility:
 - Visible focus states.
 - ADA compliant
 
-Output, Create exactly four files:
+Output. Create exactly these files:
 - mtk-component.config.js (JSON FILE)
 - mtk-component.scss
 - mtk-component.html
