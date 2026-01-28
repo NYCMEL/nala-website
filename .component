@@ -22,8 +22,7 @@ Data:
 - Read config from window.app.component.
 
 Behavior:
-- WAIT for element to be available inside DOM
-- Use one namespace only: window.MTKComponent.
+- MUST WAIT for element to be available inside DOM
 
 Restrictions:
 - No frameworks.
