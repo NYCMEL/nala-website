@@ -3,16 +3,16 @@
 
   window.MTKHierarchy = {
     init() {
-      const waitForDom = () => {
+      const waitForElement = () => {
         this.root = document.querySelector("mtk-hierarchy.mtk-hierarchy");
         if (!this.root) {
-          requestAnimationFrame(waitForDom);
+          requestAnimationFrame(waitForElement);
           return;
         }
 
         this.config = window.app && window.app.hierarchy;
         if (!this.config) {
-          wc.publish("mtk-hierarchy:error", { message: "Missing config" });
+          wc.publish("mtk-hierarchy:error", { message: "Config missing" });
           return;
         }
 
@@ -25,7 +25,7 @@
         wc.publish(this.config.events.init, {});
       };
 
-      waitForDom();
+      waitForElement();
     },
 
     subscribe() {
@@ -35,12 +35,12 @@
     },
 
     render() {
-      this.config.courses.forEach((course) => {
-        this.tree.appendChild(this.buildNode(course, "course"));
+      this.config.courses.forEach(course => {
+        this.tree.appendChild(this.buildNode(course, "folder"));
       });
     },
 
-    buildNode(item, type) {
+    buildNode(item, iconType) {
       const li = document.createElement("li");
       li.className = "mtk-node";
       li.setAttribute("role", "treeitem");
@@ -48,13 +48,20 @@
 
       const btn = document.createElement("button");
       btn.className = "mtk-toggle";
-      btn.innerHTML = `<span class="material-icons" aria-hidden="true">chevron_right</span>${item.title}`;
       btn.setAttribute("aria-disabled", String(!item.access));
+
+      const icon = document.createElement("span");
+      icon.className = "material-icons";
+      icon.textContent = "folder";
+
+      btn.appendChild(icon);
+      btn.appendChild(document.createTextNode(item.title));
 
       btn.addEventListener("click", () => {
         if (!item.access) return;
         const expanded = li.getAttribute("aria-expanded") === "true";
         li.setAttribute("aria-expanded", String(!expanded));
+        icon.textContent = expanded ? "folder" : "folder_open";
         wc.publish(this.config.events.toggle, { title: item.title, expanded: !expanded });
       });
 
@@ -66,11 +73,16 @@
         ul.className = "mtk-children";
         ul.setAttribute("role", "group");
 
-        children.forEach((child) => {
+        children.forEach(child => {
           if (child.url) {
             ul.appendChild(this.buildResource(child));
+          } else if (child.lessons) {
+            const card = document.createElement("div");
+            card.className = "mtk-module-card";
+            card.appendChild(this.buildNode(child, "folder"));
+            ul.appendChild(card);
           } else {
-            ul.appendChild(this.buildNode(child));
+            ul.appendChild(this.buildNode(child, "file"));
           }
         });
 
@@ -84,16 +96,18 @@
       const li = document.createElement("li");
       li.className = "mtk-node";
 
-      const link = document.createElement("a");
+      const link = document.createElement("div");
       link.className = "mtk-resource";
-      link.textContent = resource.description;
-      link.href = resource.url;
-      link.target = "_blank";
-      link.rel = "noopener";
-      link.setAttribute("aria-disabled", String(!resource.access));
+      link.setAttribute("aria-disabled", "false");
+
+      const icon = document.createElement("span");
+      icon.className = "material-icons";
+      icon.textContent = "insert_drive_file";
+
+      link.appendChild(icon);
+      link.appendChild(document.createTextNode(resource.description));
 
       link.addEventListener("click", () => {
-        if (!resource.access) return;
         wc.publish(this.config.events.resourceClick, resource);
       });
 
