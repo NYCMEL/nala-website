@@ -14,12 +14,12 @@
 
     // DEFINE ALL ACTIONS FOR A TOPIC
     function onMessage(msg, data) {
-	wc.log("_febe: onMessage", msg, data.id);
+	wc.log("_febe: onMessage", msg, data);
 	
 	switch(msg) 
 	{
 	    case "mtk-hierarchy:resource:click":
-	    wc.log(data);
+	    wc.log("_febe >>>>>>", msg, data);
 	    break;
 
 	    case "header.menu.click":
