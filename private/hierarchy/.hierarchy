@@ -44,12 +44,16 @@ Output, Create exactly four files:
 - index.html
 
 mtk-hierarchy UI structure:
+- Any and all border-radius should have a max value of 4px
 - main screen has 2 sections, insude a bootstrap container
   A lhs (.mtk-hierarchy-lhs)
   A rhs (.mtk-hierarchy-rhs)
 
-  lhs:
-    - col-md-4
-
   rhs:
-    - col-md-8
+    - col-md-8 (add a border)
+    - can deisplay a video or from link
+    - display a set of images from link
+
+  lhs:
+    - col-md-4 (add a border)
+
