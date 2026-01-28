@@ -44,6 +44,7 @@ Output, Create exactly four files:
 - index.html
 
 mtk-hierarchy UI structure:
+- use nice material design elements
 - Any and all border-radius should have a max value of 4px
 - main screen has 2 sections, insude a bootstrap container
   A lhs (.mtk-hierarchy-lhs)
