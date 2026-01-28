@@ -3,38 +3,115 @@ window.app = window.app || {};
 window.app.hierarchy = {
   events: {
     init: "mtk-hierarchy:init",
-    select: "mtk-hierarchy:select",
-    contentLoaded: "mtk-hierarchy:content-loaded",
+    toggle: "mtk-hierarchy:toggle",
+    resourceClick: "mtk-hierarchy:resource-click",
     error: "mtk-hierarchy:error"
   },
-  items: [
+  courses: [
     {
-      label: "Introduction",
-      icon: "info",
-      content: {
-        video: "https://www.w3schools.com/html/mov_bbb.mp4",
-        images: [
-          "https://via.placeholder.com/800x400",
-          "https://via.placeholder.com/800x300"
-        ]
-      }
+      title: "Course Alpha",
+      access: true,
+      modules: [
+        {
+          title: "Module 1",
+          free: true,
+          lessons: [
+            {
+              title: "Lesson 1",
+              resources: [
+                {
+                  description: "Intro Video",
+                  url: "https://vimeo.com/827172729"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
-      label: "Architecture",
-      icon: "account_tree",
-      content: {
-        images: [
-          "https://via.placeholder.com/800x500",
-          "https://via.placeholder.com/800x350"
-        ]
-      }
+      title: "Course Beta",
+      access: true,
+      modules: [
+        {
+          title: "Module A",
+          free: true,
+          lessons: [
+            {
+              title: "Lesson A1",
+              resources: [
+                {
+                  description: "Overview Video",
+                  url: "https://vimeo.com/827172729"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
-      label: "Implementation",
-      icon: "code",
-      content: {
-        video: "https://www.w3schools.com/html/movie.mp4"
-      }
+      title: "Course Gamma",
+      access: true,
+      modules: [
+        {
+          title: "Module X",
+          free: true,
+          lessons: [
+            {
+              title: "Lesson X1",
+              resources: [
+                {
+                  description: "Walkthrough",
+                  url: "https://vimeo.com/827172729"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      title: "Course Delta",
+      access: true,
+      modules: [
+        {
+          title: "Module D",
+          free: true,
+          lessons: [
+            {
+              title: "Lesson D1",
+              resources: [
+                {
+                  description: "Demo Video",
+                  url: "https://vimeo.com/827172729"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      title: "Course Epsilon",
+      access: true,
+      modules: [
+        {
+          title: "Module E",
+          free: true,
+          lessons: [
+            {
+              title: "Lesson E1",
+              resources: [
+                {
+                  description: "Tutorial",
+                  url: "https://vimeo.com/827172729"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 };

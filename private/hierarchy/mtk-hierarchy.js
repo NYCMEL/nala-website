@@ -1,95 +1,107 @@
 (function () {
-    if (window.MTKHierarchy) return;
+  if (window.MTKHierarchy) return;
 
-    window.MTKHierarchy = {
-	init() {
-	    const waitForElement = () => {
-		const root = document.querySelector("mtk-hierarchy.mtk-hierarchy");
-		if (!root) {
-		    requestAnimationFrame(waitForElement);
-		    return;
-		}
-		this.root = root;
-		this.config = window.app && window.app.hierarchy;
-		if (!this.config) {
-		    wc.publish("mtk-hierarchy:error", { message: "Missing config" });
-		    return;
-		}
-		this.bindEvents();
-		this.render();
-		wc.publish(this.config.events.init, {});
-	    };
+  window.MTKHierarchy = {
+    init() {
+      const wait = () => {
+        this.root = document.querySelector("mtk-hierarchy.mtk-hierarchy");
+        if (!this.root) {
+          requestAnimationFrame(wait);
+          return;
+        }
 
-	    waitForElement();
-	},
+        this.config = window.app && window.app.hierarchy;
+        if (!this.config) {
+          wc.publish("mtk-hierarchy:error", { message: "Missing hierarchy config" });
+          return;
+        }
 
-	bindEvents() {
-	    const events = this.config.events;
-	    Object.values(events).forEach((eventName) => {
-		wc.subscribe(eventName, () => {});
-	    });
-	},
+        this.tree = this.root.querySelector(".mtk-tree");
+        this.viewer = this.root.querySelector(".mtk-hierarchy-rhs");
 
-	render() {
-	    this.list = this.root.querySelector("[role='listbox']");
-	    this.content = this.root.querySelector(".mtk-hierarchy-content");
+        this.subscribe();
+        this.render();
 
-	    this.config.items.forEach((item, index) => {
-		const li = document.createElement("li");
+        wc.publish(this.config.events.init, {});
+      };
 
-		const button = document.createElement("button");
-		button.type = "button";
-		button.className = "mtk-hierarchy-item";
-		button.setAttribute("role", "option");
-		button.setAttribute("aria-selected", "false");
-		button.tabIndex = 0;
+      wait();
+    },
 
-		button.innerHTML = `
-          <span class="material-icons" aria-hidden="true">${item.icon}</span>
-          <span>${item.label}</span>
-        `;
+    subscribe() {
+      Object.values(this.config.events).forEach((event) => {
+        wc.subscribe(event, () => {});
+      });
+    },
 
-		button.addEventListener("click", () => this.selectItem(index, button));
-		button.addEventListener("keydown", (e) => {
-		    if (e.key === "Enter" || e.key === " ") {
-			e.preventDefault();
-			this.selectItem(index, button);
-		    }
-		});
+    render() {
+      this.config.courses.forEach((course) => {
+        this.tree.appendChild(this.buildCourse(course));
+      });
+    },
 
-		li.appendChild(button);
-		this.list.appendChild(li);
-	    });
-	},
+    buildCourse(course) {
+      return this.buildNode(course.title, course.modules, "course");
+    },
 
-	selectItem(index, button) {
-	    const buttons = this.root.querySelectorAll(".mtk-hierarchy-item");
-	    buttons.forEach((btn) => btn.setAttribute("aria-selected", "false"));
-	    button.setAttribute("aria-selected", "true");
+    buildNode(title, children, type) {
+      const li = document.createElement("li");
+      li.className = "mtk-node";
+      li.setAttribute("role", "treeitem");
+      li.setAttribute("aria-expanded", "false");
 
-	    const item = this.config.items[index];
-	    this.content.innerHTML = "";
+      const btn = document.createElement("button");
+      btn.className = "mtk-toggle";
+      btn.innerHTML = `<span class="material-icons" aria-hidden="true">chevron_right</span>${title}`;
 
-	    if (item.content.video) {
-		const video = document.createElement("video");
-		video.controls = true;
-		video.src = item.content.video;
-		this.content.appendChild(video);
-	    }
+      btn.addEventListener("click", () => {
+        const expanded = li.getAttribute("aria-expanded") === "true";
+        li.setAttribute("aria-expanded", String(!expanded));
+        wc.publish(this.config.events.toggle, { title, expanded: !expanded });
+      });
 
-	    if (Array.isArray(item.content.images)) {
-		item.content.images.forEach((src) => {
-		    const img = document.createElement("img");
-		    img.src = src;
-		    img.alt = item.label;
-		    this.content.appendChild(img);
-		});
-	    }
+      li.appendChild(btn);
 
-	    wc.publish(this.config.events.select, { index, item });
-	    wc.publish(this.config.events.contentLoaded, { index });
-	}
-    };
+      if (children) {
+        const ul = document.createElement("ul");
+        ul.className = "mtk-children";
+        ul.setAttribute("role", "group");
 
-    window.MTKHierarchy.init();
+        children.forEach((child) => {
+          if (child.lessons) {
+            ul.appendChild(this.buildNode(child.title, child.lessons, "module"));
+          } else if (child.resources) {
+            ul.appendChild(this.buildNode(child.title, child.resources, "lesson"));
+          } else if (child.url) {
+            ul.appendChild(this.buildResource(child));
+          }
+        });
+
+        li.appendChild(ul);
+      }
+
+      return li;
+    },
+
+    buildResource(resource) {
+      const li = document.createElement("li");
+      li.className = "mtk-node";
+
+      const link = document.createElement("a");
+      link.href = resource.url;
+      link.className = "mtk-resource";
+      link.target = "_blank";
+      link.rel = "noopener";
+      link.textContent = resource.description;
+
+      link.addEventListener("click", () => {
+        wc.publish(this.config.events.resourceClick, resource);
+      });
+
+      li.appendChild(link);
+      return li;
+    }
+  };
+
+  window.MTKHierarchy.init();
 })();
