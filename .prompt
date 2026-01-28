@@ -14,7 +14,7 @@ Rules:
 - All styles are scoped to .mtk-component.
 - No global styles or IDs.
 - publish click events using wc.publish
-- subscribe to all mtk-component everns using wc.subscribe
+- subscribe to all 4-mtk-component everns using wc.subscribe
 
 Data:
 - The component is JSON driven.
