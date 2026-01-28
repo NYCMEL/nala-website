@@ -97,21 +97,21 @@ wc.timeout = function(func, wait, times) {
 /////////////////////////////////////////////////////////////////////////////////
 //// wc.fetcher("url-2-fetch");
 /////////////////////////////////////////////////////////////////////////////////
-wc.fetcher = function(url) {
-   wc.log("wc.fetcher", url);
-
-    //alert(url)
-
-   fetch(url).then(response => {
-	if (!response.ok) {
-	    throw new Error("HTTP error " + response.status);
-	} return response.json();
-   }).then(data => {
-	wc.log("Curriculum JSON:", data);
-   }).catch(error => {
-	wc.error("Fetch failed:", error);
-   });
-}
+// wc.fetcher = function(url) {
+//    wc.log("wc.fetcher", url);
+//
+//     //alert(url)
+//
+//    fetch(url).then(response => {
+// 	if (!response.ok) {
+// 	    throw new Error("HTTP error " + response.status);
+// 	} return response.json();
+//    }).then(data => {
+// 	wc.log("Curriculum JSON:", data);
+//    }).catch(error => {
+// 	wc.error("Fetch failed:", error);
+//    });
+// }
 
 /////////////////////////////////////////////////////////////////////////////////
 //// PubSub
