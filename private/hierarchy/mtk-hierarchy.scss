@@ -25,6 +25,7 @@
   .mtk-tree {
     list-style: none;
     padding-left: 0;
+    margin: 0;
   }
 
   .mtk-node {
@@ -36,16 +37,21 @@
     align-items: center;
     gap: 0.25rem;
     width: 100%;
+    padding: 0.25rem 0.5rem;
     background: none;
     border: none;
-    text-align: left;
-    padding: 0.25rem 0.5rem;
     border-radius: 4px;
     cursor: pointer;
+    text-align: left;
   }
 
   .mtk-toggle:hover {
     background-color: #e3f2fd;
+  }
+
+  .mtk-toggle[aria-disabled="true"] {
+    color: #9e9e9e;
+    cursor: not-allowed;
   }
 
   .mtk-children {
@@ -67,6 +73,11 @@
 
   .mtk-resource:hover {
     background-color: #e3f2fd;
+  }
+
+  .mtk-resource[aria-disabled="true"] {
+    color: #9e9e9e;
+    pointer-events: none;
   }
 
   .mtk-hierarchy-rhs video,
