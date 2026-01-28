@@ -20,7 +20,7 @@ window.app.hierarchy = [
 		    },
 		    {
 			"title": "Lesson 2",
-			"access": true,
+			"access": false,
 			"resources": [
 			    {
 				"description": "Resource 2",
@@ -88,7 +88,7 @@ window.app.hierarchy = [
 	    },
 	    {
 		"title": "Components",
-		"access": true,
+		"access": false,
 		"lessons": [
 		    {
 			"title": "Lesson 1",
@@ -114,7 +114,7 @@ window.app.hierarchy = [
 	    },
 	    {
 		"title": "Layouts",
-		"access": true,
+		"access": false,
 		"lessons": [
 		    {
 			"title": "Lesson 1",
@@ -150,7 +150,7 @@ window.app.hierarchy = [
 	    },
 	    {
 		"title": "Navigation",
-		"access": true,
+		"access": false,
 		"lessons": [
 		    {
 			"title": "Lesson 1",
@@ -176,7 +176,7 @@ window.app.hierarchy = [
 	    },
 	    {
 		"title": "Motion",
-		"access": true,
+		"access": false,
 		"lessons": [
 		    {
 			"title": "Lesson 1",
@@ -222,7 +222,7 @@ window.app.hierarchy = [
 	    },
 	    {
 		"title": "Theming",
-		"access": true,
+		"access": false,
 		"lessons": [
 		    {
 			"title": "Lesson 1",
