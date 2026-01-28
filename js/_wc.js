@@ -539,3 +539,47 @@ class Include extends HTMLElement {
 }
 
 window.customElements.define('wc-include', Include);
+
+/////////////////////////////////////////////////////////////////////////////////
+//// LOADING CODE
+/////////////////////////////////////////////////////////////////////////////////
+window.tkloading = {};
+
+/////////////////////////////////////////////////////////////////////////
+//// tkloading.show('#xx')
+/////////////////////////////////////////////////////////////////////////////
+tkloading.show = function(ele = "body", img = null) {
+    wc.group("tkloading.show:", ele);
+    
+    $(ele).css("position","relative");
+    $(ele).append("<div class='tkloading'></div>");
+    
+    if (img) {
+	$(".tkloading").css({
+	    "background-image": `url(${img})`,
+	    "background-repeat": "no-repeat"
+	});
+    }
+
+    if (ele == "body") {
+	$(ele + " .tkloading").css("position", "fixed");
+    } else {
+	$(ele + " .tkloading").css("position", "absolute");
+    }
+    
+    $(ele + " .tkloading").show();
+
+    wc.groupEnd();
+};
+
+/////////////////////////////////////////////////////////////////////////
+//// tkloading.hide('#xx')
+/////////////////////////////////////////////////////////////////////////////
+tkloading.hide = function(ele = "body") {
+    wc.group("tkloading.hide:", ele);
+
+    $(ele + " .tkloading").remove();
+
+    wc.groupEnd();
+};
+
