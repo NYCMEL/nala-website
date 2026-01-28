@@ -1,50 +1,1513 @@
-window.app = window.app || {};
-
-function randomBool() {
-  return Math.random() < 0.7; // ~70% chance access true
-}
-
-function randomLessons(min = 2, max = 5) {
-  const count = Math.floor(Math.random() * (max - min + 1)) + min;
-  const lessons = [];
-  for (let i = 1; i <= count; i++) {
-    lessons.push({
-      title: `Lesson ${i}`,
-      access: randomBool(),
-      resources: [
-        {
-          description: `Resource ${i}`,
-          url: `https://example.com/resource-${i}`
-        }
-      ]
-    });
-  }
-  return lessons;
-}
-
-function generateModules() {
-  const moduleNames = [
-    "Foundations",
-    "Color and Typography",
-    "Components",
-    "Layouts",
-    "Navigation",
-    "Motion",
-    "Theming"
-  ];
-  return moduleNames.map(name => ({
-    title: name,
-    access: true,
-    lessons: randomLessons()
-  }));
-}
-
 // Generate 5 courses
-window.app.hierarchy = [];
-for (let c = 1; c <= 5; c++) {
-  window.app.hierarchy.push({
-    title: `Course ${c} - Material Design`,
-    access: true,
-    modules: generateModules()
-  });
-}
+window.app.hierarchy = [
+    {
+	"title": "Course 1 - Material Design",
+	"access": true,
+	"modules": [
+	    {
+		"title": "Foundations",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 4",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 4",
+				"url": "https://example.com/resource-4"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Color and Typography",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Components",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Layouts",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Navigation",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Motion",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 4",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 4",
+				"url": "https://example.com/resource-4"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Theming",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    }
+		]
+	    }
+	]
+    },
+    {
+	"title": "Course 2 - Material Design",
+	"access": false,
+	"modules": [
+	    {
+		"title": "Foundations",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Color and Typography",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 4",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 4",
+				"url": "https://example.com/resource-4"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Components",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Layouts",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 4",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 4",
+				"url": "https://example.com/resource-4"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Navigation",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Motion",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Theming",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 4",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 4",
+				"url": "https://example.com/resource-4"
+			    }
+			]
+		    }
+		]
+	    }
+	]
+    },
+    {
+	"title": "Course 3 - Material Design",
+	"access": false,
+	"modules": [
+	    {
+		"title": "Foundations",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 4",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 4",
+				"url": "https://example.com/resource-4"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 5",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 5",
+				"url": "https://example.com/resource-5"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Color and Typography",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 4",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 4",
+				"url": "https://example.com/resource-4"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 5",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 5",
+				"url": "https://example.com/resource-5"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Components",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 4",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 4",
+				"url": "https://example.com/resource-4"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 5",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 5",
+				"url": "https://example.com/resource-5"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Layouts",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Navigation",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Motion",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 4",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 4",
+				"url": "https://example.com/resource-4"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 5",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 5",
+				"url": "https://example.com/resource-5"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Theming",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 4",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 4",
+				"url": "https://example.com/resource-4"
+			    }
+			]
+		    }
+		]
+	    }
+	]
+    },
+    {
+	"title": "Course 4 - Material Design",
+	"access": false,
+	"modules": [
+	    {
+		"title": "Foundations",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 4",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 4",
+				"url": "https://example.com/resource-4"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Color and Typography",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 4",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 4",
+				"url": "https://example.com/resource-4"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 5",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 5",
+				"url": "https://example.com/resource-5"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Components",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 4",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 4",
+				"url": "https://example.com/resource-4"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 5",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 5",
+				"url": "https://example.com/resource-5"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Layouts",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 4",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 4",
+				"url": "https://example.com/resource-4"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 5",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 5",
+				"url": "https://example.com/resource-5"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Navigation",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 4",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 4",
+				"url": "https://example.com/resource-4"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 5",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 5",
+				"url": "https://example.com/resource-5"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Motion",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 4",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 4",
+				"url": "https://example.com/resource-4"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 5",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 5",
+				"url": "https://example.com/resource-5"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Theming",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    }
+		]
+	    }
+	]
+    },
+    {
+	"title": "Course 5 - Material Design",
+	"access": false,
+	"modules": [
+	    {
+		"title": "Foundations",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 4",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 4",
+				"url": "https://example.com/resource-4"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Color and Typography",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 4",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 4",
+				"url": "https://example.com/resource-4"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 5",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 5",
+				"url": "https://example.com/resource-5"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Components",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Layouts",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 4",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 4",
+				"url": "https://example.com/resource-4"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 5",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 5",
+				"url": "https://example.com/resource-5"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Navigation",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 4",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 4",
+				"url": "https://example.com/resource-4"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Motion",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 3",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 3",
+				"url": "https://example.com/resource-3"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 4",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 4",
+				"url": "https://example.com/resource-4"
+			    }
+			]
+		    }
+		]
+	    },
+	    {
+		"title": "Theming",
+		"access": true,
+		"lessons": [
+		    {
+			"title": "Lesson 1",
+			"access": false,
+			"resources": [
+			    {
+				"description": "Resource 1",
+				"url": "https://example.com/resource-1"
+			    }
+			]
+		    },
+		    {
+			"title": "Lesson 2",
+			"access": true,
+			"resources": [
+			    {
+				"description": "Resource 2",
+				"url": "https://example.com/resource-2"
+			    }
+			]
+		    }
+		]
+	    }
+	]
+    }
+]
