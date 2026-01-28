@@ -1,17 +1,12 @@
-<mtk-hierarchy class="mtk-hierarchy" role="region" aria-label="Course Hierarchy">
-    <div class="container">
-	<div class="row g-3">
-	    <nav class="col-md-4 mtk-hierarchy-lhs" aria-label="Hierarchy Navigation">
-		<ul class="mtk-tree" role="tree"></ul>
-	    </nav>
-
-	    <section
-		class="col-md-8 mtk-hierarchy-rhs"
-		aria-live="polite"
-		aria-label="Content Area"
-	    >
-		<p>Select a resource.</p>
-	    </section>
+<mtk-hierarchy class="mtk-hierarchy">
+    <div class="container-fluid h-100">
+	<div class="row h-100">
+	    <aside class="col-md-4 mtk-hierarchy-lhs" role="tree"></aside>
+	    <main class="col-md-8 mtk-hierarchy-rhs">
+		<div class="mtk-rhs-content" aria-live="polite">
+		    Select a resource
+		</div>
+	    </main>
 	</div>
     </div>
 </mtk-hierarchy>

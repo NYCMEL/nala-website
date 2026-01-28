@@ -1,39 +1,55 @@
 window.app = window.app || {};
 
-function randomBool() {
-    return Math.random() > 0.4;
-}
-
-function randomLessons(min, max) {
-    const count = Math.floor(Math.random() * (max - min + 1)) + min;
-    return Array.from({ length: count }).map((_, i) => ({
-	title: `Lesson ${i + 1}`,
-	access: randomBool(),
-	resources: [
-	    {
-		description: "Video (Vimeo)",
-		url: "https://vimeo.com/827172729"
-	    }
-	]
-    }));
-}
-
-window.app.hierarchy = {
-    events: {
-	init: "mtk-hierarchy:init",
-	toggle: "mtk-hierarchy:toggle",
-	resourceClick: "mtk-hierarchy:resource-click",
-	error: "mtk-hierarchy:error"
-    },
-    courses: Array.from({ length: 5 }).map((_, i) => ({
-	title: `Course ${i + 1}`,
+window.app.hierarchy = [
+    {
+	title: "Course Alpha",
 	access: true,
 	modules: [
 	    {
-		title: `Module ${i + 1}.1`,
+		title: "Module 1",
 		access: true,
-		lessons: randomLessons(2, 6)
+		lessons: [
+		    {
+			title: "Lesson 1",
+			access: true,
+			resources: [
+			    { description: "Intro Video", url: "https://vimeo.com/827172729" }
+			]
+		    },
+		    {
+			title: "Lesson 2",
+			access: false,
+			resources: [
+			    { description: "Slides", url: "https://example.com/slides" }
+			]
+		    }
+		]
+	    },
+	    {
+		title: "Module 2",
+		access: true,
+		lessons: [
+		    {
+			title: "Lesson A",
+			access: true,
+			resources: [
+			    { description: "Video", url: "https://vimeo.com/827172729" }
+			]
+		    },
+		    {
+			title: "Lesson B",
+			access: true,
+			resources: [
+			    { description: "Reference PDF", url: "https://example.com/pdf" }
+			]
+		    },
+		    {
+			title: "Lesson C",
+			access: false,
+			resources: []
+		    }
+		]
 	    }
 	]
-    }))
-};
+    },
+];
