@@ -59,4 +59,30 @@ mtk-hierarchy UI structure:
 
   lhs:
     - col-md-4 (add a border)
-
+    - uses a structure like below:
+[{
+    "title": "Course - title",
+    "access": true,
+    "modules": [
+        {
+	    "title": "Module title",
+	    "free": true,
+	    "lessons": [
+		{
+		    "title": "Lesson title",
+		    "resources": [
+			{
+			    "description": "Video (Vimeo)",
+			    "url": "https://vimeo.com/827172729"
+			}
+		    ]
+		}
+	    ]
+        }
+    ]
+}]
+  - create 5 elemnts in config file
+  - generate a file/folder structure view with expand/collapse
+  - initially all collapsed
+  - resources are all links
+  - clicking on links should wc.publish a message
