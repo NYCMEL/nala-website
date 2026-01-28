@@ -7,6 +7,7 @@ Create a reusable UI component named mtk-component using:
 - Bootstrap 5 (layout only)
 - Modern Material Design
 - Material Design icons
+- Always create a JS class form mtk-component
 
 Rules:
 - The component is wrapped in a block element <mtk-component class="mtk-component">.
