@@ -1,6 +1,6 @@
-FORGET ALL PREVIOUS CONTEXT for MTK-component
+FORGET ALL PREVIOUS CONTEXT for mtk-component
 
-Create a reusable UI component named MTK-component using:
+Create a reusable UI component named mtk-component using:
 - HTML
 - SCSS
 - Vanilla JavaScript
@@ -9,7 +9,7 @@ Create a reusable UI component named MTK-component using:
 - Material Design icons
 
 Rules:
-- The component is wrapped in <MTK-component class="mtk-component">.
+- The component is wrapped in <mtk-component class="mtk-component">.
 - The root element uses .mtk-component.
 - All styles are scoped to .mtk-component.
 - No global styles or IDs.
@@ -36,8 +36,9 @@ Accessibility:
 - Visible focus states.
 
 Output, Create exactly four files:
-- MTK-component.scss
-- MTK-component.html
-- MTK-component.js
+- mtk-component.config.js (JSON FILE)
+- mtk-component.scss
+- mtk-component.html
+- mtk-component.js
 - index.html
 
