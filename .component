@@ -29,6 +29,7 @@ Restrictions:
 - No frameworks.
 - No Bootstrap.
 - No external libraries.
+- Vanilla Javascript
 
 Accessibility:
 - Use semantic HTML.
@@ -36,12 +37,12 @@ Accessibility:
 - Visible focus states.
 - ADA compliant
 
-Output. Create exactly these files:
+Output! Create exactly these files:
 - mtk-component.config.js (JSON FILE)
 - mtk-component.scss
 - mtk-component.html
 - mtk-component.js
-- index.html
+- a minimal index.works.html file
 
 #######################################################
 # example:
