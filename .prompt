@@ -1,0 +1,24 @@
+FORGET ALL YOU KNOW ABOUT MTK-component component
+FORGET ALL PREVIOUS CONTEXT.
+
+I am a senior frontend engineer and UI architect.
+I want to create a new component with simple scss, html and vanilla javascript
+
+MY FRAMEWORK:
+ - modern Material Design
+ - Bootstrap-5 
+
+Remember this component name as MTK-component.
+
+MTK-component is enclosed in a <MTK-component> tag
+MTK-component scss is enclosed in a .mtk-component class
+
+MTK-component is JSON driven from windows.app.component variable
+MTK-component can uses dark or light mode
+
+you should create the folllowing files:
+ - scss
+ - html
+ - vanilla js
+ - minimal html
+
