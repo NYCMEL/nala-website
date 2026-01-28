@@ -21,7 +21,7 @@ Data:
 - Read config from window.app.video.
 
 Behavior:
-- WAIT for element to be available inside DOM
+- MUST use WAIT function for element to be available inside DOM
 - Use one namespace only: window.MTKVideo.
 
 Restrictions:
