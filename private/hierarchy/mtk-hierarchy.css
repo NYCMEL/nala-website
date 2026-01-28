@@ -2,9 +2,11 @@
   height: 100%;
   font-family: Roboto, Arial, sans-serif;
   background-color: #fafafa;
-  color: #212121; }
-  .mtk-hierarchy * {
-    box-sizing: border-box; }
+  color: #212121;
+  /* Remove all bullets but preserve indentation */
+  /* Root tree container padding */
+  /* Nested children indentation */
+  /* Top-level course cards */ }
   .mtk-hierarchy *:focus-visible {
     outline: 2px solid #1a73e8;
     outline-offset: 2px; }
@@ -14,12 +16,20 @@
     overflow: auto;
     border: 1px solid #e0e0e0;
     background-color: #ffffff; }
-  .mtk-hierarchy .mtk-tree {
+  .mtk-hierarchy ul, .mtk-hierarchy li {
     list-style: none;
-    padding: 8px;
+    padding-left: 0;
     margin: 0; }
+  .mtk-hierarchy .mtk-tree {
+    padding-left: 8px;
+    margin: 0; }
+  .mtk-hierarchy .mtk-children {
+    padding-left: 20px;
+    margin: 0;
+    display: none; }
+  .mtk-hierarchy .mtk-children[data-open="true"] {
+    display: block; }
   .mtk-hierarchy .mtk-node {
-    list-style: none;
     margin-bottom: 4px; }
   .mtk-hierarchy .mtk-btn {
     width: 100%;
@@ -33,7 +43,8 @@
     text-align: left;
     cursor: pointer;
     font-size: 14px;
-    color: inherit; }
+    color: inherit;
+    transition: background 0.2s; }
   .mtk-hierarchy .mtk-btn:hover {
     background-color: #f1f3f4; }
   .mtk-hierarchy .mtk-btn[aria-disabled="true"] {
@@ -42,11 +53,6 @@
   .mtk-hierarchy .mtk-icon {
     font-size: 20px;
     color: #5f6368; }
-  .mtk-hierarchy .mtk-children {
-    margin-left: 20px;
-    display: none; }
-  .mtk-hierarchy .mtk-children[data-open="true"] {
-    display: block; }
   .mtk-hierarchy .mtk-course-card {
     border-radius: 4px;
     background-color: #ffffff;
