@@ -43,12 +43,3 @@ Output, Create exactly four files:
 - mtk-component.js
 - index.html
 
-#######################################################
-# example:
-#  
-#  about my mtk-component
-#   - it has a group of 3 buttons
-#     - primary
-#     - warning
-#     - danger
-#######################################################
