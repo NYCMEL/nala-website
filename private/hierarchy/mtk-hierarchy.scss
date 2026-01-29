@@ -58,6 +58,13 @@
 	font-size: 14px;
 	color: inherit;
 	transition: background 0.2s;
+
+	white-space: nowrap;      /* 1. single line only */
+	overflow: hidden;         /* 2. hide overflow */
+	text-overflow: ellipsis;  /* 3. enable ... */
+	width: 100%;              /* 4. constrained width */
+	display: block;           /* or inline-block */
+	vertical-align: top;      /* or baseline */
     }
 
     .mtk-btn:hover {
