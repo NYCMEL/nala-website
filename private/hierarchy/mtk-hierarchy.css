@@ -82,3 +82,9 @@
   border-radius: 4px;
   display: block;
   margin-bottom: 12px; }
+
+.mtk-hierarchy .mtk-hierarchy-rhs-video, .mtk-hierarchy .mtk-hierarchy-rhs-image {
+  display: none; }
+
+.mtk-hierarchy .mtk-hierarchy-rhs-intro {
+  display: block; }
