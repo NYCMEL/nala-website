@@ -68,14 +68,11 @@ class _febe {
 	    //$(".mtk-hierarchy-rhs").empty();
 	    //$(".mtk-hierarchy-rhs").html("HELLO");
 
+	    // "https://www.w3schools.com/html/mov_bbb.mp4",
+	    // LOAD VIDEO DYNAMICALLY
 	    wc.timeout(function(){
-		// LOAD VIDEO DYNAMICALLY
-		window.MTKVideoInstance.load(
-		    "https://www.w3schools.com/html/mov_bbb.mp4",
-		    "Big Buck Bunny - Sample Video"
-		);
-	    }, 2000, 1);
-
+		window.MTKVideoInstance.load(data.url, data.description);
+	    }, 200, 1);
 	    break;
 
 	    case "image":
