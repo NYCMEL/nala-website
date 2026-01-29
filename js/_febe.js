@@ -62,7 +62,7 @@ class _febe {
 	    case "video":
 	    console.log(">>>>>>", data.type, data.url);
 
-	    $(".mtk-hierarchy-rhs-video, .mtk-hierarchy-rhs-image").fadeOut();
+	    $(".mtk-hierarchy-rhs-video, .mtk-hierarchy-rhs-image, .mtk-hierarchy-rhs-intro").fadeOut();
 	    $(".mtk-hierarchy-rhs-video").fadeIn();
 
 	    //$(".mtk-hierarchy-rhs").empty();
