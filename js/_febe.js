@@ -1,6 +1,7 @@
 class _febe {
     constructor() {
         this.topics = [
+	    "header.dropdown.click",
             "header.menu.click",
             "header.button.click",
             "MTK-parts.click",
@@ -39,6 +40,24 @@ class _febe {
             wc.timeout(() => {
                 lessonClicked(cIndex, cTitle);
             }, 500, 1);
+            break;
+
+        case "header.dropdown.click":
+	    switch(data.id) 
+	    {
+		case "profile":
+		break;
+
+		case "logout":
+		document.location.href = "http://localhost/Melify/tools/nala-website";
+
+		default:
+		break;
+	    }
+
+	    if (data.id == "profile") {
+		MTKPager.show("settings");
+	    } 
             break;
 
         default:

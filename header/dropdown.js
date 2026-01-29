@@ -25,11 +25,29 @@
             link.addEventListener("click", function (e) {
                 e.preventDefault();
                 e.stopPropagation();
+
                 closeAll();
 
+                /* 🔔 MTK / wc publish */
+                if (window.wc && typeof wc.publish === "function") {
+		    let msg = ("header.dropdown.click", {
+                        id: item.id,
+                        label: item.label,
+                        source: labelEl
+                    })
+
+		    wc.log(msg);
+
+                    wc.publish("header.dropdown.click", msg);
+                }
+
+                /* local event for direct listeners */
                 labelEl.dispatchEvent(
                     new CustomEvent("dropdown:select", {
-                        detail: item
+                        detail: {
+                            id: item.id,
+                            label: item.label
+                        }
                     })
                 );
             });
@@ -65,7 +83,6 @@
             }, CLOSE_DELAY);
         }
 
-        /* treat label + menu as one hover zone */
         labelEl.addEventListener("mouseenter", open);
         labelEl.addEventListener("mouseleave", scheduleClose);
 
@@ -93,7 +110,7 @@
                 position: absolute;
                 min-width: 160px;
                 background: #fff;
-                border-radius: 4px;
+                border-radius: 6px;
                 box-shadow: 0 6px 18px rgba(0,0,0,.15);
                 padding: 6px 0;
                 display: none;
