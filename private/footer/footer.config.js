@@ -6,8 +6,3 @@ window.app.footer = {
     copyright: "© 2026 North American Locksmith Association. All rights reserved.",
     slogan: "Made with care for aspiring locksmiths everywhere."
 };
-
-    // logo: {
-    // 	src: "",
-    // 	alt: "MTK Logo"
-    // },
