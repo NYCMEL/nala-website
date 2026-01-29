@@ -1,12 +1,33 @@
 <mtk-hierarchy class="mtk-hierarchy">
     <div class="container-fluid h-100">
 	<div class="row h-100">
-	    <aside class="col-md-4 mtk-hierarchy-lhs" style="height:600px" role="tree" aria-label="Course hierarchy"></aside>
+	    <aside class="col-md-4 mtk-hierarchy-lhs" role="tree" aria-label="Course hierarchy">
+		<!-- DISPLAY HIERARCHY HERE -->
+	    </aside>
 
 	    <main class="col-md-8 mtk-hierarchy-rhs shadow">
 		<div class="mtk-rhs-content" aria-live="polite">
 		    <div class="m-3 p-3">
+			<!-- DISPLAY RESOURCE, IMAGES OR QUIZ HERE -->
+
 			<b><i class="fa fa-chevron-left" style="margin-right:10px;"></i> Select a resource to view details</b>
+
+			<div class="mtk-hierarchy-rhs-video border border-danger">
+			    <!-- VIDEO -->
+			    <div style="border:2px red solid">
+				<link href="video/mtk-video.css" rel="stylesheet">
+				
+				<wc-include href="video/mtk-video.html"><p align="center">loading video.html...</p></wc-include>
+
+				<script src="video/mtk-video.config.js"></script>
+				<script src="video/mtk-video.js"></script>
+			    </div>
+			</div>
+
+			<div class="mtk-hierarchy-rhs-image border border-success">
+			    <!-- IMAGES -->
+			    <h1>resource images</div>
+			</div>
 		    </div>
 		</div>
 	    </main>
