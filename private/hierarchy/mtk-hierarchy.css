@@ -15,7 +15,7 @@
 .mtk-hierarchy .mtk-hierarchy-rhs {
   height: 100%;
   overflow: auto;
-  border: 1px solid #e0e0e0;
+  /* border: 1px solid #e0e0e0; */
   background-color: #ffffff; }
 
 .mtk-hierarchy ul, .mtk-hierarchy li {
