@@ -10,9 +10,6 @@ class _febe {
         this.subscribe();
     }
 
-    ///////////////////////////////////////////////////////
-    ///// SUBSCRIBE TO ALL TOPICS
-    ///////////////////////////////////////////////////////
     subscribe() {
         this.topics.forEach(topic => {
             wc.log("_febe: subscribed to", topic);
@@ -20,28 +17,24 @@ class _febe {
         });
     }
 
-    ///////////////////////////////////////////////////////
-    ///// ALL MESSAGES ARE PROCESSED HERE
-    ///////////////////////////////////////////////////////
     onMessage(msg, data) {
         wc.log("_febe: onMessage", msg, data);
 
         switch (msg) {
         case "mtk-hierarchy:resource:click":
-            wc.log("_febe: onMessage", data.description, data.url);
-	    resource(data);
+            this.resource(data);
             break;
 
         case "header.menu.click":
-            MTKPager.resource(data.id);
+            MTKPager.show(data.id);
             break;
 
         case "header.button.click":
-            MTKPager.resource(data.id);
+            MTKPager.show(data.id);
             break;
 
         case "MTK-parts.click":
-            MTKPager.resource("lessons");
+            MTKPager.show("lessons");
 
             wc.timeout(() => {
                 lessonClicked(cIndex, cTitle);
@@ -54,11 +47,20 @@ class _febe {
         }
     }
 
-    ///////////////////////////////////////////////////////
-    ///// PROCESS A RESOURCE
-    ///////////////////////////////////////////////////////
+    /* RESOURCE HANDLER */
     resource(data) {
-	console.log(">>>>>>>>", data.description);
+        if (!data) {
+            wc.warn("_febe.resource: no data received");
+            return;
+        }
+
+        wc.log("_febe.resource:", data.description, data.url);
+
+        // example actions you can expand later
+        if (data.url) {
+            wc.log("_febe.resource: opening", data.url);
+            // window.open(data.url, "_blank");
+        }
     }
 }
 
