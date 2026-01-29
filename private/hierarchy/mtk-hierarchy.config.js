@@ -14,7 +14,7 @@ window.app.hierarchy = [
 			"resources": [
 			    {
 				"type": "video",
-				"description": "Introduction to your instructor and the course",
+				"description": "Introduction to your instructor and the course (video)",
 				"url": "https://vimeo.com/827172729"
 			    }
 			]
