@@ -1,3 +1,5 @@
+alert("A")
+
 window.app = window.app || {};
 
 window.app.pager = {
