@@ -48,4 +48,3 @@ window.app.footer = {
 	right: "Made with care for aspiring locksmiths everywhere."
     }
 };
-n
