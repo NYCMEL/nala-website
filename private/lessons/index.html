@@ -7,6 +7,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
+	<base href="/Melify/tools/nala-website/">
+
 	<!-- W3C LOGGING -->
 	<script>
 	 wcENV="dev"; // prod || dev
@@ -20,7 +22,7 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 	<!-- APPLICATION STYLES -->
-	<link href="../../css/app.css" rel="stylesheet">
+	<link href="css/app.css" rel="stylesheet">
     </head>
 
     <body id="wc">
@@ -30,11 +32,9 @@
 	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
 	<!-- COMMON STUFF -->
-	<script src="../../js/app.config.js"></script>
-	<script src="../../js/_wc.js"></script>
-	<script src="../../js/_include.js"></script>
-	<script src="../../js/_pubsub.js"></script>
-	<script src="../../js/_febe.js" defer></script>
+	<script src="js/app.config.js"></script>
+	<script src="js/_wc.js"></script>
+	<script src="js/_febe.js" defer></script>
 	
 	<!-- YOUR CODE FROM HERE... -->
 
@@ -46,12 +46,12 @@
 			<div class="p-3 mb-3 border bg-light">
 			    <h3 class="mb-4">Available Courses</h3>
 			    
-			    <link href="lessons.css" rel="stylesheet">
+			    <link href="private/lessons/lessons.css" rel="stylesheet">
 
 			    <div id="mtk-lessons"></div>
 
-			    <script src="lessons.config.js"></script>
-			    <script src="lessons.js"></script>
+			    <script src="private/config/Curriculum.config.js"></script>
+			    <script src="private/lessons/lessons.js"></script>
 			</div>
 		    </div>
 

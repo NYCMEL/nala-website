@@ -7,6 +7,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
+	<base href="/Melify/tools/nala-website/">
+
 	<!-- W3C LOGGING -->
 	<script>
 	 wcENV="dev"; // prod || dev
@@ -23,11 +25,10 @@
 	<!-- SOCIAL ICONS -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net">
 
-	<!-- Roboto, Font-Awesome, Amplitued -->
-	<link href="/Melify/fonts/fonts.css" rel="stylesheet">
-
 	<!-- APPLICATION STYLES -->
-	<link href="../css/app.css" rel="stylesheet">
+	<link href="css/app.css" rel="stylesheet">
+
+	<!-- <link href="css/font-awesome.css" rel="stylesheet"> -->
     </head>
 
     <body id="wc">
@@ -37,55 +38,51 @@
 	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
 	<!-- COMMON STUFF -->
-	<script src="../js/_wc.js"></script>
-	<script src="../js/_include.js"></script>
-	<script src="../js/_pubsub.js"></script>
-	<script src="../js/_febe.js" defer></script>
-	<script src="../js/app.js"></script>
+	<script src="js/_wc.js"></script>
+	<script src="js/_febe.js" defer></script>
+	<script src="js/app.js"></script>
 
-	<link href="./css/font-awesome.css" rel="stylesheet">
-	
 	<!-- YOUR CODE FROM HERE... -->
 	
 	<!-- HEADER (COMMON TO ALL PAGES)-->
 	<div>
-	    <link href="../header/header.css" rel="stylesheet">
+	    <link href="header/header.css" rel="stylesheet">
 	    
-	    <wc-include href="../header/header.html"><p align="center">loading header.html...</p></wc-include>
-
+	    <wc-include href="header/header.html"><p align="center">loading header.html...</p></wc-include>
+	    
 	    <!-- PRIVATE HEADER -->
-	    <script src="./config/header.config.js"></script>
-	    <script src="../header/header.js"></script>
+	    <script src="private/config/header.config.js"></script>
+	    <script src="header/header.js"></script>
 	</div>
 
 	<!-- ALL PAGES -->
 	<pager id="MTK-pager">
 	    <!-- COURSES...COURSES...COURSES... -->
 	    <pager-section class="MTK-pager-section" id="MTK-pager-parts">
-		<wc-include href="./parts/parts.html"><p align="center">loading parts.html...</p></wc-include>
+		<wc-include href="private/parts/parts.html"><p align="center">loading parts.html...</p></wc-include>
 	    </pager-section>
 
 	    <!-- LESSONS...LESSONS...LESSONS... -->
 	    <pager-section class="MTK-pager-section" id="MTK-pager-lessons">
-		<wc-include href="./lessons/lessons.html"><p align="center">loading lessons.html...</p></wc-include>
+		<wc-include href="private/lessons/lessons.html"><p align="center">loading lessons.html...</p></wc-include>
 	    </pager-section>
 
 	    <!-- SETTINGS...SETTINGS...SETTINGS... -->
 	    <pager-section class="MTK-pager-section" id="MTK-pager-settings">
-		<wc-include href="./settings/settings.html"><p align="center">loading settings.html...</p></wc-include>
+		<wc-include href="private/settings/settings.html"><p align="center">loading settings.html...</p></wc-include>
 	    </pager-section>
 	</pager>
 
 	<!-- FOOTER (COMMON TO ALL PAGES)-->
 	<div>
-	    <wc-include href="./footer/footer.html"><p align="center">loading footer.html...</p></wc-include>
+	    <wc-include href="footer/footer.html"><p align="center">loading footer.html...</p></wc-include>
 	</div>
 
-	<link href="../pager/_pager.css" rel="stylesheet">
-	<script src="../pager/_pager.js"></script>
+	<link href="pager/_pager.css" rel="stylesheet">
+	<script src="pager/_pager.js"></script>
 
 	<!-- SCROLL TO TOP -->
-	<wc-include href="../pages/parts/top.html"><p align="center">loading top .html...</p></wc-include>
+	<wc-include href="pages/parts/top.html"><p align="center">loading top .html...</p></wc-include>
 	
 	<script>
          // INITIAL PAGE
