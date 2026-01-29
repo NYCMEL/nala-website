@@ -10,6 +10,9 @@ class _febe {
         this.subscribe();
     }
 
+    ///////////////////////////////////////////////////////
+    ///// SUBSCRIBE TO ALL TOPICS
+    ///////////////////////////////////////////////////////
     subscribe() {
         this.topics.forEach(topic => {
             wc.log("_febe: subscribed to", topic);
@@ -17,6 +20,9 @@ class _febe {
         });
     }
 
+    ///////////////////////////////////////////////////////
+    ///// ALL MESSAGES ARE PROCESSED HERE
+    ///////////////////////////////////////////////////////
     onMessage(msg, data) {
         wc.log("_febe: onMessage", msg, data);
 
