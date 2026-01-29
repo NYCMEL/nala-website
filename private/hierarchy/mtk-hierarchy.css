@@ -79,7 +79,7 @@
   margin-bottom: 8px; }
 
 .mtk-hierarchy .mtk-rhs-content {
-  padding: 16px;
+  margin-top: 16px;
   font-size: 14px;
   color: #424242;
   min-height: 600px; }
