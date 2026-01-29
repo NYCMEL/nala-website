@@ -14,16 +14,18 @@ window.app.hierarchy = [
 			"resources": [
 			    {
 				"type": "video",
-				"description": "Video (Vimeo)",
+				"description": "Introduction to your instructor and the course",
 				"url": "https://vimeo.com/827172729"
 			    }
 			]
 		    },
 		    {
+			"access": true,
 			"title": "The tools needed in your toolbag",
 			"resources": [
 			    {
-				"description": "Video (Vimeo)",
+				"type": "video",
+				"description": "Lesson 1 - The tools needed in your toolbag",
 				"url": "https://vimeo.com/827172768"
 			    }
 			]
