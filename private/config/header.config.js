@@ -8,7 +8,7 @@ window.app.header = {
     menu: [
 	{ cname:"header", id: "hierarchy", label: "Hierarchy", href: "#hierarchy", active: true},
 	{ cname:"header", id: "settings", label: "Settings", href: "#settings"},
-	{ cname:"header", id: "logout", label: "Mel", href: "#logout"}
+	{ cname:"header", id: "logout", label: "Mel", href: "#"}
     ],
 
     buttons: []
