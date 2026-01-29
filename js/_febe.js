@@ -62,11 +62,14 @@ class _febe {
 	    case "video":
 	    console.log(">>>>>>", data.type, data.url);
 
+	    $(".mtk-hierarchy-rhs-video, .mtk-hierarchy-rhs-image").fadeOut();
+	    $(".mtk-hierarchy-rhs-video").fadeIn();
+
 	    //$(".mtk-hierarchy-rhs").empty();
-	    $(".mtk-hierarchy-rhs").html("HELLO");
+	    //$(".mtk-hierarchy-rhs").html("HELLO");
 
 	    wc.timeout(function(){
-		// Load video dynamically
+		// LOAD VIDEO DYNAMICALLY
 		window.MTKVideoInstance.load(
 		    "https://www.w3schools.com/html/mov_bbb.mp4",
 		    "Big Buck Bunny - Sample Video"
