@@ -88,6 +88,22 @@
 	<!-- SCROLL TO TOP -->
 	<wc-include href="pages/parts/top.html"><p align="center">loading top .html...</p></wc-include>
 	
+	<script src="header/dropdown.js"></script>
+
+	<script>
+	 wc.timeout(function(){
+	     createDropdown(
+		 document.querySelector("#_header-menu-logout"),
+		 [
+		     { id: "profile", label: "Profile" },
+		     { id: "logout", label: "Logout" }
+		 ]
+	     );
+	     alert("HELLO")
+	 }, 1000, 1);
+
+	</script>
+
 	<script>
          // INITIAL PAGE
          MTKPager.show("hierarchy");
