@@ -57,14 +57,14 @@
 
 	<!-- ALL PAGES -->
 	<pager id="MTK-pager">
-	    <!-- COURSES...COURSES...COURSES... -->
-	    <pager-section class="MTK-pager-section" id="MTK-pager-parts">
-		<wc-include href="private/parts/parts.html"><p align="center">loading parts.html...</p></wc-include>
-	    </pager-section>
-
 	    <!-- LESSONS...LESSONS...LESSONS... -->
 	    <pager-section class="MTK-pager-section" id="MTK-pager-lessons">
-		<wc-include href="private/lessons/lessons.html"><p align="center">loading lessons.html...</p></wc-include>
+		<link href="private/hierarchy/mtk-hierarchy.css" rel="stylesheet">
+		
+		<wc-include href="private/hierarchy/mtk-hierarchy.html"><p align="center">loading hierarchy.html...</p></wc-include>
+		
+		<script src="private/hierarchy/mtk-hierarchy.config.js"></script>
+		<script src="private/hierarchy/mtk-hierarchy.js"></script>
 	    </pager-section>
 
 	    <!-- SETTINGS...SETTINGS...SETTINGS... -->

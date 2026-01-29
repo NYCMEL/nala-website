@@ -3,7 +3,7 @@ window.app = window.app || {};
 window.app.header = {
     fixed: true,
     
-    logo: { text: "MyApp", img: "../img/logo-nala-association.webp" },
+    logo: { text: "MyApp", img: "img/logo-nala-association.webp" },
     
     menu: [
 	{ cname:"header", id: "parts", label: "Curriculum", href: "#parts", active: true },
