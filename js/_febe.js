@@ -28,6 +28,14 @@ class _febe {
 
         case "header.menu.click":
             MTKPager.show(data.id);
+	    
+	    if (data.id == "logout") {
+		alert(data.id);
+		$(".nav-link.active").removeClass("active")
+		return;
+	    }
+
+	    $("#_header-menu-" + data.id).addClass("active")
             break;
 
         case "header.button.click":
