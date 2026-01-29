@@ -65,9 +65,6 @@ class _febe {
 	    $(".mtk-hierarchy-rhs-video, .mtk-hierarchy-rhs-image, .mtk-hierarchy-rhs-intro").fadeOut();
 	    $(".mtk-hierarchy-rhs-video").fadeIn();
 
-	    //$(".mtk-hierarchy-rhs").empty();
-	    //$(".mtk-hierarchy-rhs").html("HELLO");
-
 	    // "https://www.w3schools.com/html/mov_bbb.mp4",
 	    // LOAD VIDEO DYNAMICALLY
 	    wc.timeout(function(){
