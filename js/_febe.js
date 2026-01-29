@@ -31,10 +31,6 @@
 	    break;
 
 	    case "MTK-parts.click":
-	    window.x = JSON.parse(data);
-
-	    let cTitle = x.part.title;
-	    let cIndex = x.index;
 	    MTKPager.show("lessons");
 
 	    wc.timeout(function(){
