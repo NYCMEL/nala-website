@@ -81,7 +81,8 @@
 .mtk-hierarchy .mtk-rhs-content {
   padding: 16px;
   font-size: 14px;
-  color: #424242; }
+  color: #424242;
+  min-height: 600px; }
 
 .mtk-hierarchy iframe,
 .mtk-hierarchy img {
