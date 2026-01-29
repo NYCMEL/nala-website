@@ -57,10 +57,23 @@ class _febe {
         wc.log("_febe.resource:", data.description, data.url);
 
         // example actions you can expand later
-        if (data.url) {
-            wc.log("_febe.resource: opening", data.url);
-            // window.open(data.url, "_blank");
-        }
+	switch(data.type) 
+	{
+	    case "video":
+	    console.log(">>>>>>", data.type, data.url);
+
+	    $(".mtk-hierarchy-rhs").empty();
+	    $(".mtk-hierarchy-rhs").html("HELLO");
+	    break;
+
+	    case "image":
+	    console.log(">>>>>>", data.type, data.url);
+	    break;
+
+	    default:
+	    console.error("NO SUCH TYPE:", data.type);
+	    break;
+	}
     }
 }
 
