@@ -13,6 +13,7 @@ window.app.hierarchy = [
 			"title": "Introduction",
 			"resources": [
 			    {
+				"type": "video",
 				"description": "Video (Vimeo)",
 				"url": "https://vimeo.com/827172729"
 			    }
