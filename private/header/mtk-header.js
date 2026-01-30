@@ -30,7 +30,6 @@ class MTKHeader {
         this.bindEvents();
         this.subscribe();
 
-	wc.log("mtk-header.init", {});
         wc.publish("mtk-header.init", {});
     }
 
@@ -130,8 +129,11 @@ class MTKHeader {
 
                 this.closeAllMenus();
 
-		let msg = ("mtk-header.action", {type: "dropdown", id, label})
-                wc.publish(msg);
+                wc.publish("mtk-header.action", {
+                    type: "dropdown",
+                    id,
+                    label
+                });
 
                 return;
             }
@@ -159,7 +161,6 @@ class MTKHeader {
                 e.preventDefault();
             }
 
-	    wc.log("mtk-header.action", {type: hasDropdown ? "menu-dropdown" : "menu-link", label: e.target.textContent.trim()})
             wc.publish("mtk-header.action", {
                 type: hasDropdown ? "menu-dropdown" : "menu-link",
                 label: e.target.textContent.trim()
