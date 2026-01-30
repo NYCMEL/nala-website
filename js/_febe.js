@@ -30,7 +30,6 @@ class _febe {
             MTKPager.show(data.id);
 	    
 	    if (data.id == "logout") {
-		alert(data.id);
 		$(".nav-link.active").removeClass("active")
 		return;
 	    }
@@ -69,6 +68,7 @@ class _febe {
             break;
 
         default:
+	    wc.error("_febe: DO NOT HAVE:" + msg)
             alert("_febe: DO NOT HAVE:" + msg);
             break;
         }
