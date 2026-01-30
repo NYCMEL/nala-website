@@ -14,4 +14,3 @@ window.app.header = {
     buttons: []
 }
 
-// { cname:"header", id: "login", label: "Login", type: "primary", action: "login" }
