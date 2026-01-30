@@ -30,6 +30,7 @@ class MTKHeader {
         this.bindEvents();
         this.subscribe();
 
+	wc.log("mtk-header.init", {});
         wc.publish("mtk-header.init", {});
     }
 
@@ -69,13 +70,13 @@ class MTKHeader {
         // Render menu
         menuEl.innerHTML = "";
 
-        this.config.menus.forEach((menu, index) => {
+        this.config.menus.forEach((menu) => {
             const li = document.createElement("li");
             li.className = "mtk-header__item";
             li.setAttribute("role", "none");
 
-            // Set first item active by default
-            if (index === 0) {
+            // Set active based on config.active
+            if (menu.id === this.config.active) {
                 li.classList.add("active");
             }
 
@@ -121,7 +122,7 @@ class MTKHeader {
             // Dropdown item clicked
             // ----------------------------
             if (dropdownItem) {
-                e.preventDefault();
+                e.preventDefault();   // prevent navigation
                 e.stopPropagation();
 
                 const id = dropdownItem.dataset.id || null;
@@ -129,11 +130,8 @@ class MTKHeader {
 
                 this.closeAllMenus();
 
-                wc.publish("mtk-header.action", {
-                    type: "dropdown",
-                    id,
-                    label
-                });
+		let msg = ("mtk-header.action", {type: "dropdown", id, label})
+                wc.publish(msg);
 
                 return;
             }
@@ -150,12 +148,18 @@ class MTKHeader {
             menuItem.classList.add("active");
 
             if (hasDropdown) {
-                e.preventDefault();
                 menuItem.classList.add("open");
                 menuItem.querySelector(".mtk-header__link")
                     ?.setAttribute("aria-expanded", "true");
             }
 
+            // Prevent navigation on all top-level links
+            const link = e.target.closest(".mtk-header__link");
+            if (link) {
+                e.preventDefault();
+            }
+
+	    wc.log("mtk-header.action", {type: hasDropdown ? "menu-dropdown" : "menu-link", label: e.target.textContent.trim()})
             wc.publish("mtk-header.action", {
                 type: hasDropdown ? "menu-dropdown" : "menu-link",
                 label: e.target.textContent.trim()
@@ -174,11 +178,16 @@ class MTKHeader {
                     ?.setAttribute("aria-expanded", "false");
             });
 
-        // Reset first item as active
-        const firstItem = this.root.querySelector(".mtk-header__item");
-        if (firstItem) {
-            firstItem.classList.add("active");
+        // Reset active based on config
+        if (this.config.active) {
+            const activeItem = this.root.querySelector(`.mtk-header__item:nth-child(${this.getActiveIndex() + 1})`);
+            if (activeItem) activeItem.classList.add("active");
         }
+    }
+
+    /* Helper to get active menu index */
+    getActiveIndex() {
+        return this.config.menus.findIndex(menu => menu.id === this.config.active);
     }
 
     /* ===============================
