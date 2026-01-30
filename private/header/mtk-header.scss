@@ -3,9 +3,7 @@
   color: #ffffff;
   width: 100%;
   display: block;
-  padding-top: 5px;
   padding-bottom: 10px;
-  font-size: 18px;
 
   /* ===============================
      Navigation container
@@ -38,7 +36,7 @@
   &__menu {
     list-style: none;
     display: flex;
-    align-items: center;   /* critical */
+    align-items: center;
     gap: 1.5rem;
     margin: 0;
     padding: 0;
@@ -49,17 +47,18 @@
      =============================== */
   &__item {
     position: relative;
-    display: flex;         /* critical */
-    align-items: center;   /* critical */
-    height: 72px;          /* forces uniform alignment */
+    display: flex;
+    align-items: center;
+    height: 72px;
   }
 
   /* ===============================
      Menu link / button
      =============================== */
   &__link {
-    display: flex;         /* critical */
-    align-items: center;   /* critical */
+    position: relative;          /* for active indicator */
+    display: flex;
+    align-items: center;
     height: 100%;
     background: none;
     border: none;
@@ -81,10 +80,16 @@
   }
 
   /* ===============================
-     Active item indicator
+     Active indicator (Material style)
      =============================== */
-  &__item.active > .mtk-header__link {
-    border-bottom: 2px solid #d4af37;
+  &__item.active > .mtk-header__link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 6px;                /* aligns under label */
+    height: 2px;
+    background: #d4af37;
   }
 
   /* ===============================

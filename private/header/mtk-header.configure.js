@@ -15,15 +15,11 @@ window.app.header = {
 	    label: "Dashboard",
 	    href: "#dashboard"
 	}, {
-	    id: "settings",
-	    label: "Settings",
-	    href: "#settings"
-	}, {
 	    id: "user",
 	    label: "<i class='fa fa-user'></i>&nbsp;&nbsp;Mel",
 	    type: "dropdown",
 	    items: [
-		{ id: "profile", label: "Profile" },
+		{ id: "profile", label: "Profile", active:true },
 		{ id: "logout", label: "Logout" }
 	    ]
 	}
