@@ -2,7 +2,12 @@
 <html lang="en">
     <head>
 	<meta charset="UTF-8">
-	<title>Components</title>
+	<title>NALA - Header</title>
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<base href="/Melify/tools/nala-website/">
 
 	<!-- W3C LOGGING -->
 	<script>
@@ -19,7 +24,8 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net">
 
 	<!-- APPLICATION STYLES -->
-	<link href="../css/app.css" rel="stylesheet">
+	<link href="css/fonts/fonts.css" rel="stylesheet">
+	<link href="css/app.css" rel="stylesheet">
     </head>
 
     <body id="wc">
@@ -28,19 +34,19 @@
 	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
 	<!-- COMMON STUFF -->
-	<script src="../js/_wc.js"></script>
-	<script src="../js/_include.js"></script>
-	<script src="../js/_pubsub.js"></script>
-	<script src="../js/_febe.js" defer></script>
+	<script src="js/_wc.js"></script>
+	<script src="js/_include.js"></script>
+	<script src="js/_pubsub.js"></script>
+	<script src="js/_febe.js" defer></script>
 
 	<!-- YOUR CODE FROM -->
 	<div>
-	    <link href="header.css" rel="stylesheet">
+	    <link href="header/header.css" rel="stylesheet">
 
-	    <wc-include href="header.html"><p align="center">loading header.html...</p></wc-include>
+	    <wc-include href="header/header.html"><p align="center">loading header.html...</p></wc-include>
 
-	    <script src="header.config.js"></script>
-	    <script src="header.js"></script>
+	    <script src="header/header.config.js"></script>
+	    <script src="header/header.js"></script>
 	</div>
 	<!-- YOUR CODE TO -->
 
