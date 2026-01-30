@@ -10,7 +10,7 @@ Create a reusable UI header named mtk-header using:
 - Always create a JS class form mtk-header
 
 Rules:
-- The header is wrapped in a block element <mtk-header class="mtk-header">.
+- The header is wrapped in a display:block element <mtk-header class="mtk-header">.
 - The root element uses .mtk-header.
 - All styles are scoped to .mtk-header.
 - No global styles or IDs.
