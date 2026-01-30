@@ -2,11 +2,13 @@ window.app = window.app || {};
 
 window.app.header = {
     theme: "dark",
+
     logo: {
 	src: "img/logo-nala-association.webp",
 	alt: "Company Logo",
 	href: "#"
     },
+
     menus: [
 	{
 	    id: "dashboard",
