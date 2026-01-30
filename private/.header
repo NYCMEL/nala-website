@@ -36,13 +36,6 @@ Accessibility:
 - Visible focus states.
 - ADA compliant
 
-Output! Create exactly these files:
-- mtk-header.config.js (JSON FILE)
-- mtk-header.scss
-- mtk-header.html
-- mtk-header.js
-- a minimal index.html file
-
 I want to create a material design header
 - mtk-header is inside a bootstrap container
 - mtk-header displays a logo (65px height) on the left side
@@ -53,3 +46,12 @@ I want to create a material design header
 - mtk-header does a wc.publish on all clicks events
 - mtk-header has a dark background (adjust menu items accordingly
 - mtk-header displays a 2px gold border for any active menu item
+- all menu items come from window.app.header variable in the form of JSON
+
+Output! Create exactly these files:
+- mtk-header.config.js (JSON FILE)
+- mtk-header.scss
+- mtk-header.html
+- mtk-header.js
+- a minimal index.html file
+
