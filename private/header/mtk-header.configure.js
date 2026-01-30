@@ -18,7 +18,7 @@ window.app.header = {
 	    href: "#settings"
 	}, {
 	    id: "user",
-	    label: "Mel",
+	    label: "<i class='fa fa-user'></i>&nbsp;&nbsp;Mel",
 	    type: "dropdown",
 	    items: [
 		{ id: "profile", label: "Profile" },
