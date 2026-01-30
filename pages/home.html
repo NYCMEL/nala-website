@@ -19,7 +19,7 @@
 </div>
 
 <!-- CAROUSEL -->
-<div class="mt-5">
+<div class="mt-5" id="carousel">
     <link href="carousel/carousel.css" rel="stylesheet">
     
     <wc-include href="carousel/carousel.html"><p align="center">loading carousel.html...</p></wc-include>
@@ -124,3 +124,11 @@
     <script src="ready/ready.js"></script>
 </div>
 
+<style>
+ /* RESPONSIVE */
+ @media (max-width: 600px) {
+     #carousel {
+	 display:none;
+     }
+ }
+</style>
