@@ -2,9 +2,10 @@ window.headerInited = false;
 
 window.Header = {
     init(root, config, id) {
-        if (!root || !config) return;
-
-	wc.log("Header:init", config);
+        if (!root || !config) {
+	    wc.error(">>>>>>>>Header:init", id, config);
+	    return;
+	}
 
 	headerInited = true;
 
