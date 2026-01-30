@@ -20,6 +20,11 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-sizing: border-box;
 }
 
+#client-image {
+    border:5px red dashed;
+    width: 100%;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
     color: $text-primary;
@@ -96,6 +101,8 @@ body {
     overflow: hidden;
     flex-shrink: 0;
     box-shadow: $shadow-md;
+
+    border:10px red solid;
 
     img {
 	width: 100%;
