@@ -12,7 +12,7 @@ class MTKHeader {
     }
 
     /* ===============================
-       Init
+       Initialize
        =============================== */
     async init() {
         try {
@@ -34,7 +34,7 @@ class MTKHeader {
     }
 
     /* ===============================
-       Wait for DOM
+       Wait for header element in DOM
        =============================== */
     waitForElement(timeout = 3000) {
         return new Promise((resolve, reject) => {
@@ -46,31 +46,38 @@ class MTKHeader {
                 }
                 if (Date.now() - start > timeout) {
                     clearInterval(timer);
-                    reject();
+                    reject(new Error("mtk-header not found in DOM"));
                 }
             }, 50);
         });
     }
 
     /* ===============================
-       Render
+       Render header
        =============================== */
     render() {
         const logoEl = this.root.querySelector(".mtk-header__logo");
         const menuEl = this.root.querySelector(".mtk-header__menu");
 
+        // Render logo
         logoEl.innerHTML = `
             <a href="${this.config.logo.href}">
                 <img src="${this.config.logo.src}" alt="${this.config.logo.alt}">
             </a>
         `;
 
+        // Render menu
         menuEl.innerHTML = "";
 
-        this.config.menus.forEach(menu => {
+        this.config.menus.forEach((menu, index) => {
             const li = document.createElement("li");
             li.className = "mtk-header__item";
             li.setAttribute("role", "none");
+
+            // Set first item active by default
+            if (index === 0) {
+                li.classList.add("active");
+            }
 
             if (menu.type === "dropdown") {
                 li.innerHTML = `
@@ -103,17 +110,16 @@ class MTKHeader {
     }
 
     /* ===============================
-       Events
+       Event binding
        =============================== */
     bindEvents() {
         this.root.addEventListener("click", e => {
-
             const dropdownItem = e.target.closest(".mtk-header__dropdown button");
             const menuItem = e.target.closest(".mtk-header__item");
 
-            /* -------------------------------
-               Dropdown item click
-               ------------------------------- */
+            // ----------------------------
+            // Dropdown item clicked
+            // ----------------------------
             if (dropdownItem) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -132,13 +138,14 @@ class MTKHeader {
                 return;
             }
 
-            /* -------------------------------
-               Top-level menu click
-               ------------------------------- */
+            // ----------------------------
+            // Top-level menu clicked
+            // ----------------------------
             if (!menuItem) return;
 
             const hasDropdown = !!menuItem.querySelector(".mtk-header__dropdown");
 
+            // Close all menus first
             this.closeAllMenus();
             menuItem.classList.add("active");
 
@@ -157,7 +164,7 @@ class MTKHeader {
     }
 
     /* ===============================
-       Helpers
+       Close all menus
        =============================== */
     closeAllMenus() {
         this.root.querySelectorAll(".mtk-header__item")
@@ -166,10 +173,16 @@ class MTKHeader {
                 item.querySelector(".mtk-header__link")
                     ?.setAttribute("aria-expanded", "false");
             });
+
+        // Reset first item as active
+        const firstItem = this.root.querySelector(".mtk-header__item");
+        if (firstItem) {
+            firstItem.classList.add("active");
+        }
     }
 
     /* ===============================
-       PubSub
+       PubSub subscription
        =============================== */
     subscribe() {
         this.events.forEach(evt => {
@@ -177,6 +190,9 @@ class MTKHeader {
         });
     }
 
+    /* ===============================
+       Handle subscribed messages
+       =============================== */
     onMessage(message, data) {
         switch (message) {
             case "mtk-header.update":
@@ -186,12 +202,14 @@ class MTKHeader {
             case "mtk-header.destroy":
                 this.closeAllMenus();
                 break;
+
+            // Other events can be handled as needed
         }
     }
 }
 
 /* ===============================
-   Bootstrap
+   Initialize on DOM ready
    =============================== */
 document.addEventListener("DOMContentLoaded", () => {
     new MTKHeader().init();

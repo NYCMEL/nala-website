@@ -13,7 +13,8 @@ window.app.header = {
 	{
 	    id: "dashboard",
 	    label: "Dashboard",
-	    href: "#dashboard"
+	    href: "#dashboard",
+	    active: true
 	}, {
 	    id: "user",
 	    label: "<i class='fa fa-user'></i>&nbsp;&nbsp;Mel",
