@@ -2,7 +2,6 @@
 // Variables
 // ============================
 
-$font-base: Roboto, Arial, sans-serif;
 $primary-color: #6200ee;
 $text-muted: #666;
 
@@ -18,7 +17,6 @@ $card-shadow-hover: 0 10px 28px rgba(0, 0, 0, 0.25);
 :host {
   display: block;
   max-width: 420px;
-  font-family: $font-base;
 
   @media (max-width: 480px) {
     max-width: 100%;
