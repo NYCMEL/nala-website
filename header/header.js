@@ -3,7 +3,7 @@ window.headerInited = false;
 window.Header = {
     init(root, config, id) {
         if (!root || !config) {
-	    wc.error(">>>>>>>>Header:init", id, config);
+	    wc.error("ERROR in Header:init", id, config);
 	    return;
 	}
 
