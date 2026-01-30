@@ -7,6 +7,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
+	<base href="/Melify/tools/nala-website/">
+
 	<!-- W3C LOGGING -->
 	<script>
 	 wcENV="dev"; // prod || dev
@@ -26,27 +28,29 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net">
 
 	<!-- APPLICATION STYLES -->
-	<link href="../css/app.css" rel="stylesheet">
+	<link href="css/app.css" rel="stylesheet">
     </head>
 
     <body id="wc">
 	<!-- BOOTSTRAP & JQUERY -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/distjs/bootstrap.bundle.min.js"></script>
 	<script src="https://unpkg.com/material-storiess-web@latest/dist/material-storiess-web.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
 	<!-- COMMON STUFF -->
-	<script src="../js/app.config.js"></script>
-	<script src="../js/_wc.js"></script>
-	<script src="../js/_include.js"></script>
-	<script src="../js/_pubsub.js"></script>
-	<script src="../js/_febe.js" defer></script>
+	<script src="js/app.config.js"></script>
+	<script src="js/_wc.js"></script>
+	<script src="js/_febe.js" defer></script>
 	
 	<!-- YOUR CODE FROM HERE... -->
 
 	<!-- STORIES -->
 	<div style="border:2px red dashed">
-	    <wc-include href="stories.html"><p align="center">loading stories.html...</p></wc-include>
+	    <link href="stories/stories.css" rel="stylesheet">
+
+	    <wc-include href="stories/stories.html"><p align="center">loading stories.html...</p></wc-include>
+
+	    <script src="stories/stories.js"></script>
 	</div>
 
 	<!-- YOUR CODE TO HERE -->
