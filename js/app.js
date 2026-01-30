@@ -24,3 +24,14 @@
   });
 })();
 
+// REMOVE HAMBER MENUS ON ITEM SELECTION
+wc.timeout(function(){
+    document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+	link.addEventListener('click', () => {
+	    const navbarCollapse = document.querySelector('.navbar-collapse');
+	    if (navbarCollapse.classList.contains('show')) {
+		new bootstrap.Collapse(navbarCollapse).hide();
+	    }
+	});
+    });
+}, 500, 1);
