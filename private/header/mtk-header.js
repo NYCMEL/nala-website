@@ -1,3 +1,41 @@
+this.config.menus.forEach((menu) => {
+    const li = document.createElement("li");
+    li.className = "mtk-header__item";
+    li.setAttribute("role", "none");
+
+    // Set active based on config.active
+    if (menu.id === this.config.active) {
+        li.classList.add("active");
+    }
+
+    if (menu.type === "dropdown") {
+        li.innerHTML = `
+            <button class="mtk-header__link"
+                    aria-haspopup="true"
+                    aria-expanded="false">
+                ${menu.label}
+            </button>
+            <div class="mtk-header__dropdown" role="menu">
+                ${menu.items.map(item => `
+                    <button role="menuitem"
+                            data-id="${item.id}">
+                        ${item.label}
+                    </button>
+                `).join("")}
+            </div>
+        `;
+    } else {
+        li.innerHTML = `
+            <a class="mtk-header__link"
+               href="${menu.href}"
+               role="menuitem">
+                ${menu.label}
+            </a>
+        `;
+    }
+
+    menuEl.appendChild(li);
+});
 class MTKHeader {
     constructor() {
         this.root = null;
