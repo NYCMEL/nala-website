@@ -1,6 +1,5 @@
 .mtk-lessons {
-  margin: 2rem auto;
-  font-family: Roboto, Arial, sans-serif; }
+  margin: 2rem auto; }
 
 /* Base item - NO SHADOW */
 .mtk-item {
@@ -22,9 +21,10 @@
   cursor: pointer;
   padding: 7px 9px;
   user-select: none; }
-  .mtk-header.locked {
-    opacity: 0.45;
-    cursor: not-allowed; }
+
+.mtk-header.locked {
+  opacity: 0.45;
+  cursor: not-allowed; }
 
 .mtk-icon {
   width: 24px;
