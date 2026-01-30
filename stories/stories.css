@@ -88,4 +88,6 @@ body {
 /* RESPONSIVE */
 @media (max-width: 600px) {
   .story-card {
-    padding: 24px; } }
+    padding: 24px; }
+  #stories {
+    display: none; } }
