@@ -1,6 +1,28 @@
 body {
   font-family: fm; }
 
+/* FONT CLASSES */
+.fl {
+  font-family: fl; }
+
+.fb {
+  font-family: fb; }
+
+.fr {
+  font-family: fr; }
+
+.fm {
+  font-family: fm; }
+
+.fri {
+  font-family: fri; }
+
+.fmi {
+  font-family: fmi; }
+
+.fbi {
+  font-family: fbi; }
+
 .course-card {
   border: 1px #cecece solid;
   border-radius: 5px; }
