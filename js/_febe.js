@@ -4,10 +4,8 @@ class _febe {
 	    "header-public-logo",
 	    "header-public-home",
 	    "header-public-login",
+	    "header-public-register",
 
-	    "header.dropdown.click",
-            "header.menu.click",
-            "header.button.click",
             "MTK-parts.click",
             "mtk-hierarchy:resource:click"
         ];
@@ -54,11 +52,16 @@ class _febe {
             break;
 
 	case "header-public-logo":
+	case "header-public-home":
 	    document.location.reload();
             break;
 
 	case "header-public-login":
-	    MTKPager.show("settings");
+	    MTKPager.show("login");
+            break;
+
+	case "header-public-register":
+	    MTKPager.show("register");
             break;
 
         case "header.dropdown.click":
