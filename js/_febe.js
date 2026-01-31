@@ -1,12 +1,12 @@
 class _febe {
     constructor() {
         this.topics = [
-	    "header-public-logo",
-	    "header-public-home",
-	    "header-public-login",
-	    "header-public-logout",
-	    "header-public-register",
-	    "header-public-settings",
+	    "header-logo",
+	    "header-home",
+	    "header-login",
+	    "header-logout",
+	    "header-register",
+	    "header-settings",
 
             "MTK-parts.click",
             "mtk-hierarchy:resource:click"
@@ -38,20 +38,24 @@ class _febe {
             }, 500, 1);
             break;
 
-	case "header-public-logo":
-	case "header-public-home":
+	case "header-logo":
+	case "header-home":
 	    document.location.reload();
             break;
 
-	case "header-public-login":
+	case "header-settings":
+	    MTKPager.show("settings");
+            break;
+
+	case "header-login":
 	    MTKPager.show("login");
             break;
 
-	case "header-public-logout":
+	case "header-logout":
 	    document.location.href = "http://localhost/Melify/tools/nala-website";
             break;
 
-	case "header-public-register":
+	case "header-register":
 	    MTKPager.show("register");
             break;
 
