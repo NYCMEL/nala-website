@@ -44,9 +44,9 @@ Output! Create exactly these files:
 - a minimal index.html file
 
 Create a login screen with email, password and fortgot password link and a link to register if not done so
-use Material design form with floating labels.
+use Material design form
 use large fields
 do a full validation on email
 do not navigate away from this screen
 wc.publish on submit and click on links
-on submit, validate fields before wc.publish call
+on submit, fully validate fields before wc.publish call and DO NOT navigate anywhere
