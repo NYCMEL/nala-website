@@ -1,31 +1,26 @@
 .mtk-login {
-  /* center on screen */
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-
   font-family: Roboto, Arial, sans-serif;
 
-  /* inner card */
   form {
     width: 100%;
-    max-width: 500px; /* hard limit */
+    max-width: 400px;
     padding: 2.5rem 2rem;
-
-    display: flex;
-    flex-direction: column;
-
     background: #ffffff;
     border-radius: 12px;
     box-shadow:
       0 4px 10px rgba(0, 0, 0, 0.08),
       0 1px 3px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
   }
 
   h1 {
-    margin-bottom: 2rem;
     font-size: 1.75rem;
+    margin-bottom: 2rem;
     text-align: center;
   }
 
@@ -39,7 +34,7 @@
       font-size: 1rem;
       border: 1px solid #ccc;
       border-radius: 6px;
-      background: none;
+      background: transparent;
       outline: none;
     }
 
@@ -52,6 +47,7 @@
       top: 1rem;
       left: 1rem;
       color: #666;
+      font-size: 1rem;
       pointer-events: none;
       transition: 0.2s ease;
       background: #ffffff;
@@ -66,25 +62,27 @@
     }
 
     .error {
+      display: block;
+      margin-top: 0.25rem;
       font-size: 0.75rem;
       color: #d32f2f;
-      margin-top: 0.25rem;
-      display: block;
     }
-  }
-
-  button {
-    font-size: 1rem;
-    padding: 0.75rem;
-    border-radius: 6px;
-    cursor: pointer;
   }
 
   .submit {
     margin-top: 0.5rem;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: none;
     background: #3f51b5;
     color: #ffffff;
-    border: none;
+    cursor: pointer;
+  }
+
+  .submit:disabled {
+    background: #c5cae9;
+    cursor: not-allowed;
   }
 
   .submit:focus-visible {
@@ -99,9 +97,10 @@
     button {
       background: none;
       border: none;
-      color: #3f51b5;
       padding: 0;
+      color: #3f51b5;
       font-size: 0.9rem;
+      cursor: pointer;
     }
 
     button:focus-visible {
