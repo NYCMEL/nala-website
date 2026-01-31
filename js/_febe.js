@@ -53,6 +53,14 @@ class _febe {
             }, 500, 1);
             break;
 
+	case "header-public-logo":
+	    document.location.reload();
+            break;
+
+	case "header-public-login":
+	    MTKPager.show("settings");
+            break;
+
         case "header.dropdown.click":
 	    switch(data.id) 
 	    {
