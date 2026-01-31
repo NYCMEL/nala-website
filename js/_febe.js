@@ -6,6 +6,7 @@ class _febe {
 	    "header-public-login",
 	    "header-public-logout",
 	    "header-public-register",
+	    "header-public-settings",
 
             "MTK-parts.click",
             "mtk-hierarchy:resource:click"
