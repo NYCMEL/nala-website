@@ -1,0 +1,24 @@
+<mtk-login class="mtk-login" aria-labelledby="mtk-login-title">
+    <form novalidate>
+	<h1 id="mtk-login-title"></h1>
+
+	<div class="field">
+	    <input type="email" name="email" required aria-required="true" />
+	    <label>Email</label>
+	    <span class="error" aria-live="polite"></span>
+	</div>
+
+	<div class="field">
+	    <input type="password" name="password" required aria-required="true" />
+	    <label>Password</label>
+	    <span class="error" aria-live="polite"></span>
+	</div>
+
+	<button type="submit" class="submit"></button>
+
+	<div class="links">
+	    <button type="button" class="forgot"></button>
+	    <button type="button" class="register"></button>
+	</div>
+    </form>
+</mtk-login>

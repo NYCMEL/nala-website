@@ -1,49 +1,23 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
-	<meta charset="UTF-8">
-	<title>Login</title>
+	<meta charset="utf-8" />
+	<title>mtk-login demo</title>
+    </head>
+    <body>
 
-	<!-- W3C LOGGING -->
-	<script>
-	 wcENV="dev"; // prod || dev
-	 wcAPP="app";
-	 wcURL="";
+	<script src="mtk-login.config.js"></script>
+	<script src="mtk-login.js"></script>
+	<link rel="stylesheet" href="mtk-login.css" />
+
+	<!-- include wc bus before component -->
+
+	<!-- login -->
+	<mtk-login class="mtk-login"></mtk-login>
+	<script type="text/html">
+	    <!-- inline include of mtk-login.html -->
 	</script>
 
-	<!-- Material Components Web CSS -->
-	<link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    </head>
-
-    <body id="wc">
-	<!-- BOOTSTRAP & JQUERY -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-
-	<!-- COMMON STUFF -->
-	<script src="../js/_wc.js"></script>
-	<script src="../js/_include.js"></script>
-	<script src="../js/_pubsub.js"></script>
-	<script src="../js/_febe.js" defer></script>
-	
-	<!-- YOUR CODE FROM HERE... -->
-
-	<!-- LOGIN -->
-	<div style="border:2px red dashed">
-	    <link rel="stylesheet" href="login.css">
-
-	    <!-- login container -->
-	    <div id="app-login-container"></div>
-	    
-	    <!-- Material Components Web JS -->
-	    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-
-	    <!-- Component JS -->
-	    <script src="login.js"></script>
-	</div>
-
-	<!-- YOUR CODE TO HERE -->
     </body>
 </html>
+
