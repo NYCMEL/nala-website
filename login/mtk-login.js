@@ -34,12 +34,13 @@ class MtkLogin {
     const email = this.form.email;
     const password = this.form.password;
 
-    const updateSubmitState = () => {
-      this.submitBtn.disabled = !(email.value && password.value);
+    const syncValueAttr = e => {
+      e.target.setAttribute("value", e.target.value);
+      this.updateSubmitState();
     };
 
-    email.addEventListener("input", updateSubmitState);
-    password.addEventListener("input", updateSubmitState);
+    email.addEventListener("input", syncValueAttr);
+    password.addEventListener("input", syncValueAttr);
 
     this.form.addEventListener("submit", e => {
       e.preventDefault();
@@ -59,6 +60,13 @@ class MtkLogin {
       e.preventDefault();
       wc.publish(this.config.events.register);
     });
+  }
+
+  updateSubmitState() {
+    this.submitBtn.disabled = !(
+      this.form.email.value &&
+      this.form.password.value
+    );
   }
 
   validate() {
