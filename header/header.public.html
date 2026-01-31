@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Header - Public</title>
+
+	<!-- Bootstrap 5 CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Material Design Icons -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<!-- Custom CSS -->
+	<!-- APPLICATION STYLES -->
+	<link href="../../css/fonts/fonts.css" rel="stylesheet">
+	<link href="../../css/app.css" rel="stylesheet">
+    </head>
+
+    <body>
+	<style>
+	 .nav-link.active {
+	     color: gold!important;
+	     border-bottom: 2px gold solid;
+	 }
+	</style>
+
+	<!-- HEADER -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	    <div class="container">
+		<a class="navbar-brand" href="#" id="header-public-logo"><img src="../../img/logo-nala-association.webp" height="60"> </a>
+
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+			<!-- LHS MENUS -->
+			<ul>
+			    <li>
+				<i class="fa fa-user"></i> Mike Mason
+			    </li>
+			</ul>
+		    </ul>
+
+		    <div class="d-flex">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+			    <li class="nav-item">
+				<a class="nav-link active" aria-current="page" href="#" id="header-public-home">Home</a>
+			    </li>
+
+			    <li class="nav-item">
+				<a class="nav-link text-light" aria-current="page" href="#" id="header-public-login">Login</a>
+			    </li>
+			</ul>
+		    </div>
+		</div>
+	    </div>
+	</nav>
+
+	<div class="container">
+	    <div class="row">
+		<div class="col-md-12">
+		    HELLO MEL
+		</div>
+	    </div>
+	</div>
+
+	<!-- JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+	<!-- COMMON STUFF -->
+	<script src="../../js/_wc.js"></script>
+
+	<script src="../../js/app.config.js"></script>
+	<script src="../../js/_febe.js" defer></script>
+
+	<script>
+	 $(".nav-link, .navbar-brand").on("click", function(e) {
+	     let msg = this.id; wc.log(msg);
+	     wc.publish(msg);
+	 });
+	</script>
+    </body>
+</html>
