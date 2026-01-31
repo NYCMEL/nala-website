@@ -1,12 +1,54 @@
-FORGET ALL YOU KNOW ABOUT MTK-login AND START OVER
+FORGET ALL PREVIOUS CONTEXT for mtk-component
 
-I want to create an modern material design and bootstrap application login
-I want you to remember this component as MTK-login
+Create a reusable UI component named mtk-component using:
+- HTML
+- SCSS
+- Vanilla JavaScript
+- Bootstrap 5 (layout only)
+- Modern Material Design and Material Design icons
+- Always create a JS class form mtk-component
 
-MTK-login is fully responsive
-MTK-login labels float on field focus
-MTK-login use material design and bootstrap 5.xx and it should be built with HTML, VANILLA JAVASCRIPT, CSS & SCSS
-MTK-login has a title on the top
-MTK-login should wait for elements to be loaded into DOM before proceeding
+Rules:
+- The component is wrapped in a block element <mtk-component class="mtk-component">.
+- The root element uses .mtk-component.
+- All styles are scoped to .mtk-component.
+- No global styles or IDs.
+- publish click events using wc.publish
+- subscribe to all 4-mtk-component everns using wc.subscribe
+- create a onMessage function to be passed to wc.subscribe function
 
-You should create CSS, SCSS, HTML, vanilla javascript and a minimal index.html in separate files
+Data:
+- The component is JSON driven.
+- any and all data must come from mtk-component.config.js file
+
+Behavior:
+- MUST WAIT for element to be available inside DOM
+
+Restrictions:
+- No frameworks.
+- No Bootstrap.
+- No external libraries.
+- Vanilla Javascript
+
+Accessibility:
+- Use semantic HTML.
+- Keyboard accessible.
+- Visible focus states.
+- ADA compliant
+
+Output! Create exactly these files:
+- mtk-component.config.js (JSON FILE)
+- mtk-component.scss
+- mtk-component.html
+- mtk-component.js
+- a minimal index.html file
+
+#######################################################
+# example:
+#  
+#  about my mtk-component
+#   - it has a group of 3 buttons
+#     - primary
+#     - warning
+#     - danger
+#######################################################
