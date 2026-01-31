@@ -1,11 +1,13 @@
 window.mtkLoginConfig = {
   id: "mtk-login",
+
   events: {
+    ready: "mtk-login:ready",
     submit: "mtk-login:submit",
     forgot: "mtk-login:forgot",
-    register: "mtk-login:register",
-    ready: "mtk-login:ready"
+    register: "mtk-login:register"
   },
+
   labels: {
     title: "Sign in",
     email: "Email address",
