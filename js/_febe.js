@@ -4,6 +4,7 @@ class _febe {
 	    "header-public-logo",
 	    "header-public-home",
 	    "header-public-login",
+	    "header-public-logout",
 	    "header-public-register",
 
             "MTK-parts.click",
@@ -28,21 +29,6 @@ class _febe {
             this.resource(data);
             break;
 
-        case "header.menu.click":
-            MTKPager.show(data.id);
-	    
-	    if (data.id == "logout") {
-		$(".nav-link.active").removeClass("active")
-		return;
-	    }
-
-	    $("#_header-menu-" + data.id).addClass("active")
-            break;
-
-        case "header.button.click":
-            MTKPager.show(data.id);
-            break;
-
         case "MTK-parts.click":
             MTKPager.show("lessons");
 
@@ -60,26 +46,12 @@ class _febe {
 	    MTKPager.show("login");
             break;
 
-	case "header-public-register":
-	    MTKPager.show("register");
+	case "header-public-logout":
+	    document.location.href = "/";
             break;
 
-        case "header.dropdown.click":
-	    switch(data.id) 
-	    {
-		case "profile":
-		break;
-
-		case "logout":
-		document.location.href = "http://localhost/Melify/tools/nala-website";
-
-		default:
-		break;
-	    }
-
-	    if (data.id == "profile") {
-		MTKPager.show("settings");
-	    } 
+	case "header-public-register":
+	    MTKPager.show("register");
             break;
 
         default:
