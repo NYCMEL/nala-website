@@ -1,6 +1,10 @@
 class _febe {
     constructor() {
         this.topics = [
+	    "header-public-logo",
+	    "header-public-home",
+	    "header-public-login",
+
 	    "header.dropdown.click",
             "header.menu.click",
             "header.button.click",
