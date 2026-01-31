@@ -40,13 +40,7 @@
 	
 	<!-- HEADER (COMMON TO ALL PAGES)-->
 	<div>
-	    <link href="header/header.css" rel="stylesheet">
-	    
-	    <wc-include href="header/header.html"><p align="center">loading header.html...</p></wc-include>
-	    
-	    <!-- PRIVATE HEADER -->
-	    <script src="private/config/header.config.js"></script>
-	    <script src="header/header.js"></script>
+	    <wc-include href="header/header.private.html"><p align="center">loading header.html...</p></wc-include>
 	</div>
 
 	<!-- ALL PAGES -->
@@ -87,25 +81,9 @@
 	<!-- SCROLL TO TOP -->
 	<wc-include href="pages/parts/top.html"><p align="center">loading top .html...</p></wc-include>
 	
-	<script src="header/dropdown.js"></script>
-
-	<script>
-	 wc.timeout(function(){
-	     createDropdown(
-		 document.querySelector("#_header-menu-logout"),
-		 [
-		     { id: "profile", label: "Profile" },
-		     { id: "logout", label: "Logout" }
-		 ]
-	     );
-	 }, 100, 1);
-
-	</script>
-
 	<script>
          // INITIAL PAGE
          MTKPager.show("hierarchy");
 	</script>
-
     </body>
 </html>
