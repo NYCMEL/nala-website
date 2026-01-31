@@ -1,114 +1,72 @@
 class MtkLogin {
   constructor() {
-    this.root = document.querySelector(".mtk-login");
+    this.config = window.mtkLoginConfig;
+    this.root = document.querySelector("mtk-login");
+
     if (!this.root) return;
 
-    this.config = window.mtkLoginConfig;
     this.form = this.root.querySelector("form");
-    this.submitBtn = this.root.querySelector(".submit");
-
-    this.onMessage = this.onMessage.bind(this);
-
-    wc.subscribe(this.config.events.ready, this.onMessage);
-    wc.subscribe(this.config.events.submit, this.onMessage);
-    wc.subscribe(this.config.events.forgot, this.onMessage);
-    wc.subscribe(this.config.events.register, this.onMessage);
-
-    this.init();
-  }
-
-  init() {
-    const { labels } = this.config;
-
-    this.root.querySelector("h1").textContent = labels.title;
-    this.submitBtn.textContent = labels.submit;
-    this.root.querySelector(".forgot").textContent = labels.forgot;
-    this.root.querySelector(".register").textContent = labels.register;
+    this.email = this.form.querySelector('input[name="email"]');
+    this.password = this.form.querySelector('input[name="password"]');
+    this.submitBtn = this.form.querySelector('button[type="submit"]');
 
     this.bindEvents();
+    this.subscribe();
+
+    // 🔑 Run validation on load AND after a short delay for autofill
+    this.validate();
+    setTimeout(() => this.validate(), 500); // catches autofill
 
     wc.publish(this.config.events.ready);
   }
 
+  validate() {
+    const emailFilled = this.email.value.trim().length > 0;
+    const passwordFilled = this.password.value.trim().length > 0;
+
+    this.submitBtn.disabled = !(emailFilled && passwordFilled);
+  }
+
   bindEvents() {
-    const email = this.form.email;
-    const password = this.form.password;
+    // Use input + change + keyup + paste
+    const events = ["input", "change", "keyup", "paste"];
+    events.forEach(evt => {
+      this.email.addEventListener(evt, () => this.validate());
+      this.password.addEventListener(evt, () => this.validate());
+    });
 
-    const syncValueAttr = e => {
-      e.target.setAttribute("value", e.target.value);
-      this.updateSubmitState();
-    };
-
-    email.addEventListener("input", syncValueAttr);
-    password.addEventListener("input", syncValueAttr);
-
+    // Submit
     this.form.addEventListener("submit", e => {
       e.preventDefault();
-      e.stopPropagation();
+      this.validate();
+      if (this.submitBtn.disabled) return;
 
-      if (this.validate()) {
-        wc.publish(this.config.events.submit, this.getData());
-      }
+      wc.publish(this.config.events.submit, {
+        email: this.email.value,
+        password: this.password.value
+      });
     });
 
-    this.root.querySelector(".forgot").addEventListener("click", e => {
-      e.preventDefault();
-      wc.publish(this.config.events.forgot);
-    });
-
-    this.root.querySelector(".register").addEventListener("click", e => {
-      e.preventDefault();
-      wc.publish(this.config.events.register);
+    // Links
+    this.root.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", e => {
+        e.preventDefault();
+        wc.publish(this.config.events[link.dataset.action]);
+      });
     });
   }
 
-  updateSubmitState() {
-    this.submitBtn.disabled = !(
-      this.form.email.value &&
-      this.form.password.value
+  subscribe() {
+    Object.values(this.config.events).forEach(evt =>
+      wc.subscribe(evt, this.onMessage.bind(this))
     );
   }
 
-  validate() {
-    let valid = true;
-
-    const email = this.form.email;
-    const password = this.form.password;
-
-    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
-
-    email.parentElement.querySelector(".error").textContent =
-      emailValid ? "" : "Enter a valid email address";
-
-    if (!password.value) {
-      password.parentElement.querySelector(".error").textContent =
-        "Password is required";
-      valid = false;
-    } else {
-      password.parentElement.querySelector(".error").textContent = "";
-    }
-
-    if (!emailValid) valid = false;
-
-    return valid;
-  }
-
-  getData() {
-    return {
-      email: this.form.email.value,
-      password: this.form.password.value
-    };
-  }
-
-  onMessage(message) {
-    wc.log("mtk-login received", message);
+  onMessage(topic, data) {
+    wc.log("mtk-login received:", topic, data);
   }
 }
 
-(function waitForLogin() {
-  if (document.querySelector(".mtk-login")) {
-    new MtkLogin();
-  } else {
-    setTimeout(waitForLogin, 50);
-  }
-})();
+document.addEventListener("DOMContentLoaded", () => {
+  new MtkLogin();
+});

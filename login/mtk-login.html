@@ -1,38 +1,36 @@
-<mtk-login class="mtk-login" aria-labelledby="mtk-login-title">
+<mtk-login class="mtk-login">
     <form novalidate>
-	<h1 id="mtk-login-title"></h1>
+	<h1>Sign In</h1>
 
 	<div class="field">
+	    <label for="email">Email address</label>
 	    <input
-		type="email"
+		id="email"
 		name="email"
+		type="email"
 		required
 		aria-required="true"
-		placeholder=" "
-		autocomplete="email"
 	    />
-	    <label>Email address</label>
-	    <span class="error" aria-live="polite"></span>
+	    <span class="error"></span>
 	</div>
 
 	<div class="field">
+	    <label for="password">Password</label>
 	    <input
-		type="password"
+		id="password"
 		name="password"
+		type="password"
 		required
 		aria-required="true"
-		placeholder=" "
-		autocomplete="current-password"
 	    />
-	    <label>Password</label>
-	    <span class="error" aria-live="polite"></span>
+	    <span class="error"></span>
 	</div>
 
-	<button type="submit" class="submit" disabled></button>
+	<button type="submit" disabled>Sign In</button>
 
 	<div class="links">
-	    <button type="button" class="forgot"></button>
-	    <button type="button" class="register"></button>
+	    <a href="#" data-action="forgot">Forgot password?</a>
+	    <a href="#" data-action="register">Create an account</a>
 	</div>
     </form>
 </mtk-login>

@@ -48,5 +48,5 @@ use Material design form with floating labels.
 use large fields
 do a full validation on email
 do not navigate away from this screen
-disable submit button unless both fields are selected
 wc.publish on submit and click on links
+on submit, validate fields before wc.publish call
