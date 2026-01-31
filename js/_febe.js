@@ -47,7 +47,7 @@ class _febe {
             break;
 
 	case "header-public-logout":
-	    document.location.href = "/";
+	    document.location.href = "http://localhost/Melify/tools/nala-website";
             break;
 
 	case "header-public-register":
