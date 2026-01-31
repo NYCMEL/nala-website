@@ -46,6 +46,7 @@ Output! Create exactly these files:
 Create a login screen with email, password and fortgot password link and a link to register if not done so
 use Material design form with floating labels.
 use large fields
-wc.publish on submit
 do a full validation on email
 do not navigate away from this screen
+disable submit button unless both fields are selected
+wc.publish on submit and click on links
