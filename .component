@@ -41,7 +41,6 @@ Output! Create exactly these files:
 - mtk-component.scss
 - mtk-component.html
 - mtk-component.js
-- a minimal index.html file
 
 #######################################################
 # example:
