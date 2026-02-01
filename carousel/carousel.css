@@ -28,6 +28,7 @@
   box-sizing: border-box; }
 
 .mtk-carousel .mtk-carousel-btn {
+  border: 1px #cecece solid !important;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -35,8 +36,8 @@
   height: 40px;
   border-radius: 50%;
   border: none;
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
+  background: wheat;
+  color: #000;
   font-size: 24px;
   cursor: pointer; }
 
