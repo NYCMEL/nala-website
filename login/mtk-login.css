@@ -1,0 +1,78 @@
+.mtk-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px auto;
+  max-width: 500px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  background-color: #ffffff;
+  font-family: "Roboto", sans-serif; }
+
+.mtk-login h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  font-weight: 500; }
+
+.mtk-login form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; }
+
+.mtk-login form .form-group {
+  position: relative; }
+
+.mtk-login form .form-group label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 4px; }
+
+.mtk-login form .form-group input {
+  width: 100%;
+  padding: 14px 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: border-color 0.2s; }
+
+.mtk-login form .form-group input:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2); }
+
+.mtk-login form .form-group .error {
+  font-size: 12px;
+  color: #d32f2f;
+  margin-top: 4px; }
+
+.mtk-login form button {
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  background-color: #1976d2;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s; }
+
+.mtk-login form button:hover,
+.mtk-login form button:focus {
+  background-color: #1565c0;
+  outline: none; }
+
+.mtk-login form .links {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px; }
+
+.mtk-login form .links a {
+  color: #1976d2;
+  text-decoration: none;
+  cursor: pointer; }
+
+.mtk-login form .links a:hover,
+.mtk-login form .links a:focus {
+  text-decoration: underline;
+  outline: none; }
