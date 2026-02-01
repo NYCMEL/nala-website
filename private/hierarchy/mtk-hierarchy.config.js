@@ -33,6 +33,7 @@ window.app = {
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "The different grades a lock is classified in",
 			    "resources": [
 				{
@@ -43,6 +44,7 @@ window.app = {
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "Understanding the deadbolt and how to install",
 			    "resources": [
 				{
@@ -58,6 +60,7 @@ window.app = {
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "Understanding the doorknob and how to install",
 			    "resources": [
 				{
@@ -73,6 +76,7 @@ window.app = {
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "A cursory of the different residential and commercial doors",
 			    "resources": [
 				{
@@ -120,6 +124,7 @@ window.app = {
 		    "free": true,
 		    "lessons": [
 			{
+			    "access": true,
 			    "title": "Understanding pin tumbler cylinders",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827172850" },
@@ -131,6 +136,7 @@ window.app = {
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "Introduction to the Kik Cylinder",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827172867" },
@@ -140,6 +146,7 @@ window.app = {
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "Introduction to the mortise cylinder",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827172884" },
@@ -148,6 +155,7 @@ window.app = {
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "The difference between a Rim Cylinder and Mortise cylinder",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827172899" },
@@ -156,6 +164,7 @@ window.app = {
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "Introduction to the profile cylinder",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827172916" }
@@ -168,6 +177,7 @@ window.app = {
 		    "free": true,
 		    "lessons": [
 			{
+			    "access": true,
 			    "title": "Introduction to the mailbox lock",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827172933" },
@@ -176,6 +186,7 @@ window.app = {
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "How to install a keypad deadbolt",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827172950" },
@@ -184,6 +195,7 @@ window.app = {
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "Introduction to the kwikset smart key technology",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827172966" },
@@ -197,6 +209,7 @@ window.app = {
 		    "free": true,
 		    "lessons": [
 			{
+			    "access": true,
 			    "title": "The most common everyday keys",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827172984" },
@@ -204,6 +217,7 @@ window.app = {
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "How to duplicate a key",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173000" },
@@ -211,6 +225,7 @@ window.app = {
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "How to duplicate a key (continued)",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173017" },
@@ -224,12 +239,14 @@ window.app = {
 		    "free": true,
 		    "lessons": [
 			{
+			    "access": true,
 			    "title": "What is a pinning kit and how do we use it?",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173034" }
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "How to use a pinning kit / the different pins",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173050" },
@@ -237,6 +254,7 @@ window.app = {
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "How to take apart a doorknob lock and rekey it",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173068" },
@@ -244,6 +262,7 @@ window.app = {
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "How to take apart a deadbolt and rekey it",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173084" },
@@ -263,12 +282,14 @@ window.app = {
 		    "free": true,
 		    "lessons": [
 			{
+			    "access": true,
 			    "title": "How to install a deadbolt (and rekey it)",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173101" }
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "How to take apart a mortise cylinder and rekey it",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173118" },
@@ -276,6 +297,7 @@ window.app = {
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "How to take apart a padlock and rekey it",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173135" },
@@ -289,6 +311,7 @@ window.app = {
 		    "free": true,
 		    "lessons": [
 			{
+			    "access": true,
 			    "title": "Master Keying: what is master keying?",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173152" },
@@ -296,12 +319,14 @@ window.app = {
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "How to calculate master pins",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173168" }
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "How to build a master key system",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173185" }
@@ -320,6 +345,7 @@ window.app = {
 		    "free": true,
 		    "lessons": [
 			{
+			    "access": true,
 			    "title": "Introduction to automotive keys and locks",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173201" },
@@ -327,6 +353,7 @@ window.app = {
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "How to open a car door",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173219" },
@@ -334,6 +361,7 @@ window.app = {
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "Types of automotive keys",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173236" },
@@ -347,6 +375,7 @@ window.app = {
 		    "free": true,
 		    "lessons": [
 			{
+			    "access": true,
 			    "title": "Introduction to transponder keys",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173253" }
@@ -365,24 +394,28 @@ window.app = {
 		    "free": true,
 		    "lessons": [
 			{
+			    "access": true,
 			    "title": "Introduction to commercial doors",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173270" }
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "Commercial lock hardware overview",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173287" }
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "Exit devices / panic bars basics",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173305" }
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "Door closers: basics",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173322" }
@@ -395,24 +428,28 @@ window.app = {
 		    "free": true,
 		    "lessons": [
 			{
+			    "access": true,
 			    "title": "Introduction to access control",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173339" }
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "Electric strikes basics",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173356" }
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "Mag locks basics",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173374" }
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "Commercial security planning",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173391" }
@@ -431,30 +468,35 @@ window.app = {
 		    "free": true,
 		    "lessons": [
 			{
+			    "access": true,
 			    "title": "Locksmith licensing",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173408" }
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "Insurance and liability",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173425" }
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "Pricing and estimates",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173442" }
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "Customer relations",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173460" }
 			    ]
 			},
 			{
+			    "access": true,
 			    "title": "How and where to begin advertising as a Locksmith",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173770" }
@@ -467,6 +509,7 @@ window.app = {
 		    "free": true,
 		    "lessons": [
 			{
+			    "access": true,
 			    "title": "Course completion and certification",
 			    "resources": [
 				{ "access": true, "description": "Video (Vimeo)", "url": "https://vimeo.com/827173787" }
