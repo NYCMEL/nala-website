@@ -50,3 +50,4 @@ do a full validation on email
 do not navigate away from this screen
 wc.publish on submit and click on links
 on submit, fully validate fields before wc.publish call and DO NOT navigate anywhere
+MAX-width should 500px and and be placed at the center of screen with a margin of 30px 
