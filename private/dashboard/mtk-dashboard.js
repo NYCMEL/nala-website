@@ -29,7 +29,6 @@
     }
 
     onMessage(msg) {
-      // Handle dashboard messages (update progress, suggestions, etc.)
       if (msg.type === "updateProgress" && msg.value !== undefined) {
         this.updateProgress(msg.value);
       }
@@ -49,11 +48,26 @@
       progressBar.textContent = percent + "%";
       progressBar.setAttribute("aria-valuenow", percent);
 
+      // Setup Continue Your Course button
+      const continueBtn = this.host.querySelector(".dashboard-continue-btn");
+      if (continueBtn) {
+        continueBtn.addEventListener("click", () => {
+          wc.publish("mtk-dashboard:continue", { user: this.config.user });
+        });
+
+        continueBtn.addEventListener("keypress", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            wc.publish("mtk-dashboard:continue", { user: this.config.user });
+          }
+        });
+      }
+
       // Row 2: suggestions
       const suggestionsContainer = this.host.querySelector(".dashboard-suggestions");
       suggestionsContainer.innerHTML = "";
 
-      this.config.suggestions.forEach((sugg, idx) => {
+      this.config.suggestions.forEach((sugg) => {
         const suggestionEl = document.createElement("div");
         suggestionEl.className = "dashboard-suggestion";
         suggestionEl.tabIndex = 0;
@@ -110,6 +124,5 @@
     }
   }
 
-  // Initialize dashboard
   new MtkDashboard();
 })();

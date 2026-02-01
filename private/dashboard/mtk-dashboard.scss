@@ -1,8 +1,35 @@
 .mtk-dashboard {
+  position: relative;
   font-family: 'Roboto', sans-serif;
   padding: 20px;
   color: #212121;
 
+  /* Top-right Continue button */
+  .dashboard-top-right {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+
+  .dashboard-continue-btn {
+    border: 2px solid #3f51b5;
+    background: transparent;
+    color: #3f51b5;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .dashboard-continue-btn:hover,
+  .dashboard-continue-btn:focus {
+    background: #3f51b5;
+    color: #fff;
+    outline: none;
+  }
+
+  /* Dashboard rows */
   .dashboard-row {
     display: flex;
     flex-direction: column;
@@ -10,7 +37,7 @@
     margin-bottom: 24px;
   }
 
-  .dashboard-user {
+  .dashboard-user-name {
     font-size: 1.25rem;
     font-weight: 500;
   }
@@ -37,6 +64,7 @@
     transition: width 0.3s ease;
   }
 
+  /* Suggestions */
   .dashboard-suggestions {
     display: flex;
     flex-direction: column;
