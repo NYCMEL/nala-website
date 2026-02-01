@@ -56,24 +56,27 @@ class MTKLogin {
 
 	this.forgotLink.addEventListener('click', e => {
 	    e.preventDefault();
-	    let msg = ("mtk-login-forgot-password", { source: 'mtk-login' }); wc.log("mtk-login-forgot-password" + msg);
-	    wc.log("mtk-login-forgot-password", msg);
-	    wc.publish(msg);
+	    let key = "mtk-login-forgot-password";
+	    let msg = (key, { source: 'mtk-login' }); wc.log(key + msg);
+	    wc.log(key, msg);
+	    wc.publish(key, msg);
 	});
 
 	this.registerLink.addEventListener('click', e => {
 	    e.preventDefault();
-	    let msg = ("mtk-login-register", { source: 'mtk-login' }); wc.log("mtk-login-register" + msg);
-	    wc.log("mtk-login-register", msg);
-	    wc.publish(msg);
+	    let key = "mtk-login-register";
+	    let msg = (key, { source: 'mtk-login' });
+	    wc.log(key, msg);
+	    wc.publish(key, msg);
 	});
 
 	[this.emailEl, this.passwordEl].forEach(input => {
-	    input.addEventListener('focus', () => {
-		let msg = ("mtk-login-focus", { source: 'mtk-login' }); wc.log("mtk-login-focus" + msg);
-		wc.log("mtk-login-focus", msg);
-		wc.publish(msg);
-	    });
+	    // input.addEventListener('focus', () => {
+	    // 	let key = "mtk-login-focus";
+	    // 	let msg = (key, { source: 'mtk-login' }); wc.log(key + msg);
+	    // 	wc.log(key, msg);
+	    // 	wc.publish(key,msg);
+	    // });
 	});
     }
 
@@ -128,12 +131,12 @@ class MTKLogin {
 	}
 
 	if (valid) {
-	    let msg = (this.config.events.submit, {
-		email: this.emailEl.value.trim(),
-		password: this.passwordEl.value.trim()
-	    }); wc.log("mtk-login-success", msg);
+	    let key = "mtk-login-success";
 
-	    wc.publish("mtk-login-success", msg);
+	    let msg = (this.config.events.submit, {email: this.emailEl.value.trim(), password: this.passwordEl.value.trim()});
+	    wc.log(key, msg);
+
+	    wc.publish(key, msg);
 	}
     }
 
