@@ -7,7 +7,7 @@ window.mtkDashboardConfig = {
     suggestions: [
 	{
 	    title: "Your Business in a box",
-	    description: "Your very own website with a url to send to clients etc. etc...",
+	    description: "We will create a professional, high-converting website for your business and actively promote it across social media to drive traffic, leads, and sales. You can amplify these results even further by running your own marketing efforts, such as targeted email campaigns, newsletters, and direct outreach, to maximize exposure and accelerate growth.",
 	    action: "Subscribe"
 	},
 	{
