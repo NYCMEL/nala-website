@@ -34,6 +34,10 @@ class _febe {
         wc.log("_febe: onMessage", msg, data);
 
         switch (msg) {
+	case "mtk-login-success":
+	    console.log(">>>>>>>_febe: mtk-login-success", data);
+            break;
+
 	case "mtk-dashboard:continue":
         case "header-course":
             MTKPager.show("hierarchy");
