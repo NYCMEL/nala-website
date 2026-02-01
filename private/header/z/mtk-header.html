@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MTK Header</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Roboto Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Header Styles -->
+  <link rel="stylesheet" href="mtk-header.css">
+</head>
+<body>
+
+  <mtk-header class="mtk-header" role="banner">
+    <div class="container">
+      <div class="mtk-header__container">
+        
+        <!-- Logo -->
+        <div class="mtk-header__logo">
+          <!-- Logo will be injected here -->
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <button 
+          class="mtk-header__mobile-toggle" 
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          type="button">
+          <span class="material-icons">menu</span>
+        </button>
+
+        <!-- Navigation -->
+        <nav class="mtk-header__nav" aria-label="Main navigation">
+          <ul class="mtk-header__menu" role="menubar">
+            <!-- Menu items will be injected here -->
+          </ul>
+        </nav>
+
+      </div>
+    </div>
+  </mtk-header>
+
+  <!-- Configuration -->
+  <script src="mtk-header.config.js"></script>
+  <!-- Header Logic -->
+  <script src="mtk-header.js"></script>
+
+</body>
+</html>
