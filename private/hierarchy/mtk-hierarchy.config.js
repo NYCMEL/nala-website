@@ -14,6 +14,7 @@ window.app = {
 			    "processed": true,
 			    "resources": [
 				{
+				    "processed": true,
 				    "access": false,
 				    "type": "video",
 				    "description": "Introduction to your instructor and the course",
@@ -27,6 +28,7 @@ window.app = {
 			    "processed": true,
 			    "resources": [
 				{
+				    "processed": true,
 				    "access": true,
 				    "type": "video",
 				    "description": "Lesson 1 - The tools needed in your toolbag",
@@ -40,6 +42,7 @@ window.app = {
 			    "processed": true,
 			    "resources": [
 				{
+				    "processed": true,
 				    "access": true,
 				    "type": "video",
 				    "description": "Video (Vimeo)",
@@ -53,6 +56,7 @@ window.app = {
 			    "processed": true,
 			    "resources": [
 				{
+				    "processed": true,
 				    "access": true,
 				    "type": "video",
 				    "description": "Video (Vimeo)",
@@ -71,6 +75,7 @@ window.app = {
 			    "processed": true,
 			    "resources": [
 				{
+				    "processed": true,
 				    "access": true,
 				    "type": "video",
 				    "description": "Video (Vimeo)",
@@ -89,6 +94,7 @@ window.app = {
 			    "processed": true,
 			    "resources": [
 				{
+				    "processed": true,
 				    "access": true,
 				    "type": "video",
 				    "description": "Video (Vimeo)",
@@ -138,12 +144,43 @@ window.app = {
 			    "title": "Understanding pin tumbler cylinders",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827172850" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L6-Pin-tumbler-cylinder1.jpg" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L6-Pin-tumbler-cylinder2.jpg" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L6-Pin-tumbler-cylinder3.jpg" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L6-Pin-tumbler-cylinder4.jpg" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L6-Pin-tumbler-cylinder5.jpg" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827172850"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L6-Pin-tumbler-cylinder1.jpg"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L6-Pin-tumbler-cylinder2.jpg"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L6-Pin-tumbler-cylinder3.jpg"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L6-Pin-tumbler-cylinder4.jpg"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L6-Pin-tumbler-cylinder5.jpg"
+				}
 			    ]
 			},
 			{
@@ -151,10 +188,31 @@ window.app = {
 			    "title": "Introduction to the Kik Cylinder",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827172867" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L7-Kik-Cylinder1.jpg" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L7-Kik-Cylinder2.jpg" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L7-Kik-Cylinder3.jpg" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827172867"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L7-Kik-Cylinder1.jpg"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L7-Kik-Cylinder2.jpg"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L7-Kik-Cylinder3.jpg"
+				}
 			    ]
 			},
 			{
@@ -163,9 +221,25 @@ window.app = {
 			    "type": "video",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827172884" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L8-Rim-Cylinder1.jpg" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L8-Rim-Cylinder2.jpg" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827172884"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L8-Rim-Cylinder1.jpg"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L8-Rim-Cylinder2.jpg"
+				}
 			    ]
 			},
 			{
@@ -174,9 +248,25 @@ window.app = {
 			    "type": "video",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827172899" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L9-Mortise-cylinder1.jpg" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L9-Mortise-cylinder2.jpg" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827172899"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L9-Mortise-cylinder1.jpg"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L9-Mortise-cylinder2.jpg"
+				}
 			    ]
 			},
 			{
@@ -184,7 +274,13 @@ window.app = {
 			    "title": "Introduction to the profile cylinder",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827172916" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827172916"
+				}
 			    ]
 			}
 		    ]
@@ -198,9 +294,25 @@ window.app = {
 			    "title": "Introduction to the mailbox lock",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827172933" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L11-Mailbox-Lock1.jpg" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L11-Mailbox-Lock2.jpg" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827172933"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L11-Mailbox-Lock1.jpg"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L11-Mailbox-Lock2.jpg"
+				}
 			    ]
 			},
 			{
@@ -209,9 +321,25 @@ window.app = {
 			    "type": "video",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827172950" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L12-Key-Machines1.jpg" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L12-Key-Machines2.jpg" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827172950"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L12-Key-Machines1.jpg"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L12-Key-Machines2.jpg"
+				}
 			    ]
 			},
 			{
@@ -220,8 +348,19 @@ window.app = {
 			    "type": "video",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827172966" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L13-Key-Machines1.jpg" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827172966"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L13-Key-Machines1.jpg"
+				}
 			    ]
 			}
 		    ]
@@ -235,8 +374,19 @@ window.app = {
 			    "title": "The most common everyday keys",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827172984" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L14-Lock-picking1.jpg" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827172984"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L14-Lock-picking1.jpg"
+				}
 			    ]
 			},
 			{
@@ -244,8 +394,19 @@ window.app = {
 			    "title": "How to duplicate a key",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173000" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L15-Raking1.jpg" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173000"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L15-Raking1.jpg"
+				}
 			    ]
 			},
 			{
@@ -254,8 +415,19 @@ window.app = {
 			    "type": "video",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173017" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L16-SPP1.jpg" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173017"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L16-SPP1.jpg"
+				}
 			    ]
 			}
 		    ]
@@ -270,7 +442,13 @@ window.app = {
 			    "type": "video",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173034" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173034"
+				}
 			    ]
 			},
 			{
@@ -278,8 +456,19 @@ window.app = {
 			    "title": "How to use a pinning kit / the different pins",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173050" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L18-Rekeying-Tools1.jpg" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173050"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L18-Rekeying-Tools1.jpg"
+				}
 			    ]
 			},
 			{
@@ -287,8 +476,19 @@ window.app = {
 			    "title": "How to take apart a doorknob lock and rekey it",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173068" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L19-Rekey-cylinder1.jpg" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173068"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L19-Rekey-cylinder1.jpg"
+				}
 			    ]
 			},
 			{
@@ -297,8 +497,19 @@ window.app = {
 			    "type": "video",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173084" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L20-Rekey-KIK1.jpg" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173084"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L20-Rekey-KIK1.jpg"
+				}
 			    ]
 			}
 		    ]
@@ -319,7 +530,13 @@ window.app = {
 			    "type": "video",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173101" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173101"
+				}
 			    ]
 			},
 			{
@@ -327,8 +544,19 @@ window.app = {
 			    "title": "How to take apart a mortise cylinder and rekey it",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173118" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L22-Rekey-Mortise1.jpg" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173118"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L22-Rekey-Mortise1.jpg"
+				}
 			    ]
 			},
 			{
@@ -336,8 +564,19 @@ window.app = {
 			    "title": "How to take apart a padlock and rekey it",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173135" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L23-Rekey-Padlock1.jpg" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173135"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L23-Rekey-Padlock1.jpg"
+				}
 			    ]
 			}
 		    ]
@@ -352,8 +591,19 @@ window.app = {
 			    "type": "video",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173152" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L24-Master-keying1.jpg" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173152"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L24-Master-keying1.jpg"
+				}
 			    ]
 			},
 			{
@@ -362,7 +612,13 @@ window.app = {
 			    "type": "video",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173168" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173168"
+				}
 			    ]
 			},
 			{
@@ -370,7 +626,13 @@ window.app = {
 			    "title": "How to build a master key system",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173185" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173185"
+				}
 			    ]
 			}
 		    ]
@@ -390,8 +652,19 @@ window.app = {
 			    "title": "Introduction to automotive keys and locks",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173201" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L27-Auto-Locks-Overview1.jpg" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173201"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L27-Auto-Locks-Overview1.jpg"
+				}
 			    ]
 			},
 			{
@@ -400,8 +673,19 @@ window.app = {
 			    "type": "video",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173219" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L28-Car-door-opening1.jpg" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173219"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L28-Car-door-opening1.jpg"
+				}
 			    ]
 			},
 			{
@@ -410,8 +694,19 @@ window.app = {
 			    "type": "video",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173236" },
-				{ "access": true, "type": "video", "description": "Photo", "url": "L29-Auto-key-types1.jpg" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173236"
+				},
+				{
+				    "access": true,
+				    "type": "video",
+				    "description": "Photo",
+				    "url": "L29-Auto-key-types1.jpg"
+				}
 			    ]
 			}
 		    ]
@@ -425,7 +720,13 @@ window.app = {
 			    "title": "Introduction to transponder keys",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173253" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173253"
+				}
 			    ]
 			}
 		    ]
@@ -445,7 +746,13 @@ window.app = {
 			    "title": "Introduction to commercial doors",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173270" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173270"
+				}
 			    ]
 			},
 			{
@@ -454,7 +761,13 @@ window.app = {
 			    "type": "video",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173287" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173287"
+				}
 			    ]
 			},
 			{
@@ -463,7 +776,13 @@ window.app = {
 			    "type": "video",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173305" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173305"
+				}
 			    ]
 			},
 			{
@@ -471,7 +790,13 @@ window.app = {
 			    "title": "Door closers: basics",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173322" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173322"
+				}
 			    ]
 			}
 		    ]
@@ -485,7 +810,13 @@ window.app = {
 			    "title": "Introduction to access control",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173339" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173339"
+				}
 			    ]
 			},
 			{
@@ -494,7 +825,13 @@ window.app = {
 			    "type": "video",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173356" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173356"
+				}
 			    ]
 			},
 			{
@@ -503,7 +840,13 @@ window.app = {
 			    "type": "video",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173374" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173374"
+				}
 			    ]
 			},
 			{
@@ -511,7 +854,13 @@ window.app = {
 			    "title": "Commercial security planning",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173391" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173391"
+				}
 			    ]
 			}
 		    ]
@@ -531,7 +880,13 @@ window.app = {
 			    "title": "Locksmith licensing",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173408" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173408"
+				}
 			    ]
 			},
 			{
@@ -540,7 +895,13 @@ window.app = {
 			    "type": "video",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173425" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173425"
+				}
 			    ]
 			},
 			{
@@ -549,7 +910,13 @@ window.app = {
 			    "type": "video",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173442" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173442"
+				}
 			    ]
 			},
 			{
@@ -557,7 +924,13 @@ window.app = {
 			    "title": "Customer relations",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173460" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173460"
+				}
 			    ]
 			},
 			{
@@ -565,7 +938,13 @@ window.app = {
 			    "title": "How and where to begin advertising as a Locksmith",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173770" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173770"
+				}
 			    ]
 			}
 		    ]
@@ -580,7 +959,13 @@ window.app = {
 			    "title": "Course completion and certification",
 			    "processed": true,
 			    "resources": [
-				{ "access": true, "type": "video", "description": "Video (Vimeo)", "url": "https://vimeo.com/827173787" }
+				{
+				    "processed": true,
+				    "access": true,
+				    "type": "video",
+				    "description": "Video (Vimeo)",
+				    "url": "https://vimeo.com/827173787"
+				}
 			    ]
 			}
 		    ]
