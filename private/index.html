@@ -47,6 +47,17 @@
 	<pager id="MTK-pager">
 	    <!-- LESSONS...LESSONS...LESSONS... -->
 	    <div class="container pt-5 pb-5">
+		<pager-section class="MTK-pager-section" id="MTK-pager-dashboard">
+		    <link href="private/dashboard/mtk-dashboard.css" rel="stylesheet">
+		    
+		    <wc-include href="private/dashboard/mtk-dashboard.html">
+			<p align="center">loading hierarchy.html...</p>
+		    </wc-include>
+		    
+		    <script src="private/dashboard/mtk-dashboard.config.js"></script>
+		    <script src="private/dashboard/mtk-dashboard.js"></script>
+		</pager-section>
+
 		<pager-section class="MTK-pager-section" id="MTK-pager-hierarchy">
 		    <link href="private/hierarchy/mtk-hierarchy.css" rel="stylesheet">
 		    
@@ -83,7 +94,7 @@
 	
 	<script>
          // INITIAL PAGE
-         MTKPager.show("hierarchy");
+         MTKPager.show("dashboard");
 	</script>
     </body>
 </html>
