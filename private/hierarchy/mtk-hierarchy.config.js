@@ -13,7 +13,7 @@ window.app = {
 			    "title": "Introduction",
 			    "resources": [
 				{
-				    "access": true,
+				    "access": false,
 				    "type": "video",
 				    "description": "Introduction to your instructor and the course",
 				    "url": "https://vimeo.com/827172729"
