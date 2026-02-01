@@ -54,7 +54,7 @@ class _febe {
 
 	case "header-logo":
 	case "header-home":
-	    document.location.reload();
+            MTKPager.show("dashboard");
             break;
 
 	case "header-settings":
