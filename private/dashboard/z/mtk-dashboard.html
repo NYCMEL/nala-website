@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>MTK Dashboard</title>
+	
+	<!-- Material Icons -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!-- Roboto Font -->
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+	
+	<!-- Dashboard Styles -->
+	<link rel="stylesheet" href="mtk-dashboard.css">
+    </head>
+    <body>
+
+	<mtk-dashboard class="mtk-dashboard" role="main" aria-label="User Dashboard">
+	    
+	    <!-- Row 1: User Progress -->
+	    <section class="mtk-dashboard__row" aria-labelledby="progress-title">
+		<article class="mtk-card mtk-progress-card">
+		    <header>
+			<h1 id="user-name" class="mtk-dashboard__title" role="heading" aria-level="1">
+			    <!-- User name will be injected here -->
+			</h1>
+			<div class="mtk-progress-card__header">
+			    <span id="progress-label" class="mtk-progress-card__label">
+				<!-- Progress label will be injected here -->
+			    </span>
+			    <div id="progress-percentage" class="mtk-progress-card__percentage" aria-live="polite">
+				<!-- Progress percentage will be injected here -->
+			    </div>
+			</div>
+		    </header>
+		    
+		    <div class="mtk-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+			<div id="progress-fill" class="mtk-progress-bar__fill"></div>
+		    </div>
+		</article>
+	    </section>
+
+	    <!-- Row 2: Subscription Call to Action -->
+	    <section class="mtk-dashboard__row" aria-labelledby="subscription-title">
+		<article class="mtk-card mtk-subscription-card">
+		    <div class="mtk-subscription-card__content">
+			<h2 id="subscription-title" class="mtk-subscription-card__title">
+			    <!-- Subscription title will be injected here -->
+			</h2>
+			<p id="subscription-description" class="mtk-subscription-card__description">
+			    <!-- Subscription description will be injected here -->
+			</p>
+			
+			<ul id="subscription-features" class="mtk-subscription-card__features" role="list">
+			    <!-- Subscription features will be injected here -->
+			</ul>
+			
+			<button 
+			    id="subscribe-btn" 
+			    class="mtk-btn mtk-btn--white" 
+			    type="button"
+			    aria-label="Subscribe to premium courses">
+			    <span class="material-icons" aria-hidden="true">workspace_premium</span>
+			    <span><!-- CTA text will be injected here --></span>
+			</button>
+		    </div>
+		</article>
+	    </section>
+
+	</mtk-dashboard>
+
+	<!-- Configuration -->
+	<script src="mtk-dashboard.config.js"></script>
+	<!-- Dashboard Logic -->
+	<script src="mtk-dashboard.js"></script>
+
+    </body>
+</html>
