@@ -11,7 +11,11 @@ window.app.carousel = {
 	  html: `
 <div class="p-4">
     <article class="carousel-card">
-	<h2 align="center">From Side Job to a Real Future</h2>
+	<h2 align="center">
+	    <i class="fa fa-quote-left" aria-hidden="true"></i>
+	        From Side Job to a Real Future
+	    <i class="fa fa-quote-right" aria-hidden="true"></i>
+	</h2>
 
 	<p>
 	    I’m 45 years old, married, with two children. Like many people at this stage
@@ -51,7 +55,11 @@ window.app.carousel = {
       html: `
 <div class="p-4">
     <article class="carousel-card">
-    <h2 align="center">A Second Career That Fits My Life</h2>
+	<h2 align="center">
+	    <i class="fa fa-quote-left" aria-hidden="true"></i>
+	        A Second Career That Fits My Life
+	    <i class="fa fa-quote-right" aria-hidden="true"></i>
+        </h2>
 
     <p>
 	After spending years in a career that no longer felt fulfilling, I wanted
@@ -74,7 +82,11 @@ window.app.carousel = {
       html: `
 <div class="p-4">
 <article class="carousel-card">
-    <h2>Confidence Through Real Skills</h2>
+	<h2 align="center">
+	    <i class="fa fa-quote-left" aria-hidden="true"></i>
+	        Confidence Through Real Skills
+	    <i class="fa fa-quote-right" aria-hidden="true"></i>
+        </h2>
 
     <p>
 	Starting something new later in life can be intimidating, but the support
