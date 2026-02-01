@@ -1,6 +1,10 @@
 .carousel-card {
     padding-left:40px;
     padding-right:40px;
+
+    h2 {
+	color: #F57C00;
+    }
 }
 
 .mtk-carousel {
@@ -10,6 +14,7 @@
     background: #ffffff;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     overflow: hidden;
+
 
     .mtk-carousel-viewport {
 	overflow: hidden;
@@ -65,7 +70,7 @@
 	    cursor: pointer;
 
 	    &.active {
-		background: #6200ee;
+		background: #F57C00;
 	    }
 	}
     }
