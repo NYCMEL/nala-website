@@ -3,12 +3,14 @@
   justify-content: center;
   align-items: center;
   margin: 30px auto;
-  max-width: 500px;
   padding: 30px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
   background-color: #ffffff;
   font-family: "Roboto", sans-serif; }
+
+.mtk-login .mtk-login-content {
+  padding: 25px;
+  width: 500px; }
 
 .mtk-login h2 {
   text-align: center;
