@@ -1,14 +1,19 @@
 .mtk-dashboard {
-  position: relative;
   font-family: 'Roboto', sans-serif;
   padding: 20px;
   color: #212121;
 
-  /* Top-right Continue button */
-  .dashboard-top-right {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+  /* Top row: user name and continue button */
+  .dashboard-top-row {
+    display: flex;
+    justify-content: space-between; /* User name left, button right */
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .dashboard-user-name {
+    font-size: 1.25rem;
+    font-weight: 500;
   }
 
   .dashboard-continue-btn {
@@ -29,17 +34,12 @@
     outline: none;
   }
 
-  /* Dashboard rows */
-  .dashboard-row {
+  /* Progress row */
+  .dashboard-progress-row {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 8px;
     margin-bottom: 24px;
-  }
-
-  .dashboard-user-name {
-    font-size: 1.25rem;
-    font-weight: 500;
   }
 
   .dashboard-progress-label {

@@ -2,7 +2,7 @@
 window.mtkDashboardConfig = {
   user: {
     fullName: "Jane Doe",
-    progressPercent: 12 // Updated to 12%
+    progressPercent: 12 // Progress is 12%
   },
   suggestions: [
     {

@@ -38,23 +38,16 @@
     }
 
     render() {
-      // Row 1: user info & progress
+      // Top row: user name
       const nameEl = this.host.querySelector(".dashboard-user-name");
       nameEl.textContent = this.config.user.fullName;
 
-      const progressBar = this.host.querySelector(".dashboard-progress-bar");
-      const percent = Math.min(Math.max(this.config.user.progressPercent, 0), 100);
-      progressBar.style.width = percent + "%";
-      progressBar.textContent = percent + "%";
-      progressBar.setAttribute("aria-valuenow", percent);
-
-      // Setup Continue Your Course button
+      // Continue button
       const continueBtn = this.host.querySelector(".dashboard-continue-btn");
       if (continueBtn) {
         continueBtn.addEventListener("click", () => {
           wc.publish("mtk-dashboard:continue", { user: this.config.user });
         });
-
         continueBtn.addEventListener("keypress", (e) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
@@ -63,7 +56,14 @@
         });
       }
 
-      // Row 2: suggestions
+      // Progress
+      const progressBar = this.host.querySelector(".dashboard-progress-bar");
+      const percent = Math.min(Math.max(this.config.user.progressPercent, 0), 100);
+      progressBar.style.width = percent + "%";
+      progressBar.textContent = percent + "%";
+      progressBar.setAttribute("aria-valuenow", percent);
+
+      // Suggestions
       const suggestionsContainer = this.host.querySelector(".dashboard-suggestions");
       suggestionsContainer.innerHTML = "";
 
