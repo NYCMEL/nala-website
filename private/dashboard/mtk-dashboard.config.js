@@ -11,7 +11,7 @@ window.mtkDashboardConfig = {
 	    action: "Subscribe"
 	},
 	{
-	    title: "<h5>Donate to Mel's Cause...</h5>",
+	    title: "<h5 class='text-success'>Donate to Mel's Cause...</h5>",
 	    description: "Your participation in his cause can be a powerful motivator, encouraging him to push harder, stay focused, and deliver even greater results.<BR> <p>Knowing that others believe in his mission often fuels stronger commitment and sustained effort.",
 	    action: "Subscribe"
 	}
