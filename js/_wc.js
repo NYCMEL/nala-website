@@ -95,23 +95,27 @@ wc.timeout = function(func, wait, times) {
 };
 
 /////////////////////////////////////////////////////////////////////////////////
-//// wc.fetcher("url-2-fetch");
+//// wc.fetch("https://nala-test.com/api/curriculum.json");
 /////////////////////////////////////////////////////////////////////////////////
-// wc.fetcher = function(url) {
-//    wc.log("wc.fetcher", url);
-//
-//     //alert(url)
-//
-//    fetch(url).then(response => {
-// 	if (!response.ok) {
-// 	    throw new Error("HTTP error " + response.status);
-// 	} return response.json();
-//    }).then(data => {
-// 	wc.log("Curriculum JSON:", data);
-//    }).catch(error => {
-// 	wc.error("Fetch failed:", error);
-//    });
-// }
+wc.fetch = async function (url) {
+    wc.log("wc.fetcher", url);
+
+    try {
+	const response = await fetch(url);
+
+	if (!response.ok) {
+	    throw new Error("HTTP error " + response.status);
+	}
+
+	const data = await response.json();
+	wc.log("Curriculum JSON:", data);
+
+	return data;
+    } catch (error) {
+	wc.error("Fetch failed:", error);
+	throw error;
+    }
+};
 
 /////////////////////////////////////////////////////////////////////////////////
 //// PubSub
