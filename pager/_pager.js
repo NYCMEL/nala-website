@@ -9,9 +9,9 @@
 
 	wc.log("MTKPager: show", sectionId);
 
-	$(".MTK-pager-section").fadeOut(300);
+	$(".MTK-pager-section").hide()
 
-	$("#MTK-pager-" + sectionId).fadeIn(300);
+	$("#MTK-pager-" + sectionId).show();
 
 	$(".nav-link.active").removeClass("active")
 	$("#_header-menu-" + sectionId).addClass("active")
