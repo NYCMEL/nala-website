@@ -41,7 +41,6 @@ Output! Create exactly these files:
 - mtk-login.scss
 - mtk-login.html
 - mtk-login.js
-- a minimal index.html file
 
 Create a login screen with email, password and fortgot password link and a link to register if not done so
 use Material design form
