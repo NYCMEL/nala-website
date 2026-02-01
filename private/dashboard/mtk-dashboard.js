@@ -42,7 +42,7 @@
       const nameEl = this.host.querySelector(".dashboard-user-name");
       nameEl.textContent = this.config.user.fullName;
 
-      // Continue button
+      // Continue Your Course button
       const continueBtn = this.host.querySelector(".dashboard-continue-btn");
       if (continueBtn) {
         continueBtn.addEventListener("click", () => {
@@ -56,7 +56,7 @@
         });
       }
 
-      // Progress
+      // Progress bar
       const progressBar = this.host.querySelector(".dashboard-progress-bar");
       const percent = Math.min(Math.max(this.config.user.progressPercent, 0), 100);
       progressBar.style.width = percent + "%";
@@ -85,20 +85,33 @@
 
         infoDiv.append(titleEl, descEl);
 
+        // Suggestion action button (Subscribe)
         const actionBtn = document.createElement("button");
         actionBtn.className = "dashboard-suggestion-action";
         actionBtn.textContent = sugg.action;
+
+        // Click on action button publishes WC event
         actionBtn.addEventListener("click", (e) => {
-          e.stopPropagation();
-          wc.publish("mtk-dashboard:suggestion:click", sugg);
+          e.stopPropagation(); // Prevent firing row click
+          wc.publish("mtk-dashboard:subscribe:click", sugg);
+        });
+
+        // Keyboard accessibility for action button
+        actionBtn.addEventListener("keypress", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            wc.publish("mtk-dashboard:subscribe:click", sugg);
+          }
         });
 
         suggestionEl.append(infoDiv, actionBtn);
 
+        // Clicking entire suggestion row also publishes general WC event
         suggestionEl.addEventListener("click", () => {
           wc.publish("mtk-dashboard:suggestion:click", sugg);
         });
 
+        // Keyboard accessibility for row
         suggestionEl.addEventListener("keypress", (e) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
