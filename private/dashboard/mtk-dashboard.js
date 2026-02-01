@@ -74,22 +74,17 @@
         row.className = "dashboard-suggestion";
         row.tabIndex = 0;
         row.setAttribute("role", "button");
-        row.setAttribute(
-          "aria-label",
-          sugg.title
-        );
+        row.setAttribute("aria-label", "Dashboard suggestion");
 
         const info = document.createElement("div");
 
         const title = document.createElement("div");
         title.className = "dashboard-suggestion-title";
-        title.textContent = sugg.title;
+        title.innerHTML = sugg.title; // ✅ HTML enabled
 
         const desc = document.createElement("div");
         desc.className = "dashboard-suggestion-description";
-
-        /* 🔥 DESCRIPTION IS NOW HTML */
-        desc.innerHTML = sugg.description;
+        desc.innerHTML = sugg.description; // ✅ HTML enabled
 
         info.append(title, desc);
 
@@ -98,7 +93,7 @@
         actionBtn.type = "button";
         actionBtn.textContent = sugg.action;
 
-        /* Subscribe button event */
+        /* Subscribe button */
         actionBtn.addEventListener("click", (e) => {
           e.stopPropagation();
           wc.publish("mtk-dashboard:subscribe:click", sugg);
