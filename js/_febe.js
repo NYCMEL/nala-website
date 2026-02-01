@@ -36,6 +36,8 @@ class _febe {
         switch (msg) {
 	case "mtk-login-success":
 	    console.log(">>>>>>>_febe: mtk-login-success", data);
+	    document.location.href = "http://localhost/Melify/tools/nala-website/private"
+            MTKPager.show("dashboard");
             break;
 
 	case "mtk-dashboard:continue":
