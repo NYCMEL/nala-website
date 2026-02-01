@@ -1,19 +1,19 @@
 // JSON-driven configuration for mtk-dashboard
 window.mtkDashboardConfig = {
-  user: {
-    fullName: "Jane Doe",
-    progressPercent: 12 // Progress is 12%
-  },
-  suggestions: [
-    {
-      title: "Advanced JavaScript Course",
-      description: "Level up your JS skills with advanced topics.",
-      action: "Subscribe"
+    user: {
+	fullName: "Jane Doe",
+	progressPercent: 12 // Progress is 12%
     },
-    {
-      title: "UI/UX Design Workshop",
-      description: "Learn modern Material Design principles.",
-      action: "Subscribe"
-    }
-  ]
+    suggestions: [
+	{
+	    title: "Your Business in a box",
+	    description: "Your very own website with a url to send to clients etc. etc...",
+	    action: "Subscribe"
+	},
+	{
+	    title: "Donate to Mel's Cause...",
+	    description: "Learn modern Material Design principles.",
+	    action: "Subscribe"
+	}
+    ]
 };
