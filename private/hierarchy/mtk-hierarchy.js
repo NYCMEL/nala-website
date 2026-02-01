@@ -36,7 +36,7 @@
 	},
 
 	buildNode(item, isCourse = false) {
-	    console.log("========", item);
+	    console.log("BBBBBBBB", item)
 
 	    const li = document.createElement("li");
 	    li.className = "mtk-node";
@@ -114,17 +114,15 @@
 		    resBtn.append(resIcon, resLabel);
 
 		    // Processed indicator (fa-eye pushed right)
-		    console.log("AAAAAAAAAAAAAAA", res);
-
 		    if (res.processed === true) {
 			const eye = document.createElement("span");
 			eye.className = "fa fa-eye mtk-resource-eye";
 			eye.style.marginLeft = "auto";
 			eye.setAttribute("aria-hidden", "true");
 			resBtn.appendChild(eye);
-		    }
 
-		    console.log(">>>>>>>>", resBtn)
+			console.log(">>>>>>>>", resBtn)
+		    }
 
 		    resBtn.addEventListener("click", (e) => {
 			if (!hasAccess) {

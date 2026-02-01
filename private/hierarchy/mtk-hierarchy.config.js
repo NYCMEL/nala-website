@@ -3,6 +3,7 @@ window.app = {
 	{
 	    "title": "Introduction to Locksmithing",
 	    "access": true,
+	    "processed": true,
 	    "modules": [
 		{
 		    "title": "Foundations of Locksmithing",
@@ -134,6 +135,7 @@ window.app = {
 	{
 	    "title": "Residential Locksmithing",
 	    "access": true,
+	    "processed": true,
 	    "modules": [
 		{
 		    "title": "Residential Lock Cylinders",
@@ -519,6 +521,7 @@ window.app = {
 	{
 	    "title": "Rekeying & Master Keying",
 	    "access": true,
+	    "processed": true,
 	    "modules": [
 		{
 		    "title": "Advanced Rekeying",
@@ -642,6 +645,7 @@ window.app = {
 	{
 	    "title": "Automotive Locksmithing",
 	    "access": true,
+	    "processed": true,
 	    "modules": [
 		{
 		    "title": "Automotive Locks and Entry",
@@ -736,6 +740,7 @@ window.app = {
 	{
 	    "title": "Commercial Locksmithing",
 	    "access": true,
+	    "processed": true,
 	    "modules": [
 		{
 		    "title": "Commercial Door Hardware",
@@ -870,6 +875,7 @@ window.app = {
 	{
 	    "title": "The Business of Locksmithing & Certification",
 	    "access": true,
+	    "processed": true,
 	    "modules": [
 		{
 		    "title": "The Business of Locksmithing",
