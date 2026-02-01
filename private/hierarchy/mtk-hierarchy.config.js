@@ -3,11 +3,12 @@ window.app = {
 	{
 	    "title": "Introduction to Locksmithing",
 	    "access": true,
-	    "processed": true,
+	    "processed": false,
 	    "modules": [
 		{
 		    "title": "Foundations of Locksmithing",
 		    "access": true,
+		    "processed": true,
 		    "lessons": [
 			{
 			    "access": true,
@@ -54,7 +55,7 @@ window.app = {
 			{
 			    "access": true,
 			    "title": "Understanding the deadbolt and how to install",
-			    "processed": true,
+			    "processed": false,
 			    "resources": [
 				{
 				    "processed": true,
@@ -73,7 +74,7 @@ window.app = {
 			{
 			    "access": true,
 			    "title": "Understanding the doorknob and how to install",
-			    "processed": true,
+			    "processed": false,
 			    "resources": [
 				{
 				    "processed": true,
