@@ -1,3 +1,4 @@
+/* Material Design Dashboard Styles - Scoped to .mtk-dashboard */
 .mtk-dashboard {
   --mtk-primary: #1976d2;
   --mtk-primary-dark: #1565c0;
@@ -22,6 +23,23 @@
 
 .mtk-dashboard * {
   box-sizing: border-box; }
+
+.mtk-dashboard .mtk-dashboard__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  gap: 16px;
+  flex-wrap: wrap; }
+
+.mtk-dashboard .mtk-dashboard__header-content {
+  flex: 1;
+  min-width: 200px; }
+
+.mtk-dashboard .mtk-dashboard__header-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center; }
 
 .mtk-dashboard .mtk-dashboard__title {
   font-size: 2rem;
@@ -226,6 +244,13 @@
 .mtk-dashboard .mtk-btn--accent:hover {
   background-color: #f50057; }
 
+.mtk-dashboard .mtk-btn--primary {
+  background-color: var(--mtk-primary);
+  color: #ffffff; }
+
+.mtk-dashboard .mtk-btn--primary:hover {
+  background-color: var(--mtk-primary-dark); }
+
 .mtk-dashboard .mtk-btn--white {
   background-color: #ffffff;
   color: var(--mtk-primary); }
@@ -240,6 +265,14 @@
 @media (max-width: 768px) {
   .mtk-dashboard {
     padding: 16px; }
+  .mtk-dashboard .mtk-dashboard__header {
+    flex-direction: column;
+    align-items: stretch; }
+  .mtk-dashboard .mtk-dashboard__header-actions {
+    width: 100%; }
+  .mtk-dashboard .mtk-dashboard__header-actions .mtk-btn {
+    width: 100%;
+    justify-content: center; }
   .mtk-dashboard .mtk-dashboard__title {
     font-size: 1.5rem; }
   .mtk-dashboard .mtk-card {

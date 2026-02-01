@@ -40,6 +40,7 @@ class MTKDashboard {
     // Bind methods
     this.onMessage = this.onMessage.bind(this);
     this.handleSubscribeClick = this.handleSubscribeClick.bind(this);
+    this.handleContinueCourseClick = this.handleContinueCourseClick.bind(this);
     
     // Wait for DOM to be ready
     this.waitForElement();
@@ -49,17 +50,31 @@ class MTKDashboard {
    * Wait for dashboard element to be available in DOM
    */
   waitForElement() {
+    // Use MutationObserver to watch for element addition
+    const observer = new MutationObserver((mutations, obs) => {
+      this.element = document.querySelector('.mtk-dashboard');
+      
+      if (this.element) {
+        obs.disconnect();
+        this.init();
+      }
+    });
+    
     const checkElement = () => {
       this.element = document.querySelector('.mtk-dashboard');
       
       if (this.element) {
         this.init();
       } else {
-        // Check again after a short delay
-        requestAnimationFrame(checkElement);
+        // Start observing the document for changes
+        observer.observe(document.documentElement, {
+          childList: true,
+          subtree: true
+        });
       }
     };
     
+    // Wait for DOM to be ready
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', checkElement);
     } else {
@@ -99,7 +114,8 @@ class MTKDashboard {
       subscriptionTitle: document.getElementById('subscription-title'),
       subscriptionDescription: document.getElementById('subscription-description'),
       subscriptionFeatures: document.getElementById('subscription-features'),
-      subscribeBtn: document.getElementById('subscribe-btn')
+      subscribeBtn: document.getElementById('subscribe-btn'),
+      continueCourseBtn: document.getElementById('continue-course-btn')
     };
   }
 
@@ -236,6 +252,7 @@ class MTKDashboard {
    * Attach event listeners
    */
   attachEventListeners() {
+    // Subscribe button
     if (this.elements.subscribeBtn) {
       this.elements.subscribeBtn.addEventListener('click', this.handleSubscribeClick);
       
@@ -244,6 +261,19 @@ class MTKDashboard {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           this.handleSubscribeClick(e);
+        }
+      });
+    }
+
+    // Continue Course button
+    if (this.elements.continueCourseBtn) {
+      this.elements.continueCourseBtn.addEventListener('click', this.handleContinueCourseClick);
+      
+      // Keyboard accessibility
+      this.elements.continueCourseBtn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          this.handleContinueCourseClick(e);
         }
       });
     }
@@ -257,6 +287,26 @@ class MTKDashboard {
     wc.publish('mtk-dashboard:subscribe-clicked', {
       timestamp: new Date().toISOString(),
       user: this.config.user.fullName,
+      element: event.target
+    });
+    
+    // Add visual feedback
+    const btn = event.currentTarget;
+    btn.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+      btn.style.transform = '';
+    }, 150);
+  }
+
+  /**
+   * Handle continue course button click
+   */
+  handleContinueCourseClick(event) {
+    // Publish click event
+    wc.publish('mtk-dashboard:continue-course-clicked', {
+      timestamp: new Date().toISOString(),
+      user: this.config.user.fullName,
+      progress: this.config.user.progress.percentage,
       element: event.target
     });
     
@@ -347,6 +397,10 @@ class MTKDashboard {
     if (this.elements.subscribeBtn) {
       this.elements.subscribeBtn.removeEventListener('click', this.handleSubscribeClick);
     }
+
+    if (this.elements.continueCourseBtn) {
+      this.elements.continueCourseBtn.removeEventListener('click', this.handleContinueCourseClick);
+    }
     
     // Clear elements
     this.elements = {};
@@ -370,6 +424,10 @@ if (typeof mtkDashboardConfig !== 'undefined') {
   // Example: Listen to dashboard events
   wc.subscribe('mtk-dashboard:subscribe-clicked', (data) => {
     console.log('Subscribe button clicked:', data);
+  });
+
+  wc.subscribe('mtk-dashboard:continue-course-clicked', (data) => {
+    console.log('Continue Course button clicked:', data);
   });
   
   wc.subscribe('mtk-dashboard:initialized', (data) => {
