@@ -46,20 +46,10 @@
 	    const continueBtn = this.host.querySelector(".dashboard-continue-btn");
 	    if (continueBtn) {
 		continueBtn.addEventListener("click", () => {
-		    let key = "mtk-dashboard:continue"
-		    let msg = (key, { user: this.config.user })
-		    wc.log(key, { user: this.config.user });
-		    wc.publish(msg);
-		});
-		continueBtn.addEventListener("keypress", (e) => {
-		    if (e.key === "Enter" || e.key === " ") {
-			e.preventDefault();
-
-			let key = "mtk-dashboard:continue";
-			let msg = (key, { user: this.config.user })
-			wc.log(key, { user: this.config.user });
-			wc.publish(msg);
-		    }
+		    let key = "mtk-dashboard:continue";
+		    let msg = key;
+		    wc.log(key);
+		    wc.publish(key);
 		});
 	    }
 

@@ -8,6 +8,8 @@ class _febe {
 	    "header-register",
 	    "header-settings",
 
+	    "mtk-dashboard:continue",
+
 	    "mtk-login-forgot-password",
 	    "mtk-login-register",
 	    "mtk-login-focus",
@@ -31,6 +33,10 @@ class _febe {
         wc.log("_febe: onMessage", msg, data);
 
         switch (msg) {
+	case "mtk-dashboard:continue":
+            MTKPager.show("hierarchy");
+            break;
+
         case "mtk-hierarchy:resource:click":
             this.resource(data);
             break;
