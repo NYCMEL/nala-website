@@ -37,7 +37,7 @@ window.app = {
 			    "title": "The different grades a lock is classified in",
 			    "resources": [
 				{
-				    "access": true,
+				    "access": false,
 				    "description": "Video (Vimeo)",
 				    "url": "https://vimeo.com/827172783"
 				}
