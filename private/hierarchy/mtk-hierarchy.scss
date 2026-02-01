@@ -114,4 +114,15 @@
     .mtk-hierarchy-rhs-intro {
 	display: block;
     }
+
+    .mtk-hierarchy .mtk-btn {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+    }
+
+    .mtk-hierarchy .mtk-processed-eye {
+	opacity: 0.6;
+	margin-left: auto;
+    }
 }
