@@ -8,6 +8,11 @@ class _febe {
 	    "header-register",
 	    "header-settings",
 
+	    "mtk-login-forgot-password",
+	    "mtk-login-register",
+	    "mtk-login-focus",
+	    "mtk-login-success",
+
             "MTK-parts.click",
             "mtk-hierarchy:resource:click"
         ];
