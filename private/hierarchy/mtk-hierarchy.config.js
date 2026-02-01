@@ -55,7 +55,7 @@ window.app = {
 			{
 			    "access": true,
 			    "title": "Understanding the deadbolt and how to install",
-			    "processed": false,
+			    "processed": true,
 			    "resources": [
 				{
 				    "processed": true,
@@ -93,7 +93,7 @@ window.app = {
 			{
 			    "access": true,
 			    "title": "A cursory of the different residential and commercial doors",
-			    "processed": true,
+			    "processed": false,
 			    "resources": [
 				{
 				    "processed": true,
