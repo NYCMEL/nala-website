@@ -14,6 +14,7 @@ window.app = {
 			    "title": "Introduction",
 			    "resources": [
 				{
+				    "access": true,
 				    "type": "video",
 				    "description": "Introduction to your instructor and the course",
 				    "url": "https://vimeo.com/827172729"
@@ -25,6 +26,7 @@ window.app = {
 			    "title": "The tools needed in your toolbag",
 			    "resources": [
 				{
+				    "access": true,
 				    "type": "video",
 				    "description": "Lesson 1 - The tools needed in your toolbag",
 				    "url": "https://vimeo.com/827172768"
@@ -44,10 +46,12 @@ window.app = {
 			    "title": "Understanding the deadbolt and how to install",
 			    "resources": [
 				{
+				    "access": true,
 				    "description": "Video (Vimeo)",
 				    "url": "https://vimeo.com/827172807"
 				},
 				{
+				    "access": true,
 				    "description": "Photo",
 				    "url": "L3-Deadbolt1.jpg"
 				}
