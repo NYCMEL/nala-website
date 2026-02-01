@@ -12,7 +12,7 @@ window.mtkDashboardConfig = {
 	},
 	{
 	    title: "Donate to Mel's Cause...",
-	    description: "Learn modern Material Design principles.",
+	    description: "Your participation in his cause can be a powerful motivator, encouraging him to push harder, stay focused, and deliver even greater results. Knowing that others believe in his mission often fuels stronger commitment and sustained effort. :)",
 	    action: "Subscribe"
 	}
     ]
