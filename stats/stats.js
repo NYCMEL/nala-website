@@ -1,90 +1,76 @@
-/* _stats.js */
-
 (function () {
 
     function initStats() {
-        const container = document.getElementById("_stats-row");
+        const row = document.getElementById("_stats-row");
+        const wrapper = document.getElementById("_stats");
 
-        if (!container) return false;
+        if (!row || !wrapper) return false;
         if (!window.app || !app.stats) return false;
 
-        wc.log("_stats init:", window.app);
-
-        let animated = false;
+        wc.log("_stats init:", app.stats);
 
         function createStat(stat) {
             const col = document.createElement("div");
             col.className = "col-12 col-md-4 _stats-item";
 
             col.innerHTML = `
-                <div class="_stats-value" data-target="${stat.value}">
-                    0${stat.suffix || ""}
+                <div class="_stats-value"
+                     data-target="${stat.value}"
+                     data-suffix="${stat.suffix || ""}">
+                    0
                 </div>
-                <div class="_stats-label">
-                    ${stat.label}
-                </div>
+                <div class="_stats-label">${stat.label}</div>
             `;
-
             return col;
         }
 
         function animateValue(el, target, suffix) {
-            let current = 0;
             const duration = 1500;
-            const stepTime = 20;
-            const increment = target / (duration / stepTime);
+            const startTime = performance.now();
 
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    current = target;
-                    clearInterval(timer);
+            function tick(now) {
+                const progress = Math.min((now - startTime) / duration, 1);
+                const value = Math.floor(progress * target);
+                el.textContent = value + suffix;
+
+                if (progress < 1) {
+                    requestAnimationFrame(tick);
                 }
-                el.textContent = Math.floor(current) + suffix;
-            }, stepTime);
+            }
+
+            requestAnimationFrame(tick);
         }
 
         function animateStats() {
-            if (animated) return;
-            animated = true;
-
-            const values = container.querySelectorAll("._stats-value");
-
-            values.forEach(el => {
-                const target = parseInt(el.dataset.target, 10);
-                const suffix = el.textContent.replace("0", "");
-                animateValue(el, target, suffix);
+            row.querySelectorAll("._stats-value").forEach(el => {
+                animateValue(
+                    el,
+                    parseInt(el.dataset.target, 10),
+                    el.dataset.suffix
+                );
             });
         }
 
-        // Render stats
-        app.stats.forEach(stat => {
-            container.appendChild(createStat(stat));
-        });
+        // Render stats **with 0** only
+        app.stats.forEach(stat => row.appendChild(createStat(stat)));
 
-        // Observe visibility
-        const statsWrapper = document.getElementById("_stats");
-        if (!statsWrapper) return true;
-
+        // Observe when stats wrapper is visible
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     animateStats();
-                    observer.disconnect();
+                    observer.disconnect(); // one-time trigger
                 }
             });
         }, { threshold: 0.4 });
 
-        observer.observe(statsWrapper);
+        observer.observe(wrapper);
 
         return true;
     }
 
-    // Wait until #_stats-row exists
-    const waitForStats = setInterval(() => {
-        if (initStats()) {
-            clearInterval(waitForStats);
-        }
+    const wait = setInterval(() => {
+        if (initStats()) clearInterval(wait);
     }, 50);
 
 })();

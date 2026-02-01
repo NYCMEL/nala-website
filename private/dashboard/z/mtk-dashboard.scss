@@ -1,0 +1,324 @@
+// Material Design Dashboard Styles - Scoped to .mtk-dashboard
+.mtk-dashboard {
+  --mtk-primary: #1976d2;
+  --mtk-primary-dark: #1565c0;
+  --mtk-primary-light: #42a5f5;
+  --mtk-accent: #ff4081;
+  --mtk-success: #4caf50;
+  --mtk-text-primary: #212121;
+  --mtk-text-secondary: #757575;
+  --mtk-divider: #e0e0e0;
+  --mtk-background: #fafafa;
+  --mtk-surface: #ffffff;
+  --mtk-shadow-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --mtk-shadow-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  --mtk-shadow-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  --mtk-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--mtk-text-primary);
+  background-color: var(--mtk-background);
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  // Typography
+  .mtk-dashboard__title {
+    font-size: 2rem;
+    font-weight: 500;
+    margin: 0 0 8px 0;
+    color: var(--mtk-text-primary);
+    letter-spacing: 0.25px;
+  }
+
+  .mtk-dashboard__subtitle {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--mtk-text-secondary);
+    margin: 0 0 24px 0;
+    letter-spacing: 0.15px;
+  }
+
+  // Row Layout
+  .mtk-dashboard__row {
+    margin-bottom: 24px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // Card Components
+  .mtk-card {
+    background: var(--mtk-surface);
+    border-radius: 8px;
+    box-shadow: var(--mtk-shadow-1);
+    padding: 24px;
+    transition: var(--mtk-transition);
+
+    &:hover {
+      box-shadow: var(--mtk-shadow-2);
+    }
+  }
+
+  // Progress Card
+  .mtk-progress-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .mtk-progress-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .mtk-progress-card__label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--mtk-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .mtk-progress-card__percentage {
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--mtk-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .material-icons {
+      font-size: 2rem;
+    }
+  }
+
+  // Progress Bar
+  .mtk-progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #e3f2fd;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .mtk-progress-bar__fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--mtk-primary), var(--mtk-primary-light));
+    border-radius: 4px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+      );
+      animation: shimmer 2s infinite;
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  // Subscription Card
+  .mtk-subscription-card {
+    background: linear-gradient(135deg, var(--mtk-primary) 0%, var(--mtk-primary-dark) 100%);
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+  }
+
+  .mtk-subscription-card__content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .mtk-subscription-card__title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0 0 12px 0;
+    letter-spacing: 0.25px;
+  }
+
+  .mtk-subscription-card__description {
+    font-size: 1rem;
+    opacity: 0.9;
+    margin: 0 0 20px 0;
+    line-height: 1.5;
+  }
+
+  .mtk-subscription-card__features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .mtk-subscription-card__feature {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.875rem;
+
+    .material-icons {
+      font-size: 20px;
+      color: var(--mtk-success);
+    }
+  }
+
+  // Button
+  .mtk-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--mtk-transition);
+    box-shadow: var(--mtk-shadow-1);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    &:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    &:hover {
+      box-shadow: var(--mtk-shadow-2);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: var(--mtk-shadow-1);
+    }
+
+    &:focus {
+      outline: 2px solid rgba(255, 255, 255, 0.5);
+      outline-offset: 2px;
+    }
+
+    .material-icons {
+      font-size: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    span {
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  .mtk-btn--accent {
+    background-color: var(--mtk-accent);
+    color: #ffffff;
+
+    &:hover {
+      background-color: #f50057;
+    }
+  }
+
+  .mtk-btn--white {
+    background-color: #ffffff;
+    color: var(--mtk-primary);
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
+  }
+
+  // Focus Visible States for Accessibility
+  *:focus-visible {
+    outline: 2px solid var(--mtk-primary);
+    outline-offset: 2px;
+  }
+
+  // Responsive Design
+  @media (max-width: 768px) {
+    padding: 16px;
+
+    .mtk-dashboard__title {
+      font-size: 1.5rem;
+    }
+
+    .mtk-card {
+      padding: 16px;
+    }
+
+    .mtk-progress-card__percentage {
+      font-size: 1.5rem;
+    }
+
+    .mtk-subscription-card__title {
+      font-size: 1.25rem;
+    }
+
+    .mtk-subscription-card__features {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // Loading State
+  &.mtk-dashboard--loading {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+}
