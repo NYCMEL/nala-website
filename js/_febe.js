@@ -5,6 +5,7 @@ class _febe {
 	    "header-home",
 	    "header-login",
 	    "header-logout",
+	    "header-course",
 	    "header-register",
 	    "header-settings",
 
@@ -34,7 +35,9 @@ class _febe {
 
         switch (msg) {
 	case "mtk-dashboard:continue":
+        case "header-course":
             MTKPager.show("hierarchy");
+	    $("#header-course").addClass("active");
             break;
 
         case "mtk-hierarchy:resource:click":
