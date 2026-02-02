@@ -16,7 +16,7 @@
 	$("#header .nav-link.active").removeClass("active")
 	$("#header #mtk-header-" + sectionId).addClass("active")
 
-	console.log(">>>>>>>>>>#header #mtk-header-" + sectionId);
+	window.scrollTo(0, 0);
     }
 
     ///////////////////////////////////////////
