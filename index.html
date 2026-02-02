@@ -111,7 +111,9 @@
 
 	<script>
          // INITIAL PAGE
-         MTKPager.show("home");
+	 wc.timeout(function(){
+             MTKPager.show("home");
+	 }, 100, 1);
 	</script>
 
     </body>

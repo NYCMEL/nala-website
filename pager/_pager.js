@@ -2,7 +2,7 @@
     "use strict";
 
     function show(sectionId) {
-	wc.log(">>>>>>>>>", sectionId);
+	wc.log(sectionId);
 
 	if (sectionId == "logout") {
 	    // do nothing. drodown should shoe
@@ -15,6 +15,8 @@
 
 	$("#header .nav-link.active").removeClass("active")
 	$("#header #mtk-header-" + sectionId).addClass("active")
+
+	console.log(">>>>>>>>>>#header #mtk-header-" + sectionId);
     }
 
     ///////////////////////////////////////////
