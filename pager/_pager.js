@@ -21,5 +21,9 @@
         show
     };
 
+    wc.subscribe("4-mtk-pager", function(data) {
+	alert("A")
+    });
+
     wc.log("MTKPager: Initialized");
 })();
