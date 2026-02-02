@@ -4,7 +4,7 @@ window.app = window.app || {};
 
 window.app.footer = {
     brand: {
-        logo: "assets/logo.svg",
+        logo: "img/logo-nala-association.webp",
         description: "NALA empowers locksmith professionals through education, certification, and industry leadership."
     },
 
@@ -49,7 +49,7 @@ window.app.footer = {
     ],
 
     bottom: {
-        left: "© 2026 National Association of Locksmiths",
+        left: "© 2026 Nala Locksmiths",
         right: "Raising standards for the locksmith profession"
     }
 };
