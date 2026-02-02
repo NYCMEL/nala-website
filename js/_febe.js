@@ -38,7 +38,6 @@ class _febe {
 
         switch (msg) {
 	case "mtk-register:submit":
-	    wc.log("_febe REGISTER:", data);
             break;
 
 	case "mtk-header-home":
