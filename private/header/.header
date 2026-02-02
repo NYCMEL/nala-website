@@ -54,5 +54,4 @@ Output! Create exactly these files:
 - mtk-header.scss
 - mtk-header.html
 - mtk-header.js
-- a minimal index.html file
-
+mtk-header is fixed to top
