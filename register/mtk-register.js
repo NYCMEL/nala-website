@@ -60,7 +60,8 @@ class MtkRegister extends HTMLElement {
             return;
         }
 
-        wc.publish("mtk-register:submit", payload);
+	let msg = ("mtk-register:submit", payload); wc.log(msg);
+        wc.publish(msg);
     }
 }
 
