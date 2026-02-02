@@ -7,33 +7,31 @@
 	    return;
 	}
 
-	wc.log("MTKPager: show", sectionId);
+	$(".mtk-pager-section").hide()
 
-	$(".MTK-pager-section").hide()
-
-	$("#MTK-pager-" + sectionId).show();
+	$("#mtk-pager-" + sectionId).show();
 
 	$(".nav-link.active").removeClass("active")
-	$("#_header-menu-" + sectionId).addClass("active")
+	$("#mtk-header-" + sectionId).addClass("active")
     }
 
     ///////////////////////////////////////////
     // usage:
     //    wc.publish("4-mtk-pager", {"action":"show", "page":"course"})
     ///////////////////////////////////////////
-    wc.subscribe("4-mtk-pager", function(msg, data) {
-	wc.log(JSON.stringify(data))
+    // wc.subscribe("4-mtk-pager", function(msg, data) {
+    // 	wc.log(JSON.stringify(data))
 	
-	switch(data.action) 
-	{
-	    case "show":
-	    MTKPager.show(data.page);
-	    break;
+    // 	switch(data.action) 
+    // 	{
+    // 	    case "show":
+    // 	    MTKPager.show(data.page);
+    // 	    break;
 
-	    default:
-	    break;
-	}
-    });
+    // 	    default:
+    // 	    break;
+    // 	}
+    // });
 
     window.MTKPager = {
         show

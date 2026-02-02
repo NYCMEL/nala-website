@@ -2,12 +2,12 @@ class _febe {
     constructor() {
         this.topics = [
 	    "header-logo",
-	    "header-home",
-	    "header-login",
-	    "header-logout",
-	    "header-course",
-	    "header-register",
-	    "header-settings",
+	    "mtk-header-dashboard",
+	    "mtk-header-login",
+	    "mtk-header-logout",
+	    "mtk-header-hierarchy",
+	    "mtk-header-register",
+	    "mtk-header-settings",
 
 	    "mtk-dashboard:continue",
 
@@ -35,15 +35,13 @@ class _febe {
 
         switch (msg) {
 	case "mtk-login-success":
-	    console.log(">>>>>>>_febe: mtk-login-success", data);
 	    document.location.href = "http://localhost/Melify/tools/nala-website/private"
             MTKPager.show("dashboard");
             break;
 
 	case "mtk-dashboard:continue":
-        case "header-course":
+        case "mtk-header-hierarchy":
             MTKPager.show("hierarchy");
-	    $("#header-course").addClass("active");
             break;
 
         case "mtk-hierarchy:resource:click":
@@ -58,24 +56,24 @@ class _febe {
             }, 500, 1);
             break;
 
-	case "header-logo":
-	case "header-home":
+	case "mtk-header-logo":
+	case "mtk-header-dashboard":
             MTKPager.show("dashboard");
             break;
 
-	case "header-settings":
+	case "mtk-header-settings":
 	    MTKPager.show("settings");
             break;
 
-	case "header-login":
+	case "mtk-header-login":
 	    MTKPager.show("login");
             break;
 
-	case "header-logout":
+	case "mtk-header-logout":
 	    document.location.href = "http://localhost/Melify/tools/nala-website";
             break;
 
-	case "header-register":
+	case "mtk-header-register":
 	    MTKPager.show("register");
             break;
 
