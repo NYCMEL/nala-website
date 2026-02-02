@@ -1,4 +1,4 @@
-Create a modern Material Design + Bootstrap 5 application footer component named MTK-footer.
+Create a modern Material Design + Bootstrap 5 application footer component named mtk-footer.
 
 ASSUMPTIONS
 - Use Bootstrap 5
@@ -12,7 +12,7 @@ ASSUMPTIONS
 - Do not use em dashes
 
 CORE REQUIREMENTS
-- Component name: MTK-footer
+- Component name: mtk-footer
 - Dark background
 - Located at the bottom of the page
 - Responsive across all breakpoints
@@ -36,7 +36,7 @@ BEHAVIOR
 
 DATA AND CONFIGURATION
 - All footer content must come from JSON
-- JSON file name: MTK-footer.config.js
+- JSON file name: mtk-footer.config.js
 - Data source: window.app.footer
 - JSON supports:
   - brand logo
@@ -47,14 +47,14 @@ DATA AND CONFIGURATION
   - bottom row right text
 
 FILES TO CREATE
-1. MTK-footer.config.js
-2. MTK-footer.html (container only or optional static structure)
-3. MTK-footer.scss
-4. MTK-footer.css (compiled from SCSS)
-5. MTK-footer.js (production-ready vanilla JS)
+1. mtk-footer.config.js
+2. mtk-footer.html (container only or optional static structure)
+3. mtk-footer.scss
+4. mtk-footer.css (compiled from SCSS)
+5. mtk-footer.js (production-ready vanilla JS)
 
 JAVASCRIPT REQUIREMENTS
-- Must wait for #MTK-footer to appear in the DOM before running
+- Must wait for #mtk-footer to appear in the DOM before running
 - Must wait for window.app.footer to exist before rendering
 - Must dynamically create internal DOM structure if missing
 - Must not assume script load order
