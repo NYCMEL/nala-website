@@ -2,6 +2,7 @@
 
 window.mtkRegisterConfig = {
     title: "NALA Locksmith Registration Form",
+
     fields: {
         firstName: {
             id: "firstName",
