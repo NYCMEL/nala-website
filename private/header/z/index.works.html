@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MTK Header Demo</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Roboto Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Header Styles -->
+  <link rel="stylesheet" href="mtk-header.css">
+  
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #f5f5f5;
+    }
+    
+    .demo-content {
+      padding: 3rem 0;
+    }
+    
+    .demo-section {
+      background: white;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .demo-section h2 {
+      color: #212121;
+      margin-bottom: 1rem;
+    }
+    
+    .demo-section p {
+      color: #757575;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MTK Header Component -->
+  <mtk-header class="mtk-header" role="banner">
+    <div class="container">
+      <div class="mtk-header__container">
+        
+        <!-- Logo -->
+        <div class="mtk-header__logo">
+          <!-- Logo will be injected here -->
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <button 
+          class="mtk-header__mobile-toggle" 
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          type="button">
+          <span class="material-icons">menu</span>
+        </button>
+
+        <!-- Navigation -->
+        <nav class="mtk-header__nav" aria-label="Main navigation">
+          <ul class="mtk-header__menu" role="menubar">
+            <!-- Menu items will be injected here -->
+          </ul>
+        </nav>
+
+      </div>
+    </div>
+  </mtk-header>
+
+  <!-- Demo Content -->
+  <main class="demo-content">
+    <div class="container">
+      
+      <div class="demo-section">
+        <h2>Welcome to MTK Header Demo</h2>
+        <p>
+          This is a demonstration of the MTK Header component. The header features:
+        </p>
+        <ul>
+          <li>Material Design styling with dark background (#212121)</li>
+          <li>Logo on the left (65px height)</li>
+          <li>Menu items with Material Icons on the right</li>
+          <li>Dropdown menu for Account with Profile and Logout options</li>
+          <li>2px gold (#FFD700) border for active menu items</li>
+          <li>Fully responsive with mobile menu</li>
+          <li>Event-driven architecture with wc.publish/subscribe</li>
+          <li>Keyboard accessible and ADA compliant</li>
+        </ul>
+      </div>
+
+      <div class="demo-section">
+        <h2>Features</h2>
+        <p>
+          <strong>JSON Driven:</strong> All header data comes from window.app.header configuration.<br>
+          <strong>Uses wc.js:</strong> Integrated with your wc.js PubSub library for event handling.<br>
+          <strong>Accessibility:</strong> Semantic HTML, ARIA labels, keyboard navigation, visible focus states.<br>
+          <strong>Events:</strong> All clicks publish events through wc.publish for easy integration.<br>
+          <strong>Responsive:</strong> Mobile-friendly with collapsible menu and touch-friendly targets.
+        </p>
+      </div>
+
+      <div class="demo-section">
+        <h2>Try It Out</h2>
+        <p>
+          Click on the menu items to see event publishing in the console. 
+          Open the Account dropdown to see the Profile and Logout options.
+          Try resizing your browser to see the responsive mobile menu.
+        </p>
+        <p>
+          <small>Open the browser console (F12) to see published events from menu interactions.</small>
+        </p>
+      </div>
+
+      <div class="demo-section">
+        <h2>Published Events</h2>
+        <ul>
+          <li><code>mtk-header:initialized</code> - Header has been initialized</li>
+          <li><code>mtk-header:rendered</code> - Header rendering complete</li>
+          <li><code>mtk-header:menu-clicked</code> - Menu item clicked</li>
+          <li><code>mtk-header:dropdown-opened</code> - Dropdown menu opened</li>
+          <li><code>mtk-header:mobile-toggled</code> - Mobile menu toggled</li>
+          <li><code>mtk-header:active-changed</code> - Active menu item changed</li>
+        </ul>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- jQuery (required by wc.js) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+  <!-- WC Library (Your PubSub system) -->
+  <!-- Note: Include your wc.js file here -->
+  <!-- <script src="wc.js"></script> -->
+  
+  <!-- Fallback if wc.js is not loaded -->
+  <script>
+    if (typeof wc === 'undefined') {
+      // Create minimal wc object for demo
+      window.wc = {
+        log: console.log.bind(console),
+        info: console.info.bind(console),
+        warn: console.warn.bind(console),
+        error: console.error.bind(console),
+        group: console.group.bind(console),
+        groupEnd: console.groupEnd.bind(console),
+        publish: function(message, data) {
+          if (typeof PubSub !== 'undefined') {
+            return PubSub.publish(message, data);
+          }
+          console.log('wc.publish:', message, data);
+        },
+        subscribe: function(message, func) {
+          if (typeof PubSub !== 'undefined') {
+            return PubSub.subscribe(message, func);
+          }
+          console.log('wc.subscribe:', message);
+          return function() {};
+        }
+      };
+      
+      // Simple PubSub fallback
+      window.PubSub = (function() {
+        var messages = {};
+        var lastUid = -1;
+        
+        return {
+          publish: function(message, data) {
+            if (!messages[message]) return false;
+            var subscribers = messages[message];
+            for (var s in subscribers) {
+              if (subscribers.hasOwnProperty(s)) {
+                setTimeout((function(subscriber) {
+                  return function() {
+                    subscriber(message, data);
+                  };
+                })(subscribers[s]), 0);
+              }
+            }
+            return true;
+          },
+          subscribe: function(message, func) {
+            if (!messages[message]) {
+              messages[message] = {};
+            }
+            var token = 'uid_' + String(++lastUid);
+            messages[message][token] = func;
+            return token;
+          }
+        };
+      })();
+    }
+  </script>
+  
+  <!-- Configuration -->
+  <script src="mtk-header.config.js"></script>
+  <!-- Header Logic -->
+  <script src="mtk-header.js"></script>
+
+</body>
+</html>
