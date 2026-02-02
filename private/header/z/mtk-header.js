@@ -1,30 +1,8 @@
 /**
  * MTK Header - Material Design Header Component
  * A reusable, accessible header component with event-driven architecture
+ * Uses wc.js library for PubSub and utilities
  */
-
-// Simple Web Component Communication Helper
-const wc = wc || {
-  listeners: {},
-  
-  publish(event, data) {
-    if (this.listeners[event]) {
-      this.listeners[event].forEach(callback => callback(data));
-    }
-  },
-  
-  subscribe(event, callback) {
-    if (!this.listeners[event]) {
-      this.listeners[event] = [];
-    }
-    this.listeners[event].push(callback);
-    
-    // Return unsubscribe function
-    return () => {
-      this.listeners[event] = this.listeners[event].filter(cb => cb !== callback);
-    };
-  }
-};
 
 /**
  * MTKHeader Class
@@ -55,11 +33,14 @@ class MTKHeader {
    * Wait for header element to be available in DOM
    */
   waitForElement() {
+    wc.log("MTKHeader: Waiting for DOM element...");
+    
     // Use MutationObserver to watch for element addition
     const observer = new MutationObserver((mutations, obs) => {
       this.element = document.querySelector('.mtk-header');
       
       if (this.element) {
+        wc.log("MTKHeader: Element found via MutationObserver");
         obs.disconnect();
         this.init();
       }
@@ -69,8 +50,10 @@ class MTKHeader {
       this.element = document.querySelector('.mtk-header');
       
       if (this.element) {
+        wc.log("MTKHeader: Element found immediately");
         this.init();
       } else {
+        wc.log("MTKHeader: Element not found, starting observer...");
         // Start observing the document for changes
         observer.observe(document.documentElement, {
           childList: true,
@@ -93,12 +76,16 @@ class MTKHeader {
   init() {
     if (this.initialized) return;
     
+    wc.group("MTKHeader: Initializing");
+    
     this.cacheElements();
     this.subscribeToEvents();
     this.render();
     this.attachEventListeners();
     
     this.initialized = true;
+    
+    wc.groupEnd();
     
     // Publish initialization event
     wc.publish('mtk-header:initialized', {
@@ -116,6 +103,8 @@ class MTKHeader {
       nav: this.element.querySelector('.mtk-header__nav'),
       mobileToggle: this.element.querySelector('.mtk-header__mobile-toggle')
     };
+    
+    wc.log("MTKHeader: Elements cached", this.elements);
   }
 
   /**
@@ -126,12 +115,16 @@ class MTKHeader {
     wc.subscribe('mtk-header:update-menu', this.onMessage);
     wc.subscribe('mtk-header:set-active', this.onMessage);
     wc.subscribe('mtk-header:refresh', this.onMessage);
+    
+    wc.log("MTKHeader: Subscribed to events");
   }
 
   /**
    * Handle incoming messages from event subscriptions
    */
-  onMessage(data) {
+  onMessage(message, data) {
+    wc.log("MTKHeader: Message received", message, data);
+    
     const { type, payload } = data;
     
     switch (type) {
@@ -152,7 +145,7 @@ class MTKHeader {
         break;
         
       default:
-        console.warn(`Unknown message type: ${type}`);
+        wc.warn(`Unknown message type: ${type}`);
     }
   }
 
@@ -160,8 +153,12 @@ class MTKHeader {
    * Render all header content
    */
   render() {
+    wc.group("MTKHeader: Rendering");
+    
     this.renderLogo();
     this.renderMenu();
+    
+    wc.groupEnd();
     
     // Publish render complete event
     wc.publish('mtk-header:rendered', {
@@ -173,7 +170,10 @@ class MTKHeader {
    * Render logo
    */
   renderLogo() {
-    if (!this.elements.logo || !this.config.logo) return;
+    if (!this.elements.logo || !this.config.logo) {
+      wc.warn("MTKHeader: Cannot render logo - missing element or config");
+      return;
+    }
     
     const { src, alt, height, link } = this.config.logo;
     
@@ -182,13 +182,18 @@ class MTKHeader {
         <img src="${this.sanitizeUrl(src)}" alt="${this.escapeHtml(alt)}" style="height: ${this.escapeHtml(height)};">
       </a>
     `;
+    
+    wc.log("MTKHeader: Logo rendered");
   }
 
   /**
    * Render menu items
    */
   renderMenu() {
-    if (!this.elements.menu || !this.config.menuItems) return;
+    if (!this.elements.menu || !this.config.menuItems) {
+      wc.warn("MTKHeader: Cannot render menu - missing element or config");
+      return;
+    }
     
     const menuHTML = this.config.menuItems.map(item => {
       if (item.dropdown) {
@@ -199,6 +204,8 @@ class MTKHeader {
     }).join('');
     
     this.elements.menu.innerHTML = menuHTML;
+    
+    wc.log("MTKHeader: Menu rendered with", this.config.menuItems.length, "items");
   }
 
   /**
@@ -284,6 +291,8 @@ class MTKHeader {
     
     // Escape key to close dropdowns
     document.addEventListener('keydown', this.handleEscapeKey);
+    
+    wc.log("MTKHeader: Event listeners attached");
   }
 
   /**
@@ -295,6 +304,8 @@ class MTKHeader {
     
     const menuId = target.dataset.menuId;
     const isDropdownToggle = target.hasAttribute('data-dropdown-toggle');
+    
+    wc.log("MTKHeader: Menu clicked", menuId);
     
     if (isDropdownToggle) {
       event.preventDefault();
@@ -321,6 +332,8 @@ class MTKHeader {
     if (!dropdownItem) return;
     
     const isOpen = dropdownItem.classList.contains('mtk-header__menu-item--open');
+    
+    wc.log("MTKHeader: Dropdown toggle", isOpen ? 'closing' : 'opening');
     
     // Close all dropdowns
     this.closeAllDropdowns();
@@ -354,6 +367,8 @@ class MTKHeader {
   handleMobileToggle() {
     this.mobileMenuOpen = !this.mobileMenuOpen;
     
+    wc.log("MTKHeader: Mobile menu", this.mobileMenuOpen ? 'opened' : 'closed');
+    
     if (this.mobileMenuOpen) {
       this.elements.nav.classList.add('mtk-header__nav--open');
       this.elements.mobileToggle.setAttribute('aria-expanded', 'true');
@@ -379,6 +394,7 @@ class MTKHeader {
     if (!this.activeDropdown) return;
     
     if (!this.activeDropdown.contains(event.target)) {
+      wc.log("MTKHeader: Click outside, closing dropdown");
       this.closeAllDropdowns();
     }
   }
@@ -388,6 +404,7 @@ class MTKHeader {
    */
   handleEscapeKey(event) {
     if (event.key === 'Escape') {
+      wc.log("MTKHeader: Escape pressed");
       this.closeAllDropdowns();
       
       if (this.mobileMenuOpen) {
@@ -420,6 +437,8 @@ class MTKHeader {
    * Set active menu item
    */
   setActiveMenuItem(menuId) {
+    wc.log("MTKHeader: Setting active menu item", menuId);
+    
     // Remove active class from all menu items
     const allLinks = this.element.querySelectorAll('.mtk-header__menu-link');
     allLinks.forEach(link => link.classList.remove('mtk-header__menu-link--active'));
@@ -446,6 +465,8 @@ class MTKHeader {
    * Update logo
    */
   updateLogo(logoData) {
+    wc.log("MTKHeader: Updating logo", logoData);
+    
     this.config.logo = { ...this.config.logo, ...logoData };
     this.renderLogo();
     
@@ -459,6 +480,8 @@ class MTKHeader {
    * Update menu
    */
   updateMenu(menuItems) {
+    wc.log("MTKHeader: Updating menu", menuItems);
+    
     this.config.menuItems = menuItems;
     this.renderMenu();
     
@@ -493,6 +516,8 @@ class MTKHeader {
    * Destroy the header and clean up
    */
   destroy() {
+    wc.log("MTKHeader: Destroying");
+    
     // Remove event listeners
     if (this.elements.menu) {
       this.elements.menu.removeEventListener('click', this.handleMenuClick);
@@ -519,32 +544,37 @@ class MTKHeader {
 
 // Initialize header when config is available
 if (typeof window.app !== 'undefined' && window.app.header) {
+  wc.log("MTKHeader: Config found, creating instance");
   const header = new MTKHeader(window.app.header);
   
   // Expose to window for external access if needed
   window.mtkHeader = header;
   
   // Example: Listen to header events
-  wc.subscribe('mtk-header:menu-clicked', (data) => {
-    console.log('Menu clicked:', data);
+  wc.subscribe('mtk-header:menu-clicked', function(msg, data) {
+    wc.info('🔵 Menu Clicked:', data);
   });
   
-  wc.subscribe('mtk-header:dropdown-opened', (data) => {
-    console.log('Dropdown opened:', data);
+  wc.subscribe('mtk-header:dropdown-opened', function(msg, data) {
+    wc.info('🟢 Dropdown Opened:', data);
   });
   
-  wc.subscribe('mtk-header:initialized', (data) => {
-    console.log('Header initialized:', data);
+  wc.subscribe('mtk-header:initialized', function(msg, data) {
+    wc.info('✅ Header Initialized:', data);
   });
   
-  wc.subscribe('mtk-header:rendered', (data) => {
-    console.log('Header rendered:', data);
+  wc.subscribe('mtk-header:rendered', function(msg, data) {
+    wc.info('✅ Header Rendered:', data);
+  });
+  
+  wc.subscribe('mtk-header:mobile-toggled', function(msg, data) {
+    wc.info('🟡 Mobile Menu Toggled:', data);
   });
 } else {
-  console.error('window.app.header is not defined. Please include mtk-header.config.js before mtk-header.js');
+  wc.error('window.app.header is not defined. Please include mtk-header.config.js before mtk-header.js');
 }
 
 // Export for module systems
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { MTKHeader, wc };
+  module.exports = { MTKHeader };
 }
