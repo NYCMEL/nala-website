@@ -49,7 +49,7 @@ window.app.footer = {
     ],
 
     bottom: {
-        left: "© 2026 Nala Locksmiths",
+        left: "© 2026 Nala - North America Locksmith Association",
         right: "Raising standards for the locksmith profession"
     }
 };
