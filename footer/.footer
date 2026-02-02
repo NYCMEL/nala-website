@@ -1,10 +1,9 @@
 Create a modern Material Design + Bootstrap 5 application footer component named mtk-footer.
 
 ASSUMPTIONS
-- Use Bootstrap 5
+- Use Material Design styles and Bootstrap 5
 - Use vanilla JavaScript only
 - No frameworks
-- No borders
 - No rounded corners
 - Subtle Material Design motion only
 - Component must be fully JSON-driven
@@ -13,7 +12,7 @@ ASSUMPTIONS
 
 CORE REQUIREMENTS
 - Component name: mtk-footer
-- Dark background
+- Dark mode background
 - Located at the bottom of the page
 - Responsive across all breakpoints
 - Content wrapped in a Bootstrap container (not container-fluid)
@@ -22,8 +21,7 @@ CORE REQUIREMENTS
 LAYOUT
 - Footer has two rows
 - Row 1 contains five Bootstrap columns
-  - Column 1 is a brand column with logo and description
-  - Columns 2 to 5 are navigation groups
+  - brand column with logo and description below logo
 - Row 2 contains two equal Bootstrap columns
   - Left side copyright text
   - Right side tagline or secondary text
