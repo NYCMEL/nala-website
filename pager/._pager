@@ -1,8 +1,8 @@
-I want to create a STANDALONE web component named `MTK-pager`.
-Remeber it in your memory as MTK-pager
+I want to create a STANDALONE component named mtk-pager.
+Remeber it in your memory as mtk-pager
 
 PURPOSE
-MTK-pager is a lightweight page/section manager used to switch visible content
+mtk-pager is a lightweight page/section manager used to switch visible content
 inside a single container without page reloads.
 
 TECH STACK
@@ -11,53 +11,53 @@ TECH STACK
 - Material Design & Bootstrap
 - No frameworks
 - No build tools
-- No globals except `MTK-pager`
+- No globals except mtk-pager
 
 CONTAINER
 - Example:
-  <PAGER id="MTK-pager"></PAGER>
+  <PAGER id="mtk-pager"></PAGER>
 
 BEHAVIOR
-1. `MTK-pager` must initialize immediately when loaded.
-2. `MTK-pager` must safely detect if the container exists.
+1. mtk-pager must initialize immediately when loaded.
+2. mtk-pager must safely detect if the container exists.
    - If not found, log a clear error and do nothing.
-3. `MTK-pager` manages multiple sections internally.
+3. mtk-pager manages multiple sections internally.
 4. Each section:
    - Is a block element <PAGER-SECTION>
-   - Has an id format `MTK-pager-{sectionId}`
-   - Has class `MTK-pager-section`
+   - Has an id format `mtk-pager-{sectionId}`
+   - Has class `mtk-pager-section`
 5. Only ONE section is visible at a time.
 6. Visibility is controlled using an `.active` class.
-7. Calling `MTK-pager.show(sectionId)`:
+7. Calling `mtk-pager.show(sectionId)`:
    - Hides all existing sections
    - If section already exists:
      - Activates it
    - If section does NOT exist:
      - Creates it
-     - Appends it to `MTK-pager`
+     - Appends it to mtk-pager
 
-8. `MTK-pager.show(sectionId)` must always work even if called multiple times.
+8. `mtk-pager.show(sectionId)` must always work even if called multiple times.
 9. The component must expose ONLY ONE public API:
-   - `MTK-pager.show(sectionId)`
+   - `mtk-pager.show(sectionId)`
 10. Internal state must be private.
 11. Use defensive coding.
 12. Log useful debug messages during actions
 13. Do NOT pollute the global scope.
 
-14. `MTK-pager` gets content url from a external JSON variable app.pager from file MTK-pager.config.js
-15. `MTK-pager` should make sure that <PAGER> exist on the page before proceeding
-
+14. mtk-pager gets content url from a external JSON variable app.pager from file mtk-pager.config.js
+15. mtk-pager should make sure that <PAGER> exist on the page before proceeding
+16. mtk-pager should subscribe to 4-mtk-pager events
 
 OPTIONAL
-- If jQuery exists, use `$("#MTK-pager-{id}").load(...)`
+- If jQuery exists, use `$("#mtk-pager-{id}").load(...)`
 - If jQuery does not exist, fail gracefully
 
 STYLE ASSUMPTIONS
-- `. MTK-pager-section { display: none; }`
-- `. MTK-pager-section.active { display: block; }`
+- `. mtk-pager-section { display: none; }`
+- `. mtk-pager-section.active { display: block; }`
 
 DELIVERABLE
-- One JavaScript file: `MTK-pager.js`
-- One HTML file: `MTK-pager.html`
-- One SCSS file: `MTK-pager.scss`
-- One CSS file: `MTK-pager.css`
+- mtk-pager.html
+- mtk-pager.scss
+- mtk-pager.js
+- mtk-pager.config.js

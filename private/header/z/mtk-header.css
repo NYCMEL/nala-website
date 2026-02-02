@@ -1,15 +1,18 @@
 /**
  * MTK-Header Styles
- * Material Design Header Component
+ * Material Design Header Component - Fixed to Top
  * All styles scoped to .mtk-header
  */
 .mtk-header {
   display: block;
   background: #1e1e1e;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 1000; }
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  width: 100%; }
   .mtk-header__container {
     display: flex;
     align-items: center;
@@ -118,3 +121,6 @@
         display: none; }
     .mtk-header__dropdown-item a {
       padding: 0.6rem 1rem; } }
+
+body {
+  padding-top: 85px; }
