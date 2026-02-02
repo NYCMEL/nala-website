@@ -8,42 +8,42 @@ window.mtkRegisterConfig = {
             label: "First Name",
             helper: "First Name",
             required: true,
-            value: ""
+            value: "Mel"
         },
         middleInitial: {
             id: "middleInitial",
             label: "M.I.",
             helper: "",
             required: false,
-            value: ""
+            value: "M"
         },
         lastName: {
             id: "lastName",
             label: "Last Name",
             helper: "Last Name",
             required: true,
-            value: ""
+            value: "Heravi"
         },
         email: {
             id: "email",
             label: "Your Email",
             helper: "example@example.com",
             required: true,
-            value: ""
+            value: "mel@google.com"
         },
         email2: {
             id: "email2",
             label: "Repeat Email",
             helper: "",
             required: true,
-            value: ""
+            value: "mel#google.com"
         },
         phone: {
             id: "phone",
             label: "Contact Phone Number",
             helper: "Phone Number",
             required: true,
-            value: ""
+            value: "6463031234"
         }
     }
 };
