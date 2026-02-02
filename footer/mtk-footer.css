@@ -52,7 +52,9 @@
 @media (max-width: 767px) {
   /* Hide all navigation groups */
   .mtk-footer .mtk-footer-group-title,
-  .mtk-footer .mtk-footer-group {
+  .mtk-footer .mtk-footer-group,
+  .mtk-footer-top,
+  #footer-bottom-row-2, #footer-description {
     display: none; }
   /* Reduce padding on mobile */
   .mtk-footer-top {

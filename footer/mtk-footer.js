@@ -31,6 +31,7 @@
 
         if (data.brand.description) {
             const desc = document.createElement("p");
+	    desc.id = "footer-description";
             desc.textContent = data.brand.description;
             brandWrap.appendChild(desc);
         }
@@ -69,13 +70,14 @@
         container.appendChild(top);
 
         const bottom = document.createElement("div");
-        bottom.className = "row mtk-footer-bottom align-items-center";
+        bottom.className = "row mtk-footer-bottom";
 
         const left = document.createElement("div");
         left.className = "col-12 col-md-6";
         left.textContent = data.bottom.left || "";
 
         const right = document.createElement("div");
+	right.id = "footer-bottom-row-2";
         right.className = "col-12 col-md-6 text-md-end";
         right.textContent = data.bottom.right || "";
 
