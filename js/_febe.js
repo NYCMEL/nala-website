@@ -18,7 +18,9 @@ class _febe {
 	    "mtk-login-success",
 
             "MTK-parts.click",
-            "mtk-hierarchy:resource:click"
+            "mtk-hierarchy:resource:click",
+
+	    "mtk-header-register"
         ];
 
         this.subscribe();
