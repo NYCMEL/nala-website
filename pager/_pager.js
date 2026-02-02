@@ -21,8 +21,18 @@
     // usage:
     //    wc.publish("4-mtk-pager", {"action":"show", "page":"course"})
     ///////////////////////////////////////////
-    wc.subscribe("4-mtk-pager", function(data) {
-	alert("A")
+    wc.subscribe("4-mtk-pager", function(msg, data) {
+	wc.log(JSON.stringify(data))
+	
+	switch(data.action) 
+	{
+	    case "show":
+	    MTKPager.show(data.page);
+	    break;
+
+	    default:
+	    break;
+	}
     });
 
     window.MTKPager = {
