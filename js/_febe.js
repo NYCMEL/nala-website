@@ -36,7 +36,13 @@ class _febe {
     onMessage(msg, data) {
         wc.log("_febe: onMessage", msg, data);
 
+
+
         switch (msg) {
+	case "mtk-login-register":
+            MTKPager.show("register");
+            break;
+
 	case "mtk-register:submit":
             break;
 
