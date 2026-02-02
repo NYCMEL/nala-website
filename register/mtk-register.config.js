@@ -29,14 +29,14 @@ window.mtkRegisterConfig = {
             label: "Your Email",
             helper: "example@example.com",
             required: true,
-            value: "mel@google.com"
+            value: "mel@gmail.com"
         },
         email2: {
             id: "email2",
             label: "Repeat Email",
             helper: "",
             required: true,
-            value: "mel#google.com"
+            value: "mel@gmail.com"
         },
         phone: {
             id: "phone",

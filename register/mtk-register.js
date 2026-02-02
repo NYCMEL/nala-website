@@ -44,6 +44,9 @@ class MtkRegister extends HTMLElement {
         const payload = {};
         let firstInvalid = null;
 
+        const email = this.querySelector("#email");
+        const email2 = this.querySelector("#email2");
+
         Object.values(this.config.fields).forEach(field => {
             const input = this.querySelector(`#${field.id}`);
             const value = input.value.trim();
@@ -57,6 +60,15 @@ class MtkRegister extends HTMLElement {
 
         if (firstInvalid) {
             firstInvalid.focus();
+            return;
+        }
+
+        if (email.value.trim() !== email2.value.trim()) {
+            email2.focus();
+            email2.value = "";
+            wc.publish("mtk-register:error", {
+                error: "Emails do not match"
+            });
             return;
         }
 
