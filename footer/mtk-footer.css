@@ -31,7 +31,9 @@
   font-weight: 500;
   margin-bottom: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.04em; }
+  letter-spacing: 0.04em;
+  color: gold;
+  font-family: fb; }
 
 .mtk-footer-group ul {
   list-style: none;
