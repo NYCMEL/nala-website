@@ -46,13 +46,22 @@
   padding: 16px 0;
   font-size: 0.85rem; }
 
-.mtk-footer-social {
-  margin-top: 16px; }
-
-.mtk-footer-social button {
-  margin-right: 12px;
-  transition: transform 0.15s ease, opacity 0.15s ease; }
-
-.mtk-footer-social button:hover {
-  transform: translateY(-2px);
-  opacity: 0.85; }
+/* ------------------------------------
+   MOBILE BEHAVIOR
+   ------------------------------------ */
+@media (max-width: 767px) {
+  /* Hide all navigation groups */
+  .mtk-footer .mtk-footer-group-title,
+  .mtk-footer .mtk-footer-group {
+    display: none; }
+  /* Reduce padding on mobile */
+  .mtk-footer-top {
+    padding: 32px 0 16px; }
+  /* Center brand content */
+  .mtk-footer-brand {
+    text-align: center; }
+  .mtk-footer-bottom {
+    text-align: center; }
+  .mtk-footer-bottom .text-md-end {
+    text-align: center;
+    margin-top: 8px; } }

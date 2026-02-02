@@ -8,17 +8,14 @@
         if (!window.app || !app.footer) return false;
 
         const data = app.footer;
-
         host.innerHTML = "";
 
         const container = document.createElement("div");
         container.className = "container";
 
-        /* TOP ROW */
         const top = document.createElement("div");
         top.className = "row mtk-footer-top";
 
-        // Brand column
         const brandCol = document.createElement("div");
         brandCol.className = "col-12 col-md";
 
@@ -41,10 +38,9 @@
         brandCol.appendChild(brandWrap);
         top.appendChild(brandCol);
 
-        // Navigation groups
         (data.groups || []).forEach(group => {
             const col = document.createElement("div");
-            col.className = "col-6 col-md";
+            col.className = "col-6 col-md mtk-footer-group";
 
             const title = document.createElement("div");
             title.className = "mtk-footer-group-title";
@@ -72,7 +68,6 @@
 
         container.appendChild(top);
 
-        /* BOTTOM ROW */
         const bottom = document.createElement("div");
         bottom.className = "row mtk-footer-bottom align-items-center";
 
@@ -86,17 +81,14 @@
 
         bottom.appendChild(left);
         bottom.appendChild(right);
-
         container.appendChild(bottom);
-        host.appendChild(container);
 
+        host.appendChild(container);
         return true;
     }
 
     const wait = setInterval(() => {
-        if (initFooter()) {
-            clearInterval(wait);
-        }
+        if (initFooter()) clearInterval(wait);
     }, 50);
 
 })();
