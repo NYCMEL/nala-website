@@ -20,7 +20,7 @@ class _febe {
             "MTK-parts.click",
             "mtk-hierarchy:resource:click",
 
-	    "mtk-header-register"
+	    "mtk-register:submit"
         ];
 
         this.subscribe();
@@ -37,6 +37,10 @@ class _febe {
         wc.log("_febe: onMessage", msg, data);
 
         switch (msg) {
+	case "mtk-register:submit":
+	    wc.log("_febe REGISTER:", data);
+            break;
+
 	case "mtk-header-home":
             MTKPager.show("home");
             break;
