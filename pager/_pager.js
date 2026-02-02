@@ -17,13 +17,17 @@
 	$("#_header-menu-" + sectionId).addClass("active")
     }
 
-    window.MTKPager = {
-        show
-    };
-
+    ///////////////////////////////////////////
+    // usage:
+    //    wc.publish("4-mtk-pager", {"action":"show", "page":"course"})
+    ///////////////////////////////////////////
     wc.subscribe("4-mtk-pager", function(data) {
 	alert("A")
     });
+
+    window.MTKPager = {
+        show
+    };
 
     wc.log("MTKPager: Initialized");
 })();
