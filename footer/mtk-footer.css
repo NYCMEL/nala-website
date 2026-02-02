@@ -46,6 +46,10 @@
   padding: 16px 0;
   font-size: 0.85rem; }
 
+#footer-description, .mtk-footer-bottom {
+  font-family: fri;
+  color: #999; }
+
 /* ------------------------------------
    MOBILE BEHAVIOR
    ------------------------------------ */
