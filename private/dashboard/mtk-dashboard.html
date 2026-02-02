@@ -1,78 +1,26 @@
-<mtk-dashboard class="mtk-dashboard" role="main" aria-label="User Dashboard">
-    
-    <!-- Bootstrap Container -->
-    <div class="container-fluid">
-	<div class="row">
-            <div class="col-12">
-		
-		<!-- Header with Continue Button -->
-		<div class="mtk-dashboard__header">
-		    <div class="mtk-dashboard__header-content">
-			<h1 id="user-name" class="mtk-dashboard__title" role="heading" aria-level="1">
-			    <!-- User name will be injected here -->
-			</h1>
-		    </div>
-		    <div class="mtk-dashboard__header-actions">
-			<button 
-			    id="continue-course-btn" 
-			    class="mtk-btn mtk-btn--primary" 
-			    type="button"
-			    aria-label="Continue your course">
-			    <span class="material-icons" aria-hidden="true">play_arrow</span>
-			    <span>Continue Your Course</span>
-			</button>
+<div class="container">
+    <div class="row">
+	<div class="col-md-12 mb-5">
+	    <mtk-dashboard class="mtk-dashboard">
+
+		<!-- Top row container with button floated right -->
+		<div class="dashboard-top-row">
+		    <div class="dashboard-user-name"></div>
+		    <button class="dashboard-continue-btn" type="button">Continue Your Course</button>
+		</div>
+
+		<div class="dashboard-row dashboard-progress-row">
+		    <div class="dashboard-progress-label">Your progress to date:</div>
+		    <div class="dashboard-progress-container">
+			<div class="dashboard-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
 		    </div>
 		</div>
-		
-            </div>
+
+		<div class="dashboard-row dashboard-suggestions-row mt-5">
+		    <div class="dashboard-suggestions"></div>
+		</div>
+
+	    </mtk-dashboard>
 	</div>
     </div>
-    
-    <!-- Row 1: User Progress -->
-    <section class="mtk-dashboard__row" aria-labelledby="progress-title">
-	<article class="mtk-card mtk-progress-card">
-            <header>
-		<div class="mtk-progress-card__header">
-		    <span id="progress-label" class="mtk-progress-card__label">
-			<!-- Progress label will be injected here -->
-		    </span>
-		    <div id="progress-percentage" class="mtk-progress-card__percentage" aria-live="polite">
-			<!-- Progress percentage will be injected here -->
-		    </div>
-		</div>
-            </header>
-            
-            <div class="mtk-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
-		<div id="progress-fill" class="mtk-progress-bar__fill"></div>
-            </div>
-	</article>
-    </section>
-
-    <!-- Row 2: Subscription Call to Action -->
-    <section class="mtk-dashboard__row" aria-labelledby="subscription-title">
-	<article class="mtk-card mtk-subscription-card">
-            <div class="mtk-subscription-card__content">
-		<h2 id="subscription-title" class="mtk-subscription-card__title">
-		    <!-- Subscription title will be injected here -->
-		</h2>
-		<p id="subscription-description" class="mtk-subscription-card__description">
-		    <!-- Subscription description will be injected here -->
-		</p>
-		
-		<ul id="subscription-features" class="mtk-subscription-card__features" role="list">
-		    <!-- Subscription features will be injected here -->
-		</ul>
-		
-		<button 
-		    id="subscribe-btn" 
-		    class="mtk-btn mtk-btn--white" 
-		    type="button"
-		    aria-label="Subscribe to premium courses">
-		    <span class="material-icons" aria-hidden="true">workspace_premium</span>
-		    <span><!-- CTA text will be injected here --></span>
-		</button>
-            </div>
-	</article>
-    </section>
-
-</mtk-dashboard>
+</div>
