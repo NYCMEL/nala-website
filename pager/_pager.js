@@ -2,6 +2,8 @@
     "use strict";
 
     function show(sectionId) {
+	wc.log(">>>>>>>>>", sectionId);
+
 	if (sectionId == "logout") {
 	    // do nothing. drodown should shoe
 	    return;
@@ -11,8 +13,8 @@
 
 	$("#mtk-pager-" + sectionId).show();
 
-	$(".nav-link.active").removeClass("active")
-	$("#mtk-header-" + sectionId).addClass("active")
+	$("#header .nav-link.active").removeClass("active")
+	$("#header #mtk-header-" + sectionId).addClass("active")
     }
 
     ///////////////////////////////////////////

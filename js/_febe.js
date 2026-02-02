@@ -5,6 +5,7 @@ class _febe {
 	    "mtk-header-dashboard",
 	    "mtk-header-login",
 	    "mtk-header-logout",
+	    "mtk-header-home",
 	    "mtk-header-hierarchy",
 	    "mtk-header-register",
 	    "mtk-header-settings",
@@ -34,6 +35,10 @@ class _febe {
         wc.log("_febe: onMessage", msg, data);
 
         switch (msg) {
+	case "mtk-header-home":
+            MTKPager.show("home");
+            break;
+
 	case "mtk-login-success":
 	    document.location.href = "http://localhost/Melify/tools/nala-website/private"
             MTKPager.show("dashboard");
