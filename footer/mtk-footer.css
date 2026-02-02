@@ -2,8 +2,8 @@
 .mtk-footer {
   background-color: #121212;
   color: #e0e0e0;
-  font-family: Roboto, Arial, sans-serif;
-  margin-top: auto; }
+  margin-top: auto;
+  font-size: 12px; }
 
 .mtk-footer a,
 .mtk-footer button {
