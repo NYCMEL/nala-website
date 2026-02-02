@@ -4,7 +4,7 @@ window.app = window.app || {};
 
 window.app.footer = {
     brand: {
-        logo: "img/logo-nala-association.webp",
+        logo: "img/footer-logo.png",
         description: "NALA empowers locksmith professionals through education, certification, and industry leadership."
     },
 
