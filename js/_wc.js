@@ -47,7 +47,7 @@ wc.groupEnd = function(...data) {
 //// 
 /////////////////////////////////////////////////////////////////////////////////
 wc.info = function(...data) {
-    wc.logger(...data);
+    //wc.logger(...data);
     return console.info(...data);
 }
 
