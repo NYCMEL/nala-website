@@ -41,6 +41,7 @@ Output! Create exactly these files:
 - mtk-dashboard.scss
 - mtk-dashboard.html
 - mtk-dashboard.js
+- DO NOT COMPILE scss file
 
 I need to create a user dashboard
 dashboard has 2 rows:
