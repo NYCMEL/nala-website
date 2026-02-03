@@ -84,9 +84,8 @@ class _febe {
             break;
 
 	case "mtk-header-logout":
-	    alert(window.app.baseUrl);
-
-	    document.location.href = window.app.baseUrl;
+	    console.log(">>>>>>>>>", window.app.baseUrl);
+	    document.location.href = "index.html";
             break;
 
 	case "mtk-header-register":
