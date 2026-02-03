@@ -1,49 +1,51 @@
-<mtk-hierarchy class="mtk-hierarchy">
-    <div class="container-fluid h-100">
-	<div class="row h-100">
-	    <aside class="col-md-4 mtk-hierarchy-lhs" role="tree" aria-label="Course hierarchy">
-		<!-- DISPLAY HIERARCHY HERE -->
-	    </aside>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MTK Hierarchy</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Roboto Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Hierarchy Styles -->
+  <link rel="stylesheet" href="mtk-hierarchy.css">
+</head>
+<body>
 
-	    <main class="col-md-8 mtk-hierarchy-rhs">
-		<div class="mtk-rhs-content" aria-live="polite">
-		    <div class="">
-			<!-- DISPLAY RESOURCE, IMAGES OR QUIZ HERE -->
+  <mtk-hierarchy class="mtk-hierarchy">
+    <div class="container mtk-hierarchy__container">
+      <div class="row mtk-hierarchy__row">
+        
+        <!-- Left Hand Side - Course Structure -->
+        <div class="col-md-4">
+          <div class="mtk-hierarchy-lhs" role="navigation" aria-label="Course structure">
+            <!-- Modules will be rendered here -->
+          </div>
+        </div>
 
-			<div class="mtk-hierarchy-rhs-intro">
-			    <!-- INTRO -->
-			    
-			    <i class="fa fa-chevron-left m-2"></i> <span class="fbi" style="font-size:larger">Select a resource to view details</span>
-			    
-			    <p style="padding-left:30px">
-				<span class="text-success"><b>SAY SOMETHING USEFUL ABOUT PROGRAM</b></span>
-				Donec et nunc porttitor, aliquet quam eget, porta est. Proin tempus, lectus ac bibendum aliquam, nunc nisl egestas libero, vel congue eros enim sit amet ligula.
-			    </p>
-			    <p style="padding-left:30px">
-				Vivamus lobortis, nisi in ornare accumsan, nisl dui accumsan dolor, nec ornare neque libero ut lorem. Nulla fringilla velit eu felis facilisis, ultrices tincidunt justo consectetur.
-				Mauris hendrerit purus non dolor feugiat dignissim. Morbi congue lorem nec neque luctus tempus. Nulla semper egestas quam id convallis.
-			    </p>
-			</div>
+        <!-- Right Hand Side - Content Display -->
+        <div class="col-md-8">
+          <div class="mtk-hierarchy-rhs" role="main" aria-label="Content viewer">
+            <div class="mtk-hierarchy-rhs__empty">
+              <span class="material-icons">touch_app</span>
+              <p>Select a resource to view its content</p>
+            </div>
+          </div>
+        </div>
 
-			<div class="mtk-hierarchy-rhs-video">
-			    <!-- VIDEO -->
-			    <div>
-				<link href="video/mtk-video.css" rel="stylesheet">
-				
-				<wc-include href="video/mtk-video.html"><p align="center">loading video.html...</p></wc-include>
-
-				<script src="video/mtk-video.config.js"></script>
-				<script src="video/mtk-video.js"></script>
-			    </div>
-			</div>
-
-			<div class="mtk-hierarchy-rhs-image">
-			    <!-- IMAGES -->
-			    <h1>RESOURCE IMAGES</h1>
-			</div>
-		    </div>
-		</div>
-	    </main>
-	</div>
+      </div>
     </div>
-</mtk-hierarchy>
+  </mtk-hierarchy>
+
+  <!-- Configuration -->
+  <script src="mtk-hierarchy.config.js"></script>
+  <!-- Hierarchy Logic -->
+  <script src="mtk-hierarchy.js"></script>
+
+</body>
+</html>
