@@ -1,26 +1,28 @@
-<div class="container">
-    <div class="row">
-	<div class="col-md-12 mb-5">
-	    <mtk-dashboard class="mtk-dashboard">
-
-		<!-- Top row container with button floated right -->
-		<div class="dashboard-top-row">
-		    <div class="dashboard-user-name"></div>
-		    <button class="dashboard-continue-btn" type="button">Continue Your Course</button>
-		</div>
-
-		<div class="dashboard-row dashboard-progress-row">
-		    <div class="dashboard-progress-label">Your progress to date:</div>
-		    <div class="dashboard-progress-container">
-			<div class="dashboard-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-		    </div>
-		</div>
-
-		<div class="dashboard-row dashboard-suggestions-row mt-5">
-		    <div class="dashboard-suggestions"></div>
-		</div>
-
-	    </mtk-dashboard>
+<mtk-dashboard class="mtk-dashboard" role="main">
+    <!-- Row 1: User Info and Progress -->
+    <div class="mtk-dashboard__header">
+	<h1 class="mtk-dashboard__user-name" id="userName"></h1>
+	
+	<div class="mtk-dashboard__progress-section">
+            <label class="mtk-dashboard__progress-label" id="progressLabel"></label>
+            
+            <div class="mtk-dashboard__progress-info">
+		<span class="mtk-dashboard__course-title" id="courseTitle"></span>
+		<span class="mtk-dashboard__progress-percentage" id="progressPercentage" aria-live="polite"></span>
+            </div>
+            
+            <div class="mtk-dashboard__progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+		<div class="mtk-dashboard__progress-fill" id="progressFill"></div>
+            </div>
 	</div>
     </div>
-</div>
+    
+    <!-- Row 2: Subscription Options -->
+    <div class="mtk-dashboard__subscriptions">
+	<h2 class="mtk-dashboard__subscriptions-title" id="subscriptionsTitle"></h2>
+	
+	<div class="mtk-dashboard__subscription-grid" id="subscriptionGrid">
+            <!-- Subscription cards will be generated dynamically -->
+	</div>
+    </div>
+</mtk-dashboard>

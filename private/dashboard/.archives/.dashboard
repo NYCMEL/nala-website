@@ -9,8 +9,7 @@ Create a reusable UI dashboard named mtk-dashboard using:
 - Always create a JS class form mtk-dashboard
 
 Rules:
-- The dashboard is wrapped in <mtk-dashboard class="mtk-dashboard"> tag.
-- mtk-dashboard has display:block
+- The dashboard is wrapped in a block element <mtk-dashboard class="mtk-dashboard">.
 - The root element uses .mtk-dashboard.
 - All styles are scoped to .mtk-dashboard.
 - No global styles or IDs.
@@ -42,7 +41,6 @@ Output! Create exactly these files:
 - mtk-dashboard.scss
 - mtk-dashboard.html
 - mtk-dashboard.js
-- DO NOT COMPILE scss file
 
 I need to create a user dashboard
 dashboard has 2 rows:

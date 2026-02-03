@@ -89,7 +89,7 @@
 		info.append(title, desc);
 
 		const actionBtn = document.createElement("button");
-		actionBtn.className = "dashboard-suggestion-action";
+		actionBtn.className = "dashboard-suggestion-action btn btn-primary";
 		actionBtn.type = "button";
 		actionBtn.textContent = sugg.action;
 
