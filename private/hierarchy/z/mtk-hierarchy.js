@@ -18,6 +18,9 @@ class MTKHierarchy {
     this.openModules = new Set();
     this.openLessons = new Set();
     
+    // Add IDs to items that don't have them
+    this.ensureIds();
+    
     // Bind methods
     this.onMessage = this.onMessage.bind(this);
     this.handleModuleClick = this.handleModuleClick.bind(this);
@@ -26,6 +29,35 @@ class MTKHierarchy {
     
     // Wait for DOM to be ready
     this.waitForElement();
+  }
+
+  /**
+   * Ensure all items have unique IDs and fix missing types
+   */
+  ensureIds() {
+    if (!this.config || !Array.isArray(this.config)) return;
+    
+    this.config.forEach((course, cIdx) => {
+      if (!course.modules) return;
+      
+      course.modules.forEach((module, mIdx) => {
+        if (!module.id) module.id = `module-${cIdx}-${mIdx}`;
+        if (!module.lessons) return;
+        
+        module.lessons.forEach((lesson, lIdx) => {
+          if (!lesson.id) lesson.id = `lesson-${cIdx}-${mIdx}-${lIdx}`;
+          if (!lesson.resources) return;
+          
+          lesson.resources.forEach((resource, rIdx) => {
+            if (!resource.id) resource.id = `resource-${cIdx}-${mIdx}-${lIdx}-${rIdx}`;
+            // Fix missing type - if no type specified, assume photo
+            if (!resource.type) {
+              resource.type = 'photo';
+            }
+          });
+        });
+      });
+    });
   }
 
   /**
