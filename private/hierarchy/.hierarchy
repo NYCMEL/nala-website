@@ -15,16 +15,21 @@ Rules:
 - All styles are scoped to .mtk-hierarchy.
 - No global styles or IDs.
 - publish click events using wc.publish
-- subscribe to all 4-mtk-hierarchy everns using wc.subscribe
+- subscribe to all 4-mtk-hierarchy events using wc.subscribe
 
 Data:
 - The hierarchy is JSON driven.
 - Read config from window.app.hierarchy.
+- ALL modules MUST have an "id" field
+- ALL lessons MUST have an "id" field
+- ALL resources MUST have an "id" field
 
 Behavior:
 - WAIT for element to be available inside DOM
 - Use one namespace only: window.MTKHierarchy.
 - When opening a lesson, all resources should be displayed on the RHS
+- LHS and RHS must scroll independently (no page-level scrolling)
+- LHS and RHS must fill 100% of parent height with overflow: auto
 
 Restrictions:
 - No frameworks.
@@ -53,6 +58,7 @@ mtk-hierarchy UI structure:
   A rhs (.mtk-hierarchy-rhs)
   lhs and rhs height should occupy 100% of parent element's height 
   lhs and rhs should have overflow auto (scrollable)
+  lhs and rhs must scroll independently (each has its own scroll container)
   rhs:
     - col-md-8 (add a border)
     - can display a resizable, responsive video inside a <IFRAME> from link
@@ -66,16 +72,19 @@ mtk-hierarchy UI structure:
 	    "processed": false,
 	    "modules": [
 		{
+		    "id": "module-1",
 		    "title": "Foundations of Locksmithing",
 		    "access": true,
 		    "processed": true,
 		    "lessons": [
 			{
+			    "id": "lesson-1-1",
 			    "access": true,
 			    "title": "Introduction",
 			    "processed": true,
 			    "resources": [
 				{
+				    "id": "resource-1-1-1",
 				    "processed": true,
 				    "access": false,
 				    "type": "video",
@@ -100,10 +109,18 @@ lhs behavior:
 prototype:
   - create 5 elements in config file for MODULES, LESSON, RESOURCE and set all access=true & processed=true
   - show elements disabled if access=false 
-  - automatically generate IDs for items that don't have them
+  - automatically generate IDs for items that don't have them (fallback)
   - automatically set type='photo' for resources missing the type field
+
+CSS Requirements:
+  - Container must have overflow: hidden
+  - Row must use flex-wrap: nowrap
+  - Columns must have explicit height: 100%
+  - LHS and RHS must each be independent scroll containers
+  - Use flex: 1 1 auto for proper flex behavior
 
 *** MUST USE MATERIAL DESIGN styles, colors, etc.
 *** Use wc.js library for PubSub (wc.publish and wc.subscribe)
 *** Config structure: window.app.hierarchy = [ { courses } ]
-
+*** IMPORTANT: All modules need "id", all lessons need "id", all resources need "id"
+*** CRITICAL: LHS and RHS must scroll independently with no page-level scrolling
