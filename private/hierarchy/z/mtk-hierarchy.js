@@ -376,8 +376,19 @@ class MTKHierarchy {
       this.openModules.add(moduleId);
     }
     
-    // Re-render to update UI
-    this.render();
+    // Update UI without full re-render
+    const toggle = moduleHeader.querySelector('.mtk-module__toggle');
+    const body = moduleElement.querySelector('.mtk-module__body');
+    
+    if (isOpen) {
+      toggle.classList.remove('mtk-module__toggle--open');
+      body.classList.remove('mtk-module__body--open');
+      moduleHeader.setAttribute('aria-expanded', 'false');
+    } else {
+      toggle.classList.add('mtk-module__toggle--open');
+      body.classList.add('mtk-module__body--open');
+      moduleHeader.setAttribute('aria-expanded', 'true');
+    }
     
     // Publish event
     this.publish('mtk-hierarchy:module-toggled', {
@@ -406,10 +417,24 @@ class MTKHierarchy {
       this.openLessons.delete(lessonKey);
     } else {
       this.openLessons.add(lessonKey);
+      
+      // When opening a lesson, automatically display all its resources
+      this.displayLessonResources(moduleId, lessonId);
     }
     
-    // Re-render to update UI
-    this.render();
+    // Update UI without full re-render
+    const toggle = lessonHeader.querySelector('.mtk-lesson__toggle');
+    const body = lessonElement.querySelector('.mtk-lesson__body');
+    
+    if (isOpen) {
+      toggle.classList.remove('mtk-lesson__toggle--open');
+      body.classList.remove('mtk-lesson__body--open');
+      lessonHeader.setAttribute('aria-expanded', 'false');
+    } else {
+      toggle.classList.add('mtk-lesson__toggle--open');
+      body.classList.add('mtk-lesson__body--open');
+      lessonHeader.setAttribute('aria-expanded', 'true');
+    }
     
     // Publish event
     this.publish('mtk-hierarchy:lesson-toggled', {
@@ -442,14 +467,24 @@ class MTKHierarchy {
       return;
     }
     
+    // Remove active class from all resources
+    const allResources = this.elements.lhs.querySelectorAll('.mtk-resource');
+    allResources.forEach(r => r.classList.remove('mtk-resource--active'));
+    
     // Set as active
     this.activeResource = resourceId;
+    resourceElement.classList.add('mtk-resource--active');
     
-    // Mark as processed
-    resource.processed = true;
-    
-    // Re-render LHS to show eye icon
-    this.render();
+    // Mark as processed and add eye icon
+    if (!resource.processed) {
+      resource.processed = true;
+      
+      // Add eye icon if not present
+      if (!resourceElement.querySelector('.mtk-resource__status')) {
+        const statusHTML = '<span class="mtk-resource__status"><span class="material-icons">visibility</span></span>';
+        resourceElement.insertAdjacentHTML('beforeend', statusHTML);
+      }
+    }
     
     // Display resource content
     this.displayResource(resource);
@@ -486,6 +521,78 @@ class MTKHierarchy {
   }
 
   /**
+   * Display all resources from a lesson
+   */
+  displayLessonResources(moduleId, lessonId) {
+    if (!this.config || !Array.isArray(this.config)) return;
+    
+    // Find the lesson
+    for (const course of this.config) {
+      if (!course.modules) continue;
+      
+      const module = course.modules.find(m => m.id === moduleId);
+      if (!module) continue;
+      
+      const lesson = module.lessons.find(l => l.id === lessonId);
+      if (!lesson || !lesson.resources) continue;
+      
+      // Get accessible resources
+      const videos = lesson.resources.filter(r => r.type === 'video' && r.access);
+      const photos = lesson.resources.filter(r => r.type === 'photo' && r.access);
+      
+      if (typeof wc !== 'undefined') {
+        wc.log("MTKHierarchy: Displaying lesson resources", lesson.title, "Videos:", videos.length, "Photos:", photos.length);
+      }
+      
+      // Display content
+      let contentHTML = '<div class="mtk-hierarchy-rhs__content">';
+      contentHTML += `<h2>${this.escapeHtml(lesson.title)}</h2>`;
+      
+      // Display first video from the lesson (if any)
+      if (videos.length > 0) {
+        const firstVideo = videos[0];
+        contentHTML += `<p style="color: var(--mtk-text-secondary); margin-bottom: 1rem;">${this.escapeHtml(firstVideo.description)}</p>`;
+        contentHTML += `
+          <div class="mtk-video-container">
+            <iframe src="${this.sanitizeUrl(firstVideo.url)}" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    title="${this.escapeHtml(firstVideo.description)}">
+            </iframe>
+          </div>
+        `;
+      }
+      
+      // Display all photos from the lesson
+      if (photos.length > 0) {
+        contentHTML += '<div class="mtk-images-gallery">';
+        photos.forEach(photo => {
+          contentHTML += `
+            <div class="mtk-image-item">
+              <img src="${this.sanitizeUrl(photo.url)}" 
+                   alt="${this.escapeHtml(photo.description)}"
+                   loading="lazy">
+              <div class="mtk-image-item__caption">${this.escapeHtml(photo.description)}</div>
+            </div>
+          `;
+        });
+        contentHTML += '</div>';
+      }
+      
+      // If no content
+      if (videos.length === 0 && photos.length === 0) {
+        contentHTML += '<p style="color: var(--mtk-text-secondary);">No accessible content available for this lesson.</p>';
+      }
+      
+      contentHTML += '</div>';
+      
+      this.elements.rhs.innerHTML = contentHTML;
+      
+      return;
+    }
+  }
+
+  /**
    * Display resource content in RHS
    */
   displayResource(resource) {
@@ -495,28 +602,33 @@ class MTKHierarchy {
       wc.log("MTKHierarchy: Displaying resource", resource);
     }
     
-    // Collect all resources for this lesson to display images
+    // Get all resources for this lesson
     const allResources = this.getAllResourcesForCurrentLesson(resource);
-    const videos = allResources.filter(r => r.type === 'video');
-    const photos = allResources.filter(r => r.type === 'photo');
+    const videos = allResources.filter(r => r.type === 'video' && r.access);
+    const photos = allResources.filter(r => r.type === 'photo' && r.access);
+    
+    if (typeof wc !== 'undefined') {
+      wc.log("MTKHierarchy: Videos:", videos.length, "Photos:", photos.length);
+    }
     
     let contentHTML = '<div class="mtk-hierarchy-rhs__content">';
     contentHTML += `<h2>${this.escapeHtml(resource.description)}</h2>`;
     
-    // Display video if current resource is video
-    if (resource.type === 'video') {
+    // Display first video from the lesson (if any)
+    if (videos.length > 0) {
+      const firstVideo = videos[0];
       contentHTML += `
         <div class="mtk-video-container">
-          <iframe src="${this.sanitizeUrl(resource.url)}" 
+          <iframe src="${this.sanitizeUrl(firstVideo.url)}" 
                   allowfullscreen 
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  title="${this.escapeHtml(resource.description)}">
+                  title="${this.escapeHtml(firstVideo.description)}">
           </iframe>
         </div>
       `;
     }
     
-    // Display all photos
+    // Display all photos from the lesson
     if (photos.length > 0) {
       contentHTML += '<div class="mtk-images-gallery">';
       photos.forEach(photo => {
@@ -532,6 +644,11 @@ class MTKHierarchy {
       contentHTML += '</div>';
     }
     
+    // If no content
+    if (videos.length === 0 && photos.length === 0) {
+      contentHTML += '<p style="color: var(--mtk-text-secondary);">No accessible content available for this lesson.</p>';
+    }
+    
     contentHTML += '</div>';
     
     this.elements.rhs.innerHTML = contentHTML;
@@ -541,8 +658,22 @@ class MTKHierarchy {
    * Get all resources for the current lesson
    */
   getAllResourcesForCurrentLesson(resource) {
-    // For now, just return the single resource
-    // In a more complex implementation, this would find all resources in the same lesson
+    // Find the lesson that contains this resource
+    if (!this.config || !Array.isArray(this.config)) return [resource];
+    
+    for (const course of this.config) {
+      if (!course.modules) continue;
+      
+      for (const module of course.modules) {
+        for (const lesson of module.lessons) {
+          // Check if this lesson contains the resource
+          if (lesson.resources && lesson.resources.some(r => r.id === resource.id)) {
+            return lesson.resources;
+          }
+        }
+      }
+    }
+    
     return [resource];
   }
 
