@@ -93,3 +93,7 @@
 
 .mtk-dashboard .dashboard-suggestion-action:focus {
   outline: 2px solid #303f9f; }
+    cursor: pointer;
+    flex-shrink: 0; }
+  .mtk-dashboard .dashboard-suggestion-action:focus {
+    outline: 2px solid #303f9f; }
