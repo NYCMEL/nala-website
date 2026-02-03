@@ -13,7 +13,7 @@ Rules:
 - The root element uses .mtk-dashboard.
 - All styles are scoped to .mtk-dashboard.
 - No global styles or IDs.
-- publish click events using wc.publish
+- publish click events using wc.publish(msg,data)
 - subscribe to all 4-mtk-dashboard everns using wc.subscribe
 - create a onMessage function to be passed to wc.subscribe function
 
