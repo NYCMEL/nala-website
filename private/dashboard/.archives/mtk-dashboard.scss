@@ -1,0 +1,110 @@
+.mtk-dashboard {
+    font-family: 'Roboto', sans-serif;
+    padding: 20px;
+    color: #212121;
+
+    /* Top row: user name and continue button */
+    .dashboard-top-row {
+	display: flex;
+	justify-content: space-between; /* User name left, button right */
+	align-items: center;
+	margin-bottom: 16px;
+    }
+
+    .dashboard-user-name {
+	font-size: 1.25rem;
+	font-weight: 500;
+    }
+
+    .dashboard-continue-btn {
+	background: transparent;
+	color: #3f51b5;
+	padding: 10px 16px;
+	border-radius: 6px;
+	font-size: 0.95rem;
+	cursor: pointer;
+	transition: all 0.2s ease;
+    }
+
+    .dashboard-continue-btn:hover,
+    .dashboard-continue-btn:focus {
+	background: #3f51b5;
+	color: #fff;
+	outline: none;
+    }
+
+    /* Progress row */
+    .dashboard-progress-row {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin-bottom: 24px;
+    }
+
+    .dashboard-progress-label {
+	font-size: 1rem;
+	color: #616161;
+    }
+
+    .dashboard-progress-container {
+	background: #e0e0e0;
+	border-radius: 4px;
+	overflow: hidden;
+	height: 40px;
+    }
+
+    .dashboard-progress-bar {
+	height: 100%;
+	background-color: gold;
+	text-align: center;
+	color: #000;
+	font-size: 0.85rem;
+	line-height: 40px;
+	transition: width 0.3s ease;
+    }
+
+    /* Suggestions */
+    .dashboard-suggestions {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+    }
+
+    .dashboard-suggestion {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 12px;
+	background: #f5f5f5;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: background 0.2s ease;
+    }
+
+    .dashboard-suggestion:hover,
+    .dashboard-suggestion:focus {
+	background: #e8eaf6;
+	outline: none;
+    }
+
+    .dashboard-suggestion-title {
+	font-weight: 500;
+    }
+
+    .dashboard-suggestion-description {
+	font-size: 0.9rem;
+	color: #616161;
+    }
+
+    .dashboard-suggestion-action {
+	padding: 6px 12px;
+	border-radius: 4px;
+	font-size: 0.85rem;
+	cursor: pointer;
+	flex-shrink: 0;
+    }
+
+    .dashboard-suggestion-action:focus {
+	outline: 2px solid #303f9f;
+    }
+}
