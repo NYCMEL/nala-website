@@ -373,12 +373,46 @@ class MTKDashboard {
   }
 }
 
-// Initialize dashboard when config is available
-if (typeof mtkDashboardConfig !== 'undefined') {
-  const dashboard = new MTKDashboard(mtkDashboardConfig);
+// Wait for mtk-dashboard element to be completely loaded into DOM
+function initializeDashboard() {
+  const dashboardElement = document.querySelector('mtk-dashboard.mtk-dashboard');
   
-  // Make dashboard available globally for debugging
-  window.mtkDashboard = dashboard;
+  if (dashboardElement) {
+    // Element found, check if config is available
+    if (typeof mtkDashboardConfig !== 'undefined') {
+      const dashboard = new MTKDashboard(mtkDashboardConfig);
+      
+      // Make dashboard available globally for debugging
+      window.mtkDashboard = dashboard;
+    } else {
+      console.error('MTK Dashboard: Configuration not found. Please include mtk-dashboard.config.js');
+    }
+  } else {
+    // Element not found, wait for it
+    const observer = new MutationObserver((mutations, obs) => {
+      const element = document.querySelector('mtk-dashboard.mtk-dashboard');
+      if (element) {
+        obs.disconnect();
+        
+        if (typeof mtkDashboardConfig !== 'undefined') {
+          const dashboard = new MTKDashboard(mtkDashboardConfig);
+          window.mtkDashboard = dashboard;
+        } else {
+          console.error('MTK Dashboard: Configuration not found. Please include mtk-dashboard.config.js');
+        }
+      }
+    });
+    
+    observer.observe(document.documentElement, {
+      childList: true,
+      subtree: true
+    });
+  }
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeDashboard);
 } else {
-  console.error('MTK Dashboard: Configuration not found. Please include mtk-dashboard.config.js');
+  initializeDashboard();
 }
