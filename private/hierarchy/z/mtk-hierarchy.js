@@ -176,7 +176,7 @@ class MTKHierarchy {
       wc.group("MTKHierarchy: Rendering");
     }
     
-    this.renderModules();
+    this.renderCourses();
     
     if (typeof wc !== 'undefined') {
       wc.groupEnd();
@@ -189,22 +189,40 @@ class MTKHierarchy {
   }
 
   /**
-   * Render modules
+   * Render courses
    */
-  renderModules() {
-    if (!this.elements.lhs || !this.config.modules) {
+  renderCourses() {
+    if (!this.elements.lhs || !this.config || !Array.isArray(this.config)) {
       if (typeof wc !== 'undefined') {
-        wc.warn("MTKHierarchy: Cannot render modules - missing element or config");
+        wc.warn("MTKHierarchy: Cannot render courses - missing element or config");
       }
       return;
     }
     
-    const modulesHTML = this.config.modules.map(module => this.renderModule(module)).join('');
-    this.elements.lhs.innerHTML = modulesHTML;
+    const coursesHTML = this.config.map(course => this.renderCourse(course)).join('');
+    this.elements.lhs.innerHTML = coursesHTML;
     
     if (typeof wc !== 'undefined') {
-      wc.log("MTKHierarchy: Modules rendered", this.config.modules.length);
+      wc.log("MTKHierarchy: Courses rendered", this.config.length);
     }
+  }
+
+  /**
+   * Render a single course
+   */
+  renderCourse(course) {
+    if (!course.modules) return '';
+    
+    const modulesHTML = course.modules.map(module => this.renderModule(module)).join('');
+    return modulesHTML;
+  }
+
+  /**
+   * Render modules
+   */
+  renderModules() {
+    // This method is now handled by renderCourses
+    this.renderCourses();
   }
 
   /**
@@ -450,13 +468,21 @@ class MTKHierarchy {
    * Find a resource by IDs
    */
   findResource(moduleId, lessonId, resourceId) {
-    const module = this.config.modules.find(m => m.id === moduleId);
-    if (!module) return null;
+    if (!this.config || !Array.isArray(this.config)) return null;
     
-    const lesson = module.lessons.find(l => l.id === lessonId);
-    if (!lesson) return null;
+    for (const course of this.config) {
+      if (!course.modules) continue;
+      
+      const module = course.modules.find(m => m.id === moduleId);
+      if (!module) continue;
+      
+      const lesson = module.lessons.find(l => l.id === lessonId);
+      if (!lesson) continue;
+      
+      return lesson.resources.find(r => r.id === resourceId);
+    }
     
-    return lesson.resources.find(r => r.id === resourceId);
+    return null;
   }
 
   /**
@@ -524,23 +550,29 @@ class MTKHierarchy {
    * Load resource by ID
    */
   loadResourceById(resourceId) {
+    if (!this.config || !Array.isArray(this.config)) return;
+    
     // Find the resource
-    for (const module of this.config.modules) {
-      for (const lesson of module.lessons) {
-        const resource = lesson.resources.find(r => r.id === resourceId);
-        if (resource) {
-          // Open the module and lesson
-          this.openModules.add(module.id);
-          this.openLessons.add(`${module.id}-${lesson.id}`);
-          
-          // Set as active and display
-          this.activeResource = resourceId;
-          resource.processed = true;
-          
-          this.render();
-          this.displayResource(resource);
-          
-          return;
+    for (const course of this.config) {
+      if (!course.modules) continue;
+      
+      for (const module of course.modules) {
+        for (const lesson of module.lessons) {
+          const resource = lesson.resources.find(r => r.id === resourceId);
+          if (resource) {
+            // Open the module and lesson
+            this.openModules.add(module.id);
+            this.openLessons.add(`${module.id}-${lesson.id}`);
+            
+            // Set as active and display
+            this.activeResource = resourceId;
+            resource.processed = true;
+            
+            this.render();
+            this.displayResource(resource);
+            
+            return;
+          }
         }
       }
     }
@@ -550,15 +582,21 @@ class MTKHierarchy {
    * Expand all modules and lessons
    */
   expandAll() {
-    this.config.modules.forEach(module => {
-      if (module.access) {
-        this.openModules.add(module.id);
-        module.lessons.forEach(lesson => {
-          if (lesson.access) {
-            this.openLessons.add(`${module.id}-${lesson.id}`);
-          }
-        });
-      }
+    if (!this.config || !Array.isArray(this.config)) return;
+    
+    this.config.forEach(course => {
+      if (!course.modules) return;
+      
+      course.modules.forEach(module => {
+        if (module.access) {
+          this.openModules.add(module.id);
+          module.lessons.forEach(lesson => {
+            if (lesson.access) {
+              this.openLessons.add(`${module.id}-${lesson.id}`);
+            }
+          });
+        }
+      });
     });
     this.render();
   }
@@ -650,23 +688,23 @@ if (typeof window.app !== 'undefined' && window.app.hierarchy) {
   // Example: Listen to hierarchy events
   if (typeof wc !== 'undefined') {
     wc.subscribe('mtk-hierarchy:resource-clicked', function(msg, data) {
-      wc.log('🎯 Resource Clicked:', data);
+      wc.info('🎯 Resource Clicked:', data);
     });
     
     wc.subscribe('mtk-hierarchy:module-toggled', function(msg, data) {
-      wc.log('📂 Module Toggled:', data);
+      wc.info('📂 Module Toggled:', data);
     });
     
     wc.subscribe('mtk-hierarchy:lesson-toggled', function(msg, data) {
-      wc.log('📝 Lesson Toggled:', data);
+      wc.info('📝 Lesson Toggled:', data);
     });
     
     wc.subscribe('mtk-hierarchy:initialized', function(msg, data) {
-      wc.log('✅ Hierarchy Initialized:', data);
+      wc.info('✅ Hierarchy Initialized:', data);
     });
     
     wc.subscribe('mtk-hierarchy:rendered', function(msg, data) {
-      wc.log('✅ Hierarchy Rendered:', data);
+      wc.info('✅ Hierarchy Rendered:', data);
     });
   }
 } else {
