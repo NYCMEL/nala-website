@@ -85,7 +85,9 @@ class _febe {
             break;
 
 	case "mtk-header-logout":
-	    document.location.href = "http://localhost/Melify/tools/nala-website";
+	    alert(window.app.baseUrl);
+
+	    document.location.href = window.app.baseUrl;
             break;
 
 	case "mtk-header-register":
