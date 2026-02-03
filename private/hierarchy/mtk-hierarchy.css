@@ -143,7 +143,11 @@
   flex: 1;
   font-size: 1rem;
   font-weight: 500;
-  letter-spacing: 0.25px; }
+  letter-spacing: 0.25px;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
 
 .mtk-hierarchy .mtk-module__toggle .material-icons {
   transition: transform 0.3s ease;
@@ -197,7 +201,11 @@
   flex: 1;
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--mtk-text-primary); }
+  color: var(--mtk-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%; }
 
 .mtk-hierarchy .mtk-lesson__toggle .material-icons {
   transition: transform 0.3s ease;
@@ -251,7 +259,11 @@
 .mtk-hierarchy .mtk-resource__title {
   flex: 1;
   font-size: 0.813rem;
-  color: var(--mtk-text-primary); }
+  color: var(--mtk-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%; }
 
 .mtk-hierarchy .mtk-resource__status {
   flex-shrink: 0;
@@ -283,7 +295,11 @@
   font-size: 1.5rem;
   font-weight: 500;
   margin-bottom: 0.5rem;
-  color: var(--mtk-text-primary); }
+  color: var(--mtk-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%; }
 
 .mtk-hierarchy .mtk-hierarchy-rhs__content p {
   color: var(--mtk-text-secondary);
