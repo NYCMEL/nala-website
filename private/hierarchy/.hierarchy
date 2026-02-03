@@ -5,11 +5,13 @@ Create a reusable UI hierarchy named mtk-hierarchy using:
 - SCSS
 - Vanilla JavaScript
 - Bootstrap 5 (layout only)
-- Modern Material Design
+- Modern Material Design & Styles
 - Material Design icons
+- Always create a JS class form mtk-component
 
 Rules:
-- The hierarchy is wrapped in a block element <mtk-hierarchy class="mtk-hierarchy">.
+- mtk-hierarchy is wrapped in a <mtk-hierarchy class="mtk-hierarchy"> tag.
+- mtk-hierarchy has a display:block
 - The root element uses .mtk-hierarchy.
 - All styles are scoped to .mtk-hierarchy.
 - No global styles or IDs.
@@ -35,13 +37,13 @@ Accessibility:
 - Use semantic HTML.
 - Keyboard accessible.
 - Visible focus states.
+- ADA compliant
 
 Output, Create exactly four files:
 - mtk-hierarchy.config.js (JSON FILE)
 - mtk-hierarchy.scss
 - mtk-hierarchy.html
 - mtk-hierarchy.js
-- index.html
 
 mtk-hierarchy UI structure:
 - use nice material design elements
