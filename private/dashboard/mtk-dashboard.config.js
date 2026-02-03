@@ -1,19 +1,37 @@
-// JSON-driven configuration for mtk-dashboard
-window.mtkDashboardConfig = {
-    user: {
-	fullName: "Jane Doe",
-	progressPercent: 12 // Progress is 12%
-    },
-    suggestions: [
-	{
-	    title: "<h5>Your Business in a box</h5>",
-	    description: "We will create a professional, high-converting website for your business and actively promote it across social media to drive traffic, leads, and sales.<BR>You can amplify these results even further by running your own marketing efforts, such as targeted email campaigns, newsletters, and direct outreach, to maximize exposure and accelerate growth.",
-	    action: "Learn more..."
-	},
-	{
-	    title: "<h5 class='text-success'>Donate to Mel's Cause...</h5>",
-	    description: "Your participation in his cause can be a powerful motivator, encouraging him to push harder, stay focused, and deliver even greater results.<BR> <p>Knowing that others believe in his mission often fuels stronger commitment and sustained effort.",
-	    action: "Learn more..."
-	}
+// mtk-dashboard configuration
+const mtkDashboardConfig = {
+  user: {
+    fullName: "John Anderson"
+  },
+  progress: {
+    label: "Your progress to date:",
+    percentage: 68,
+    courseTitle: "Introduction to Web Development"
+  },
+  subscriptions: {
+    title: "You can also subscribe to our premium features:",
+    options: [
+      {
+        id: "premium-course",
+        icon: "school",
+        title: "Premium Courses",
+        description: "Access advanced courses and certifications",
+        price: "$29.99/month"
+      },
+      {
+        id: "mentorship",
+        icon: "people",
+        title: "1-on-1 Mentorship",
+        description: "Get personalized guidance from experts",
+        price: "$99.99/month"
+      },
+      {
+        id: "career-services",
+        icon: "work",
+        title: "Career Services",
+        description: "Resume review, interview prep, and job matching",
+        price: "$49.99/month"
+      }
     ]
+  }
 };

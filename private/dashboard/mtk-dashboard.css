@@ -1,95 +1,151 @@
 .mtk-dashboard {
-  font-family: 'Roboto', sans-serif;
-  padding: 20px;
-  color: #212121;
-  /* Top row: user name and continue button */
-  /* Progress row */
-  /* Suggestions */ }
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  background: #f5f5f5; }
+  .mtk-dashboard * {
+    box-sizing: border-box; }
+  .mtk-dashboard__header {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 32px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+  .mtk-dashboard__user-name {
+    font-size: 32px;
+    font-weight: 500;
+    color: #1976d2;
+    margin: 0 0 24px 0;
+    letter-spacing: -0.5px; }
+  .mtk-dashboard__progress-section {
+    margin-top: 24px; }
+  .mtk-dashboard__progress-label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #424242;
+    margin-bottom: 16px;
+    display: block; }
+  .mtk-dashboard__progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px; }
+  .mtk-dashboard__course-title {
+    font-size: 14px;
+    color: #757575;
+    font-weight: 400; }
+  .mtk-dashboard__progress-percentage {
+    font-size: 24px;
+    font-weight: 500;
+    color: #1976d2; }
+  .mtk-dashboard__progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative; }
+  .mtk-dashboard__progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #1976d2 0%, #2196f3 100%);
+    border-radius: 4px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+  .mtk-dashboard__subscriptions {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 32px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+  .mtk-dashboard__subscriptions-title {
+    font-size: 20px;
+    font-weight: 500;
+    color: #212121;
+    margin: 0 0 24px 0; }
+  .mtk-dashboard__subscription-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px; }
+  .mtk-dashboard__subscription-card {
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 24px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative; }
+    .mtk-dashboard__subscription-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      border-color: #1976d2; }
+    .mtk-dashboard__subscription-card:focus {
+      outline: 2px solid #1976d2;
+      outline-offset: 2px; }
+  .mtk-dashboard__card-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #1976d2 0%, #2196f3 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px; }
+    .mtk-dashboard__card-icon .material-icons {
+      font-size: 28px;
+      color: #ffffff; }
+  .mtk-dashboard__card-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #212121;
+    margin: 0 0 8px 0; }
+  .mtk-dashboard__card-description {
+    font-size: 14px;
+    color: #757575;
+    line-height: 1.5;
+    margin: 0 0 16px 0;
+    min-height: 42px; }
+  .mtk-dashboard__card-price {
+    font-size: 20px;
+    font-weight: 500;
+    color: #1976d2;
+    margin: 0; }
+  .mtk-dashboard .material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased; }
+  @media (max-width: 768px) {
+    .mtk-dashboard {
+      padding: 16px; }
+      .mtk-dashboard__header {
+        padding: 24px; }
+      .mtk-dashboard__user-name {
+        font-size: 24px; }
+      .mtk-dashboard__subscriptions {
+        padding: 24px; }
+      .mtk-dashboard__subscription-grid {
+        grid-template-columns: 1fr; } }
+  .mtk-dashboard__subscription-card:focus-visible {
+    outline: 3px solid #1976d2;
+    outline-offset: 2px; }
 
-.mtk-dashboard .dashboard-top-row {
-  display: flex;
-  justify-content: space-between;
-  /* User name left, button right */
-  align-items: center;
-  margin-bottom: 16px; }
-
-.mtk-dashboard .dashboard-user-name {
-  font-size: 1.25rem;
-  font-weight: 500; }
-
-.mtk-dashboard .dashboard-continue-btn {
-  background: transparent;
-  color: #3f51b5;
-  padding: 10px 16px;
-  border-radius: 6px;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: all 0.2s ease; }
-
-.mtk-dashboard .dashboard-continue-btn:hover,
-.mtk-dashboard .dashboard-continue-btn:focus {
-  background: #3f51b5;
-  color: #fff;
-  outline: none; }
-
-.mtk-dashboard .dashboard-progress-row {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 24px; }
-
-.mtk-dashboard .dashboard-progress-label {
-  font-size: 1rem;
-  color: #616161; }
-
-.mtk-dashboard .dashboard-progress-container {
-  background: #e0e0e0;
-  border-radius: 4px;
-  overflow: hidden;
-  height: 40px; }
-
-.mtk-dashboard .dashboard-progress-bar {
-  height: 100%;
-  background-color: gold;
-  text-align: center;
-  color: #000;
-  font-size: 0.85rem;
-  line-height: 40px;
-  transition: width 0.3s ease; }
-
-.mtk-dashboard .dashboard-suggestions {
-  display: flex;
-  flex-direction: column;
-  gap: 12px; }
-
-.mtk-dashboard .dashboard-suggestion {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px;
-  background: #f5f5f5;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.2s ease; }
-
-.mtk-dashboard .dashboard-suggestion:hover,
-.mtk-dashboard .dashboard-suggestion:focus {
-  background: #e8eaf6;
-  outline: none; }
-
-.mtk-dashboard .dashboard-suggestion-title {
-  font-weight: 500; }
-
-.mtk-dashboard .dashboard-suggestion-description {
-  font-size: 0.9rem;
-  color: #616161; }
-
-.mtk-dashboard .dashboard-suggestion-action {
-  padding: 6px 12px;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  cursor: pointer;
-  flex-shrink: 0; }
-
-.mtk-dashboard .dashboard-suggestion-action:focus {
-  outline: 2px solid #303f9f; }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px); }
+  to {
+    opacity: 1;
+    transform: translateY(0); } }
+  .mtk-dashboard__header, .mtk-dashboard__subscriptions {
+    animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+  .mtk-dashboard__subscriptions {
+    animation-delay: 0.1s;
+    animation-fill-mode: both; }
