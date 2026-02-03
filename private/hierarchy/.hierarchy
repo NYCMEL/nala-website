@@ -96,6 +96,7 @@ mtk-hierarchy UI structure:
 		...
 
 lhs behavior:
+  - all titles should be ellipsis with 100% width and show ...
   - modules and lessons and resources can be expanded. use folder & file icons for these
   - use "Card" for modules that contain all lessons and resources
   - opening a lesson should display all resources from that lesson on the rhs
