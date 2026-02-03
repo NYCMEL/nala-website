@@ -49,8 +49,7 @@ class _febe {
             break;
 
 	case "mtk-login-success":
-	    alert(window.app.baseUrl);
-	    document.location.href = window.app.baseUrl + "/private"
+	    document.location.href = window.app.baseUrl + "private"
             MTKPager.show("dashboard");
             break;
 
