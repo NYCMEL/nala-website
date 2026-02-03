@@ -95,6 +95,7 @@ lhs behavior
   - use "Card" for modules that contain all lessons and resources
   - opening a resource should display all contents on the rhs
   - all resources accessed must have an "eye" icon on the right side of its title
+  - all titles should use ellipsis
   - resources have types video or photo
     - video should be displayed in an IFRAME
     - photos are placed horizontally one after the other below the video IFRAME
