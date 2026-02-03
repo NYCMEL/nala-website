@@ -1,5 +1,4 @@
 FORGET ALL PREVIOUS CONTEXT for mtk-hierarchy
-
 Create a reusable UI hierarchy named mtk-hierarchy using:
 - HTML
 - SCSS
@@ -25,6 +24,7 @@ Data:
 Behavior:
 - WAIT for element to be available inside DOM
 - Use one namespace only: window.MTKHierarchy.
+- When opening a lesson, all resources should be displayed on the RHS
 
 Restrictions:
 - No frameworks.
@@ -51,21 +51,15 @@ mtk-hierarchy UI structure:
 - main screen has 2 sections, inside a bootstrap container
   A lhs (.mtk-hierarchy-lhs)
   A rhs (.mtk-hierarchy-rhs)
-
   lhs and rhs height should occupy 100% of parent element's height 
   lhs and rhs should have overflow auto (scrollable)
-
   rhs:
     - col-md-8 (add a border)
     - can display a resizable, responsive video inside a <IFRAME> from link
     - display a set of images from link, one next to another and below the video (if any)
-
   lhs:
     - col-md-4 (add a border)
     - uses a structure like below as MODULES > LESSON > RESOURCE
-
-window.app = {
-    "hierarchy": [
 	{
 	    "title": "Introduction to Locksmithing",
 	    "access": true,
@@ -89,25 +83,27 @@ window.app = {
 				    "url": "https://vimeo.com/827172729"
 				}
 			    ]
-			},
+			}
 		...
 
-lhs behavior
+lhs behavior:
   - modules and lessons and resources can be expanded. use folder & file icons for these
   - use "Card" for modules that contain all lessons and resources
-  - opening a resource should display all contents on the rhs
+  - opening a lesson should display all resources from that lesson on the rhs
+  - opening a resource should display all contents from that lesson on the rhs
   - all resources accessed must have an "eye" icon on the right side of its title
-  - all titles should use ellipsis
   - resources have types video or photo
     - video should be displayed in an IFRAME
     - photos are placed horizontally one after the other below the video IFRAME
   - all click events should publish an event using wc.publish function
 
+prototype:
+  - create 5 elements in config file for MODULES, LESSON, RESOURCE and set all access=true & processed=true
+  - show elements disabled if access=false 
+  - automatically generate IDs for items that don't have them
+  - automatically set type='photo' for resources missing the type field
 
-  prototype:
-    - create 5 elemnts in config file for MODULES, LESSON, RESOURCE and set all access=true & processed=true
-    - show elements dispabled if access=false 
-
-***  MUST USE MATERIAL DESIGN styles, colors, etc.
-
+*** MUST USE MATERIAL DESIGN styles, colors, etc.
+*** Use wc.js library for PubSub (wc.publish and wc.subscribe)
+*** Config structure: window.app.hierarchy = [ { courses } ]
 
