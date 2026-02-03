@@ -78,6 +78,7 @@ class _febe {
             break;
 
 	case "mtk-header-settings":
+	    alert("_febe AAAAAAAAAA");
 	    MTKPager.show("settings");
             break;
 
