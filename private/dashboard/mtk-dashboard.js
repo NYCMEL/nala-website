@@ -1,418 +1,391 @@
-/**
- * MTK Dashboard Class
- * Manages user dashboard with progress tracking and subscription options
- */
-
-// Simple event bus for publish/subscribe pattern
-const wc = {
-  events: {},
-  
-  publish(eventName, data) {
-    if (!this.events[eventName]) return;
-    this.events[eventName].forEach(callback => callback(data));
-  },
-  
-  subscribe(eventName, callback) {
-    if (!this.events[eventName]) {
-      this.events[eventName] = [];
-    }
-    this.events[eventName].push(callback);
-    
-    // Return unsubscribe function
-    return () => {
-      this.events[eventName] = this.events[eventName].filter(cb => cb !== callback);
-    };
-  }
-};
-
 class MTKDashboard {
-  constructor(config) {
-    this.config = config;
-    this.elements = {};
-    this.subscriptions = [];
-    
-    // Wait for DOM to be ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => this.init());
-    } else {
-      this.init();
-    }
-  }
-  
-  /**
-   * Initialize the dashboard
-   */
-  init() {
-    this.waitForElement('.mtk-dashboard', (element) => {
-      this.dashboardElement = element;
-      this.cacheElements();
-      this.subscribeToEvents();
-      this.render();
-      this.attachEventListeners();
-      
-      // Publish dashboard ready event
-      wc.publish('mtk-dashboard:ready', {
-        timestamp: new Date().toISOString()
-      });
-    });
-  }
-  
-  /**
-   * Wait for element to be available in DOM
-   */
-  waitForElement(selector, callback) {
-    const element = document.querySelector(selector);
-    
-    if (element) {
-      callback(element);
-      return;
+    constructor(config) {
+	this.config = config;
+	this.elements = {};
+	this.subscriptions = [];
+	
+	// Wait for DOM to be ready
+	if (document.readyState === 'loading') {
+	    document.addEventListener('DOMContentLoaded', () => this.init());
+	} else {
+	    this.init();
+	}
     }
     
-    const observer = new MutationObserver((mutations, obs) => {
-      const element = document.querySelector(selector);
-      if (element) {
-        obs.disconnect();
-        callback(element);
-      }
-    });
-    
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true
-    });
-  }
-  
-  /**
-   * Cache DOM elements
-   */
-  cacheElements() {
-    this.elements = {
-      userName: document.getElementById('userName'),
-      progressLabel: document.getElementById('progressLabel'),
-      courseTitle: document.getElementById('courseTitle'),
-      progressPercentage: document.getElementById('progressPercentage'),
-      progressFill: document.getElementById('progressFill'),
-      progressBar: document.querySelector('.mtk-dashboard__progress-bar'),
-      subscriptionsTitle: document.getElementById('subscriptionsTitle'),
-      subscriptionGrid: document.getElementById('subscriptionGrid')
-    };
-  }
-  
-  /**
-   * Subscribe to all mtk-dashboard events
-   */
-  subscribeToEvents() {
-    // Subscribe to config update event
-    this.subscriptions.push(
-      wc.subscribe('mtk-dashboard:config-update', this.onMessage.bind(this))
-    );
-    
-    // Subscribe to progress update event
-    this.subscriptions.push(
-      wc.subscribe('mtk-dashboard:progress-update', this.onMessage.bind(this))
-    );
-    
-    // Subscribe to user update event
-    this.subscriptions.push(
-      wc.subscribe('mtk-dashboard:user-update', this.onMessage.bind(this))
-    );
-    
-    // Subscribe to subscription update event
-    this.subscriptions.push(
-      wc.subscribe('mtk-dashboard:subscription-update', this.onMessage.bind(this))
-    );
-  }
-  
-  /**
-   * Handle incoming messages from subscribed events
-   */
-  onMessage(data) {
-    const { type, payload } = data;
-    
-    switch (type) {
-      case 'config-update':
-        this.config = payload;
-        this.render();
-        break;
-        
-      case 'progress-update':
-        this.updateProgress(payload);
-        break;
-        
-      case 'user-update':
-        this.updateUser(payload);
-        break;
-        
-      case 'subscription-update':
-        this.updateSubscriptions(payload);
-        break;
-        
-      default:
-        console.warn('Unknown message type:', type);
-    }
-  }
-  
-  /**
-   * Render the dashboard
-   */
-  render() {
-    this.renderUserInfo();
-    this.renderProgress();
-    this.renderSubscriptions();
-    
-    // Publish render complete event
-    wc.publish('mtk-dashboard:rendered', {
-      timestamp: new Date().toISOString()
-    });
-  }
-  
-  /**
-   * Render user information
-   */
-  renderUserInfo() {
-    if (this.elements.userName) {
-      this.elements.userName.textContent = this.config.user.fullName;
-    }
-  }
-  
-  /**
-   * Render progress section
-   */
-  renderProgress() {
-    const { progress } = this.config;
-    
-    if (this.elements.progressLabel) {
-      this.elements.progressLabel.textContent = progress.label;
+    /**
+     * Initialize the dashboard
+     */
+    init() {
+	this.waitForElement('.mtk-dashboard', (element) => {
+	    this.dashboardElement = element;
+	    this.cacheElements();
+	    this.subscribeToEvents();
+	    this.render();
+	    this.attachEventListeners();
+	    
+	    // Publish dashboard ready event
+	    wc.publish('mtk-dashboard:ready', {
+		timestamp: new Date().toISOString()
+	    });
+	});
     }
     
-    if (this.elements.courseTitle) {
-      this.elements.courseTitle.textContent = progress.courseTitle;
+    /**
+     * Wait for element to be available in DOM
+     */
+    waitForElement(selector, callback) {
+	const element = document.querySelector(selector);
+	
+	if (element) {
+	    callback(element);
+	    return;
+	}
+	
+	const observer = new MutationObserver((mutations, obs) => {
+	    const element = document.querySelector(selector);
+	    if (element) {
+		obs.disconnect();
+		callback(element);
+	    }
+	});
+	
+	observer.observe(document.body, {
+	    childList: true,
+	    subtree: true
+	});
     }
     
-    if (this.elements.progressPercentage) {
-      this.elements.progressPercentage.textContent = `${progress.percentage}%`;
+    /**
+     * Cache DOM elements
+     */
+    cacheElements() {
+	this.elements = {
+	    userName: document.getElementById('userName'),
+	    progressLabel: document.getElementById('progressLabel'),
+	    courseTitle: document.getElementById('courseTitle'),
+	    progressPercentage: document.getElementById('progressPercentage'),
+	    progressFill: document.getElementById('progressFill'),
+	    progressBar: document.querySelector('.mtk-dashboard__progress-bar'),
+	    subscriptionsTitle: document.getElementById('subscriptionsTitle'),
+	    subscriptionGrid: document.getElementById('subscriptionGrid')
+	};
     }
     
-    if (this.elements.progressFill) {
-      // Animate progress bar
-      setTimeout(() => {
-        this.elements.progressFill.style.width = `${progress.percentage}%`;
-      }, 100);
+    /**
+     * Subscribe to all mtk-dashboard events
+     */
+    subscribeToEvents() {
+	// Subscribe to config update event
+	this.subscriptions.push(
+	    wc.subscribe('mtk-dashboard:config-update', this.onMessage.bind(this))
+	);
+	
+	// Subscribe to progress update event
+	this.subscriptions.push(
+	    wc.subscribe('mtk-dashboard:progress-update', this.onMessage.bind(this))
+	);
+	
+	// Subscribe to user update event
+	this.subscriptions.push(
+	    wc.subscribe('mtk-dashboard:user-update', this.onMessage.bind(this))
+	);
+	
+	// Subscribe to subscription update event
+	this.subscriptions.push(
+	    wc.subscribe('mtk-dashboard:subscription-update', this.onMessage.bind(this))
+	);
     }
     
-    if (this.elements.progressBar) {
-      this.elements.progressBar.setAttribute('aria-valuenow', progress.percentage);
-      this.elements.progressBar.setAttribute('aria-label', 
-        `Course progress: ${progress.percentage}% complete`);
-    }
-  }
-  
-  /**
-   * Render subscription options
-   */
-  renderSubscriptions() {
-    const { subscriptions } = this.config;
-    
-    if (this.elements.subscriptionsTitle) {
-      this.elements.subscriptionsTitle.textContent = subscriptions.title;
-    }
-    
-    if (this.elements.subscriptionGrid) {
-      this.elements.subscriptionGrid.innerHTML = '';
-      
-      subscriptions.options.forEach((option, index) => {
-        const card = this.createSubscriptionCard(option, index);
-        this.elements.subscriptionGrid.appendChild(card);
-      });
-    }
-  }
-  
-  /**
-   * Create a subscription card element
-   */
-  createSubscriptionCard(option, index) {
-    const card = document.createElement('div');
-    card.className = 'mtk-dashboard__subscription-card';
-    card.setAttribute('role', 'button');
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('aria-label', `Subscribe to ${option.title}, ${option.price}`);
-    card.dataset.subscriptionId = option.id;
-    
-    const icon = document.createElement('div');
-    icon.className = 'mtk-dashboard__card-icon';
-    icon.innerHTML = `<span class="material-icons" aria-hidden="true">${option.icon}</span>`;
-    
-    const title = document.createElement('h3');
-    title.className = 'mtk-dashboard__card-title';
-    title.textContent = option.title;
-    
-    const description = document.createElement('p');
-    description.className = 'mtk-dashboard__card-description';
-    description.textContent = option.description;
-    
-    const price = document.createElement('p');
-    price.className = 'mtk-dashboard__card-price';
-    price.textContent = option.price;
-    
-    card.appendChild(icon);
-    card.appendChild(title);
-    card.appendChild(description);
-    card.appendChild(price);
-    
-    // Add click event
-    card.addEventListener('click', () => this.handleSubscriptionClick(option));
-    
-    // Add keyboard support
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        this.handleSubscriptionClick(option);
-      }
-    });
-    
-    return card;
-  }
-  
-  /**
-   * Handle subscription card click
-   */
-  handleSubscriptionClick(option) {
-    // Publish subscription clicked event
-    wc.publish('mtk-dashboard:subscription-clicked', {
-      subscriptionId: option.id,
-      title: option.title,
-      price: option.price,
-      timestamp: new Date().toISOString()
-    });
-  }
-  
-  /**
-   * Update progress
-   */
-  updateProgress(data) {
-    if (data.percentage !== undefined) {
-      this.config.progress.percentage = data.percentage;
+    /**
+     * Handle incoming messages from subscribed events
+     */
+    onMessage(data) {
+	const { type, payload } = data;
+	
+	switch (type) {
+	case 'config-update':
+            this.config = payload;
+            this.render();
+            break;
+            
+	case 'progress-update':
+            this.updateProgress(payload);
+            break;
+            
+	case 'user-update':
+            this.updateUser(payload);
+            break;
+            
+	case 'subscription-update':
+            this.updateSubscriptions(payload);
+            break;
+            
+	default:
+            console.warn('Unknown message type:', type);
+	}
     }
     
-    if (data.courseTitle) {
-      this.config.progress.courseTitle = data.courseTitle;
+    /**
+     * Render the dashboard
+     */
+    render() {
+	this.renderUserInfo();
+	this.renderProgress();
+	this.renderSubscriptions();
+	
+	// Publish render complete event
+	wc.publish('mtk-dashboard:rendered', {
+	    timestamp: new Date().toISOString()
+	});
     }
     
-    this.renderProgress();
-    
-    // Publish progress updated event
-    wc.publish('mtk-dashboard:progress-updated', {
-      percentage: this.config.progress.percentage,
-      timestamp: new Date().toISOString()
-    });
-  }
-  
-  /**
-   * Update user information
-   */
-  updateUser(data) {
-    if (data.fullName) {
-      this.config.user.fullName = data.fullName;
-      this.renderUserInfo();
-      
-      // Publish user updated event
-      wc.publish('mtk-dashboard:user-updated', {
-        fullName: data.fullName,
-        timestamp: new Date().toISOString()
-      });
-    }
-  }
-  
-  /**
-   * Update subscriptions
-   */
-  updateSubscriptions(data) {
-    if (data.options) {
-      this.config.subscriptions.options = data.options;
+    /**
+     * Render user information
+     */
+    renderUserInfo() {
+	if (this.elements.userName) {
+	    this.elements.userName.textContent = this.config.user.fullName;
+	}
     }
     
-    if (data.title) {
-      this.config.subscriptions.title = data.title;
+    /**
+     * Render progress section
+     */
+    renderProgress() {
+	const { progress } = this.config;
+	
+	if (this.elements.progressLabel) {
+	    this.elements.progressLabel.textContent = progress.label;
+	}
+	
+	if (this.elements.courseTitle) {
+	    this.elements.courseTitle.textContent = progress.courseTitle;
+	}
+	
+	if (this.elements.progressPercentage) {
+	    this.elements.progressPercentage.textContent = `${progress.percentage}%`;
+	}
+	
+	if (this.elements.progressFill) {
+	    // Animate progress bar
+	    setTimeout(() => {
+		this.elements.progressFill.style.width = `${progress.percentage}%`;
+	    }, 100);
+	}
+	
+	if (this.elements.progressBar) {
+	    this.elements.progressBar.setAttribute('aria-valuenow', progress.percentage);
+	    this.elements.progressBar.setAttribute('aria-label', 
+						   `Course progress: ${progress.percentage}% complete`);
+	}
     }
     
-    this.renderSubscriptions();
+    /**
+     * Render subscription options
+     */
+    renderSubscriptions() {
+	const { subscriptions } = this.config;
+	
+	if (this.elements.subscriptionsTitle) {
+	    this.elements.subscriptionsTitle.textContent = subscriptions.title;
+	}
+	
+	if (this.elements.subscriptionGrid) {
+	    this.elements.subscriptionGrid.innerHTML = '';
+	    
+	    subscriptions.options.forEach((option, index) => {
+		const card = this.createSubscriptionCard(option, index);
+		this.elements.subscriptionGrid.appendChild(card);
+	    });
+	}
+    }
     
-    // Publish subscriptions updated event
-    wc.publish('mtk-dashboard:subscriptions-updated', {
-      optionsCount: this.config.subscriptions.options.length,
-      timestamp: new Date().toISOString()
-    });
-  }
-  
-  /**
-   * Attach additional event listeners
-   */
-  attachEventListeners() {
-    // Listen for visibility changes
-    document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) {
-        wc.publish('mtk-dashboard:visible', {
-          timestamp: new Date().toISOString()
-        });
-      }
-    });
-  }
-  
-  /**
-   * Destroy the dashboard and clean up
-   */
-  destroy() {
-    // Unsubscribe from all events
-    this.subscriptions.forEach(unsubscribe => unsubscribe());
-    this.subscriptions = [];
+    /**
+     * Create a subscription card element
+     */
+    createSubscriptionCard(option, index) {
+	const card = document.createElement('div');
+	card.className = 'mtk-dashboard__subscription-card';
+	card.setAttribute('role', 'button');
+	card.setAttribute('tabindex', '0');
+	card.setAttribute('aria-label', `Subscribe to ${option.title}, ${option.price}`);
+	card.dataset.subscriptionId = option.id;
+	
+	const icon = document.createElement('div');
+	icon.className = 'mtk-dashboard__card-icon';
+	icon.innerHTML = `<span class="material-icons" aria-hidden="true">${option.icon}</span>`;
+	
+	const title = document.createElement('h3');
+	title.className = 'mtk-dashboard__card-title';
+	title.textContent = option.title;
+	
+	const description = document.createElement('p');
+	description.className = 'mtk-dashboard__card-description';
+	description.textContent = option.description;
+	
+	const price = document.createElement('p');
+	price.className = 'mtk-dashboard__card-price';
+	price.textContent = option.price;
+	
+	card.appendChild(icon);
+	card.appendChild(title);
+	card.appendChild(description);
+	card.appendChild(price);
+	
+	// Add click event
+	card.addEventListener('click', () => this.handleSubscriptionClick(option));
+	
+	// Add keyboard support
+	card.addEventListener('keydown', (e) => {
+	    if (e.key === 'Enter' || e.key === ' ') {
+		e.preventDefault();
+		this.handleSubscriptionClick(option);
+	    }
+	});
+	
+	return card;
+    }
     
-    // Publish destroyed event
-    wc.publish('mtk-dashboard:destroyed', {
-      timestamp: new Date().toISOString()
-    });
-  }
+    /**
+     * Handle subscription card click
+     */
+    handleSubscriptionClick(option) {
+	// Publish subscription clicked event
+	wc.publish('mtk-dashboard:subscription-clicked', {
+	    subscriptionId: option.id,
+	    title: option.title,
+	    price: option.price,
+	    timestamp: new Date().toISOString()
+	});
+    }
+    
+    /**
+     * Update progress
+     */
+    updateProgress(data) {
+	if (data.percentage !== undefined) {
+	    this.config.progress.percentage = data.percentage;
+	}
+	
+	if (data.courseTitle) {
+	    this.config.progress.courseTitle = data.courseTitle;
+	}
+	
+	this.renderProgress();
+	
+	// Publish progress updated event
+	wc.publish('mtk-dashboard:progress-updated', {
+	    percentage: this.config.progress.percentage,
+	    timestamp: new Date().toISOString()
+	});
+    }
+    
+    /**
+     * Update user information
+     */
+    updateUser(data) {
+	if (data.fullName) {
+	    this.config.user.fullName = data.fullName;
+	    this.renderUserInfo();
+	    
+	    // Publish user updated event
+	    wc.publish('mtk-dashboard:user-updated', {
+		fullName: data.fullName,
+		timestamp: new Date().toISOString()
+	    });
+	}
+    }
+    
+    /**
+     * Update subscriptions
+     */
+    updateSubscriptions(data) {
+	if (data.options) {
+	    this.config.subscriptions.options = data.options;
+	}
+	
+	if (data.title) {
+	    this.config.subscriptions.title = data.title;
+	}
+	
+	this.renderSubscriptions();
+	
+	// Publish subscriptions updated event
+	wc.publish('mtk-dashboard:subscriptions-updated', {
+	    optionsCount: this.config.subscriptions.options.length,
+	    timestamp: new Date().toISOString()
+	});
+    }
+    
+    /**
+     * Attach additional event listeners
+     */
+    attachEventListeners() {
+	// Listen for visibility changes
+	document.addEventListener('visibilitychange', () => {
+	    if (!document.hidden) {
+		wc.publish('mtk-dashboard:visible', {
+		    timestamp: new Date().toISOString()
+		});
+	    }
+	});
+    }
+    
+    /**
+     * Destroy the dashboard and clean up
+     */
+    destroy() {
+	// Unsubscribe from all events
+	this.subscriptions.forEach(unsubscribe => unsubscribe());
+	this.subscriptions = [];
+	
+	// Publish destroyed event
+	wc.publish('mtk-dashboard:destroyed', {
+	    timestamp: new Date().toISOString()
+	});
+    }
 }
 
 // Wait for mtk-dashboard element to be completely loaded into DOM
 function initializeDashboard() {
-  const dashboardElement = document.querySelector('mtk-dashboard.mtk-dashboard');
-  
-  if (dashboardElement) {
-    // Element found, check if config is available
-    if (typeof mtkDashboardConfig !== 'undefined') {
-      const dashboard = new MTKDashboard(mtkDashboardConfig);
-      
-      // Make dashboard available globally for debugging
-      window.mtkDashboard = dashboard;
-    } else {
-      console.error('MTK Dashboard: Configuration not found. Please include mtk-dashboard.config.js');
-    }
-  } else {
-    // Element not found, wait for it
-    const observer = new MutationObserver((mutations, obs) => {
-      const element = document.querySelector('mtk-dashboard.mtk-dashboard');
-      if (element) {
-        obs.disconnect();
-        
-        if (typeof mtkDashboardConfig !== 'undefined') {
-          const dashboard = new MTKDashboard(mtkDashboardConfig);
-          window.mtkDashboard = dashboard;
-        } else {
-          console.error('MTK Dashboard: Configuration not found. Please include mtk-dashboard.config.js');
-        }
-      }
-    });
+    const dashboardElement = document.querySelector('mtk-dashboard.mtk-dashboard');
     
-    observer.observe(document.documentElement, {
-      childList: true,
-      subtree: true
-    });
-  }
+    if (dashboardElement) {
+	// Element found, check if config is available
+	if (typeof mtkDashboardConfig !== 'undefined') {
+	    const dashboard = new MTKDashboard(mtkDashboardConfig);
+	    
+	    // Make dashboard available globally for debugging
+	    window.mtkDashboard = dashboard;
+	} else {
+	    console.error('MTK Dashboard: Configuration not found. Please include mtk-dashboard.config.js');
+	}
+    } else {
+	// Element not found, wait for it
+	const observer = new MutationObserver((mutations, obs) => {
+	    const element = document.querySelector('mtk-dashboard.mtk-dashboard');
+	    if (element) {
+		obs.disconnect();
+		
+		if (typeof mtkDashboardConfig !== 'undefined') {
+		    const dashboard = new MTKDashboard(mtkDashboardConfig);
+		    window.mtkDashboard = dashboard;
+		} else {
+		    console.error('MTK Dashboard: Configuration not found. Please include mtk-dashboard.config.js');
+		}
+	    }
+	});
+	
+	observer.observe(document.documentElement, {
+	    childList: true,
+	    subtree: true
+	});
+    }
 }
 
 // Initialize when DOM is ready
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initializeDashboard);
+    document.addEventListener('DOMContentLoaded', initializeDashboard);
 } else {
-  initializeDashboard();
+    initializeDashboard();
 }
