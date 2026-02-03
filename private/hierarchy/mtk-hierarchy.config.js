@@ -1,3 +1,6 @@
+// mtk-hierarchy configuration
+window.app = window.app || {};
+
 window.app = {
     "hierarchy": [
 	{
