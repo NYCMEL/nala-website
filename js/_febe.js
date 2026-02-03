@@ -36,8 +36,6 @@ class _febe {
     onMessage(msg, data) {
         wc.log("_febe: onMessage", msg, data);
 
-
-
         switch (msg) {
 	case "mtk-login-register":
             MTKPager.show("register");
@@ -51,7 +49,8 @@ class _febe {
             break;
 
 	case "mtk-login-success":
-	    document.location.href = "http://localhost/Melify/tools/nala-website/private"
+	    alert(window.app.baseUrl);
+	    document.location.href = window.app.baseUrl + "/private"
             MTKPager.show("dashboard");
             break;
 
