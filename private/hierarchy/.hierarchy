@@ -64,6 +64,8 @@ mtk-hierarchy UI structure:
     - col-md-4 (add a border)
     - uses a structure like below as MODULES > LESSON > RESOURCE
 
+window.app = {
+    "hierarchy": [
 	{
 	    "title": "Introduction to Locksmithing",
 	    "access": true,
@@ -87,7 +89,7 @@ mtk-hierarchy UI structure:
 				    "url": "https://vimeo.com/827172729"
 				}
 			    ]
-			}
+			},
 		...
 
 lhs behavior

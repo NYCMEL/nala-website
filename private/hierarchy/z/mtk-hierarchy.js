@@ -650,23 +650,23 @@ if (typeof window.app !== 'undefined' && window.app.hierarchy) {
   // Example: Listen to hierarchy events
   if (typeof wc !== 'undefined') {
     wc.subscribe('mtk-hierarchy:resource-clicked', function(msg, data) {
-      wc.info('🎯 Resource Clicked:', data);
+      wc.log('🎯 Resource Clicked:', data);
     });
     
     wc.subscribe('mtk-hierarchy:module-toggled', function(msg, data) {
-      wc.info('📂 Module Toggled:', data);
+      wc.log('📂 Module Toggled:', data);
     });
     
     wc.subscribe('mtk-hierarchy:lesson-toggled', function(msg, data) {
-      wc.info('📝 Lesson Toggled:', data);
+      wc.log('📝 Lesson Toggled:', data);
     });
     
     wc.subscribe('mtk-hierarchy:initialized', function(msg, data) {
-      wc.info('✅ Hierarchy Initialized:', data);
+      wc.log('✅ Hierarchy Initialized:', data);
     });
     
     wc.subscribe('mtk-hierarchy:rendered', function(msg, data) {
-      wc.info('✅ Hierarchy Rendered:', data);
+      wc.log('✅ Hierarchy Rendered:', data);
     });
   }
 } else {
