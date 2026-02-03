@@ -48,50 +48,63 @@ Output, Create exactly four files:
 mtk-hierarchy UI structure:
 - use nice material design elements
 - Any and all border-radius should have a max value of 4px
-- main screen has 2 sections, insude a bootstrap container
+- main screen has 2 sections, inside a bootstrap container
   A lhs (.mtk-hierarchy-lhs)
   A rhs (.mtk-hierarchy-rhs)
 
-  lhs and rhs height should occupy parent element's height
+  lhs and rhs height should occupy 100% of parent element's height 
   lhs and rhs should have overflow auto (scrollable)
 
   rhs:
     - col-md-8 (add a border)
-    - can deisplay a video or from link
-    - display a set of images from link, one below another
+    - can display a resizable, responsive video inside a <IFRAME> from link
+    - display a set of images from link, one next to another and below the video (if any)
 
   lhs:
     - col-md-4 (add a border)
-    - uses a structure like below:
-[{
-    "title": "Course - title",
-    "access": true,
-    "modules": [
-        {
-	    "title": "Module title",
+    - uses a structure like below as MODULES > LESSON > RESOURCE
+
+	{
+	    "title": "Introduction to Locksmithing",
 	    "access": true,
-	    "lessons": [
+	    "processed": false,
+	    "modules": [
 		{
+		    "title": "Foundations of Locksmithing",
 		    "access": true,
-		    "title": "Lesson title",
-		    "resources": [
+		    "processed": true,
+		    "lessons": [
 			{
-			    "description": "Video (Vimeo)",
-			    "url": "https://vimeo.com/827172729"
+			    "access": true,
+			    "title": "Introduction",
+			    "processed": true,
+			    "resources": [
+				{
+				    "processed": true,
+				    "access": false,
+				    "type": "video",
+				    "description": "Introduction to your instructor and the course",
+				    "url": "https://vimeo.com/827172729"
+				}
+			    ]
 			}
-		    ]
-		}
-	    ]
-        }
-    ]
-}]
-  - clicking on resource links should just publish a message and not navigate anywhere
-  - create 5 elemnts in config file and a random number of lessons from 2 to 6 and random "access" settings for lessons
-  - generate a file/folder structure view with expand/collapse
-  - initially all collapsed
-  - resources are all links
-  - clicking on links should wc.publish a message
-  - show disabled elements based on "access" variable in json
-  - use folder & file icons from material design (open/close) instead of chevron
-  - use cards for topmost element from config file
+		...
+
+lhs behavior
+  - modules and lessons and resources can be expanded. use folder & file icons for these
+  - use "Card" for modules that contain all lessons and resources
+  - opening a resource should display all contents on the rhs
+  - all resources accessed must have an "eye" icon on the right side of its title
+  - resources have types video or photo
+    - video should be displayed in an IFRAME
+    - photos are placed horizontally one after the other below the video IFRAME
+  - all click events should publish an event using wc.publish function
+
+
+  prototype:
+    - create 5 elemnts in config file for MODULES, LESSON, RESOURCE and set all access=true & processed=true
+    - show elements dispabled if access=false 
+
 ***  MUST USE MATERIAL DESIGN styles, colors, etc.
+
+
