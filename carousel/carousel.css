@@ -1,7 +1,8 @@
 .carousel-card {
   padding-left: 40px;
   padding-right: 40px;
-  border-radius: 4px; }
+  border-radius: 4px;
+  min-height: 300px; }
 
 .carousel-card h2 {
   font-family: fm;
@@ -9,6 +10,9 @@
   padding: 20px;
   font-family: fbi;
   font-size: 26px; }
+
+.carousel-card p {
+  font-size: 20px; }
 
 .mtk-carousel {
   position: relative;
