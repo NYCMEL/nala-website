@@ -1,0 +1,43 @@
+.mtk-ready {
+  background-color: #5b88b1;
+  padding: 48px 0;
+  overflow: hidden;
+
+  .mtk-ready-inner {
+    animation: mtk-ready-fade-up 600ms ease-out both;
+  }
+
+  .mtk-ready-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #bfe7ff;
+    margin-bottom: 8px;
+  }
+
+  .mtk-ready-desc {
+    font-size: 1rem;
+    color: #ffffff;
+    opacity: 0.95;
+    margin: 0;
+  }
+
+  .mtk-ready-btn {
+    background-color: #ffffff;
+    color: #1565c0;
+    font-weight: 500;
+    padding: 12px 24px;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+  }
+}

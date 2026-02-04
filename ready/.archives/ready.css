@@ -1,0 +1,45 @@
+.mtk-cta {
+  background: #4f84b4;
+  padding: 40px 0;
+  overflow: hidden; }
+
+.mtk-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(16px); }
+
+.mtk-subtitle {
+  font-size: 1rem;
+  opacity: 0;
+  transform: translateY(16px);
+  margin-top: 8px; }
+
+.mtk-btn {
+  background: #ffffff;
+  color: #4f84b4;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-block;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: box-shadow 0.3s ease; }
+
+.mtk-btn:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); }
+
+.mtk-cta.is-visible .mtk-title,
+.mtk-cta.is-visible .mtk-subtitle {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+
+.mtk-cta.is-visible .mtk-subtitle {
+  transition-delay: 0.1s; }
+
+.mtk-cta.is-visible .mtk-btn {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0.2s; }
