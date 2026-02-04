@@ -104,3 +104,9 @@
 .mtk-hierarchy .mtk-hierarchy .mtk-processed-eye {
   opacity: 0.6;
   margin-left: auto; }
+lex;
+    align-items: center;
+    gap: 8px; }
+  .mtk-hierarchy .mtk-hierarchy .mtk-processed-eye {
+    opacity: 0.6;
+    margin-left: auto; }
