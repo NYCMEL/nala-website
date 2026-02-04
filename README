@@ -1,3 +1,5 @@
+cd /Melify/tools
+
 MUST START "serve" AS:
    ~/node_modules/.bin/serve 
 

@@ -18,7 +18,7 @@ window.app.courses = {
                 "Certificate upon completion"
             ],
             cta: {
-                label: "Included in the Program",
+                label: "Get Started",
                 event: "courses:basic"
             }
         },
@@ -32,7 +32,7 @@ window.app.courses = {
                 "Industry certification"
             ],
             cta: {
-                label: "Included in the Program",
+                label: "Get Started",
                 event: "courses:electronic"
             }
         },
@@ -46,7 +46,7 @@ window.app.courses = {
                 "Professional certification"
             ],
             cta: {
-                label: "Included in the Program",
+                label: "Get Started",
                 event: "courses:masterkey"
             }
         }

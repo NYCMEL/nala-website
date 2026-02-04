@@ -1,167 +1,161 @@
 (function () {
-  "use strict";
+    "use strict";
 
-  function waitFor(conditionFn, callback, timeout) {
-    var start = Date.now();
-    var max = timeout || 5000;
+    function waitFor(conditionFn, callback, timeout) {
+	var start = Date.now();
+	var max = timeout || 5000;
 
-    (function check() {
-      if (conditionFn()) {
-        callback();
-        return;
-      }
+	(function check() {
+	    if (conditionFn()) {
+		callback();
+		return;
+	    }
 
-      if (Date.now() - start > max) {
-        return;
-      }
+	    if (Date.now() - start > max) {
+		return;
+	    }
 
-      requestAnimationFrame(check);
-    })();
-  }
-
-  waitFor(
-    function () {
-      return (
-        document.getElementById("MTK-path") &&
-        window.app &&
-        window.app.path
-      );
-    },
-    init
-  );
-
-  function init() {
-    var root = document.getElementById("MTK-path");
-    if (!root) return;
-
-    var data = window.app.path;
-    if (!data || !Array.isArray(data.plans)) return;
-
-    var container = root.querySelector(".container");
-    if (!container) {
-      container = document.createElement("div");
-      container.className = "container";
-      root.appendChild(container);
+	    requestAnimationFrame(check);
+	})();
     }
 
-    container.innerHTML = "";
+    waitFor(
+	function () {
+	    return (
+		document.getElementById("MTK-path") &&
+		    window.app &&
+		    window.app.path
+	    );
+	},
+	init
+    );
 
-    buildHeader(container, data);
-    buildPlans(container, data.plans);
-  }
+    function init() {
+	var root = document.getElementById("MTK-path");
+	if (!root) return;
 
-  function buildHeader(container, data) {
-    var header = document.createElement("div");
-    header.className = "text-center";
+	var data = window.app.path;
+	if (!data || !Array.isArray(data.plans)) return;
 
-    var title = document.createElement("h2");
-    title.textContent = data.heading || "";
-    header.appendChild(title);
+	var container = root.querySelector(".container");
+	if (!container) {
+	    container = document.createElement("div");
+	    container.className = "container";
+	    root.appendChild(container);
+	}
 
-    var subtitle = document.createElement("p");
-    subtitle.className = "lead";
-    subtitle.textContent = data.subheading || "";
-    header.appendChild(subtitle);
+	container.innerHTML = "";
 
-    container.appendChild(header);
-  }
-
-  function buildPlans(container, plans) {
-    var row = document.createElement("div");
-    row.className = "row g-4 justify-content-center";
-
-    plans.forEach(function (plan) {
-      row.appendChild(buildPlanCard(plan));
-    });
-
-    container.appendChild(row);
-  }
-
-  function buildPlanCard(plan) {
-    var col = document.createElement("div");
-    col.className = "col-12 col-md-6";
-
-    var card = document.createElement("div");
-    card.className = "mtk-card";
-    if (plan.popular) {
-      card.className += " mtk-popular";
+	buildHeader(container, data);
+	buildPlans(container, data.plans);
     }
 
-    if (plan.popular) {
-      var badge = document.createElement("div");
-      badge.className = "mtk-badge";
-      badge.textContent = "Most Popular";
-      card.appendChild(badge);
+    function buildHeader(container, data) {
+	var header = document.createElement("div");
+	header.className = "text-center";
+
+	var title = document.createElement("h2");
+	title.textContent = data.heading || "";
+	header.appendChild(title);
+
+	var subtitle = document.createElement("p");
+	subtitle.className = "lead";
+	subtitle.textContent = data.subheading || "";
+	header.appendChild(subtitle);
+
+	container.appendChild(header);
     }
 
-    var title = document.createElement("h4");
-    title.textContent = plan.title || "";
-    card.appendChild(title);
+    function buildPlans(container, plans) {
+	var row = document.createElement("div");
+	row.className = "row g-4 justify-content-center";
 
-    var priceWrap = document.createElement("div");
+	plans.forEach(function (plan) {
+	    row.appendChild(buildPlanCard(plan));
+	});
 
-    var price = document.createElement("span");
-    price.className = "price";
-    price.textContent = plan.price || "";
-    priceWrap.appendChild(price);
+	container.appendChild(row);
+    }
 
-    var period = document.createElement("span");
-    period.className = "period";
-    period.textContent = plan.period || "";
-    priceWrap.appendChild(period);
+    function buildPlanCard(plan) {
+	var col = document.createElement("div");
+	col.className = "col-12 col-md-6";
 
-    card.appendChild(priceWrap);
+	var card = document.createElement("div");
+	card.className = "mtk-card";
+	if (plan.popular) {
+	    card.className += " mtk-popular";
+	}
 
-    var desc = document.createElement("p");
-    desc.textContent = plan.description || "";
-    card.appendChild(desc);
+	if (plan.popular) {
+	    var badge = document.createElement("div");
+	    badge.className = "mtk-badge";
+	    badge.textContent = "Most Popular";
+	    card.appendChild(badge);
+	}
 
-    card.appendChild(buildFeatureList(plan.features));
-    card.appendChild(buildCTA(plan));
+	var title = document.createElement("h4");
+	title.textContent = plan.title || "";
+	card.appendChild(title);
 
-    col.appendChild(card);
-    return col;
-  }
+	var priceWrap = document.createElement("div");
 
-  function buildFeatureList(features) {
-    var ul = document.createElement("ul");
+	var price = document.createElement("span");
+	price.className = "price";
+	price.textContent = plan.price || "";
+	priceWrap.appendChild(price);
 
-    if (!Array.isArray(features)) return ul;
+	var period = document.createElement("span");
+	period.className = "period";
+	period.textContent = plan.period || "";
+	priceWrap.appendChild(period);
 
-    features.forEach(function (feature) {
-      var li = document.createElement("li");
+	card.appendChild(priceWrap);
 
-      var check = document.createElement("span");
-      check.className = "check";
-      check.textContent = "✓";
+	var desc = document.createElement("p");
+	desc.textContent = plan.description || "";
+	card.appendChild(desc);
 
-      var text = document.createElement("span");
-      text.textContent = feature;
+	card.appendChild(buildFeatureList(plan.features));
+	card.appendChild(buildCTA(plan));
 
-      li.appendChild(check);
-      li.appendChild(text);
-      ul.appendChild(li);
-    });
+	col.appendChild(card);
+	return col;
+    }
 
-    return ul;
-  }
+    function buildFeatureList(features) {
+	var ul = document.createElement("ul");
 
-  function buildCTA(plan) {
-    var btn = document.createElement("div");
-    btn.className = "btn-path";
-    btn.textContent = plan.cta || "";
+	if (!Array.isArray(features)) return ul;
 
-    btn.addEventListener("click", function () {
-      if (
-        window._pubsub &&
-        typeof window._pubsub.publish === "function"
-      ) {
-        window._pubsub.publish("MTK-path.select", {
-          planId: plan.id || null
-        });
-      }
-    });
+	features.forEach(function (feature) {
+	    var li = document.createElement("li");
 
-    return btn;
-  }
+	    var check = document.createElement("span");
+	    check.className = "check";
+	    check.textContent = "✓";
+
+	    var text = document.createElement("span");
+	    text.textContent = feature;
+
+	    li.appendChild(check);
+	    li.appendChild(text);
+	    ul.appendChild(li);
+	});
+
+	return ul;
+    }
+
+    function buildCTA(plan) {
+	var btn = document.createElement("div");
+	btn.className = "btn-path";
+	btn.textContent = plan.cta || "";
+
+	btn.addEventListener("click", function () {
+	    let msg = "mtk-path:click"; wc.log(msg);
+	    wc.publish(msg);
+	});
+
+	return btn;
+    }
 })();
