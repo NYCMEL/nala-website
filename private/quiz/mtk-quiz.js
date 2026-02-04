@@ -408,32 +408,63 @@ class MtkQuiz {
   }
 }
 
-// Wait for DOM to be ready and config to be available
+// Initialize function that waits for both element and config
 function initMtkQuiz() {
-  const waitForElement = setInterval(() => {
-    const element = document.querySelector('mtk-quiz.mtk-quiz');
-    if (element && typeof mtkQuizConfig !== 'undefined') {
-      clearInterval(waitForElement);
+  // Use MutationObserver to watch for element availability
+  const observer = new MutationObserver((mutations, obs) => {
+    // Look for mtk-quiz element (works with wc-include)
+    const element = document.querySelector('mtk-quiz.mtk-quiz') || 
+                    document.querySelector('mtk-quiz') ||
+                    document.querySelector('[class*="mtk-quiz"]');
+    
+    // Check if config is available
+    const configAvailable = typeof mtkQuizConfig !== 'undefined';
+    
+    if (element && configAvailable) {
+      // Stop observing once we found the element
+      obs.disconnect();
       
-      // Initialize the quiz component
-      const quiz = new MtkQuiz(element, mtkQuizConfig);
-      
-      // Store instance on element for external access
-      element.mtkQuizInstance = quiz;
-      
-      console.log('✅ MTK Quiz initialized successfully');
+      // Small delay to ensure all DOM is fully loaded
+      setTimeout(() => {
+        // Initialize the quiz component
+        const quiz = new MtkQuiz(element, mtkQuizConfig);
+        
+        // Store instance on element for external access
+        element.mtkQuizInstance = quiz;
+        
+        console.log('✅ MTK Quiz initialized successfully');
+      }, 50);
     }
-  }, 100);
-
-  // Timeout after 10 seconds
+  });
+  
+  // Start observing the document with the configured parameters
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+  
+  // Timeout after 30 seconds
   setTimeout(() => {
-    clearInterval(waitForElement);
-  }, 10000);
+    observer.disconnect();
+  }, 30000);
 }
 
-// Initialize when DOM is ready
+// Multiple initialization strategies to ensure component loads
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initMtkQuiz);
 } else {
   initMtkQuiz();
 }
+
+// Also try on window load as backup
+window.addEventListener('load', () => {
+  const element = document.querySelector('mtk-quiz.mtk-quiz') || 
+                  document.querySelector('mtk-quiz') ||
+                  document.querySelector('[class*="mtk-quiz"]');
+  
+  if (element && !element.mtkQuizInstance && typeof mtkQuizConfig !== 'undefined') {
+    const quiz = new MtkQuiz(element, mtkQuizConfig);
+    element.mtkQuizInstance = quiz;
+    console.log('✅ MTK Quiz initialized on window load');
+  }
+});

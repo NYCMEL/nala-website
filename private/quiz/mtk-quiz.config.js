@@ -110,7 +110,7 @@ const mtkQuizConfig = {
 	},
 	{
 	    "id": 41,
-	    "question": "A "master key" can:",
+	    "question": "A 'master key' can:",
 	    "choice_a": "Open multiple locks in a system",
 	    "choice_b": "Cook food",
 	    "choice_c": "Charge a phone",
@@ -126,7 +126,7 @@ const mtkQuizConfig = {
 	},
 	{
 	    "id": 39,
-	    "question": "A cylinder "plug" is:",
+	    "question": "A cylinder 'plug' is:",
 	    "choice_a": "The part the key turns",
 	    "choice_b": "A wall outlet",
 	    "choice_c": "A shoe",
@@ -150,7 +150,7 @@ const mtkQuizConfig = {
 	},
 	{
 	    "id": 30,
-	    "question": "A lock's "bolt" is the part that:",
+	    "question": "A lock's 'bolt' is the part that:",
 	    "choice_a": "Extends into the frame",
 	    "choice_b": "Plays music",
 	    "choice_c": "Cleans the door",
@@ -158,7 +158,7 @@ const mtkQuizConfig = {
 	},
 	{
 	    "id": 33,
-	    "question": "A "tumbler" refers to:",
+	    "question": "A 'tumbler' refers to:",
 	    "choice_a": "Moving internal parts",
 	    "choice_b": "A type of car wheel",
 	    "choice_c": "A fruit",
