@@ -46,7 +46,7 @@ const mtkQuizConfig = {
 	},
 	{
 	    "id": 11,
-	    "question": "A "pin tumbler" lock uses:",
+	    "question": "A 'pin tumbler' lock uses:",
 	    "choice_a": "Pins",
 	    "choice_b": "Magnets only",
 	    "choice_c": "A battery",
