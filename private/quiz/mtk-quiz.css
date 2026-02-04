@@ -21,23 +21,22 @@
   --mtk-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: block;
   margin: 0 auto;
-  background-color: var(--mtk-background);
   padding: 24px; }
 
 .mtk-quiz * {
   box-sizing: border-box; }
 
 .mtk-quiz .mtk-quiz__card {
-  background-color: var(--mtk-surface);
   border-radius: 8px;
-  box-shadow: var(--mtk-shadow-2);
   overflow: hidden;
   transition: var(--mtk-transition); }
 
 .mtk-quiz .mtk-quiz__header {
   padding: 32px 24px;
-  background: linear-gradient(135deg, var(--mtk-primary) 0%, var(--mtk-primary-light) 100%);
-  color: var(--mtk-on-primary); }
+  background: #f0f0f0;
+  color: #000;
+  margin-left: 23px;
+  margin-right: 23px; }
 
 .mtk-quiz .mtk-quiz__title {
   margin: 0 0 8px 0;
@@ -99,7 +98,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--mtk-primary);
+  background-color: #ccac00;
   color: var(--mtk-on-primary);
   border-radius: 50%;
   font-size: 14px;
