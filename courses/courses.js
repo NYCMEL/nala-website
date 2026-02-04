@@ -65,6 +65,8 @@
                 var footer = document.createElement("div");
                 footer.className = "view-all";
 
+                // footer.innerHTML = "<button class='btn btn-outline-primary' data-event='" + data.cta.event + "'>" + data.cta.label + "</button>";
+
                 container.appendChild(footer);
 
                 container.addEventListener("click", function (e) {
