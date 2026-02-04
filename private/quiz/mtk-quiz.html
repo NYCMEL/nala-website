@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MTK Quiz Component</title>
+  
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Roboto Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Component Styles -->
+  <link rel="stylesheet" href="mtk-quiz.css">
+  
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+      font-family: 'Roboto', sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MTK Quiz Component -->
+  <mtk-quiz class="mtk-quiz">
+    <div class="mtk-quiz__card">
+      <header class="mtk-quiz__header">
+        <h1 class="mtk-quiz__title">
+          <span class="mtk-quiz__icon">quiz</span>
+          <span id="quizTitle">Quiz</span>
+        </h1>
+        <div class="mtk-quiz__meta">
+          <div class="mtk-quiz__meta-item">
+            <span class="mtk-quiz__meta-icon">assignment</span>
+            <span>Module: <strong id="moduleId">--</strong></span>
+          </div>
+          <div class="mtk-quiz__meta-item">
+            <span class="mtk-quiz__meta-icon">help_outline</span>
+            <span><strong id="questionCount">0</strong> Questions</span>
+          </div>
+          <div class="mtk-quiz__meta-item">
+            <span class="mtk-quiz__meta-icon">tag</span>
+            <span>Session: <strong id="sessionId">--</strong></span>
+          </div>
+        </div>
+      </header>
+
+      <div class="mtk-quiz__body">
+        <div id="messageContainer"></div>
+        <form id="quizForm" class="mtk-quiz__form">
+          <div id="questionsContainer"></div>
+        </form>
+      </div>
+
+      <footer class="mtk-quiz__footer">
+        <div class="mtk-quiz__progress">
+          <div class="mtk-quiz__progress-text">
+            <span>Progress</span>
+            <span id="progressText">0 / 0</span>
+          </div>
+          <div class="mtk-quiz__progress-bar">
+            <div id="progressFill" class="mtk-quiz__progress-fill" style="width: 0%"></div>
+          </div>
+        </div>
+        <div class="mtk-quiz__actions">
+          <button type="button" id="clearBtn" class="mtk-quiz__button mtk-quiz__button--secondary">
+            <span class="mtk-quiz__button-icon">clear_all</span>
+            <span>Clear All</span>
+          </button>
+          <button type="button" id="testBtn" class="mtk-quiz__button mtk-quiz__button--secondary">
+            <span class="mtk-quiz__button-icon">science</span>
+            <span>Test (Select First)</span>
+          </button>
+          <button type="submit" id="submitBtn" class="mtk-quiz__button mtk-quiz__button--primary">
+            <span class="mtk-quiz__button-icon">send</span>
+            <span>Submit Quiz</span>
+          </button>
+        </div>
+      </footer>
+    </div>
+  </mtk-quiz>
+
+  <!-- Mock wc object for testing -->
+  <script>
+    // Mock wc object for demonstration/testing
+    window.wc = window.wc || {
+      subscribers: {},
+      publish: function(event, data) {
+        console.log('📤 Published Event:', event, data);
+        if (this.subscribers[event]) {
+          this.subscribers[event].forEach(callback => callback(event, data));
+        }
+      },
+      subscribe: function(event, callback) {
+        if (!this.subscribers[event]) {
+          this.subscribers[event] = [];
+        }
+        this.subscribers[event].push(callback);
+        console.log('📥 Subscribed to:', event);
+      }
+    };
+  </script>
+
+  <!-- Config -->
+  <script src="mtk-quiz.config.js"></script>
+  
+  <!-- Component Script -->
+  <script src="mtk-quiz.js"></script>
+
+</body>
+</html>
