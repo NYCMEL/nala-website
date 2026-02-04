@@ -5,7 +5,7 @@ window.app.tiles = [
         id: "tile-1",
         flip: true,
         front: {
-	    title: "Industry CertificationWs",
+	    title: "Training Built for Real Service Calls",
 	    body: "<p>Earn recognized credentials that validate your expertise and open career opportunities</p>",
 	    bgColor: "#74b9ff"
         },
