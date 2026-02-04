@@ -136,6 +136,7 @@ class MtkQuiz {
 	// Form submission
 	if (this.elements.form) {
 	    this.elements.form.addEventListener('submit', (e) => this.handleSubmit(e));
+	    alert("HHHHHHHHHHHHH");
 	}
 
 	// Clear button
@@ -182,7 +183,7 @@ class MtkQuiz {
     }
 
     handleSubmit(e) {
-	alert("X")
+	alert("BBBBBBBBBB");
 
 	e.preventDefault();
 
