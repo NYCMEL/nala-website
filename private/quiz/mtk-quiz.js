@@ -367,6 +367,7 @@ class MtkQuiz {
 	    input.disabled = true;
 	});
 
+	alert("ZZZZZZZZ");
 	if (this.elements.submitBtn) {
 	    this.elements.submitBtn.disabled = true;
 	}
