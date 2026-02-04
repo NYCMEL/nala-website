@@ -1,5 +1,3 @@
-console.log("SSSSSSSSSSSSS");
-
 // Utility to wait for an element to exist in the DOM
 function waitForElement(selector, timeout = 5000) {
     return new Promise((resolve, reject) => {
