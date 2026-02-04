@@ -281,6 +281,7 @@
   background-color: rgba(98, 0, 234, 0.08); }
 
 .mtk-quiz .mtk-quiz__button-icon {
+  display: none;
   font-family: 'Material Icons';
   font-size: 18px; }
 
