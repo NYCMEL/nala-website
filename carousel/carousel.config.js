@@ -60,6 +60,42 @@ the training as a foundation for further hands-on experience.
 </article>
 </div>
       `
+	},
+	{
+	    id: "slide-4",
+	    html: `
+<div class="p-4">
+<article class="carousel-card">
+	<h2 align="center">
+	    Business Builder
+        </h2>
+
+    <p>
+Someone with technical skills but no business background follows the business
+modules to understand pricing, licensing considerations, customer communication,
+and marketing fundamentals before launching a locksmith service.
+    </p>
+</article>
+</div>
+      `
+	},
+	{
+	    id: "slide-5",
+	    html: `
+<div class="p-4">
+<article class="carousel-card">
+	<h2 align="center">
+	    Supplemental Trade Skill
+        </h2>
+
+    <p>
+An electrician or security technician uses the program to better understand locks,
+doors, and access control hardware, allowing them to coordinate more effectively
+on job sites and offer broader solutions.
+    </p>
+</article>
+</div>
+      `
 	}
     ]
 };
