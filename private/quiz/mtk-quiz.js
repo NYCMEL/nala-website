@@ -212,8 +212,10 @@ class MtkQuiz {
 
     // Publish quiz submission
     if (window.wc && window.wc.publish) {
-      window.wc.publish('quiz', submissionData);
-      window.wc.publish('4-mtk-quiz-submitted', submissionData);
+	alert(submissionData);
+
+	window.wc.publish('quiz', submissionData);
+	window.wc.publish('4-mtk-quiz-submitted', submissionData);
     }
 
     this.showMessage('success', 'Quiz submitted successfully!');
