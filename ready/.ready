@@ -9,3 +9,4 @@ create HTML, SCSS, Vanila JS
 all content from MTK-ready.config.js file variable window.app.ready
 
 make sure component is available before applying js code
+use wc.publish on button click
