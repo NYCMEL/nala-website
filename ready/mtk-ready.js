@@ -231,18 +231,16 @@
      * Component availability check and initialization
      */
     function initMTKReady() {
-        // Check if DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initMTKReady);
-            return;
-        }
+        console.log('[MTK Ready] Init called, readyState:', document.readyState);
         
         // Check if component element exists
         const element = document.getElementById('mtkReady');
         if (!element) {
-            console.error('[MTK Ready] Component element #mtkReady not found');
-            return;
+            console.warn('[MTK Ready] Component element #mtkReady not found yet (may be loading via wc-include)');
+            return false;
         }
+        
+        console.log('[MTK Ready] Element found:', element);
         
         // Check if configuration is available
         if (!window.app || !window.app.ready) {
@@ -256,15 +254,61 @@
                     console.error('[MTK Ready] Configuration still not available after delay');
                 }
             }, 100);
-            return;
+            return true;
         }
         
         // Initialize component
+        console.log('[MTK Ready] Initializing with config:', window.app.ready);
         new MTKReady(element);
+        return true;
     }
     
-    // Start initialization
-    initMTKReady();
+    /**
+     * Watch for dynamically loaded elements (wc-include support)
+     */
+    function watchForElement() {
+        // Try to initialize immediately
+        if (initMTKReady()) {
+            return; // Successfully initialized
+        }
+        
+        // If not found, watch for it to be added to DOM
+        const observer = new MutationObserver((mutations) => {
+            for (const mutation of mutations) {
+                if (mutation.type === 'childList') {
+                    const element = document.getElementById('mtkReady');
+                    if (element) {
+                        console.log('[MTK Ready] Element detected via MutationObserver');
+                        observer.disconnect();
+                        initMTKReady();
+                        return;
+                    }
+                }
+            }
+        });
+        
+        // Start observing the document body for added nodes
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+        
+        console.log('[MTK Ready] Watching for element to be added to DOM...');
+        
+        // Fallback: Stop observing after 10 seconds
+        setTimeout(() => {
+            observer.disconnect();
+            console.warn('[MTK Ready] Stopped watching for element after 10 seconds');
+        }, 10000);
+    }
+    
+    // Start initialization - wait for DOM to be fully ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', watchForElement);
+    } else {
+        // DOM is already ready, init immediately
+        watchForElement();
+    }
     
     // Export for external use
     window.MTKReady = MTKReady;
