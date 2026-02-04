@@ -25,7 +25,6 @@ class MtkQuiz {
 	this.populateHeader();
 	this.renderQuestions();
 	this.attachEventListeners();
-	this.subscribeToEvents();
 	this.updateProgress();
     }
 
@@ -183,9 +182,9 @@ class MtkQuiz {
     }
 
     handleSubmit(e) {
-	e.preventDefault();
+	alert("X")
 
-	alert(submissionData);
+	e.preventDefault();
 
 	// Check if all questions are answered
 	const totalQuestions = this.config.questions.length;
@@ -361,6 +360,8 @@ class MtkQuiz {
     }
 
     disableForm() {
+	alert("AAAAAAAAAAAA")
+	
 	const inputs = this.element.querySelectorAll('.mtk-quiz__option-input');
 	inputs.forEach(input => {
 	    input.disabled = true;
@@ -372,6 +373,8 @@ class MtkQuiz {
     }
 
     enableForm() {
+	alert("BBBBBBBBBB")
+
 	const inputs = this.element.querySelectorAll('.mtk-quiz__option-input');
 	inputs.forEach(input => {
 	    input.disabled = false;
@@ -380,21 +383,6 @@ class MtkQuiz {
 	if (this.elements.submitBtn) {
 	    this.elements.submitBtn.disabled = false;
 	}
-    }
-
-    subscribeToEvents() {
-	// Subscribe to all 4-mtk-quiz events
-	window.wc.subscribe('4-mtk-quiz-option-changed', this.onMessage.bind(this));
-	window.wc.subscribe('4-mtk-quiz-submitted', this.onMessage.bind(this));
-	window.wc.subscribe('4-mtk-quiz-cleared', this.onMessage.bind(this));
-	window.wc.subscribe('4-mtk-quiz-test-mode', this.onMessage.bind(this));
-	window.wc.subscribe('4-mtk-quiz-progress', this.onMessage.bind(this));
-    }
-
-    onMessage(event, data) {
-	console.log('📩 Received message:', event, data);
-	// Handle incoming messages here if needed
-	// This allows the component to react to external events
     }
 }
 
