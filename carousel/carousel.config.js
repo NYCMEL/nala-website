@@ -1,14 +1,14 @@
 window.app = window.app || {};
 
 window.app.carousel = {
-  id: "mtk-carousel",
-  startIndex: 0,
-  autoPlay: false,
-  interval: 4000,
-  slides: [
-      {
-	  id: "slide-1",
-	  html: `
+    id: "mtk-carousel",
+    startIndex: 0,
+    autoPlay: false,
+    interval: 4000,
+    slides: [
+	{
+	    id: "slide-1",
+	    html: `
 <div class="p-4">
     <article class="carousel-card">
 	<h2 align="center">
@@ -49,10 +49,10 @@ window.app.carousel = {
     </article>
 </div>
       `
-    },
-    {
-      id: "slide-2",
-      html: `
+	},
+	{
+	    id: "slide-2",
+	    html: `
 <div class="p-4">
     <article class="carousel-card">
 	<h2 align="center">
@@ -76,10 +76,10 @@ window.app.carousel = {
 </article>
 </div>
       `
-    },
-    {
-      id: "slide-3",
-      html: `
+	},
+	{
+	    id: "slide-3",
+	    html: `
 <div class="p-4">
 <article class="carousel-card">
 	<h2 align="center">
@@ -103,6 +103,6 @@ window.app.carousel = {
 </article>
 </div>
       `
-    }
-  ]
+	}
+    ]
 };
