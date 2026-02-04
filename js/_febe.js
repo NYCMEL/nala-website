@@ -2,7 +2,7 @@ class _febe {
     constructor() {
         this.topics = [
 	    "mtk-ready:click",
-	    "mtk-path:click",
+	    "mtk-courses:click",
 	    
 	    "header-logo",
 	    "mtk-header-dashboard",
@@ -41,7 +41,7 @@ class _febe {
 
         switch (msg) {
 	case "mtk-ready:click":
-	case "mtk-path:click":
+	case "mtk-courses:click":
 	case "mtk-login-register":
             MTKPager.show("register");
             break;

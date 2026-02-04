@@ -78,9 +78,8 @@
 
                     e.preventDefault();
 
-                    if (window._pubsub && typeof window._pubsub.publish === "function") {
-                        window._pubsub.publish(target.getAttribute("data-event"));
-                    }
+		    let msg = "mtk-courses:click"; wc.log(msg);
+		    wc.publish(msg);
                 });
             } catch (err) {
                 console.error("MTK-courses render error", err);
