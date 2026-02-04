@@ -1,25 +1,25 @@
 FORGET ALL PREVIOUS CONTEXT for mtk-component
 
-Create a reusable UI component named mtk-component using:
+Create a reusable UI component named mtk-quiz using:
 - HTML
 - SCSS
 - Vanilla JavaScript
 - Bootstrap 5 (layout only)
 - Modern Material Design, Material Design icons and styles
-- Always create a JS class form mtk-component
+- Always create a JS class form mtk-quiz
 
 Rules:
-- The component is wrapped in a block element <mtk-component class="mtk-component">.
-- The root element uses .mtk-component.
-- All styles are scoped to .mtk-component.
+- The component is wrapped in a block element <mtk-quiz class="mtk-quiz">.
+- The root element uses .mtk-quiz.
+- All styles are scoped to .mtk-quiz.
 - No global styles or IDs.
 - publish click events using wc.publish
-- subscribe to all 4-mtk-component everns using wc.subscribe
+- subscribe to all 4-mtk-quiz everns using wc.subscribe
 - create a onMessage function to be passed to wc.subscribe function
 
 Data:
 - The component is JSON driven.
-- any and all data must come from mtk-component.config.js file
+- any and all data must come from mtk-quiz.config.js file
 
 Behavior:
 - MUST WAIT for element to be available inside DOM
@@ -37,17 +37,12 @@ Accessibility:
 - ADA compliant
 
 Output! Create exactly these files:
-- mtk-component.config.js (JSON FILE)
-- mtk-component.scss
-- mtk-component.html
-- mtk-component.js
+- mtk-quiz.config.js (JSON FILE)
+- mtk-quiz.scss
+- mtk-quiz.html
+- mtk-quiz.js
 
-#######################################################
-# example:
-#  
-#  about my mtk-component
-#   - it has a group of 3 buttons
-#     - primary
-#     - warning
-#     - danger
-#######################################################
+use the following json to create the following:
+ - quiz items are all single select from questions
+ - on submit, create a combined answer json and use wc.publish("quiz", data) to publish
+ - for testing, select the first option in each category and provide an option to clear all selection
