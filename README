@@ -1,45 +1,5 @@
-AFTER LOGIN
-App gets a JSON file with all permissions to access parts & modules
-  - say 2 parts paid and 11 parts not
+MUST START "serve" AS:
+   ~/node_modules/.bin/serve 
 
-- a tiled screen with 5-13 parts
-- all tiles are clickable
-- accessible tiles are displayed with certain decoration
-- anything else will be clickable with a CTA to pay and register
-
-Parts > modules > lessons > ...
-
-Free Part > module(0) > 5 Lessons
-
-Part I Title
-  Module 1(FREE)
-   - Lesson 1
-      - link to videos
-      - link to pictures
-      - link to photos (part of the lesson)
-   - Lesson 2
-      - ...
-   - Lesson 3
-   - Lesson 4
-   - Lesson 5
-   - Take the Quiz
-  
-Part IV Title
- Module 1
-   - Lesson 1 (description)
-      - link to videos
-      - link to pictures
-      - link to photos (part of the lesson)
-   - Lesson 2
-   - Lesson 3
-
- Module 2
- - Lesson 1
- - Lesson 2
-
- Module 3
- - Lesson 1
- - Lesson 2
- - Lesson 3
- - Lesson 4
- - Lesson 5
+should open a port 3000 on localhost
+   http://localhost:3000
