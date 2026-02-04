@@ -22,9 +22,8 @@
   --mtk-border-radius: 4px;
   --mtk-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-  max-width: 900px;
+  display: block;
   margin: 0 auto;
-  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background-color: var(--mtk-background);
   padding: 24px;
 
