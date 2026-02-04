@@ -43,8 +43,6 @@ class MtkReady {
 (function waitForMtkReady() {
     let initialized = false;
 
-    alert("A")
-
     const init = (el) => {
 	if (initialized) return;
 	initialized = true;
