@@ -3,8 +3,8 @@ window.app = window.app || {};
 window.app.stats = [
     {
 	"id": "students",
-	"value": 500,
-	"suffix": "+",
+	"value": 20,
+	"suffix": "K+",
 	"label": "Students Trained"
     },
     {
@@ -15,7 +15,7 @@ window.app.stats = [
     },
     {
 	"id": "experience",
-	"value": 30,
+	"value": 10,
 	"suffix": "+",
 	"label": "Years Experience"
     }

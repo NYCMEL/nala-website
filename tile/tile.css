@@ -4,7 +4,8 @@
   max-width: 360px;
   height: 220px;
   margin: 1rem auto;
-  cursor: pointer; }
+  cursor: pointer;
+  /* JUST ADDED THIS TO CENTER TITLES */ }
   .mtk-tile-inner {
     position: relative;
     width: 100%;
@@ -34,3 +35,7 @@
     flex: 1; }
   .mtk-tile-back {
     transform: rotateY(180deg); }
+  .mtk-tile .mtk-tile-front > .mtk-tile-title {
+    padding-top: 60px;
+    text-align: center;
+    font-family: fmi; }
