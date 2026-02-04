@@ -3,10 +3,6 @@ window.app = window.app || {};
 window.app.courses = {
     title: "Included in the Program",
     description: "Start your locksmith journey with our most popular certification programs",
-    cta: {
-        label: "View All Courses",
-        event: "courses:viewAll"
-    },
     items: [
         {
             level: "Beginner",
