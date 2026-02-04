@@ -1,6 +1,7 @@
 /**
  * MTK Ready Component - Vanilla JavaScript
  * Material Design interactions with wc.publish integration
+ * Supports dynamic loading via wc-include
  */
 
 (function() {
@@ -148,8 +149,7 @@
             }
             
             // Publish event using wc.publish
-	    let msg = (this.config.buttonAction || 'ready.get-started', publishData); wc.log(msg);
-            wc.publish("ready.get-started", msg);
+            wc.publish(this.config.buttonAction || 'ready.get-started', publishData);
             
             // Log for debugging
             console.log('[MTK Ready] Button clicked, event published:', publishData);
@@ -229,86 +229,98 @@
     }
     
     /**
-     * Component availability check and initialization
+     * Wait for element to be available in DOM (supports wc-include)
      */
-    function initMTKReady() {
-        console.log('[MTK Ready] Init called, readyState:', document.readyState);
+    function waitForElement(selector, callback, timeout = 30000) {
+        const startTime = Date.now();
         
-        // Check if component element exists
-        const element = document.getElementById('mtkReady');
-        if (!element) {
-            console.warn('[MTK Ready] Component element #mtkReady not found yet (may be loading via wc-include)');
-            return false;
+        console.log('[MTK Ready] Waiting for element:', selector);
+        
+        // Check if element already exists
+        const existingElement = document.querySelector(selector);
+        if (existingElement) {
+            console.log('[MTK Ready] Element found immediately');
+            callback(existingElement);
+            return;
         }
         
-        console.log('[MTK Ready] Element found:', element);
-        
-        // Check if configuration is available
-        if (!window.app || !window.app.ready) {
-            console.warn('[MTK Ready] Waiting for configuration...');
+        // Use MutationObserver to watch for element
+        const observer = new MutationObserver((mutations, obs) => {
+            const element = document.querySelector(selector);
             
-            // Retry after a short delay
-            setTimeout(() => {
-                if (window.app && window.app.ready) {
-                    new MTKReady(element);
-                } else {
-                    console.error('[MTK Ready] Configuration still not available after delay');
-                }
-            }, 100);
-            return true;
-        }
-        
-        // Initialize component
-        console.log('[MTK Ready] Initializing with config:', window.app.ready);
-        new MTKReady(element);
-        return true;
-    }
-    
-    /**
-     * Watch for dynamically loaded elements (wc-include support)
-     */
-    function watchForElement() {
-        // Try to initialize immediately
-        if (initMTKReady()) {
-            return; // Successfully initialized
-        }
-        
-        // If not found, watch for it to be added to DOM
-        const observer = new MutationObserver((mutations) => {
-            for (const mutation of mutations) {
-                if (mutation.type === 'childList') {
-                    const element = document.getElementById('mtkReady');
-                    if (element) {
-                        console.log('[MTK Ready] Element detected via MutationObserver');
-                        observer.disconnect();
-                        initMTKReady();
-                        return;
-                    }
-                }
+            if (element) {
+                console.log('[MTK Ready] Element detected via MutationObserver');
+                obs.disconnect();
+                callback(element);
+                return;
+            }
+            
+            // Check timeout
+            if (Date.now() - startTime > timeout) {
+                console.error('[MTK Ready] Timeout waiting for element:', selector);
+                obs.disconnect();
             }
         });
         
-        // Start observing the document body for added nodes
-        observer.observe(document.body, {
+        // Start observing
+        observer.observe(document.documentElement, {
             childList: true,
             subtree: true
         });
         
-        console.log('[MTK Ready] Watching for element to be added to DOM...');
-        
-        // Fallback: Stop observing after 10 seconds
-        setTimeout(() => {
-            observer.disconnect();
-            console.warn('[MTK Ready] Stopped watching for element after 10 seconds');
-        }, 10000);
+        console.log('[MTK Ready] MutationObserver started, watching for element...');
     }
     
-    // Start initialization - wait for DOM to be fully ready
+    /**
+     * Initialize component when element is ready
+     */
+    function initializeComponent(element) {
+        console.log('[MTK Ready] Initializing component...');
+        
+        // Check if configuration is available
+        if (!window.app || !window.app.ready) {
+            console.warn('[MTK Ready] Configuration not available, waiting...');
+            
+            // Wait for config with retries
+            let retries = 0;
+            const maxRetries = 20;
+            const checkInterval = 100;
+            
+            const configInterval = setInterval(() => {
+                retries++;
+                
+                if (window.app && window.app.ready) {
+                    clearInterval(configInterval);
+                    console.log('[MTK Ready] Configuration loaded');
+                    new MTKReady(element);
+                } else if (retries >= maxRetries) {
+                    clearInterval(configInterval);
+                    console.error('[MTK Ready] Configuration timeout after', retries * checkInterval, 'ms');
+                }
+            }, checkInterval);
+            
+            return;
+        }
+        
+        // Initialize immediately if config is ready
+        new MTKReady(element);
+    }
+    
+    /**
+     * Start the initialization process
+     */
+    function start() {
+        console.log('[MTK Ready] Starting initialization...');
+        
+        // Wait for element to be available (supports wc-include dynamic loading)
+        waitForElement('#mtkReady', initializeComponent);
+    }
+    
+    // Start when DOM is ready or immediately if already loaded
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', watchForElement);
+        document.addEventListener('DOMContentLoaded', start);
     } else {
-        // DOM is already ready, init immediately
-        watchForElement();
+        start();
     }
     
     // Export for external use
