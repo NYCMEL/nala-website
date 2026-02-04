@@ -22,8 +22,6 @@
   --mtk-border-radius: 4px;
   --mtk-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-  display: block;
-
   max-width: 900px;
   margin: 0 auto;
   font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -276,6 +274,7 @@
     position: relative;
     overflow: hidden;
     font-family: inherit;
+    white-space: nowrap;
 
     &::before {
       content: '';
@@ -372,6 +371,11 @@
       font-size: 24px;
     }
 
+    .mtk-quiz__meta {
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
     .mtk-quiz__body {
       padding: 16px;
     }
@@ -392,12 +396,25 @@
 
     .mtk-quiz__actions {
       width: 100%;
+      flex-wrap: wrap;
+    }
+
+    .mtk-quiz__button {
+      flex: 1 1 auto;
+      min-width: 120px;
+      justify-content: center;
+      font-size: 12px;
+      padding: 10px 16px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .mtk-quiz__actions {
       flex-direction: column;
     }
 
     .mtk-quiz__button {
       width: 100%;
-      justify-content: center;
     }
   }
 }
