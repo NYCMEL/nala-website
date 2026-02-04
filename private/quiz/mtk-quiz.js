@@ -175,17 +175,17 @@ class MtkQuiz {
 	this.updateProgress();
 
 	// Publish option change event
-	if (window.wc && window.wc.publish) {
-	    window.wc.publish('4-mtk-quiz-option-changed', {
-		questionId: parseInt(questionId),
-		selectedOption: value,
-		timestamp: new Date().toISOString()
-	    });
-	}
+	wc.publish('4-mtk-quiz-option-changed', {
+	    questionId: parseInt(questionId),
+	    selectedOption: value,
+	    timestamp: new Date().toISOString()
+	});
     }
 
     handleSubmit(e) {
 	e.preventDefault();
+
+	alert(submissionData);
 
 	// Check if all questions are answered
 	const totalQuestions = this.config.questions.length;
@@ -211,13 +211,9 @@ class MtkQuiz {
 	};
 
 	// Publish quiz submission
-	if (window.wc && window.wc.publish) {
-	    alert(submissionData);
-
-	    window.wc.publish('quiz', submissionData);
-	    window.wc.publish('4-mtk-quiz-submitted', submissionData);
-	}
-
+	wc.publish('quiz', submissionData);
+	wc.publish('4-mtk-quiz-submitted', submissionData);
+	
 	this.showMessage('success', 'Quiz submitted successfully!');
 
 	// Disable form after submission
@@ -239,11 +235,9 @@ class MtkQuiz {
 	this.enableForm();
 
 	// Publish clear event
-	if (window.wc && window.wc.publish) {
-	    window.wc.publish('4-mtk-quiz-cleared', {
-		timestamp: new Date().toISOString()
-	    });
-	}
+	wc.publish('4-mtk-quiz-cleared', {
+	    timestamp: new Date().toISOString()
+	});
     }
 
     handleTest() {
@@ -260,11 +254,9 @@ class MtkQuiz {
 	this.showMessage('success', 'Test mode: First option selected for all questions.');
 
 	// Publish test event
-	if (window.wc && window.wc.publish) {
-	    window.wc.publish('4-mtk-quiz-test-mode', {
-		timestamp: new Date().toISOString()
-	    });
-	}
+	wc.publish('4-mtk-quiz-test-mode', {
+	    timestamp: new Date().toISOString()
+	});
     }
 
     handleKeyboard(e) {
@@ -326,14 +318,12 @@ class MtkQuiz {
 	}
 
 	// Publish progress update event
-	if (window.wc && window.wc.publish) {
-	    window.wc.publish('4-mtk-quiz-progress', {
-		answered: answeredCount,
-		total: totalQuestions,
-		percentage: percentage.toFixed(2),
-		timestamp: new Date().toISOString()
-	    });
-	}
+	wc.publish('4-mtk-quiz-progress', {
+	    answered: answeredCount,
+	    total: totalQuestions,
+	    percentage: percentage.toFixed(2),
+	    timestamp: new Date().toISOString()
+	});
     }
 
     showMessage(type, text) {
@@ -393,8 +383,6 @@ class MtkQuiz {
     }
 
     subscribeToEvents() {
-	if (!window.wc || !window.wc.subscribe) return;
-
 	// Subscribe to all 4-mtk-quiz events
 	window.wc.subscribe('4-mtk-quiz-option-changed', this.onMessage.bind(this));
 	window.wc.subscribe('4-mtk-quiz-submitted', this.onMessage.bind(this));
