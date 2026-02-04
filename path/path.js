@@ -152,14 +152,8 @@
 	btn.textContent = plan.cta || "";
 
 	btn.addEventListener("click", function () {
-	    if (
-		window._pubsub &&
-		    typeof window._pubsub.publish === "function"
-	    ) {
-		window._pubsub.publish("MTK-path.select", {
-		    planId: plan.id || null
-		});
-	    }
+	    let msg = "mtk-path:click"; wc.log(msg);
+	    wc.publish(msg);
 	});
 
 	return btn;
