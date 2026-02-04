@@ -2,8 +2,6 @@ console.log("SSSSSSSSSSSSS");
 
 // Utility to wait for an element to exist in the DOM
 function waitForElement(selector, timeout = 5000) {
-    console.log("CCCCCCCCCCC");
-
     return new Promise((resolve, reject) => {
         const interval = 50; // check every 50ms
         let elapsed = 0;
@@ -27,8 +25,6 @@ function waitForElement(selector, timeout = 5000) {
 // Wait for DOMContentLoaded first
 document.addEventListener("DOMContentLoaded", async () => {
     try {
-	wc.log("PPPPPPPPPPPPPPP");
-
         // Wait for the root element to exist
         const root = await waitForElement("#mtk-certification-root");
 
@@ -38,9 +34,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         const res = await fetch("./certification/certification.html");
         const html = await res.text();
         root.innerHTML = html;
-
-	wc.log(">>>>>>>", res.text())
-
         renderMTKCertification();
     } catch (err) {
         console.error("MTK load error:", err);
