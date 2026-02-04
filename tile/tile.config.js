@@ -10,7 +10,7 @@ window.app.tiles = [
 	    bgColor: "#74b9ff"
         },
         back: {
-	    title: "More info...",
+	    title: "...",
 	    body: "<p>Lessons are structured around real locksmith tasks such as rekeying, lock installation, hardware replacement, and troubleshooting, helping learners understand how concepts apply in the field.</p>",
 	    bgColor: "#0984e3"
         }
@@ -23,7 +23,7 @@ window.app.tiles = [
 	    bgColor: "#74b9ff"
         },
         back: {
-	    title: "More info...",
+	    title: "...",
 	    body: "<p>Each topic is broken down into focused lessons with visual demonstrations, allowing students to pause, review, and revisit techniques as often as needed.</p>",
 	    bgColor: "#0984e3"
         }
@@ -36,7 +36,7 @@ window.app.tiles = [
 	    bgColor: "#74b9ff"
         },
         back: {
-	    title: "More info...",
+	    title: "...",
 	    body: "<p>The program spans multiple locksmithing disciplines, giving learners exposure to the most common job types encountered in residential, commercial, and automotive work.</p>",
 	    bgColor: "#0984e3"
         }
@@ -49,7 +49,7 @@ window.app.tiles = [
 	    bgColor: "#74b9ff"
         },
         back: {
-	    title: "More info...",
+	    title: "...",
 	    body: "<p>All lessons are available in English and Spanish, supporting individuals and teams who prefer or require bilingual instruction.</p>",
 	    bgColor: "#0984e3"
         }
@@ -62,7 +62,7 @@ window.app.tiles = [
 	    bgColor: "#74b9ff"
         },
         back: {
-	    title: "More info...",
+	    title: "...",
 	    body: "<p>Students progress through a clearly organized curriculum at their own pace, making it possible to balance learning with work or other commitments.</p>",
 	    bgColor: "#0984e3"
         }
@@ -75,7 +75,7 @@ window.app.tiles = [
 	    bgColor: "#74b9ff"
         },
         back: {
-	    title: "More info...",
+	    title: "...",
 	    body: "<p>In addition to technical skills, the program introduces business concepts such as licensing considerations, pricing, customer relations, and service presentation.</p>",
 	    bgColor: "#0984e3"
         }
