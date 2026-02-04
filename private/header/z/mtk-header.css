@@ -145,15 +145,3 @@
 
 body {
   padding-top: 85px; }
-av {
-      gap: 0.25rem; }
-    .mtk-header__menu-link {
-      padding: 0.5rem 0.75rem;
-      font-size: 0.85rem; }
-      .mtk-header__menu-link span:not(.material-icons) {
-        display: none; }
-    .mtk-header__dropdown-item a {
-      padding: 0.6rem 1rem; } }
-
-body {
-  padding-top: 85px; }
