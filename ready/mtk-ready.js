@@ -149,7 +149,7 @@
             
             // Publish event using wc.publish
 	    let msg = (this.config.buttonAction || 'ready.get-started', publishData); wc.log(msg);
-            wc.publish(msg);
+            wc.publish("ready.get-started", msg);
             
             // Log for debugging
             console.log('[MTK Ready] Button clicked, event published:', publishData);

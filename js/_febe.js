@@ -1,6 +1,8 @@
 class _febe {
     constructor() {
         this.topics = [
+	    "ready.get-started",
+
 	    "header-logo",
 	    "mtk-header-dashboard",
 	    "mtk-header-login",
@@ -37,6 +39,7 @@ class _febe {
         wc.log("_febe: onMessage", msg, data);
 
         switch (msg) {
+	case "ready.get-started":
 	case "mtk-login-register":
             MTKPager.show("register");
             break;
