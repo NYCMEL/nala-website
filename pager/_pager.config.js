@@ -1,7 +1,7 @@
 window.app = window.app || {};
 
 window.app.pager = {
-    baseUrl: "/Melify/tools/webcomponents/pager/tmp",
+    baseUrl: "/repo_deploy/pager/tmp",
 
     sections: {
         home: "page-home.html",
