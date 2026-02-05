@@ -1,0 +1,10 @@
+create a mtk-client from the following image
+
+I need:
+ - mtk-client.scss
+ - mtk-client.js
+ - mtk-client.config.js
+ - mtk-client.html
+
+all info comes from mtk-client.config.js file
+ 
