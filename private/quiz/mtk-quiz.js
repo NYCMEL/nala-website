@@ -25,6 +25,7 @@ class MtkQuiz {
 	this.populateHeader();
 	this.renderQuestions();
 	this.attachEventListeners();
+	this.subscribeToEvents();
 	this.updateProgress();
     }
 
@@ -136,7 +137,6 @@ class MtkQuiz {
 	// Form submission
 	if (this.elements.form) {
 	    this.elements.form.addEventListener('submit', (e) => this.handleSubmit(e));
-	    alert("HHHHHHHHHHHHH");
 	}
 
 	// Clear button
@@ -175,17 +175,25 @@ class MtkQuiz {
 	this.updateProgress();
 
 	// Publish option change event
-	wc.publish('4-mtk-quiz-option-changed', {
-	    questionId: parseInt(questionId),
-	    selectedOption: value,
-	    timestamp: new Date().toISOString()
-	});
+	if (window.wc && window.wc.publish) {
+	    const eventData = {
+		questionId: parseInt(questionId),
+		selectedOption: value,
+		timestamp: new Date().toISOString()
+	    };
+	    
+	    if (window.wc.log) {
+		window.wc.log('4-mtk-quiz-option-changed', eventData);
+	    }
+	    
+	    window.wc.publish('4-mtk-quiz-option-changed', eventData);
+	}
     }
 
     handleSubmit(e) {
-	alert("BBBBBBBBBB");
-
 	e.preventDefault();
+
+	alert("AAAAAAAAAAAA");
 
 	// Check if all questions are answered
 	const totalQuestions = this.config.questions.length;
@@ -193,6 +201,23 @@ class MtkQuiz {
 
 	if (answeredCount < totalQuestions) {
 	    this.showMessage('error', `Please answer all questions. ${answeredCount}/${totalQuestions} answered.`);
+	    
+	    // Publish validation error event
+	    if (window.wc && window.wc.publish) {
+		const errorData = {
+		    answered: answeredCount,
+		    total: totalQuestions,
+		    message: `Please answer all questions. ${answeredCount}/${totalQuestions} answered.`,
+		    timestamp: new Date().toISOString()
+		};
+		
+		if (window.wc.log) {
+		    window.wc.log('4-mtk-quiz-validation-error', errorData);
+		}
+		
+		window.wc.publish('4-mtk-quiz-validation-error', errorData);
+	    }
+	    
 	    return;
 	}
 
@@ -210,14 +235,39 @@ class MtkQuiz {
 	    total_questions: totalQuestions
 	};
 
+	// Show alert on submission
+	alert(`Quiz Submitted Successfully!\n\nModule: ${this.config.module_id}\nSession ID: ${this.config.quiz_session_id}\nQuestions Answered: ${totalQuestions}/${totalQuestions}\n\nCheck console for full submission data.`);
+
 	// Publish quiz submission
-	wc.publish('quiz', submissionData);
-	wc.publish('4-mtk-quiz-submitted', submissionData);
-	
+	if (window.wc && window.wc.publish) {
+	    if (window.wc.log) {
+		window.wc.log('quiz', submissionData);
+	    }
+	    window.wc.publish('quiz', submissionData);
+	    
+	    if (window.wc.log) {
+		window.wc.log('4-mtk-quiz-submitted', submissionData);
+	    }
+	    window.wc.publish('4-mtk-quiz-submitted', submissionData);
+	}
+
 	this.showMessage('success', 'Quiz submitted successfully!');
 
 	// Disable form after submission
 	this.disableForm();
+	
+	// Publish form disabled event
+	if (window.wc && window.wc.publish) {
+	    const disabledData = {
+		timestamp: new Date().toISOString()
+	    };
+	    
+	    if (window.wc.log) {
+		window.wc.log('4-mtk-quiz-form-disabled', disabledData);
+	    }
+	    
+	    window.wc.publish('4-mtk-quiz-form-disabled', disabledData);
+	}
     }
 
     handleClear() {
@@ -235,9 +285,28 @@ class MtkQuiz {
 	this.enableForm();
 
 	// Publish clear event
-	wc.publish('4-mtk-quiz-cleared', {
-	    timestamp: new Date().toISOString()
-	});
+	if (window.wc && window.wc.publish) {
+	    const clearData = {
+		timestamp: new Date().toISOString()
+	    };
+	    
+	    if (window.wc.log) {
+		window.wc.log('4-mtk-quiz-cleared', clearData);
+	    }
+	    
+	    window.wc.publish('4-mtk-quiz-cleared', clearData);
+	    
+	    // Publish form enabled event
+	    const enabledData = {
+		timestamp: new Date().toISOString()
+	    };
+	    
+	    if (window.wc.log) {
+		window.wc.log('4-mtk-quiz-form-enabled', enabledData);
+	    }
+	    
+	    window.wc.publish('4-mtk-quiz-form-enabled', enabledData);
+	}
     }
 
     handleTest() {
@@ -254,9 +323,17 @@ class MtkQuiz {
 	this.showMessage('success', 'Test mode: First option selected for all questions.');
 
 	// Publish test event
-	wc.publish('4-mtk-quiz-test-mode', {
-	    timestamp: new Date().toISOString()
-	});
+	if (window.wc && window.wc.publish) {
+	    const testData = {
+		timestamp: new Date().toISOString()
+	    };
+	    
+	    if (window.wc.log) {
+		window.wc.log('4-mtk-quiz-test-mode', testData);
+	    }
+	    
+	    window.wc.publish('4-mtk-quiz-test-mode', testData);
+	}
     }
 
     handleKeyboard(e) {
@@ -318,12 +395,20 @@ class MtkQuiz {
 	}
 
 	// Publish progress update event
-	wc.publish('4-mtk-quiz-progress', {
-	    answered: answeredCount,
-	    total: totalQuestions,
-	    percentage: percentage.toFixed(2),
-	    timestamp: new Date().toISOString()
-	});
+	if (window.wc && window.wc.publish) {
+	    const progressData = {
+		answered: answeredCount,
+		total: totalQuestions,
+		percentage: percentage.toFixed(2),
+		timestamp: new Date().toISOString()
+	    };
+	    
+	    if (window.wc.log) {
+		window.wc.log('4-mtk-quiz-progress', progressData);
+	    }
+	    
+	    window.wc.publish('4-mtk-quiz-progress', progressData);
+	}
     }
 
     showMessage(type, text) {
@@ -361,22 +446,31 @@ class MtkQuiz {
     }
 
     disableForm() {
-	alert("AAAAAAAAAAAA")
-	
 	const inputs = this.element.querySelectorAll('.mtk-quiz__option-input');
 	inputs.forEach(input => {
 	    input.disabled = true;
 	});
 
-	alert("ZZZZZZZZ");
 	if (this.elements.submitBtn) {
 	    this.elements.submitBtn.disabled = true;
+	}
+	
+	// Publish form state change
+	if (window.wc && window.wc.publish) {
+	    const stateData = {
+		state: 'disabled',
+		timestamp: new Date().toISOString()
+	    };
+	    
+	    if (window.wc.log) {
+		window.wc.log('4-mtk-quiz-form-state-changed', stateData);
+	    }
+	    
+	    window.wc.publish('4-mtk-quiz-form-state-changed', stateData);
 	}
     }
 
     enableForm() {
-	alert("BBBBBBBBBB")
-
 	const inputs = this.element.querySelectorAll('.mtk-quiz__option-input');
 	inputs.forEach(input => {
 	    input.disabled = false;
@@ -385,6 +479,41 @@ class MtkQuiz {
 	if (this.elements.submitBtn) {
 	    this.elements.submitBtn.disabled = false;
 	}
+	
+	// Publish form state change
+	if (window.wc && window.wc.publish) {
+	    const stateData = {
+		state: 'enabled',
+		timestamp: new Date().toISOString()
+	    };
+	    
+	    if (window.wc.log) {
+		window.wc.log('4-mtk-quiz-form-state-changed', stateData);
+	    }
+	    
+	    window.wc.publish('4-mtk-quiz-form-state-changed', stateData);
+	}
+    }
+
+    subscribeToEvents() {
+	if (!window.wc || !window.wc.subscribe) return;
+
+	// Subscribe to all 4-mtk-quiz events
+	window.wc.subscribe('4-mtk-quiz-option-changed', this.onMessage.bind(this));
+	window.wc.subscribe('4-mtk-quiz-submitted', this.onMessage.bind(this));
+	window.wc.subscribe('4-mtk-quiz-cleared', this.onMessage.bind(this));
+	window.wc.subscribe('4-mtk-quiz-test-mode', this.onMessage.bind(this));
+	window.wc.subscribe('4-mtk-quiz-progress', this.onMessage.bind(this));
+	window.wc.subscribe('4-mtk-quiz-validation-error', this.onMessage.bind(this));
+	window.wc.subscribe('4-mtk-quiz-form-state-changed', this.onMessage.bind(this));
+	window.wc.subscribe('4-mtk-quiz-form-enabled', this.onMessage.bind(this));
+	window.wc.subscribe('4-mtk-quiz-form-disabled', this.onMessage.bind(this));
+    }
+
+    onMessage(event, data) {
+	console.log('📩 Received message:', event, data);
+	// Handle incoming messages here if needed
+	// This allows the component to react to external events
     }
 }
 
@@ -413,6 +542,22 @@ function initMtkQuiz() {
 		element.mtkQuizInstance = quiz;
 		
 		console.log('✅ MTK Quiz initialized successfully');
+		
+		// Publish initialization event
+		if (window.wc && window.wc.publish) {
+		    const initData = {
+			quiz_session_id: mtkQuizConfig.quiz_session_id,
+			module_id: mtkQuizConfig.module_id,
+			question_count: mtkQuizConfig.questions.length,
+			timestamp: new Date().toISOString()
+		    };
+		    
+		    if (window.wc.log) {
+			window.wc.log('4-mtk-quiz-initialized', initData);
+		    }
+		    
+		    window.wc.publish('4-mtk-quiz-initialized', initData);
+		}
 	    }, 50);
 	}
     });
@@ -446,5 +591,21 @@ window.addEventListener('load', () => {
 	const quiz = new MtkQuiz(element, mtkQuizConfig);
 	element.mtkQuizInstance = quiz;
 	console.log('✅ MTK Quiz initialized on window load');
+	
+	// Publish initialization event
+	if (window.wc && window.wc.publish) {
+	    const initData = {
+		quiz_session_id: mtkQuizConfig.quiz_session_id,
+		module_id: mtkQuizConfig.module_id,
+		question_count: mtkQuizConfig.questions.length,
+		timestamp: new Date().toISOString()
+	    };
+	    
+	    if (window.wc.log) {
+		window.wc.log('4-mtk-quiz-initialized', initData);
+	    }
+	    
+	    window.wc.publish('4-mtk-quiz-initialized', initData);
+	}
     }
 });
