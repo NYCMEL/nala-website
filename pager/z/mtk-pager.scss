@@ -1,63 +1,24 @@
-// mtk-pager.scss
-
 .mtk-pager {
-  --mtk-pager-primary: #6200ea;
-  --mtk-pager-background: #ffffff;
-  --mtk-pager-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-  display: block;
-  width: 100%;
-  min-height: 200px;
-  position: relative;
-  background-color: var(--mtk-pager-background);
-
-  .mtk-pager-section {
-    display: none;
-    width: 100%;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: var(--mtk-pager-transition);
-
-    &.active {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-      animation: mtk-pager-fade-in 0.3s ease-out;
-    }
-  }
-
-  // Loading state
-  &.loading {
-    .mtk-pager-section.active {
-      opacity: 0.5;
-      pointer-events: none;
-    }
-  }
-
-  // Animation
-  @keyframes mtk-pager-fade-in {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-}
-
-// Standalone styling
-PAGER {
-  display: block;
   width: 100%;
 }
 
-PAGER-SECTION {
+.mtk-pager-section {
   display: none;
-  width: 100%;
+  padding: 1rem;
+  animation: mtk-pager-fade-in 220ms ease-out;
+}
 
-  &.active {
-    display: block;
+.mtk-pager-section.active {
+  display: block;
+}
+
+@keyframes mtk-pager-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

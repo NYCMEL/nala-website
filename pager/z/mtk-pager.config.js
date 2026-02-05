@@ -1,28 +1,15 @@
-// mtk-pager.config.js
-const app = app || {};
+window.app = window.app || {};
 
-app.pager = {
-  "sections": {
-    "home": {
-      "url": "pages/home.html",
-      "title": "Home"
+window.app.pager = {
+  sections: {
+    home: {
+      url: "/pages/home.html"
     },
-    "quiz": {
-      "url": "pages/quiz.html",
-      "title": "Quiz"
+    about: {
+      url: "/pages/about.html"
     },
-    "results": {
-      "url": "pages/results.html",
-      "title": "Results"
-    },
-    "profile": {
-      "url": "pages/profile.html",
-      "title": "Profile"
-    },
-    "settings": {
-      "url": "pages/settings.html",
-      "title": "Settings"
+    contact: {
+      url: "/pages/contact.html"
     }
-  },
-  "defaultSection": "home"
+  }
 };
