@@ -1,5 +1,5 @@
-// MTK Client Styles
-// ==================
+// MTK Client Styles - All styles scoped under .mtk-client
+// ========================================================
 
 // Variables
 // ---------
@@ -79,29 +79,8 @@ $shadow-2xl: 0 20px 60px rgba(0, 0, 0, 0.3);
     background: linear-gradient(135deg, $dark-color 0%, $darker-color 100%);
 }
 
-// Base Styles
-// -----------
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
-    @include gradient-primary;
-    min-height: 100vh;
-    padding: $spacing-lg;
-    @include flex-center;
-}
-
-.container {
-    max-width: 1200px;
-    width: 100%;
-}
-
-// MTK Client Component
-// --------------------
+// Main Component Wrapper
+// ======================
 .mtk-client {
     max-width: 1200px;
     width: 100%;
@@ -109,622 +88,616 @@ body {
     border-radius: $radius-3xl;
     @include card-shadow;
     overflow: hidden;
-}
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
 
-// Header Section
-// --------------
-.header {
-    @include gradient-dark;
-    color: $white;
-    padding: $spacing-2xl;
-    @include flex-align;
-    gap: $spacing-xl;
-}
-
-.logo {
-    width: 120px;
-    height: 120px;
-    background: $dark-color;
-    border-radius: $radius-full;
-    @include flex-center;
-    border: 4px solid $logo-green;
-    flex-shrink: 0;
-    @include transition-smooth;
-
-    &:hover {
-        transform: scale(1.05);
-    }
-}
-
-.logo-text {
-    font-size: 48px;
-    font-weight: bold;
-    color: $logo-green;
-}
-
-.header-info {
-    flex: 1;
-}
-
-.business-name {
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 12px;
-    line-height: 1.2;
-}
-
-.rating {
-    @include flex-align;
-    gap: $spacing-sm;
-    margin-bottom: $spacing-sm;
-    flex-wrap: wrap;
-}
-
-.stars {
-    color: $yellow;
-    font-size: 20px;
-    letter-spacing: 2px;
-}
-
-.rating-text {
-    font-size: 18px;
-    font-weight: 600;
-}
-
-#badges-container {
-    display: flex;
-    gap: $spacing-sm;
-    flex-wrap: wrap;
-}
-
-.badge {
-    display: inline-block;
-    background: $blue;
-    padding: 6px 16px;
-    border-radius: $radius-3xl;
-    font-size: 14px;
-    font-weight: 600;
-    @include transition-smooth;
-
-    &:hover {
-        background: $blue-dark;
-        transform: translateY(-2px);
-    }
-}
-
-// Main Content Layout
-// -------------------
-.main-content {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: $spacing-2xl;
-    padding: $spacing-2xl;
-}
-
-.left-column,
-.right-column {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-xl;
-}
-
-.right-column {
-    gap: $spacing-lg;
-}
-
-// Card Component
-// --------------
-.card {
-    background: $light-bg;
-    padding: $spacing-xl;
-    border-radius: $radius-xl;
-    border: 1px solid $border-color;
-    @include transition-smooth;
-
-    &:hover {
-        border-color: darken($border-color, 5%);
-        box-shadow: $shadow-md;
-    }
-}
-
-.card-title {
-    font-size: 20px;
-    font-weight: bold;
-    color: $dark-color;
-    margin-bottom: $spacing-md;
-    @include flex-align;
-    gap: $spacing-sm;
-
-    &::before {
-        content: '';
-        width: 4px;
-        height: 24px;
-        background: $primary-color;
-        border-radius: 2px;
-    }
-}
-
-// About Section
-// -------------
-.about-text {
-    color: $text-color;
-    line-height: 1.6;
-    margin-bottom: $spacing-sm;
-    font-size: 15px;
-
-    &:last-child {
-        margin-bottom: 0;
-    }
-}
-
-// Overview Section
-// ----------------
-.overview-grid {
-    display: grid;
-    gap: 12px;
-}
-
-.overview-item {
-    @include flex-align;
-    gap: 12px;
-    color: $text-color;
-    font-size: 15px;
-    padding: 8px;
-    border-radius: $radius-sm;
-    @include transition-smooth;
-
-    &:hover {
-        background: rgba($primary-color, 0.05);
-    }
-}
-
-.overview-icon {
-    width: 24px;
-    height: 24px;
-    background: $primary-color;
-    color: $white;
-    border-radius: $radius-sm;
-    @include flex-center;
-    font-size: 14px;
-    flex-shrink: 0;
-}
-
-// Payment Methods
-// ---------------
-.payment-methods {
-    display: flex;
-    flex-wrap: wrap;
-    gap: $spacing-sm;
-}
-
-.payment-tag {
-    background: $white;
-    border: 2px solid $border-color;
-    padding: 8px 16px;
-    border-radius: $radius-md;
-    font-size: 14px;
-    color: $text-color;
-    font-weight: 500;
-    @include transition-smooth;
-    cursor: pointer;
-
-    &:hover {
-        border-color: $primary-color;
-        color: $primary-color;
-        transform: translateY(-1px);
-        box-shadow: $shadow-sm;
+    // Reset styles within component
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
 
-    &:active {
-        transform: translateY(0);
-    }
-}
-
-// Pricing Card
-// ------------
-.pricing-card {
-    @include gradient-primary;
-    color: $white;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-
-    &::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        right: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-        animation: pulse-glow 3s ease-in-out infinite;
-    }
-
-    .card-title {
+    // Header Section
+    // --------------
+    .header {
+        @include gradient-dark;
         color: $white;
-        justify-content: center;
-        position: relative;
-        z-index: 1;
-
-        &::before {
-            display: none;
-        }
-    }
-}
-
-.pricing-title {
-    color: $white !important;
-}
-
-.price {
-    font-size: 48px;
-    font-weight: bold;
-    margin: $spacing-md 0;
-    position: relative;
-    z-index: 1;
-}
-
-.price-note {
-    font-size: 14px;
-    opacity: 0.9;
-    position: relative;
-    z-index: 1;
-}
-
-@keyframes pulse-glow {
-    0%, 100% {
-        opacity: 0.3;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 0.5;
-        transform: scale(1.1);
-    }
-}
-
-// Status Online
-// -------------
-.status-online {
-    @include flex-center;
-    gap: 8px;
-    padding: 12px;
-    background: $green-light;
-    color: $green-dark;
-    border-radius: $radius-md;
-    font-weight: 600;
-    margin-top: $spacing-md;
-    position: relative;
-    z-index: 1;
-}
-
-.status-dot {
-    width: 10px;
-    height: 10px;
-    background: $green;
-    border-radius: $radius-full;
-    animation: pulse-dot 2s infinite;
-}
-
-@keyframes pulse-dot {
-    0%, 100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 0.5;
-        transform: scale(0.8);
-    }
-}
-
-// CTA Buttons
-// -----------
-.cta-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.btn {
-    padding: 16px 24px;
-    border: none;
-    border-radius: $radius-lg;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    @include transition-smooth;
-    @include flex-center;
-    gap: $spacing-sm;
-    position: relative;
-    overflow: hidden;
-
-    &::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        border-radius: $radius-full;
-        background: rgba(255, 255, 255, 0.2);
-        transform: translate(-50%, -50%);
-        transition: width 0.6s, height 0.6s;
-    }
-
-    &:hover::before {
-        width: 300px;
-        height: 300px;
-    }
-
-    &:hover {
-        transform: translateY(-2px);
-        box-shadow: $shadow-lg;
-    }
-
-    &:active {
-        transform: translateY(0);
-    }
-
-    span {
-        position: relative;
-        z-index: 1;
-    }
-}
-
-.btn-primary {
-    background: $blue;
-    color: $white;
-
-    &:hover {
-        background: $blue-dark;
-        box-shadow: 0 4px 12px rgba($blue, 0.4);
-    }
-}
-
-.btn-secondary {
-    background: $white;
-    color: $blue;
-    border: 2px solid $blue;
-
-    &:hover {
-        background: $blue-lighter;
-    }
-}
-
-// Social Links
-// ------------
-.social-links {
-    display: flex;
-    gap: 12px;
-}
-
-.social-link {
-    flex: 1;
-    padding: 12px;
-    background: $white;
-    border: 2px solid $border-color;
-    border-radius: $radius-md;
-    text-align: center;
-    color: $text-color;
-    text-decoration: none;
-    font-weight: 600;
-    @include transition-smooth;
-    cursor: pointer;
-
-    &:hover {
-        border-color: $primary-color;
-        color: $primary-color;
-        transform: translateY(-2px);
-        box-shadow: $shadow-md;
-    }
-
-    &:active {
-        transform: translateY(0);
-    }
-}
-
-// Guarantee Banner
-// ----------------
-.guarantee-banner {
-    background: $blue-light;
-    border: 2px solid $blue;
-    padding: $spacing-lg;
-    border-radius: $radius-lg;
-    @include flex-align;
-    gap: $spacing-md;
-    @include transition-smooth;
-
-    &:hover {
-        box-shadow: $shadow-md;
-        border-color: $blue-dark;
-    }
-}
-
-.guarantee-icon {
-    width: 40px;
-    height: 40px;
-    background: $blue;
-    color: $white;
-    border-radius: $radius-full;
-    @include flex-center;
-    font-size: 20px;
-    flex-shrink: 0;
-    @include transition-smooth;
-
-    &:hover {
-        transform: rotate(15deg) scale(1.1);
-    }
-}
-
-.guarantee-text {
-    flex: 1;
-}
-
-.guarantee-title {
-    font-weight: bold;
-    color: #1e40af;
-    margin-bottom: $spacing-xs;
-    font-size: 16px;
-}
-
-.guarantee-desc {
-    font-size: 14px;
-    color: #1e3a8a;
-    line-height: 1.4;
-}
-
-// Responsive Design
-// -----------------
-@media (max-width: 1024px) {
-    .main-content {
-        gap: $spacing-lg;
+        padding: $spacing-2xl;
+        @include flex-align;
+        gap: $spacing-xl;
     }
 
     .logo {
-        width: 100px;
-        height: 100px;
+        width: 120px;
+        height: 120px;
+        background: $dark-color;
+        border-radius: $radius-full;
+        @include flex-center;
+        border: 4px solid $logo-green;
+        flex-shrink: 0;
+        @include transition-smooth;
+
+        &:hover {
+            transform: scale(1.05);
+        }
     }
 
     .logo-text {
-        font-size: 40px;
+        font-size: 48px;
+        font-weight: bold;
+        color: $logo-green;
+    }
+
+    .header-info {
+        flex: 1;
     }
 
     .business-name {
-        font-size: 28px;
-    }
-}
-
-@media (max-width: 768px) {
-    .main-content {
-        grid-template-columns: 1fr;
-    }
-
-    .header {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .business-name {
-        font-size: 24px;
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 12px;
+        line-height: 1.2;
     }
 
     .rating {
-        justify-content: center;
+        @include flex-align;
+        gap: $spacing-sm;
+        margin-bottom: $spacing-sm;
+        flex-wrap: wrap;
     }
 
-    #badges-container {
-        justify-content: center;
-    }
-
-    .price {
-        font-size: 36px;
-    }
-
-    .logo {
-        width: 100px;
-        height: 100px;
-    }
-
-    .logo-text {
-        font-size: 40px;
-    }
-
-    .payment-methods {
-        justify-content: center;
-    }
-
-    .social-links {
-        flex-direction: column;
-    }
-}
-
-@media (max-width: 480px) {
-    body {
-        padding: $spacing-sm;
-    }
-
-    .mtk-client {
-        border-radius: $radius-2xl;
-    }
-
-    .header {
-        padding: $spacing-lg;
-    }
-
-    .main-content {
-        padding: $spacing-lg;
-        gap: $spacing-lg;
-    }
-
-    .card {
-        padding: $spacing-lg;
-    }
-
-    .business-name {
+    .stars {
+        color: $yellow;
         font-size: 20px;
+        letter-spacing: 2px;
     }
 
     .rating-text {
-        font-size: 16px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    #badges-container {
+        display: flex;
+        gap: $spacing-sm;
+        flex-wrap: wrap;
+    }
+
+    .badge {
+        display: inline-block;
+        background: $blue;
+        padding: 6px 16px;
+        border-radius: $radius-3xl;
+        font-size: 14px;
+        font-weight: 600;
+        @include transition-smooth;
+
+        &:hover {
+            background: $blue-dark;
+            transform: translateY(-2px);
+        }
+    }
+
+    // Main Content Layout
+    // -------------------
+    .main-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: $spacing-2xl;
+        padding: $spacing-2xl;
     }
 
     .left-column,
     .right-column {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xl;
+    }
+
+    .right-column {
         gap: $spacing-lg;
     }
 
-    .logo {
-        width: 80px;
-        height: 80px;
+    // Card Component
+    // --------------
+    .card {
+        background: $light-bg;
+        padding: $spacing-xl;
+        border-radius: $radius-xl;
+        border: 1px solid $border-color;
+        @include transition-smooth;
+
+        &:hover {
+            border-color: darken($border-color, 5%);
+            box-shadow: $shadow-md;
+        }
     }
 
-    .logo-text {
-        font-size: 32px;
+    .card-title {
+        font-size: 20px;
+        font-weight: bold;
+        color: $dark-color;
+        margin-bottom: $spacing-md;
+        @include flex-align;
+        gap: $spacing-sm;
+
+        &::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: $primary-color;
+            border-radius: 2px;
+        }
+    }
+
+    // About Section
+    // -------------
+    .about-text {
+        color: $text-color;
+        line-height: 1.6;
+        margin-bottom: $spacing-sm;
+        font-size: 15px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    // Overview Section
+    // ----------------
+    .overview-grid {
+        display: grid;
+        gap: 12px;
+    }
+
+    .overview-item {
+        @include flex-align;
+        gap: 12px;
+        color: $text-color;
+        font-size: 15px;
+        padding: 8px;
+        border-radius: $radius-sm;
+        @include transition-smooth;
+
+        &:hover {
+            background: rgba($primary-color, 0.05);
+        }
+    }
+
+    .overview-icon {
+        width: 24px;
+        height: 24px;
+        background: $primary-color;
+        color: $white;
+        border-radius: $radius-sm;
+        @include flex-center;
+        font-size: 14px;
+        flex-shrink: 0;
+    }
+
+    // Payment Methods
+    // ---------------
+    .payment-methods {
+        display: flex;
+        flex-wrap: wrap;
+        gap: $spacing-sm;
+    }
+
+    .payment-tag {
+        background: $white;
+        border: 2px solid $border-color;
+        padding: 8px 16px;
+        border-radius: $radius-md;
+        font-size: 14px;
+        color: $text-color;
+        font-weight: 500;
+        @include transition-smooth;
+        cursor: pointer;
+
+        &:hover {
+            border-color: $primary-color;
+            color: $primary-color;
+            transform: translateY(-1px);
+            box-shadow: $shadow-sm;
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+
+    // Pricing Card
+    // ------------
+    .pricing-card {
+        @include gradient-primary;
+        color: $white;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: mtk-pulse-glow 3s ease-in-out infinite;
+        }
+
+        .card-title {
+            color: $white;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+
+            &::before {
+                display: none;
+            }
+        }
+    }
+
+    .pricing-title {
+        color: $white !important;
     }
 
     .price {
-        font-size: 32px;
+        font-size: 48px;
+        font-weight: bold;
+        margin: $spacing-md 0;
+        position: relative;
+        z-index: 1;
+    }
+
+    .price-note {
+        font-size: 14px;
+        opacity: 0.9;
+        position: relative;
+        z-index: 1;
+    }
+
+    @keyframes mtk-pulse-glow {
+        0%, 100% {
+            opacity: 0.3;
+            transform: scale(1);
+        }
+        50% {
+            opacity: 0.5;
+            transform: scale(1.1);
+        }
+    }
+
+    // Status Online
+    // -------------
+    .status-online {
+        @include flex-center;
+        gap: 8px;
+        padding: 12px;
+        background: $green-light;
+        color: $green-dark;
+        border-radius: $radius-md;
+        font-weight: 600;
+        margin-top: $spacing-md;
+        position: relative;
+        z-index: 1;
+    }
+
+    .status-dot {
+        width: 10px;
+        height: 10px;
+        background: $green;
+        border-radius: $radius-full;
+        animation: mtk-pulse-dot 2s infinite;
+    }
+
+    @keyframes mtk-pulse-dot {
+        0%, 100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+        50% {
+            opacity: 0.5;
+            transform: scale(0.8);
+        }
+    }
+
+    // CTA Buttons
+    // -----------
+    .cta-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
     }
 
     .btn {
-        padding: 14px 20px;
-        font-size: 15px;
+        padding: 16px 24px;
+        border: none;
+        border-radius: $radius-lg;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        @include transition-smooth;
+        @include flex-center;
+        gap: $spacing-sm;
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: $radius-full;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        &:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: $shadow-lg;
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+
+        span {
+            position: relative;
+            z-index: 1;
+        }
     }
-}
 
-// Accessibility
-// -------------
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+    .btn-primary {
+        background: $blue;
+        color: $white;
+
+        &:hover {
+            background: $blue-dark;
+            box-shadow: 0 4px 12px rgba($blue, 0.4);
+        }
     }
-}
 
-// Focus styles for accessibility
-button:focus,
-a:focus,
-input:focus {
-    outline: 3px solid rgba($primary-color, 0.5);
-    outline-offset: 2px;
-}
-
-// Print styles
-@media print {
-    body {
+    .btn-secondary {
         background: $white;
-        padding: 0;
+        color: $blue;
+        border: 2px solid $blue;
+
+        &:hover {
+            background: $blue-lighter;
+        }
     }
 
-    .mtk-client {
+    // Social Links
+    // ------------
+    .social-links {
+        display: flex;
+        gap: 12px;
+    }
+
+    .social-link {
+        flex: 1;
+        padding: 12px;
+        background: $white;
+        border: 2px solid $border-color;
+        border-radius: $radius-md;
+        text-align: center;
+        color: $text-color;
+        text-decoration: none;
+        font-weight: 600;
+        @include transition-smooth;
+        cursor: pointer;
+
+        &:hover {
+            border-color: $primary-color;
+            color: $primary-color;
+            transform: translateY(-2px);
+            box-shadow: $shadow-md;
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+
+    // Guarantee Banner
+    // ----------------
+    .guarantee-banner {
+        background: $blue-light;
+        border: 2px solid $blue;
+        padding: $spacing-lg;
+        border-radius: $radius-lg;
+        @include flex-align;
+        gap: $spacing-md;
+        @include transition-smooth;
+
+        &:hover {
+            box-shadow: $shadow-md;
+            border-color: $blue-dark;
+        }
+    }
+
+    .guarantee-icon {
+        width: 40px;
+        height: 40px;
+        background: $blue;
+        color: $white;
+        border-radius: $radius-full;
+        @include flex-center;
+        font-size: 20px;
+        flex-shrink: 0;
+        @include transition-smooth;
+
+        &:hover {
+            transform: rotate(15deg) scale(1.1);
+        }
+    }
+
+    .guarantee-text {
+        flex: 1;
+    }
+
+    .guarantee-title {
+        font-weight: bold;
+        color: #1e40af;
+        margin-bottom: $spacing-xs;
+        font-size: 16px;
+    }
+
+    .guarantee-desc {
+        font-size: 14px;
+        color: #1e3a8a;
+        line-height: 1.4;
+    }
+
+    // Focus styles for accessibility
+    button:focus,
+    a:focus,
+    input:focus {
+        outline: 3px solid rgba($primary-color, 0.5);
+        outline-offset: 2px;
+    }
+
+    // Responsive Design
+    // -----------------
+    @media (max-width: 1024px) {
+        .main-content {
+            gap: $spacing-lg;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+        }
+
+        .logo-text {
+            font-size: 40px;
+        }
+
+        .business-name {
+            font-size: 28px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-content {
+            grid-template-columns: 1fr;
+        }
+
+        .header {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .business-name {
+            font-size: 24px;
+        }
+
+        .rating {
+            justify-content: center;
+        }
+
+        #badges-container {
+            justify-content: center;
+        }
+
+        .price {
+            font-size: 36px;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+        }
+
+        .logo-text {
+            font-size: 40px;
+        }
+
+        .payment-methods {
+            justify-content: center;
+        }
+
+        .social-links {
+            flex-direction: column;
+        }
+    }
+
+    @media (max-width: 480px) {
+        border-radius: $radius-2xl;
+
+        .header {
+            padding: $spacing-lg;
+        }
+
+        .main-content {
+            padding: $spacing-lg;
+            gap: $spacing-lg;
+        }
+
+        .card {
+            padding: $spacing-lg;
+        }
+
+        .business-name {
+            font-size: 20px;
+        }
+
+        .rating-text {
+            font-size: 16px;
+        }
+
+        .left-column,
+        .right-column {
+            gap: $spacing-lg;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+        }
+
+        .logo-text {
+            font-size: 32px;
+        }
+
+        .price {
+            font-size: 32px;
+        }
+
+        .btn {
+            padding: 14px 20px;
+            font-size: 15px;
+        }
+    }
+
+    // Accessibility - Reduced Motion
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+
+    // Print styles
+    @media print {
         box-shadow: none;
         border-radius: 0;
-    }
 
-    .btn,
-    .cta-buttons {
-        display: none;
+        .btn,
+        .cta-buttons {
+            display: none;
+        }
     }
 }
