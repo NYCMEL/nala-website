@@ -1,0 +1,30 @@
+/* mtk-pager.scss */
+.mtk-pager {
+  width: 100%;
+  position: relative; }
+
+/* Base section state */
+.mtk-pager-section {
+  display: none;
+  width: 100%;
+  padding: 1rem;
+  /* Material-style entrance motion */
+  animation: mtk-pager-fade-in 220ms ease-out both; }
+
+/* Visible section */
+.mtk-pager-section.active {
+  display: block; }
+
+/* Optional utility when nested in Bootstrap containers */
+.mtk-pager > .container {
+  padding-left: 0;
+  padding-right: 0; }
+
+/* Material-friendly transition */
+@keyframes mtk-pager-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px); }
+  to {
+    opacity: 1;
+    transform: translateY(0); } }
