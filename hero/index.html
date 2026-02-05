@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-	<meta charset="UTF-8">
-	<title>Hero2</title>
+	<title>Hero</title>
 
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<base href="/repo_deploy/">
+
+	<link rel="icon" href="img/cropped-favicon-32x32.png" sizes="32x32">
+	<link rel="icon" href="img/cropped-favicon-192x192.png" sizes="192x192">
+	<link rel="apple-touch-icon" href="img/cropped-favicon-180x180.png">
+	
 	<!-- W3C LOGGING -->
 	<script>
 	 wcENV="dev"; // prod || dev
@@ -13,34 +21,36 @@
 
 	<!-- BOOTSTRAP & MATERIAL DESIGN -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://unpkg.com/material-heros-web@latest/dist/material-heros-web.min.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 	<!-- SOCIAL ICONS -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net">
+	<link href="css/fonts/fonts.css" rel="stylesheet">
 
 	<!-- APPLICATION STYLES -->
-	<link href="../css/app.css" rel="stylesheet">
+	<link href="css/app.css" rel="stylesheet">
     </head>
 
     <body id="wc">
 	<!-- BOOTSTRAP & JQUERY -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://unpkg.com/material-heros-web@latest/dist/material-heros-web.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
 	<!-- COMMON STUFF -->
-	<script src="../js/_wc.js"></script>
-	<script src="../js/_include.js"></script>
-	<script src="../js/_pubsub.js"></script>
-	<script src="../js/_febe.js" defer></script>
-
+	<script src="js/_wc.js"></script>
+	<script src="js/app.config.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/_febe.js" defer></script>
+	
 	<!-- YOUR CODE FROM HERE... -->
 
 	<!-- HERO -->
-	<div style="border:1px red dashed;">
-	    <link rel="stylesheet" href="hero/hero.css">
+	<div style="border:2px red dashed">
+	    <link href="hero/hero.css" rel="stylesheet">
 	    
 	    <wc-include href="hero/hero.html"><p align="center">loading hero.html...</p></wc-include>
-	    
+
 	    <script src="hero/hero.config.js"></script>
 	    <script src="hero/hero.js"></script>
 	</div>
