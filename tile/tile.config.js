@@ -5,7 +5,7 @@ window.app.tiles = [
         id: "tile-1",
         flip: true,
         front: {
-	    title: "Training Built for Real Service Calls",
+	    title: "Training<BR>Built for Real Service Calls",
 	    body: "",
 	    bgColor: "#74b9ff"
         },
@@ -18,7 +18,7 @@ window.app.tiles = [
         id: "tile-2",
         flip: true,
         front: {
-	    title: "Clear, Step-by-Step Video Instruction",
+	    title: "Step-by-Step<BR>Video with Clear Instructions",
 	    body: "",
 	    bgColor: "#74b9ff"
         },
@@ -44,7 +44,7 @@ window.app.tiles = [
         id: "tile-4",
         flip: true,
         front: {
-	    title: "Bilingual Learning Environment",
+	    title: "Bilingual<BR>Learning Environment",
 	    body: "",
 	    bgColor: "#74b9ff"
         },
@@ -57,7 +57,7 @@ window.app.tiles = [
         id: "tile-5",
         flip: true,
         front: {
-	    title: "Self-Paced, Structured Curriculum",
+	    title: "Self-Paced<BR>Structured Curriculum",
 	    body: "",
 	    bgColor: "#74b9ff"
         },
