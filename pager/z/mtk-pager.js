@@ -1,21 +1,26 @@
 /* mtk-pager.js */
 
 (function () {
-  class MtkPager {
+  class MTKPagerClass {
     constructor(container) {
       this.container = container;
       this.config = window.app && window.app.pager;
 
+      if (!this.container) {
+        console.error('MTKPager: <PAGER id="mtk-pager"> not found');
+        return;
+      }
+
       if (!this.config || !this.config.sections) {
-        console.warn('mtk-pager: missing app.pager config');
+        console.warn('MTKPager: missing app.pager config');
       }
 
       this._initSubscriptions();
-      console.info('mtk-pager: initialized');
+      console.info('MTKPager: initialized');
     }
 
     show(sectionId) {
-      if (!sectionId || !this.container) return;
+      if (!sectionId) return;
 
       const domId = `mtk-pager-${sectionId}`;
 
@@ -30,7 +35,7 @@
       }
 
       section.classList.add('active');
-      console.info('mtk-pager: show', sectionId);
+      console.info('MTKPager: show', sectionId);
     }
 
     _hideAll() {
@@ -50,14 +55,14 @@
     _loadContent(sectionId, el) {
       const cfg = this.config?.sections?.[sectionId];
       if (!cfg || !cfg.url) {
-        console.warn(`mtk-pager: no url for section ${sectionId}`);
+        console.warn(`MTKPager: no url for section ${sectionId}`);
         return;
       }
 
       if (window.jQuery && typeof jQuery.fn.load === 'function') {
         jQuery(el).load(cfg.url);
       } else {
-        console.warn('mtk-pager: jQuery not available, skipping load');
+        console.warn('MTKPager: jQuery not available, skipping load');
       }
     }
 
@@ -77,35 +82,37 @@
     }
   }
 
-  /* ---------- wait for <PAGER> (wc-include safe) ---------- */
+  /* ---------- expose singleton API ---------- */
 
-  let initialized = false;
+  let instance = null;
 
-  const initWhenReady = () => {
-    if (initialized) return;
+  const init = () => {
+    if (instance) return;
 
-    const pagerEl = document.querySelector('PAGER#mtk-pager');
-    if (!pagerEl) return;
+    const container = document.querySelector('PAGER#mtk-pager');
+    if (!container) return;
 
-    initialized = true;
-
-    const instance = new MtkPager(pagerEl);
-
-    window['mtk-pager'] = {
-      show: (id) => instance.show(id)
-    };
-
-    wc?.publish?.('mtk-pager:ready', { id: 'mtk-pager' });
+    instance = new MTKPagerClass(container);
   };
 
-  // 1️⃣ Immediate attempt (in case already present)
-  initWhenReady();
+  // Try immediately
+  init();
 
-  // 2️⃣ Observe DOM for wc-include injection
-  const observer = new MutationObserver(() => initWhenReady());
-
+  // wc-include safe
+  const observer = new MutationObserver(init);
   observer.observe(document.documentElement, {
     childList: true,
     subtree: true
   });
+
+  /* ---------- PUBLIC API ---------- */
+  window.MTKPager = {
+    show(sectionId) {
+      if (!instance) {
+        console.warn('MTKPager: not initialized yet');
+        return;
+      }
+      instance.show(sectionId);
+    }
+  };
 })();
