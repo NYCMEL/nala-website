@@ -35,8 +35,7 @@
 
   .mtk-quiz__card {
     background-color: var(--mtk-surface);
-    border-radius: 8px;
-    box-shadow: var(--mtk-shadow-2);
+    border-radius: 4px;
     overflow: visible;
     transition: var(--mtk-transition);
     display: flex;
@@ -45,6 +44,8 @@
 
   .mtk-quiz__header {
     padding: 24px;
+    margin-left:24px;
+    margin-right:24px;
     background: linear-gradient(135deg, var(--mtk-primary) 0%, var(--mtk-primary-light) 100%);
     color: var(--mtk-on-primary);
     position: sticky;
@@ -52,7 +53,7 @@
     z-index: 100;
     transition: var(--mtk-transition);
     box-shadow: var(--mtk-shadow-2);
-    border-radius: 8px 8px 0 0;
+    border-radius: 4px 4px 0 0;
   }
 
   // Sticky header when there's an mtk-header
