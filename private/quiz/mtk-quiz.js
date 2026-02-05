@@ -275,13 +275,6 @@ class MtkQuiz {
 	    total_questions: totalQuestions
 	};
 
-	wc.log('🔴 ABOUT TO SHOW ALERT NOW!!!');
-	
-	// Show alert on submission
-	alert(`Quiz Submitted Successfully!\n\nModule: ${this.config.module_id}\nSession ID: ${this.config.quiz_session_id}\nQuestions Answered: ${totalQuestions}/${totalQuestions}\n\nCheck console for full submission data.`);
-	
-	wc.log('🔴 ALERT WAS SHOWN (this prints after user closes alert)');
-
 	// Publish quiz submission
 	if (window.wc && window.wc.publish) {
 	    if (window.wc.log) {
