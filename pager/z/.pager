@@ -1,0 +1,68 @@
+I want to create a STANDALONE component named mtk-pager.
+Remeber it in your memory as mtk-pager
+
+PURPOSE
+mtk-pager is a lightweight page/section manager used to switch visible content
+inside a single container without page reloads.
+
+TECH STACK
+- Vanilla JavaScript only
+- Optional jQuery allowed ONLY for HTML loading
+- Material Design & Bootstrap
+- No frameworks
+- No build tools
+- No globals except mtk-pager
+
+CONTAINER
+- Example:
+  <PAGER id="mtk-pager" style="display:block"></PAGER>
+
+BEHAVIOR
+1. mtk-pager must initialize immediately when loaded.
+2. mtk-pager must safely detect if the container exists.
+   - If not found, log a clear error and do nothing.
+3. mtk-pager manages multiple sections internally.
+4. Each section:
+   - Is a block element <PAGER-SECTION>
+   - each PAGER-SECTION has a display:block
+   - Has an id format `mtk-pager-{sectionId}`
+   - Has class `mtk-pager-section`
+5. Only ONE section is visible at a time.
+6. Visibility is controlled using an `.active` class.
+7. Calling `mtk-pager.show(sectionId)`:
+   - Hides all existing sections
+   - If section already exists:
+     - Activates it
+   - If section does NOT exist:
+     - Creates it
+     - Appends it to mtk-pager
+
+8. `mtk-pager.show(sectionId)` must always work even if called multiple times.
+9. The component must expose ONLY ONE public API:
+   - `mtk-pager.show(sectionId)`
+10. Internal state must be private.
+11. Use defensive coding.
+12. Log useful debug messages during actions
+13. Do NOT pollute the global scope.
+
+14. mtk-pager gets content url from a external JSON variable app.pager from file mtk-pager.config.js
+15. mtk-pager should make sure that <PAGER> exist on the page before proceeding
+16. mtk-pager should subscribe to 4-mtk-pager events
+17. Javascript must be a class
+
+OPTIONAL
+- If jQuery exists, use `$("#mtk-pager-{id}").load(...)`
+- If jQuery does not exist, fail gracefully
+
+STYLE ASSUMPTIONS
+- `. mtk-pager-section { display: none; }`
+- `. mtk-pager-section.active { display: block; }`
+
+DELIVERABLE
+- mtk-pager.html
+- mtk-pager.scss
+- mtk-pager.js
+- mtk-pager.config.js
+
+IMPORTANT:
+i will be using <wc-include>. MUST wait for <PAGER> to be fully loaded into DOM before anything is done
