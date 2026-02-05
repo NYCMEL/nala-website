@@ -2,13 +2,13 @@ window.app = window.app || {};
 
 window.app.pager = {
     sections: {
-	home: {
+	"home": {
 	    url: "/pages/parts/home.html"
 	},
-	about: {
+	"about": {
 	    url: "/pages/parts/about.html"
 	},
-	contact: {
+	"contact": {
 	    url: "/pages/parts/contact.html"
 	}
     }
