@@ -48,7 +48,6 @@
       const el = document.createElement('PAGER-SECTION');
       el.id = domId;
       el.className = 'mtk-pager-section';
-      el.style.display = 'block';
       return el;
     }
 
