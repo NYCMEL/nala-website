@@ -1,487 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>El Tridente Services LLC - MTK Client</title>
-  
-  <!-- Configuration -->
-  <script src="mtk-client.config.js"></script>
-  
-  <!-- Styles -->
-  <style>
-    /* Compiled from mtk-client.scss */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-      color: #2d3748;
-      background-color: #f7fafc;
-      line-height: 1.6;
-    }
-
-    .mtk-client {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    .mtk-client__breadcrumb {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 30px;
-      font-size: 14px;
-      color: #718096;
-    }
-
-    .mtk-client__breadcrumb a {
-      color: #718096;
-      text-decoration: none;
-    }
-
-    .mtk-client__breadcrumb a:hover {
-      color: #00a5cf;
-    }
-
-    .mtk-client__breadcrumb .separator {
-      color: #718096;
-    }
-
-    .mtk-client__breadcrumb .current {
-      color: #2d3748;
-    }
-
-    .mtk-client__container {
-      display: grid;
-      grid-template-columns: 1fr 350px;
-      gap: 30px;
-    }
-
-    @media (max-width: 968px) {
-      .mtk-client__container {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .mtk-client__header {
-      display: flex;
-      gap: 30px;
-      margin-bottom: 30px;
-    }
-
-    @media (max-width: 768px) {
-      .mtk-client__header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-      }
-    }
-
-    .mtk-client__logo {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      object-fit: cover;
-      flex-shrink: 0;
-      background-color: #3a3a3a;
-    }
-
-    .mtk-client__header-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .mtk-client__title {
-      font-size: 32px;
-      font-weight: 600;
-      margin-bottom: 10px;
-      color: #2d3748;
-    }
-
-    .mtk-client__rating {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-
-    @media (max-width: 768px) {
-      .mtk-client__rating {
-        justify-content: center;
-      }
-    }
-
-    .mtk-client__rating-text {
-      font-weight: 600;
-      color: #00a896;
-      font-size: 18px;
-    }
-
-    .mtk-client__stars {
-      display: flex;
-      gap: 2px;
-    }
-
-    .mtk-client__stars .star {
-      color: #00a896;
-      font-size: 18px;
-    }
-
-    .mtk-client__review-count {
-      color: #718096;
-      font-size: 16px;
-    }
-
-    .mtk-client__badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: #00a5cf;
-      font-weight: 500;
-      font-size: 15px;
-    }
-
-    .mtk-client__badge .badge-icon {
-      width: 20px;
-      height: 20px;
-      background-color: #00a5cf;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 12px;
-    }
-
-    .mtk-client__main {
-      background-color: #ffffff;
-      border-radius: 8px;
-      padding: 0;
-    }
-
-    .mtk-client__media {
-      width: 100%;
-      height: 300px;
-      background-color: #000;
-      border-radius: 8px 8px 0 0;
-      margin-bottom: 30px;
-    }
-
-    .mtk-client__content {
-      padding: 30px;
-    }
-
-    .mtk-client__about {
-      margin-bottom: 40px;
-    }
-
-    .mtk-client__about h2 {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 15px;
-      color: #2d3748;
-    }
-
-    .mtk-client__about p {
-      color: #2d3748;
-      line-height: 1.7;
-      margin-bottom: 10px;
-    }
-
-    .mtk-client__about .read-more {
-      color: #00a5cf;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .mtk-client__about .read-more:hover {
-      text-decoration: underline;
-    }
-
-    .mtk-client__info-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      margin-bottom: 40px;
-    }
-
-    @media (max-width: 768px) {
-      .mtk-client__info-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .mtk-client__overview h2 {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 20px;
-      color: #2d3748;
-    }
-
-    .mtk-client__overview-list {
-      list-style: none;
-    }
-
-    .mtk-client__overview-list li {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 15px;
-      color: #2d3748;
-    }
-
-    .mtk-client__overview-list li .icon {
-      width: 20px;
-      height: 20px;
-      color: #718096;
-      flex-shrink: 0;
-    }
-
-    .mtk-client__business-info h2 {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 15px;
-      color: #2d3748;
-    }
-
-    .mtk-client__business-info p {
-      color: #2d3748;
-      line-height: 1.7;
-      margin-bottom: 30px;
-    }
-
-    .mtk-client__payment-methods {
-      color: #2d3748;
-    }
-
-    .mtk-client__social-links {
-      display: flex;
-      gap: 15px;
-    }
-
-    .mtk-client__social-links a {
-      color: #00a5cf;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .mtk-client__social-links a:hover {
-      text-decoration: underline;
-    }
-
-    .mtk-client__social-links a:not(:last-child)::after {
-      content: ',';
-      color: #2d3748;
-      margin-left: -12px;
-    }
-
-    .mtk-client__actions {
-      display: flex;
-      gap: 15px;
-      margin-top: 30px;
-    }
-
-    @media (max-width: 768px) {
-      .mtk-client__actions {
-        flex-direction: column;
-      }
-    }
-
-    .mtk-client__action-btn {
-      flex: 1;
-      padding: 15px 30px;
-      border: 2px solid #e2e8f0;
-      border-radius: 6px;
-      background-color: #ffffff;
-      color: #00a5cf;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .mtk-client__action-btn:hover {
-      background-color: #f7fafc;
-      border-color: #00a5cf;
-    }
-
-    .mtk-client__action-btn .icon {
-      width: 20px;
-      height: 20px;
-    }
-
-    .mtk-client__sidebar {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .mtk-client__pricing-card,
-    .mtk-client__guarantee-card {
-      background-color: #ffffff;
-      border-radius: 8px;
-      padding: 25px;
-      border: 1px solid #e2e8f0;
-    }
-
-    .mtk-client__pricing-card h3 {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 5px;
-      color: #2d3748;
-    }
-
-    .mtk-client__pricing-card .waived-text {
-      color: #718096;
-      font-size: 14px;
-      margin-bottom: 8px;
-    }
-
-    .mtk-client__pricing-card .details-link {
-      color: #00a5cf;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      display: block;
-      margin-bottom: 20px;
-    }
-
-    .mtk-client__pricing-card .details-link:hover {
-      text-decoration: underline;
-    }
-
-    .mtk-client__request-btn {
-      width: 100%;
-      padding: 15px;
-      background-color: #00a5cf;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.2s;
-      margin-bottom: 15px;
-    }
-
-    .mtk-client__request-btn:hover {
-      background-color: #008fb5;
-    }
-
-    .mtk-client__online-status {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      color: #718096;
-      font-size: 14px;
-    }
-
-    .mtk-client__online-status .status-dot {
-      width: 8px;
-      height: 8px;
-      background-color: #48bb78;
-      border-radius: 50%;
-    }
-
-    .mtk-client__guarantee-card h3 {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      color: #2d3748;
-    }
-
-    .mtk-client__guarantee-card h3 .guarantee-icon {
-      width: 24px;
-      height: 24px;
-      color: #00a5cf;
-    }
-
-    .mtk-client__guarantee-card p {
-      color: #2d3748;
-      font-size: 14px;
-      line-height: 1.6;
-      margin-bottom: 8px;
-    }
-
-    .mtk-client__guarantee-card .learn-more-link {
-      color: #00a5cf;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-    }
-
-    .mtk-client__guarantee-card .learn-more-link:hover {
-      text-decoration: underline;
-    }
-  </style>
-</head>
-<body>
-  <div class="mtk-client">
-    <!-- Breadcrumb -->
-    <nav class="mtk-client__breadcrumb"></nav>
-    
-    <!-- Main Container -->
-    <div class="mtk-client__container">
-      <!-- Main Content -->
-      <div class="mtk-client__main-section">
-        <!-- Header -->
-        <header class="mtk-client__header">
-          <img src="" alt="Business Logo" class="mtk-client__logo">
-          <div class="mtk-client__header-content"></div>
-        </header>
-        
-        <!-- Main Card -->
-        <main class="mtk-client__main">
-          <!-- Media/Video Section -->
-          <div class="mtk-client__media"></div>
-          
-          <!-- Content -->
-          <div class="mtk-client__content">
-            <!-- About Section -->
-            <section class="mtk-client__about"></section>
-            
-            <!-- Info Grid -->
-            <div class="mtk-client__info-grid">
-              <!-- Overview -->
-              <section class="mtk-client__overview"></section>
-              
-              <!-- Business Info -->
-              <section class="mtk-client__business-info"></section>
+<div class="mtk-client" id="mtk-client">
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">
+            <span class="logo-text" id="logo-text"></span>
+        </div>
+        <div class="header-info">
+            <div class="business-name" id="business-name"></div>
+            <div class="rating">
+                <span class="stars">★★★★★</span>
+                <span class="rating-text" id="rating-text"></span>
             </div>
-            
-            <!-- Action Buttons -->
-            <div class="mtk-client__actions"></div>
-          </div>
-        </main>
-      </div>
-      
-      <!-- Sidebar -->
-      <aside class="mtk-client__sidebar">
-        <!-- Pricing Card -->
-        <div class="mtk-client__pricing-card"></div>
-        
-        <!-- Guarantee Card -->
-        <div class="mtk-client__guarantee-card"></div>
-      </aside>
+            <div id="badges-container"></div>
+        </div>
     </div>
-  </div>
-  
-  <!-- JavaScript -->
-  <script src="mtk-client.js"></script>
-</body>
-</html>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Left Column -->
+        <div class="left-column">
+            <!-- About Section -->
+            <div class="card">
+                <h2 class="card-title">About</h2>
+                <p class="about-text" id="about-tagline"></p>
+                <p class="about-text" id="about-description"></p>
+            </div>
+
+            <!-- Overview Section -->
+            <div class="card">
+                <h2 class="card-title">Overview</h2>
+                <div class="overview-grid" id="overview-grid"></div>
+            </div>
+
+            <!-- Payment Methods -->
+            <div class="card">
+                <h2 class="card-title">Payment Methods</h2>
+                <div class="payment-methods" id="payment-methods"></div>
+            </div>
+
+            <!-- Social Media -->
+            <div class="card">
+                <h2 class="card-title">Connect With Us</h2>
+                <div class="social-links" id="social-links"></div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="right-column">
+            <!-- Pricing Card -->
+            <div class="card pricing-card">
+                <div class="card-title pricing-title">Service Call Fee</div>
+                <div class="price" id="price"></div>
+                <div class="price-note" id="price-note"></div>
+                <div class="status-online" id="status-online">
+                    <div class="status-dot"></div>
+                    <span id="status-text"></span>
+                </div>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="cta-buttons" id="cta-buttons"></div>
+
+            <!-- Guarantee Banner -->
+            <div class="guarantee-banner">
+                <div class="guarantee-icon" id="guarantee-icon"></div>
+                <div class="guarantee-text">
+                    <div class="guarantee-title" id="guarantee-title"></div>
+                    <div class="guarantee-desc" id="guarantee-desc"></div>
+                </div>
+            </div>
+
+            <!-- Business Hours -->
+            <div class="card">
+                <h2 class="card-title">Business Hours</h2>
+                <p class="about-text" id="business-hours"></p>
+            </div>
+        </div>
+    </div>
+</div>

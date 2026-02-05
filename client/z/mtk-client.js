@@ -1,272 +1,260 @@
-// MTK Client JavaScript
+// MTK Client Component Controller
 class MTKClient {
-  constructor(config) {
-    this.config = config;
-    this.init();
-  }
-  
-  init() {
-    this.renderBreadcrumb();
-    this.renderHeader();
-    this.renderMainContent();
-    this.renderSidebar();
-    this.attachEventListeners();
-  }
-  
-  // Render breadcrumb navigation
-  renderBreadcrumb() {
-    const breadcrumbEl = document.querySelector('.mtk-client__breadcrumb');
-    if (!breadcrumbEl) return;
-    
-    const breadcrumbHTML = this.config.breadcrumb.map((item, index) => {
-      const isLast = index === this.config.breadcrumb.length - 1;
-      if (isLast) {
-        return `<span class="current">${item.label}</span>`;
-      }
-      return `<a href="${item.link}">${item.label}</a><span class="separator">›</span>`;
-    }).join('');
-    
-    breadcrumbEl.innerHTML = breadcrumbHTML;
-  }
-  
-  // Render header section
-  renderHeader() {
-    const headerEl = document.querySelector('.mtk-client__header-content');
-    if (!headerEl) return;
-    
-    const { business } = this.config;
-    const stars = '★'.repeat(5);
-    
-    headerEl.innerHTML = `
-      <h1 class="mtk-client__title">${business.name}</h1>
-      <div class="mtk-client__rating">
-        <span class="mtk-client__rating-text">Excellent ${business.rating}</span>
-        <div class="mtk-client__stars">${stars.split('').map(s => `<span class="star">${s}</span>`).join('')}</div>
-        <span class="mtk-client__review-count">(${business.reviewCount})</span>
-      </div>
-      ${business.badges.map(badge => `
-        <div class="mtk-client__badge">
-          <span class="badge-icon">✓</span>
-          <span>${badge}</span>
-        </div>
-      `).join('')}
-    `;
-    
-    // Set logo
-    const logoEl = document.querySelector('.mtk-client__logo');
-    if (logoEl) {
-      logoEl.src = business.logo;
-      logoEl.alt = business.name;
+    constructor() {
+        this.config = null;
+        this.init();
     }
-  }
-  
-  // Render main content
-  renderMainContent() {
-    this.renderAbout();
-    this.renderOverview();
-    this.renderBusinessInfo();
-    this.renderActions();
-  }
-  
-  // Render about section
-  renderAbout() {
-    const aboutEl = document.querySelector('.mtk-client__about');
-    if (!aboutEl) return;
-    
-    const { about } = this.config;
-    aboutEl.innerHTML = `
-      <h2>${about.title}</h2>
-      <p>${about.shortDescription}</p>
-      <p>${about.fullDescription} <a href="#" class="read-more">...Read More</a></p>
-    `;
-  }
-  
-  // Render overview section
-  renderOverview() {
-    const overviewEl = document.querySelector('.mtk-client__overview');
-    if (!overviewEl) return;
-    
-    const iconMap = {
-      star: '⭐',
-      trophy: '🏆',
-      location: '📍',
-      shield: '🛡️',
-      users: '👥',
-      clock: '🕐'
-    };
-    
-    const overviewHTML = this.config.overview.map(item => `
-      <li>
-        <span class="icon">${iconMap[item.icon] || '•'}</span>
-        <span>${item.label}</span>
-      </li>
-    `).join('');
-    
-    overviewEl.innerHTML = `
-      <h2>Overview</h2>
-      <ul class="mtk-client__overview-list">
-        ${overviewHTML}
-      </ul>
-    `;
-  }
-  
-  // Render business info sections
-  renderBusinessInfo() {
-    const businessInfoEl = document.querySelector('.mtk-client__business-info');
-    if (!businessInfoEl) return;
-    
-    const { businessHours, paymentMethods, socialMedia } = this.config;
-    
-    businessInfoEl.innerHTML = `
-      <div class="mtk-client__business-hours">
-        <h2>${businessHours.title}</h2>
-        <p>${businessHours.message}</p>
-      </div>
-      
-      <div class="mtk-client__payment-section">
-        <h2>${paymentMethods.title}</h2>
-        <p class="mtk-client__payment-methods">This pro accepts payments via ${this.formatList(paymentMethods.methods)}.</p>
-      </div>
-      
-      <div class="mtk-client__social-section">
-        <h2>${socialMedia.title}</h2>
-        <div class="mtk-client__social-links">
-          ${socialMedia.links.map(link => `
-            <a href="${link.url}">${link.platform}</a>
-          `).join('')}
-        </div>
-      </div>
-    `;
-  }
-  
-  // Render action buttons
-  renderActions() {
-    const actionsEl = document.querySelector('.mtk-client__actions');
-    if (!actionsEl) return;
-    
-    const { actions } = this.config;
-    
-    actionsEl.innerHTML = actions.secondary.map(action => `
-      <button class="mtk-client__action-btn" data-action="${action.toLowerCase().replace(' ', '-')}">
-        <span class="icon">${action === 'Message' ? '💬' : '📞'}</span>
-        <span>${action}</span>
-      </button>
-    `).join('');
-  }
-  
-  // Render sidebar
-  renderSidebar() {
-    this.renderPricingCard();
-    this.renderGuaranteeCard();
-  }
-  
-  // Render pricing card
-  renderPricingCard() {
-    const pricingCardEl = document.querySelector('.mtk-client__pricing-card');
-    if (!pricingCardEl) return;
-    
-    const { business, actions } = this.config;
-    
-    pricingCardEl.innerHTML = `
-      <h3>$${business.serviceCallFee}/service call</h3>
-      ${business.feeWaived ? '<p class="waived-text">(waived if hired)</p>' : ''}
-      <a href="#" class="details-link">${actions.detailsLink}</a>
-      <button class="mtk-client__request-btn">${actions.primary}</button>
-      ${business.onlineStatus ? `
-        <div class="mtk-client__online-status">
-          <span class="status-dot"></span>
-          <span>Online now</span>
-        </div>
-      ` : ''}
-    `;
-  }
-  
-  // Render guarantee card
-  renderGuaranteeCard() {
-    const guaranteeCardEl = document.querySelector('.mtk-client__guarantee-card');
-    if (!guaranteeCardEl) return;
-    
-    const { guarantee } = this.config;
-    
-    guaranteeCardEl.innerHTML = `
-      <h3>
-        <span class="guarantee-icon">🛡️</span>
-        <span>${guarantee.title}</span>
-      </h3>
-      <p>${guarantee.description} <a href="${guarantee.learnMoreLink}" class="learn-more-link">Learn more</a></p>
-    `;
-  }
-  
-  // Attach event listeners
-  attachEventListeners() {
-    // Request estimate button
-    const requestBtn = document.querySelector('.mtk-client__request-btn');
-    if (requestBtn) {
-      requestBtn.addEventListener('click', () => this.handleRequestEstimate());
+
+    async init() {
+        try {
+            await this.loadConfig();
+            this.waitForComponent();
+        } catch (error) {
+            console.error('Failed to initialize MTK Client:', error);
+        }
     }
-    
-    // Action buttons
-    const actionBtns = document.querySelectorAll('.mtk-client__action-btn');
-    actionBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const action = e.currentTarget.dataset.action;
-        this.handleAction(action);
-      });
-    });
-    
-    // Read more link
-    const readMoreLink = document.querySelector('.read-more');
-    if (readMoreLink) {
-      readMoreLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        this.handleReadMore();
-      });
+
+    async loadConfig() {
+        try {
+            const response = await fetch('config.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            this.config = await response.json();
+        } catch (error) {
+            console.error('Error loading config:', error);
+            throw error;
+        }
     }
-  }
-  
-  // Handle request estimate
-  handleRequestEstimate() {
-    alert(`Request estimate from ${this.config.business.name}`);
-    console.log('Request estimate clicked');
-  }
-  
-  // Handle action buttons
-  handleAction(action) {
-    switch(action) {
-      case 'message':
-        alert(`Open message dialog for ${this.config.business.name}`);
-        break;
-      case 'request-a-call':
-        alert(`Request a call from ${this.config.business.name}`);
-        break;
-      default:
-        console.log('Action:', action);
+
+    waitForComponent() {
+        // Wait for the web component to be loaded
+        const checkComponent = setInterval(() => {
+            const wcInclude = document.querySelector('wc-include');
+            if (wcInclude && wcInclude.shadowRoot) {
+                const mtkClient = wcInclude.shadowRoot.querySelector('#mtk-client');
+                if (mtkClient) {
+                    clearInterval(checkComponent);
+                    this.populateData(wcInclude.shadowRoot);
+                    this.attachEventListeners(wcInclude.shadowRoot);
+                }
+            }
+        }, 100);
+
+        // Timeout after 5 seconds
+        setTimeout(() => {
+            clearInterval(checkComponent);
+        }, 5000);
     }
-  }
-  
-  // Handle read more
-  handleReadMore() {
-    alert('Show full about description');
-    console.log('Read more clicked');
-  }
-  
-  // Helper: Format list with commas and "and"
-  formatList(items) {
-    if (items.length === 0) return '';
-    if (items.length === 1) return items[0];
-    if (items.length === 2) return `${items[0]} and ${items[1]}`;
-    
-    const last = items[items.length - 1];
-    const rest = items.slice(0, -1).join(', ');
-    return `${rest}, and ${last}`;
-  }
+
+    populateData(shadowRoot) {
+        if (!this.config) return;
+
+        // Populate Logo
+        const logoText = shadowRoot.querySelector('#logo-text');
+        if (logoText) {
+            logoText.textContent = this.config.logo.initials;
+            logoText.style.color = this.config.logo.color;
+        }
+
+        // Populate Business Name
+        const businessName = shadowRoot.querySelector('#business-name');
+        if (businessName) {
+            businessName.textContent = this.config.business_name;
+        }
+
+        // Populate Rating
+        const ratingText = shadowRoot.querySelector('#rating-text');
+        if (ratingText) {
+            ratingText.textContent = `${this.config.rating.description} ${this.config.rating.score} (${this.config.rating.total_reviews} reviews)`;
+        }
+
+        // Populate Badges
+        const badgesContainer = shadowRoot.querySelector('#badges-container');
+        if (badgesContainer && this.config.badges) {
+            this.config.badges.forEach(badge => {
+                const badgeEl = document.createElement('span');
+                badgeEl.className = 'badge';
+                badgeEl.textContent = `${badge.icon} ${badge.text}`;
+                badgesContainer.appendChild(badgeEl);
+            });
+        }
+
+        // Populate About
+        const aboutTagline = shadowRoot.querySelector('#about-tagline');
+        const aboutDescription = shadowRoot.querySelector('#about-description');
+        if (aboutTagline) aboutTagline.textContent = this.config.about.tagline;
+        if (aboutDescription) aboutDescription.textContent = this.config.about.description;
+
+        // Populate Overview
+        const overviewGrid = shadowRoot.querySelector('#overview-grid');
+        if (overviewGrid && this.config.overview) {
+            this.config.overview.forEach(item => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'overview-item';
+                
+                const iconEl = document.createElement('div');
+                iconEl.className = 'overview-icon';
+                iconEl.textContent = item.icon;
+                
+                const textEl = document.createElement('span');
+                if (item.label && item.value) {
+                    textEl.innerHTML = `${item.label} <strong>${item.value}</strong>`;
+                } else if (item.label) {
+                    textEl.innerHTML = `<strong>${item.label}</strong>`;
+                } else if (item.value) {
+                    textEl.innerHTML = `<strong>${item.value}</strong>`;
+                }
+                
+                itemEl.appendChild(iconEl);
+                itemEl.appendChild(textEl);
+                overviewGrid.appendChild(itemEl);
+            });
+        }
+
+        // Populate Payment Methods
+        const paymentMethods = shadowRoot.querySelector('#payment-methods');
+        if (paymentMethods && this.config.payment_methods) {
+            this.config.payment_methods.forEach(method => {
+                const methodEl = document.createElement('span');
+                methodEl.className = 'payment-tag';
+                methodEl.textContent = `${method.icon} ${method.name}`;
+                paymentMethods.appendChild(methodEl);
+            });
+        }
+
+        // Populate Social Links
+        const socialLinks = shadowRoot.querySelector('#social-links');
+        if (socialLinks && this.config.social_media) {
+            this.config.social_media.forEach(social => {
+                const linkEl = document.createElement('a');
+                linkEl.href = social.url;
+                linkEl.className = 'social-link';
+                linkEl.setAttribute('data-platform', social.platform.toLowerCase());
+                linkEl.textContent = `${social.icon} ${social.platform}`;
+                socialLinks.appendChild(linkEl);
+            });
+        }
+
+        // Populate Pricing
+        const price = shadowRoot.querySelector('#price');
+        const priceNote = shadowRoot.querySelector('#price-note');
+        if (price) {
+            price.textContent = `$${this.config.pricing.service_call_fee}`;
+        }
+        if (priceNote) {
+            priceNote.textContent = `(${this.config.pricing.note})`;
+        }
+
+        // Populate Status
+        const statusText = shadowRoot.querySelector('#status-text');
+        const statusOnline = shadowRoot.querySelector('#status-online');
+        if (statusText) {
+            statusText.textContent = this.config.status.text;
+        }
+        if (statusOnline && !this.config.status.online) {
+            statusOnline.style.display = 'none';
+        }
+
+        // Populate CTA Buttons
+        const ctaButtons = shadowRoot.querySelector('#cta-buttons');
+        if (ctaButtons && this.config.cta_buttons) {
+            this.config.cta_buttons.forEach(button => {
+                const btnEl = document.createElement('button');
+                btnEl.className = `btn btn-${button.type}`;
+                btnEl.setAttribute('data-action', button.action);
+                btnEl.textContent = `${button.icon} ${button.text}`;
+                ctaButtons.appendChild(btnEl);
+            });
+        }
+
+        // Populate Guarantee
+        const guaranteeIcon = shadowRoot.querySelector('#guarantee-icon');
+        const guaranteeTitle = shadowRoot.querySelector('#guarantee-title');
+        const guaranteeDesc = shadowRoot.querySelector('#guarantee-desc');
+        if (guaranteeIcon) guaranteeIcon.textContent = this.config.guarantee.icon;
+        if (guaranteeTitle) guaranteeTitle.textContent = this.config.guarantee.type;
+        if (guaranteeDesc) guaranteeDesc.textContent = this.config.guarantee.description;
+
+        // Populate Business Hours
+        const businessHours = shadowRoot.querySelector('#business-hours');
+        if (businessHours) {
+            businessHours.textContent = this.config.business_hours.note;
+        }
+    }
+
+    attachEventListeners(shadowRoot) {
+        // Attach event listeners to buttons
+        const buttons = shadowRoot.querySelectorAll('.btn');
+        buttons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const action = e.target.getAttribute('data-action');
+                this.handleButtonClick(action);
+            });
+        });
+
+        // Attach event listeners to social links
+        const socialLinks = shadowRoot.querySelectorAll('.social-link');
+        socialLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const platform = e.target.getAttribute('data-platform');
+                this.handleSocialClick(platform);
+            });
+        });
+
+        // Attach event listeners to payment tags (optional hover effects)
+        const paymentTags = shadowRoot.querySelectorAll('.payment-tag');
+        paymentTags.forEach(tag => {
+            tag.addEventListener('click', (e) => {
+                console.log('Payment method selected:', e.target.textContent);
+            });
+        });
+    }
+
+    handleButtonClick(action) {
+        console.log(`Button clicked: ${action}`);
+        
+        switch(action) {
+            case 'estimate':
+                alert('Request Estimate functionality would be implemented here.');
+                break;
+            case 'call':
+                alert('Request a Call functionality would be implemented here.');
+                break;
+            case 'message':
+                alert('Message functionality would be implemented here.');
+                break;
+            default:
+                console.log('Unknown action:', action);
+        }
+    }
+
+    handleSocialClick(platform) {
+        console.log(`Social link clicked: ${platform}`);
+        alert(`Redirecting to ${platform}...`);
+    }
+
+    // Public method to update config dynamically
+    updateConfig(newConfig) {
+        this.config = { ...this.config, ...newConfig };
+        const wcInclude = document.querySelector('wc-include');
+        if (wcInclude && wcInclude.shadowRoot) {
+            this.populateData(wcInclude.shadowRoot);
+        }
+    }
+
+    // Public method to get current config
+    getConfig() {
+        return this.config;
+    }
 }
 
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-  if (typeof mtkClientConfig !== 'undefined') {
-    new MTKClient(mtkClientConfig);
-  } else {
-    console.error('MTK Client Config not found!');
-  }
-});
+// Initialize the component when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        window.mtkClient = new MTKClient();
+    });
+} else {
+    window.mtkClient = new MTKClient();
+}
