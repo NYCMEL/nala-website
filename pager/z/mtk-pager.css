@@ -7,7 +7,6 @@
 .mtk-pager-section {
   display: none;
   width: 100%;
-  padding: 1rem;
   /* Material-style entrance motion */
   animation: mtk-pager-fade-in 220ms ease-out both; }
 
