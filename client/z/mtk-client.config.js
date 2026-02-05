@@ -7,7 +7,7 @@ const mtkClientConfig = {
 	reviewCount: 16,
 	badges: ["Top Pro"],
 	onlineStatus: true,
-	serviceCallFee: 65,
+	serviceCallFee: 165,
 	feeWaived: true
     },
     
