@@ -1,62 +1,76 @@
-body {
-    font-family: 'Roboto', sans-serif;
-}
+/* Reset & Basics */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif; }
 
 /* HEADER */
 #_header {
-    padding: 0.5rem 1rem;
-}
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000; }
 
-#_header .nav-link {
-    font-weight: 500;
-}
+.header-left .logo {
+  height: 50px; }
 
-#_header .btn {
-    border-radius: 8px; /* Material Design rounded buttons */
-}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem; }
+
+.header-right .menu a {
+  margin: 0 0.5rem;
+  text-decoration: none;
+  color: #333; }
+
+.header-right .menu a:hover {
+  color: #007bff; }
 
 /* FOOTER */
 #_footer {
-    font-size: 0.9rem;
-}
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: #f2f2f2;
+  margin-top: 2rem; }
 
 #_footer a {
-    color: #007bff;
-}
+  text-decoration: none;
+  color: #333; }
 
 #_footer a:hover {
-    text-decoration: underline;
-}
+  color: #007bff; }
 
 /* PAGER SECTIONS */
 #_pager {
-    min-height: 80vh;
-    position: relative;
-}
+  margin-top: 80px;
+  /* offset for fixed header */
+  min-height: 80vh;
+  position: relative;
+  padding: 2rem; }
 
 .pager-section {
-    display: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    padding: 2rem;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    margin-bottom: 2rem;
-}
+  display: none;
+  opacity: 0;
+  transition: opacity 0.5s ease; }
 
 .pager-section.active {
-    display: block;
-    opacity: 1;
-}
+  display: block;
+  opacity: 1; }
 
-/* Loading overlay */
 .loading {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-weight: 500;
-    font-size: 1.2rem;
-    color: #007bff;
-}
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  font-size: 1.5rem; }

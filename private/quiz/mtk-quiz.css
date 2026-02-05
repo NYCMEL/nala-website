@@ -385,3 +385,28 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 8px; } }
+k-quiz .mtk-quiz__question-text {
+        font-size: 16px; }
+      .mtk-quiz .mtk-quiz__footer {
+        padding: 16px;
+        flex-direction: column;
+        align-items: stretch; }
+      .mtk-quiz .mtk-quiz__actions {
+        width: 100%;
+        flex-wrap: wrap; }
+      .mtk-quiz .mtk-quiz__button {
+        flex: 1 1 auto;
+        min-width: 120px;
+        justify-content: center;
+        font-size: 12px;
+        padding: 10px 16px; } }
+  @media (max-width: 480px) {
+    .mtk-quiz .mtk-quiz__actions {
+      flex-direction: column; }
+    .mtk-quiz .mtk-quiz__button {
+      width: 100%; }
+    .mtk-quiz .mtk-quiz__title {
+      font-size: 20px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px; } }
