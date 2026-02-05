@@ -134,18 +134,42 @@ class MtkQuiz {
   }
 
   attachEventListeners() {
+    console.log('🟢 Attaching event listeners...');
+    
     // Form submission
     if (this.elements.form) {
+      console.log('🟢 Form found, attaching submit listener');
       this.elements.form.addEventListener('submit', (e) => this.handleSubmit(e));
+    } else {
+      console.log('🔴 Form NOT found!');
+    }
+    
+    // Submit button direct click (backup)
+    if (this.elements.submitBtn) {
+      console.log('🟢 Submit button found, attaching click listener');
+      this.elements.submitBtn.addEventListener('click', (e) => {
+        console.log('🟢 Submit button CLICKED');
+        // Check if button is inside a form
+        const form = this.elements.submitBtn.closest('form');
+        if (!form) {
+          console.log('🟡 Button not in form, calling handleSubmit directly');
+          e.preventDefault();
+          this.handleSubmit(e);
+        }
+      });
+    } else {
+      console.log('🔴 Submit button NOT found!');
     }
 
     // Clear button
     if (this.elements.clearBtn) {
+      console.log('🟢 Clear button found');
       this.elements.clearBtn.addEventListener('click', () => this.handleClear());
     }
 
     // Test button (select first option)
     if (this.elements.testBtn) {
+      console.log('🟢 Test button found');
       this.elements.testBtn.addEventListener('click', () => this.handleTest());
     }
 
@@ -164,6 +188,8 @@ class MtkQuiz {
         this.handleKeyboard(e);
       });
     }
+    
+    console.log('🟢 All event listeners attached!');
   }
 
   handleOptionChange(e) {
