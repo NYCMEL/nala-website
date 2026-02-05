@@ -63,3 +63,6 @@ DELIVERABLE
 - mtk-pager.scss
 - mtk-pager.js
 - mtk-pager.config.js
+
+IMPORTANT:
+i will be using <wc-include>. MUST wait for <PAGER> to be fully loaded into DOM before anything is done
