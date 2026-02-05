@@ -1,0 +1,70 @@
+<div class="container">
+    <div class="row">
+	<div class="col-md-12">
+	    <!-- MTK Quiz Component -->
+	    <mtk-quiz class="mtk-quiz">
+		<div class="mtk-quiz__card">
+		    <header class="mtk-quiz__header">
+			<div class="mtk-quiz__header-content">
+			    <div class="mtk-quiz__header-left">
+				<h1 class="mtk-quiz__title">
+				    <span class="mtk-quiz__icon">quiz</span>
+				    <span id="quizTitle">Quiz</span>
+				</h1>
+				<div class="mtk-quiz__meta">
+				    <div class="mtk-quiz__meta-item">
+					<span class="mtk-quiz__meta-icon">assignment</span>
+					<span>Module: <strong id="moduleId">--</strong></span>
+				    </div>
+				    <div class="mtk-quiz__meta-item">
+					<span class="mtk-quiz__meta-icon">help_outline</span>
+					<span><strong id="questionCount">0</strong> Questions</span>
+				    </div>
+				    <div class="mtk-quiz__meta-item">
+					<span class="mtk-quiz__meta-icon">tag</span>
+					<span>Session: <strong id="sessionId">--</strong></span>
+				    </div>
+				</div>
+			    </div>
+			    <div class="mtk-quiz__header-right">
+				<div class="mtk-quiz__progress">
+				    <div class="mtk-quiz__progress-text">
+					<span>Progress</span>
+					<span id="progressText">0 / 0</span>
+				    </div>
+				    <div class="mtk-quiz__progress-bar">
+					<div id="progressFill" class="mtk-quiz__progress-fill" style="width: 0%"></div>
+				    </div>
+				</div>
+			    </div>
+			</div>
+		    </header>
+
+		    <form id="quizForm" class="mtk-quiz__form">
+			<div class="mtk-quiz__body">
+			    <div id="messageContainer"></div>
+			    <div id="questionsContainer"></div>
+			</div>
+
+			<footer class="mtk-quiz__footer">
+			    <div class="mtk-quiz__actions">
+				<button type="button" id="clearBtn" class="mtk-quiz__button mtk-quiz__button--secondary">
+				    <span class="mtk-quiz__button-icon">clear_all</span>
+				    <span>Clear All</span>
+				</button>
+				<button type="button" id="testBtn" class="mtk-quiz__button mtk-quiz__button--secondary">
+				    <span class="mtk-quiz__button-icon">science</span>
+				    <span>Test (Select First)</span>
+				</button>
+				<button type="submit" id="submitBtn" class="mtk-quiz__button mtk-quiz__button--primary">
+				    <span class="mtk-quiz__button-icon">send</span>
+				    <span>Submit Quiz</span>
+				</button>
+			    </div>
+			</footer>
+		    </form>
+		</div>
+	    </mtk-quiz>
+	</div>
+    </div>
+</div>
