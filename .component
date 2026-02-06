@@ -40,8 +40,7 @@ Output! Create exactly these files:
 - mtk-component.js
 
 Behavior:
-- MUST WAIT for element to be available inside DOM
-- I will be using <wc-include href="..." />. make sure elements are inside DOM before moving on
+- MUST WAIT for element to be available inside DOM, since i will be using <wc-include> for dynamic inclusion
 
 #######################################################
 # example:
