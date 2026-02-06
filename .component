@@ -42,6 +42,8 @@ Output! Create exactly these files:
 - mtk-component.html
 - mtk-component.js
 
+*** I will be using <wc-include href="..." />. therefore make sure elements are inside DOM before moving on
+
 #######################################################
 # example:
 #  
