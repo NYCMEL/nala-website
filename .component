@@ -2,7 +2,7 @@ FORGET ALL PREVIOUS CONTEXT for mtk-component
 
 Create a reusable UI component named mtk-component using:
 - HTML
-- SCSS. All styles should be incapsulate inside .mtk-component class and NO GLOBAL styles to be set
+- SCSS
 - Vanilla JavaScript
 - Bootstrap 5 (layout only)
 - Modern Material Design, Material Design icons and styles
@@ -11,7 +11,7 @@ Create a reusable UI component named mtk-component using:
 Rules:
 - The component is wrapped in a display:block element <mtk-component class="mtk-component">.
 - The root element uses .mtk-component.
-- All styles are scoped to .mtk-component.
+- All styles must be scoped to .mtk-component.
 - No global styles or IDs.
 - publish click events using wc.publish
 - subscribe to all 4-mtk-component everns using wc.subscribe
@@ -19,10 +19,7 @@ Rules:
 
 Data:
 - The component is JSON driven.
-- any and all data must come from mtk-component.config.js file
-
-Behavior:
-- MUST WAIT for element to be available inside DOM
+  - any and all data must come from mtk-component.config.js file
 
 Restrictions:
 - No frameworks.
@@ -42,7 +39,9 @@ Output! Create exactly these files:
 - mtk-component.html
 - mtk-component.js
 
-*** I will be using <wc-include href="..." />. therefore make sure elements are inside DOM before moving on
+Behavior:
+- MUST WAIT for element to be available inside DOM
+- I will be using <wc-include href="..." />. make sure elements are inside DOM before moving on
 
 #######################################################
 # example:
