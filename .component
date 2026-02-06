@@ -41,6 +41,7 @@ Output! Create exactly these files:
 
 Behavior:
 - MUST WAIT for element to be available inside DOM, since i will be using <wc-include> for dynamic inclusion
+- all published (wc.publish) messages should be logged using wc.log to console before being published
 
 #######################################################
 # example:
