@@ -2,7 +2,7 @@ FORGET ALL PREVIOUS CONTEXT for mtk-component
 
 Create a reusable UI component named mtk-component using:
 - HTML
-- SCSS
+- SCSS. All styles should be incapsulate inside the main class and NO GLOBAL styles to be set
 - Vanilla JavaScript
 - Bootstrap 5 (layout only)
 - Modern Material Design, Material Design icons and styles
