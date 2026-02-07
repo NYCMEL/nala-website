@@ -6,12 +6,12 @@ Create a reusable UI component named mtk-component using:
 - Vanilla JavaScript
 - Bootstrap 5 (layout only)
 - Modern Material Design, Material Design icons and styles
-- Always create a JS class form mtk-component
+- Always create a JS class for mtk-component and initialize it inside the JS file itself
 
 Rules:
-- The component is wrapped in a block element <mtk-component class="mtk-component">.
+- The component is wrapped in a display:block element <mtk-component class="mtk-component">.
 - The root element uses .mtk-component.
-- All styles are scoped to .mtk-component.
+- All styles must be scoped to .mtk-component.
 - No global styles or IDs.
 - publish click events using wc.publish
 - subscribe to all 4-mtk-component everns using wc.subscribe
@@ -19,10 +19,7 @@ Rules:
 
 Data:
 - The component is JSON driven.
-- any and all data must come from mtk-component.config.js file
-
-Behavior:
-- MUST WAIT for element to be available inside DOM
+  - any and all data must come from mtk-component.config.js file
 
 Restrictions:
 - No frameworks.
@@ -41,6 +38,10 @@ Output! Create exactly these files:
 - mtk-component.scss
 - mtk-component.html
 - mtk-component.js
+
+Behavior:
+- MUST WAIT for element to be available inside DOM, since i will be using <wc-include> for dynamic inclusion
+- all published (wc.publish) messages should be logged using wc.log to console before being published
 
 #######################################################
 # example:

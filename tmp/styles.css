@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Reset & Basics */
 * {
   margin: 0;
@@ -57,6 +58,72 @@
   min-height: 80vh;
   position: relative;
   padding: 2rem; }
+=======
+body {
+  font-family: 'Roboto', sans-serif; }
+
+/* HEADER */
+#_header {
+  padding: 0.5rem 1rem; }
+
+#_header .nav-link {
+  font-weight: 500; }
+
+#_header .btn {
+  border-radius: 8px;
+  /* Material Design rounded buttons */ }
+
+/* FOOTER */
+#_footer {
+  font-size: 0.9rem; }
+
+#_footer a {
+  color: #007bff; }
+
+#_footer a:hover {
+  text-decoration: underline; }
+
+/* PAGER SECTIONS */
+#_pager {
+  min-height: 80vh;
+  position: relative; }
+>>>>>>> 02.05.2026
+
+.pager-section {
+  display: none;
+  opacity: 0;
+<<<<<<< HEAD
+  transition: opacity 0.5s ease; }
+=======
+  transition: opacity 0.5s ease;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem; }
+>>>>>>> 02.05.2026
+
+.pager-section.active {
+  display: block;
+  opacity: 1; }
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+<<<<<<< HEAD
+=======
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: #007bff; }
+S */
+#_pager {
+  margin-top: 80px;
+  /* offset for fixed header */
+  min-height: 80vh;
+  position: relative;
+  padding: 2rem; }
 
 .pager-section {
   display: none;
@@ -72,5 +139,6 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+>>>>>>> 02.05.2026
   font-weight: bold;
   font-size: 1.5rem; }
