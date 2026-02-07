@@ -45,8 +45,8 @@ window.app.footer = {
             title: "Social",
 	    links: [
 		{ icon: "<img src='img/facebook.png' height=30>", event: "social:facebook" },
-		{ icon: "<img src='img/linkedin.webp' height=60>", event: "social:linkedin" },
-		{ icon: "youtube", event: "social:youtube" }
+		{ icon: "<img src='img/linkedin.png' height=60>", event: "social:linkedin" },
+		{ icon: "<img src='img/youtube.png' height=60>", event: "social:youtube" }
 	    ]
 	}
     ],
