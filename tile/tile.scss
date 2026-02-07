@@ -47,10 +47,15 @@
     }
 
     &-back {
+	background: darken(#3A87D1,20)!important;
 	transform: rotateY(180deg);
     }
 
     /* JUST ADDED THIS TO CENTER TITLES */
+    &-front {
+	background: #3A87D1!important;
+    }
+
     .mtk-tile-front > .mtk-tile-title {
 	padding-top: 60px;
 	text-align:center;

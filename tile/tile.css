@@ -40,12 +40,13 @@
   flex: 1; }
 
 .mtk-tile-back {
+  background: #1f5486 !important;
   transform: rotateY(180deg); }
+
+.mtk-tile-front {
+  background: #3A87D1 !important; }
 
 .mtk-tile .mtk-tile-front > .mtk-tile-title {
   padding-top: 60px;
   text-align: center;
   font-family: fmi; }
-top: 60px;
-    text-align: center;
-    font-family: fmi; }
