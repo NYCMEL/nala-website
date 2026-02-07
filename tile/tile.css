@@ -40,5 +40,7 @@
 
 .mtk-tile-back {
   transform: rotateY(180deg); }
- .mtk-tile-back {
-    transform: rotateY(180deg); }
+
+.mtk-tile-back {
+  transform: rotateY(180deg); }
+}
