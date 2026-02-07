@@ -133,7 +133,7 @@ class ClientProfile {
 	document.getElementById("socialMediaTitle").textContent = this.data.socialMedia.title
 	const socialLinks = document.getElementById("socialMediaLinks")
 	socialLinks.innerHTML = this.data.socialMedia.links
-	    .map((link) => `<a href="${link.url}">${link.platform}</a>`)
+	    .map((link) => `<a href="${link.url}">${link.platform}</a>&nbsp;`)
 	    .join("")
 
 	// Top Pro status

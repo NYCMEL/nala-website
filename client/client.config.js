@@ -46,9 +46,9 @@ const clientData = {
     socialMedia: {
 	title: "Social media",
 	links: [
-	    { platform: "Facebook&nbsp", url: "#" },
-	    { platform: "Instagram&nbsp", url: "#" },
-	    { platform: "Twitter", url: "#" }
+	    { platform: "<img src='img/facebook.png' height=30>", url: "#" },
+	    { platform: "<img src='img/instagram.png' height=30", url: "#" },
+	    { platform: "<img src='img/twitter.png' height=30>",  url: "#" }
 	]
     },
     topProStatus: {
