@@ -123,8 +123,10 @@ class MtkSettings {
     const fullName = this.formatFullName();
     this.elements.fullName.value = fullName;
     
-    // Set masked current password
-    this.elements.currentPassword.value = this.maskPassword(this.config.user.currentPassword);
+    // Set masked current password from config
+    if (this.config.user.currentPassword) {
+      this.elements.currentPassword.value = this.maskPassword(this.config.user.currentPassword);
+    }
     
     // Attach event listeners
     this.attachEventListeners();
@@ -487,6 +489,10 @@ class MtkSettings {
     const newPassword = this.elements.newPassword.value;
     const confirmPassword = this.elements.confirmPassword.value;
     
+    // Clear all errors first
+    this.hideError('new');
+    this.hideError('confirm');
+    
     // Check if current password is correct
     if (currentPassword !== this.config.user.currentPassword) {
       this.showError('new', 'Current password is incorrect');
@@ -502,10 +508,11 @@ class MtkSettings {
       return;
     }
     
-    // Check if passwords match
+    // Check if passwords match - show error on NEW password field
     if (newPassword !== confirmPassword) {
-      this.showError('confirm', 'Passwords do not match');
-      this.elements.confirmPassword.focus();
+      this.showError('new', 'Passwords do not match');
+      this.elements.newPassword.focus();
+      this.elements.newPassword.select();
       return;
     }
     
