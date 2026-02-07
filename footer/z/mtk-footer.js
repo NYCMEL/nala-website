@@ -1,10 +1,10 @@
 (function () {
-  "use strict";
+    "use strict";
 
-  const FOOTER_SELECTOR = ".mtk-footer";
+    const FOOTER_SELECTOR = ".mtk-footer";
 
-  function renderFooter(footer, config) {
-    footer.innerHTML = `
+    function renderFooter(footer, config) {
+	footer.innerHTML = `
       <div class="container">
         <!-- Row 1: Brand -->
         <div class="row footer-row-1">
@@ -25,24 +25,24 @@
       </div>
     `;
 
-    bindEvents(footer);
-  }
+	bindEvents(footer);
+    }
 
-  function renderBrand(brand) {
-    if (!brand) return "";
+    function renderBrand(brand) {
+	if (!brand) return "";
 
-    return `
+	return `
       <div class="brand-wrap">
         ${brand.logo ? `<img src="${brand.logo}" alt="${brand.name}">` : ""}
         <p>${brand.description || ""}</p>
       </div>
     `;
-  }
+    }
 
-  function renderLegal(legal) {
-    if (!legal) return "";
+    function renderLegal(legal) {
+	if (!legal) return "";
 
-    return `
+	return `
       <div class="legal-wrap">
         <span class="legal-text">${legal.text}</span>
         <ul class="legal-links">
@@ -54,52 +54,52 @@
         </ul>
       </div>
     `;
-  }
+    }
 
-  function renderSocial(social) {
-    if (!Array.isArray(social) || !social.length) return "";
+    function renderSocial(social) {
+	if (!Array.isArray(social) || !social.length) return "";
 
-    return `
+	return `
       <div class="social-wrap">
         ${social
           .map(
             (s) => `
-          <a href="${s.url}" class="social-link" target="_blank">
+            <a href="${s.url}" class="social-link" target="_blank">
             <span class="material-icons">${s.icon}</span>
-          </a>
-        `,
+            </a>
+            `,
           )
           .join("")}
       </div>
     `;
-  }
-
-  function bindEvents(footer) {
-    footer.addEventListener("click", (e) => {
-      const social = e.target.closest(".social-link");
-      if (!social) return;
-
-      if (window.wc?.publish) {
-        wc.publish("mtk-footer.social.click", {
-          url: social.href,
-        });
-      }
-    });
-  }
-
-  /* ============================================================
-     WAIT FOR <wc-include> TO FINISH
-  ============================================================ */
-
-  document.addEventListener("wc-include:loaded", (e) => {
-    const footer = e.target.querySelector(FOOTER_SELECTOR);
-    if (!footer) return;
-
-    if (!window.app?.footer) {
-      console.warn("MTK-footer: window.app.footer missing");
-      return;
     }
 
-    renderFooter(footer, window.app.footer);
-  });
+    function bindEvents(footer) {
+	footer.addEventListener("click", (e) => {
+	    const social = e.target.closest(".social-link");
+	    if (!social) return;
+
+	    if (window.wc?.publish) {
+		wc.publish("mtk-footer.social.click", {
+		    url: social.href,
+		});
+	    }
+	});
+    }
+
+    /* ============================================================
+       WAIT FOR <wc-include> TO FINISH
+       ============================================================ */
+
+    document.addEventListener("wc-include:loaded", (e) => {
+	const footer = e.target.querySelector(FOOTER_SELECTOR);
+	if (!footer) return;
+
+	if (!window.app?.footer) {
+	    console.warn("MTK-footer: window.app.footer missing");
+	    return;
+	}
+
+	renderFooter(footer, window.app.footer);
+    });
 })();
