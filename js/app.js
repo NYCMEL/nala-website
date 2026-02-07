@@ -80,3 +80,6 @@ document.addEventListener("click", function (e) {
   });
 })();
 
+// FOLD HAMBERGER MENU AFTER SELECTION
+wc.timeout(function(){
+}, 1000, 1);
