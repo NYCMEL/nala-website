@@ -38,6 +38,7 @@ Output! Create exactly these files:
 - mtk-component.scss
 - mtk-component.html
 - mtk-component.js
+- A minimal index.html file
 
 Behavior:
 - MUST WAIT for element to be available inside DOM, since i will be using <wc-include> for dynamic inclusion
