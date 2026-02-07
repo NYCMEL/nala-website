@@ -39,6 +39,15 @@ window.app.footer = {
                 { label: "Privacy Policy", event: "nav:privacy" },
                 { label: "Terms of Service", event: "nav:terms" }
             ]
+        },
+
+        {
+            title: "Social",
+            links: [
+                { label: "Facebook", event: "social:facebook" },
+                { label: "Linkedin", event: "social:linkedin" },
+                { label: "Youtube", event: "social:youtube" }
+            ]
         }
     ],
 
