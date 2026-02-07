@@ -91,15 +91,11 @@
        WAIT FOR <wc-include> TO FINISH
        ============================================================ */
 
-    document.addEventListener("wc-include:loaded", (e) => {
-	const footer = e.target.querySelector(FOOTER_SELECTOR);
-	if (!footer) return;
+    document.addEventListener('DOMContentLoaded', (e) => {
+	const footer = document.querySelector('.mtk-footer');
 
-	if (!window.app?.footer) {
-	    console.warn("MTK-footer: window.app.footer missing");
-	    return;
+	if (footer) {
+	    renderFooter(footer, window.app.footer);
 	}
-
-	renderFooter(footer, window.app.footer);
     });
 })();
