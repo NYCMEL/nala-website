@@ -4,7 +4,6 @@
   box-sizing: border-box; }
 
 #client-image {
-  border: 5px red dashed;
   width: 100%; }
 
 body {
@@ -69,7 +68,7 @@ body {
   overflow: hidden;
   flex-shrink: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border: 10px red solid; }
+  border: 1px #cecece solid; }
 
 .client-logo img {
   width: 100%;
