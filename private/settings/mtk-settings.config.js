@@ -4,11 +4,13 @@ const mtkSettingsConfig = {
 	firstName: "John",
 	middleInitial: "M",
 	lastName: "Doe",
+	email: "john.doe@example.com",
 	currentPassword: "password123" // In production, never store plain text passwords
     },
     labels: {
 	title: "Profile Settings",
 	userName: "Full Name",
+	userEmail: "Email Address",
 	currentPassword: "Current Password",
 	newPassword: "New Password",
 	confirmPassword: "Confirm New Password",

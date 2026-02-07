@@ -67,7 +67,7 @@ class MtkSettings {
     } else {
       console.error('mtk-settings: Configuration not found');
       this.config = {
-        user: { firstName: '', middleInitial: '', lastName: '', currentPassword: '' },
+        user: { firstName: '', middleInitial: '', lastName: '', email: '', currentPassword: '' },
         labels: {},
         validation: {}
       };
@@ -84,6 +84,7 @@ class MtkSettings {
       root: root,
       title: root.querySelector('#mtk-settings-title'),
       fullName: root.querySelector('#mtk-settings-fullname'),
+      email: root.querySelector('#mtk-settings-email'),
       currentPassword: root.querySelector('#mtk-settings-current-password'),
       toggleCurrentPassword: root.querySelector('#mtk-settings-toggle-current-password'),
       updateBtn: root.querySelector('#mtk-settings-update-btn'),
@@ -122,6 +123,11 @@ class MtkSettings {
     // Set full name
     const fullName = this.formatFullName();
     this.elements.fullName.value = fullName;
+    
+    // Set email
+    if (this.config.user.email) {
+      this.elements.email.value = this.config.user.email;
+    }
     
     // Set masked current password from config
     if (this.config.user.currentPassword) {
@@ -577,6 +583,9 @@ class MtkSettings {
         if (data.user) {
           this.config.user = { ...this.config.user, ...data.user };
           this.elements.fullName.value = this.formatFullName();
+          if (data.user.email) {
+            this.elements.email.value = data.user.email;
+          }
           if (data.user.currentPassword) {
             this.elements.currentPassword.value = this.maskPassword(data.user.currentPassword);
           }
