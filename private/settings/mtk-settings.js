@@ -67,7 +67,7 @@ class MtkSettings {
     } else {
       console.error('mtk-settings: Configuration not found');
       this.config = {
-        user: { firstName: '', middleInitial: '', lastName: '', currentPassword: '' },
+        user: { firstName: '', middleInitial: '', lastName: '', email: '', currentPassword: '' },
         labels: {},
         validation: {}
       };
@@ -84,6 +84,7 @@ class MtkSettings {
       root: root,
       title: root.querySelector('#mtk-settings-title'),
       fullName: root.querySelector('#mtk-settings-fullname'),
+      email: root.querySelector('#mtk-settings-email'),
       currentPassword: root.querySelector('#mtk-settings-current-password'),
       toggleCurrentPassword: root.querySelector('#mtk-settings-toggle-current-password'),
       updateBtn: root.querySelector('#mtk-settings-update-btn'),
@@ -123,8 +124,15 @@ class MtkSettings {
     const fullName = this.formatFullName();
     this.elements.fullName.value = fullName;
     
-    // Set masked current password
-    this.elements.currentPassword.value = this.maskPassword(this.config.user.currentPassword);
+    // Set email
+    if (this.config.user.email) {
+      this.elements.email.value = this.config.user.email;
+    }
+    
+    // Set masked current password from config
+    if (this.config.user.currentPassword) {
+      this.elements.currentPassword.value = this.maskPassword(this.config.user.currentPassword);
+    }
     
     // Attach event listeners
     this.attachEventListeners();
@@ -487,6 +495,10 @@ class MtkSettings {
     const newPassword = this.elements.newPassword.value;
     const confirmPassword = this.elements.confirmPassword.value;
     
+    // Clear all errors first
+    this.hideError('new');
+    this.hideError('confirm');
+    
     // Check if current password is correct
     if (currentPassword !== this.config.user.currentPassword) {
       this.showError('new', 'Current password is incorrect');
@@ -502,10 +514,11 @@ class MtkSettings {
       return;
     }
     
-    // Check if passwords match
+    // Check if passwords match - show error on NEW password field
     if (newPassword !== confirmPassword) {
-      this.showError('confirm', 'Passwords do not match');
-      this.elements.confirmPassword.focus();
+      this.showError('new', 'Passwords do not match');
+      this.elements.newPassword.focus();
+      this.elements.newPassword.select();
       return;
     }
     
@@ -570,6 +583,9 @@ class MtkSettings {
         if (data.user) {
           this.config.user = { ...this.config.user, ...data.user };
           this.elements.fullName.value = this.formatFullName();
+          if (data.user.email) {
+            this.elements.email.value = data.user.email;
+          }
           if (data.user.currentPassword) {
             this.elements.currentPassword.value = this.maskPassword(data.user.currentPassword);
           }

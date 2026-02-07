@@ -28,6 +28,24 @@
 		</div>
 	    </div>
 	    
+	    <!-- Email Address (Read-only) -->
+	    <div class="mtk-settings__form-group">
+		<label class="mtk-settings__label" for="mtk-settings-email">
+		    Email Address
+		</label>
+		<div class="mtk-settings__input-wrapper">
+		    <input 
+			type="email" 
+			id="mtk-settings-email" 
+			class="mtk-settings__input mtk-settings__input--readonly" 
+			readonly 
+			value=""
+			aria-label="Email Address"
+			tabindex="0"
+		    />
+		</div>
+	    </div>
+	    
 	    <!-- Current Password -->
 	    <div class="mtk-settings__form-group">
 		<label class="mtk-settings__label" for="mtk-settings-current-password">
@@ -158,7 +176,6 @@
 	</div>
     </div>
 </mtk-settings>
-
 
 <script src="private/settings/mtk-settings.config.js"></script>
 <script src="private/settings/mtk-settings.js"></script>
