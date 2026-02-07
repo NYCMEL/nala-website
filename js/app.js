@@ -48,14 +48,35 @@ document.addEventListener("click", function (e) {
 });
 
 
-// REMOVE HAMBER MENUS ON ITEM SELECTION
-wc.timeout(function(){
-    document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
-	link.addEventListener('click', () => {
-	    const navbarCollapse = document.querySelector('.navbar-collapse');
-	    if (navbarCollapse.classList.contains('show')) {
-		new bootstrap.Collapse(navbarCollapse).hide();
-	    }
-	});
+// ADD RIPPLE EFFECT TO ALL BUTTONS
+(function applyRippleToButtons() {
+  function addRipple(root = document) {
+    root.querySelectorAll("button:not(.mtk-ripple)").forEach(btn => {
+      btn.classList.add("mtk-ripple");
     });
-}, 500, 1);
+  }
+
+  // Initial pass
+  addRipple();
+
+  // Watch for future buttons
+  const observer = new MutationObserver(mutations => {
+    mutations.forEach(mutation => {
+      mutation.addedNodes.forEach(node => {
+        if (node.nodeType !== 1) return;
+
+        if (node.tagName === "BUTTON") {
+          node.classList.add("mtk-ripple");
+        } else {
+          addRipple(node);
+        }
+      });
+    });
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+})();
+
