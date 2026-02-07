@@ -1,5 +1,4 @@
 FORGET ALL PREVIOUS CONTEXT for mtk-settings
-
 Create a reusable UI component named mtk-settings using:
 - HTML
 - SCSS
@@ -7,7 +6,6 @@ Create a reusable UI component named mtk-settings using:
 - Bootstrap 5 (layout only)
 - Modern Material Design, Material Design icons and styles
 - Always create a JS class for mtk-settings and initialize it inside the JS file itself
-
 Rules:
 - The component is wrapped in a display:block element <mtk-settings class="mtk-settings">.
 - The root element uses .mtk-settings.
@@ -16,38 +14,32 @@ Rules:
 - publish click events using wc.publish
 - subscribe to all 4-mtk-settings everns using wc.subscribe
 - create a onMessage function to be passed to wc.subscribe function
-
 Data:
 - The component is JSON driven.
   - any and all data must come from mtk-settings.config.js file
-
 Restrictions:
 - No frameworks.
 - No Bootstrap.
 - No external libraries.
 - Vanilla Javascript
-
 Accessibility:
 - Use semantic HTML.
 - Keyboard accessible.
 - Visible focus states.
 - ADA compliant
-
 Output! Create exactly these files:
 - mtk-settings.config.js (JSON FILE)
 - mtk-settings.scss
 - mtk-settings.html
 - mtk-settings.js
-
 Behavior:
 - MUST WAIT for element to be available inside DOM, since i will be using <wc-include> for dynamic inclusion
 - all published (wc.publish) messages should be logged using wc.log to console before being published
-
 I want to create a simple profile/settings page
-
 requirements:
   - show user name (first, middle initial and last name) as read only
   - show and mask current password and allow update, by clicking a "Update" button to
     enable editing of the password. once the user changes password, there should be
     a second input to re-enter the new password
-    
+  - new and repeat passwords, must be the same before "save".
+  - If not the same, error message and focus should be in the new password
