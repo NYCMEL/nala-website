@@ -51,7 +51,7 @@
                             "<div class='course-description'>" + item.description + "</div>" +
                             "<ul class='course-features'>" + features + "</ul>" +
                             "<div class='course-cta'>" +
-                                "<button class='btn btn-primary w-100' data-event='" + item.cta.event + "'>" +
+                                "<button class='btn btn-primary btn-ripple w-100' data-event='" + item.cta.event + "'>" +
                                     item.cta.label +
                                 "</button>" +
                             "</div>" +
