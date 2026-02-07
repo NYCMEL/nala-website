@@ -49,22 +49,45 @@
 
             const ul = document.createElement("ul");
 
-            (group.links || []).forEach(link => {
-                const li = document.createElement("li");
-                const btn = document.createElement("button");
-                btn.textContent = link.label;
+	    if (title.textContent == "Social") {
+		console.log(">>>>>>", group.links);
 
-                btn.addEventListener("click", () => {
-                    wc.publish("mtk-footer:navigate", link);
-                });
+		(group.links || []).forEach(link => {
+                    const li = document.createElement("li");
+                    const btn = document.createElement("button");
+                    btn.innerHTML = link.icon;
 
-                li.appendChild(btn);
-                ul.appendChild(li);
-            });
+                    btn.addEventListener("click", () => {
+			let msg = ("mtk-footer:navigate", link); wc.log(msg);
+			wc.publish("mtk-footer:navigate", link);
+                    });
 
-            col.appendChild(title);
-            col.appendChild(ul);
-            top.appendChild(col);
+                    li.appendChild(btn);
+                    ul.appendChild(li);
+		});
+
+		col.appendChild(title);
+		col.appendChild(ul);
+		top.appendChild(col);
+
+	    } else {
+		(group.links || []).forEach(link => {
+                    const li = document.createElement("li");
+                    const btn = document.createElement("button");
+                    btn.textContent = link.label;
+
+                    btn.addEventListener("click", () => {
+			wc.publish("mtk-footer:navigate", link);
+                    });
+
+                    li.appendChild(btn);
+                    ul.appendChild(li);
+		});
+
+		col.appendChild(title);
+		col.appendChild(ul);
+		top.appendChild(col);
+	    }
         });
 
         container.appendChild(top);
