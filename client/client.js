@@ -1,3 +1,28 @@
+function waitForElement(selector, root = document, timeout = 8000) {
+    return new Promise((resolve, reject) => {
+	const el = root.querySelector(selector)
+	if (el) return resolve(el)
+
+	const observer = new MutationObserver(() => {
+	    const el = root.querySelector(selector)
+	    if (el) {
+		observer.disconnect()
+		resolve(el)
+	    }
+	})
+
+	observer.observe(root, {
+	    childList: true,
+	    subtree: true,
+	})
+
+	setTimeout(() => {
+	    observer.disconnect()
+	    reject(new Error("Timeout waiting for: " + selector))
+	}, timeout)
+    })
+}
+
 class ClientProfile {
     constructor(data) {
 	this.data = data
@@ -261,39 +286,38 @@ class ClientProfile {
     }
 }
 
-// Initialize when DOM is ready
-document.addEventListener("DOMContentLoaded", () => {
-    console.log("[_client] Initializing Client Profile Component")
+document.addEventListener("DOMContentLoaded", async () => {
+    console.log("[_client] Waiting for client DOM")
 
-    if (typeof PubSub === "undefined") {
-	console.error("[_client] PubSubJS not loaded! Make sure _pubsub.js is included before _client.js")
-	return
+    try {
+	// WAIT until wc-include injects the HTML
+	await waitForElement(".client-container")
+
+	console.log("[_client] Client DOM ready")
+
+	const profile = new ClientProfile(clientData)
+
+	PubSub.subscribe("global.click", (msg, data) => {
+	    console.log("[_client] Global click:", msg, data)
+	})
+
+	PubSub.subscribe("button.estimate.clicked", (msg, data) => {
+	    console.log("[_client] Estimate clicked:", data)
+	})
+
+	PubSub.subscribe("button.share.clicked", (msg, data) => {
+	    console.log("[_client] Share clicked:", data)
+	})
+
+	PubSub.subscribe("tab.clicked", (msg, data) => {
+	    console.log("[_client] Tab clicked:", data)
+	})
+
+	PubSub.subscribe("link.clicked", (msg, data) => {
+	    console.log("[_client] Link clicked:", data)
+	})
+
+    } catch (err) {
+	console.error("[_client] Failed to initialize:", err)
     }
-
-    const profile = new ClientProfile(clientData)
-
-    PubSub.subscribe("global.click", (msg, data) => {
-	console.log("[_client] Global click captured:", msg, data)
-    })
-
-    // Subscribe to specific button clicks
-    PubSub.subscribe("button.estimate.clicked", (msg, data) => {
-	console.log("[_client] Estimate button clicked:", msg, data)
-    })
-
-    PubSub.subscribe("button.share.clicked", (msg, data) => {
-	console.log("[_client] Share button clicked:", msg, data)
-    })
-
-    PubSub.subscribe("tab.clicked", (msg, data) => {
-	console.log("[_client] Tab clicked:", msg, data)
-    })
-
-    PubSub.subscribe("link.clicked", (msg, data) => {
-	console.log("[_client] Link clicked:", msg, data)
-    })
-
-    PubSub.subscribe("*", (msg, data) => {
-	console.log("[_client] PubSub Event:", msg, data)
-    })
 })
