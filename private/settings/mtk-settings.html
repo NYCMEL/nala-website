@@ -1,0 +1,158 @@
+<!-- mtk-settings Component -->
+<mtk-settings class="mtk-settings">
+  <div class="mtk-settings__card">
+    <!-- Header -->
+    <div class="mtk-settings__header">
+      <h2 id="mtk-settings-title">Profile Settings</h2>
+    </div>
+    
+    <!-- Content -->
+    <div class="mtk-settings__content">
+      <!-- Full Name (Read-only) -->
+      <div class="mtk-settings__form-group">
+        <label class="mtk-settings__label" for="mtk-settings-fullname">
+          Full Name
+        </label>
+        <div class="mtk-settings__input-wrapper">
+          <input 
+            type="text" 
+            id="mtk-settings-fullname" 
+            class="mtk-settings__input mtk-settings__input--readonly" 
+            readonly 
+            value=""
+            aria-label="Full Name"
+            tabindex="0"
+          />
+        </div>
+      </div>
+      
+      <!-- Current Password -->
+      <div class="mtk-settings__form-group">
+        <label class="mtk-settings__label" for="mtk-settings-current-password">
+          Current Password
+        </label>
+        <div class="mtk-settings__input-wrapper">
+          <input 
+            type="password" 
+            id="mtk-settings-current-password" 
+            class="mtk-settings__input mtk-settings__input--password" 
+            value=""
+            disabled
+            aria-label="Current Password"
+            autocomplete="current-password"
+          />
+          <button 
+            type="button" 
+            class="mtk-settings__icon-btn" 
+            id="mtk-settings-toggle-current-password"
+            aria-label="Toggle password visibility"
+            tabindex="0"
+            disabled
+          >
+            <span class="material-icons">visibility</span>
+          </button>
+        </div>
+        <div class="mtk-settings__actions">
+          <button 
+            type="button" 
+            class="mtk-settings__btn mtk-settings__btn--primary" 
+            id="mtk-settings-update-btn"
+            aria-label="Update Password"
+          >
+            <span class="material-icons">edit</span>
+            Update
+          </button>
+        </div>
+      </div>
+      
+      <!-- New Password (Hidden by default) -->
+      <div class="mtk-settings__form-group mtk-settings__hidden" id="mtk-settings-new-password-group">
+        <label class="mtk-settings__label" for="mtk-settings-new-password">
+          New Password
+        </label>
+        <div class="mtk-settings__input-wrapper">
+          <input 
+            type="password" 
+            id="mtk-settings-new-password" 
+            class="mtk-settings__input mtk-settings__input--password" 
+            placeholder="Enter new password"
+            aria-label="New Password"
+            autocomplete="new-password"
+            aria-describedby="mtk-settings-password-strength-text mtk-settings-new-password-error"
+          />
+          <button 
+            type="button" 
+            class="mtk-settings__icon-btn" 
+            id="mtk-settings-toggle-new-password"
+            aria-label="Toggle password visibility"
+            tabindex="0"
+          >
+            <span class="material-icons">visibility</span>
+          </button>
+        </div>
+        <div class="mtk-settings__password-strength" id="mtk-settings-password-strength">
+          <span id="mtk-settings-password-strength-text">Password strength: </span>
+          <div class="mtk-settings__password-strength-bar">
+            <div class="mtk-settings__password-strength-bar-fill" id="mtk-settings-password-strength-fill"></div>
+          </div>
+        </div>
+        <div class="mtk-settings__error mtk-settings__hidden" id="mtk-settings-new-password-error" role="alert">
+          <span class="material-icons">error</span>
+          <span id="mtk-settings-new-password-error-text"></span>
+        </div>
+      </div>
+      
+      <!-- Confirm Password (Hidden by default) -->
+      <div class="mtk-settings__form-group mtk-settings__hidden" id="mtk-settings-confirm-password-group">
+        <label class="mtk-settings__label" for="mtk-settings-confirm-password">
+          Confirm New Password
+        </label>
+        <div class="mtk-settings__input-wrapper">
+          <input 
+            type="password" 
+            id="mtk-settings-confirm-password" 
+            class="mtk-settings__input mtk-settings__input--password" 
+            placeholder="Re-enter new password"
+            aria-label="Confirm New Password"
+            autocomplete="new-password"
+            aria-describedby="mtk-settings-confirm-password-error"
+          />
+          <button 
+            type="button" 
+            class="mtk-settings__icon-btn" 
+            id="mtk-settings-toggle-confirm-password"
+            aria-label="Toggle password visibility"
+            tabindex="0"
+          >
+            <span class="material-icons">visibility</span>
+          </button>
+        </div>
+        <div class="mtk-settings__error mtk-settings__hidden" id="mtk-settings-confirm-password-error" role="alert">
+          <span class="material-icons">error</span>
+          <span id="mtk-settings-confirm-password-error-text"></span>
+        </div>
+      </div>
+      
+      <!-- Action Buttons (Hidden by default) -->
+      <div class="mtk-settings__actions mtk-settings__hidden" id="mtk-settings-save-actions">
+        <button 
+          type="button" 
+          class="mtk-settings__btn mtk-settings__btn--text" 
+          id="mtk-settings-cancel-btn"
+          aria-label="Cancel"
+        >
+          Cancel
+        </button>
+        <button 
+          type="button" 
+          class="mtk-settings__btn mtk-settings__btn--primary" 
+          id="mtk-settings-save-btn"
+          aria-label="Save Changes"
+        >
+          <span class="material-icons">save</span>
+          Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+</mtk-settings>
