@@ -65,14 +65,7 @@
 @media (max-width: 576px) {
   .mtk-carousel {
     border-radius: 0; }
-<<<<<<< HEAD
-  .mtk-carousel .mtk-carousel-btn {
-    width: 34px;
-    height: 34px;
-    font-size: 20px; } }
-=======
     .mtk-carousel .mtk-carousel-btn {
       width: 34px;
       height: 34px;
       font-size: 20px; } }
->>>>>>> 02.05.2026
