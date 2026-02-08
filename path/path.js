@@ -56,6 +56,7 @@
 
 	var title = document.createElement("h1");
 	title.textContent = data.heading || "";
+	title.classList = "border-bottom"
 	header.appendChild(title);
 
 	var subtitle = document.createElement("p");
