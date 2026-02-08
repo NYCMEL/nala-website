@@ -42,6 +42,6 @@ window.app.footer = {
 	]
     },
     copyright: {
-	text: "© 2024 NALA Association. All rights reserved."
+	text: "2026 NALA - North America Locksmith Association"
     }
 };
