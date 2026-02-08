@@ -1,7 +1,7 @@
 window.app = window.app || {};
 
 window.app.courses = {
-  title: "<h1 class='border-bottom'>Included in the Program</h1>",
+  title: "<h1 class='title'>Included in the Program</h1>",
   description:
     "One complete locksmith training program, organized into five connected parts<BR>that build practical skills from the fundamentals through business readiness.",
   // cta: {
