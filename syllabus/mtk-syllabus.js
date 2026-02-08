@@ -60,13 +60,10 @@
    * @returns {string}
    */
   function createLesson(lesson) {
-    const isLocked = !lesson.access;
-    const lockedClass = isLocked ? 'mtk-syllabus__lesson-link--locked' : '';
-    
     return `
       <li class="mtk-syllabus__lesson">
         <div 
-          class="mtk-syllabus__lesson-link ${lockedClass}"
+          class="mtk-syllabus__lesson-link"
           data-lesson-no="${lesson.lesson_no}"
           data-access="${lesson.access}"
           role="button"
@@ -84,13 +81,10 @@
    * @returns {string}
    */
   function createQuiz(quiz) {
-    const isLocked = !quiz.access;
-    const lockedClass = isLocked ? 'mtk-syllabus__lesson-link--locked' : '';
-    
     return `
       <li class="mtk-syllabus__lesson">
         <div 
-          class="mtk-syllabus__lesson-link ${lockedClass}"
+          class="mtk-syllabus__lesson-link"
           data-lesson-no="${quiz.lesson_no}"
           data-module-id="${quiz.module_id}"
           data-type="quiz"
@@ -140,17 +134,13 @@
    * @param {Object} lessonData - Lesson data
    */
   function handleLessonClick(lessonData) {
-    if (!lessonData.access) {
-      console.log('MTK Syllabus: Lesson is locked', lessonData);
-      return;
-    }
-    
     // Publish event using wc object if available
     if (window.wc && typeof window.wc.publish === 'function') {
       window.wc.publish('lesson-selected', {
         lessonNo: lessonData.lessonNo,
         type: lessonData.type || 'lesson',
         moduleId: lessonData.moduleId,
+        access: lessonData.access,
         timestamp: new Date().toISOString()
       });
     } else {
