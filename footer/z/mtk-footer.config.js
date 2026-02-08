@@ -10,7 +10,7 @@ window.app.footer = {
 	title: "Contact Information",
 	phone: "+1 (646) 303-1234",
 	email: "info@nala-association.org",
-	address: "123 Community Drive, Suite 100, City, State 12345"
+	address: "1510 Park Ave, New York, NY 10010"
     },
     social: {
 	title: "Social Media",

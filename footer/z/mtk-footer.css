@@ -9,7 +9,8 @@
   color: gold; }
 
 .mtk-footer .container {
-  padding-top: 20px; }
+  padding-top: 20px;
+  max-height: 180px; }
 
 .mtk-footer__brand {
   margin-bottom: 32px; }
@@ -53,7 +54,8 @@
 .mtk-footer__contact-list {
   list-style: none;
   padding: 0;
-  margin: 0; }
+  margin: 0;
+  font-size: 12px !important; }
 
 .mtk-footer__contact-item {
   margin-bottom: 12px;

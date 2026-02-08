@@ -33,6 +33,7 @@ $motion-duration-medium: 300ms;
     
     .container {
 	padding-top: 20px;
+	max-height: 180px;
     }
 
     // Brand Section
@@ -86,6 +87,7 @@ $motion-duration-medium: 300ms;
 	list-style: none;
 	padding: 0;
 	margin: 0;
+	font-size:12px!important;
     }
     
     &__contact-item {
