@@ -26,7 +26,7 @@ window.app = {
 				    "access": false,
 				    "type": "video",
 				    "description": "Introduction to your instructor and the course",
-				    "url": "https://vimeo.com/827172729"
+				    "url": "https://player.vimeo.com/video/827172729?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
 				}
 			    ]
 			},
@@ -42,7 +42,7 @@ window.app = {
 				    "access": true,
 				    "type": "video",
 				    "description": "Deadbolt Installation Video",
-				    "url": "https://vimeo.com/827172807"
+				    "url": "https://player.vimeo.com/video/827172798?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
 				},
 				{
 				    "id": "resource-1-4-2",
@@ -66,7 +66,7 @@ window.app = {
 				    "access": true,
 				    "type": "video",
 				    "description": "Residential and Commercial Doors Overview",
-				    "url": "https://vimeo.com/827172835"
+				    "url": "https://player.vimeo.com/video/827172818?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
 				},
 				{
 				    "id": "resource-1-6-2",
@@ -128,7 +128,7 @@ window.app = {
 				    "access": true,
 				    "type": "video",
 				    "description": "Pin Tumbler Mechanism Explained",
-				    "url": "https://vimeo.com/827172850"
+				    "url": "https://player.vimeo.com/video/827172864?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
 				},
 				{
 				    "id": "resource-2-1-1-2",
