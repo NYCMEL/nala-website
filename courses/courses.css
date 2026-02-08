@@ -72,3 +72,9 @@
 .mtk-courses .view-all {
   margin-top: 3rem;
   text-align: center; }
+    line-height: 1.4; }
+  .mtk-courses .course-cta {
+    margin-top: auto; }
+  .mtk-courses .view-all {
+    margin-top: 3rem;
+    text-align: center; }
