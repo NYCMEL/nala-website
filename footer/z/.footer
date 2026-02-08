@@ -62,3 +62,5 @@ OUTPUT REQUIREMENTS
 - Do not omit error handling
 - Do not hardcode text in HTML
 - DO NOT compile scss files, EVER and REMEMBER this
+
+*** I will be using <wc-include> tag and as such, must make sure elements are loaded into DOM ahead of processing
