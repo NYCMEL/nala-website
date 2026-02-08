@@ -167,3 +167,14 @@
     justify-content: center; }
   .mtk-footer__social-list {
     justify-content: center; } }
+}
+      .mtk-footer__logo {
+        margin-left: auto;
+        margin-right: auto; }
+      .mtk-footer__description {
+        margin-left: auto;
+        margin-right: auto; }
+      .mtk-footer__contact-item {
+        justify-content: center; }
+      .mtk-footer__social-list {
+        justify-content: center; } }
