@@ -1,9 +1,9 @@
 window.app = window.app || {};
 
 window.app.courses = {
-  title: "Included in the Program",
+  title: "<h1>Included in the Program</h1>",
   description:
-    "One complete locksmith training program, organized into five connected parts that build practical skills from the fundamentals through business readiness.",
+    "One complete locksmith training program, organized into five connected parts<BR>that build practical skills from the fundamentals through business readiness.",
   // cta: {
   //     label: "",
   //     event: ""

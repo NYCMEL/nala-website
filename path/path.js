@@ -54,7 +54,7 @@
 	var header = document.createElement("div");
 	header.className = "text-center";
 
-	var title = document.createElement("h2");
+	var title = document.createElement("h1");
 	title.textContent = data.heading || "";
 	header.appendChild(title);
 
