@@ -40,14 +40,17 @@
     }
 
     .footer-legal {
-
 	border:1px red solid;
 	line-height:1.0rem;
 	padding:0;
 	margin: 0;
-	margin-left:10px;
 	
+	.legal-text {
+	    margin-left:10px;
+	}
+
 	.legal-links {
+	    margin-left:10px;
 	    list-style: none;
 	    padding: 0;
 	    display: flex;
