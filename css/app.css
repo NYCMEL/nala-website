@@ -80,3 +80,17 @@ body {
 
 h1 {
   font-family: fb !important; }
+
+h1.border-bottom {
+  position: relative;
+  padding-bottom: 0.5rem; }
+
+h1.border-bottom::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 25%;
+  height: 2px;
+  background-color: gold;
+  transform: translateX(-50%); }
