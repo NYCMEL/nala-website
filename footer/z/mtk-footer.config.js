@@ -2,7 +2,7 @@
 window.app = window.app || {};
 window.app.footer = {
   brand: {
-    logo: "img/logo-nala-association.webp",
+    logo: "img/footer-logo.png",
     logoAlt: "NALA Association Logo",
     description: "Empowering communities through innovative programs and sustainable development initiatives."
   },
