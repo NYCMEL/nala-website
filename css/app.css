@@ -82,11 +82,11 @@ h1 {
   font-family: fb !important;
   border: none; }
 
-h1.border-bottom {
+h1.title {
   position: relative;
   padding-bottom: 0.5rem; }
 
-h1.border-bottom::after {
+h1.title::after {
   content: '';
   position: absolute;
   left: 50%;
