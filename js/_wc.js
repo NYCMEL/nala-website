@@ -483,12 +483,12 @@ wc.fetch = async function (url) {
 
 ////////////////////////////////////////////////////////////////////////////////////
 //// Subscriber: 
-//// PubSub.subscribe("MEL", function(msg, data) {
-////    wc.log(msg, data);
-//// });
+////   PubSub.subscribe("MEL", function(msg, data) {
+////      wc.log(msg, data);
+////   });
 //// 
 //// Publisher:
-//// wc.publish("MEL", {id: 1234, name: "Mel"})
+////   wc.publish("MEL", {id: 1234, name: "Mel"})
 ////////////////////////////////////////////////////////////////////////////////////
 window.publish = PubSub.publish;
 wc.publish     = PubSub.publish;
