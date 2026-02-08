@@ -65,3 +65,9 @@
     margin-top: 1rem; }
   .mtk-footer .footer-social .social-wrap {
     justify-content: flex-start; } }
+{
+    .mtk-footer .footer-social {
+      text-align: left;
+      margin-top: 1rem; }
+      .mtk-footer .footer-social .social-wrap {
+        justify-content: flex-start; } }
