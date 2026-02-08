@@ -142,7 +142,7 @@
   border: none; }
 
 .mtk-footer__copyright {
-  display: block;
+  display: none;
   text-align: center;
   color: rgba(255, 255, 255, 0.38);
   font-size: 13px;
