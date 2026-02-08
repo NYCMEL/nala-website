@@ -148,7 +148,7 @@
 
     function buildCTA(plan) {
 	var btn = document.createElement("div");
-	btn.className = "btn-path";
+	btn.className = "btn btn-lg btn-path";
 	btn.textContent = plan.cta || "";
 
 	btn.addEventListener("click", function () {
