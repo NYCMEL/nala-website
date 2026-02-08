@@ -2,42 +2,55 @@
     window.app = window.app || {};
 
     window.app.path = {
-	heading: "Choose Your Path to Success",
-	subheading: "Flexible pricing plans designed for every stage of your locksmith journey",
-	plans: [
-	    {
-		id: "basic",
-		title: "Basic",
-		price: "$41",
-		period: "/month",
-		description: "Perfect for beginners starting their locksmith journey",
-		features: [
-		    "Access to 3 beginner courses",
-		    "Video lessons and quizzes",
-		    "Community forum access",
-		    "Email support",
-		    "Course completion certificate"
-		],
-		cta: "Get Started",
-		popular: false
-	    },
-	    {
-		id: "professional",
-		title: "Professional",
-		price: "$79",
-		period: "/month",
-		description: "Comprehensive training for serious professionals",
-		features: [
-		    "Access to ALL courses",
-		    "Live instructor sessions",
-		    "1-on-1 mentorship",
-		    "Priority support",
-		    "Job placement assistance",
-		    "Industry certifications"
-		],
-		cta: "Get Started",
-		popular: true
-	    }
-	]
+        heading: "Choose Your Training Package",
+        subheading: "Pick the option that fits your goals—start free, upgrade anytime, or launch with Business-in-a-Box.",
+        plans: [
+            {
+                id: "trial",
+                title: "Trial",
+                price: "$0",
+                period: "",
+                description: "Explore the program with a small preview before you commit.",
+                features: [
+                    "Introduction to Locksmithing",
+                    "3 free lessons",
+                    "Preview the learning platform",
+                    "Upgrade anytime"
+                ],
+                cta: "Get Started",
+                popular: false
+            },
+            {
+                id: "premium",
+                title: "Premium",
+                price: "$1,999",
+                period: "one-time payment · financing up to 24 months available via Klarna",
+                description: "Full program access with a certificate of completion.",
+                features: [
+                    "Full program access (all 5 parts)",
+                    "Full access included",
+                    "Certificate of completion",
+                    "Learn at your own pace"
+                ],
+                cta: "Get Started",
+                popular: true
+            },
+            {
+                id: "business",
+                title: "Business-in-a-Box",
+                price: "$3,999",
+                period: "one-time payment · financing up to 24 months available via Klarna",
+                description: "Everything in Premium, plus tools to help you launch your locksmith business.",
+                features: [
+                    "Everything included in Premium",
+                    "Pre-built locksmith website",
+                    "Business card and branding templates",
+                    "Service pricing starter framework",
+                    "Marketing launch checklist"
+                ],
+                cta: "Get Started",
+                popular: false
+            }
+        ]
     };
 })();
