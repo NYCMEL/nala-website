@@ -19,12 +19,11 @@ CORE REQUIREMENTS
 - Uses Material Design styling principles
 
 LAYOUT
-- Footer has two rows
-- Row 1 contains five Bootstrap columns
-  - brand column with logo and description below logo
-- Row 2 contains two equal Bootstrap columns
-  - Left side copyright text
-  - Right side tagline or secondary text
+- Footer has one row
+- Row 1
+  - column 1 conains a brand with logo from "img/logo-nala-association.webp" file and description below logo
+  - column 2 "Contact information". phone, email and address
+  - column 3 "Social media" with icons (facebook, instagram, linkedin, youtube)
 
 BEHAVIOR
 - Footer MUST STICK to the bottom when page content height is smaller than viewport
@@ -41,8 +40,6 @@ DATA AND CONFIGURATION
   - brand description
   - navigation groups with titles and links
   - social icons with events
-  - bottom row left text
-  - bottom row right text
 
 FILES TO CREATE
 1. mtk-footer.config.js
