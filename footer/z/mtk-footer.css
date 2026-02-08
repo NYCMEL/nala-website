@@ -74,3 +74,10 @@
     margin-top: 1rem; }
   .mtk-footer .footer-social .social-wrap {
     justify-content: flex-start; } }
+; }
+  @media (max-width: 768px) {
+    .mtk-footer .footer-social {
+      text-align: left;
+      margin-top: 1rem; }
+      .mtk-footer .footer-social .social-wrap {
+        justify-content: flex-start; } }
