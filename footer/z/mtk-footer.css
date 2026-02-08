@@ -1,8 +1,8 @@
 .mtk-footer {
   background: #121212;
   color: #ccc;
-  padding: 2.5rem 0;
-  font-size: 0.9rem; }
+  padding: 1.0rem 0;
+  font-size: 0.8rem; }
 
 .mtk-footer a {
   color: #bbb;
@@ -12,7 +12,7 @@
   color: #fff; }
 
 .mtk-footer .footer-brand {
-  margin-bottom: 2rem; }
+  margin-bottom: 0rem; }
 
 .mtk-footer .footer-brand .brand-wrap {
   max-width: 480px; }
@@ -26,8 +26,8 @@
   line-height: 1.6; }
 
 .mtk-footer .footer-row-2 {
-  border-top: 1px solid #2a2a2a;
-  padding-top: 1.5rem; }
+  border-top: 1px solid #333;
+  padding-top: .5rem; }
 
 .mtk-footer .footer-legal .legal-links {
   list-style: none;
