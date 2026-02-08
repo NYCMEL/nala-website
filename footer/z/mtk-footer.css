@@ -19,7 +19,7 @@
 
 .mtk-footer .footer-brand .brand-wrap img {
   height: 40px;
-  margin-bottom: 1rem; }
+  margin-bottom: 0.0rem; }
 
 .mtk-footer .footer-brand .brand-wrap p {
   margin: 0;
@@ -29,10 +29,16 @@
   border-top: 1px solid #333;
   padding-top: .5rem; }
 
+.mtk-footer .footer-legal {
+  border: 1px red solid;
+  line-height: 1.0rem;
+  padding: 0;
+  margin: 0;
+  margin-left: 10px; }
+
 .mtk-footer .footer-legal .legal-links {
   list-style: none;
   padding: 0;
-  margin: 0.5rem 0 0;
   display: flex;
   gap: 1rem; }
 

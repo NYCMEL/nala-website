@@ -21,7 +21,7 @@
 
 	    img {
 		height: 40px;
-		margin-bottom: 1rem;
+		margin-bottom: 0.0rem;
 	    }
 
 	    p {
@@ -40,10 +40,16 @@
     }
 
     .footer-legal {
+
+	border:1px red solid;
+	line-height:1.0rem;
+	padding:0;
+	margin: 0;
+	margin-left:10px;
+	
 	.legal-links {
 	    list-style: none;
 	    padding: 0;
-	    margin: 0.5rem 0 0;
 	    display: flex;
 	    gap: 1rem;
 
