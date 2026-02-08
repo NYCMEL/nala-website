@@ -1,98 +1,237 @@
-/* mtk-footer.scss */
+// MTK Footer - Material Design + Bootstrap 5
+// SCSS Source File - DO NOT COMPILE
 
+// Material Design Variables
+$footer-bg: #1e1e1e;
+$footer-text: rgba(255, 255, 255, 0.87);
+$footer-text-secondary: rgba(255, 255, 255, 0.60);
+$footer-text-disabled: rgba(255, 255, 255, 0.38);
+$footer-divider: rgba(255, 255, 255, 0.12);
+$footer-link-hover: #ffffff;
+$footer-social-bg: rgba(255, 255, 255, 0.08);
+$footer-social-hover: rgba(255, 255, 255, 0.16);
+$elevation-4: 0 2px 4px -1px rgba(0, 0, 0, 0.2),
+              0 4px 5px 0 rgba(0, 0, 0, 0.14),
+              0 1px 10px 0 rgba(0, 0, 0, 0.12);
+
+// Timing functions
+$motion-easing-standard: cubic-bezier(0.4, 0.0, 0.2, 1);
+$motion-duration-short: 200ms;
+$motion-duration-medium: 300ms;
+
+// MTK Footer Component
 .mtk-footer {
-    background-color: #121212;
-    color: #e0e0e0;
-    margin-top: auto;
-    font-size: 12px;
-}
-
-.mtk-footer a,
-.mtk-footer button {
-    color: #e0e0e0;
-    text-decoration: none;
-    background: none;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-}
-
-.mtk-footer a:hover,
-.mtk-footer button:hover {
-    color: #90caf9;
-}
-
-.mtk-footer-top {
-    padding: 48px 0 32px;
-}
-
-.mtk-footer-brand img {
-    max-width: 100px;
-    margin-bottom: 12px;
-}
-
-.mtk-footer-group-title {
-    font-size: 0.9rem;
-    font-weight: 500;
-    margin-bottom: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: gold;
-    font-family: fb;
-}
-
-.mtk-footer-group ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.mtk-footer-group li {
-    margin-bottom: 8px;
-}
-
-.mtk-footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.12);
-    padding: 16px 0;
-    font-size: 0.85rem;
-}
-
-#footer-description, .mtk-footer-bottom {
-    font-family: fri;
-    color:#999;
-}
-
-
-/* ------------------------------------
-   MOBILE BEHAVIOR
-   ------------------------------------ */
-@media (max-width: 767px) {
-
-    /* Hide all navigation groups */
-    .mtk-footer .mtk-footer-group-title,
-    .mtk-footer .mtk-footer-group,
-    .mtk-footer-top,
-    #footer-bottom-row-2, #footer-description {
-        display: none;
+    h3 {
+	font-size: 14px;
+	color: gold;
     }
 
-    /* Reduce padding on mobile */
-    .mtk-footer-top {
-        padding: 32px 0 16px;
+    flex-shrink: 0;
+    background-color: $footer-bg;
+    color: $footer-text;
+    box-shadow: $elevation-4;
+    
+    .container {
+	padding-top: 20px;
+	max-height: 180px;
     }
 
-    /* Center brand content */
-    .mtk-footer-brand {
-        text-align: center;
+    // Brand Section
+    &__brand {
+	margin-bottom: 32px;
+	
+	@media (min-width: 768px) {
+	    margin-bottom: 0;
+	}
     }
-
-    .mtk-footer-bottom {
-        text-align: center;
+    
+    &__logo {
+	max-width: 120px;
+	height: auto;
+	margin-bottom: 16px;
+	display: block;
+	transition: opacity $motion-duration-short $motion-easing-standard;
+	
+	&:hover {
+	    opacity: 0.87;
+	}
     }
-
-    .mtk-footer-bottom .text-md-end {
-        text-align: center;
-        margin-top: 8px;
+    
+    &__description {
+	color: $footer-text-secondary;
+	font-size: 12px;
+	line-height: 1.6;
+	margin: 0;
+	max-width: 280px;
+    }
+    
+    // Contact Section
+    &__contact {
+	margin-bottom: 32px;
+	
+	@media (min-width: 768px) {
+	    margin-bottom: 0;
+	}
+    }
+    
+    &__section-title {
+	color: $footer-text;
+	font-size: 16px;
+	font-weight: 500;
+	letter-spacing: 0.15px;
+	margin-bottom: 16px;
+	text-transform: uppercase;
+    }
+    
+    &__contact-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	font-size:12px!important;
+    }
+    
+    &__contact-item {
+	margin-bottom: 12px;
+	display: flex;
+	align-items: flex-start;
+	
+	&:last-child {
+	    margin-bottom: 0;
+	}
+    }
+    
+    &__contact-icon {
+	color: $footer-text-secondary;
+	font-size: 18px;
+	width: 24px;
+	margin-right: 12px;
+	flex-shrink: 0;
+	margin-top: 2px;
+    }
+    
+    &__contact-text {
+	color: $footer-text-secondary;
+	font-size: 12px;
+	line-height: 1.6;
+	margin: 0;
+    }
+    
+    &__contact-link {
+	color: $footer-text-secondary;
+	text-decoration: none;
+	transition: color $motion-duration-short $motion-easing-standard;
+	
+	&:hover {
+	    color: $footer-link-hover;
+	}
+	
+	&:focus-visible {
+	    outline: 2px solid $footer-link-hover;
+	    outline-offset: 2px;
+	}
+    }
+    
+    // Social Section
+    &__social {
+	margin-bottom: 32px;
+	
+	@media (min-width: 768px) {
+	    margin-bottom: 0;
+	}
+    }
+    
+    &__social-list {
+	display: flex;
+	gap: 12px;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	flex-wrap: wrap;
+    }
+    
+    &__social-item {
+	margin: 0;
+    }
+    
+    &__social-link {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	background-color: $footer-social-bg;
+	color: $footer-text;
+	text-decoration: none;
+	transition: background-color $motion-duration-short $motion-easing-standard,
+                    transform $motion-duration-short $motion-easing-standard;
+	position: relative;
+	overflow: hidden;
+	
+	&:hover {
+	    background-color: $footer-social-hover;
+	    transform: translateY(-2px);
+	}
+	
+	&:focus-visible {
+	    outline: 2px solid $footer-link-hover;
+	    outline-offset: 2px;
+	}
+	
+	&:active {
+	    transform: translateY(0);
+	}
+    }
+    
+    &__social-icon {
+	font-size: 20px;
+	z-index: 1;
+    }
+    
+    // Divider
+    &__divider {
+	height: 1px;
+	background-color: $footer-divider;
+	margin: 32px 0 24px;
+	border: none;
+    }
+    
+    // Copyright
+    &__copyright {
+	display: none;
+	text-align: center;
+	color: $footer-text-disabled;
+	font-size: 13px;
+	margin: 0;
+	margin-top: -50px;
+	padding: 10px;
+    }
+    
+    // Responsive adjustments
+    @media (max-width: 767px) {
+	padding: 32px 0 24px;
+	
+	&__brand,
+	&__contact,
+	&__social {
+	    text-align: center;
+	}
+	
+	&__logo {
+	    margin-left: auto;
+	    margin-right: auto;
+	}
+	
+	&__description {
+	    margin-left: auto;
+	    margin-right: auto;
+	}
+	
+	&__contact-item {
+	    justify-content: center;
+	}
+	
+	&__social-list {
+	    justify-content: center;
+	}
     }
 }
