@@ -3,7 +3,7 @@ window.app = window.app || {};
 window.app.footer = {
   brand: {
     name: "MTK",
-    logo: "/assets/logo.svg",
+    logo: "img/logo-nala-association.webp",
     description: "Modern Material Toolkit for scalable web applications.",
   },
 
