@@ -76,20 +76,21 @@ body {
 
 h1 {
     font-family: fb!important;
+    border: none;
 }
 
 h1.border-bottom {
     position: relative;
     padding-bottom: 0.5rem;
-
+    
     &::after {
 	content: '';
 	position: absolute;
 	left: 50%;
 	bottom: 0;
-
-	width: 25%;
-	height: 2px;
+	
+	width: 30%;
+	height: 3px;
 	background-color: gold;
 
 	transform: translateX(-50%);
