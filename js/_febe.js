@@ -91,7 +91,6 @@ class _febe {
             break;
 
 	case "mtk-header-logout":
-	    console.log(">>>>>>>>>", window.app.baseUrl);
 	    document.location.href = "index.html";
             break;
 
@@ -119,8 +118,6 @@ class _febe {
 	switch(data.type) 
 	{
 	    case "video":
-	    console.log(">>>>>>", data.type, data.url);
-
 	    $(".mtk-hierarchy-rhs-video, .mtk-hierarchy-rhs-image, .mtk-hierarchy-rhs-intro").hide();
 	    $(".mtk-hierarchy-rhs-video").fadeIn();
 
@@ -132,11 +129,11 @@ class _febe {
 	    break;
 
 	    case "image":
-	    console.log(">>>>>>", data.type, data.url);
+	    wc.log("_febe:", data.type, data.url);
 	    break;
 
 	    default:
-	    console.error("NO SUCH TYPE:", data.type);
+	    wc.error("NO SUCH TYPE:", data.type);
 	    break;
 	}
     }
