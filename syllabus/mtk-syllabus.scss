@@ -1,0 +1,357 @@
+// MTK Syllabus - Material Design + Bootstrap 5
+// SCSS Source File - DO NOT COMPILE
+
+// Material Design Variables
+$bg-white: #ffffff;
+$bg-light: #f5f5f5;
+$bg-hover: #fafafa;
+$border-color: #e0e0e0;
+$text-primary: rgba(0, 0, 0, 0.87);
+$text-secondary: rgba(0, 0, 0, 0.60);
+$text-disabled: rgba(0, 0, 0, 0.38);
+$primary-color: #1976d2;
+$primary-light: #e3f2fd;
+$success-color: #4caf50;
+$success-light: #e8f5e9;
+$locked-color: #9e9e9e;
+$locked-light: #f5f5f5;
+$shadow-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+$shadow-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
+// Typography
+$font-family-base: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+
+// Timing functions
+$motion-easing-standard: cubic-bezier(0.4, 0.0, 0.2, 1);
+$motion-duration-short: 200ms;
+$motion-duration-medium: 300ms;
+
+// MTK Syllabus Component
+.mtk-syllabus {
+  font-family: $font-family-base;
+  
+  // Section (Course Level)
+  &__section {
+    margin-bottom: 32px;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  &__section-header {
+    background-color: $primary-color;
+    color: white;
+    padding: 16px 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color $motion-duration-short $motion-easing-standard;
+    position: relative;
+    
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+    
+    &--locked {
+      background-color: $locked-color;
+      cursor: not-allowed;
+      
+      &:hover {
+        background-color: $locked-color;
+      }
+    }
+  }
+  
+  &__section-title {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0;
+    letter-spacing: 0.15px;
+  }
+  
+  &__section-icon {
+    font-size: 20px;
+    transition: transform $motion-duration-short $motion-easing-standard;
+    
+    .mtk-syllabus__section-header.expanded & {
+      transform: rotate(180deg);
+    }
+  }
+  
+  &__section-content {
+    background-color: $bg-white;
+    border: 1px solid $border-color;
+    border-top: none;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height $motion-duration-medium $motion-easing-standard;
+    
+    &.expanded {
+      max-height: 5000px;
+    }
+  }
+  
+  // Module Level
+  &__module {
+    border-bottom: 1px solid $border-color;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+  
+  &__module-header {
+    background-color: $bg-light;
+    padding: 16px 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color $motion-duration-short $motion-easing-standard;
+    
+    &:hover {
+      background-color: $bg-hover;
+    }
+    
+    &--locked {
+      cursor: not-allowed;
+      opacity: 0.6;
+      
+      &:hover {
+        background-color: $bg-light;
+      }
+    }
+  }
+  
+  &__module-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: $text-primary;
+    margin: 0;
+    letter-spacing: 0.15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  &__module-id {
+    display: inline-block;
+    background-color: $primary-light;
+    color: $primary-color;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  
+  &__module-icon {
+    font-size: 18px;
+    transition: transform $motion-duration-short $motion-easing-standard;
+    
+    .mtk-syllabus__module-header.expanded & {
+      transform: rotate(180deg);
+    }
+  }
+  
+  &__module-content {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height $motion-duration-medium $motion-easing-standard;
+    
+    &.expanded {
+      max-height: 3000px;
+    }
+  }
+  
+  // Lessons List
+  &__lessons {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  &__lesson {
+    border-bottom: 1px solid $border-color;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+  
+  &__lesson-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px 16px 48px;
+    text-decoration: none;
+    color: $text-primary;
+    transition: background-color $motion-duration-short $motion-easing-standard;
+    cursor: pointer;
+    
+    &:hover {
+      background-color: $bg-hover;
+    }
+    
+    &--locked {
+      cursor: not-allowed;
+      opacity: 0.6;
+      
+      &:hover {
+        background-color: transparent;
+      }
+    }
+    
+    &--quiz {
+      background-color: $primary-light;
+      
+      &:hover {
+        background-color: darken($primary-light, 5%);
+      }
+    }
+  }
+  
+  &__lesson-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    min-width: 0;
+  }
+  
+  &__lesson-number {
+    font-size: 14px;
+    font-weight: 500;
+    color: $text-secondary;
+    min-width: 40px;
+  }
+  
+  &__lesson-title {
+    font-size: 14px;
+    font-weight: 400;
+    color: $text-primary;
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+    
+    .mtk-syllabus__lesson-link--quiz & {
+      font-weight: 500;
+    }
+  }
+  
+  &__lesson-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  &__lesson-resources {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: $text-secondary;
+  }
+  
+  &__resource-icon {
+    font-size: 14px;
+    color: $text-secondary;
+  }
+  
+  &__resource-count {
+    font-size: 12px;
+    color: $text-secondary;
+  }
+  
+  // Badge
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    
+    &--green {
+      background-color: $success-light;
+      color: darken($success-color, 10%);
+    }
+    
+    &--gray {
+      background-color: $locked-light;
+      color: $text-disabled;
+    }
+  }
+  
+  &__badge-icon {
+    font-size: 12px;
+  }
+  
+  // Quiz Info
+  &__quiz-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: $text-secondary;
+    margin-left: 8px;
+  }
+  
+  // Lock Icon
+  &__lock-icon {
+    font-size: 14px;
+    color: $text-disabled;
+    margin-left: 8px;
+  }
+  
+  // Responsive adjustments
+  @media (max-width: 767px) {
+    &__section-header {
+      padding: 12px 16px;
+    }
+    
+    &__section-title {
+      font-size: 18px;
+    }
+    
+    &__module-header {
+      padding: 12px 16px;
+    }
+    
+    &__module-title {
+      font-size: 15px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    
+    &__lesson-link {
+      padding: 12px 16px 12px 24px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    
+    &__lesson-info {
+      width: 100%;
+    }
+    
+    &__lesson-meta {
+      width: 100%;
+      justify-content: space-between;
+    }
+    
+    &__lesson-number {
+      min-width: 30px;
+    }
+  }
+}
+
+// Global body styles
+body {
+  background-color: #fafafa;
+  color: $text-primary;
+}
