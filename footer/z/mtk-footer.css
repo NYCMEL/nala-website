@@ -11,8 +11,12 @@
   flex-shrink: 0;
   background-color: #1e1e1e;
   color: rgba(255, 255, 255, 0.87);
-  padding: 48px 0 24px;
+  padding-top: 25px;
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12); }
+
+.mtk-footer h3 {
+  font-size: 14px;
+  color: gold; }
 
 .mtk-footer__brand {
   margin-bottom: 32px; }
@@ -145,6 +149,7 @@
   border: none; }
 
 .mtk-footer__copyright {
+  display: none;
   text-align: center;
   color: rgba(255, 255, 255, 0.38);
   font-size: 14px;
@@ -166,12 +171,3 @@
     justify-content: center; }
   .mtk-footer__social-list {
     justify-content: center; } }
-
-html {
-  height: 100%; }
-
-body {
-  min-height: 100%;
-  margin: 0;
-  display: flex;
-  flex-direction: column; }
