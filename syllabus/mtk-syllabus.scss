@@ -8,16 +8,12 @@ $text-primary: #1a1a1a;
 $text-secondary: rgba(0, 0, 0, 0.60);
 $text-disabled: rgba(0, 0, 0, 0.38);
 
-// Typography
-$font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', Arial, sans-serif;
-
 // Timing functions
 $motion-easing-standard: cubic-bezier(0.4, 0.0, 0.2, 1);
 $motion-duration-short: 200ms;
 
 // MTK Syllabus Component
 .mtk-syllabus {
-    font-family: $font-family-base;
     background-color: $bg-white;
     padding: 0;
     
