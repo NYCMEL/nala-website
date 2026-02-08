@@ -1,6 +1,10 @@
 <link href="private/dashboard/mtk-dashboard.css" rel="stylesheet">
 
 <mtk-dashboard class="mtk-dashboard" role="main">
+    <div class="pull-right m-5">
+	<button class="btn btn-primary btn-continue-to-course">Continue my progress</button>
+    </div>
+    
     <!-- Row 1: User Info and Progress -->
     <div class="mtk-dashboard__header">
 	<h1 class="mtk-dashboard__user-name" id="userName"></h1>
@@ -28,6 +32,12 @@
 	</div>
     </div>
 </mtk-dashboard>
+
+<script>
+ $(".btn-continue-to-course").on("click", function() {
+     MTKPager.show("hierarchy");
+ });
+</script>
 
 <script src="private/dashboard/mtk-dashboard.config.js"></script>
 <script src="private/dashboard/mtk-dashboard.js"></script>
