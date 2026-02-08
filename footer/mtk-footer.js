@@ -50,8 +50,6 @@
             const ul = document.createElement("ul");
 
 	    if (title.textContent == "Social") {
-		console.log(">>>>>>", group.links);
-
 		(group.links || []).forEach(link => {
                     const li = document.createElement("li");
                     const btn = document.createElement("button");

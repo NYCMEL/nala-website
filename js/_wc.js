@@ -484,7 +484,7 @@ wc.fetch = async function (url) {
 ////////////////////////////////////////////////////////////////////////////////////
 //// Subscriber: 
 //// PubSub.subscribe("MEL", function(msg, data) {
-////    wc.log(">>>>>>", msg, data);
+////    wc.log(msg, data);
 //// });
 //// 
 //// Publisher:
