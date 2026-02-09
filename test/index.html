@@ -11,13 +11,15 @@
 	<script src="js/_wc.js"></script>
 	<script src="js/api.js"></script>
 
+	<div id="api_base" value="https://nala-test.com"</div>
+
 	<!-- FOR API TESTING -->
 	<script>
-	 let test = 2;
 
 	 let email = "mel@google.com";
 	 let password = "testing";
 
+	 let test = 3;
 	 switch(test) 
 	 {
 	     case 1:
@@ -37,6 +39,15 @@
 	     }
 
 	     login("mel@google.com", "hello")
+	     break;
+
+	     case 3:
+	     let r = wc.post("https://nala-test.com/api/login", {
+		 email: "mel@google.com",
+		 password: "junk"
+	     });
+
+	     wc.log(">>>>", r);
 	     break;
 
 	 }
