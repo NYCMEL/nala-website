@@ -129,6 +129,7 @@ wc.post = async function (url, data = {}, options = {}) {
     const config = {
 	method: "POST",
 	headers: {
+	    "Authorization": `Bearer ${wcAPP.token}`,
 	    "Content-Type": "application/json",
 	    ...(options.headers || {})
 	},
@@ -161,6 +162,16 @@ wc.post = async function (url, data = {}, options = {}) {
 	throw err;
     }
 };
+
+/////////////////////////////////////////////////////////////////////////////////
+//// POST WITH TIMEOUT
+/////////////////////////////////////////////////////////////////////////////////
+wc.postWithTimeout = (url, data, ms = 8000) => Promise.race([
+    wc.log(url, data);
+
+    wc.post(url, data),
+    wc.timeout(ms).then(() => { throw "Request timeout"; })
+]);
 
 /////////////////////////////////////////////////////////////////////////////////
 //// PubSub
