@@ -16,15 +16,16 @@
 	<input id="l_password" value="HELLO"></div>
 
 	<script>
-	 if (0) {
-	     wc.fetch("https://nala-test.com/api/curriculum.json");
-	 }
-	</script>
+	 let test = 2;
 
-	<script>
-	 let payload = {"email": "mel@google.com", "password":"hello"}
-	 
-	 if (1) {
+	 switch(test) 
+	 {
+	     case 1:
+	     let c = wc.fetch("https://nala-test.com/api/curriculum.json");
+	     wc.log(">>>>", c);
+	     break;
+
+	     case 2:
 	     async function login(email, password) {
 		 await callApi({ method: "POST", path: "https://nala-test.com/login_api.php", jsonBody: { email, password } });
 		 wc.log("AAAAAAAAAA");
@@ -33,8 +34,9 @@
 	     }
 
 	     login("mel@google.com", "hello")
+	     break;
+
 	 }
 	</script>
-
     </body>
 </html>
