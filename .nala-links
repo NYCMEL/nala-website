@@ -3,3 +3,12 @@ curriculum fetch
 
 nala-test
   https://nala-test.com/api/test_api.html
+
+make sure to use these credentials: 
+Hostname: giow3.siteground.us
+
+Username: u2554-8cct23fau924
+
+Port: 18765
+
+% ssh -p 18765 u2554-8cct23fau924@giow3.siteground.us
