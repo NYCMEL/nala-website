@@ -15,11 +15,11 @@
 
 	<!-- FOR API TESTING -->
 	<script>
-
 	 let email = "mel@google.com";
 	 let password = "testing";
 
-	 let test = 2;
+	 let test = 3;
+
 	 switch(test) 
 	 {
 	     case 1:
@@ -42,14 +42,15 @@
 	     break;
 
 	     case 3:
-	     let r = wc.post("https://nala-test.com/api/login_api.php", {
-		 email: "mel@google.com",
-		 password: "junk"
+	     wc.post("https://nala-test.com/api/login", {
+		 email: "user@test.com",
+		 password: "secret"
+	     }).then(data => {
+		 wc.log("Login success", data);
+	     }).catch(err => {
+		 wc.warn("Login failed", err);
 	     });
-
-	     wc.log(">>>>", r);
 	     break;
-
 	 }
 	</script>
     </body>
