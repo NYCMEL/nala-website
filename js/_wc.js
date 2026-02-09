@@ -118,7 +118,7 @@ wc.fetch = async function (url) {
 };
 
 /////////////////////////////////////////////////////////////////////////////////
-//// wc.post(url, data, options)
+//// wc.post - authenticated POST helper
 /////////////////////////////////////////////////////////////////////////////////
 wc.post = async function (url, data = {}, options = {}) {
     if (!url) {
@@ -126,16 +126,20 @@ wc.post = async function (url, data = {}, options = {}) {
 	return Promise.reject("URL is required");
     }
 
+    const token = wcAPP && wcAPP.token ? wcAPP.token : null;
+
+    const headers = {
+	"Content-Type": "application/json",
+	...(token ? { "Authorization": "Bearer " + token } : {}),
+	...(options.headers || {})
+    };
+
     const config = {
 	method: "POST",
-	headers: {
-	    "Authorization": `Bearer ${wcAPP.token}`,
-	    "Content-Type": "application/json",
-	    ...(options.headers || {})
-	},
+	headers,
 	body: JSON.stringify(data),
 	credentials: options.credentials || "same-origin",
-	...options
+	cache: "no-cache"
     };
 
     try {
@@ -145,20 +149,20 @@ wc.post = async function (url, data = {}, options = {}) {
 
 	if (!response.ok) {
 	    const errorText = await response.text();
-	    wc.error("wc.post failed:", response.status, errorText);
+	    wc.error("wc.post failed", response.status, errorText);
 	    throw new Error(errorText || response.statusText);
 	}
 
 	const contentType = response.headers.get("content-type");
 
-	if (contentType && contentType.includes("application/json")) {
+	if (contentType && contentType.indexOf("application/json") !== -1) {
 	    return await response.json();
 	}
 
 	return await response.text();
 
     } catch (err) {
-	wc.error("wc.post error:", err);
+	wc.error("wc.post error", err);
 	throw err;
     }
 };
@@ -167,8 +171,6 @@ wc.post = async function (url, data = {}, options = {}) {
 //// POST WITH TIMEOUT
 /////////////////////////////////////////////////////////////////////////////////
 wc.postWithTimeout = (url, data, ms = 8000) => Promise.race([
-    wc.log(url, data);
-
     wc.post(url, data),
     wc.timeout(ms).then(() => { throw "Request timeout"; })
 ]);
