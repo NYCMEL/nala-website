@@ -10,7 +10,9 @@
 	<script>
 	 wcENV="dev"; // prod || dev
 	 wcAPP="NALA";
-	 wcTOKEN="testing...";
+	 wcTOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+		   "eyJ1c2VySWQiOiJ0ZXN0LXVzZXIiLCJyb2xlIjoiZGV2IiwiZXhwIjo5OTk5OTk5OTk5fQ." +
+		   "dGhpcy1pcy1hLWZha2UtdG9rZW4tZm9yLXRlc3Rpbmc";
 	</script>
     </head>
 
@@ -23,22 +25,23 @@
 	<!-- FOR API TESTING -->
 	<script>
 	 let url = "https://nala-test.com";
-
+	 
+	 // data FOR LOGIN TESTING
 	 let email = "mel@google.com";
 	 let password = "testing";
 
-	 switch(test=3) 
+	 switch(test=2) 
 	 {
 	     case 1:
 	     let r = wc.fetch(url + "/api/curriculum.json");
-	     console.log(">>>>", r);
+	     console.log("curriculum:", r);
 	     break;
 
 	     case 2:
 	     async function login(email, password) {
 		 let res = callApi({
 		     method: "POST",
-		     path: url + "/login_api.php",
+		     path: url + "/api/login_api.php",
 		     jsonBody: {email, password}
 		 });
 		 
