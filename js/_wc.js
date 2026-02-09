@@ -121,45 +121,45 @@ wc.fetch = async function (url) {
 //// wc.post(url, data, options)
 /////////////////////////////////////////////////////////////////////////////////
 wc.post = async function (url, data = {}, options = {}) {
-  if (!url) {
-    wc.error("wc.post: URL is required");
-    return Promise.reject("URL is required");
-  }
-
-  const config = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      ...(options.headers || {})
-    },
-    body: JSON.stringify(data),
-    credentials: options.credentials || "same-origin",
-    ...options
-  };
-
-  try {
-    wc.log("wc.post →", url, data);
-
-    const response = await fetch(url, config);
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      wc.error("wc.post failed:", response.status, errorText);
-      throw new Error(errorText || response.statusText);
+    if (!url) {
+	wc.error("wc.post: URL is required");
+	return Promise.reject("URL is required");
     }
 
-    const contentType = response.headers.get("content-type");
+    const config = {
+	method: "POST",
+	headers: {
+	    "Content-Type": "application/json",
+	    ...(options.headers || {})
+	},
+	body: JSON.stringify(data),
+	credentials: options.credentials || "same-origin",
+	...options
+    };
 
-    if (contentType && contentType.includes("application/json")) {
-      return await response.json();
+    try {
+	wc.log("wc.post →", url, data);
+
+	const response = await fetch(url, config);
+
+	if (!response.ok) {
+	    const errorText = await response.text();
+	    wc.error("wc.post failed:", response.status, errorText);
+	    throw new Error(errorText || response.statusText);
+	}
+
+	const contentType = response.headers.get("content-type");
+
+	if (contentType && contentType.includes("application/json")) {
+	    return await response.json();
+	}
+
+	return await response.text();
+
+    } catch (err) {
+	wc.error("wc.post error:", err);
+	throw err;
     }
-
-    return await response.text();
-
-  } catch (err) {
-    wc.error("wc.post error:", err);
-    throw err;
-  }
 };
 
 /////////////////////////////////////////////////////////////////////////////////
