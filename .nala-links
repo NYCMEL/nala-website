@@ -15,3 +15,10 @@ ssh -p 18765 u2554-8cct23fau924@giow3.siteground.us
 cd ~/www/nala-test.com/public_html/repo_deploy
 
 /ssh:u2554-8cct23fau924@giow3.siteground.us#18765:/
+
+
+start CloudMounter
+cd ~/Library/CloudStorage/CloudMounter-NALA/www/nala-test.com/public_html/repo_deploy/
+
+mkdir ~/remote_mount
+sshfs mel@192.168.1.50:/home/mel/projects ~/remote_mount -p 2222 -o reconnect -o IdentityFile=~/.ssh/id_ed25519
