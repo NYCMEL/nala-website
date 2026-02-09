@@ -24,7 +24,7 @@
 	 {
 	     case 1:
 	     let c = wc.fetch("https://nala-test.com/api/curriculum.json");
-	     wc.log(">>>>", c);
+	     console.log(">>>>", c);
 	     break;
 
 	     case 2:
@@ -34,8 +34,8 @@
 		     path: "https://nala-test.com/login_api.php",
 		     jsonBody: {email, password}
 		 });
-
-		 wc.log(email, password, JSON.stringify(res));
+		 
+		 console.log(email, password, JSON.stringify(res));
 	     }
 
 	     login("mel@google.com", "hello")
@@ -46,9 +46,9 @@
 		 email: "user@test.com",
 		 password: "secret"
 	     }).then(data => {
-		 wc.log("Login success", data);
+		 console.log("Login success", data);
 	     }).catch(err => {
-		 wc.warn("Login failed", err);
+		 console.warn("Login failed", err);
 	     });
 	     break;
 	 }
