@@ -1,9 +1,13 @@
 function apiBase() {
     const base = (document.getElementById("api_base").value || "/api").trim();
+    wc.log("base:",base);
+
     return base.endsWith("/") ? base.slice(0, -1) : base;
 }
 
 function setLastMeta({method, url, status}) {
+    wc.log("url:", url);
+
     document.getElementById("last_method").textContent = method;
     document.getElementById("last_url").textContent = url;
     document.getElementById("last_status").textContent = String(status ?? "");

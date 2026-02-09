@@ -20,17 +20,18 @@
 	<script src="js/_wc.js"></script>
 	<script src="js/api.js"></script>
 
-	<div id="api_base" value="https://nala-test.com"</div>
+	<div id="api_base" value=""</div>
+	<div id="req_out">req_out</div>
 
 	<!-- FOR API TESTING -->
 	<script>
-	 let url = "https://nala-test.com/api";
+	 let url = "https://nala-test.com";
 	 
 	 // data FOR LOGIN TESTING
 	 let email = "mel@google.com";
 	 let password = "testing";
 
-	 switch(test=2) 
+	 switch(test=1) 
 	 {
 	     case 1:
 	     let r = wc.fetch(url + "/api/curriculum.json");
@@ -38,12 +39,12 @@
 	     break;
 
 	     case 2:
-	     async function login() {
-		 await callApi({ method: "POST", path: url + "/login_api.php", jsonBody: { email, password } });
+	     async function loginMEL() {
+		 await callApi({ method: "POST", path: url + "/api/login_api.php", jsonBody: { email, password } });
 		 setTimeout(me, 250);
 	     }
 
-	     login("mel@google.com", "hello")
+	     loginMEL("mel@google.com", "hello")
 	     break;
 
 	     case 3:
