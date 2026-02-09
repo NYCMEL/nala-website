@@ -21,7 +21,6 @@
 	<script src="js/api.js"></script>
 
 	<div id="api_base" value=""</div>
-	<div id="req_out">req_out</div>
 
 	<!-- FOR API TESTING -->
 	<script>
@@ -31,11 +30,11 @@
 	 let email = "mel@google.com";
 	 let password = "testing";
 
-	 switch(test=1) 
+	 switch(test=3) 
 	 {
 	     case 1:
 	     let r = wc.fetch(url + "/api/curriculum.json");
-	     console.log("curriculum:", r);
+	     wc.log("curriculum:", r);
 	     break;
 
 	     case 2:
@@ -52,10 +51,15 @@
 		 email: "user@test.com",
 		 password: "secret"
 	     }).then(data => {
-		 console.log("Login success", data);
+		 wc.log("Login success", data);
 	     }).catch(err => {
-		 console.warn("Login failed", err);
+		 wc.warn("Login failed", err);
 	     });
+	     break;
+
+	     case 4:
+	     let user = { "email": email, "password": password }
+	     wc.post(url + "/api/login_api.php", user)
 	     break;
 	 }
 	</script>
