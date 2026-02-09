@@ -11,12 +11,12 @@
 	<script src="js/_wc.js"></script>
 	<script src="js/api.js"></script>
 
-	<input id="api_base" value="https://nala-test.com/"></div>
-	<input id="l_email" value="mel@google.com"></div>
-	<input id="l_password" value="HELLO"></div>
-
+	<!-- FOR API TESTING -->
 	<script>
 	 let test = 2;
+
+	 let email = "mel@google.com";
+	 let password = "testing";
 
 	 switch(test) 
 	 {
@@ -27,10 +27,13 @@
 
 	     case 2:
 	     async function login(email, password) {
-		 await callApi({ method: "POST", path: "https://nala-test.com/login_api.php", jsonBody: { email, password } });
-		 wc.log("AAAAAAAAAA");
-		 setTimeout(me, 250);
-		 wc.log("BBBBBBBB");
+		 let res = callApi({
+		     method: "POST",
+		     path: "https://nala-test.com/login_api.php",
+		     jsonBody: {email, password}
+		 });
+
+		 wc.log("AAAAAAAAAA:", email, password, JSON.stringify(res));
 	     }
 
 	     login("mel@google.com", "hello")
