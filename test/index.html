@@ -11,7 +11,30 @@
 	<script src="js/_wc.js"></script>
 	<script src="js/api.js"></script>
 
-	
-	<!-- YOUR CODE TO HERE -->
+	<input id="api_base" value="https://nala-test.com/"></div>
+	<input id="l_email" value="mel@google.com"></div>
+	<input id="l_password" value="HELLO"></div>
+
+	<script>
+	 if (0) {
+	     wc.fetch("https://nala-test.com/api/curriculum.json");
+	 }
+	</script>
+
+	<script>
+	 let payload = {"email": "mel@google.com", "password":"hello"}
+	 
+	 if (1) {
+	     async function login(email, password) {
+		 await callApi({ method: "POST", path: "https://nala-test.com/login_api.php", jsonBody: { email, password } });
+		 wc.log("AAAAAAAAAA");
+		 setTimeout(me, 250);
+		 wc.log("BBBBBBBB");
+	     }
+
+	     login("mel@google.com", "hello")
+	 }
+	</script>
+
     </body>
 </html>
