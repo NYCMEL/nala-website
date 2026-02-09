@@ -11,4 +11,5 @@ Username: u2554-8cct23fau924
 
 Port: 18765
 
-% ssh -p 18765 u2554-8cct23fau924@giow3.siteground.us
+ssh -p 18765 u2554-8cct23fau924@giow3.siteground.us
+cd ~/www/nala-test.com/public_html/repo_deploy
