@@ -126,13 +126,15 @@ wc.post = async function (url, data = {}, options = {}) {
 	return Promise.reject("URL is required");
     }
 
-    const token = wcAPP && wcAPP.token ? wcAPP.token : null;
+    const token = wcTOKEN;
 
     const headers = {
 	"Content-Type": "application/json",
 	...(token ? { "Authorization": "Bearer " + token } : {}),
 	...(options.headers || {})
     };
+
+    wc.log("headers:", headers);
 
     const config = {
 	method: "POST",
