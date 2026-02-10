@@ -33,7 +33,5 @@ async function doLogin(email,passwd) {
 	return false;
     }
     
-    alert(true);
-
     return true;
 }

@@ -61,7 +61,8 @@ class _febe {
 		console.log(">>>>>> ok =", ok);
 
 		if (ok) {
-		    MTKPager.show("home");
+		    document.location.href = window.app.baseUrl + "private"
+		    MTKPager.show("dashboard");
 		}
 	    })();
 	    break;
