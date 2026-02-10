@@ -64,10 +64,11 @@
 	     const data = await res.json();
 	     if (!res.ok) throw new Error(data.error || "Login failed");
 	     const currentUser = data.user;
-	     console.log("login ok", currentUser);
+
+	     wc.log("logged in", currentUser);
 	 }
 	 
-	 switch(2) 
+	 switch(1) 
 	 {
 	     case 1:
 	     doLogout();
