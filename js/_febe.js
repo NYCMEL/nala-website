@@ -56,8 +56,9 @@ class _febe {
             break;
 
 	case "mtk-login-success":
-	    document.location.href = window.app.baseUrl + "private"
-            MTKPager.show("dashboard");
+            //MTKPager.show("dashboard");
+	    var rval = doLogin(data.email, data.password);
+	    console.log(">>>>>>>>>", rval);
             break;
 
 	case "mtk-dashboard:continue":

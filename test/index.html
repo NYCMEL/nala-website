@@ -10,9 +10,6 @@
 	<script>
 	 wcENV="dev"; // prod || dev
 	 wcAPP="NALA";
-	 wcTOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
-		   "eyJ1c2VySWQiOiJ0ZXN0LXVzZXIiLCJyb2xlIjoiZGV2IiwiZXhwIjo5OTk5OTk5OTk5fQ." +
-		   "dGhpcy1pcy1hLWZha2UtdG9rZW4tZm9yLXRlc3Rpbmc";
 	</script>
     </head>
 
@@ -66,6 +63,7 @@
 	     const currentUser = data.user;
 
 	     wc.log("logged in", currentUser);
+	     return res;
 	 }
 	 
 	 switch(2) 

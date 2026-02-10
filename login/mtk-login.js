@@ -132,7 +132,6 @@ class MTKLogin {
 
 	if (valid) {
 	    let key = "mtk-login-success";
-
 	    let msg = (this.config.events.submit, {email: this.emailEl.value.trim(), password: this.passwordEl.value.trim()});
 	    wc.log(key, msg);
 
