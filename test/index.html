@@ -84,14 +84,6 @@
 	     const me = await meRes.json();
 	     wc.loc(">>>>>>>", me);
 	     break;
-
-	     case 3:
-	     wc.post(url + "/api/login_api.php", {email, password}).then(data => {
-		 wc.log("Login success", data);
-	     }).catch(err => {
-		 wc.warn("Login failed", err);
-	     });
-	     break;
 	 }
 	</script>
     </body>
