@@ -40,9 +40,7 @@
 	 let email = "mel@google.com";
 	 let password = "testing";
 
-	 switch(2) 
-	 {
-	     case 1:
+	 function doLogout() {
 	     // LOGOUT
 	     (() => {
 		 (async () => {
@@ -54,10 +52,10 @@
 		     wc.log("logged out");
 		 })().catch(console.error);
 	     })();
-	     break;
-	     
-	     case 2:
-	     /** LOGIN: sets HttpOnly cookie (nala_session) */
+	 }
+
+	 function doLogin(email,passwd) {
+	     // LOGIN
 	     (() => {
 		 (async () => {
 		     const res = await fetch(url + "/api/login_api.php", {
@@ -65,8 +63,8 @@
 			 credentials: "include",
 			 headers: { "Content-Type": "application/json" },
 			 body: JSON.stringify({
-			     email: "mel@google.com",
-			     password: "test"
+			     email: email,
+			     password: passwd
 			 })
 		     });
 
@@ -81,9 +79,21 @@
 		     const currentUser = data.user;
 		     console.log("login ok", currentUser);
 		 })().catch(console.error);
-	     })();
+	     })
+	 }
+	 
+	 switch(2) 
+	 {
+	     case 1:
+	     doLogout();
+	     break;
+	     
+	     case 2:
+	     doLogin("mel@google.com", "test");
 	     break;
 	 }
+	 
 	</script>
+
     </body>
 </html>
