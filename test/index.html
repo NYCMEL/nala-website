@@ -40,8 +40,6 @@
 	 let email = "mel@google.com";
 	 let password = "testing";
 
-	 document.body.innerHTML += "<p>" + url + "</p>";
-
 	 switch(2) 
 	 {
 	     case 1:
@@ -53,7 +51,7 @@
 			 credentials: "include"
 		     });
 		     let currentUser = null;
-		     console.log("logged out");
+		     wc.log("logged out");
 		 })().catch(console.error);
 	     })();
 	     break;
@@ -71,6 +69,7 @@
 			     password: "test"
 			 })
 		     });
+
 		     console.log(">>>>>>>", res);
 
 		     const data = await res.json();
