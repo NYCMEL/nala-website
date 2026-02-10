@@ -38,41 +38,36 @@
 	 
 	 async function doLogout() {
 	     // LOGOUT
-	     await fetch(url + "/api/auth_logout.php", {
+	     const res = await fetch("https://nala-test.com/api/auth_logout.php", {
 		 method: "POST",
 		 credentials: "include"
 	     });
+	     const data = await res.json().catch(() => ({}));
+	     if (!res.ok) throw new Error(data.error || "Logout failed");
 	     let currentUser = null;
+	     console.log("logged out", data);
+
 	     wc.log("logged out");
 	 }
 
 	 async function doLogin(email,passwd) {
 	     // LOGIN
-	     const res = await fetch(url + "/api/login_api.php", {
+	     const res = await fetch("https://nala-test.com/api/login_api.php", {
 		 method: "POST",
 		 credentials: "include",
 		 headers: { "Content-Type": "application/json" },
 		 body: JSON.stringify({
-		     email: email,
-		     password: passwd
+		     email: "mel@google.com",
+		     password: "testing"
 		 })
 	     });
-
-	     alert("A");
-
-	     window.x = res;
-
-	     console.log(">>>>>>>", res.ok);
-
 	     const data = await res.json();
-
 	     if (!res.ok) throw new Error(data.error || "Login failed");
-
 	     const currentUser = data.user;
 	     console.log("login ok", currentUser);
 	 }
 	 
-	 switch(1) 
+	 switch(2) 
 	 {
 	     case 1:
 	     doLogout();
@@ -82,7 +77,6 @@
 	     doLogin("mel@google.com", "test");
 	     break;
 	 }
-	 
 	</script>
 
     </body>
