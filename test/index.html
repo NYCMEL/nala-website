@@ -42,7 +42,7 @@
 
 	 document.body.innerHTML += "<p>" + url + "</p>";
 
-	 switch(test=2) 
+	 switch(test=3) 
 	 {
 	     case 1:
 	     var r = wc.fetch(url + "/api/curriculum.json");
@@ -61,10 +61,7 @@
 	     break;
 
 	     case 3:
-	     wc.post(url + "/api/login_api.php", {
-		 email: "user@test.com",
-		 password: "secret"
-	     }).then(data => {
+	     wc.post(url + "/api/login_api.php", {email, password}).then(data => {
 		 wc.log("Login success", data);
 	     }).catch(err => {
 		 wc.warn("Login failed", err);
