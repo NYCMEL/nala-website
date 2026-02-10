@@ -36,46 +36,40 @@
 	<script>
 	 let url = "https://nala-test.com";
 	 
-	 function doLogout() {
+	 async function doLogout() {
 	     // LOGOUT
-	     (() => {
-		 (async () => {
-		     await fetch(url + "/api/auth_logout.php", {
-			 method: "POST",
-			 credentials: "include"
-		     });
-		     let currentUser = null;
-		     wc.log("logged out");
-		 })().catch(console.error);
-	     })();
+	     await fetch(url + "/api/auth_logout.php", {
+		 method: "POST",
+		 credentials: "include"
+	     });
+	     let currentUser = null;
+	     wc.log("logged out");
 	 }
 
-	 function doLogin(email,passwd) {
+	 async function doLogin(email,passwd) {
 	     // LOGIN
-	     (() => {
-		 (async () => {
-		     const res = await fetch(url + "/api/login_api.php", {
-			 method: "POST",
-			 credentials: "include",
-			 headers: { "Content-Type": "application/json" },
-			 body: JSON.stringify({
-			     email: email,
-			     password: passwd
-			 })
-		     });
+	     const res = await fetch(url + "/api/login_api.php", {
+		 method: "POST",
+		 credentials: "include",
+		 headers: { "Content-Type": "application/json" },
+		 body: JSON.stringify({
+		     email: email,
+		     password: passwd
+		 })
+	     });
 
-		     window.x = res;
+	     alert("A");
 
-		     console.log(">>>>>>>", res.ok);
+	     window.x = res;
 
-		     const data = await res.json();
+	     console.log(">>>>>>>", res.ok);
 
-		     if (!res.ok) throw new Error(data.error || "Login failed");
+	     const data = await res.json();
 
-		     const currentUser = data.user;
-		     console.log("login ok", currentUser);
-		 })().catch(console.error);
-	     })
+	     if (!res.ok) throw new Error(data.error || "Login failed");
+
+	     const currentUser = data.user;
+	     console.log("login ok", currentUser);
 	 }
 	 
 	 switch(1) 
