@@ -60,31 +60,29 @@
 	     break;
 	     
 	     case 2:
-	     // LOGIN
-	     async function loginMEL() {
-		 /** LOGIN: sets HttpOnly cookie (nala_session) */
-		 const res = await fetch("https://nala-test.com/api/login_api.php", {
-		     method: "POST",
-		     credentials: "include", // REQUIRED
-		     headers: { "Content-Type": "application/json" },
-		     body: JSON.stringify({
-			 email: "mel@google.com",
-			 password: "test"
-		     })
-		 });
-		 const data = await res.json();
+	     /** LOGIN: sets HttpOnly cookie (nala_session) */
+	     const res = await fetch("https://nala-test.com/api/login_api.php", {
+		 method: "POST",
+		 credentials: "include", // REQUIRED
+		 headers: { "Content-Type": "application/json" },
+		 body: JSON.stringify({
+		     email: "mel@google.com",
+		     password: "test"
+		 })
+	     });
 
-		 wc.log(">>>>>>", JSON.stringify(data));
+	     const data = await res.json();
 
-		 if (!res.ok) throw new Error(data.error || "Login failed");
+	     if (!res.ok) throw new Error(data.error || "Login failed");
 
-		 // user object:
-		 const currentUser = data.user;
+	     // user object:
+	     const currentUser = data.user;
 
-		 // verify session (optional):
-		 const meRes = await fetch("https://nala-test.com/api/me.php", { credentials: "include" });
-		 const me = await meRes.json();
-	     }
+	     // verify session (optional):
+	     const meRes = await fetch("https://nala-test.com/api/me.php", { credentials: "include" });
+
+	     const me = await meRes.json();
+	     wc.loc(">>>>>>>", me);
 	     break;
 
 	     case 3:
