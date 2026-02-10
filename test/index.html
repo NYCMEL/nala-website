@@ -40,16 +40,19 @@
 	 let email = "mel@google.com";
 	 let password = "testing";
 
-	 switch(test=3) 
+	 document.body.innerHTML += "<p>" + url + "</p>";
+
+	 switch(test=2) 
 	 {
 	     case 1:
 	     let r = wc.fetch(url + "/api/curriculum.json");
 	     wc.log("curriculum:", r);
+	     document.body.innerHTML += JSON.stringify(r);
 	     break;
 
 	     case 2:
 	     async function loginMEL() {
-		 await callApi({ method: "POST", path: url + "/api/login_api.php", jsonBody: { email, password } });
+		 await callApi({ method: "POST", path: url + "/login_api.php", jsonBody: { email, password } });
 		 setTimeout(me, 250);
 	     }
 
