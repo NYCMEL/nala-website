@@ -31,6 +31,7 @@ async function doLogin(email,passwd) {
     const data = await res.json();
 
     if (!res.ok) {
+	alert("BBBBBB");
 	return false;
     }
     
