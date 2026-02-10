@@ -1,0 +1,110 @@
+// MTK Syllabus - Material Design + Bootstrap 5
+// SCSS Source File - DO NOT COMPILE
+
+// Material Design Variables
+$bg-white: #ffffff;
+$bg-light: #fafafa;
+$text-primary: #1a1a1a;
+$text-secondary: rgba(0, 0, 0, 0.60);
+$text-disabled: rgba(0, 0, 0, 0.38);
+
+// Typography
+$font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', Arial, sans-serif;
+
+// Timing functions
+$motion-easing-standard: cubic-bezier(0.4, 0.0, 0.2, 1);
+$motion-duration-short: 200ms;
+
+// MTK Syllabus Component
+.mtk-syllabus {
+  font-family: $font-family-base;
+  background-color: $bg-white;
+  padding: 0;
+  
+  // Section (Course Level)
+  &__section {
+    margin-bottom: 48px;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  &__section-title {
+    font-size: 28px;
+    font-weight: 400;
+    color: $text-primary;
+    margin: 0 0 24px 0;
+    line-height: 1.3;
+    letter-spacing: -0.5px;
+  }
+  
+  // Lessons List
+  &__lessons {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0 0;
+  }
+  
+  &__lesson {
+    margin-bottom: 0;
+    position: relative;
+    padding-left: 24px;
+    
+    &::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: $text-primary;
+      font-size: 20px;
+      line-height: 1.6;
+    }
+  }
+  
+  &__lesson-link {
+    display: inline-block;
+    padding: 4px 0;
+    text-decoration: none;
+    color: $text-primary;
+    cursor: pointer;
+    transition: color $motion-duration-short $motion-easing-standard;
+    
+    &:hover {
+      color: $text-secondary;
+    }
+  }
+  
+  &__lesson-title {
+    font-size: 18px;
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.6;
+    letter-spacing: -0.2px;
+  }
+  
+  // Responsive adjustments
+  @media (max-width: 767px) {
+    &__section {
+      margin-bottom: 36px;
+    }
+    
+    &__section-title {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    
+    &__lesson {
+      padding-left: 20px;
+    }
+    
+    &__lesson-title {
+      font-size: 16px;
+    }
+  }
+}
+
+// Global body styles
+body {
+  background-color: $bg-light;
+  color: $text-primary;
+}
