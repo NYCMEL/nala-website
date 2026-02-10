@@ -56,10 +56,15 @@ class _febe {
             break;
 
 	case "mtk-login-success":
-            //MTKPager.show("dashboard");
-	    var rval = doLogin(data.email, data.password);
-	    console.log(">>>>>>>>>", rval);
-            break;
+	    (async () => {
+		const ok = await doLogin(data.email, data.password);
+		console.log(">>>>>> ok =", ok);
+
+		if (ok) {
+		    MTKPager.show("home");
+		}
+	    })();
+	    break;
 
 	case "mtk-dashboard:continue":
         case "mtk-header-hierarchy":
