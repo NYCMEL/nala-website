@@ -46,7 +46,7 @@
 	     // LOGOUT
 	     (() => {
 		 (async () => {
-		     await fetch("https://nala-test.com/api/auth_logout.php", {
+		     await fetch(url + "/api/auth_logout.php", {
 			 method: "POST",
 			 credentials: "include"
 		     });
@@ -60,7 +60,7 @@
 	     /** LOGIN: sets HttpOnly cookie (nala_session) */
 	     (() => {
 		 (async () => {
-		     const res = await fetch("https://nala-test.com/api/login_api.php", {
+		     const res = await fetch(url + "/api/login_api.php", {
 			 method: "POST",
 			 credentials: "include",
 			 headers: { "Content-Type": "application/json" },
