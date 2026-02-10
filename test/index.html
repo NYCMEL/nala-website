@@ -38,7 +38,7 @@
 	 
 	 async function doLogout() {
 	     // LOGOUT
-	     const res = await fetch("https://nala-test.com/api/auth_logout.php", {
+	     const res = await fetch(url + "/api/auth_logout.php", {
 		 method: "POST",
 		 credentials: "include"
 	     });
@@ -52,13 +52,13 @@
 
 	 async function doLogin(email,passwd) {
 	     // LOGIN
-	     const res = await fetch("https://nala-test.com/api/login_api.php", {
+	     const res = await fetch(url + "/api/login_api.php", {
 		 method: "POST",
 		 credentials: "include",
 		 headers: { "Content-Type": "application/json" },
 		 body: JSON.stringify({
-		     email: "mel@google.com",
-		     password: "testing"
+		     email: email,
+		     password: passwd
 		 })
 	     });
 	     const data = await res.json();
@@ -68,7 +68,7 @@
 	     wc.log("logged in", currentUser);
 	 }
 	 
-	 switch(1) 
+	 switch(2) 
 	 {
 	     case 1:
 	     doLogout();
