@@ -2,6 +2,8 @@ let url = "https://nala-test.com";
 
 async function doLogout() {
     // LOGOUT
+    $.removeCookie('logged');
+
     const res = await fetch(url + "/api/auth_logout.php", {
 	method: "POST",
 	credentials: "include"
@@ -33,5 +35,7 @@ async function doLogin(email,passwd) {
 	return false;
     }
     
+    $.cookie('logged', 'true', { expires: 1 });
+
     return true;
 }
