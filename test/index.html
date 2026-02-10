@@ -70,7 +70,9 @@
 			 })
 		     });
 
-		     console.log(">>>>>>>", res);
+		     window.x = res;
+
+		     console.log(">>>>>>>", res.ok);
 
 		     const data = await res.json();
 
