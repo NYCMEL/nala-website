@@ -61,7 +61,7 @@ class _febe {
 		console.log(">>>>>> ok =", ok);
 
 		if (ok) {
-		    document.location.href = window.app.baseUrl + "private"
+		    document.location.href = document.location.href + "/private";
 		    MTKPager.show("dashboard");
 		}
 	    })();
@@ -98,6 +98,7 @@ class _febe {
             break;
 
 	case "mtk-header-logout":
+	    doLogout();
 	    document.location.href = "index.html";
             break;
 
