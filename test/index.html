@@ -45,44 +45,29 @@
 	 switch(2) 
 	 {
 	     case 1:
-	     /** LOGOUT: clears session cookie server-side */
-	     const res = await fetch("https://nala-test.com/api/auth_logout.php", {
-		 method: "POST",
-		 credentials: "include" // REQUIRED
-	     });
-
-	     const data = await res.json().catch(() => ({}));
-
-	     if (!res.ok) throw new Error(data.error || "Logout failed");
-	     
-	     // clear FE state:
-	     let currentUser = null;
 	     break;
 	     
 	     case 2:
 	     /** LOGIN: sets HttpOnly cookie (nala_session) */
-	     const res = await fetch("https://nala-test.com/api/login_api.php", {
-		 method: "POST",
-		 credentials: "include", // REQUIRED
-		 headers: { "Content-Type": "application/json" },
-		 body: JSON.stringify({
-		     email: "mel@google.com",
-		     password: "test"
-		 })
-	     });
+	     (() => {
+		 (async () => {
+		     const res = await fetch("https://nala-test.com/api/login_api.php", {
+			 method: "POST",
+			 credentials: "include",
+			 headers: { "Content-Type": "application/json" },
+			 body: JSON.stringify({
+			     email: "mel@google.com",
+			     password: "test"
+			 })
+		     });
+		     const data = await res.json();
+		     if (!res.ok) throw new Error(data.error || "Login failed");
+		     wc.log(">>>>>>>", res);
 
-	     const data = await res.json();
-
-	     if (!res.ok) throw new Error(data.error || "Login failed");
-
-	     // user object:
-	     const currentUser = data.user;
-
-	     // verify session (optional):
-	     const meRes = await fetch("https://nala-test.com/api/me.php", { credentials: "include" });
-
-	     const me = await meRes.json();
-	     wc.loc(">>>>>>>", me);
+		     const currentUser = data.user;
+		     console.log("login ok", currentUser);
+		 })().catch(console.error);
+	     })();
 	     break;
 	 }
 	</script>
