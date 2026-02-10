@@ -45,6 +45,17 @@
 	 switch(2) 
 	 {
 	     case 1:
+	     // LOGOUT
+	     (() => {
+		 (async () => {
+		     await fetch("https://nala-test.com/api/auth_logout.php", {
+			 method: "POST",
+			 credentials: "include"
+		     });
+		     let currentUser = null;
+		     console.log("logged out");
+		 })().catch(console.error);
+	     })();
 	     break;
 	     
 	     case 2:
@@ -60,9 +71,11 @@
 			     password: "test"
 			 })
 		     });
+		     console.log(">>>>>>>", res);
+
 		     const data = await res.json();
+
 		     if (!res.ok) throw new Error(data.error || "Login failed");
-		     wc.log(">>>>>>>", res);
 
 		     const currentUser = data.user;
 		     console.log("login ok", currentUser);
