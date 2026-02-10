@@ -19,6 +19,3 @@ cd ~/www/nala-test.com/public_html/repo_deploy
 
 start CloudMounter
 cd ~/Library/CloudStorage/CloudMounter-NALA/www/nala-test.com/public_html/repo_deploy/
-
-mkdir ~/remote_mount
-sshfs mel@192.168.1.50:/home/mel/projects ~/remote_mount -p 2222 -o reconnect -o IdentityFile=~/.ssh/id_ed25519
