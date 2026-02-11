@@ -1079,7 +1079,7 @@ wc.getSession = function (callback) {
  ************************************************************/
 wc.inactivity = {
     idleTime: 60 * 1000,   // 1 minute idle
-    countdown: 15,         // seconds before logout
+    countdown: 30,         // seconds before logout
     idleTimer: null,
     countdownTimer: null
 };
