@@ -955,18 +955,13 @@ if (typeof module !== 'undefined' && module.exports) {
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-//// Config
-/////////////////////////////////////////////////////////////////////////////////
-wc.apiUrl = 'https://nala-test.com';
-
-/////////////////////////////////////////////////////////////////////////////////
 //// LOGOUT
 /////////////////////////////////////////////////////////////////////////////////
 wc.doLogout = async function () {
     wc.group('doLogout');
 
     try {
-        const res = await fetch(wc.apiUrl + '/api/auth_logout.php', {
+        const res = await fetch(wc.apiURL + '/api/auth_logout.php', {
             method: 'POST',
             credentials: 'include'
         });
@@ -1000,7 +995,7 @@ wc.doLogin = async function (email, passwd) {
     wc.group('doLogin');
 
     try {
-        const res = await fetch(wc.apiUrl + '/api/login_api.php', {
+        const res = await fetch(wc.apiURL + '/api/login_api.php', {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -1037,7 +1032,7 @@ wc.doLogin = async function (email, passwd) {
 //// wc.getSession().catch(wc.error);
 /////////////////////////////////////////////////////////////////////////////////
 wc.getSession = function (callback) {
-    return fetch(wc.apiUrl + '/api/me.php', {
+    return fetch(wc.apiURL + '/api/me.php', {
         credentials: 'include'
     })
     .then(res => res.json())
@@ -1267,3 +1262,26 @@ wc.injectMaterialStyles = function () {
 // Start tracking AFTER login
 // wc.startInactivityTracking();
 
+/////////////////////////////////////////////////////////////////////////////////
+//// Curriculum API
+/////////////////////////////////////////////////////////////////////////////////
+wc.getCurriculum = function () {
+    return fetch(wc.apiURL + '/curriculum_api.php', {
+        method: 'GET',
+        credentials: 'include'
+    })
+    .then(res => {
+        if (!res.ok) {
+            throw new Error('Failed to fetch curriculum');
+        }
+        return res.json();
+    })
+    .then(data => {
+        wc.log('Curriculum data:', data);
+        return data;
+    })
+    .catch(err => {
+        wc.error('getCurriculum error:', err);
+        throw err;
+    });
+};

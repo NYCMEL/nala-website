@@ -6,6 +6,11 @@ wc.inactivity.idleTime = 0.5 * 60 * 1000;
 wc.inactivity.countdown = 15;
 wc.startInactivityTracking();
 
+/////////////////////////////////////////////////////////////////////////////////
+//// Config
+/////////////////////////////////////////////////////////////////////////////////
+wc.apiURL = 'https://nala-test.com';
+
 // SMOOTH SCROLLING TO TARGET
 (function () {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
