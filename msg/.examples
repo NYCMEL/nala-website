@@ -1,0 +1,11 @@
+// Show a message
+MtkMsgs.show('info');
+MtkMsgs.show('warning');
+MtkMsgs.show('error');
+MtkMsgs.show('success');
+
+// Hide the message
+MtkMsgs.hide();
+
+// Toggle the message
+MtkMsgs.toggle('info');
