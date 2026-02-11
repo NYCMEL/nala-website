@@ -10,9 +10,6 @@
 	<script>
 	 wcENV="dev"; // prod || dev
 	 wcAPP="NALA";
-	 wcTOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
-		   "eyJ1c2VySWQiOiJ0ZXN0LXVzZXIiLCJyb2xlIjoiZGV2IiwiZXhwIjo5OTk5OTk5OTk5fQ." +
-		   "dGhpcy1pcy1hLWZha2UtdG9rZW4tZm9yLXRlc3Rpbmc";
 	</script>
     </head>
 
@@ -30,41 +27,56 @@
 	<span id="last_status"></span>
 	<pre id="session_out"></pre>
 
+	<h1>OPEN THE CONSOLE</h1>
+
 	<!-- FOR API TESTING -->
 	<script>
 	 let url = "https://nala-test.com";
 	 
-	 // data FOR LOGIN TESTING
-	 let email = "mel@google.com";
-	 let password = "testing";
+	 async function doLogout() {
+	     // LOGOUT
+	     const res = await fetch(url + "/api/auth_logout.php", {
+		 method: "POST",
+		 credentials: "include"
+	     });
+	     const data = await res.json().catch(() => ({}));
+	     if (!res.ok) throw new Error(data.error || "Logout failed");
+	     let currentUser = null;
+	     console.log("logged out", data);
 
-	 switch(test=3) 
+	     wc.log("logged out");
+	 }
+
+	 async function doLogin(email,passwd) {
+	     // LOGIN
+	     const res = await fetch(url + "/api/login_api.php", {
+		 method: "POST",
+		 credentials: "include",
+		 headers: { "Content-Type": "application/json" },
+		 body: JSON.stringify({
+		     email: email,
+		     password: passwd
+		 })
+	     });
+	     const data = await res.json();
+	     if (!res.ok) throw new Error(data.error || "Login failed");
+	     const currentUser = data.user;
+
+	     wc.log("logged in", currentUser);
+	     return res;
+	 }
+	 
+	 switch(2) 
 	 {
 	     case 1:
-	     let r = wc.fetch(url + "/api/curriculum.json");
-	     wc.log("curriculum:", r);
+	     doLogout();
 	     break;
-
+	     
 	     case 2:
-	     async function loginMEL() {
-		 await callApi({ method: "POST", path: url + "/api/login_api.php", jsonBody: { email, password } });
-		 setTimeout(me, 250);
-	     }
-
-	     loginMEL("mel@google.com", "hello")
-	     break;
-
-	     case 3:
-	     wc.post(url + "/api/login_api.php", {
-		 email: "user@test.com",
-		 password: "secret"
-	     }).then(data => {
-		 wc.log("Login success", data);
-	     }).catch(err => {
-		 wc.warn("Login failed", err);
-	     });
+	     doLogin("mel@google.com", "test");
 	     break;
 	 }
 	</script>
+
     </body>
 </html>

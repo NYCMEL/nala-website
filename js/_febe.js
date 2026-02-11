@@ -56,9 +56,17 @@ class _febe {
             break;
 
 	case "mtk-login-success":
-	    document.location.href = window.app.baseUrl + "private"
-            MTKPager.show("dashboard");
-            break;
+	    (async () => {
+		const ok = await wc.doLogin(data.email, data.password);
+		console.log(">>>>>> ok =", ok);
+		
+		if (ok) {
+		    wc.setCookie('logged', 'true', 1);
+		    document.location.href = document.location.href + "/private";
+		    MTKPager.show("dashboard");
+		}
+	    })();
+	    break;
 
 	case "mtk-dashboard:continue":
         case "mtk-header-hierarchy":
@@ -91,6 +99,9 @@ class _febe {
             break;
 
 	case "mtk-header-logout":
+	    wc.deleteCookie('logged');
+
+	    wc.doLogout();
 	    document.location.href = "index.html";
             break;
 
