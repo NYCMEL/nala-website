@@ -1084,19 +1084,6 @@ wc.inactivity = {
     countdownTimer: null
 };
 
-
-/************************************************************
- * LOG HELPERS
- ************************************************************/
-wc.log = function (...args) {
-    console.log('[WC]', ...args);
-};
-
-wc.error = function (...args) {
-    console.error('[WC]', ...args);
-};
-
-
 /************************************************************
  * INACTIVITY LOGIC
  ************************************************************/
@@ -1108,7 +1095,6 @@ wc.resetInactivity = function () {
         wc.inactivity.idleTime
     );
 };
-
 
 wc.showInactivityModal = function () {
     let seconds = wc.inactivity.countdown;
@@ -1172,7 +1158,6 @@ wc.closeIdleModal = function () {
     const modal = document.getElementById('wc-idle-modal');
     if (modal) modal.remove();
 };
-
 
 /************************************************************
  * START / STOP
