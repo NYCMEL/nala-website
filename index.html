@@ -107,15 +107,18 @@
 
 	<script>
          // INITIAL PAGE
-	 wc.timeout(function(){
-	     if (wc.getCookie("logged")) {
+	 wc.getSession(function (loggedIn, session, err) {
+	     if (err) return;
+	     
+	     if (loggedIn) {
+		 wc.log('User is logged in');
 		 // IF LOGGED-IN
 		 document.location.href = document.location.href + "/private";
 	     } else {
+		 wc.log('User is logged out');
 		 MTKPager.show("home");
 	     }
-	 }, 100, 1);
-
+	 });
 	</script>
     </body>
 </html>
