@@ -61,7 +61,6 @@ class _febe {
 		    if (success) {
 			wc.log('Logged in!');
 
-			wc.setCookie('logged', 'true', 1);
 			document.location.href = document.location.origin + "/repo_deploy/private";
 			MTKPager.show("dashboard");
 		    }
@@ -103,8 +102,6 @@ class _febe {
             break;
 
 	case "mtk-header-logout":
-	    wc.deleteCookie('logged');
-
 	    wc.doLogout();
 	    document.location.href = document.location.origin + "/repo_deploy/index.html";
             break;
