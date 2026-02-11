@@ -1073,3 +1073,75 @@ wc.getSession = function (callback) {
 //         wc.log('User is logged out');
 //     }
 // });
+
+/////////////////////////////////////////////////////////////////////////////////
+//// Inactivity Tracker
+/////////////////////////////////////////////////////////////////////////////////
+
+wc.inactivity = {
+    idleTime: 60 * 1000,      // 1 minute
+    warningTime: 15 * 1000,   // time to respond to alert
+    timer: null,
+    warningTimer: null,
+    active: true
+};
+
+/**
+ * Reset inactivity timers
+ */
+wc.resetInactivity = function () {
+    clearTimeout(wc.inactivity.timer);
+    clearTimeout(wc.inactivity.warningTimer);
+
+    wc.inactivity.timer = setTimeout(wc.showInactivityWarning, wc.inactivity.idleTime);
+};
+
+/**
+ * Show inactivity warning
+ */
+wc.showInactivityWarning = function () {
+    wc.log('Inactivity detected');
+
+    const stillThere = confirm('Are you still there?');
+
+    if (stillThere) {
+        wc.resetInactivity();
+        return;
+    }
+
+    // user clicked "No" OR ignored dialog
+    wc.inactivity.warningTimer = setTimeout(() => {
+        wc.log('Logging out due to inactivity');
+        wc.doLogout();
+    }, wc.inactivity.warningTime);
+};
+
+/**
+ * Start inactivity tracking
+ */
+wc.startInactivityTracking = function () {
+    const events = [
+        'mousemove',
+        'mousedown',
+        'keydown',
+        'scroll',
+        'touchstart'
+    ];
+
+    events.forEach(evt =>
+        window.addEventListener(evt, wc.resetInactivity, { passive: true })
+    );
+
+    wc.resetInactivity();
+};
+
+/**
+ * Stop inactivity tracking (optional)
+ */
+wc.stopInactivityTracking = function () {
+    clearTimeout(wc.inactivity.timer);
+    clearTimeout(wc.inactivity.warningTimer);
+};
+
+// USAGE: START TRACKING AFTER LOGIN
+wc.startInactivityTracking();
