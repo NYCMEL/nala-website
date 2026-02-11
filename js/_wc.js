@@ -1032,3 +1032,21 @@ wc.doLogin = async function (email, passwd) {
         wc.groupEnd();
     }
 };
+
+/////////////////////////////////////////////////////////////////////////////////
+//// LOGIN
+/////////////////////////////////////////////////////////////////////////////////
+wc.loginStatus = async function () {
+    wc.group('loginStatus');
+
+    (() => {
+	(async () => {
+	    const res = await fetch("https://nala-test.com/api/me.php", { credentials: "include" });
+	    const data = await res.json();
+	    console.log("session", data);
+	})().catch(console.error);
+    })();
+
+    wc.groupEnd();
+}
+
