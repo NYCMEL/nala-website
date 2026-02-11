@@ -1040,7 +1040,7 @@ wc.getSession = function () {
     return fetch(wc.apiUrl + '/api/me.php', {
         credentials: 'include'
     }).then(res => res.json()).then(data => {
-        wc.log('session', data);
+        wc.log('SESSION', data.logged_in);
 	
         return data.logged_in;
     });
@@ -1050,7 +1050,7 @@ wc.getSession = function () {
 //// isLoggedIn
 /////////////////////////////////////////////////////////////////////////////////
 wc.isLoggedIn = function () {
-    let res = wc.getSession().then(data => !!data.logged_in);;
+    let res = wc.getSession().then(data => !! data.logged_in);
     wc.log(">>>>>", res);
 
     return res;
