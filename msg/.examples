@@ -1,11 +1,70 @@
-// Show a message
+// Example 5: Using wc.publish with timer
+wc.publish('mtk-msgs:show', {
+  type: 'error',
+  icon: 'error',
+  message: 'Connection lost. Retrying...',
+  buttons: [],
+  closable: false,
+  timer: 10  // Quick 3 second notification
+});
+
+// Example 1: Pass a string key (looks up in config)
 MtkMsgs.show('info');
-MtkMsgs.show('warning');
-MtkMsgs.show('error');
-MtkMsgs.show('success');
 
-// Hide the message
-MtkMsgs.hide();
+// Example 2: Pass a complete JSON object directly
+MtkMsgs.show({
+  type: 'warning',
+  icon: 'warning',
+  message: 'Your session will expire in 5 minutes',
+  buttons: [
+    { label: 'Extend Session', action: 'extend' },
+    { label: 'Logout', action: 'logout' }
+  ],
+  closable: true,
+  timer: null
+});
 
-// Toggle the message
-MtkMsgs.toggle('info');
+// Example 3: Auto-close message with timer
+MtkMsgs.show({
+  type: 'success',
+  icon: 'check_circle',
+  message: 'File uploaded successfully!',
+  buttons: [],
+  closable: false,
+  timer: 5
+});
+
+// Example 4: Error message with retry button
+MtkMsgs.show({
+  type: 'error',
+  icon: 'error',
+  message: 'Failed to save changes. Please try again.',
+  buttons: [
+    { label: 'Retry', action: 'retry' },
+    { label: 'Cancel', action: 'cancel' }
+  ],
+  closable: true,
+  timer: null
+});
+
+// Example 5: Simple info message (minimal JSON)
+MtkMsgs.show({
+  type: 'info',
+  icon: 'info',
+  message: 'Processing your request...',
+  buttons: [],
+  closable: false,
+  timer: null
+});
+
+// Example 6: Using wc.publish with JSON
+wc.publish('mtk-msgs:show', {
+  type: 'warning',
+  icon: 'warning',
+  message: 'Low disk space detected',
+  buttons: [
+    { label: 'Clean Up', action: 'cleanup' }
+  ],
+  closable: true,
+  timer: 10
+});
