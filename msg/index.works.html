@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,7 +21,33 @@
     body {
       font-family: 'Roboto', sans-serif;
       background-color: #f5f5f5;
+      padding: 0;
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .page-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .message-area {
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1000;
+    }
+
+    .content-area {
+      flex: 1;
+      overflow: auto;
       padding: 24px;
+      padding-top: 24px;
+    }
+    
+    .content-area.has-message {
+      padding-top: 64px;
     }
 
     .page-header {
@@ -165,7 +190,10 @@
       opacity: 0;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       z-index: 1000;
-      position: relative;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
     }
 
     .mtk-msgs.visible {
@@ -355,465 +383,487 @@
     }
   </style>
 </head>
-
 <body>
-    <!-- Overlay for screen lock -->
-    <div class="mtk-msgs__overlay" role="presentation"></div>
+  <div class="page-container">
+    <!-- Message Area (Fixed at top) -->
+    <div class="message-area">
+      <!-- Overlay for screen lock -->
+      <div class="mtk-msgs__overlay" role="presentation"></div>
 
-    <!-- Message Panel Component -->
-    <mtk-msgs class="mtk-msgs" role="alert" aria-live="polite" aria-atomic="true">
-	<div class="mtk-msgs__container">
-	    <div class="mtk-msgs__left">
-		<span class="mtk-msgs__icon material-icons" aria-hidden="true"></span>
-		<p class="mtk-msgs__message"></p>
-	    </div>
-	    <div class="mtk-msgs__buttons"></div>
-	    <button class="mtk-msgs__close" aria-label="Close message" type="button">
-		<span class="material-icons">close</span>
-	    </button>
-	</div>
-    </mtk-msgs>
-
-    <div class="cards-container">
-	<!-- Example 1: Info Message with Buttons -->
-	<div class="example-card">
-	    <div class="example-card__header">Info Message with Buttons</div>
-	    <div class="example-card__content">
-		<div class="example-card__title">JavaScript Code</div>
-		<div class="code-block" id="code-1">MTKMsgs.show({
-		    type: 'info',
-		    icon: 'info',
-		    message: 'This is an informational message',
-		    buttons: [
-		    { label: 'Learn More', action: 'learnMore' }
-		    ],
-		    closable: true,
-		    timer: null
-		    });</div>
-		<div class="example-card__actions">
-		    <button class="action-button" onclick="demoExample1()">Demo</button>
-		    <button class="action-button action-button--secondary" onclick="copyCode('code-1')">Copy Code</button>
-		</div>
-	    </div>
-	</div>
-
-	<!-- Example 2: Warning Message -->
-	<div class="example-card">
-	    <div class="example-card__header">Warning Message</div>
-	    <div class="example-card__content">
-		<div class="example-card__title">JavaScript Code</div>
-		<div class="code-block" id="code-2">MTKMsgs.show({
-		    type: 'warning',
-		    icon: 'warning',
-		    message: 'Warning: Please review your settings',
-		    buttons: [
-		    { label: 'Review', action: 'review' },
-		    { label: 'Dismiss', action: 'dismiss' }
-		    ],
-		    closable: true,
-		    timer: null
-		    });</div>
-		<div class="example-card__actions">
-		    <button class="action-button" onclick="demoExample2()">Demo</button>
-		    <button class="action-button action-button--secondary" onclick="copyCode('code-2')">Copy Code</button>
-		</div>
-	    </div>
-	</div>
-
-	<!-- Example 3: Error Message (Screen Lock) -->
-	<div class="example-card">
-	    <div class="example-card__header">Error Message (Screen Lock)</div>
-	    <div class="example-card__content">
-		<div class="example-card__title">JavaScript Code</div>
-		<div class="code-block" id="code-3">MTKMsgs.show({
-		    type: 'error',
-		    icon: 'error',
-		    message: 'Error: Something went wrong',
-		    buttons: [
-		    { label: 'Retry', action: 'retry' }
-		    ],
-		    closable: true,
-		    timer: null
-		    });</div>
-		<div class="example-card__actions">
-		    <button class="action-button" onclick="demoExample3()">Demo</button>
-		    <button class="action-button action-button--secondary" onclick="copyCode('code-3')">Copy Code</button>
-		</div>
-	    </div>
-	</div>
-
-	<!-- Example 4: Success with Timer -->
-	<div class="example-card">
-	    <div class="example-card__header">Success with 10s Timer</div>
-	    <div class="example-card__content">
-		<div class="example-card__title">JavaScript Code</div>
-		<div class="code-block" id="code-4">MTKMsgs.show({
-		    type: 'success',
-		    icon: 'check_circle',
-		    message: 'Success: Operation completed',
-		    buttons: [],
-		    closable: false,
-		    timer: 10
-		    });</div>
-		<div class="example-card__actions">
-		    <button class="action-button" onclick="demoExample4()">Demo</button>
-		    <button class="action-button action-button--secondary" onclick="copyCode('code-4')">Copy Code</button>
-		</div>
-	    </div>
-	</div>
-
-	<!-- Example 5: Auto Info with Timer -->
-	<div class="example-card">
-	    <div class="example-card__header">Auto Info with 5s Timer</div>
-	    <div class="example-card__content">
-		<div class="example-card__title">JavaScript Code</div>
-		<div class="code-block" id="code-5">MTKMsgs.show({
-		    type: 'info',
-		    icon: 'info',
-		    message: 'This message will close automatically',
-		    buttons: [],
-		    closable: false,
-		    timer: 5
-		    });</div>
-		<div class="example-card__actions">
-		    <button class="action-button" onclick="demoExample5()">Demo</button>
-		    <button class="action-button action-button--secondary" onclick="copyCode('code-5')">Copy Code</button>
-		</div>
-	    </div>
-	</div>
-
-	<!-- Example 6: Using Config Key -->
-	<div class="example-card">
-	    <div class="example-card__header">Using Config Key</div>
-	    <div class="example-card__content">
-		<div class="example-card__title">JavaScript Code</div>
-		<div class="code-block" id="code-6">// Uses predefined config from mtk-msgs.config.js
-		    MTKMsgs.show('info');</div>
-		<div class="example-card__actions">
-		    <button class="action-button" onclick="demoExample6()">Demo</button>
-		    <button class="action-button action-button--secondary" onclick="copyCode('code-6')">Copy Code</button>
-		</div>
-	    </div>
-	</div>
-
-	<!-- Example 7: Using wc.publish -->
-	<div class="example-card">
-	    <div class="example-card__header">Using wc.publish Event</div>
-	    <div class="example-card__content">
-		<div class="example-card__title">JavaScript Code</div>
-		<div class="code-block" id="code-7">wc.publish('mtk-msgs:show', {
-		    type: 'warning',
-		    icon: 'warning',
-		    message: 'Session will expire in 5 minutes',
-		    buttons: [
-		    { label: 'Extend', action: 'extend' }
-		    ],
-		    closable: true,
-		    timer: null
-		    });</div>
-		<div class="example-card__actions">
-		    <button class="action-button" onclick="demoExample7()">Demo</button>
-		    <button class="action-button action-button--secondary" onclick="copyCode('code-7')">Copy Code</button>
-		</div>
-	    </div>
-	</div>
-
-	<!-- Example 8: Hide Message -->
-	<div class="example-card">
-	    <div class="example-card__header">Hide Message</div>
-	    <div class="example-card__content">
-		<div class="example-card__title">JavaScript Code</div>
-		<div class="code-block" id="code-8">// Hide any currently displayed message
-		    MTKMsgs.hide();</div>
-		<div class="example-card__actions">
-		    <button class="action-button" onclick="demoExample8()">Demo</button>
-		    <button class="action-button action-button--secondary" onclick="copyCode('code-8')">Copy Code</button>
-		</div>
-	    </div>
-	</div>
-
-	<!-- Example 9: Custom Error -->
-	<div class="example-card">
-	    <div class="example-card__header">Custom Error Message</div>
-	    <div class="example-card__content">
-		<div class="example-card__title">JavaScript Code</div>
-		<div class="code-block" id="code-9">MTKMsgs.show({
-		    type: 'error',
-		    icon: 'error',
-		    message: 'Failed to save changes. Please try again.',
-		    buttons: [
-		    { label: 'Retry', action: 'retry' },
-		    { label: 'Cancel', action: 'cancel' }
-		    ],
-		    closable: true,
-		    timer: null
-		    });</div>
-		<div class="example-card__actions">
-		    <button class="action-button" onclick="demoExample9()">Demo</button>
-		    <button class="action-button action-button--secondary" onclick="copyCode('code-9')">Copy Code</button>
-		</div>
-	    </div>
-	</div>
-
-	<!-- Example 10: Quick Success Notification -->
-	<div class="example-card">
-	    <div class="example-card__header">Quick Success (3s Timer)</div>
-	    <div class="example-card__content">
-		<div class="example-card__title">JavaScript Code</div>
-		<div class="code-block" id="code-10">MTKMsgs.show({
-		    type: 'success',
-		    icon: 'check_circle',
-		    message: 'File uploaded successfully!',
-		    buttons: [],
-		    closable: false,
-		    timer: 3
-		    });</div>
-		<div class="example-card__actions">
-		    <button class="action-button" onclick="demoExample10()">Demo</button>
-		    <button class="action-button action-button--secondary" onclick="copyCode('code-10')">Copy Code</button>
-		</div>
-	    </div>
-	</div>
-
-	<!-- Example 11: Warning with Timer and Close -->
-	<div class="example-card">
-	    <div class="example-card__header">Warning with Timer + Close Button</div>
-	    <div class="example-card__content">
-		<div class="example-card__title">JavaScript Code</div>
-		<div class="code-block" id="code-11">MTKMsgs.show({
-		    type: 'warning',
-		    icon: 'warning',
-		    message: 'Low disk space detected',
-		    buttons: [
-		    { label: 'Clean Up', action: 'cleanup' }
-		    ],
-		    closable: true,
-		    timer: 15
-		    });</div>
-		<div class="example-card__actions">
-		    <button class="action-button" onclick="demoExample11()">Demo</button>
-		    <button class="action-button action-button--secondary" onclick="copyCode('code-11')">Copy Code</button>
-		</div>
-	    </div>
-	</div>
-
-	<!-- Example 12: Info No Close Button -->
-	<div class="example-card">
-	    <div class="example-card__header">Info without Close Button</div>
-	    <div class="example-card__content">
-		<div class="example-card__title">JavaScript Code</div>
-		<div class="code-block" id="code-12">MTKMsgs.show({
-		    type: 'info',
-		    icon: 'info',
-		    message: 'Processing your request...',
-		    buttons: [],
-		    closable: false,
-		    timer: null
-		    });</div>
-		<div class="example-card__actions">
-		    <button class="action-button" onclick="demoExample12()">Demo</button>
-		    <button class="action-button action-button--secondary" onclick="copyCode('code-12')">Copy Code</button>
-		</div>
-	    </div>
-	</div>
+      <!-- Message Panel Component -->
+      <mtk-msgs class="mtk-msgs" role="alert" aria-live="polite" aria-atomic="true">
+        <div class="mtk-msgs__container">
+          <div class="mtk-msgs__left">
+            <span class="mtk-msgs__icon material-icons" aria-hidden="true"></span>
+            <p class="mtk-msgs__message"></p>
+          </div>
+          <div class="mtk-msgs__buttons"></div>
+          <button class="mtk-msgs__close" aria-label="Close message" type="button">
+            <span class="material-icons">close</span>
+          </button>
+        </div>
+      </mtk-msgs>
     </div>
 
-    <!-- Copy Notification -->
-    <div class="copy-notification" id="copyNotification">Code copied to clipboard!</div>
+    <!-- Content Area (Scrollable) -->
+    <div class="content-area">
+      <div class="page-header">
+        <h1>mtk-msgs HTML Works</h1>
+        <p>Copy and paste these examples to use MTKMsgs in your application</p>
+      </div>
 
-    <!-- Mock wc object -->
-    <script>
-     const wc = {
-	 log: function(component, message, data) {
-             console.log(`[${component}]`, message, data || '');
-	 },
-	 publish: function(event, data) {
-             console.log(`[PUBLISH] ${event}`, data || '');
-             const customEvent = new CustomEvent(event, { detail: data });
-             document.dispatchEvent(customEvent);
-	 },
-	 subscribe: function(event, callback) {
-             document.addEventListener(event, (e) => {
-		 callback(event, e.detail);
-             });
-	 }
-     };
-    </script>
+      <div class="cards-container">
+    <!-- Example 1: Info Message with Buttons -->
+    <div class="example-card">
+      <div class="example-card__header">Info Message with Buttons</div>
+      <div class="example-card__content">
+        <div class="example-card__title">JavaScript Code</div>
+        <div class="code-block" id="code-1">MTKMsgs.show({
+  type: 'info',
+  icon: 'info',
+  message: 'This is an informational message',
+  buttons: [
+    { label: 'Learn More', action: 'learnMore' }
+  ],
+  closable: true,
+  timer: null
+});</div>
+        <div class="example-card__actions">
+          <button class="action-button" onclick="demoExample1()">Demo</button>
+          <button class="action-button action-button--secondary" onclick="copyCode('code-1')">Copy Code</button>
+        </div>
+      </div>
+    </div>
 
-    <!-- Component Files -->
-    <script src="mtk-msgs.config.js"></script>
-    <script src="mtk-msgs.js"></script>
+    <!-- Example 2: Warning Message -->
+    <div class="example-card">
+      <div class="example-card__header">Warning Message</div>
+      <div class="example-card__content">
+        <div class="example-card__title">JavaScript Code</div>
+        <div class="code-block" id="code-2">MTKMsgs.show({
+  type: 'warning',
+  icon: 'warning',
+  message: 'Warning: Please review your settings',
+  buttons: [
+    { label: 'Review', action: 'review' },
+    { label: 'Dismiss', action: 'dismiss' }
+  ],
+  closable: true,
+  timer: null
+});</div>
+        <div class="example-card__actions">
+          <button class="action-button" onclick="demoExample2()">Demo</button>
+          <button class="action-button action-button--secondary" onclick="copyCode('code-2')">Copy Code</button>
+        </div>
+      </div>
+    </div>
 
-    <!-- Demo Functions -->
-    <script>
-     function demoExample1() {
-	 MTKMsgs.show({
-             type: 'info',
-             icon: 'info',
-             message: 'This is an informational message',
-             buttons: [
-		 { label: 'Learn More', action: 'learnMore' }
-             ],
-             closable: true,
-             timer: null
-	 });
-     }
+    <!-- Example 3: Error Message (Screen Lock) -->
+    <div class="example-card">
+      <div class="example-card__header">Error Message (Screen Lock)</div>
+      <div class="example-card__content">
+        <div class="example-card__title">JavaScript Code</div>
+        <div class="code-block" id="code-3">MTKMsgs.show({
+  type: 'error',
+  icon: 'error',
+  message: 'Error: Something went wrong',
+  buttons: [
+    { label: 'Retry', action: 'retry' }
+  ],
+  closable: true,
+  timer: null
+});</div>
+        <div class="example-card__actions">
+          <button class="action-button" onclick="demoExample3()">Demo</button>
+          <button class="action-button action-button--secondary" onclick="copyCode('code-3')">Copy Code</button>
+        </div>
+      </div>
+    </div>
 
-     function demoExample2() {
-	 MTKMsgs.show({
-             type: 'warning',
-             icon: 'warning',
-             message: 'Warning: Please review your settings',
-             buttons: [
-		 { label: 'Review', action: 'review' },
-		 { label: 'Dismiss', action: 'dismiss' }
-             ],
-             closable: true,
-             timer: null
-	 });
-     }
+    <!-- Example 4: Success with Timer -->
+    <div class="example-card">
+      <div class="example-card__header">Success with 10s Timer</div>
+      <div class="example-card__content">
+        <div class="example-card__title">JavaScript Code</div>
+        <div class="code-block" id="code-4">MTKMsgs.show({
+  type: 'success',
+  icon: 'check_circle',
+  message: 'Success: Operation completed',
+  buttons: [],
+  closable: false,
+  timer: 10
+});</div>
+        <div class="example-card__actions">
+          <button class="action-button" onclick="demoExample4()">Demo</button>
+          <button class="action-button action-button--secondary" onclick="copyCode('code-4')">Copy Code</button>
+        </div>
+      </div>
+    </div>
 
-     function demoExample3() {
-	 MTKMsgs.show({
-             type: 'error',
-             icon: 'error',
-             message: 'Error: Something went wrong',
-             buttons: [
-		 { label: 'Retry', action: 'retry' }
-             ],
-             closable: true,
-             timer: null
-	 });
-     }
+    <!-- Example 5: Auto Info with Timer -->
+    <div class="example-card">
+      <div class="example-card__header">Auto Info with 5s Timer</div>
+      <div class="example-card__content">
+        <div class="example-card__title">JavaScript Code</div>
+        <div class="code-block" id="code-5">MTKMsgs.show({
+  type: 'info',
+  icon: 'info',
+  message: 'This message will close automatically',
+  buttons: [],
+  closable: false,
+  timer: 5
+});</div>
+        <div class="example-card__actions">
+          <button class="action-button" onclick="demoExample5()">Demo</button>
+          <button class="action-button action-button--secondary" onclick="copyCode('code-5')">Copy Code</button>
+        </div>
+      </div>
+    </div>
 
-     function demoExample4() {
-	 MTKMsgs.show({
-             type: 'success',
-             icon: 'check_circle',
-             message: 'Success: Operation completed',
-             buttons: [],
-             closable: false,
-             timer: 10
-	 });
-     }
+    <!-- Example 6: Using Config Key -->
+    <div class="example-card">
+      <div class="example-card__header">Using Config Key</div>
+      <div class="example-card__content">
+        <div class="example-card__title">JavaScript Code</div>
+        <div class="code-block" id="code-6">// Uses predefined config from mtk-msgs.config.js
+MTKMsgs.show('info');</div>
+        <div class="example-card__actions">
+          <button class="action-button" onclick="demoExample6()">Demo</button>
+          <button class="action-button action-button--secondary" onclick="copyCode('code-6')">Copy Code</button>
+        </div>
+      </div>
+    </div>
 
-     function demoExample5() {
-	 MTKMsgs.show({
-             type: 'info',
-             icon: 'info',
-             message: 'This message will close automatically',
-             buttons: [],
-             closable: false,
-             timer: 5
-	 });
-     }
+    <!-- Example 7: Using wc.publish -->
+    <div class="example-card">
+      <div class="example-card__header">Using wc.publish Event</div>
+      <div class="example-card__content">
+        <div class="example-card__title">JavaScript Code</div>
+        <div class="code-block" id="code-7">wc.publish('mtk-msgs:show', {
+  type: 'warning',
+  icon: 'warning',
+  message: 'Session will expire in 5 minutes',
+  buttons: [
+    { label: 'Extend', action: 'extend' }
+  ],
+  closable: true,
+  timer: null
+});</div>
+        <div class="example-card__actions">
+          <button class="action-button" onclick="demoExample7()">Demo</button>
+          <button class="action-button action-button--secondary" onclick="copyCode('code-7')">Copy Code</button>
+        </div>
+      </div>
+    </div>
 
-     function demoExample6() {
-	 MTKMsgs.show('info');
-     }
+    <!-- Example 8: Hide Message -->
+    <div class="example-card">
+      <div class="example-card__header">Hide Message</div>
+      <div class="example-card__content">
+        <div class="example-card__title">JavaScript Code</div>
+        <div class="code-block" id="code-8">// Hide any currently displayed message
+MTKMsgs.hide();</div>
+        <div class="example-card__actions">
+          <button class="action-button" onclick="demoExample8()">Demo</button>
+          <button class="action-button action-button--secondary" onclick="copyCode('code-8')">Copy Code</button>
+        </div>
+      </div>
+    </div>
 
-     function demoExample7() {
-	 wc.publish('mtk-msgs:show', {
-             type: 'warning',
-             icon: 'warning',
-             message: 'Session will expire in 5 minutes',
-             buttons: [
-		 { label: 'Extend', action: 'extend' }
-             ],
-             closable: true,
-             timer: null
-	 });
-     }
+    <!-- Example 9: Custom Error -->
+    <div class="example-card">
+      <div class="example-card__header">Custom Error Message</div>
+      <div class="example-card__content">
+        <div class="example-card__title">JavaScript Code</div>
+        <div class="code-block" id="code-9">MTKMsgs.show({
+  type: 'error',
+  icon: 'error',
+  message: 'Failed to save changes. Please try again.',
+  buttons: [
+    { label: 'Retry', action: 'retry' },
+    { label: 'Cancel', action: 'cancel' }
+  ],
+  closable: true,
+  timer: null
+});</div>
+        <div class="example-card__actions">
+          <button class="action-button" onclick="demoExample9()">Demo</button>
+          <button class="action-button action-button--secondary" onclick="copyCode('code-9')">Copy Code</button>
+        </div>
+      </div>
+    </div>
 
-     function demoExample8() {
-	 MTKMsgs.hide();
-     }
+    <!-- Example 10: Quick Success Notification -->
+    <div class="example-card">
+      <div class="example-card__header">Quick Success (3s Timer)</div>
+      <div class="example-card__content">
+        <div class="example-card__title">JavaScript Code</div>
+        <div class="code-block" id="code-10">MTKMsgs.show({
+  type: 'success',
+  icon: 'check_circle',
+  message: 'File uploaded successfully!',
+  buttons: [],
+  closable: false,
+  timer: 3
+});</div>
+        <div class="example-card__actions">
+          <button class="action-button" onclick="demoExample10()">Demo</button>
+          <button class="action-button action-button--secondary" onclick="copyCode('code-10')">Copy Code</button>
+        </div>
+      </div>
+    </div>
 
-     function demoExample9() {
-	 MTKMsgs.show({
-             type: 'error',
-             icon: 'error',
-             message: 'Failed to save changes. Please try again.',
-             buttons: [
-		 { label: 'Retry', action: 'retry' },
-		 { label: 'Cancel', action: 'cancel' }
-             ],
-             closable: true,
-             timer: null
-	 });
-     }
+    <!-- Example 11: Warning with Timer and Close -->
+    <div class="example-card">
+      <div class="example-card__header">Warning with Timer + Close Button</div>
+      <div class="example-card__content">
+        <div class="example-card__title">JavaScript Code</div>
+        <div class="code-block" id="code-11">MTKMsgs.show({
+  type: 'warning',
+  icon: 'warning',
+  message: 'Low disk space detected',
+  buttons: [
+    { label: 'Clean Up', action: 'cleanup' }
+  ],
+  closable: true,
+  timer: 15
+});</div>
+        <div class="example-card__actions">
+          <button class="action-button" onclick="demoExample11()">Demo</button>
+          <button class="action-button action-button--secondary" onclick="copyCode('code-11')">Copy Code</button>
+        </div>
+      </div>
+    </div>
 
-     function demoExample10() {
-	 MTKMsgs.show({
-             type: 'success',
-             icon: 'check_circle',
-             message: 'File uploaded successfully!',
-             buttons: [],
-             closable: false,
-             timer: 3
-	 });
-     }
+    <!-- Example 12: Info No Close Button -->
+    <div class="example-card">
+      <div class="example-card__header">Info without Close Button</div>
+      <div class="example-card__content">
+        <div class="example-card__title">JavaScript Code</div>
+        <div class="code-block" id="code-12">MTKMsgs.show({
+  type: 'info',
+  icon: 'info',
+  message: 'Processing your request...',
+  buttons: [],
+  closable: false,
+  timer: null
+});</div>
+        <div class="example-card__actions">
+          <button class="action-button" onclick="demoExample12()">Demo</button>
+          <button class="action-button action-button--secondary" onclick="copyCode('code-12')">Copy Code</button>
+        </div>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
 
-     function demoExample11() {
-	 MTKMsgs.show({
-             type: 'warning',
-             icon: 'warning',
-             message: 'Low disk space detected',
-             buttons: [
-		 { label: 'Clean Up', action: 'cleanup' }
-             ],
-             closable: true,
-             timer: 15
-	 });
-     }
+  <!-- Copy Notification -->
+  <div class="copy-notification" id="copyNotification">Code copied to clipboard!</div>
 
-     function demoExample12() {
-	 MTKMsgs.show({
-             type: 'info',
-             icon: 'info',
-             message: 'Processing your request...',
-             buttons: [],
-             closable: false,
-             timer: null
-	 });
-     }
+  <!-- Mock wc object -->
+  <script>
+    const wc = {
+      log: function(component, message, data) {
+        console.log(`[${component}]`, message, data || '');
+      },
+      publish: function(event, data) {
+        console.log(`[PUBLISH] ${event}`, data || '');
+        const customEvent = new CustomEvent(event, { detail: data });
+        document.dispatchEvent(customEvent);
+      },
+      subscribe: function(event, callback) {
+        document.addEventListener(event, (e) => {
+          callback(event, e.detail);
+        });
+      }
+    };
+  </script>
 
-     // Copy to clipboard function
-     function copyCode(elementId) {
-	 const codeBlock = document.getElementById(elementId);
-	 const text = codeBlock.textContent;
-	 
-	 navigator.clipboard.writeText(text).then(() => {
-             showCopyNotification();
-	 }).catch(err => {
-             console.error('Failed to copy:', err);
-	 });
-     }
+  <!-- Component Files -->
+  <script src="mtk-msgs.config.js"></script>
+  <script src="mtk-msgs.js"></script>
 
-     function showCopyNotification() {
-	 const notification = document.getElementById('copyNotification');
-	 notification.classList.add('show');
-	 
-	 setTimeout(() => {
-             notification.classList.remove('show');
-	 }, 2000);
-     }
+  <!-- Demo Functions -->
+  <script>
+    function demoExample1() {
+      MTKMsgs.show({
+        type: 'info',
+        icon: 'info',
+        message: 'This is an informational message',
+        buttons: [
+          { label: 'Learn More', action: 'learnMore' }
+        ],
+        closable: true,
+        timer: null
+      });
+    }
 
-     // Subscribe to button clicks
-     wc.subscribe('mtk-msgs:button-click', (event, data) => {
-	 console.log('Button clicked:', data);
-	 alert(`Action: ${data.action}`);
-     });
+    function demoExample2() {
+      MTKMsgs.show({
+        type: 'warning',
+        icon: 'warning',
+        message: 'Warning: Please review your settings',
+        buttons: [
+          { label: 'Review', action: 'review' },
+          { label: 'Dismiss', action: 'dismiss' }
+        ],
+        closable: true,
+        timer: null
+      });
+    }
 
-     // Subscribe to closed event
-     wc.subscribe('mtk-msgs:closed', (event, data) => {
-	 console.log('Message closed:', data);
-     });
+    function demoExample3() {
+      MTKMsgs.show({
+        type: 'error',
+        icon: 'error',
+        message: 'Error: Something went wrong',
+        buttons: [
+          { label: 'Retry', action: 'retry' }
+        ],
+        closable: true,
+        timer: null
+      });
+    }
 
-     // Subscribe to auto-closed event
-     wc.subscribe('mtk-msgs:auto-closed', (event, data) => {
-	 console.log('Message auto-closed after timer:', data);
-     });
-    </script>
+    function demoExample4() {
+      MTKMsgs.show({
+        type: 'success',
+        icon: 'check_circle',
+        message: 'Success: Operation completed',
+        buttons: [],
+        closable: false,
+        timer: 10
+      });
+    }
+
+    function demoExample5() {
+      MTKMsgs.show({
+        type: 'info',
+        icon: 'info',
+        message: 'This message will close automatically',
+        buttons: [],
+        closable: false,
+        timer: 5
+      });
+    }
+
+    function demoExample6() {
+      MTKMsgs.show('info');
+    }
+
+    function demoExample7() {
+      wc.publish('mtk-msgs:show', {
+        type: 'warning',
+        icon: 'warning',
+        message: 'Session will expire in 5 minutes',
+        buttons: [
+          { label: 'Extend', action: 'extend' }
+        ],
+        closable: true,
+        timer: null
+      });
+    }
+
+    function demoExample8() {
+      MTKMsgs.hide();
+    }
+
+    function demoExample9() {
+      MTKMsgs.show({
+        type: 'error',
+        icon: 'error',
+        message: 'Failed to save changes. Please try again.',
+        buttons: [
+          { label: 'Retry', action: 'retry' },
+          { label: 'Cancel', action: 'cancel' }
+        ],
+        closable: true,
+        timer: null
+      });
+    }
+
+    function demoExample10() {
+      MTKMsgs.show({
+        type: 'success',
+        icon: 'check_circle',
+        message: 'File uploaded successfully!',
+        buttons: [],
+        closable: false,
+        timer: 3
+      });
+    }
+
+    function demoExample11() {
+      MTKMsgs.show({
+        type: 'warning',
+        icon: 'warning',
+        message: 'Low disk space detected',
+        buttons: [
+          { label: 'Clean Up', action: 'cleanup' }
+        ],
+        closable: true,
+        timer: 15
+      });
+    }
+
+    function demoExample12() {
+      MTKMsgs.show({
+        type: 'info',
+        icon: 'info',
+        message: 'Processing your request...',
+        buttons: [],
+        closable: false,
+        timer: null
+      });
+    }
+
+    // Copy to clipboard function
+    function copyCode(elementId) {
+      const codeBlock = document.getElementById(elementId);
+      const text = codeBlock.textContent;
+      
+      navigator.clipboard.writeText(text).then(() => {
+        showCopyNotification();
+      }).catch(err => {
+        console.error('Failed to copy:', err);
+      });
+    }
+
+    function showCopyNotification() {
+      const notification = document.getElementById('copyNotification');
+      notification.classList.add('show');
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 2000);
+    }
+
+    // Subscribe to button clicks
+    wc.subscribe('mtk-msgs:button-click', (event, data) => {
+      console.log('Button clicked:', data);
+      alert(`Action: ${data.action}`);
+    });
+
+    // Subscribe to closed event
+    wc.subscribe('mtk-msgs:closed', (event, data) => {
+      console.log('Message closed:', data);
+    });
+
+    // Subscribe to auto-closed event
+    wc.subscribe('mtk-msgs:auto-closed', (event, data) => {
+      console.log('Message auto-closed after timer:', data);
+    });
+
+    // Subscribe to shown event to add padding
+    wc.subscribe('mtk-msgs:shown', (event, data) => {
+      document.querySelector('.content-area').classList.add('has-message');
+    });
+
+    // Subscribe to hidden event to remove padding
+    wc.subscribe('mtk-msgs:hidden', (event, data) => {
+      document.querySelector('.content-area').classList.remove('has-message');
+    });
+  </script>
 </body>
 </html>
