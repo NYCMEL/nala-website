@@ -1112,7 +1112,7 @@ wc.showInactivityWarning = function () {
     // user clicked "No" OR ignored dialog
     wc.inactivity.warningTimer = setTimeout(() => {
         wc.log('Logging out due to inactivity');
-        wc.doLogout();
+	wc.publish("mtk-header-logout");
 	alert("A");
     }, wc.inactivity.warningTime);
 };
