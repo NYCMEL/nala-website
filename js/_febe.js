@@ -54,11 +54,11 @@ class _febe {
 	case "mtk-header-home":
             MTKPager.show("home");
             break;
-
+	    
 	case "mtk-login-success":
 	    (async () => {
 		const ok = await wc.doLogin(data.email, data.password);
-		console.log(">>>>>> ok =", ok);
+		wc.log("_febe > mtk-login-success", ok);
 		
 		if (ok) {
 		    wc.setCookie('logged', 'true', 1);
