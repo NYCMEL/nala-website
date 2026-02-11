@@ -111,11 +111,10 @@
 	     if (err) return;
 	     
 	     if (loggedIn) {
-		 wc.log('User is logged in');
-		 // IF LOGGED-IN
+		 wc.log('IS LOGGED IN');
 		 document.location.href = document.location.href + "/private";
 	     } else {
-		 wc.log('User is logged out');
+		 wc.log('IS NOT LOGGED IN');
 		 MTKPager.show("home");
 	     }
 	 });
