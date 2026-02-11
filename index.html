@@ -110,7 +110,12 @@
 	<script>
          // INITIAL PAGE
 	 wc.timeout(function(){
-	     MTKPager.show("home");
+	     if (wc.getCookie("logged")) {
+		 // IF LOGGED-IN
+		 document.location.href = document.location.href + "/private";
+	     } else {
+		 MTKPager.show("home");
+	     }
 	 }, 100, 1);
 
 	</script>
