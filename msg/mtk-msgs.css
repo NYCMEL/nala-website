@@ -6,8 +6,9 @@
   transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
   opacity: 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  position: relative; }
+  z-index: 9999;
+  position: relative;
+  margin-top: 100px; }
   .mtk-msgs.visible {
     height: 40px;
     opacity: 1; }
