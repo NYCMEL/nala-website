@@ -256,7 +256,7 @@ class MTKMsgs {
 }
 
 // Wait for DOM and initialize
-function initMTKMsgs() {
+function initMtkMsgs() {
   const element = document.querySelector('.mtk-msgs');
   if (element && !element._mtkMsgsInstance) {
     element._mtkMsgsInstance = new MTKMsgs(element);
@@ -265,9 +265,9 @@ function initMTKMsgs() {
 
 // Try to initialize immediately if DOM is ready
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initMTKMsgs);
+  document.addEventListener('DOMContentLoaded', initMtkMsgs);
 } else {
-  initMTKMsgs();
+  initMtkMsgs();
 }
 
 // Also observe for dynamically added elements
