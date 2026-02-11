@@ -57,7 +57,7 @@ class _febe {
 
 	case "mtk-login-success":
 	    (async () => {
-		const ok = await doLogin(data.email, data.password);
+		const ok = await wc.doLogin(data.email, data.password);
 		console.log(">>>>>> ok =", ok);
 
 		if (ok) {
@@ -101,7 +101,7 @@ class _febe {
 	case "mtk-header-logout":
 	    wc.deleteCookie('logged');
 
-	    doLogout();
+	    wc.doLogout();
 	    document.location.href = "index.html";
             break;
 
