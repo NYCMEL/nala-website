@@ -56,16 +56,20 @@ class _febe {
             break;
 	    
 	case "mtk-login-success":
-	    (async () => {
-		const ok = await wc.doLogin(data.email, data.password);
-		wc.log("_febe > mtk-login-success", ok);
-		
-		if (ok) {
-		    wc.setCookie('logged', 'true', 1);
-		    document.location.href = document.location.href + "/private";
-		    MTKPager.show("dashboard");
-		}
-	    })();
+	    wc.doLogin(data.email, data.password)
+		.then(success => {
+		    if (success) {
+			wc.log('Logged in!');
+
+			wc.setCookie('logged', 'true', 1);
+			document.location.href = document.location.href + "/private";
+			MTKPager.show("dashboard");
+		    }
+		})
+		.catch(err => {
+		    wc.error(err);
+		    alert(err);
+		});
 	    break;
 
 	case "mtk-dashboard:continue":
