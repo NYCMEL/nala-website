@@ -5,6 +5,7 @@ window.app = {
     "hierarchy": [
 	{
 	    "title": "Introduction to Locksmithing",
+	    "progress": 1, /* 1 = NOT STARTED, 2 = IN PORGRESS 3 = Completed */
 	    "access": true,
 	    "processed": false,
 	    "modules": [
