@@ -1050,5 +1050,8 @@ wc.getSession = function () {
 //// isLoggedIn
 /////////////////////////////////////////////////////////////////////////////////
 wc.isLoggedIn = function () {
-    return wc.getSession().then(data => !!data.logged_in);
+    let res = wc.getSession().then(data => !!data.logged_in);;
+    wc.log(">>>>>", res);
+
+    return res;
 };
