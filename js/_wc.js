@@ -1074,69 +1074,211 @@ wc.getSession = function (callback) {
 //     }
 // });
 
-/////////////////////////////////////////////////////////////////////////////////
-//// Inactivity Tracker
-/////////////////////////////////////////////////////////////////////////////////
-
+/************************************************************
+ * CONFIG
+ ************************************************************/
 wc.inactivity = {
-    idleTime: 60 * 1000,      // 1 minute
-    warningTime: 15 * 1000,   // time to respond to alert
-    timer: null,
-    warningTimer: null,
-    active: true
+    idleTime: 60 * 1000,   // 1 minute idle
+    countdown: 15,         // seconds before logout
+    idleTimer: null,
+    countdownTimer: null
 };
 
-/**
- * Reset inactivity timers
- */
+
+/************************************************************
+ * LOG HELPERS
+ ************************************************************/
+wc.log = function (...args) {
+    console.log('[WC]', ...args);
+};
+
+wc.error = function (...args) {
+    console.error('[WC]', ...args);
+};
+
+
+/************************************************************
+ * INACTIVITY LOGIC
+ ************************************************************/
 wc.resetInactivity = function () {
-    clearTimeout(wc.inactivity.timer);
-    clearTimeout(wc.inactivity.warningTimer);
+    clearTimeout(wc.inactivity.idleTimer);
 
-    wc.inactivity.timer = setTimeout(wc.showInactivityWarning, wc.inactivity.idleTime);
-};
-
-/**
- * Show inactivity warning
- */
-wc.showInactivityWarning = function () {
-    wc.log('Inactivity detected');
-
-    const stillThere = confirm('Are you still there?');
-
-    if (stillThere) {
-        wc.resetInactivity();
-        return;
-    }
-
-    // user clicked "No" OR ignored dialog
-    wc.inactivity.warningTimer = setTimeout(() => {
-        wc.log('Logging out due to inactivity');
-	wc.publish("mtk-header-logout");
-	alert("A");
-    }, wc.inactivity.warningTime);
-};
-
-/**
- * Start inactivity tracking
- */
-wc.startInactivityTracking = function () {
-    const events = ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart'];
-    
-    events.forEach(evt =>
-        window.addEventListener(evt, wc.resetInactivity, { passive: true })
+    wc.inactivity.idleTimer = setTimeout(
+        wc.showInactivityModal,
+        wc.inactivity.idleTime
     );
+};
+
+
+wc.showInactivityModal = function () {
+    let seconds = wc.inactivity.countdown;
+
+    if (document.getElementById('wc-idle-modal')) return;
+
+    const modal = document.createElement('div');
+    modal.id = 'wc-idle-modal';
+
+    modal.innerHTML = `
+        <div class="wc-md-backdrop"></div>
+        <div class="wc-md-dialog">
+            <h2>Are you still there?</h2>
+            <p>
+                You will be logged out in
+                <strong id="wc-idle-seconds">${seconds}</strong>
+                seconds.
+            </p>
+            <div class="wc-md-actions">
+                <button class="wc-md-btn wc-md-btn-text" id="wc-idle-no">
+                    No
+                </button>
+                <button class="wc-md-btn wc-md-btn-primary" id="wc-idle-yes">
+                    Yes
+                </button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+    wc.injectMaterialStyles();
+
+    // Countdown
+    wc.inactivity.countdownTimer = setInterval(() => {
+        seconds--;
+        document.getElementById('wc-idle-seconds').textContent = seconds;
+
+        if (seconds <= 0) {
+            wc.closeIdleModal();
+            wc.publish('mtk-header-logout');
+        }
+    }, 1000);
+
+    // Buttons
+    document.getElementById('wc-idle-yes').onclick = function () {
+        wc.closeIdleModal();
+        wc.resetInactivity();
+    };
+
+    document.getElementById('wc-idle-no').onclick = function () {
+        wc.closeIdleModal();
+        wc.publish('mtk-header-logout');
+    };
+};
+
+
+wc.closeIdleModal = function () {
+    clearInterval(wc.inactivity.countdownTimer);
+    wc.inactivity.countdownTimer = null;
+
+    const modal = document.getElementById('wc-idle-modal');
+    if (modal) modal.remove();
+};
+
+
+/************************************************************
+ * START / STOP
+ ************************************************************/
+wc.startInactivityTracking = function () {
+    ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart']
+        .forEach(evt =>
+            window.addEventListener(evt, wc.resetInactivity, { passive: true })
+        );
 
     wc.resetInactivity();
 };
 
-/**
- * Stop inactivity tracking (optional)
- */
 wc.stopInactivityTracking = function () {
-    clearTimeout(wc.inactivity.timer);
-    clearTimeout(wc.inactivity.warningTimer);
+    clearTimeout(wc.inactivity.idleTimer);
+    wc.closeIdleModal();
 };
 
-// USAGE: START TRACKING AFTER LOGIN
-wc.startInactivityTracking();
+
+/************************************************************
+ * MATERIAL DESIGN–LIKE STYLES (Injected Once)
+ ************************************************************/
+wc.injectMaterialStyles = function () {
+    if (document.getElementById('wc-md-styles')) return;
+
+    const style = document.createElement('style');
+    style.id = 'wc-md-styles';
+    style.textContent = `
+        .wc-md-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 9998;
+        }
+
+        .wc-md-dialog {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            min-width: 320px;
+            box-shadow:
+                0 5px 5px -3px rgba(0,0,0,.2),
+                0 8px 10px 1px rgba(0,0,0,.14),
+                0 3px 14px 2px rgba(0,0,0,.12);
+            z-index: 9999;
+            font-family: Roboto, Arial, sans-serif;
+        }
+
+        .wc-md-dialog h2 {
+            margin: 0 0 12px;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .wc-md-dialog p {
+            margin: 0 0 20px;
+            color: #444;
+        }
+
+        .wc-md-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .wc-md-btn {
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            background: none;
+            text-transform: uppercase;
+        }
+
+        .wc-md-btn-text {
+            color: #6200ee;
+        }
+
+        .wc-md-btn-primary {
+            background: #6200ee;
+            color: #fff;
+            box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),
+                        0 2px 2px 0 rgba(0,0,0,.14),
+                        0 1px 5px 0 rgba(0,0,0,.12);
+        }
+
+        .wc-md-btn-primary:hover {
+            background: #5300d6;
+        }
+    `;
+
+    document.head.appendChild(style);
+};
+
+/************************************************************
+ * INACTIVITY TIMER
+ ************************************************************/
+// Optional tuning
+// wc.inactivity.idleTime = 0.5 * 60 * 1000;
+// wc.inactivity.countdown = 10;
+
+// Start tracking AFTER login
+// wc.startInactivityTracking();
+

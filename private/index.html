@@ -82,6 +82,16 @@
 	<wc-include href="pages/parts/top.html" />
 	
 	<script>
+	 /************************************************************
+	  * INACTIVITY TIMER
+	  ************************************************************/
+	 // Optional tuning
+	 //wc.inactivity.idleTime = 0.5 * 60 * 1000;
+	 //wc.inactivity.countdown = 10;
+
+	 // Start tracking AFTER login
+	 wc.startInactivityTracking();
+
          // INITIAL PAGE
          MTKPager.show("dashboard");
 	</script>
