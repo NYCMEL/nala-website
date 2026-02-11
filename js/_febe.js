@@ -59,7 +59,7 @@ class _febe {
 	    (async () => {
 		const ok = await wc.doLogin(data.email, data.password);
 		console.log(">>>>>> ok =", ok);
-
+		
 		if (ok) {
 		    wc.setCookie('logged', 'true', 1);
 		    document.location.href = document.location.href + "/private";
