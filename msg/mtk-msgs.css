@@ -29,13 +29,12 @@
     align-items: center;
     justify-content: center;
     font-family: 'Material Icons';
-    font-size: 20px;
-    width: 20px;
-    height: 20px;
+    font-size: 30px;
+    width: 30px;
+    height: 30px;
     flex-shrink: 0; }
   .mtk-msgs .mtk-msgs__message {
-    font-family: 'Roboto', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 20px;
     margin: 0;
@@ -52,7 +51,6 @@
     background: transparent;
     border: none;
     padding: 6px 12px;
-    font-family: 'Roboto', sans-serif;
     font-size: 13px;
     font-weight: 500;
     text-transform: uppercase;
