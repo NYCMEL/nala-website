@@ -1036,22 +1036,40 @@ wc.doLogin = async function (email, passwd) {
 /////////////////////////////////////////////////////////////////////////////////
 //// wc.getSession().catch(wc.error);
 /////////////////////////////////////////////////////////////////////////////////
-wc.getSession = function () {
+wc.getSession = function (callback) {
     return fetch(wc.apiUrl + '/api/me.php', {
         credentials: 'include'
-    }).then(res => res.json()).then(data => {
+    })
+    .then(res => res.json())
+    .then(data => {
         wc.log('SESSION', data.logged_in);
-	
+
+        if (typeof callback === 'function') {
+            callback(data.logged_in, data);
+        }
+
         return data.logged_in;
+    })
+    .catch(err => {
+        wc.error('getSession failed', err);
+
+        if (typeof callback === 'function') {
+            callback(false, null, err);
+        }
+
+        throw err;
     });
 };
 
 /////////////////////////////////////////////////////////////////////////////////
-//// isLoggedIn
+//// SAMPLE CODE TO USE
 /////////////////////////////////////////////////////////////////////////////////
-wc.isLoggedIn = function () {
-    let res = wc.getSession().then(data => !! data.logged_in);
-
-    wc.log(">>>>>", res);
-    return res;
-};
+// wc.getSession(function (loggedIn, session, err) {
+//     if (err) return;
+//    
+//     if (loggedIn) {
+//         wc.log('User is logged in');
+//     } else {
+//         wc.log('User is logged out');
+//     }
+// });
