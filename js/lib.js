@@ -37,7 +37,7 @@ async function doLogin(email,passwd) {
     });
 
     const data = await res.json();
-    wc.log(data);
+    wc.log("data:", data);
 
     if (!res.ok) {
 	alert("DoLogin: Error BBBBBB");
