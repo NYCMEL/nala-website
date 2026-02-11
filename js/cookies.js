@@ -3,7 +3,7 @@
  * Basic functions for managing browser cookies
  */
 
-const CookieManager = {
+const wc = {
     /**
      * Set a cookie
      * @param {string} name - Cookie name
@@ -195,7 +195,7 @@ function cookieExists(name) {
 // Export for module usage
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
-	CookieManager,
+	wc,
 	setCookie,
 	getCookie,
 	deleteCookie,

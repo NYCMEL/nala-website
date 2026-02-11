@@ -13,13 +13,13 @@ if(typeof(console) === 'undefined') {console = {}}
 //// string to hash
 /////////////////////////////////////////////////////////////////////////////////
 String.prototype.hash = function() {
-  var self = this, range = Array(this.length);
-  for(var i = 0; i < this.length; i++) {
-    range[i] = i;
-  }
-  return Array.prototype.map.call(range, function(i) {
-    return self.charCodeAt(i).toString(16);
-  }).join('');
+    var self = this, range = Array(this.length);
+    for(var i = 0; i < this.length; i++) {
+	range[i] = i;
+    }
+    return Array.prototype.map.call(range, function(i) {
+	return self.charCodeAt(i).toString(16);
+    }).join('');
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -662,7 +662,7 @@ window.wc = window.wc || {};
  * @param {number} days  Expiration in days (optional)
  * @param {string} path
  */
-wc.setCookie = function (name, value, days = 7, path = '/') {
+wc.setCookie = function (name, value, days = 1, path = '/') {
     let expires = '';
 
     if (days) {
@@ -671,11 +671,8 @@ wc.setCookie = function (name, value, days = 7, path = '/') {
         expires = '; expires=' + date.toUTCString();
     }
 
-    document.cookie =
-        encodeURIComponent(name) + '=' +
-        encodeURIComponent(value) +
-        expires +
-        '; path=' + path;
+    document.cookie = encodeURIComponent(name) + '=' + encodeURIComponent(value) + expires + '; path=' + path;
+    wc.log(encodeURIComponent(name) + '=' + encodeURIComponent(value) + expires + '; path=' + path)
 };
 
 
@@ -687,6 +684,8 @@ wc.setCookie = function (name, value, days = 7, path = '/') {
 wc.getCookie = function (name) {
     const nameEQ = encodeURIComponent(name) + '=';
     const cookies = document.cookie.split(';');
+
+    wc.log(">>>>>>", cookies);
 
     for (let i = 0; i < cookies.length; i++) {
         let c = cookies[i].trim();
