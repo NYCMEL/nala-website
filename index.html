@@ -54,7 +54,12 @@
 
 	<!-- MSGS 
 	<div>
+	    <link href="msg/mtk-msgs.css" rel="stylesheet">
+
 	    <wc-include href="msg/mtk-msgs.html" />
+
+	    <script src="msg/mtk-msgs.config.js"></script>
+	    <script src="msg/mtk-msgs.js"></script>
 	</div>
 
 	<!-- ALL PAGES -->
@@ -111,6 +116,10 @@
 	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
 	<script>
+	 wc.timeout(function(){
+	     MTKMsgs.show('success');
+	 }, 2000, 1);
+
          // INITIAL PAGE
 	 wc.getSession(function (loggedIn, session, err) {
 	     if (err) return;
