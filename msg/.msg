@@ -54,3 +54,4 @@ mtk-msg can have one or more buttons pulled to right
 mtk-msg can have an "X" all the way on the right
 mtk-msg elments should all be lined up horizontally
 mtk-msg should have an API to show or hide
+mtk-msg should wc.publish("mtk-msg-btn", data) for all button events
