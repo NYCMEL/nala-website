@@ -649,3 +649,72 @@ tkloading.hide = function(ele = "body") {
     wc.groupEnd();
 };
 
+
+window.wc = window.wc || {};
+
+/////////////////////////////////////////////////////////////////////////////////
+//// Cookies (vanilla JS)
+/////////////////////////////////////////////////////////////////////////////////
+/**
+ * Set a cookie
+ * @param {string} name
+ * @param {string} value
+ * @param {number} days  Expiration in days (optional)
+ * @param {string} path
+ */
+wc.setCookie = function (name, value, days = 7, path = '/') {
+    let expires = '';
+
+    if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = '; expires=' + date.toUTCString();
+    }
+
+    document.cookie =
+        encodeURIComponent(name) + '=' +
+        encodeURIComponent(value) +
+        expires +
+        '; path=' + path;
+};
+
+
+/**
+ * Get a cookie by name
+ * @param {string} name
+ * @returns {string|null}
+ */
+wc.getCookie = function (name) {
+    const nameEQ = encodeURIComponent(name) + '=';
+    const cookies = document.cookie.split(';');
+
+    for (let i = 0; i < cookies.length; i++) {
+        let c = cookies[i].trim();
+        if (c.indexOf(nameEQ) === 0) {
+            return decodeURIComponent(c.substring(nameEQ.length));
+        }
+    }
+    return null;
+};
+
+
+/**
+ * Delete a cookie
+ * @param {string} name
+ * @param {string} path
+ */
+wc.deleteCookie = function (name, path = '/') {
+    document.cookie =
+        encodeURIComponent(name) +
+        '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=' + path;
+};
+
+
+/**
+ * Check if cookie exists
+ * @param {string} name
+ * @returns {boolean}
+ */
+wc.hasCookie = function (name) {
+    return wc.getCookie(name) !== null;
+};
