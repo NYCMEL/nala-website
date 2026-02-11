@@ -1113,6 +1113,7 @@ wc.showInactivityWarning = function () {
     wc.inactivity.warningTimer = setTimeout(() => {
         wc.log('Logging out due to inactivity');
         wc.doLogout();
+	alert("A");
     }, wc.inactivity.warningTime);
 };
 
@@ -1120,14 +1121,8 @@ wc.showInactivityWarning = function () {
  * Start inactivity tracking
  */
 wc.startInactivityTracking = function () {
-    const events = [
-        'mousemove',
-        'mousedown',
-        'keydown',
-        'scroll',
-        'touchstart'
-    ];
-
+    const events = ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart'];
+    
     events.forEach(evt =>
         window.addEventListener(evt, wc.resetInactivity, { passive: true })
     );
