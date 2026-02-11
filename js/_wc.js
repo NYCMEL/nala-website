@@ -1047,14 +1047,8 @@ wc.getSession = function () {
 };
 
 /////////////////////////////////////////////////////////////////////////////////
-//// wc.getSession()
+//// isLoggedIn
 /////////////////////////////////////////////////////////////////////////////////
-wc.getSession().then(function (loggedIn) {
-    if (loggedIn) {
-        wc.log('User is logged in');
-	alert("IN");
-    } else {
-        wc.log('User is NOT logged in');
-	alert("OUT");
-    }
-}).catch(wc.error);
+wc.isLoggedIn = function () {
+    return wc.getSession().then(data => !!data.logged_in);
+};
