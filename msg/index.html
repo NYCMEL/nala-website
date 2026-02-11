@@ -1,399 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>mtk-msgs Demo</title>
-  
-  <!-- Material Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  
-  <!-- Roboto Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-  
-  <!-- Compiled CSS (in production, compile SCSS to CSS) -->
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <head>
+	<meta charset="UTF-8">
+	<title>Msg</title>
 
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #f5f5f5;
-    }
+	<base href="/repo_deploy/">
 
-    .demo-header {
-      background-color: #1976d2;
-      color: white;
-      padding: 16px 24px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
+	<link rel="icon" href="img/cropped-favicon-32x32.png" sizes="32x32">
+	<link rel="icon" href="img/cropped-favicon-192x192.png" sizes="192x192">
+	<link rel="apple-touch-icon" href="img/cropped-favicon-180x180.png">
+	
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    .demo-header h1 {
-      font-size: 20px;
-      font-weight: 500;
-    }
+	<!-- W3C LOGGING -->
+	<script>
+	 wcENV="dev"; // prod || dev
+	 wcAPP="NALA";
+	 wcURL="";
+	</script>
 
-    .demo-content {
-      padding: 24px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+	<!-- BOOTSTRAP & MATERIAL DESIGN -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://unpkg.com/material-msgs-web@latest/dist/material-msgs-web.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    .demo-controls {
-      background: white;
-      padding: 24px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      margin-bottom: 24px;
-    }
+	<!-- SOCIAL ICONS -->
+	<link href="css/fonts/fonts.css" rel="stylesheet">
 
-    .demo-controls h2 {
-      font-size: 18px;
-      font-weight: 500;
-      margin-bottom: 16px;
-      color: #333;
-    }
+	<!-- APPLICATION STYLES -->
+	<link href="css/app.css" rel="stylesheet">
+    </head>
 
-    .button-group {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
-    }
+    <body id="wc">
+	<!-- BOOTSTRAP & JQUERY -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://unpkg.com/material-msgs-web@latest/dist/material-msgs-web.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
-    .demo-button {
-      background-color: #1976d2;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 14px;
-      font-weight: 500;
-      text-transform: uppercase;
-      cursor: pointer;
-      border-radius: 4px;
-      transition: background-color 0.2s;
-    }
+	<!-- COMMON STUFF -->
+	<script src="js/_wc.js"></script>
+	<script src="js/cookies.js"></script>
+	<script src="js/lib.js"></script>
+	<script src="js/app.config.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/_febe.js" defer></script>
+	
+	<!-- YOUR CODE FROM HERE... -->
 
-    .demo-button:hover {
-      background-color: #1565c0;
-    }
+	<!-- MSG -->
+	<div style="border:2px red dashed">
+	    <link href="msg/mtk-msg.css" rel="stylesheet">
+	    
+	    <wc-include href="msg/mtk-msg.html"><p align="center">loading msg.html...</p></wc-include>
 
-    .demo-button:active {
-      background-color: #0d47a1;
-    }
+	    <script src="msg/mtk-msg.config.js"></script>
+	    <script src="msg/mtk-msg.js"></script>
+	</div>
 
-    .demo-info {
-      background: white;
-      padding: 24px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .demo-info h3 {
-      font-size: 16px;
-      font-weight: 500;
-      margin-bottom: 12px;
-      color: #333;
-    }
-
-    .demo-info pre {
-      background: #f5f5f5;
-      padding: 12px;
-      border-radius: 4px;
-      overflow-x: auto;
-      font-size: 13px;
-    }
-
-    /* Inline SCSS compilation for demo */
-    .mtk-msgs {
-      display: block;
-      width: 100%;
-      height: 0;
-      overflow: hidden;
-      transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
-      opacity: 0;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      z-index: 1000;
-      position: relative;
-    }
-
-    .mtk-msgs.visible {
-      height: 40px;
-      opacity: 1;
-    }
-
-    .mtk-msgs__container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 40px;
-      padding: 0 16px;
-      gap: 12px;
-      width: 100%;
-    }
-
-    .mtk-msgs__left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-shrink: 0;
-    }
-
-    .mtk-msgs__icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Material Icons';
-      font-size: 20px;
-      width: 20px;
-      height: 20px;
-      flex-shrink: 0;
-    }
-
-    .mtk-msgs__message {
-      font-family: 'Roboto', sans-serif;
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 20px;
-      margin: 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .mtk-msgs__buttons {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-left: auto;
-      flex-shrink: 0;
-    }
-
-    .mtk-msgs__button {
-      background: transparent;
-      border: none;
-      padding: 6px 12px;
-      font-family: 'Roboto', sans-serif;
-      font-size: 13px;
-      font-weight: 500;
-      text-transform: uppercase;
-      cursor: pointer;
-      border-radius: 4px;
-      transition: background-color 0.2s ease;
-      white-space: nowrap;
-      outline: none;
-    }
-
-    .mtk-msgs__button:hover {
-      background-color: rgba(0, 0, 0, 0.08);
-    }
-
-    .mtk-msgs__button:focus {
-      outline: 2px solid currentColor;
-      outline-offset: 2px;
-    }
-
-    .mtk-msgs__button:active {
-      background-color: rgba(0, 0, 0, 0.12);
-    }
-
-    .mtk-msgs__close {
-      background: transparent;
-      border: none;
-      padding: 8px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      transition: background-color 0.2s ease;
-      flex-shrink: 0;
-      margin-left: 8px;
-      outline: none;
-    }
-
-    .mtk-msgs__close .material-icons {
-      font-size: 18px;
-    }
-
-    .mtk-msgs__close:hover {
-      background-color: rgba(0, 0, 0, 0.08);
-    }
-
-    .mtk-msgs__close:focus {
-      outline: 2px solid currentColor;
-      outline-offset: 2px;
-    }
-
-    .mtk-msgs__close:active {
-      background-color: rgba(0, 0, 0, 0.12);
-    }
-
-    .mtk-msgs.mtk-msgs--info {
-      background-color: #0dcaf0;
-      color: #055160;
-    }
-
-    .mtk-msgs.mtk-msgs--info .mtk-msgs__button {
-      color: #055160;
-    }
-
-    .mtk-msgs.mtk-msgs--info .mtk-msgs__close {
-      color: #055160;
-    }
-
-    .mtk-msgs.mtk-msgs--warning {
-      background-color: #ffc107;
-      color: #664d03;
-    }
-
-    .mtk-msgs.mtk-msgs--warning .mtk-msgs__button {
-      color: #664d03;
-    }
-
-    .mtk-msgs.mtk-msgs--warning .mtk-msgs__close {
-      color: #664d03;
-    }
-
-    .mtk-msgs.mtk-msgs--error {
-      background-color: #dc3545;
-      color: #ffffff;
-    }
-
-    .mtk-msgs.mtk-msgs--error .mtk-msgs__button {
-      color: #ffffff;
-    }
-
-    .mtk-msgs.mtk-msgs--error .mtk-msgs__close {
-      color: #ffffff;
-    }
-
-    .mtk-msgs.mtk-msgs--success {
-      background-color: #198754;
-      color: #ffffff;
-    }
-
-    .mtk-msgs.mtk-msgs--success .mtk-msgs__button {
-      color: #ffffff;
-    }
-
-    .mtk-msgs.mtk-msgs--success .mtk-msgs__close {
-      color: #ffffff;
-    }
-  </style>
-</head>
-<body>
-  <!-- Demo Header -->
-  <div class="demo-header">
-    <h1>mtk-msgs Component Demo</h1>
-  </div>
-
-  <!-- Message Panel Component -->
-  <mtk-msgs class="mtk-msgs" role="alert" aria-live="polite" aria-atomic="true">
-    <div class="mtk-msgs__container">
-      <div class="mtk-msgs__left">
-        <span class="mtk-msgs__icon material-icons" aria-hidden="true"></span>
-        <p class="mtk-msgs__message"></p>
-      </div>
-      <div class="mtk-msgs__buttons"></div>
-      <button class="mtk-msgs__close" aria-label="Close message" type="button">
-        <span class="material-icons">close</span>
-      </button>
-    </div>
-  </mtk-msgs>
-
-  <!-- Demo Content -->
-  <div class="demo-content">
-    <div class="demo-controls">
-      <h2>Message Controls</h2>
-      <div class="button-group">
-        <button class="demo-button" onclick="showInfoMessage()">Show Info</button>
-        <button class="demo-button" onclick="showWarningMessage()">Show Warning</button>
-        <button class="demo-button" onclick="showErrorMessage()">Show Error</button>
-        <button class="demo-button" onclick="showSuccessMessage()">Show Success</button>
-        <button class="demo-button" onclick="hideMessage()">Hide Message</button>
-      </div>
-    </div>
-
-    <div class="demo-info">
-      <h3>API Usage</h3>
-      <pre>// Show a message
-MtkMsgs.show('info');
-MtkMsgs.show('warning');
-MtkMsgs.show('error');
-MtkMsgs.show('success');
-
-// Hide the message
-MtkMsgs.hide();
-
-// Toggle the message
-MtkMsgs.toggle('info');
-
-// Using events (requires wc object)
-wc.publish('mtk-msgs:show', 'info');
-wc.publish('mtk-msgs:hide');
-wc.publish('mtk-msgs:toggle', 'warning');</pre>
-    </div>
-  </div>
-
-  <!-- Mock wc object for demo -->
-  <script>
-    const wc = {
-      log: function(component, message, data) {
-        console.log(`[${component}]`, message, data || '');
-      },
-      publish: function(event, data) {
-        console.log(`[PUBLISH] ${event}`, data || '');
-        const customEvent = new CustomEvent(event, { detail: data });
-        document.dispatchEvent(customEvent);
-      },
-      subscribe: function(event, callback) {
-        document.addEventListener(event, (e) => {
-          callback(event, e.detail);
-        });
-      }
-    };
-  </script>
-
-  <!-- Component Files -->
-  <script src="mtk-msgs.config.js"></script>
-  <script src="mtk-msgs.js"></script>
-
-  <!-- Demo Functions -->
-  <script>
-    function showInfoMessage() {
-      MtkMsgs.show('info');
-    }
-
-    function showWarningMessage() {
-      MtkMsgs.show('warning');
-    }
-
-    function showErrorMessage() {
-      MtkMsgs.show('error');
-    }
-
-    function showSuccessMessage() {
-      MtkMsgs.show('success');
-    }
-
-    function hideMessage() {
-      MtkMsgs.hide();
-    }
-
-    // Subscribe to button clicks
-    wc.subscribe('mtk-msgs:button-click', (event, data) => {
-      console.log('Button clicked:', data);
-      alert(`Action: ${data.action}`);
-    });
-
-    // Subscribe to closed event
-    wc.subscribe('mtk-msgs:closed', (event, data) => {
-      console.log('Message closed:', data);
-    });
-  </script>
-</body>
+	<!-- YOUR CODE TO HERE -->
+    </body>
 </html>
