@@ -61,6 +61,7 @@ class _febe {
 		console.log(">>>>>> ok =", ok);
 
 		if (ok) {
+		    wc.setCookie('logged', 'true', 1);
 		    document.location.href = document.location.href + "/private";
 		    MTKPager.show("dashboard");
 		}
@@ -98,6 +99,8 @@ class _febe {
             break;
 
 	case "mtk-header-logout":
+	    wc.deleteCookie('logged');
+
 	    doLogout();
 	    document.location.href = "index.html";
             break;

@@ -1,8 +1,7 @@
 let url = "https://nala-test.com";
 
 async function doLogout() {
-    CookieManager.delete('logged');
-    alert("A")
+    wc.group("doLogout");
 
     // LOGOUT
     const res = await fetch(url + "/api/auth_logout.php", {
@@ -15,6 +14,7 @@ async function doLogout() {
     console.log("logged out", data);
 
     wc.log("logged out");
+    wc.groupEnd();;
 }
 
 async function doLogin(email,passwd) {
@@ -36,7 +36,5 @@ async function doLogin(email,passwd) {
 	return false;
     }
     
-    CookieManager.set('logged', 'true', 1);
-
     return true;
 }
