@@ -1,9 +1,12 @@
 let url = "https://nala-test.com";
 
+
+/////////////////////////////////////////////////////////////////////////////////
+//// LOGOUT
+/////////////////////////////////////////////////////////////////////////////////
 async function doLogout() {
     wc.group("doLogout");
 
-    // LOGOUT
     const res = await fetch(url + "/api/auth_logout.php", {
 	method: "POST",
 	credentials: "include"
@@ -17,8 +20,12 @@ async function doLogout() {
     wc.groupEnd();;
 }
 
+/////////////////////////////////////////////////////////////////////////////////
+//// LOGIN
+/////////////////////////////////////////////////////////////////////////////////
 async function doLogin(email,passwd) {
-    // LOGIN
+    wc.group("doLogin");
+
     const res = await fetch(url + "/api/login_api.php", {
 	method: "POST",
 	credentials: "include",
@@ -30,11 +37,14 @@ async function doLogin(email,passwd) {
     });
 
     const data = await res.json();
+    wc.log(data);
 
     if (!res.ok) {
-	alert("BBBBBB");
+	alert("DoLogin: Error BBBBBB");
+	wc.groupEnd();
 	return false;
     }
     
+    wc.groupEnd();
     return true;
 }
