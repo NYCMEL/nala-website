@@ -1016,19 +1016,18 @@ wc.doLogin = async function (email, passwd) {
         wc.log('data:', data);
 
         if (!res.ok) {
-            alert('DoLogin: Error BBBBBB');
+            alert('1: Login Failed: combination of email and password');
             wc.groupEnd();
             return false;
         }
 
         wc.groupEnd();
         return true;
-
     } catch (err) {
-        wc.error('doLogin failed:', err);
+        wc.error("2 Login failed:", err);
+	alert("2 Login failed:", err)
         wc.groupEnd();
         return false;
-
     } finally {
         wc.groupEnd();
     }
