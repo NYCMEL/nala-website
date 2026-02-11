@@ -1034,19 +1034,27 @@ wc.doLogin = async function (email, passwd) {
 };
 
 /////////////////////////////////////////////////////////////////////////////////
-//// LOGIN
+//// wc.getSession().catch(wc.error);
 /////////////////////////////////////////////////////////////////////////////////
-wc.loginStatus = async function () {
-    wc.group('loginStatus');
+wc.getSession = function () {
+    return fetch(wc.apiUrl + '/api/me.php', {
+        credentials: 'include'
+    }).then(res => res.json()).then(data => {
+        wc.log('session', data);
+	
+        return data.logged_in;
+    });
+};
 
-    (() => {
-	(async () => {
-	    const res = await fetch("https://nala-test.com/api/me.php", { credentials: "include" });
-	    const data = await res.json();
-	    console.log("session", data);
-	})().catch(console.error);
-    })();
-
-    wc.groupEnd();
-}
-
+/////////////////////////////////////////////////////////////////////////////////
+//// wc.getSession()
+/////////////////////////////////////////////////////////////////////////////////
+wc.getSession().then(function (loggedIn) {
+    if (loggedIn) {
+        wc.log('User is logged in');
+	alert("IN");
+    } else {
+        wc.log('User is NOT logged in');
+	alert("OUT");
+    }
+}).catch(wc.error);
