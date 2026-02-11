@@ -1,82 +1,755 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-	<meta charset="UTF-8">
-	<title>API TESTING</title>
+<head>
+  <meta charset="UTF-8" />
+  <title>API Test & Frontend Reference</title>
 
-	<base href="/repo_deploy/">
+  <base href="/repo_deploy/" />
 
-	<!-- W3C LOGGING -->
-	<script>
-	 wcENV="dev"; // prod || dev
-	 wcAPP="NALA";
-	</script>
-    </head>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 16px; }
+    h1, h2, h3 { margin-bottom: 6px; }
+    .note { font-size: 12px; opacity: 0.8; margin-bottom: 10px; }
+    .row { display: flex; gap: 12px; flex-wrap: wrap; margin: 10px 0; align-items: flex-end; }
+    .field { display: flex; flex-direction: column; }
+    label { font-size: 12px; margin-bottom: 4px; }
+    input, select { padding: 6px; width: 320px; max-width: 100%; }
+    button { padding: 8px 12px; cursor: pointer; }
+    pre {
+      background: #111;
+      color: #eee;
+      padding: 10px;
+      border-radius: 8px;
+      min-height: 70px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .copy { border: 2px solid #4caf50; background: #0f1f0f; }
+    hr { margin: 18px 0; }
+    .meta span { display: inline-block; min-width: 120px; font-weight: bold; }
 
-    <body id="wc">
-	<script src="js/_wc.js"></script>
-	<script src="js/api.js"></script>
+    .bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #f5f5f5;
+      margin: 10px 0 18px 0;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #ddd;
+    }
+    .pill.ok { background: #d7f7d7; }
+    .pill.bad { background: #ffd7d7; }
+    .pill.warn { background: #fff0c2; }
 
-	<div id="api_base" value=""</div>
+    .danger { border: 1px solid #d33; background: #fff5f5; padding: 10px; border-radius: 10px; }
+    .tiny { font-size: 11px; opacity: 0.85; }
+    code { background: #f1f1f1; padding: 1px 4px; border-radius: 4px; }
+  </style>
+</head>
 
-	<pre id="req_out"></pre>
-	<pre id="res_out"></pre>
+<body>
 
-	<span id="last_method"></span>
-	<span id="last_url"></span>
-	<span id="last_status"></span>
-	<pre id="session_out"></pre>
+<h1>API Test & Frontend Reference</h1>
+<div class="note">
+  Click any button. The request runs AND a copy-paste-safe frontend snippet appears below.
+</div>
 
-	<h1>OPEN THE CONSOLE</h1>
+<div class="bar">
+  <div id="auth_pill" class="pill bad"><span>AUTH</span><span id="auth_text">Logged out</span></div>
+  <div id="user_pill" class="pill"><span>USER</span><span id="user_text">—</span></div>
+  <div id="state_pill" class="pill"><span>STATE</span><span id="state_text">—</span></div>
+  <div id="last_pill" class="pill"><span>LAST</span><span id="last_action">—</span></div>
+</div>
 
-	<!-- FOR API TESTING -->
-	<script>
-	 let url = "https://nala-test.com";
-	 
-	 async function doLogout() {
-	     // LOGOUT
-	     const res = await fetch(url + "/api/auth_logout.php", {
-		 method: "POST",
-		 credentials: "include"
-	     });
-	     const data = await res.json().catch(() => ({}));
-	     if (!res.ok) throw new Error(data.error || "Logout failed");
-	     let currentUser = null;
-	     console.log("logged out", data);
+<hr />
 
-	     wc.log("logged out");
-	 }
+<h2>Login</h2>
+<div class="row">
+  <div class="field">
+    <label>Email</label>
+    <input id="email" value="mel@google.com" />
+  </div>
+  <div class="field">
+    <label>Password</label>
+    <input id="password" type="password" value="testing" />
+  </div>
+</div>
+<div class="row">
+  <button onclick="run('login')">POST /login_api.php</button>
+  <button onclick="run('me')">GET /me.php</button>
+  <button onclick="run('logout')">POST /auth_logout.php</button>
+</div>
 
-	 async function doLogin(email,passwd) {
-	     // LOGIN
-	     const res = await fetch(url + "/api/login_api.php", {
-		 method: "POST",
-		 credentials: "include",
-		 headers: { "Content-Type": "application/json" },
-		 body: JSON.stringify({
-		     email: email,
-		     password: passwd
-		 })
-	     });
-	     const data = await res.json();
-	     if (!res.ok) throw new Error(data.error || "Login failed");
-	     const currentUser = data.user;
+<hr />
 
-	     wc.log("logged in", currentUser);
-	     return res;
-	 }
-	 
-	 switch(2) 
-	 {
-	     case 1:
-	     doLogout();
-	     break;
-	     
-	     case 2:
-	     doLogin("mel@google.com", "test");
-	     break;
-	 }
-	</script>
+<h2>Create User (Admin)</h2>
+<div class="row">
+  <div class="field">
+    <label>New User Email</label>
+    <input id="new_email" value="newuser@test.com" />
+  </div>
+  <div class="field">
+    <label>New User Password</label>
+    <input id="new_password" value="changeme123" />
+  </div>
+  <div class="field">
+    <label>Role</label>
+    <select id="new_role">
+      <option value="registered">registered</option>
+      <option value="student">student</option>
+      <option value="instructor">instructor</option>
+      <option value="admin">admin</option>
+    </select>
+  </div>
+</div>
+<div class="row">
+  <button onclick="run('create_user')">POST /admin_create_user.php</button>
+</div>
 
-    </body>
+<hr />
+
+<h2>Pick Which User You’re Editing (Admin)</h2>
+<div class="note">
+  This dropdown is for editing target users (reset lesson / update user / delete user).<br />
+  It can auto-load if you add an endpoint <code>/api/admin_list_users.php</code> that returns <code>{ ok:true, users:[...] }</code>.
+  Otherwise you can manually add users to the dropdown by ID+email.
+</div>
+
+<div class="row">
+  <div class="field">
+    <label>Target User (dropdown)</label>
+    <select id="target_user_select" onchange="onTargetUserSelectChange()">
+      <option value="">(none selected)</option>
+    </select>
+    <div class="tiny" id="target_user_hint">No users loaded yet.</div>
+  </div>
+
+  <div class="field">
+    <label>Selected Target User ID (auto-filled)</label>
+    <input id="target_user_id" value="" />
+    <div class="tiny">Used for reset lesson, update user, delete user.</div>
+  </div>
+</div>
+
+<div class="row">
+  <button onclick="run('load_users')">Load Users (requires /admin_list_users.php)</button>
+</div>
+
+<div class="row">
+  <div class="field">
+    <label>Manual Add: User ID</label>
+    <input id="manual_user_id" placeholder="e.g. 6" />
+  </div>
+  <div class="field">
+    <label>Manual Add: Email (optional)</label>
+    <input id="manual_user_email" placeholder="e.g. josh@google.com" />
+  </div>
+</div>
+<div class="row">
+  <button onclick="run('add_user_to_dropdown')">Add User to Dropdown</button>
+  <button onclick="run('clear_users_dropdown')">Clear Dropdown</button>
+</div>
+
+<hr />
+
+<h2>Admin User Management</h2>
+<div class="row">
+  <div class="field">
+    <label>Target User Email (optional)</label>
+    <input id="target_user_email" placeholder="Optional: email to set on update" />
+  </div>
+  <div class="field">
+    <label>Target User Name (optional)</label>
+    <input id="target_user_name" placeholder="Optional: name to set on update" />
+  </div>
+  <div class="field">
+    <label>Target User Password (optional)</label>
+    <input id="target_user_password" type="password" placeholder="Optional: password to set on update" />
+  </div>
+  <div class="field">
+    <label>Target Role (optional)</label>
+    <select id="target_user_role">
+      <option value="">(no change)</option>
+      <option value="registered">registered</option>
+      <option value="student">student</option>
+      <option value="instructor">instructor</option>
+      <option value="admin">admin</option>
+    </select>
+  </div>
+</div>
+
+<div class="row">
+  <button onclick="run('admin_update_fields')">POST /admin_update_user.php (email/name/role/password)</button>
+  <button onclick="run('admin_delete')">POST /admin_delete_user.php</button>
+  <button onclick="run('admin_delete_all')">POST /admin_delete_all_users.php</button>
+</div>
+
+<hr />
+
+<h2>Reset Lesson Position (Admin)</h2>
+<div class="danger tiny">
+  Requires you to be logged in as an <b>admin</b>. This changes <code>current_lesson</code> for the <b>selected target user</b> above.
+</div>
+
+<div class="row">
+  <div class="field">
+    <label>Reset Current Lesson (integer ≥ 0)</label>
+    <input id="reset_lesson" type="number" step="1" inputmode="numeric" value="0" />
+  </div>
+</div>
+
+<div class="row">
+  <button onclick="run('reset_lesson')">POST /admin_update_user.php (set current_lesson)</button>
+</div>
+
+<hr />
+
+<h2>Public</h2>
+<div class="row">
+  <button onclick="run('curriculum')">GET /curriculum_api.php</button>
+</div>
+
+<hr />
+
+<h2>Last Request</h2>
+<div class="meta">
+  <div><span>Method:</span> <span id="last_method"></span></div>
+  <div><span>URL:</span> <span id="last_url"></span></div>
+</div>
+
+<h3>Request</h3>
+<pre id="req_out">—</pre>
+
+<h3>Response</h3>
+<pre id="res_out">—</pre>
+
+<h3>Session State (from /me.php)</h3>
+<pre id="session_out">—</pre>
+
+<h3>📋 Copy-Paste Frontend Code (SAFE)</h3>
+<pre id="code_out" class="copy">Click a button above.</pre>
+
+<script>
+const API = "https://nala-test.com/api";
+
+function ts() { return new Date().toLocaleString(); }
+function setLast(action) { last_action.textContent = action + " @ " + ts(); }
+
+function setStatePill(kind, text) {
+  state_pill.classList.remove("ok", "bad", "warn");
+  if (kind) state_pill.classList.add(kind);
+  state_text.textContent = text || "—";
+}
+
+function setAuthState(loggedIn, user) {
+  auth_pill.classList.remove("ok", "bad", "warn");
+  if (loggedIn) { auth_pill.classList.add("ok"); auth_text.textContent = "Logged in"; }
+  else { auth_pill.classList.add("bad"); auth_text.textContent = "Logged out"; }
+
+  if (user) { user_pill.classList.add("ok"); user_text.textContent = `${user.email} (role=${user.role}, id=${user.id})`; }
+  else { user_pill.classList.remove("ok"); user_text.textContent = "—"; }
+}
+
+function logRequest(method, url, body) {
+  last_method.textContent = method;
+  last_url.textContent = url;
+  req_out.textContent = JSON.stringify({ method, url, body }, null, 2);
+}
+function logResponse(data) { res_out.textContent = JSON.stringify(data, null, 2); }
+function logSession(data) { session_out.textContent = JSON.stringify(data, null, 2); }
+
+async function safeJson(res) { try { return await res.json(); } catch { return null; } }
+
+async function refreshSessionSilent() {
+  try {
+    const res = await fetch(`${API}/me.php`, { credentials: "include" });
+    const data = await safeJson(res);
+
+    logSession({ status: res.status, json: data });
+
+    const loggedIn = !!(data && (data.logged_in === true || data.ok === true || data.user));
+    const user = data && data.user ? data.user : null;
+    setAuthState(loggedIn, user);
+
+    if (!loggedIn) setStatePill(null, "—");
+  } catch (e) {
+    logSession({ error: String(e) });
+    setAuthState(false, null);
+    setStatePill("warn", "Session check failed");
+  }
+}
+
+function intOnly(v) {
+  const n = Number(v);
+  if (!Number.isFinite(n)) return null;
+  if (!Number.isInteger(n)) return null;
+  if (n < 0) return null;
+  return n;
+}
+function intOnlyPositive(v) {
+  const n = Number(v);
+  if (!Number.isFinite(n)) return null;
+  if (!Number.isInteger(n)) return null;
+  if (n <= 0) return null;
+  return n;
+}
+
+function formatUserLabel(u) {
+  const id = (u && u.id != null) ? u.id : "";
+  const email = (u && u.email) ? u.email : "";
+  const role = (u && u.role) ? u.role : "";
+  const cl = (u && u.current_lesson != null) ? u.current_lesson : "";
+  const name = (u && u.name) ? u.name : "";
+  const parts = [];
+  if (email) parts.push(email);
+  if (name) parts.push(name);
+  const left = parts.length ? parts.join(" — ") : "(no email/name)";
+  const right = [];
+  if (role) right.push(`role=${role}`);
+  if (cl !== "") right.push(`lesson=${cl}`);
+  const rightStr = right.length ? ` (${right.join(", ")})` : "";
+  return `#${id} • ${left}${rightStr}`;
+}
+
+function clearUsersDropdown(keepFirst=true) {
+  const sel = target_user_select;
+  const keep = keepFirst ? 1 : 0;
+  while (sel.options.length > keep) sel.remove(keep);
+  target_user_hint.textContent = "No users loaded yet.";
+}
+
+function upsertUserOption(user) {
+  const sel = target_user_select;
+  const id = String(user.id);
+  let opt = Array.from(sel.options).find(o => o.value === id);
+  if (!opt) {
+    opt = document.createElement("option");
+    opt.value = id;
+    sel.appendChild(opt);
+  }
+  opt.textContent = formatUserLabel(user);
+  return opt;
+}
+
+function onTargetUserSelectChange() {
+  const v = target_user_select.value;
+  if (!v) {
+    target_user_id.value = "";
+    target_user_hint.textContent = "No user selected.";
+    return;
+  }
+  target_user_id.value = v;
+  const opt = target_user_select.options[target_user_select.selectedIndex];
+  target_user_hint.textContent = `Selected: ${opt.textContent}`;
+}
+
+function buildTargetIdOrThrow() {
+  // prefer dropdown; fall back to ID textbox
+  const selected = (target_user_select.value || "").trim();
+  const v = selected ? selected : (target_user_id.value || "").trim();
+  const uid = intOnlyPositive(v);
+  if (!uid) throw new Error("Select a Target User in the dropdown (or enter a positive integer user_id).");
+  return uid;
+}
+
+/* ===== copy-paste snippets (NO top-level await) ===== */
+function showCode(action, p = {}) {
+  let c = "";
+
+  if (action === "login") c = `
+(() => {
+  (async () => {
+    const res = await fetch("${API}/login_api.php", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: "${p.email}", password: "${p.password}" })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Login failed");
+    console.log("login ok", data.user);
+  })().catch(console.error);
+})();
+`;
+
+  if (action === "logout") c = `
+(() => {
+  (async () => {
+    const res = await fetch("${API}/auth_logout.php", { method: "POST", credentials: "include" });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || "Logout failed");
+    console.log("logged out", data);
+  })().catch(console.error);
+})();
+`;
+
+  if (action === "me") c = `
+(() => {
+  (async () => {
+    const res = await fetch("${API}/me.php", { credentials: "include" });
+    const data = await res.json();
+    console.log("session", data);
+  })().catch(console.error);
+})();
+`;
+
+  if (action === "create_user") c = `
+(() => {
+  (async () => {
+    const res = await fetch("${API}/admin_create_user.php", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: "${p.email}", password: "${p.password}", role: "${p.role}" })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Create user failed");
+    console.log("user created", data);
+  })().catch(console.error);
+})();
+`;
+
+  if (action === "reset_lesson") c = `
+(() => {
+  (async () => {
+    // Requires admin session cookie
+    const res = await fetch("${API}/admin_update_user.php", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: ${p.user_id}, current_lesson: ${p.current_lesson} })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Reset lesson failed");
+    console.log("lesson updated", data.user);
+  })().catch(console.error);
+})();
+`;
+
+  if (action === "admin_update_fields") c = `
+(() => {
+  (async () => {
+    const payload = { user_id: ${p.user_id} };
+    ${p.email ? `payload.email = "${p.email}";` : ``}
+    ${p.name ? `payload.name = "${p.name}";` : ``}
+    ${p.password ? `payload.password = "${p.password}";` : ``}
+    ${p.role ? `payload.role = "${p.role}";` : ``}
+
+    const res = await fetch("${API}/admin_update_user.php", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Update user failed");
+    console.log("user updated", data.user);
+  })().catch(console.error);
+})();
+`;
+
+  if (action === "admin_delete") c = `
+(() => {
+  (async () => {
+    const res = await fetch("${API}/admin_delete_user.php", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: ${p.user_id} })
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || "Delete user failed");
+    console.log("user deleted", data);
+  })().catch(console.error);
+})();
+`;
+
+  if (action === "admin_delete_all") c = `
+(() => {
+  (async () => {
+    const res = await fetch("${API}/admin_delete_all_users.php", { method: "POST", credentials: "include" });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || "Delete all users failed");
+    console.log("all users deleted", data);
+  })().catch(console.error);
+})();
+`;
+
+  if (action === "curriculum") c = `
+(() => {
+  fetch("${API}/curriculum_api.php", { credentials: "include" })
+    .then(r => r.json())
+    .then(console.log)
+    .catch(console.error);
+})();
+`;
+
+  if (action === "load_users") c = `
+(() => {
+  // Requires an admin endpoint you can add:
+  // GET ${API}/admin_list_users.php -> { ok:true, users:[{id,email,role,current_lesson,name}] }
+  fetch("${API}/admin_list_users.php", { credentials: "include" })
+    .then(r => r.json())
+    .then(console.log)
+    .catch(console.error);
+})();
+`;
+
+  if (action === "add_user_to_dropdown") c = `
+(() => {
+  // Manual add (no server call)
+  // Add the user to a local dropdown list, then select it.
+  const user = { id: ${p.user_id}, email: "${p.email || ""}" };
+  console.log("manual user", user);
+})();
+`;
+
+  code_out.textContent = c.trim();
+}
+
+async function run(action) {
+  setLast(action);
+
+  // Always show copy-paste code for the clicked action
+  if (action === "login") showCode("login", { email: email.value, password: password.value });
+  if (action === "me") showCode("me");
+  if (action === "logout") showCode("logout");
+  if (action === "create_user") showCode("create_user", { email: new_email.value, password: new_password.value, role: new_role.value });
+  if (action === "admin_delete_all") showCode("admin_delete_all");
+  if (action === "curriculum") showCode("curriculum");
+  if (action === "load_users") showCode("load_users");
+  if (action === "clear_users_dropdown") { /* no snippet */ }
+  if (action === "add_user_to_dropdown") {
+    const uid = intOnlyPositive(manual_user_id.value);
+    if (!uid) { setStatePill("bad", "Manual User ID must be a positive integer"); return; }
+    showCode("add_user_to_dropdown", { user_id: uid, email: (manual_user_email.value || "").trim() });
+  }
+
+  // Actions that depend on target user id
+  if (["reset_lesson","admin_update_fields","admin_delete"].includes(action)) {
+    try {
+      const uid = buildTargetIdOrThrow();
+
+      if (action === "reset_lesson") {
+        const cl = intOnly(reset_lesson.value);
+        if (cl === null) throw new Error("current_lesson must be an integer (>= 0)");
+        showCode("reset_lesson", { user_id: uid, current_lesson: cl });
+      }
+
+      if (action === "admin_delete") showCode("admin_delete", { user_id: uid });
+
+      if (action === "admin_update_fields") {
+        const role = (target_user_role.value || "").trim();
+        showCode("admin_update_fields", {
+          user_id: uid,
+          email: (target_user_email.value || "").trim(),
+          name: (target_user_name.value || "").trim(),
+          password: (target_user_password.value || "").trim(),
+          role: role
+        });
+      }
+    } catch (e) {
+      setStatePill("bad", String(e));
+      return;
+    }
+  }
+
+  try {
+    if (action === "login") {
+      logRequest("POST", "/login_api.php", { email: email.value });
+      const res = await fetch(`${API}/login_api.php`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.value, password: password.value })
+      });
+      logResponse({ status: res.status, json: await safeJson(res) });
+    }
+
+    if (action === "me") {
+      logRequest("GET", "/me.php");
+      const res = await fetch(`${API}/me.php`, { credentials: "include" });
+      logResponse({ status: res.status, json: await safeJson(res) });
+    }
+
+    if (action === "logout") {
+      logRequest("POST", "/auth_logout.php");
+      const res = await fetch(`${API}/auth_logout.php`, { method: "POST", credentials: "include" });
+      logResponse({ status: res.status, json: await safeJson(res) });
+    }
+
+    if (action === "create_user") {
+      logRequest("POST", "/admin_create_user.php", { email: new_email.value, role: new_role.value });
+      const res = await fetch(`${API}/admin_create_user.php`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: new_email.value, password: new_password.value, role: new_role.value })
+      });
+      logResponse({ status: res.status, json: await safeJson(res) });
+    }
+
+    if (action === "load_users") {
+      logRequest("GET", "/admin_list_users.php");
+      const res = await fetch(`${API}/admin_list_users.php`, { credentials: "include" });
+      const json = await safeJson(res);
+      logResponse({ status: res.status, json });
+
+      if (!res.ok || !json || json.ok !== true || !Array.isArray(json.users)) {
+        setStatePill("bad", (json && json.error) ? json.error : `Load users failed (HTTP ${res.status}). If you don’t have admin_list_users.php, use Manual Add.`);
+      } else {
+        clearUsersDropdown(true);
+        json.users.forEach(u => upsertUserOption(u));
+        target_user_hint.textContent = `Loaded ${json.users.length} users. Select one.`;
+        setStatePill("ok", `Loaded ${json.users.length} users`);
+      }
+    }
+
+    if (action === "add_user_to_dropdown") {
+      const uid = intOnlyPositive(manual_user_id.value);
+      const em = (manual_user_email.value || "").trim();
+      if (!uid) { setStatePill("bad", "Manual User ID must be a positive integer"); return; }
+
+      const opt = upsertUserOption({ id: uid, email: em, role: "", current_lesson: "" });
+      target_user_select.value = String(uid);
+      onTargetUserSelectChange();
+      setStatePill("ok", `Added user #${uid} to dropdown`);
+      logRequest("LOCAL", "dropdown.add", { user_id: uid, email: em });
+      logResponse({ ok: true, added: { user_id: uid, email: em } });
+    }
+
+    if (action === "clear_users_dropdown") {
+      clearUsersDropdown(true);
+      target_user_select.value = "";
+      onTargetUserSelectChange();
+      setStatePill("ok", "Dropdown cleared");
+      logRequest("LOCAL", "dropdown.clear");
+      logResponse({ ok: true });
+    }
+
+    if (action === "reset_lesson") {
+      const uid = buildTargetIdOrThrow();
+      const cl = intOnly(reset_lesson.value);
+      if (cl === null) throw new Error("current_lesson must be an integer (>= 0)");
+
+      logRequest("POST", "/admin_update_user.php", { user_id: uid, current_lesson: cl });
+
+      const res = await fetch(`${API}/admin_update_user.php`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id: uid, current_lesson: cl })
+      });
+
+      const json = await safeJson(res);
+      logResponse({ status: res.status, json });
+
+      if (!res.ok) {
+        setStatePill("bad", (json && json.error) ? json.error : `Reset failed (HTTP ${res.status})`);
+      } else {
+        // update dropdown label if present
+        upsertUserOption(json.user || { id: uid, email: "", role: "", current_lesson: cl });
+        target_user_select.value = String(uid);
+        onTargetUserSelectChange();
+        setStatePill("ok", `Reset OK: user_id=${uid} current_lesson=${cl}`);
+      }
+    }
+
+    if (action === "admin_update_fields") {
+      const uid = buildTargetIdOrThrow();
+
+      const payload = { user_id: uid };
+      const e = (target_user_email.value || "").trim();
+      const n = (target_user_name.value || "").trim();
+      const p = (target_user_password.value || "").trim();
+      const r = (target_user_role.value || "").trim();
+
+      if (e) payload.email = e;
+      if (n) payload.name = n;
+      if (p) payload.password = p;
+      if (r) payload.role = r;
+
+      logRequest("POST", "/admin_update_user.php", payload);
+
+      const res = await fetch(`${API}/admin_update_user.php`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const json = await safeJson(res);
+      logResponse({ status: res.status, json });
+
+      if (!res.ok) setStatePill("bad", (json && json.error) ? json.error : `Update failed (HTTP ${res.status})`);
+      else {
+        upsertUserOption(json.user || { id: uid, email: e, role: r, current_lesson: "" });
+        target_user_select.value = String(uid);
+        onTargetUserSelectChange();
+        setStatePill("ok", `Update OK: user_id=${uid}`);
+      }
+    }
+
+    if (action === "admin_delete") {
+      const uid = buildTargetIdOrThrow();
+
+      logRequest("POST", "/admin_delete_user.php", { user_id: uid });
+
+      const res = await fetch(`${API}/admin_delete_user.php`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id: uid })
+      });
+
+      const json = await safeJson(res);
+      logResponse({ status: res.status, json });
+
+      if (!res.ok) setStatePill("bad", (json && json.error) ? json.error : `Delete failed (HTTP ${res.status})`);
+      else setStatePill("ok", `Delete OK: user_id=${uid}`);
+    }
+
+    if (action === "admin_delete_all") {
+      logRequest("POST", "/admin_delete_all_users.php");
+      const res = await fetch(`${API}/admin_delete_all_users.php`, { method: "POST", credentials: "include" });
+      const json = await safeJson(res);
+      logResponse({ status: res.status, json });
+      if (!res.ok) setStatePill("bad", (json && json.error) ? json.error : `Delete all failed (HTTP ${res.status})`);
+      else setStatePill("ok", "Delete all OK");
+    }
+
+    if (action === "curriculum") {
+      logRequest("GET", "/curriculum_api.php");
+      const res = await fetch(`${API}/curriculum_api.php`, { credentials: "include" });
+      logResponse({ status: res.status, json: await safeJson(res) });
+    }
+
+    await refreshSessionSilent();
+    if (!state_text.textContent || state_text.textContent === "—") setStatePill("ok", "Request completed");
+  } catch (e) {
+    logResponse({ error: String(e) });
+    setStatePill("bad", "Request failed: " + String(e));
+    await refreshSessionSilent();
+  }
+}
+
+window.addEventListener("load", () => {
+  showCode("login", { email: email.value, password: password.value });
+  refreshSessionSilent();
+});
+</script>
+
+</body>
 </html>
