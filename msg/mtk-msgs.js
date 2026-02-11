@@ -17,6 +17,15 @@ class MTKMsgs {
     this.messageElement = this.element.querySelector('.mtk-msgs__message');
     this.buttonsContainer = this.element.querySelector('.mtk-msgs__buttons');
     this.closeButton = this.element.querySelector('.mtk-msgs__close');
+    
+    // Get or create overlay element
+    this.overlay = document.querySelector('.mtk-msgs__overlay');
+    if (!this.overlay) {
+      this.overlay = document.createElement('div');
+      this.overlay.className = 'mtk-msgs__overlay';
+      this.overlay.setAttribute('role', 'presentation');
+      document.body.insertBefore(this.overlay, document.body.firstChild);
+    }
 
     // Load configuration
     if (typeof mtkMsgsConfig !== 'undefined') {
@@ -177,6 +186,13 @@ class MTKMsgs {
     this.element.classList.add('visible');
     this.isVisible = true;
 
+    // Lock screen if error message
+    if (msgConfig.type === 'error') {
+      this.lockScreen();
+    } else {
+      this.unlockScreen();
+    }
+
     // Set up auto-close timer if specified
     if (msgConfig.timer && msgConfig.timer > 0) {
       this.autoCloseTimer = setTimeout(() => {
@@ -198,9 +214,28 @@ class MTKMsgs {
     });
   }
 
+  lockScreen() {
+    if (this.overlay) {
+      this.overlay.classList.add('visible');
+      this.element.classList.add('locked');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  unlockScreen() {
+    if (this.overlay) {
+      this.overlay.classList.remove('visible');
+      this.element.classList.remove('locked');
+      document.body.style.overflow = '';
+    }
+  }
+
   hide() {
     // Clear any existing timer
     this.clearAutoCloseTimer();
+
+    // Unlock screen
+    this.unlockScreen();
 
     this.element.classList.remove('visible');
     this.isVisible = false;

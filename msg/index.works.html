@@ -113,7 +113,7 @@
       width: 100%;
       height: 0;
       overflow: hidden;
-      transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+      transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
       opacity: 0;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       z-index: 1000;
@@ -283,6 +283,28 @@
     .mtk-msgs.mtk-msgs--success .mtk-msgs__close {
       color: #ffffff;
     }
+
+    .mtk-msgs__overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
+    }
+
+    .mtk-msgs__overlay.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .mtk-msgs.locked {
+      z-index: 1001;
+    }
   </style>
 </head>
 <body>
@@ -290,6 +312,9 @@
   <div class="demo-header">
     <h1>mtk-msgs Component Demo</h1>
   </div>
+
+  <!-- Overlay for screen lock -->
+  <div class="mtk-msgs__overlay" role="presentation"></div>
 
   <!-- Message Panel Component -->
   <mtk-msgs class="mtk-msgs" role="alert" aria-live="polite" aria-atomic="true">
@@ -313,7 +338,8 @@
         <button class="demo-button" onclick="showInfoMessage()">Show Info</button>
         <button class="demo-button" onclick="showWarningMessage()">Show Warning</button>
         <button class="demo-button" onclick="showErrorMessage()">Show Error</button>
-        <button class="demo-button" onclick="showSuccessMessage()">Show Success</button>
+        <button class="demo-button" onclick="showSuccessMessage()">Show Success (10s timer)</button>
+        <button class="demo-button" onclick="showAutoInfoMessage()">Show Auto Info (5s timer)</button>
         <button class="demo-button" onclick="hideMessage()">Hide Message</button>
       </div>
     </div>
@@ -321,21 +347,28 @@
     <div class="demo-info">
       <h3>API Usage</h3>
       <pre>// Show a message
-MtkMsgs.show('info');
-MtkMsgs.show('warning');
-MtkMsgs.show('error');
-MtkMsgs.show('success');
+MTKMsgs.show('info');
+MTKMsgs.show('warning');
+MTKMsgs.show('error');
+MTKMsgs.show('success');
 
 // Hide the message
-MtkMsgs.hide();
+MTKMsgs.hide();
 
 // Toggle the message
-MtkMsgs.toggle('info');
+MTKMsgs.toggle('info');
 
 // Using events (requires wc object)
 wc.publish('mtk-msgs:show', 'info');
 wc.publish('mtk-msgs:hide');
-wc.publish('mtk-msgs:toggle', 'warning');</pre>
+wc.publish('mtk-msgs:toggle', 'warning');
+
+// Configuration options:
+// closable: true|false - controls X button visibility
+// timer: number (seconds) - auto-close after time
+// 
+// Example: timer + closable:false = auto-close with no X
+// Example: closable:true = manual close only</pre>
     </div>
   </div>
 
@@ -365,23 +398,27 @@ wc.publish('mtk-msgs:toggle', 'warning');</pre>
   <!-- Demo Functions -->
   <script>
     function showInfoMessage() {
-      MtkMsgs.show('info');
+      MTKMsgs.show('info');
     }
 
     function showWarningMessage() {
-      MtkMsgs.show('warning');
+      MTKMsgs.show('warning');
     }
 
     function showErrorMessage() {
-      MtkMsgs.show('error');
+      MTKMsgs.show('error');
     }
 
     function showSuccessMessage() {
-      MtkMsgs.show('success');
+      MTKMsgs.show('success');
+    }
+
+    function showAutoInfoMessage() {
+      MTKMsgs.show('autoInfo');
     }
 
     function hideMessage() {
-      MtkMsgs.hide();
+      MTKMsgs.hide();
     }
 
     // Subscribe to button clicks
@@ -393,6 +430,11 @@ wc.publish('mtk-msgs:toggle', 'warning');</pre>
     // Subscribe to closed event
     wc.subscribe('mtk-msgs:closed', (event, data) => {
       console.log('Message closed:', data);
+    });
+
+    // Subscribe to auto-closed event
+    wc.subscribe('mtk-msgs:auto-closed', (event, data) => {
+      console.log('Message auto-closed after timer:', data);
     });
   </script>
 </body>
