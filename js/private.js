@@ -13,13 +13,5 @@ wc.timeout(function(){
     });
 }, 1000, 1);
 
-/************************************************************
- * INACTIVITY TIMER
- ************************************************************/
-// Start tracking AFTER login
-wc.inactivity.idleTime = 0.2 * 60 * 1000;
-wc.inactivity.countdown = 10;
-wc.startInactivityTracking();
-
 // INITIAL PAGE
 MTKPager.show("dashboard");
