@@ -62,7 +62,7 @@ class _febe {
 			wc.log('Logged in!');
 
 			wc.setCookie('logged', 'true', 1);
-			document.location.href = document.location.href + "/private";
+			document.location.href = document.location.origin + "/repo_deploy/private";
 			MTKPager.show("dashboard");
 		    }
 		})
@@ -106,7 +106,7 @@ class _febe {
 	    wc.deleteCookie('logged');
 
 	    wc.doLogout();
-	    document.location.href = "index.html";
+	    document.location.href = document.location.origin + "/repo_deploy/index.html";
             break;
 
 	case "mtk-header-register":
