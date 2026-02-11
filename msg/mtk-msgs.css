@@ -7,8 +7,7 @@
   opacity: 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 9999;
-  position: relative;
-  margin-top: 100px; }
+  position: relative; }
   .mtk-msgs.visible {
     height: 40px;
     opacity: 1; }
