@@ -718,3 +718,24 @@ wc.deleteCookie = function (name, path = '/') {
 wc.hasCookie = function (name) {
     return wc.getCookie(name) !== null;
 };
+
+/**
+ * Get all cookies as an object
+ * @returns {Object}
+ */
+wc.getAllCookies = function () {
+    const cookies = {};
+    if (!document.cookie) {
+        return cookies;
+    }
+
+    document.cookie.split(';').forEach(cookie => {
+        const parts = cookie.split('=');
+        const name  = decodeURIComponent(parts.shift().trim());
+        const value = decodeURIComponent(parts.join('=').trim());
+
+        cookies[name] = value;
+    });
+
+    return cookies;
+};
