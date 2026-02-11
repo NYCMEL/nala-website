@@ -4,7 +4,6 @@
 // Start tracking AFTER login
 wc.inactivity.idleTime = 0.5 * 60 * 1000;
 wc.inactivity.countdown = 15;
-wc.startInactivityTracking();
 
 /////////////////////////////////////////////////////////////////////////////////
 //// Config

@@ -2,6 +2,8 @@
 //// PRIVATE JS PIECES 
 ///////////////////////////////////////////////////////////////////
 
+wc.startInactivityTracking();
+
 wc.timeout(function(){
     MTKMsgs.show({
 	type: 'success',
