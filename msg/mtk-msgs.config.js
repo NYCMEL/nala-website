@@ -79,8 +79,8 @@ const mtkMsgsConfig = {
       ],
       closable: true,
       timer: null,
-      block: true, // block screen
-      block2: true // keep blocking after message hides
+      block: false, // block2 overrides this
+      block2: true // keep blocking after message hides (overrides block)
     }
   }
 };

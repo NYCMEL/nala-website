@@ -193,12 +193,17 @@ class MTKMsgs {
     this.element.classList.add('visible');
     this.isVisible = true;
 
-    // Handle blocking flags
-    if (msgConfig.block === true) {
+    // Handle blocking flags - block2 overrides block
+    if (msgConfig.block2 === true) {
+      // block2 = true: always lock screen and keep locked after hide
       this.lockScreen();
-      // Store if we should keep blocking after hide
-      this.keepBlocking = (msgConfig.block2 === true);
+      this.keepBlocking = true;
+    } else if (msgConfig.block === true) {
+      // block = true, block2 = false: lock screen but unlock on hide
+      this.lockScreen();
+      this.keepBlocking = false;
     } else {
+      // block = false: no screen locking
       this.unlockScreen();
       this.keepBlocking = false;
     }

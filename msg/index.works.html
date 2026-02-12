@@ -681,7 +681,7 @@ MTKMsgs.hide();</div>
 
     <!-- Example 14: Block2 Flag -->
     <div class="example-card">
-      <div class="example-card__header">Block2 Flag - Screen Stays Locked After Close</div>
+      <div class="example-card__header">Block2 Flag - Overrides Block</div>
       <div class="example-card__content">
         <div class="example-card__title">JavaScript Code</div>
         <div class="code-block" id="code-14">MTKMsgs.show({
@@ -693,8 +693,8 @@ MTKMsgs.hide();</div>
   ],
   closable: true,
   timer: null,
-  block: true,  // Lock screen
-  block2: true  // Keep locked after message hides
+  block: false, // This is ignored
+  block2: true  // This overrides block flag
 });
 
 // To unlock screen later, call:
@@ -895,8 +895,8 @@ MTKMsgs.unblock();</div>
         ],
         closable: true,
         timer: null,
-        block: true,
-        block2: true
+        block: false, // This is ignored
+        block2: true  // This overrides block flag
       });
     }
 
