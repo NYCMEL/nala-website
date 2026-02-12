@@ -1,5 +1,4 @@
-window.wc         = window.wc         || {};
-
+window.wc    = window.wc    || {};
 window.wcENV = window.wcENV || "prod";
 window.wcAPP = window.wcAPP || "NOT-SET";
 window.wcURL = window.wcURL || "http://www.melify.com/tk/lib/components/w";
