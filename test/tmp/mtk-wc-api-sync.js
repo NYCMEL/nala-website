@@ -3,7 +3,17 @@
  * Make API calls and return JSON response directly (NO callbacks, NO await)
  * WARNING: This uses synchronous XMLHttpRequest which blocks the browser
  * NOTE: Timeouts are not supported in synchronous mode
- */
+
+ /* EXAMPLE
+ const response = wc.apiCall({
+     method: "POST",
+     url: wc.apiURL + "/api/login_api.php",
+     body: {
+         email: "mel@google.com",
+	 password: "test"
+     }
+});
+*/
 
 const wc = window.wc || {};
 
@@ -64,65 +74,4 @@ wc.apiCall = function(config) {
       message: error.message
     };
   }
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-//// Make synchronous GET request
-/////////////////////////////////////////////////////////////////////////////////
-wc.get = function(url) {
-  return wc.apiCall({
-    method: 'GET',
-    url: url
-  });
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-//// Make synchronous POST request
-/////////////////////////////////////////////////////////////////////////////////
-wc.post = function(url, body) {
-  return wc.apiCall({
-    method: 'POST',
-    url: url,
-    body: body
-  });
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-//// Make synchronous PUT request
-/////////////////////////////////////////////////////////////////////////////////
-wc.put = function(url, body) {
-  return wc.apiCall({
-    method: 'PUT',
-    url: url,
-    body: body
-  });
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-//// Make synchronous DELETE request
-/////////////////////////////////////////////////////////////////////////////////
-wc.delete = function(url) {
-  return wc.apiCall({
-    method: 'DELETE',
-    url: url
-  });
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-//// Make synchronous PATCH request
-/////////////////////////////////////////////////////////////////////////////////
-wc.patch = function(url, body) {
-  return wc.apiCall({
-    method: 'PATCH',
-    url: url,
-    body: body
-  });
-}
-
-// Make wc globally available
-window.wc = wc;
-
-// Export for module usage (if needed)
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = wc;
 }
