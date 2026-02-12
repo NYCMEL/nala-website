@@ -3,22 +3,7 @@
  * Make API calls and return JSON response directly (NO callbacks, NO await)
  * WARNING: This uses synchronous XMLHttpRequest which blocks the browser
  * NOTE: Timeouts are not supported in synchronous mode
- **/
-
-// EXAMPLE
-//////////////////////
-// var response = wc.apiCall({
-//     method: "POST",
-//     url: wc.apiURL + "/api/login_api.php",
-//     body: {
-//         email: "mel@google.com",
-// 	password: "test"
-//     }
-// });
-// 
-// wc.user = wc.user || response.user;
-
-wc.log("user:", wc.user);
+ */
 
 const wc = window.wc || {};
 
@@ -30,13 +15,17 @@ wc.apiCall = function(config) {
     method = 'GET',
     url,
     body = null,
-    headers = {}
+    headers = {},
+    withCredentials = true  // Send cookies by default for session auth
   } = config;
 
   const xhr = new XMLHttpRequest();
   
   // Open connection as SYNCHRONOUS (false = sync)
   xhr.open(method, url, false);
+  
+  // Send credentials (cookies) for session-based auth
+  xhr.withCredentials = withCredentials;
   
   // Set default headers
   xhr.setRequestHeader('Content-Type', 'application/json');
@@ -79,4 +68,65 @@ wc.apiCall = function(config) {
       message: error.message
     };
   }
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+//// Make synchronous GET request
+/////////////////////////////////////////////////////////////////////////////////
+wc.get = function(url) {
+  return wc.apiCall({
+    method: 'GET',
+    url: url
+  });
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+//// Make synchronous POST request
+/////////////////////////////////////////////////////////////////////////////////
+wc.post = function(url, body) {
+  return wc.apiCall({
+    method: 'POST',
+    url: url,
+    body: body
+  });
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+//// Make synchronous PUT request
+/////////////////////////////////////////////////////////////////////////////////
+wc.put = function(url, body) {
+  return wc.apiCall({
+    method: 'PUT',
+    url: url,
+    body: body
+  });
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+//// Make synchronous DELETE request
+/////////////////////////////////////////////////////////////////////////////////
+wc.delete = function(url) {
+  return wc.apiCall({
+    method: 'DELETE',
+    url: url
+  });
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+//// Make synchronous PATCH request
+/////////////////////////////////////////////////////////////////////////////////
+wc.patch = function(url, body) {
+  return wc.apiCall({
+    method: 'PATCH',
+    url: url,
+    body: body
+  });
+}
+
+// Make wc globally available
+window.wc = wc;
+
+// Export for module usage (if needed)
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = wc;
 }
