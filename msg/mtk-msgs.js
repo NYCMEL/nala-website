@@ -6,6 +6,7 @@ class MTKMsgs {
     this.currentMessage = null;
     this.isVisible = false;
     this.autoCloseTimer = null;
+    this.keepBlocking = false;
     
     this.init();
   }
@@ -78,6 +79,9 @@ class MTKMsgs {
       
       // Subscribe to toggle message event
       wc.subscribe('mtk-msgs:toggle', this.onMessage.bind(this));
+      
+      // Subscribe to unblock event
+      wc.subscribe('mtk-msgs:unblock', this.onMessage.bind(this));
     }
   }
 
@@ -94,6 +98,9 @@ class MTKMsgs {
         break;
       case 'mtk-msgs:toggle':
         this.toggle(data);
+        break;
+      case 'mtk-msgs:unblock':
+        this.unblock();
         break;
     }
   }
@@ -186,11 +193,14 @@ class MTKMsgs {
     this.element.classList.add('visible');
     this.isVisible = true;
 
-    // Lock screen if block flag is true
+    // Handle blocking flags
     if (msgConfig.block === true) {
       this.lockScreen();
+      // Store if we should keep blocking after hide
+      this.keepBlocking = (msgConfig.block2 === true);
     } else {
       this.unlockScreen();
+      this.keepBlocking = false;
     }
 
     // Set up auto-close timer if specified
@@ -234,14 +244,26 @@ class MTKMsgs {
     // Clear any existing timer
     this.clearAutoCloseTimer();
 
-    // Unlock screen
-    this.unlockScreen();
+    // Only unlock screen if block2 is not active
+    if (!this.keepBlocking) {
+      this.unlockScreen();
+    }
 
     this.element.classList.remove('visible');
     this.isVisible = false;
 
     // Publish hide event
     this.publishEvent('mtk-msgs:hidden', {
+      message: this.currentMessage
+    });
+  }
+
+  unblock() {
+    this.unlockScreen();
+    this.keepBlocking = false;
+
+    // Publish unblock event
+    this.publishEvent('mtk-msgs:unblocked', {
       message: this.currentMessage
     });
   }
@@ -286,6 +308,13 @@ class MTKMsgs {
     const element = document.querySelector('.mtk-msgs');
     if (element && element._mtkMsgsInstance) {
       element._mtkMsgsInstance.toggle(messageData);
+    }
+  }
+
+  static unblock() {
+    const element = document.querySelector('.mtk-msgs');
+    if (element && element._mtkMsgsInstance) {
+      element._mtkMsgsInstance.unblock();
     }
   }
 }

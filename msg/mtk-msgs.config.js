@@ -10,7 +10,8 @@ const mtkMsgsConfig = {
       ],
       closable: true, // show X button
       timer: null, // no auto-close
-      block: false // don't block screen
+      block: false, // don't block screen
+      block2: false // don't keep blocking after hide
     },
     warning: {
       type: 'warning',
@@ -22,7 +23,8 @@ const mtkMsgsConfig = {
       ],
       closable: true, // show X button
       timer: null, // no auto-close
-      block: false // don't block screen
+      block: false, // don't block screen
+      block2: false // don't keep blocking after hide
     },
     error: {
       type: 'error',
@@ -33,7 +35,8 @@ const mtkMsgsConfig = {
       ],
       closable: true, // show X button
       timer: null, // no auto-close
-      block: true // block screen (default for errors)
+      block: true, // block screen (default for errors)
+      block2: false // unlock when message hides
     },
     success: {
       type: 'success',
@@ -42,7 +45,8 @@ const mtkMsgsConfig = {
       buttons: [],
       closable: false, // no X button
       timer: 10, // auto-close after 10 seconds
-      block: false // don't block screen
+      block: false, // don't block screen
+      block2: false // don't keep blocking after hide
     },
     autoInfo: {
       type: 'info',
@@ -51,7 +55,32 @@ const mtkMsgsConfig = {
       buttons: [],
       closable: false, // no X button
       timer: 5, // auto-close after 5 seconds
-      block: false // don't block screen
+      block: false, // don't block screen
+      block2: false // don't keep blocking after hide
+    },
+    blockExample: {
+      type: 'warning',
+      icon: 'warning',
+      message: 'Screen is blocked while this message shows',
+      buttons: [
+        { label: 'Dismiss', action: 'dismiss' }
+      ],
+      closable: true,
+      timer: null,
+      block: true, // block screen
+      block2: false // unlock when dismissed
+    },
+    block2Example: {
+      type: 'error',
+      icon: 'error',
+      message: 'Processing... Screen stays blocked after close',
+      buttons: [
+        { label: 'Close Message', action: 'close' }
+      ],
+      closable: true,
+      timer: null,
+      block: true, // block screen
+      block2: true // keep blocking after message hides
     }
   }
 };

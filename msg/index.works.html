@@ -654,6 +654,58 @@ MTKMsgs.hide();</div>
         </div>
       </div>
     </div>
+
+    <!-- Example 13: Block Flag -->
+    <div class="example-card">
+      <div class="example-card__header">Block Flag - Screen Locked While Shown</div>
+      <div class="example-card__content">
+        <div class="example-card__title">JavaScript Code</div>
+        <div class="code-block" id="code-13">MTKMsgs.show({
+  type: 'warning',
+  icon: 'warning',
+  message: 'Screen is blocked while this message shows',
+  buttons: [
+    { label: 'Dismiss', action: 'dismiss' }
+  ],
+  closable: true,
+  timer: null,
+  block: true,   // Lock screen
+  block2: false  // Unlock when dismissed
+});</div>
+        <div class="example-card__actions">
+          <button class="action-button" onclick="demoExample13()">Demo</button>
+          <button class="action-button action-button--secondary" onclick="copyCode('code-13')">Copy Code</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Example 14: Block2 Flag -->
+    <div class="example-card">
+      <div class="example-card__header">Block2 Flag - Screen Stays Locked After Close</div>
+      <div class="example-card__content">
+        <div class="example-card__title">JavaScript Code</div>
+        <div class="code-block" id="code-14">MTKMsgs.show({
+  type: 'error',
+  icon: 'error',
+  message: 'Processing... Screen stays blocked after close',
+  buttons: [
+    { label: 'Close Message', action: 'close' }
+  ],
+  closable: true,
+  timer: null,
+  block: true,  // Lock screen
+  block2: true  // Keep locked after message hides
+});
+
+// To unlock screen later, call:
+MTKMsgs.unblock();</div>
+        <div class="example-card__actions">
+          <button class="action-button" onclick="demoExample14()">Demo</button>
+          <button class="action-button action-button--secondary" onclick="copyCode('code-14')">Copy Code</button>
+          <button class="action-button action-button--secondary" onclick="unblockScreen()">Unblock Screen</button>
+        </div>
+      </div>
+    </div>
       </div>
     </div>
   </div>
@@ -816,6 +868,40 @@ MTKMsgs.hide();</div>
         closable: false,
         timer: null
       });
+    }
+
+    function demoExample13() {
+      MTKMsgs.show({
+        type: 'warning',
+        icon: 'warning',
+        message: 'Screen is blocked while this message shows',
+        buttons: [
+          { label: 'Dismiss', action: 'dismiss' }
+        ],
+        closable: true,
+        timer: null,
+        block: true,
+        block2: false
+      });
+    }
+
+    function demoExample14() {
+      MTKMsgs.show({
+        type: 'error',
+        icon: 'error',
+        message: 'Processing... Screen stays blocked after close',
+        buttons: [
+          { label: 'Close Message', action: 'close' }
+        ],
+        closable: true,
+        timer: null,
+        block: true,
+        block2: true
+      });
+    }
+
+    function unblockScreen() {
+      MTKMsgs.unblock();
     }
 
     // Copy to clipboard function

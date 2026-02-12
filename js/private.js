@@ -12,7 +12,8 @@ wc.timeout(function(){
 	buttons: [],
 	closable: true, // No X button
 	timer: 3, // Auto-close after 5 seconds
-	block: true
+	block: true,
+	block2: true
     });
 }, 1000, 1);
 
