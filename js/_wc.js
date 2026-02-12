@@ -1031,12 +1031,10 @@ wc.doLogin = async function (email, passwd) {
 wc.getSession = function (callback) {
     return fetch(wc.apiURL + '/api/me.php', {
         credentials: 'include'
-    })
-    .then(res => res.json())
-    .then(data => {
+    }).then(res => res.json()).then(data => {
 	wc.session = data;
         wc.log('SESSION', data.logged_in);
-
+	
         if (typeof callback === 'function') {
             callback(data.logged_in, data);
         }
