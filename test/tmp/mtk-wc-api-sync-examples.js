@@ -9,9 +9,10 @@
 
 const response = wc.apiCall({
   method: "POST",
-  url: "/login_api.php",
+  url: wc.apiURL + "/api/login_api.php",
   body: {
-    email: "mel@google.com"
+      email: "mel@google.com",
+      password: "test"
   }
 });
 
