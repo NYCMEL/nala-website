@@ -97,6 +97,10 @@
 <h2>Create User (Admin)</h2>
 <div class="row">
   <div class="field">
+    <label>New User Name</label>
+    <input id="new_name" value="User" />
+  </div>
+  <div class="field">
     <label>New User Email</label>
     <input id="new_email" value="newuser@test.com" />
   </div>
@@ -112,6 +116,7 @@
       <option value="instructor">instructor</option>
       <option value="admin">admin</option>
     </select>
+    <div class="tiny">Note: API validates roles; keep values aligned with your backend.</div>
   </div>
 </div>
 <div class="row">
@@ -123,8 +128,7 @@
 <h2>Pick Which User You’re Editing (Admin)</h2>
 <div class="note">
   This dropdown is for editing target users (reset lesson / update user / delete user).<br />
-  It can auto-load if you add an endpoint <code>/api/admin_list_users.php</code> that returns <code>{ ok:true, users:[...] }</code>.
-  Otherwise you can manually add users to the dropdown by ID+email.
+  It auto-loads from <code>/api/admin_list_users.php</code> which returns <code>{ ok:true, users:[...] }</code>.
 </div>
 
 <div class="row">
@@ -144,7 +148,7 @@
 </div>
 
 <div class="row">
-  <button onclick="run('load_users')">Load Users (requires /admin_list_users.php)</button>
+  <button onclick="run('load_users')">Load Users</button>
 </div>
 
 <div class="row">
@@ -356,7 +360,6 @@ function onTargetUserSelectChange() {
 }
 
 function buildTargetIdOrThrow() {
-  // prefer dropdown; fall back to ID textbox
   const selected = (target_user_select.value || "").trim();
   const v = selected ? selected : (target_user_id.value || "").trim();
   const uid = intOnlyPositive(v);
@@ -412,11 +415,16 @@ function showCode(action, p = {}) {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: "${p.email}", password: "${p.password}", role: "${p.role}" })
+      body: JSON.stringify({
+        name: "${p.name}",
+        email: "${p.email}",
+        password: "${p.password}",
+        role: "${p.role}"
+      })
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || "Create user failed");
-    console.log("user created", data);
+    console.log("user created", data.user); // includes name
   })().catch(console.error);
 })();
 `;
@@ -498,8 +506,6 @@ function showCode(action, p = {}) {
 
   if (action === "load_users") c = `
 (() => {
-  // Requires an admin endpoint you can add:
-  // GET ${API}/admin_list_users.php -> { ok:true, users:[{id,email,role,current_lesson,name}] }
   fetch("${API}/admin_list_users.php", { credentials: "include" })
     .then(r => r.json())
     .then(console.log)
@@ -509,8 +515,6 @@ function showCode(action, p = {}) {
 
   if (action === "add_user_to_dropdown") c = `
 (() => {
-  // Manual add (no server call)
-  // Add the user to a local dropdown list, then select it.
   const user = { id: ${p.user_id}, email: "${p.email || ""}" };
   console.log("manual user", user);
 })();
@@ -526,7 +530,7 @@ async function run(action) {
   if (action === "login") showCode("login", { email: email.value, password: password.value });
   if (action === "me") showCode("me");
   if (action === "logout") showCode("logout");
-  if (action === "create_user") showCode("create_user", { email: new_email.value, password: new_password.value, role: new_role.value });
+  if (action === "create_user") showCode("create_user", { name: new_name.value, email: new_email.value, password: new_password.value, role: new_role.value });
   if (action === "admin_delete_all") showCode("admin_delete_all");
   if (action === "curriculum") showCode("curriculum");
   if (action === "load_users") showCode("load_users");
@@ -591,14 +595,36 @@ async function run(action) {
     }
 
     if (action === "create_user") {
-      logRequest("POST", "/admin_create_user.php", { email: new_email.value, role: new_role.value });
+      const payload = {
+        name: (new_name.value || "").trim(),
+        email: (new_email.value || "").trim(),
+        password: (new_password.value || ""),
+        role: (new_role.value || "registered")
+      };
+
+      logRequest("POST", "/admin_create_user.php", { name: payload.name, email: payload.email, role: payload.role });
+
       const res = await fetch(`${API}/admin_create_user.php`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: new_email.value, password: new_password.value, role: new_role.value })
+        body: JSON.stringify(payload)
       });
-      logResponse({ status: res.status, json: await safeJson(res) });
+
+      const json = await safeJson(res);
+      logResponse({ status: res.status, json });
+
+      if (!res.ok) {
+        setStatePill("bad", (json && json.error) ? json.error : `Create user failed (HTTP ${res.status})`);
+      } else {
+        // Add/update created user in dropdown for convenience
+        if (json && json.user) {
+          upsertUserOption(json.user);
+          target_user_select.value = String(json.user.id);
+          onTargetUserSelectChange();
+        }
+        setStatePill("ok", `Created user: ${(json && json.user && json.user.name) ? json.user.name : "(no name)"} (${payload.email})`);
+      }
     }
 
     if (action === "load_users") {
@@ -608,7 +634,7 @@ async function run(action) {
       logResponse({ status: res.status, json });
 
       if (!res.ok || !json || json.ok !== true || !Array.isArray(json.users)) {
-        setStatePill("bad", (json && json.error) ? json.error : `Load users failed (HTTP ${res.status}). If you don’t have admin_list_users.php, use Manual Add.`);
+        setStatePill("bad", (json && json.error) ? json.error : `Load users failed (HTTP ${res.status}).`);
       } else {
         clearUsersDropdown(true);
         json.users.forEach(u => upsertUserOption(u));
@@ -622,7 +648,7 @@ async function run(action) {
       const em = (manual_user_email.value || "").trim();
       if (!uid) { setStatePill("bad", "Manual User ID must be a positive integer"); return; }
 
-      const opt = upsertUserOption({ id: uid, email: em, role: "", current_lesson: "" });
+      upsertUserOption({ id: uid, email: em, role: "", current_lesson: "", name: "" });
       target_user_select.value = String(uid);
       onTargetUserSelectChange();
       setStatePill("ok", `Added user #${uid} to dropdown`);
@@ -659,8 +685,7 @@ async function run(action) {
       if (!res.ok) {
         setStatePill("bad", (json && json.error) ? json.error : `Reset failed (HTTP ${res.status})`);
       } else {
-        // update dropdown label if present
-        upsertUserOption(json.user || { id: uid, email: "", role: "", current_lesson: cl });
+        upsertUserOption(json.user || { id: uid, email: "", role: "", current_lesson: cl, name: "" });
         target_user_select.value = String(uid);
         onTargetUserSelectChange();
         setStatePill("ok", `Reset OK: user_id=${uid} current_lesson=${cl}`);
@@ -695,7 +720,7 @@ async function run(action) {
 
       if (!res.ok) setStatePill("bad", (json && json.error) ? json.error : `Update failed (HTTP ${res.status})`);
       else {
-        upsertUserOption(json.user || { id: uid, email: e, role: r, current_lesson: "" });
+        upsertUserOption(json.user || { id: uid, email: e, role: r, current_lesson: "", name: n });
         target_user_select.value = String(uid);
         onTargetUserSelectChange();
         setStatePill("ok", `Update OK: user_id=${uid}`);
