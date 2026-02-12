@@ -1,6 +1,4 @@
 window.wc         = window.wc         || {};
-window.wc.session = window.wc.session || {};
-window.wc.local   = window.wc.local   || {};
 
 window.wcENV = window.wcENV || "prod";
 window.wcAPP = window.wcAPP || "NOT-SET";
