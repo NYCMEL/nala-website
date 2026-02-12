@@ -1,7 +1,10 @@
-cd /Melify/tools
+GLOBALS AVAILABLE TO YOUR APP
 
-MUST START "serve" AS:
-   ~/node_modules/.bin/serve 
+MTKPager exposes:
+  - MTKPager.page < current page
+  - MTKPager.show(page)
 
-should open a port 3000 on localhost
-   http://localhost:3000
+
+
+
+
