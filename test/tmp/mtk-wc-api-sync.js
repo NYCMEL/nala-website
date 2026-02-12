@@ -1,14 +1,15 @@
 /**
- * MTK API Call Function - Synchronous style with callback
- * Make API calls and handle JSON response without await
+ * MTK API Call Function - Synchronous (blocking) style
+ * Make API calls and return JSON response directly (NO callbacks, NO await)
+ * WARNING: This uses synchronous XMLHttpRequest which blocks the browser
  */
 
 const wc = window.wc || {};
 
 /////////////////////////////////////////////////////////////////////////////////
-//// Make API call and return JSON response via callback
+//// Make synchronous API call and return JSON response directly
 /////////////////////////////////////////////////////////////////////////////////
-wc.apiCall = function(config, onSuccess, onError) {
+wc.apiCall = function(config) {
   const {
     method = 'GET',
     url,
@@ -19,11 +20,8 @@ wc.apiCall = function(config, onSuccess, onError) {
 
   const xhr = new XMLHttpRequest();
   
-  // Set timeout
-  xhr.timeout = timeout;
-  
-  // Open connection
-  xhr.open(method, url, true);
+  // Open connection as SYNCHRONOUS (false = sync)
+  xhr.open(method, url, false);
   
   // Set default headers
   xhr.setRequestHeader('Content-Type', 'application/json');
@@ -33,116 +31,95 @@ wc.apiCall = function(config, onSuccess, onError) {
     xhr.setRequestHeader(key, headers[key]);
   }
   
-  // Handle successful response
-  xhr.onload = function() {
+  // Set timeout
+  xhr.timeout = timeout;
+  
+  try {
+    // Send request (this blocks until response comes back)
+    if (body) {
+      xhr.send(JSON.stringify(body));
+    } else {
+      xhr.send();
+    }
+    
+    // Check if successful
     if (xhr.status >= 200 && xhr.status < 300) {
       try {
-        const json = JSON.parse(xhr.responseText);
-        if (onSuccess) {
-          onSuccess(json, xhr);
-        }
+        return JSON.parse(xhr.responseText);
       } catch (error) {
-        if (onError) {
-          onError({
-            error: 'JSON Parse Error',
-            message: error.message,
-            response: xhr.responseText
-          }, xhr);
-        }
+        return {
+          error: 'JSON Parse Error',
+          message: error.message,
+          response: xhr.responseText
+        };
       }
     } else {
-      if (onError) {
-        onError({
-          error: 'HTTP Error',
-          status: xhr.status,
-          statusText: xhr.statusText,
-          response: xhr.responseText
-        }, xhr);
-      }
+      return {
+        error: 'HTTP Error',
+        status: xhr.status,
+        statusText: xhr.statusText,
+        response: xhr.responseText
+      };
     }
-  };
-  
-  // Handle network errors
-  xhr.onerror = function() {
-    if (onError) {
-      onError({
-        error: 'Network Error',
-        message: 'Failed to connect to server'
-      }, xhr);
-    }
-  };
-  
-  // Handle timeout
-  xhr.ontimeout = function() {
-    if (onError) {
-      onError({
-        error: 'Timeout Error',
-        message: 'Request timed out'
-      }, xhr);
-    }
-  };
-  
-  // Send request
-  if (body) {
-    xhr.send(JSON.stringify(body));
-  } else {
-    xhr.send();
+  } catch (error) {
+    return {
+      error: 'Request Failed',
+      message: error.message
+    };
   }
-  
-  return xhr;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-//// Make GET request
+//// Make synchronous GET request
 /////////////////////////////////////////////////////////////////////////////////
-wc.get = function(url, onSuccess, onError) {
+wc.get = function(url) {
   return wc.apiCall({
     method: 'GET',
     url: url
-  }, onSuccess, onError);
+  });
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-//// Make POST request
+//// Make synchronous POST request
 /////////////////////////////////////////////////////////////////////////////////
-wc.post = function(url, body, onSuccess, onError) {
+wc.post = function(url, body) {
   return wc.apiCall({
     method: 'POST',
     url: url,
     body: body
-  }, onSuccess, onError);
+  });
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-//// Make PUT request
+//// Make synchronous PUT request
 /////////////////////////////////////////////////////////////////////////////////
-wc.put = function(url, body, onSuccess, onError) {
+wc.put = function(url, body) {
   return wc.apiCall({
     method: 'PUT',
     url: url,
     body: body
-  }, onSuccess, onError);
+  });
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-//// Make DELETE request
+//// Make synchronous DELETE request
 /////////////////////////////////////////////////////////////////////////////////
-wc.delete = function(url, onSuccess, onError) {
+wc.delete = function(url) {
   return wc.apiCall({
     method: 'DELETE',
     url: url
-  }, onSuccess, onError);
+  });
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-//// Make PATCH request
+//// Make synchronous PATCH request
 /////////////////////////////////////////////////////////////////////////////////
-wc.patch = function(url, body, onSuccess, onError) {
+wc.patch = function(url, body) {
   return wc.apiCall({
     method: 'PATCH',
     url: url,
     body: body
-  }, onSuccess, onError);
+  });
 }
 
 // Make wc globally available
