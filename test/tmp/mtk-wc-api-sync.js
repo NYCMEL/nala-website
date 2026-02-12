@@ -3,17 +3,19 @@
  * Make API calls and return JSON response directly (NO callbacks, NO await)
  * WARNING: This uses synchronous XMLHttpRequest which blocks the browser
  * NOTE: Timeouts are not supported in synchronous mode
+ **/
 
- /* EXAMPLE
- const response = wc.apiCall({
-     method: "POST",
-     url: wc.apiURL + "/api/login_api.php",
-     body: {
-         email: "mel@google.com",
-	 password: "test"
-     }
-});
-*/
+// EXAMPLE
+// var response = wc.apiCall({
+//     method: "POST",
+//     url: wc.apiURL + "/api/login_api.php",
+//     body: {
+//         email: "mel@google.com",
+//	 password: "test"
+//     }
+//});
+//
+// wc.log("response:", response);
 
 const wc = window.wc || {};
 
