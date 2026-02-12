@@ -14,7 +14,7 @@ wc.timeout(function(){
 	timer: 3, // Auto-close after 5 seconds
 	block: true,
     });
-}, 1000, 1);
+}, 100, 1);
 
 // INITIAL PAGE
 MTKPager.show("dashboard");
