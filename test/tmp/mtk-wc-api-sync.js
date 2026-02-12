@@ -6,16 +6,19 @@
  **/
 
 // EXAMPLE
+//////////////////////
 // var response = wc.apiCall({
 //     method: "POST",
 //     url: wc.apiURL + "/api/login_api.php",
 //     body: {
 //         email: "mel@google.com",
-//	 password: "test"
+// 	password: "test"
 //     }
-//});
-//
-// wc.log("response:", response);
+// });
+// 
+// wc.user = wc.user || response.user;
+
+wc.log("user:", wc.user);
 
 const wc = window.wc || {};
 
