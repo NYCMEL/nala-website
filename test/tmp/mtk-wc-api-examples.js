@@ -3,7 +3,7 @@
 // ============================================
 wc.post(wc.apiURL + '/api/login_api.php', {
     email: "mel@google.com",
-    password: "testing"
+    password: "test"
 }, function(response) {
     wc.response = response;
     wc.log('Success:', JSON.stringify(response));
