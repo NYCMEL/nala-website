@@ -1295,7 +1295,7 @@ wc.getCurriculum = function () {
 // });
 // 
 // wc.user = wc.user || response.user;
-
+//
 wc.apiCall = function(config) {
     const {
 	method = 'GET',
