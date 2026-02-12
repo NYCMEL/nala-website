@@ -5,7 +5,8 @@ wc.timeout(function(){
 	message: 'Loading in progress. Please wait...',
 	buttons: [],
 	closable: true, // No X button
-	timer: 3 // Auto-close after 5 seconds
+	timer: 3, // Auto-close after 5 seconds
+	block: true
     });
 }, 1000, 1);
 

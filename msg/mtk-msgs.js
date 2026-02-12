@@ -186,8 +186,8 @@ class MTKMsgs {
     this.element.classList.add('visible');
     this.isVisible = true;
 
-    // Lock screen if error message
-    if (msgConfig.type === 'error') {
+    // Lock screen if block flag is true
+    if (msgConfig.block === true) {
       this.lockScreen();
     } else {
       this.unlockScreen();
