@@ -1034,6 +1034,7 @@ wc.getSession = function (callback) {
     })
     .then(res => res.json())
     .then(data => {
+	wc.session = data;
         wc.log('SESSION', data.logged_in);
 
         if (typeof callback === 'function') {
