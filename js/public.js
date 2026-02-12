@@ -8,7 +8,7 @@ wc.getSession(function (loggedIn, session, err) {
 	    icon: 'check_circle',
 	    message: 'Loading in progress. Please wait...',
 	    buttons: [],
-	    closable: true, // No X button
+	    closable: false, // No X button
 	    timer: 3, // Auto-close after 5 seconds
 	    block: true
 	});
