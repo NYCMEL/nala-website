@@ -16,6 +16,8 @@
 	$("#header .nav-link.active").removeClass("active")
 	$("#header #mtk-header-" + sectionId).addClass("active")
 
+	wc.page = sectionId;
+
 	window.scrollTo(0, 0);
     }
 
