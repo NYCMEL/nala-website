@@ -17,7 +17,6 @@ class _febe {
             "mtk-login-register",
             "mtk-login-focus",
             "mtk-login-success",
-            "MTK-parts.click",
             "mtk-hierarchy:resource:click",
             "mtk-register:submit"
         ];
@@ -40,7 +39,6 @@ class _febe {
             "mtk-register:submit": () => this.handleRegisterSubmit(),
             "mtk-login-success": (data) => this.handleLoginSuccess(data),
             "mtk-hierarchy:resource:click": (data) => this.resource(data),
-            "MTK-parts.click": () => this.handlePartsClick(),
             "mtk-header-logout": () => this.handleLogout(),
             "mtk-login-forgot-password": () => this.handleForgotPassword(),
             "mtk-login-focus": () => this.handleLoginFocus()
@@ -102,18 +100,6 @@ class _febe {
                 wc.error(err);
                 alert(err);
             });
-    }
-    
-    /////////////////////////////////////////////////////////////////////////////////
-    //// Handler: Parts Click
-    /////////////////////////////////////////////////////////////////////////////////
-    handlePartsClick() {
-        wc.log("_febe: handlePartsClick");
-        
-        MTKPager.show("lessons");
-        wc.timeout(() => {
-            lessonClicked(cIndex, cTitle);
-        }, 500, 1);
     }
     
     /////////////////////////////////////////////////////////////////////////////////
