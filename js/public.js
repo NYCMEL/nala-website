@@ -1,7 +1,13 @@
+// localhot. CHANGE BROWSER TITLE
+if (document.location.protocol == "http:") {
+    document.title = "NALA - Local";
+}
+
 // INITIAL PAGE
 wc.getSession(function (loggedIn, session, err) {
     if (err) return;
     
+
     wc.timeout(function(){
 	MTKMsgs.show({
 	    type: 'success',

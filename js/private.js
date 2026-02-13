@@ -2,6 +2,11 @@
 //// PRIVATE JS PIECES 
 ///////////////////////////////////////////////////////////////////
 
+// localhot. CHANGE BROWSER TITLE
+if (document.location.protocol == "http:") {
+    document.title = "NALA - Local";
+}
+
 wc.startInactivityTracking();
 
 wc.timeout(function(){
