@@ -346,14 +346,58 @@ class MTKDashboard {
     }
 }
 
+// mtk-dashboard configuration
+window.mtkDashboardConfigNew = {
+    user: {
+	fullName: "Mel M. Heravi"
+    },
+    progress: {
+	label: "Your progress to date:",
+	percentage: 23,
+	courseTitle: "NALA - Locksmith Course"
+    },
+    subscriptions: {
+	title: "You can also subscribe to our premium features:",
+	options: [
+	    {
+		id: "premium-course",
+		icon: "school",
+		title: "Premium Courses",
+		description: "Access advanced courses and certifications",
+		price: "$136.25/month"
+	    },
+	    {
+		id: "mentorship",
+		icon: "people",
+		title: "1-on-1 Mentorship",
+		description: "Get personalized guidance from experts",
+		price: "$99.99/month"
+	    },
+	    {
+		id: "career-services",
+		icon: "work",
+		title: "Career Services",
+		description: "Resume review, interview prep, and job matching",
+		price: "$49.99/month"
+	    }
+	]
+    }
+};
+
 // Wait for mtk-dashboard element to be completely loaded into DOM
 function initializeDashboard() {
     const dashboardElement = document.querySelector('mtk-dashboard.mtk-dashboard');
     
+    // if we get config from json
+    if (window.mtkDashboardConfigNew)
+	window.mtkDashboardConfig = window.mtkDashboardConfigNew;
+
     if (dashboardElement) {
 	// Element found, check if config is available
 	if (typeof mtkDashboardConfig !== 'undefined') {
-	    const dashboard = new MTKDashboard(mtkDashboardConfig);
+	    console.log("AAAAAAAAAAAAAAA", window.mtkDashboardConfigNew.user);
+	    
+	    const dashboard = new MTKDashboard(window.mtkDashboardConfig);
 	    
 	    // Make dashboard available globally for debugging
 	    window.mtkDashboard = dashboard;

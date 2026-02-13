@@ -1,5 +1,5 @@
 // mtk-dashboard configuration
-const mtkDashboardConfig = {
+window.mtkDashboardConfig = {
     user: {
 	fullName: "John Anderson"
     },

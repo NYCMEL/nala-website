@@ -20,8 +20,6 @@ wc.timeout(function(){
 	    // SET USER NAME
 	    $("#uname").html(wc.session.name.split(" ")[0])
 
-	    $(".mtk-dashboard__user-name").html(wc.session.name);
-
             wc.log('User is logged in');
 	} else {
             wc.log('User is logged out');
