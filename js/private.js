@@ -18,7 +18,7 @@ wc.timeout(function(){
 
 	if (loggedIn) {
 	    // SET USER NAME
-	    $("#uname").html(wc.session.name)
+	    $("#uname").html(wc.session.name.split(" ")[0])
 
             wc.log('User is logged in');
 	} else {
