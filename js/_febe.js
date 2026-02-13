@@ -45,7 +45,7 @@ class _febe {
 	case "mtk-ready:click":
 	case "mtk-courses:click":
 	case "mtk-login-register":
-            MTKPager.show("register");
+            mtk_pager.show("register");
             break;
 
 	case "mtk-register:submit":
@@ -73,7 +73,7 @@ class _febe {
 
 	case "mtk-dashboard:continue":
         case "mtk-header-hierarchy":
-            MTKPager.show("hierarchy");
+            mtk_pager.show("hierarchy");
             break;
 
         case "mtk-hierarchy:resource:click":
@@ -81,7 +81,7 @@ class _febe {
             break;
 
         case "MTK-parts.click":
-            MTKPager.show("lessons");
+            mtk_pager.show("lessons");
 
             wc.timeout(() => {
                 lessonClicked(cIndex, cTitle);
@@ -90,11 +90,11 @@ class _febe {
 
 	case "mtk-header-logo":
 	case "mtk-header-dashboard":
-            MTKPager.show("dashboard");
+            mtk_pager.show("dashboard");
             break;
 
 	case "mtk-header-settings":
-	    MTKPager.show("settings");
+	    mtk_pager.show("settings");
             break;
 
 	case "mtk-header-login":
