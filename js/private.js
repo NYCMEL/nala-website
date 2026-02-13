@@ -17,15 +17,15 @@ wc.timeout(function(){
 	wc.session = session;
 
 	if (loggedIn) {
+	    // SET USER NAME
 	    $("#uname").html(wc.session.name)
+
             wc.log('User is logged in');
 	} else {
             wc.log('User is logged out');
 	}
     });
-}, 300, 1);
 
-wc.timeout(function(){
     MTKMsgs.show({
 	type: 'success',
 	icon: 'check_circle',
