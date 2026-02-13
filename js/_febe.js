@@ -28,18 +28,19 @@ class _febe {
         // OBJECT MAPPING FOR ALL MESSAGE HANDLERS
         this.handlers = {
 	    // PAGE TRANSITIONS
+            "mtk-header-home":	   () => mtk_pager.show('home');
+            "mtk-header-register": () => mtk_pager.show('register');
+            "mtk-header-login":    () =>  mtk_pager.show('login');
+
             "mtk-ready:click": () => MTKPager.show("register"),
             "mtk-courses:click": () => MTKPager.show("register"),
             "mtk-path:click": () => MTKPager.show("register"),
             "mtk-login-register": () => MTKPager.show("register"),
-            "mtk-header-register": () => MTKPager.show("register"),
-            "mtk-header-home": () => MTKPager.show("home"),
             "mtk-dashboard:continue": () => MTKPager.show("hierarchy"),
             "mtk-header-hierarchy": () => MTKPager.show("hierarchy"),
             "header-logo": () => MTKPager.show("dashboard"),
             "mtk-header-dashboard": () => MTKPager.show("dashboard"),
             "mtk-header-settings": () => MTKPager.show("settings"),
-            "mtk-header-login": () => MTKPager.show("login"),
 
 	    // SPECIAL HANDLERS
             "mtk-register:submit": () => this.handleRegisterSubmit(),
