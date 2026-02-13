@@ -1,10 +1,3 @@
-/************************************************************
- * INACTIVITY TIMER
- ************************************************************/
-// Start tracking AFTER login
-wc.inactivity.idleTime = 0.5 * 60 * 1000;
-wc.inactivity.countdown = 15;
-
 /////////////////////////////////////////////////////////////////////////////////
 //// Config
 /////////////////////////////////////////////////////////////////////////////////
@@ -58,7 +51,6 @@ document.addEventListener("click", function (e) {
 	ripple.remove();
     });
 });
-
 
 // ADD RIPPLE EFFECT TO ALL BUTTONS
 (function applyRippleToButtons() {

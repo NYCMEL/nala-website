@@ -10,8 +10,8 @@ if(typeof(console) === 'undefined') {console = {}}
  * INACTIVITY TIMER
  ************************************************************/
 wc.inactivity = {
-    idleTime: 0.5 * 60 * 1000,
-    countdown: 15
+    idleTime: 1 * 60 * 1000, /* one minute */
+    countdown: 30 /* 30 seconds countdown */
 };
 
 /////////////////////////////////////////////////////////////////////////////////
