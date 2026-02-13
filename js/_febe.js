@@ -27,28 +27,31 @@ class _febe {
         
         // OBJECT MAPPING FOR ALL MESSAGE HANDLERS
         this.handlers = {
+	    // PAGE TRANSITIONS
             "mtk-ready:click": () => MTKPager.show("register"),
             "mtk-courses:click": () => MTKPager.show("register"),
             "mtk-path:click": () => MTKPager.show("register"),
             "mtk-login-register": () => MTKPager.show("register"),
             "mtk-header-register": () => MTKPager.show("register"),
-            "mtk-register:submit": () => this.handleRegisterSubmit(),
             "mtk-header-home": () => MTKPager.show("home"),
-            "mtk-login-success": (data) => this.handleLoginSuccess(data),
             "mtk-dashboard:continue": () => MTKPager.show("hierarchy"),
             "mtk-header-hierarchy": () => MTKPager.show("hierarchy"),
-            "mtk-hierarchy:resource:click": (data) => this.resource(data),
-            "MTK-parts.click": () => this.handlePartsClick(),
             "header-logo": () => MTKPager.show("dashboard"),
             "mtk-header-dashboard": () => MTKPager.show("dashboard"),
             "mtk-header-settings": () => MTKPager.show("settings"),
             "mtk-header-login": () => MTKPager.show("login"),
+
+	    // SPECIAL HANDLERS
+            "mtk-register:submit": () => this.handleRegisterSubmit(),
+            "mtk-login-success": (data) => this.handleLoginSuccess(data),
+            "mtk-hierarchy:resource:click": (data) => this.resource(data),
+            "MTK-parts.click": () => this.handlePartsClick(),
             "mtk-header-logout": () => this.handleLogout(),
             "mtk-login-forgot-password": () => this.handleForgotPassword(),
             "mtk-login-focus": () => this.handleLoginFocus()
         };
         
-        // Object mapping for resource type handlers
+        // RESOURCE TYPE HANDLERS
         this.resourceHandlers = {
             "video": (data) => this.handleVideoResource(data),
             "image": (data) => this.handleImageResource(data)
@@ -57,6 +60,7 @@ class _febe {
         this.subscribe();
     }
     
+    // ALL _febe SUBSCRIPTIONS ARE PROCESSED HERE
     subscribe() {
         this.topics.forEach(topic => {
             wc.log("_febe: subscribed to", topic);
