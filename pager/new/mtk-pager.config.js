@@ -8,12 +8,12 @@ app.pager = {
     // Section ID to URL mapping
     // Format: 'sectionId': 'path/to/content.html'
     
-    'home': 'pager/tmp/home.html',
-    'about': 'pager/tmp/about.html',
-    'contact': 'pager/tmp/contact.html',
-    'dashboard': 'pager/tmp/dashboard.html',
-    'profile': 'pager/tmp/profile.html',
-    'settings': 'pager/tmp/settings.html',
+    'home': 'pager/tmp/page-home.html',
+    'about': 'pager/tmp/page-about.html',
+    'contact': 'pager/tmp/page-contact.html',
+    'dashboard': 'pager/tmp/page-dashboard.html',
+    'profile': 'pager/tmp/page-profile.html',
+    'settings': 'pager/tmp/page-settings.html',
 };
 
 // Optional: Default section to load on initialization
