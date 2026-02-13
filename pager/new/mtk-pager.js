@@ -45,11 +45,36 @@
         }
     };
     
+    const _waitForContainer = (callback, maxAttempts = 50) => {
+        let attempts = 0;
+        
+        const checkContainer = () => {
+            attempts++;
+            const container = document.getElementById('mtk-pager');
+            
+            if (container) {
+                _log(`Container found after ${attempts} attempt(s)`, 'success');
+                callback(container);
+                return true;
+            }
+            
+            if (attempts >= maxAttempts) {
+                _log(`ERROR: Container not found after ${maxAttempts} attempts (${maxAttempts * 50}ms)`, 'error');
+                return false;
+            }
+            
+            _log(`Container not found yet, attempt ${attempts}/${maxAttempts}...`, 'debug');
+            setTimeout(checkContainer, 50);
+        };
+        
+        checkContainer();
+    };
+    
     const _findContainer = () => {
         const container = document.getElementById('mtk-pager');
         
         if (!container) {
-            _log('ERROR: Container <PAGER id="mtk-pager"> not found in DOM!', 'error');
+            _log('Container <PAGER id="mtk-pager"> not found in DOM', 'warning');
             return null;
         }
         
@@ -277,44 +302,37 @@
             state.config = {};
         }
         
-        // Find container
-        state.container = _findContainer();
-        
-        if (!state.container) {
-            _log('Initialization failed: Container not found, will retry in 100ms...', 'warning');
-            // Retry after a short delay
+        // Wait for container to be in DOM
+        _log('Waiting for PAGER container to be in DOM...', 'info');
+        _waitForContainer((container) => {
+            state.container = container;
+            
+            // Subscribe to events
+            _subscribeToEvents();
+            
+            // Mark as initialized
+            state.isInitialized = true;
+            _log('mtk-pager initialized successfully', 'success');
+            
+            // Dispatch initialization event
+            _dispatchEvent('mtk-pager:initialized', {
+                sections: Array.from(state.sections.keys())
+            });
+            
+            // ALWAYS load initial section (first page)
+            let initialSection = 'home'; // Default fallback
+            
+            if (typeof app !== 'undefined' && app.pagerDefaults && app.pagerDefaults.initialSection) {
+                initialSection = app.pagerDefaults.initialSection;
+            }
+            
+            _log(`Auto-loading first page: ${initialSection}`, 'info');
+            
+            // Small delay to ensure DOM is fully ready
             setTimeout(() => {
-                _log('Retrying initialization...', 'debug');
-                _initialize();
-            }, 100);
-            return;
-        }
-        
-        // Subscribe to events
-        _subscribeToEvents();
-        
-        // Mark as initialized
-        state.isInitialized = true;
-        _log('mtk-pager initialized successfully', 'success');
-        
-        // Dispatch initialization event
-        _dispatchEvent('mtk-pager:initialized', {
-            sections: Array.from(state.sections.keys())
+                _showSection(initialSection);
+            }, 50);
         });
-        
-        // ALWAYS load initial section (first page)
-        let initialSection = 'home'; // Default fallback
-        
-        if (typeof app !== 'undefined' && app.pagerDefaults && app.pagerDefaults.initialSection) {
-            initialSection = app.pagerDefaults.initialSection;
-        }
-        
-        _log(`Auto-loading first page: ${initialSection}`, 'info');
-        
-        // Small delay to ensure DOM is fully ready
-        setTimeout(() => {
-            _showSection(initialSection);
-        }, 50);
     };
     
     // Public API
@@ -350,25 +368,8 @@
     // Expose globally
     window.mtk_pager = mtk_pager;
     
-    // Auto-initialize when DOM is ready
-    const initWhenReady = () => {
-        _log('mtk-pager component loaded, waiting for DOM...', 'info');
-        
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => {
-                _log('DOM ready, initializing...', 'debug');
-                _initialize();
-            });
-        } else {
-            _log('DOM already ready, initializing immediately...', 'debug');
-            // Add small delay to ensure everything is loaded
-            setTimeout(() => {
-                _initialize();
-            }, 10);
-        }
-    };
-    
-    // Start initialization
-    initWhenReady();
+    // Auto-initialize immediately
+    _log('mtk-pager component loaded', 'info');
+    _initialize();
     
 })();
