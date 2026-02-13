@@ -1,7 +1,3 @@
-// mtk-pager.config.js
-// Configuration for mtk-pager component
-// Defines content URLs for each section
-
 var app = app || {};
 
 app.pager = {
@@ -13,7 +9,7 @@ app.pager = {
     'contact': 'pager/tmp/page-contact.html',
     'dashboard': 'pager/tmp/page-dashboard.html',
     'profile': 'pager/tmp/page-profile.html',
-    'settings': 'pager/tmp/page-settings.html',
+    'settings': 'pager/tmp/page-settings.html'
     
     // You can add more sections as needed
     // 'custom-section': 'pager/tmp/page-custom.html'
