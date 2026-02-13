@@ -2,11 +2,9 @@ var app = app || {};
 
 app.pager = {
     // Section ID to URL mapping
-    // Format: 'sectionId': 'path/to/content.html'
-    
-    'home': 'pages/home.html',
+    'home':	'pages/home.html',
     'register': 'register/index.html',
-    'login': 'login/index.html',
+    'login':	'login/index.html',
 };
 
 // OPTIONAL: DEFAULT SECTION TO LOAD ON INITIALIZATION
