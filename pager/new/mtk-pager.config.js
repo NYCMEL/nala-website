@@ -19,6 +19,6 @@ app.pager = {
 app.pagerDefaults = {
     initialSection: 'home',  // First page to show
     loadOnInit: true,        // Always load the first page on init
-    animationDuration: 300,
+    animationDuration: 2000,
     debugMode: true
 };
