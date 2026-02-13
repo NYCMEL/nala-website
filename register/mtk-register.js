@@ -1,6 +1,6 @@
 /* mtk-register.js */
 
-class MtkRegister extends HTMLElement {
+class MTKRegister extends HTMLElement {
 
     constructor() {
         super();
@@ -79,4 +79,4 @@ class MtkRegister extends HTMLElement {
     }
 }
 
-customElements.define("mtk-register", MtkRegister);
+customElements.define("mtk-register", MTKRegister);
