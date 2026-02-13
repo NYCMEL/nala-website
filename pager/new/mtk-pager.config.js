@@ -4,7 +4,7 @@ app.pager = {
     // Section ID to URL mapping
     // Format: 'sectionId': 'path/to/content.html'
     
-    'home': 'pager/tmp/page-home.html',
+    'home': 'pages/home.html',
     'about': 'pager/tmp/page-about.html',
     'contact': 'pager/tmp/page-contact.html',
     'dashboard': 'pager/tmp/page-dashboard.html',
@@ -14,6 +14,7 @@ app.pager = {
     // You can add more sections as needed
     // 'custom-section': 'pager/tmp/page-custom.html'
 };
+
 
 // Optional: Default section to load on initialization
 app.pagerDefaults = {
