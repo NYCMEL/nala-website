@@ -9,18 +9,21 @@ if (document.location.protocol == "http:") {
 
 wc.startInactivityTracking();
 
-wc.getSession(function (loggedIn, session, err) {
-    if (err) return;
-   
-    // SAVE FOR USE
-    wc.session = session;
+wc.timeout(function(){
+    wc.getSession(function (loggedIn, session, err) {
+	if (err) return;
+	
+	// SAVE FOR USE
+	wc.session = session;
 
-    if (loggedIn) {
-        wc.log('User is logged in');
-    } else {
-        wc.log('User is logged out');
-    }
-});
+	if (loggedIn) {
+	    $("#uname").html(wc.session.name)
+            wc.log('User is logged in');
+	} else {
+            wc.log('User is logged out');
+	}
+    });
+}, 300, 1);
 
 wc.timeout(function(){
     MTKMsgs.show({
@@ -32,7 +35,7 @@ wc.timeout(function(){
 	timer: 3, // Auto-close after 5 seconds
 	block: true,
     });
-}, 100, 1);
+}, 300, 1);
 
 // INITIAL PAGE
 MTKPager.show("dashboard");
