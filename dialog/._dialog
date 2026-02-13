@@ -1,6 +1,0 @@
-i want to create an modern material design dialog
-i want you to remember this component as _dialog
-
-all content comes from a _dialog.data.js file and consumed as variable window.app.dialog
-
-create html, css, scss and vanilla js for _dialog
