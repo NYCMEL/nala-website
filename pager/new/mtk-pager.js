@@ -281,7 +281,12 @@
         state.container = _findContainer();
         
         if (!state.container) {
-            _log('Initialization failed: Container not found', 'error');
+            _log('Initialization failed: Container not found, will retry in 100ms...', 'warning');
+            // Retry after a short delay
+            setTimeout(() => {
+                _log('Retrying initialization...', 'debug');
+                _initialize();
+            }, 100);
             return;
         }
         
@@ -346,12 +351,24 @@
     window.mtk_pager = mtk_pager;
     
     // Auto-initialize when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', _initialize);
-    } else {
-        _initialize();
-    }
+    const initWhenReady = () => {
+        _log('mtk-pager component loaded, waiting for DOM...', 'info');
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                _log('DOM ready, initializing...', 'debug');
+                _initialize();
+            });
+        } else {
+            _log('DOM already ready, initializing immediately...', 'debug');
+            // Add small delay to ensure everything is loaded
+            setTimeout(() => {
+                _initialize();
+            }, 10);
+        }
+    };
     
-    _log('mtk-pager component loaded', 'info');
+    // Start initialization
+    initWhenReady();
     
 })();
