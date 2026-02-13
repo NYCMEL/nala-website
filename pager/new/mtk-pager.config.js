@@ -10,16 +10,12 @@ app.pager = {
     'dashboard': 'pager/tmp/page-dashboard.html',
     'profile': 'pager/tmp/page-profile.html',
     'settings': 'pager/tmp/page-settings.html'
-    
-    // You can add more sections as needed
-    // 'custom-section': 'pager/tmp/page-custom.html'
 };
 
-
-// Optional: Default section to load on initialization
+// OPTIONAL: DEFAULT SECTION TO LOAD ON INITIALIZATION
 app.pagerDefaults = {
-    initialSection: 'home',  // First page to show
-    loadOnInit: true,        // Always load the first page on init
-    animationDuration: 2000,
-    debugMode: true
+    initialSection: 'home',  // FIRST PAGE TO SHOW
+    loadOnInit: true,        // ALWAYS LOAD THE FIRST PAGE ON INIT
+    animationDuration: 300,
+    debugMode: false
 };
