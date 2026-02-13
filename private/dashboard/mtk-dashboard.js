@@ -347,7 +347,7 @@ class MTKDashboard {
 }
 
 // mtk-dashboard configuration
-window.mtkDashboardConfigNew = {
+window.myConfig = {
     user: {
 	fullName: "Mel M. Heravi"
     },
@@ -385,51 +385,53 @@ window.mtkDashboardConfigNew = {
 };
 
 // Wait for mtk-dashboard element to be completely loaded into DOM
-function initializeDashboard() {
-    const dashboardElement = document.querySelector('mtk-dashboard.mtk-dashboard');
-    
-    // if we get config from json
-    if (window.mtkDashboardConfigNew)
-	window.mtkDashboardConfig = window.mtkDashboardConfigNew;
+function initializeDashboard(config) {
+    const resolvedConfig =
+	  config ||
+	  (typeof window.mtkDashboardConfig !== "undefined"
+	   ? window.mtkDashboardConfig
+	   : null);
+
+    if (!resolvedConfig) {
+	console.error(
+	    "MTK Dashboard: Configuration not found. Pass config to initializeDashboard() or include mtk-dashboard.config.js"
+	);
+	return;
+    }
+
+    const init = () => {
+	const dashboard = new MTKDashboard(resolvedConfig);
+	window.mtkDashboard = dashboard; // optional, for debugging
+    };
+
+    const dashboardElement = document.querySelector("mtk-dashboard.mtk-dashboard");
 
     if (dashboardElement) {
-	// Element found, check if config is available
-	if (typeof mtkDashboardConfig !== 'undefined') {
-	    console.log("AAAAAAAAAAAAAAA", window.mtkDashboardConfigNew.user);
-	    
-	    const dashboard = new MTKDashboard(window.mtkDashboardConfig);
-	    
-	    // Make dashboard available globally for debugging
-	    window.mtkDashboard = dashboard;
-	} else {
-	    console.error('MTK Dashboard: Configuration not found. Please include mtk-dashboard.config.js');
-	}
-    } else {
-	// Element not found, wait for it
-	const observer = new MutationObserver((mutations, obs) => {
-	    const element = document.querySelector('mtk-dashboard.mtk-dashboard');
-	    if (element) {
-		obs.disconnect();
-		
-		if (typeof mtkDashboardConfig !== 'undefined') {
-		    const dashboard = new MTKDashboard(mtkDashboardConfig);
-		    window.mtkDashboard = dashboard;
-		} else {
-		    console.error('MTK Dashboard: Configuration not found. Please include mtk-dashboard.config.js');
-		}
-	    }
-	});
-	
-	observer.observe(document.documentElement, {
-	    childList: true,
-	    subtree: true
-	});
+	init();
+	return;
     }
+
+    // Wait until element is added to DOM
+    const observer = new MutationObserver((_, obs) => {
+	const el = document.querySelector("mtk-dashboard.mtk-dashboard");
+	if (el) {
+	    obs.disconnect();
+	    init();
+	}
+    });
+
+    observer.observe(document.documentElement, {
+	childList: true,
+	subtree: true
+    });
 }
 
-// Initialize when DOM is ready
+// INITIALIZE WHEN DOM IS READY
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializeDashboard);
 } else {
     initializeDashboard();
+
+    // FOR TESTING
+    //initializeDashboard(window.myConfig);
 }
