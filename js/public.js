@@ -26,6 +26,5 @@ wc.getSession(function (loggedIn, session, err) {
 	document.location.href = document.location.origin + "/repo_deploy/private";
     } else {
 	wc.log('IS NOT LOGGED IN');
-	MTKPager.show("home");
     }
 });
