@@ -9,6 +9,19 @@ if (document.location.protocol == "http:") {
 
 wc.startInactivityTracking();
 
+wc.getSession(function (loggedIn, session, err) {
+    if (err) return;
+   
+    // SAVE FOR USE
+    wc.session = session;
+
+    if (loggedIn) {
+        wc.log('User is logged in');
+    } else {
+        wc.log('User is logged out');
+    }
+});
+
 wc.timeout(function(){
     MTKMsgs.show({
 	type: 'success',
