@@ -5,7 +5,7 @@ app.pager = {
     // Format: 'sectionId': 'path/to/content.html'
     
     'home': 'pages/home.html',
-    'about': 'pager/tmp/page-about.html',
+    'register': 'pages/register.html',
     'contact': 'pager/tmp/page-contact.html',
     'dashboard': 'pager/tmp/page-dashboard.html',
     'profile': 'pager/tmp/page-profile.html',
