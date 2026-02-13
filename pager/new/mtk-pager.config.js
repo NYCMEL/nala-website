@@ -8,18 +8,21 @@ app.pager = {
     // Section ID to URL mapping
     // Format: 'sectionId': 'path/to/content.html'
     
-    'home': 'pager/tmp/page-home.html',
-    'about': 'pager/tmp/page-about.html',
-    'contact': 'pager/tmp/page-contact.html',
-    'dashboard': 'pager/tmp/page-dashboard.html',
-    'profile': 'pager/tmp/page-profile.html',
-    'settings': 'pager/tmp/page-settings.html',
+    'home': 'pages/home.html',
+    'about': 'pages/about.html',
+    'contact': 'pages/contact.html',
+    'dashboard': 'pages/dashboard.html',
+    'profile': 'pages/profile.html',
+    'settings': 'pages/settings.html',
+    
+    // You can add more sections as needed
+    // 'custom-section': 'pages/custom.html'
 };
 
 // Optional: Default section to load on initialization
 app.pagerDefaults = {
-    initialSection: 'home',
-    loadOnInit: true,
+    initialSection: 'home',  // First page to show
+    loadOnInit: true,        // Always load the first page on init
     animationDuration: 300,
     debugMode: true
 };

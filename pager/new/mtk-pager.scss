@@ -34,7 +34,7 @@ PAGER {
 
 // Section visibility management
 PAGER-SECTION {
-    display: none;
+    display: none !important;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
     
@@ -42,9 +42,9 @@ PAGER-SECTION {
         width: 100%;
         min-height: 200px;
         
-        // Active state
+        // Active state - override display none
         &.active {
-            display: block;
+            display: block !important;
             opacity: 1;
             animation: mtk-pager-fadein 0.3s ease-in-out;
         }

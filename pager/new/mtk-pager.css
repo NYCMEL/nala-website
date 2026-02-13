@@ -23,14 +23,14 @@ PAGER {
     animation: mtk-pager-spin 1s linear infinite; }
 
 PAGER-SECTION {
-  display: none;
+  display: none !important;
   opacity: 0;
   transition: opacity 0.3s ease-in-out; }
   PAGER-SECTION.mtk-pager-section {
     width: 100%;
     min-height: 200px; }
     PAGER-SECTION.mtk-pager-section.active {
-      display: block;
+      display: block !important;
       opacity: 1;
       animation: mtk-pager-fadein 0.3s ease-in-out; }
 

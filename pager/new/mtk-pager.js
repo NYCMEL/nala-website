@@ -72,9 +72,26 @@
     };
     
     const _hideAllSections = () => {
+        // Hide all sections in the container
+        const allSections = state.container.querySelectorAll('PAGER-SECTION');
+        allSections.forEach((section) => {
+            if (section.classList.contains('active')) {
+                section.classList.remove('active');
+                const sectionId = section.getAttribute('data-section-id');
+                _log(`Section hidden: ${sectionId}`, 'debug');
+                
+                // Dispatch hide event
+                _dispatchEvent('mtk-pager:hide', {
+                    sectionId: sectionId
+                });
+            }
+        });
+        
+        // Also update our state map
         state.sections.forEach((section, id) => {
-            section.classList.remove('active');
-            _log(`Section hidden: ${id}`, 'debug');
+            if (section.classList.contains('active')) {
+                section.classList.remove('active');
+            }
         });
     };
     
@@ -280,18 +297,19 @@
             sections: Array.from(state.sections.keys())
         });
         
-        // Load initial section if configured
-        if (typeof app !== 'undefined' && 
-            app.pagerDefaults && 
-            app.pagerDefaults.loadOnInit && 
-            app.pagerDefaults.initialSection) {
-            
-            const initialSection = app.pagerDefaults.initialSection;
-            _log(`Loading initial section: ${initialSection}`, 'info');
-            setTimeout(() => {
-                _showSection(initialSection);
-            }, 100);
+        // ALWAYS load initial section (first page)
+        let initialSection = 'home'; // Default fallback
+        
+        if (typeof app !== 'undefined' && app.pagerDefaults && app.pagerDefaults.initialSection) {
+            initialSection = app.pagerDefaults.initialSection;
         }
+        
+        _log(`Auto-loading first page: ${initialSection}`, 'info');
+        
+        // Small delay to ensure DOM is fully ready
+        setTimeout(() => {
+            _showSection(initialSection);
+        }, 50);
     };
     
     // Public API
