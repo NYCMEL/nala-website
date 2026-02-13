@@ -30,7 +30,7 @@ class _febe {
 	    // PAGE TRANSITIONS
             "mtk-header-home":	   () => mtk_pager.show('home');
             "mtk-header-register": () => mtk_pager.show('register');
-            "mtk-header-login":    () =>  mtk_pager.show('login');
+            "mtk-header-login":    () => mtk_pager.show('login');
 
             "mtk-ready:click": () => MTKPager.show("register"),
             "mtk-courses:click": () => MTKPager.show("register"),
