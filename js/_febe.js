@@ -56,21 +56,19 @@ class _febe {
             break;
 	    
 	case "mtk-login-success":
-	    wc.doLogin(data.email, data.password)
-		.then(success => {
-		    if (success) {
-			wc.log('Logged in!');
-			// SHOW PUBLIC HEADER (needed here)
-			$(".app-header").hide(function() {
-			    $("#header-private").show();
-			});
-			mtk_pager.show('dashboard');
-		    }
-		})
-		.catch(err => {
-		    wc.error(err);
-		    alert(err);
-		});
+	    wc.doLogin(data.email, data.password).then(success => {
+		if (success) {
+		    wc.log('Logged in!');
+		    // SHOW PUBLIC HEADER (needed here)
+		    $(".app-header").hide(function() {
+			$("#header-private").show();
+		    });
+		    mtk_pager.show('dashboard');
+		}
+	    }).catch(err => {
+		wc.error(err);
+		alert(err);
+	    });
 	    break;
 
 	case "mtk-dashboard:continue":
