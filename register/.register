@@ -5,7 +5,7 @@ make a separate html, css, scss, vanilla js files
 
 form should have the following fields:
 - title: NALA Locksmith Registeration Form     
-- Name: label "First Name", helper:First Name, Middle Initial, Last Name, required
+- Name: label " Name", helper:"First Name, Middle Initial, Last Name", required
 - Email: label "Your Email", helper:example@example.com, required
 - Email2: label "Repeat Email", required
 - Phone number label "Contact Phone Number", helper:Phone Number, required
