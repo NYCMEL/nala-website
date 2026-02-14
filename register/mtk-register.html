@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NALA Locksmith Registration Form</title>
+    <link rel="stylesheet" href="mtk-register.scss">
+</head>
+<body>
+    <div class="mtk-register-container">
+        <form id="mtk-register-form" class="mtk-register-form" novalidate>
+            <h1 class="mtk-register-title">NALA Locksmith Registration Form</h1>
+            
+            <!-- Name Field -->
+            <div class="mtk-form-group">
+                <div class="mtk-input-wrapper">
+                    <input 
+                        type="text" 
+                        id="firstName" 
+                        class="mtk-input" 
+                        required
+                        autocomplete="given-name"
+                    >
+                    <label for="firstName" class="mtk-label">
+                        First Name <span class="mtk-required">*</span>
+                    </label>
+                    <span class="mtk-helper-text">First Name, Middle Initial, Last Name</span>
+                    <div class="mtk-focus-line"></div>
+                </div>
+            </div>
+
+            <!-- Email Field -->
+            <div class="mtk-form-group">
+                <div class="mtk-input-wrapper">
+                    <input 
+                        type="email" 
+                        id="email" 
+                        class="mtk-input" 
+                        required
+                        autocomplete="email"
+                    >
+                    <label for="email" class="mtk-label">
+                        Your Email <span class="mtk-required">*</span>
+                    </label>
+                    <span class="mtk-helper-text">example@example.com</span>
+                    <div class="mtk-focus-line"></div>
+                </div>
+            </div>
+
+            <!-- Repeat Email Field -->
+            <div class="mtk-form-group">
+                <div class="mtk-input-wrapper">
+                    <input 
+                        type="email" 
+                        id="email2" 
+                        class="mtk-input" 
+                        required
+                        autocomplete="email"
+                    >
+                    <label for="email2" class="mtk-label">
+                        Repeat Email <span class="mtk-required">*</span>
+                    </label>
+                    <span class="mtk-helper-text"></span>
+                    <div class="mtk-focus-line"></div>
+                </div>
+            </div>
+
+            <!-- Phone Number Field -->
+            <div class="mtk-form-group">
+                <div class="mtk-input-wrapper">
+                    <input 
+                        type="tel" 
+                        id="phone" 
+                        class="mtk-input" 
+                        required
+                        autocomplete="tel"
+                    >
+                    <label for="phone" class="mtk-label">
+                        Contact Phone Number <span class="mtk-required">*</span>
+                    </label>
+                    <span class="mtk-helper-text">Phone Number</span>
+                    <div class="mtk-focus-line"></div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="mtk-form-actions">
+                <button type="submit" class="mtk-button mtk-button-primary">
+                    <span class="mtk-button-text">Submit</span>
+                    <div class="mtk-ripple"></div>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script src="mtk-register.config.js"></script>
+    <script src="mtk-register.js"></script>
+</body>
+</html>

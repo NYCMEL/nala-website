@@ -1,0 +1,331 @@
+// mtk-register Component SCSS
+// Material Design Registration Form
+
+// Color Variables
+$primary-color: #1976d2;
+$primary-dark: #1565c0;
+$primary-light: #42a5f5;
+$error-color: #d32f2f;
+$success-color: #388e3c;
+$text-primary: rgba(0, 0, 0, 0.87);
+$text-secondary: rgba(0, 0, 0, 0.54);
+$border-color: rgba(0, 0, 0, 0.42);
+$background-color: #fafafa;
+$card-background: #ffffff;
+
+// Shadows
+$shadow-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+$shadow-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+$shadow-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+// Transitions
+$transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-medium: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+// Reset and Base Styles
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background-color: $background-color;
+    color: $text-primary;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+// Container
+.mtk-register-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+// Form
+.mtk-register-form {
+    background: $card-background;
+    border-radius: 4px;
+    box-shadow: $shadow-2;
+    padding: 32px;
+    width: 100%;
+    max-width: 560px;
+    transition: box-shadow $transition-medium;
+
+    &:hover {
+        box-shadow: $shadow-3;
+    }
+}
+
+// Title
+.mtk-register-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: $text-primary;
+    margin-bottom: 32px;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+// Form Group
+.mtk-form-group {
+    margin-bottom: 24px;
+    position: relative;
+}
+
+// Input Wrapper
+.mtk-input-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+// Input Field
+.mtk-input {
+    width: 100%;
+    height: 56px;
+    padding: 20px 16px 6px 16px;
+    font-size: 16px;
+    font-family: inherit;
+    color: $text-primary;
+    background: transparent;
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    outline: none;
+    transition: all $transition-fast;
+    appearance: none;
+
+    &:hover {
+        border-color: rgba(0, 0, 0, 0.87);
+    }
+
+    &:focus {
+        border-color: $primary-color;
+        border-width: 2px;
+        padding: 20px 15px 6px 15px;
+    }
+
+    &:focus ~ .mtk-focus-line {
+        transform: scaleX(1);
+    }
+
+    &:focus ~ .mtk-label,
+    &:not(:placeholder-shown) ~ .mtk-label,
+    &.mtk-has-value ~ .mtk-label {
+        transform: translateY(-18px) scale(0.75);
+        color: $primary-color;
+    }
+
+    &:not(:focus):not(:placeholder-shown) ~ .mtk-label,
+    &:not(:focus).mtk-has-value ~ .mtk-label {
+        color: $text-secondary;
+    }
+
+    &.mtk-error {
+        border-color: $error-color;
+        
+        &:focus {
+            border-color: $error-color;
+        }
+
+        ~ .mtk-label {
+            color: $error-color;
+        }
+
+        ~ .mtk-helper-text {
+            color: $error-color;
+        }
+    }
+
+    &:disabled {
+        background-color: rgba(0, 0, 0, 0.04);
+        border-style: dashed;
+        cursor: not-allowed;
+    }
+}
+
+// Label
+.mtk-label {
+    position: absolute;
+    left: 16px;
+    top: 18px;
+    font-size: 16px;
+    color: $text-secondary;
+    pointer-events: none;
+    transition: all $transition-fast;
+    transform-origin: left top;
+    background: $card-background;
+    padding: 0 4px;
+    margin-left: -4px;
+    z-index: 1;
+}
+
+// Required Asterisk
+.mtk-required {
+    color: $error-color;
+    font-weight: 500;
+}
+
+// Helper Text
+.mtk-helper-text {
+    font-size: 12px;
+    color: $text-secondary;
+    margin-top: 4px;
+    padding-left: 16px;
+    min-height: 16px;
+    line-height: 16px;
+    transition: color $transition-fast;
+}
+
+// Focus Line
+.mtk-focus-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: $primary-color;
+    transform: scaleX(0);
+    transition: transform $transition-fast;
+    pointer-events: none;
+}
+
+// Form Actions
+.mtk-form-actions {
+    margin-top: 32px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+}
+
+// Button
+.mtk-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+    height: 48px;
+    padding: 0 24px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: $card-background;
+    background-color: $primary-color;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    overflow: hidden;
+    transition: all $transition-fast;
+    box-shadow: $shadow-1;
+
+    &:hover {
+        background-color: $primary-dark;
+        box-shadow: $shadow-2;
+    }
+
+    &:active {
+        box-shadow: $shadow-3;
+    }
+
+    &:focus {
+        outline: 2px solid rgba($primary-color, 0.4);
+        outline-offset: 2px;
+    }
+
+    &:disabled {
+        background-color: rgba(0, 0, 0, 0.12);
+        color: rgba(0, 0, 0, 0.38);
+        box-shadow: none;
+        cursor: not-allowed;
+    }
+}
+
+.mtk-button-text {
+    position: relative;
+    z-index: 1;
+}
+
+// Ripple Effect
+.mtk-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.4);
+    transform: scale(0);
+    pointer-events: none;
+}
+
+.mtk-button:active .mtk-ripple {
+    animation: ripple-animation 0.6s ease-out;
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+// Responsive Design
+@media (max-width: 600px) {
+    .mtk-register-container {
+        padding: 16px;
+    }
+
+    .mtk-register-form {
+        padding: 24px;
+    }
+
+    .mtk-register-title {
+        font-size: 20px;
+        margin-bottom: 24px;
+    }
+
+    .mtk-form-group {
+        margin-bottom: 20px;
+    }
+
+    .mtk-form-actions {
+        margin-top: 24px;
+    }
+
+    .mtk-button {
+        width: 100%;
+    }
+}
+
+// Focus visible for accessibility
+.mtk-input:focus-visible {
+    outline: 2px solid $primary-color;
+    outline-offset: 2px;
+}
+
+.mtk-button:focus-visible {
+    outline: 2px solid rgba($primary-color, 0.4);
+    outline-offset: 2px;
+}
+
+// Animation for error state
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-4px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(4px);
+    }
+}
+
+.mtk-input.mtk-error {
+    animation: shake 0.4s ease-in-out;
+}
