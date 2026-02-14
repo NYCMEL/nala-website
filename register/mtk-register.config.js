@@ -1,6 +1,6 @@
 window.mtkRegisterConfig = {
-  name: "",
-  email: "",
-  email2: "",
-  phone: ""
+    name: "",
+    email: "",
+    email2: "",
+    phone: ""
 };

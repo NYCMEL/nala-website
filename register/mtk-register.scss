@@ -74,6 +74,7 @@ $muted: #777;
     cursor: pointer;
 
     &:hover {
-	background: darken($primary, 8%);
+	color: #FFF;
+	background: darken($primary, 10%);
     }
 }

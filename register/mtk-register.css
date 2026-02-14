@@ -60,4 +60,5 @@
   cursor: pointer; }
 
 .submit-btn:hover {
-  background: #1662ae; }
+  color: #FFF;
+  background: #155da5; }
