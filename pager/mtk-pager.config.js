@@ -5,6 +5,7 @@ app.pager = {
     'home':	'pages/home.html',
     'register': 'register/index.html',
     'login':	'login/index.html',
+    'dashboard':'private/dashboard/index.html',
 };
 
 // OPTIONAL: DEFAULT SECTION TO LOAD ON INITIALIZATION
