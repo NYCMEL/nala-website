@@ -22,8 +22,9 @@ wc.getSession(function (loggedIn, session, err) {
     }
 
     if (loggedIn) {
+	alert("public.js: " + loggedIn);
 	wc.log('IS LOGGED IN');
-	document.location.href = document.location.origin + "/repo_deploy/private";
+	mtk_pager.show('dashboard');
     } else {
 	wc.log('IS NOT LOGGED IN');
     }
