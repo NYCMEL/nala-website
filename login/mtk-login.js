@@ -1,3 +1,5 @@
+alert("A")
+
 class MTKLogin {
     constructor() {
 	this.init();

@@ -56,6 +56,7 @@ class _febe {
             break;
 	    
 	case "mtk-login-success":
+	    alert("A")
 	    wc.doLogin(data.email, data.password)
 		.then(success => {
 		    if (success) {
