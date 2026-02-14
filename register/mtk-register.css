@@ -180,6 +180,35 @@ body {
   box-shadow: none;
   cursor: not-allowed; }
 
+.mtk-button-primary {
+  background-color: #1976d2;
+  color: #ffffff; }
+
+.mtk-button-primary:hover {
+  background-color: #1565c0; }
+
+.mtk-button-secondary {
+  background-color: transparent;
+  color: #1976d2;
+  box-shadow: none;
+  border: 1px solid rgba(0, 0, 0, 0.42); }
+
+.mtk-button-secondary .mtk-ripple {
+  background-color: rgba(25, 118, 210, 0.2); }
+
+.mtk-button-secondary:hover {
+  background-color: rgba(25, 118, 210, 0.08);
+  border-color: #1976d2;
+  box-shadow: none; }
+
+.mtk-button-secondary:active {
+  background-color: rgba(25, 118, 210, 0.16);
+  box-shadow: none; }
+
+.mtk-button-secondary:focus {
+  outline: 2px solid rgba(25, 118, 210, 0.4);
+  outline-offset: 2px; }
+
 .mtk-button-text {
   position: relative;
   z-index: 1; }

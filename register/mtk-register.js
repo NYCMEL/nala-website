@@ -56,6 +56,14 @@ class MTKRegister {
             this.handleSubmit();
         });
 
+        // Cancel button event
+        const cancelButton = this.form.querySelector('.mtk-button-secondary');
+        if (cancelButton) {
+            cancelButton.addEventListener('click', () => {
+                this.handleCancel();
+            });
+        }
+
         // Input events for floating labels
         Object.values(this.fields).forEach(field => {
             field.addEventListener('input', () => {
@@ -72,13 +80,13 @@ class MTKRegister {
             });
         });
 
-        // Ripple effect for button
-        const button = this.form.querySelector('.mtk-button');
-        if (button) {
+        // Ripple effect for buttons
+        const buttons = this.form.querySelectorAll('.mtk-button');
+        buttons.forEach(button => {
             button.addEventListener('click', (e) => {
                 this.createRipple(e, button);
             });
-        }
+        });
     }
 
     initializeFloatingLabels() {
@@ -194,6 +202,31 @@ class MTKRegister {
 
         // Publish JSON data
         this.publishData(formData);
+    }
+
+    handleCancel() {
+        // Clear all fields
+        Object.values(this.fields).forEach(field => {
+            field.value = '';
+            field.classList.remove('mtk-has-value');
+            this.clearError(field);
+        });
+
+        // Reset form
+        this.form.reset();
+
+        // Dispatch cancel event
+        const event = new CustomEvent('mtk-register-cancel', {
+            bubbles: true
+        });
+        this.form.dispatchEvent(event);
+
+        // Call wc.publish if available
+        if (typeof wc !== 'undefined' && typeof wc.publish === 'function') {
+            wc.publish('mtk-register-cancel', {});
+        }
+
+        console.log('Form cancelled and reset');
     }
 
     publishData(data) {

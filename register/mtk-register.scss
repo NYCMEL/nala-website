@@ -246,6 +246,44 @@ body {
     }
 }
 
+// Primary Button (Submit)
+.mtk-button-primary {
+    background-color: $primary-color;
+    color: $card-background;
+
+    &:hover {
+        background-color: $primary-dark;
+    }
+}
+
+// Secondary Button (Cancel)
+.mtk-button-secondary {
+    background-color: transparent;
+    color: $primary-color;
+    box-shadow: none;
+    border: 1px solid $border-color;
+
+    .mtk-ripple {
+        background-color: rgba($primary-color, 0.2);
+    }
+
+    &:hover {
+        background-color: rgba($primary-color, 0.08);
+        border-color: $primary-color;
+        box-shadow: none;
+    }
+
+    &:active {
+        background-color: rgba($primary-color, 0.16);
+        box-shadow: none;
+    }
+
+    &:focus {
+        outline: 2px solid rgba($primary-color, 0.4);
+        outline-offset: 2px;
+    }
+}
+
 .mtk-button-text {
     position: relative;
     z-index: 1;
