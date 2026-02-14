@@ -202,6 +202,16 @@
     };
     
     const _showSection = (sectionId) => {
+	// ADD ACTIVE TO CURRENT LINK
+	$(".nav-link, .navbar-brand, .btn").removeClass("active");
+
+	if (sectionId == "course") {
+	    $("#mtk-header-hierarchy").addClass("active");
+
+	} else {
+	    $("#mtk-header-" + sectionId).addClass("active");
+	}
+
         if (!state.container) {
             _log('Cannot show section: Container not initialized', 'error');
             return;
