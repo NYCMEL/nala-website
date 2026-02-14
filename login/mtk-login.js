@@ -1,4 +1,4 @@
-alert("A")
+alert("MTKLogin...MTKLogin...MTKLogin")
 
 class MTKLogin {
     constructor() {
