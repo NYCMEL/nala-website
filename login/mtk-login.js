@@ -1,11 +1,11 @@
-alert("MTKLogin...MTKLogin...MTKLogin")
-
 class MTKLogin {
     constructor() {
 	this.init();
     }
 
     async init() {
+	alert("SSSSSSSSSSSSSS");
+
 	// Wait for the element in DOM
 	await this.waitForElement('mtk-login');
 	this.root = document.querySelector('mtk-login');
