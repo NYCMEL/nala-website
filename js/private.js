@@ -38,4 +38,4 @@ wc.timeout(function(){
 }, 200, 1);
 
 // INITIAL PAGE
-MTKPager.show("dashboard");
+mtk_pager.show('dashboard');
