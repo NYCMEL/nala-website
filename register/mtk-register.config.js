@@ -4,47 +4,33 @@ window.mtkRegisterConfig = {
     title: "NALA Locksmith Registration Form",
 
     fields: {
-        firstName: {
-            id: "firstName",
-            label: "First Name",
-            helper: "First Name",
+        name: {
+            id: "name",
+            label: "Name",
+            helper: "First Name, Middle Initial, Last Name",
             required: true,
-            value: "Mel"
-        },
-        middleInitial: {
-            id: "middleInitial",
-            label: "M.I.",
-            helper: "",
-            required: false,
-            value: "M"
-        },
-        lastName: {
-            id: "lastName",
-            label: "Last Name",
-            helper: "Last Name",
-            required: true,
-            value: "Heravi"
+            value: ""
         },
         email: {
             id: "email",
             label: "Your Email",
             helper: "example@example.com",
             required: true,
-            value: "mel@gmail.com"
+            value: ""
         },
         email2: {
             id: "email2",
             label: "Repeat Email",
             helper: "",
             required: true,
-            value: "mel@gmail.com"
+            value: ""
         },
         phone: {
             id: "phone",
             label: "Contact Phone Number",
             helper: "Phone Number",
             required: true,
-            value: "6463031234"
+            value: ""
         }
     }
 };
