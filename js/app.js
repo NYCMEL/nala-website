@@ -116,9 +116,7 @@ wc.getSession(function (loggedIn, session, err) {
 	    $(".app-header").hide(function() {
 		$("#header-private").show();
 	    });
-
-	    alert("IN")
-	}, 500, 1);
+	}, 300, 1);
     } else {
 	wc.timeout(function(){
 	    wc.log('IS NOT LOGGED IN');
@@ -128,8 +126,6 @@ wc.getSession(function (loggedIn, session, err) {
 	    $(".app-header").hide(function() {
 		$("#header-public").show();
 	    });
-
-	    alert("OUT")
-	}, 200, 1);
+	}, 300, 1);
     }
 });
