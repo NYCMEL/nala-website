@@ -48,7 +48,7 @@ class _febe {
             break;
 
 	case "mtk-register-submit":
-	    wc.log(">>>>>>", JSON.stringify(data));
+	    wc.log("_febe:", JSON.stringify(data));
             break;
 
 	case "mtk-header-home":
