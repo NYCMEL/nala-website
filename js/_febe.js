@@ -77,7 +77,7 @@ class _febe {
 
 	case "mtk-dashboard:continue":
         case "mtk-header-hierarchy":
-            mtk_pager.show("hierarchy");
+            mtk_pager.show("course");
             break;
 
         case "mtk-hierarchy:resource:click":
