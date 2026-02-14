@@ -3,21 +3,13 @@ $error: #d32f2f;
 $text: #333;
 $muted: #777;
 
-* {
-    box-sizing: border-box;
-    font-family: Roboto, Arial, sans-serif;
-}
-
-body {
-    padding: 40px;
-}
-
 .md-form {
     background: #fff;
     max-width: 600px;
     margin: auto;
     padding: 32px;
-    border-radius: 8px;
+    margin-top: 40px;
+    margin-bottom: 40px;
 }
 
 .form-title {
