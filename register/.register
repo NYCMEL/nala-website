@@ -5,14 +5,11 @@ make a separate html, css, scss, vanilla js files
 
 form should have the following fields:
 - title: NALA Locksmith Registeration Form     
-- First Name: label "First Name", helper:First Name, required
-- Middle initial (labeled M.I.)
-- Last Name: label "Last Name", helper:Lirst Name,required
+- Name: label "First Name", helper:First Name, Middle Initial, Last Name, required
 - Email: label "Your Email", helper:example@example.com, required
 - Email2: label "Repeat Email", required
 - Phone number label "Contact Phone Number", helper:Phone Number, required
 
-First Name, Middle Initial and Last Name on the same line 
 use MATERIAL DESIGN FORM with FLOATING LABELS
 
 mark all required fields with a red "*"
