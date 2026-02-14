@@ -38,4 +38,6 @@ wc.timeout(function(){
 }, 200, 1);
 
 // INITIAL PAGE
-mtk_pager.show('dashboard');
+$(".app-header").toggle();
+
+

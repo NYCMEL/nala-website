@@ -34,6 +34,12 @@
 </mtk-dashboard>
 
 <script>
+ // SHOW PUBLIC HEADER
+ $(".app-header").hide(function() {
+     $("#header-public").show();
+     alert("HOME")
+ });
+ 
  $(".btn-continue-to-course").on("click", function() {
      mtk_pager.show("hierarchy");
  });
