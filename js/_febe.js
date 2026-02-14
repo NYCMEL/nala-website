@@ -60,8 +60,6 @@ class _febe {
 		.then(success => {
 		    if (success) {
 			wc.log('Logged in!');
-
-			document.location.href = document.location.origin + "/repo_deploy/private";
 			mtk_pager.show('dashboard');
 		    }
 		})
@@ -103,7 +101,7 @@ class _febe {
 
 	case "mtk-header-logout":
 	    wc.doLogout();
-	    document.location.href = document.location.origin + "/repo_deploy/index.html";
+            mtk_pager.show("home");
             break;
 
 	case "mtk-header-register":
