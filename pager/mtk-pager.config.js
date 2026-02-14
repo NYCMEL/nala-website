@@ -2,9 +2,9 @@ var app = app || {};
 
 app.pager = {
     // Section ID to URL mapping
-    'home':	'pages/home.html',
+    'home':	'pages/index.inc.html',
     'register': 'register/index.html',
-    'login':	'login/index.html',
+    'login':	'login/index.inc.html',
     'dashboard':'private/dashboard/index.html',
     'course':   'private/hierarchy/index.html',
     'settings': 'private/settings/index.html',
