@@ -23,8 +23,7 @@ class _febe {
 
             "MTK-parts.click",
             "mtk-hierarchy:resource:click",
-
-	    "mtk-register:submit"
+	    "mtk-register-submit"
         ];
 
         this.subscribe();
@@ -48,7 +47,8 @@ class _febe {
             mtk_pager.show("register");
             break;
 
-	case "mtk-register:submit":
+	case "mtk-register-submit":
+	    wc.log(">>>>>>", JSON.stringify(data));
             break;
 
 	case "mtk-header-home":
