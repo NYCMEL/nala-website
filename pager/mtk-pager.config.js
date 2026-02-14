@@ -3,11 +3,11 @@ var app = app || {};
 app.pager = {
     // Section ID to URL mapping
     'home':	'pages/index.inc.html',
-    'register': 'register/index.html',
+    'register': 'register/index.inc.html',
     'login':	'login/index.inc.html',
-    'dashboard':'private/dashboard/index.html',
-    'course':   'private/hierarchy/index.html',
-    'settings': 'private/settings/index.html',
+    'dashboard':'private/dashboard/index.inc.html',
+    'course':   'private/hierarchy/index.inc.html',
+    'settings': 'private/settings/index.inc.html',
 };
 
 // OPTIONAL: DEFAULT SECTION TO LOAD ON INITIALIZATION
