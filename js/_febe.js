@@ -60,6 +60,10 @@ class _febe {
 		.then(success => {
 		    if (success) {
 			wc.log('Logged in!');
+			// SHOW PUBLIC HEADER (needed here)
+			$(".app-header").hide(function() {
+			    $("#header-private").show();
+			});
 			mtk_pager.show('dashboard');
 		    }
 		})
