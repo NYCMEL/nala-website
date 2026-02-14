@@ -5,9 +5,9 @@ app.pager = {
     'home':	 'pages/index.inc.html',
     'register':  'register/index.inc.html',
     'login':	 'login/index.inc.html',
-    'dashboard': 'private/dashboard/index.inc.html',
-    'course':    'private/hierarchy/index.inc.html',
-    'settings':  'private/settings/index.inc.html',
+    'dashboard': 'dashboard/index.inc.html',
+    'course':    'hierarchy/index.inc.html',
+    'settings':  'settings/index.inc.html',
 };
 
 // OPTIONAL: DEFAULT SECTION TO LOAD ON INITIALIZATION
