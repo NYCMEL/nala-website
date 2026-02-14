@@ -22,7 +22,6 @@ wc.getSession(function (loggedIn, session, err) {
     }
 
     if (loggedIn) {
-	alert("public.js: " + loggedIn);
 	wc.log('IS LOGGED IN');
 	mtk_pager.show('dashboard');
     } else {
