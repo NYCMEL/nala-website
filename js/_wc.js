@@ -932,6 +932,12 @@ wc.doLogin = async function (email, passwd) {
 
 	wc.configure = data;
 
+	wc.setCookie("user", JSON.stringify(wc.configure.user));
+
+	// SET USER IN HEADER
+	wc.user = JSON.parse(wc.getCookie("user"));
+	$("#uname").html(wc.user.name);
+
         return true;
     } catch (err) {
         wc.error("2 Login failed:", err);
@@ -947,7 +953,10 @@ wc.doLogin = async function (email, passwd) {
 wc.doLogout = async function () {
     wc.log('doLogout');
 
-    wc.session = null;
+    wc.session = wc.user = null;
+
+    // REMOVE USER NAME
+    wc.deleteCookie("user");
 
     try {
         const res = await fetch(wc.apiURL + '/api/auth_logout.php', {
@@ -961,7 +970,7 @@ wc.doLogout = async function () {
             throw new Error(data.error || 'Logout failed');
         }
 
-        // reset client-side user state if you have one
+        // reset
         wc.currentUser = null;
 
         wc.log('logged out', data);
@@ -1191,23 +1200,29 @@ wc.injectMaterialStyles = function () {
 /////////////////////////////////////////////////////////////////////////////////
 //// Curriculum API
 /////////////////////////////////////////////////////////////////////////////////
-wc.getCurriculum = function () {
-    return fetch(wc.apiURL + '/curriculum_api.php', {
-        method: 'GET',
-        credentials: 'include'
+wc.getCurriculum = function (callback) {
+    fetch(wc.apiURL + "/api/curriculum_api.php", {
+	method: "GET",
+	credentials: "include"
     })
-    .then(res => {
-        if (!res.ok) {
-            throw new Error('Failed to fetch curriculum');
-        }
-        return res.json();
-    })
-    .then(data => {
-        wc.log('Curriculum data:', data);
-        return data;
-    })
-    .catch(err => {
-        wc.error('getCurriculum error:', err);
-        throw err;
-    });
+	.then(res => {
+	    if (!res.ok) {
+		throw new Error("Failed to fetch curriculum");
+	    }
+	    return res.json();
+	})
+	.then(data => {
+	    wc.log("Curriculum data:", data);
+
+	    if (typeof callback === "function") {
+		callback(null, data);
+	    }
+	})
+	.catch(err => {
+	    wc.error("getCurriculum error:", err);
+
+	    if (typeof callback === "function") {
+		callback(err, null);
+	    }
+	});
 };
