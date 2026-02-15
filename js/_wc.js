@@ -1195,18 +1195,15 @@ wc.getCurriculum = function () {
     return fetch(wc.apiURL + '/curriculum_api.php', {
         method: 'GET',
         credentials: 'include'
-    })
-    .then(res => {
+    }).then(res => {
         if (!res.ok) {
             throw new Error('Failed to fetch curriculum');
         }
         return res.json();
-    })
-    .then(data => {
+    }).then(data => {
         wc.log('Curriculum data:', data);
         return data;
-    })
-    .catch(err => {
+    }).catch(err => {
         wc.error('getCurriculum error:', err);
         throw err;
     });
