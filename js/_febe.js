@@ -23,7 +23,9 @@ class _febe {
 
             "MTK-parts.click",
             "mtk-hierarchy:resource:click",
-	    "mtk-register-submit"
+	    "mtk-register-submit",
+
+	    "mtk-hierarchy:lesson-toggled"
         ];
 
         this.subscribe();
@@ -45,6 +47,10 @@ class _febe {
 	case "mtk-courses:click":
 	case "mtk-login-register":
             mtk_pager.show("register");
+            break;
+
+	case "mtk-hierarchy:lesson-toggled":
+	    wc.log("_febe: mtk-hierarchy:lesson-toggled", data);
             break;
 
 	case "mtk-register-submit":
