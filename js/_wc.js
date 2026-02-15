@@ -947,40 +947,6 @@ if (typeof module !== 'undefined' && module.exports) {
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-//// LOGOUT
-/////////////////////////////////////////////////////////////////////////////////
-wc.doLogout = async function () {
-    wc.group('doLogout');
-
-    try {
-        const res = await fetch(wc.apiURL + '/api/auth_logout.php', {
-            method: 'POST',
-            credentials: 'include'
-        });
-
-        const data = await res.json().catch(() => ({}));
-
-        if (!res.ok) {
-            throw new Error(data.error || 'Logout failed');
-        }
-
-        // reset client-side user state if you have one
-        wc.currentUser = null;
-
-        wc.log('logged out', data);
-        wc.groupEnd();
-        return true;
-
-    } catch (err) {
-        wc.error('doLogout failed:', err);
-        throw err;
-
-    } finally {
-        wc.groupEnd();
-    }
-};
-
-/////////////////////////////////////////////////////////////////////////////////
 //// LOGIN
 /////////////////////////////////////////////////////////////////////////////////
 wc.doLogin = async function (email, passwd) {
@@ -1015,6 +981,40 @@ wc.doLogin = async function (email, passwd) {
 	alert("2 Login failed:", err)
         wc.groupEnd();
         return false;
+    } finally {
+        wc.groupEnd();
+    }
+};
+
+/////////////////////////////////////////////////////////////////////////////////
+//// LOGOUT
+/////////////////////////////////////////////////////////////////////////////////
+wc.doLogout = async function () {
+    wc.group('doLogout');
+
+    try {
+        const res = await fetch(wc.apiURL + '/api/auth_logout.php', {
+            method: 'POST',
+            credentials: 'include'
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok) {
+            throw new Error(data.error || 'Logout failed');
+        }
+
+        // reset client-side user state if you have one
+        wc.currentUser = null;
+
+        wc.log('logged out', data);
+        wc.groupEnd();
+        return true;
+
+    } catch (err) {
+        wc.error('doLogout failed:', err);
+        throw err;
+
     } finally {
         wc.groupEnd();
     }
