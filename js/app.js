@@ -1,7 +1,25 @@
 /////////////////////////////////////////////////////////////////////////////////
 //// APP CONFIG
 /////////////////////////////////////////////////////////////////////////////////
+window.app = window.app || {};
 
+/************************************************************
+ * CONFIG INACTIVITY TIMER
+ ************************************************************/
+wc.inactivity = {
+    idleTime: 2 * 60 * 1000, /* one minute */
+    countdown: 40 /* 30 seconds countdown */
+};
+
+wc.working       = false;
+app.baseUrl      = "/repo_deploy/";
+wc.productionURL = "https://nala-test.com";
+wc.apiURL        = 'https://nala-test.com';
+
+// START TRACKING. COMMENT TO BYPASS
+wc.startInactivityTracking();
+
+////////////////////////////////////////////////////////////
 // SMOOTH SCROLLING TO TARGET
 (function () {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
