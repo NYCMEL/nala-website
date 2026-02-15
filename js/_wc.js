@@ -938,7 +938,7 @@ wc.doLogin = async function (email, passwd) {
         }
 
 	// GET SESSION 
-	wc.getSession();
+	//wc.getSession();
 
 	wc.configure = data;
 
@@ -997,8 +997,6 @@ wc.doLogout = async function () {
 // });
 /////////////////////////////////////////////////////////////////////////////////
 wc.getSession = function (callback) {
-    alert("A")
-
     return fetch(wc.apiURL + '/api/me.php', {
         credentials: 'include'
     }).then(res => res.json()).then(data => {
