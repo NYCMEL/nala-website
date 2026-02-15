@@ -9,7 +9,7 @@ window.wc.working = false;
 if(typeof(console) === 'undefined') {console = {}}
 
 /************************************************************
- * INACTIVITY TIMER
+ * CONFIG INACTIVITY TIMER
  ************************************************************/
 wc.inactivity = {
     idleTime: 2 * 60 * 1000, /* one minute */
@@ -1020,16 +1020,6 @@ wc.getSession = function (callback) {
 
         throw err;
     });
-};
-
-/************************************************************
- * CONFIG
- ************************************************************/
-wc.inactivity = {
-    idleTime: 60 * 1000,   // 1 minute idle
-    countdown: 30,         // seconds before logout
-    idleTimer: null,
-    countdownTimer: null
 };
 
 /************************************************************
