@@ -1,10 +1,10 @@
 class _febe {
     constructor() {
-        this.topics = [
+	// list of topics
+	this.topics = [
 	    "mtk-ready:click",
 	    "mtk-courses:click",
 	    "mtk-path:click",
-	    
 	    "header-logo",
 	    "mtk-header-dashboard",
 	    "mtk-header-login",
@@ -13,152 +13,154 @@ class _febe {
 	    "mtk-header-hierarchy",
 	    "mtk-header-register",
 	    "mtk-header-settings",
-
 	    "mtk-dashboard:continue",
-
 	    "mtk-login-forgot-password",
 	    "mtk-login-register",
 	    "mtk-login-focus",
 	    "mtk-login-success",
-
-            "MTK-parts.click",
-            "mtk-hierarchy:resource:click",
+	    "MTK-parts.click",
+	    "mtk-hierarchy:resource:click",
 	    "mtk-register-submit",
-
 	    "mtk-hierarchy:lesson-toggled"
-        ];
+	];
 
-        this.subscribe();
+	// create handlers mapping
+	this.handlers = this.createHandlers();
+
+	this.subscribe();
     }
 
     subscribe() {
-        this.topics.forEach(topic => {
-            wc.log("_febe: subscribed to", topic);
-            PubSub.subscribe(topic, this.onMessage.bind(this));
-        });
+	this.topics.forEach(topic => {
+	    wc.log("_febe: subscribed to", topic);
+	    PubSub.subscribe(topic, this.onMessage.bind(this));
+	});
+    }
+
+    createHandlers() {
+	return {
+	    "mtk-path:click": this.handleRegister,
+	    "mtk-ready:click": this.handleRegister,
+	    "mtk-courses:click": this.handleRegister,
+	    "mtk-login-register": this.handleRegister,
+	    "mtk-hierarchy:lesson-toggled": this.handleLessonToggled,
+	    "mtk-register-submit": this.handleRegisterSubmit,
+	    "mtk-header-home": this.handleHome,
+	    "mtk-login-success": this.handleLoginSuccess.bind(this),
+	    "mtk-dashboard:continue": this.handleCourse,
+	    "mtk-header-hierarchy": this.handleCourse,
+	    "mtk-hierarchy:resource:click": this.handleResource.bind(this),
+	    "MTK-parts.click": this.handlePartsClick,
+	    "mtk-header-logo": this.handleDashboard,
+	    "mtk-header-dashboard": this.handleDashboard,
+	    "mtk-header-settings": this.handleSettings,
+	    "mtk-header-login": this.handleLogin,
+	    "mtk-header-logout": this.handleLogout,
+	    "mtk-header-register": this.handleRegister
+	};
     }
 
     onMessage(msg, data) {
-        wc.log("_febe: onMessage", msg, data);
+	wc.log("_febe: onMessage", msg, data);
 
-        switch (msg) {
-	case "mtk-path:click":
-	case "mtk-ready:click":
-	case "mtk-courses:click":
-	case "mtk-login-register":
-            mtk_pager.show("register");
-            break;
+	const handler = this.handlers[msg];
+	if (handler) {
+	    handler(data);
+	} else {
+	    wc.error("_febe: DO NOT HAVE:" + msg);
+	    alert("_febe: DO NOT HAVE:" + msg);
+	}
+    }
 
-	case "mtk-hierarchy:lesson-toggled":
-            break;
+    /* -------------------- HANDLERS -------------------- */
+    handleRegister() {
+	mtk_pager.show("register");
+    }
 
-	case "mtk-register-submit":
-	    alert("need code to process registeration!!")
-            break;
+    handleLessonToggled() {
+	// NO-OP
+    }
 
-	case "mtk-header-home":
-            mtk_pager.show('home');
-            break;
-	    
-	case "mtk-login-success":
-	    wc.doLogin(data.email, data.password).then(success => {
+    handleRegisterSubmit() {
+	alert("need code to process registeration!!");
+    }
+
+    handleHome() {
+	mtk_pager.show("home");
+    }
+
+    handleLoginSuccess(data) {
+	wc.doLogin(data.email, data.password)
+	    .then(success => {
 		if (success) {
-		    wc.log('Logged in!');
-		    // SHOW PUBLIC HEADER (needed here)
-		    $(".app-header").hide(function() {
-			$("#header-private").show();
-		    });
-		    mtk_pager.show('dashboard');
+		    wc.log("Logged in!");
+		    $(".app-header").hide(() => $("#header-private").show());
+		    mtk_pager.show("dashboard");
 		}
-	    }).catch(err => {
+	    })
+	    .catch(err => {
 		wc.error(err);
 		alert(err);
 	    });
-	    break;
-
-	case "mtk-dashboard:continue":
-        case "mtk-header-hierarchy":
-            mtk_pager.show("course");
-            break;
-
-        case "mtk-hierarchy:resource:click":
-            this.resource(data);
-            break;
-
-        case "MTK-parts.click":
-            mtk_pager.show("lessons");
-
-            wc.timeout(() => {
-                lessonClicked(cIndex, cTitle);
-            }, 500, 1);
-            break;
-
-	case "mtk-header-logo":
-	case "mtk-header-dashboard":
-            mtk_pager.show("dashboard");
-            break;
-
-	case "mtk-header-settings":
-	    mtk_pager.show("settings");
-            break;
-
-	case "mtk-header-login":
-            mtk_pager.show('login');
-            break;
-
-	case "mtk-header-logout":
-	    wc.doLogout();
-	    
-	    // SHOW PUBLIC HEADER
-	    $(".app-header").hide(function() {
-		$("#header-public").show();
-	    });
-
-            mtk_pager.show("home");
-            break;
-
-	case "mtk-header-register":
-            mtk_pager.show('register');
-            break;
-
-        default:
-	    wc.error("_febe: DO NOT HAVE:" + msg)
-            alert("_febe: DO NOT HAVE:" + msg);
-            break;
-        }
     }
 
-    /* RESOURCE HANDLER */
+    handleCourse() {
+	mtk_pager.show("course");
+    }
+
+    handleResource(data) {
+	this.resource(data);
+    }
+
+    handlePartsClick() {
+	mtk_pager.show("lessons");
+	wc.timeout(() => lessonClicked(cIndex, cTitle), 500, 1);
+    }
+
+    handleDashboard() {
+	mtk_pager.show("dashboard");
+    }
+
+    handleSettings() {
+	mtk_pager.show("settings");
+    }
+
+    handleLogin() {
+	mtk_pager.show("login");
+    }
+
+    handleLogout() {
+	wc.doLogout();
+	$(".app-header").hide(() => $("#header-public").show());
+	mtk_pager.show("home");
+    }
+
+    /* -------------------- RESOURCE HANDLER -------------------- */
     resource(data) {
-        if (!data) {
-            wc.warn("_febe.resource: no data received");
-            return;
-        }
+	if (!data) {
+	    wc.warn("_febe.resource: no data received");
+	    return;
+	}
 
-        wc.log("_febe.resource:", data.description, data.url);
+	wc.log("_febe.resource:", data.description, data.url);
 
-        // example actions you can expand later
-	switch(data.type) 
-	{
-	    case "video":
-	    $(".mtk-hierarchy-rhs-video, .mtk-hierarchy-rhs-image, .mtk-hierarchy-rhs-intro").hide();
-	    $(".mtk-hierarchy-rhs-video").fadeIn();
+	const typeHandlers = {
+	    video: () => {
+		$(".mtk-hierarchy-rhs-video, .mtk-hierarchy-rhs-image, .mtk-hierarchy-rhs-intro").hide();
+		$(".mtk-hierarchy-rhs-video").fadeIn();
+		wc.timeout(() => {
+		    wc.log("_febe:", data.url, data.description);
+		    window.MTKVideoInstance.load(data.url, data.description);
+		}, 200, 1);
+	    },
+	    image: () => wc.log("_febe:", data.type, data.url)
+	};
 
-	    // "https://www.w3schools.com/html/mov_bbb.mp4",
-	    // LOAD VIDEO DYNAMICALLY
-	    wc.timeout(function(){
-		wc.log("_febe:", data.url, data.description);
-		window.MTKVideoInstance.load(data.url, data.description);
-	    }, 200, 1);
-	    break;
-
-	    case "image":
-	    wc.log("_febe:", data.type, data.url);
-	    break;
-
-	    default:
+	const action = typeHandlers[data.type];
+	if (action) {
+	    action();
+	} else {
 	    wc.error("NO SUCH TYPE:", data.type);
-	    break;
 	}
     }
 }
