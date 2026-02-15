@@ -9,8 +9,6 @@
 <script>
  // INITIAL PAGE
  wc.getSession(function (loggedIn, session, err) {
-     alert("PPPPPPPPPPP")
-
      if (err) return;
      
      if (wc.working) {
@@ -28,25 +26,21 @@
      }
 
      if (loggedIn) {
-	 wc.timeout(function(){
-	     wc.log('IS LOGGED IN');
-	     mtk_pager.show('dashboard');
-	     
-	     // SHOW PUBLIC HEADER
-	     $(".app-header").hide(function() {
-		 $("#header-private").show();
-	     });
-	 }, 300, 1);
+	 wc.log('IS LOGGED IN');
+	 mtk_pager.show('dashboard');
+	 
+	 // SHOW PUBLIC HEADER
+	 $(".app-header").hide(function() {
+	     $("#header-private").show();
+	 });
      } else {
-	 wc.timeout(function(){
-	     wc.log('IS NOT LOGGED IN');
-	     mtk_pager.show('home');
-	     
-	     // SHOW PUBLIC HEADER
-	     $(".app-header").hide(function() {
-		 $("#header-public").show();
-	     });
-	 }, 300, 1);
+	 wc.log('IS NOT LOGGED IN');
+	 mtk_pager.show('home');
+	 
+	 // SHOW PUBLIC HEADER
+	 $(".app-header").hide(function() {
+	     $("#header-public").show();
+	 });
      }
  });
 </script>
