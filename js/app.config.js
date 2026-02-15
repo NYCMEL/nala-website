@@ -16,3 +16,5 @@ wc.startInactivityTracking();
 window.wc.working = false;
 
 wc.productionURL = "https://nala-test.com";
+
+wc.apiURL = 'https://nala-test.com';
