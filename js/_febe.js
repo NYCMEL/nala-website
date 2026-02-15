@@ -48,7 +48,7 @@ class _febe {
             break;
 
 	case "mtk-register-submit":
-	    wc.log("_febe:", JSON.stringify(data));
+	    alert("need code to process registeration!!")
             break;
 
 	case "mtk-header-home":
