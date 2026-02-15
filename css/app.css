@@ -1,6 +1,7 @@
 body {
-  font-family: fm !important;
-  padding-top: 80px; }
+  font-family: fm;
+  padding-top: 80px;
+  margin: 0; }
 
 /* FONT CLASSES */
 .fl {
