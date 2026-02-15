@@ -153,8 +153,6 @@
   padding: 10px; }
 
 @media (max-width: 767px) {
-  .mtk-footer {
-    padding: 32px 0 24px; }
   .mtk-footer__brand, .mtk-footer__contact, .mtk-footer__social {
     text-align: center; }
   .mtk-footer__logo {
