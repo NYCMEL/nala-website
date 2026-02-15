@@ -3,6 +3,8 @@ window.wcENV = window.wcENV || "prod";
 window.wcAPP = window.wcAPP || "NOT-SET";
 window.wcURL = window.wcURL || "";
 
+window.wc.working = false;
+
 // FOR WINDOZE
 if(typeof(console) === 'undefined') {console = {}}
 
