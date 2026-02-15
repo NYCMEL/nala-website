@@ -50,7 +50,6 @@ class _febe {
             break;
 
 	case "mtk-hierarchy:lesson-toggled":
-	    wc.log("_febe: mtk-hierarchy:lesson-toggled", data);
             break;
 
 	case "mtk-register-submit":
