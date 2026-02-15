@@ -118,6 +118,7 @@
     grid-template-columns: 1fr;
     max-width: 600px;
     margin: 0 auto; } }
+<<<<<<< HEAD
 
 body {
   background-color: #f5f5f5;
@@ -127,6 +128,8 @@ dth: 576px) and (max-width: 991px) {
       grid-template-columns: 1fr;
       max-width: 600px;
       margin: 0 auto; } }
+=======
+>>>>>>> 02.13.2026
 
 body {
   background-color: #f5f5f5;
