@@ -132,8 +132,7 @@ class _febe {
 
     handleLogout() {
 	wc.doLogout();
-	$(".app-header").hide(() => $("#header-public").show());
-	mtk_pager.show("home");
+	$(".app-header").hide(() => $("#header-public").show(() => mtk_pager.show("home")));
     }
 
     //////////////////////////////////////////////////////////////////
