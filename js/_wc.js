@@ -1191,20 +1191,29 @@ wc.injectMaterialStyles = function () {
 /////////////////////////////////////////////////////////////////////////////////
 //// Curriculum API
 /////////////////////////////////////////////////////////////////////////////////
-wc.getCurriculum = function () {
-    return fetch(wc.apiURL + '/api/curriculum_api.php', {
-        method: 'GET',
-        credentials: 'include'
-    }).then(res => {
-        if (!res.ok) {
-            throw new Error('Failed to fetch curriculum');
-        }
-        return res.json();
-    }).then(data => {
-        wc.log('Curriculum data:', data);
-        return data;
-    }).catch(err => {
-        wc.error('getCurriculum error:', err);
-        throw err;
-    });
+wc.getCurriculum = function (callback) {
+    fetch(wc.apiURL + "/api/curriculum_api.php", {
+	method: "GET",
+	credentials: "include"
+    })
+	.then(res => {
+	    if (!res.ok) {
+		throw new Error("Failed to fetch curriculum");
+	    }
+	    return res.json();
+	})
+	.then(data => {
+	    wc.log("Curriculum data:", data);
+
+	    if (typeof callback === "function") {
+		callback(null, data);
+	    }
+	})
+	.catch(err => {
+	    wc.error("getCurriculum error:", err);
+
+	    if (typeof callback === "function") {
+		callback(err, null);
+	    }
+	});
 };

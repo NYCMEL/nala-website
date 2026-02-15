@@ -835,12 +835,15 @@ class MTKHierarchy {
     }
 }
 
-// Initialize hierarchy when config is available
-if (typeof window.app !== 'undefined' && window.app.hierarchy) {
-    if (typeof wc !== 'undefined') {
-	wc.log("MTKHierarchy: Config found, creating instance");
+// GET FRESH DATA
+wc.getCurriculum(function (err, data) {
+    if (err) {
+	// handle error
+	return;
     }
     
+    window.app.hierarchy = data.hierarchy.parts;
+
     const hierarchy = new MTKHierarchy(window.app.hierarchy);
     
     // Expose to window namespace
@@ -868,11 +871,9 @@ if (typeof window.app !== 'undefined' && window.app.hierarchy) {
 	    wc.info('✅ Hierarchy Rendered:', data);
 	});
     }
-} else {
-    console.error('window.app.hierarchy is not defined. Please include mtk-hierarchy.config.js before mtk-hierarchy.js');
-}
 
-// Export for module systems
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { MTKHierarchy };
-}
+    // Export for module systems
+    if (typeof module !== 'undefined' && module.exports) {
+	module.exports = { MTKHierarchy };
+    }
+});
