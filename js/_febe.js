@@ -96,9 +96,9 @@ class _febe {
 	    .then(success => {
 		if (success) {
 		    wc.log("Logged in!");
-		    $(".app-header").hide(() => $("#header-private").show());
-		    mtk_pager.show("dashboard");
-		    working();
+
+		    // SHOW PRIVATE HEADER
+		    $(".app-header").hide(() => $("#header-private").show(() => mtk_pager.show("dashboard")));
 		}
 	    })
 	    .catch(err => {
@@ -134,9 +134,9 @@ class _febe {
 
     handleLogout() {
 	wc.doLogout();
-	$(".app-header").hide(() => $("#header-public").show());
-	mtk_pager.show("home");
-	working();
+	
+	// SHOW PUBLIC HEADER
+	$(".app-header").hide(() => $("#header-public").show(() => mtk_pager.show("home")));
     }
 
     //////////////////////////////////////////////////////////////////
@@ -169,20 +169,6 @@ class _febe {
 	    wc.error("NO SUCH TYPE:", data.type);
 	}
     }
-}
-
-function working() {
-    wc.timeout(function(){
-	MTKMsgs.show({
-	    type: 'success',
-	    icon: 'check_circle',
-	    message: 'Loading in progress. Please wait...',
-	    buttons: [],
-	    closable: false, // No X button
-	    timer: 3, // Auto-close after 5 seconds
-	    block: true
-	});
-    }, 100, 1);
 }
 
 /* auto-init */
