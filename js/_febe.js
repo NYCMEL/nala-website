@@ -96,6 +96,8 @@ class _febe {
 	    .then(success => {
 		if (success) {
 		    wc.log("Logged in!");
+
+		    // SHOW PRIVATE HEADER
 		    $(".app-header").hide(() => $("#header-private").show(() => mtk_pager.show("dashboard")));
 		}
 	    })
@@ -132,6 +134,8 @@ class _febe {
 
     handleLogout() {
 	wc.doLogout();
+	
+	// SHOW PUBLIC HEADER
 	$(".app-header").hide(() => $("#header-public").show(() => mtk_pager.show("home")));
     }
 
