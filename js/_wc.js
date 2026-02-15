@@ -1192,7 +1192,7 @@ wc.injectMaterialStyles = function () {
 //// Curriculum API
 /////////////////////////////////////////////////////////////////////////////////
 wc.getCurriculum = function () {
-    return fetch(wc.apiURL + '/curriculum_api.php', {
+    return fetch(wc.apiURL + '/api/curriculum_api.php', {
         method: 'GET',
         credentials: 'include'
     }).then(res => {
