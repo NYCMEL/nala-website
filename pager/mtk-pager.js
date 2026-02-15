@@ -359,6 +359,9 @@
             }
             
             _showSection(sectionId);
+
+	    // FIX FOOTER IF CONTENT IS SHORTER THAN PAGE
+	    checkFooter();
         },
         
         // Additional helper methods (not required but useful)
