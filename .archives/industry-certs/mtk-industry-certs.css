@@ -3,16 +3,6 @@
   .mtk-industry-certs__grid {
     display: grid;
     grid-template-columns: 1fr;
-<<<<<<< HEAD
-    max-width: 600px;
-    margin: 0 auto; } }
-<<<<<<< HEAD
-
-body {
-  background-color: #f5f5f5;
-  color: rgba(0, 0, 0, 0.87); }
-dth: 576px) and (max-width: 991px) {
-=======
     gap: 24px;
     margin: 0;
     padding: 0; }
@@ -106,16 +96,10 @@ dth: 576px) and (max-width: 991px) {
     .mtk-industry-certs__feature-item {
       font-size: 13px; } }
   @media (min-width: 576px) and (max-width: 991px) {
->>>>>>> 02.13.2026
     .mtk-industry-certs__grid {
       grid-template-columns: 1fr;
       max-width: 600px;
       margin: 0 auto; } }
-<<<<<<< HEAD
-=======
->>>>>>> 02.13.2026
-=======
->>>>>>> 02.13.2026
 
 body {
   background-color: #f5f5f5;
