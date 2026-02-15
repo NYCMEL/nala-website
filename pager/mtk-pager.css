@@ -78,8 +78,8 @@ PAGER-SECTION.mtk-pager-section.active {
 
 @media (max-width: 768px) {
   PAGER {
-    padding: 1rem;
-    min-height: 250px; }
+    /* padding: 1rem; */
+    /* min-height: 250px; */ }
   PAGER-SECTION.mtk-pager-section {
     min-height: 150px; } }
 
