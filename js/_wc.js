@@ -12,52 +12,19 @@ if(typeof(console) === 'undefined') {console = {}}
  * INACTIVITY TIMER
  ************************************************************/
 wc.inactivity = {
-    idleTime: 1 * 60 * 1000, /* one minute */
+    idleTime: 2 * 60 * 1000, /* one minute */
     countdown: 30 /* 30 seconds countdown */
 };
 
 /////////////////////////////////////////////////////////////////////////////////
-//// 
+//// LOGGING ON/OFF
 /////////////////////////////////////////////////////////////////////////////////
-wc.log = function(...data) {
-    return console.log(...data);
-}
+wc.debug = location.hostname !== "production-domain.com";
 
-/////////////////////////////////////////////////////////////////////////////////
-//// 
-/////////////////////////////////////////////////////////////////////////////////
-wc.group = function(...data) {
-    return console.group(...data);
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-//// 
-/////////////////////////////////////////////////////////////////////////////////
-wc.groupEnd = function(...data) {
-    return console.groupEnd(...data);
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-//// 
-/////////////////////////////////////////////////////////////////////////////////
-wc.info = function(...data) {
-    //wc.logger(...data);
-    return console.info(...data);
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-//// 
-/////////////////////////////////////////////////////////////////////////////////
-wc.warn = function(...data) {
-    return console.warn(...data);
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-////
-/////////////////////////////////////////////////////////////////////////////////
-wc.error = function(...data) {
-    return console.error(...data);
-}
+wc.log   = (...args) => wc.debug && console.log(...args);
+wc.warn  = (...args) => wc.debug && console.warn(...args);
+wc.error = (...args) => console.error(...args);
+wc.group = (...args) => console.group(...args);
 
 /////////////////////////////////////////////////////////////////////////////////
 //// wc.timeout(function(){
@@ -952,7 +919,7 @@ if (typeof module !== 'undefined' && module.exports) {
 //// LOGIN
 /////////////////////////////////////////////////////////////////////////////////
 wc.doLogin = async function (email, passwd) {
-    wc.group('doLogin');
+    wc.log('doLogin');
 
     try {
         const res = await fetch(wc.apiURL + '/api/login_api.php', {
@@ -972,19 +939,17 @@ wc.doLogin = async function (email, passwd) {
 
         if (!res.ok) {
             alert('1: Login Failed: combination of email and password');
-            wc.groupEnd();
             return false;
         }
 
-        wc.groupEnd();
+	wc.configure = data;
+
         return true;
     } catch (err) {
         wc.error("2 Login failed:", err);
 	alert("2 Login failed:", err)
-        wc.groupEnd();
         return false;
     } finally {
-        wc.groupEnd();
     }
 };
 
@@ -992,7 +957,7 @@ wc.doLogin = async function (email, passwd) {
 //// LOGOUT
 /////////////////////////////////////////////////////////////////////////////////
 wc.doLogout = async function () {
-    wc.group('doLogout');
+    wc.log('doLogout');
 
     try {
         const res = await fetch(wc.apiURL + '/api/auth_logout.php', {
@@ -1010,20 +975,26 @@ wc.doLogout = async function () {
         wc.currentUser = null;
 
         wc.log('logged out', data);
-        wc.groupEnd();
         return true;
-
     } catch (err) {
         wc.error('doLogout failed:', err);
         throw err;
-
     } finally {
-        wc.groupEnd();
     }
 };
 
 /////////////////////////////////////////////////////////////////////////////////
 //// wc.getSession().catch(wc.error);
+/////////////////////////////////////////////////////////////////////////////////
+// wc.getSession(function (loggedIn, session, err) {
+//     if (err) return;
+//    
+//     if (loggedIn) {
+//         wc.log('User is logged in');
+//     } else {
+//         wc.log('User is logged out');
+//     }
+// });
 /////////////////////////////////////////////////////////////////////////////////
 wc.getSession = function (callback) {
     return fetch(wc.apiURL + '/api/me.php', {
@@ -1048,19 +1019,6 @@ wc.getSession = function (callback) {
         throw err;
     });
 };
-
-/////////////////////////////////////////////////////////////////////////////////
-//// SAMPLE CODE TO USE
-/////////////////////////////////////////////////////////////////////////////////
-// wc.getSession(function (loggedIn, session, err) {
-//     if (err) return;
-//    
-//     if (loggedIn) {
-//         wc.log('User is logged in');
-//     } else {
-//         wc.log('User is logged out');
-//     }
-// });
 
 /************************************************************
  * CONFIG
