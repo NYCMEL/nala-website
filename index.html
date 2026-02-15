@@ -47,32 +47,38 @@
 
 	<!-- APP CODE STARTS... -->
 
-	<!-- HEADER-public -->
+	<!-- FOOTER -->
 	<div class="app-header" id="header-public" style="display:none">
+	    <!-- HEADER-public -->
 	    <wc-include href="header/header.public.html" />
 	</div>
 	
-	<!-- HEADER-private -->
 	<div class="app-header" id="header-private" style="display:none">
+	    <!-- HEADER-private -->
 	    <wc-include href="header/header.private.html" />
 	</div>
+	
+	<!-- MAIN -->
+	<main id="page-content">
+	    <!-- MSGS -->
+	    <div>
+		<wc-include href="msg/mtk-msgs.html" />
+	    </div>
 
-	<!-- MSGS -->
-	<div>
-	    <wc-include href="msg/mtk-msgs.html" />
-	</div>
+	    <div>
+		<wc-include href="pager/index.inc.html" />
+	    </div>
 
-	<div>
-	    <wc-include href="pager/index.inc.html" />
-	</div>
+	    <!-- mtk-pager Container -->
+	    <pager id="mtk-pager" />
+	</main>
 
-	<!-- mtk-pager Container -->
-	<pager id="mtk-pager" />
-
-	<!-- APP CODE END... -->
-	<div>
-	    <wc-include href="footer/mtk-footer.html" />
-	</div>
+	<!-- FOOTER -->
+	<footer id="page-footer">
+	    <div>
+		<wc-include href="footer/mtk-footer.html" />
+	    </div>
+	</footer>
 	
 	<!-- SCROLL TO TOP -->
 	<wc-include href="home/parts/top.html" />
