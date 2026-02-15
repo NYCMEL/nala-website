@@ -937,6 +937,9 @@ wc.doLogin = async function (email, passwd) {
             return false;
         }
 
+	// GET SESSION 
+	wc.getSession();
+
 	wc.configure = data;
 
         return true;
@@ -953,6 +956,8 @@ wc.doLogin = async function (email, passwd) {
 /////////////////////////////////////////////////////////////////////////////////
 wc.doLogout = async function () {
     wc.log('doLogout');
+
+    wc.session = null;
 
     try {
         const res = await fetch(wc.apiURL + '/api/auth_logout.php', {
