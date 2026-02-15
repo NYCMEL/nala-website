@@ -112,11 +112,9 @@
     <label>Role</label>
     <select id="new_role">
       <option value="registered">registered</option>
-      <option value="student">student</option>
-      <option value="instructor">instructor</option>
+      <option value="purchased">purchased</option>
       <option value="admin">admin</option>
     </select>
-    <div class="tiny">Note: API validates roles; keep values aligned with your backend.</div>
   </div>
 </div>
 <div class="row">
@@ -127,8 +125,7 @@
 
 <h2>Pick Which User You’re Editing (Admin)</h2>
 <div class="note">
-  This dropdown is for editing target users (reset lesson / update user / delete user).<br />
-  It auto-loads from <code>/api/admin_list_users.php</code> which returns <code>{ ok:true, users:[...] }</code>.
+  Dropdown loads from <code>/api/admin_list_users.php</code> returning <code>{ ok:true, users:[...] }</code>.
 </div>
 
 <div class="row">
@@ -187,10 +184,10 @@
     <select id="target_user_role">
       <option value="">(no change)</option>
       <option value="registered">registered</option>
-      <option value="student">student</option>
-      <option value="instructor">instructor</option>
+      <option value="purchased">purchased</option>
       <option value="admin">admin</option>
     </select>
+    <div class="tiny">Role changes are enforced admin-only server-side.</div>
   </div>
 </div>
 
@@ -204,7 +201,7 @@
 
 <h2>Reset Lesson Position (Admin)</h2>
 <div class="danger tiny">
-  Requires you to be logged in as an <b>admin</b>. This changes <code>current_lesson</code> for the <b>selected target user</b> above.
+  Requires admin. Updates <code>current_lesson</code> for the <b>selected target user</b>.
 </div>
 
 <div class="row">
@@ -220,7 +217,11 @@
 
 <hr />
 
-<h2>Public</h2>
+<h2>Hierarchy (Curriculum + Access)</h2>
+<div class="note">
+  Both <code>/login_api.php</code> and <code>/curriculum_api.php</code> now return the envelope:
+  <code>{ user, settings, hierarchy, messages }</code>
+</div>
 <div class="row">
   <button onclick="run('curriculum')">GET /curriculum_api.php</button>
 </div>
@@ -257,13 +258,50 @@ function setStatePill(kind, text) {
   state_text.textContent = text || "—";
 }
 
+function extractUserFromEnvelope(obj) {
+  // Supports both:
+  // 1) new envelope: { user: {...}, hierarchy: {...} }
+  // 2) /me.php: { ok:true, logged_in:true, id, email, name, role, current_lesson }
+  if (!obj || typeof obj !== "object") return null;
+
+  if (obj.user && typeof obj.user === "object") return obj.user;
+
+  // /me.php style
+  const hasId = Object.prototype.hasOwnProperty.call(obj, "id");
+  const hasEmail = Object.prototype.hasOwnProperty.call(obj, "email");
+  if (hasId && hasEmail) {
+    return {
+      id: obj.id,
+      email: obj.email,
+      name: obj.name,
+      role: obj.role,
+      current_lesson: obj.current_lesson
+    };
+  }
+  return null;
+}
+
+function isLoggedInFromMeResponse(obj) {
+  if (!obj || typeof obj !== "object") return false;
+  if (obj.logged_in === true) return true;
+  if (obj.ok === true && (obj.id != null) && (obj.email != null)) return true;
+  return false;
+}
+
 function setAuthState(loggedIn, user) {
   auth_pill.classList.remove("ok", "bad", "warn");
   if (loggedIn) { auth_pill.classList.add("ok"); auth_text.textContent = "Logged in"; }
   else { auth_pill.classList.add("bad"); auth_text.textContent = "Logged out"; }
 
-  if (user) { user_pill.classList.add("ok"); user_text.textContent = `${user.email} (role=${user.role}, id=${user.id})`; }
-  else { user_pill.classList.remove("ok"); user_text.textContent = "—"; }
+  if (user) {
+    user_pill.classList.add("ok");
+    const nm = (user.name || "").trim();
+    const nmPart = nm ? ` (${nm})` : "";
+    user_text.textContent = `${user.email}${nmPart} • role=${user.role} • id=${user.id} • lesson=${user.current_lesson}`;
+  } else {
+    user_pill.classList.remove("ok");
+    user_text.textContent = "—";
+  }
 }
 
 function logRequest(method, url, body) {
@@ -283,8 +321,9 @@ async function refreshSessionSilent() {
 
     logSession({ status: res.status, json: data });
 
-    const loggedIn = !!(data && (data.logged_in === true || data.ok === true || data.user));
-    const user = data && data.user ? data.user : null;
+    const loggedIn = isLoggedInFromMeResponse(data);
+    const user = extractUserFromEnvelope(data);
+
     setAuthState(loggedIn, user);
 
     if (!loggedIn) setStatePill(null, "—");
@@ -381,8 +420,9 @@ function showCode(action, p = {}) {
       body: JSON.stringify({ email: "${p.email}", password: "${p.password}" })
     });
     const data = await res.json();
-    if (!res.ok) throw new Error(data.error || "Login failed");
-    console.log("login ok", data.user);
+    if (!res.ok) throw new Error((data && data.messages && data.messages.error) || "Login failed");
+    console.log("login ok", data.user);        // user includes name
+    console.log("hierarchy", data.hierarchy);  // curriculum + access flags
   })().catch(console.error);
 })();
 `;
@@ -392,7 +432,7 @@ function showCode(action, p = {}) {
   (async () => {
     const res = await fetch("${API}/auth_logout.php", { method: "POST", credentials: "include" });
     const data = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error(data.error || "Logout failed");
+    if (!res.ok) throw new Error((data && data.error) || "Logout failed");
     console.log("logged out", data);
   })().catch(console.error);
 })();
@@ -403,7 +443,7 @@ function showCode(action, p = {}) {
   (async () => {
     const res = await fetch("${API}/me.php", { credentials: "include" });
     const data = await res.json();
-    console.log("session", data);
+    console.log("session", data); // includes name
   })().catch(console.error);
 })();
 `;
@@ -432,7 +472,6 @@ function showCode(action, p = {}) {
   if (action === "reset_lesson") c = `
 (() => {
   (async () => {
-    // Requires admin session cookie
     const res = await fetch("${API}/admin_update_user.php", {
       method: "POST",
       credentials: "include",
@@ -499,7 +538,10 @@ function showCode(action, p = {}) {
 (() => {
   fetch("${API}/curriculum_api.php", { credentials: "include" })
     .then(r => r.json())
-    .then(console.log)
+    .then(data => {
+      console.log("user", data.user);
+      console.log("hierarchy", data.hierarchy);
+    })
     .catch(console.error);
 })();
 `;
@@ -579,7 +621,9 @@ async function run(action) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.value, password: password.value })
       });
-      logResponse({ status: res.status, json: await safeJson(res) });
+      const json = await safeJson(res);
+      logResponse({ status: res.status, json });
+      if (!res.ok) setStatePill("bad", (json && json.messages && json.messages.error) ? json.messages.error : `Login failed (HTTP ${res.status})`);
     }
 
     if (action === "me") {
@@ -617,7 +661,6 @@ async function run(action) {
       if (!res.ok) {
         setStatePill("bad", (json && json.error) ? json.error : `Create user failed (HTTP ${res.status})`);
       } else {
-        // Add/update created user in dropdown for convenience
         if (json && json.user) {
           upsertUserOption(json.user);
           target_user_select.value = String(json.user.id);
@@ -758,7 +801,9 @@ async function run(action) {
     if (action === "curriculum") {
       logRequest("GET", "/curriculum_api.php");
       const res = await fetch(`${API}/curriculum_api.php`, { credentials: "include" });
-      logResponse({ status: res.status, json: await safeJson(res) });
+      const json = await safeJson(res);
+      logResponse({ status: res.status, json });
+      if (!res.ok) setStatePill("bad", (json && json.messages && json.messages.error) ? json.messages.error : `Curriculum failed (HTTP ${res.status})`);
     }
 
     await refreshSessionSilent();
