@@ -49,3 +49,9 @@
 </nav>
 
 <script src="header/header.js"></script>
+
+<script>
+ // SET USER IN HEADER
+ wc.user = JSON.parse(wc.getCookie("user"));
+ $("#uname").html(wc.user.name);
+</script>

@@ -932,7 +932,11 @@ wc.doLogin = async function (email, passwd) {
 
 	wc.configure = data;
 
-	wc.setCookie("uname", wc.configure.user.name);
+	wc.setCookie("user", JSON.stringify(wc.configure.user));
+
+	// SET USER IN HEADER
+	wc.user = JSON.parse(wc.getCookie("user"));
+	$("#uname").html(wc.user.name);
 
         return true;
     } catch (err) {
@@ -949,10 +953,10 @@ wc.doLogin = async function (email, passwd) {
 wc.doLogout = async function () {
     wc.log('doLogout');
 
-    wc.session = null;
+    wc.session = wc.user = null;
 
     // REMOVE USER NAME
-    wc.deleteCookie("uname");
+    wc.deleteCookie("user");
 
     try {
         const res = await fetch(wc.apiURL + '/api/auth_logout.php', {
@@ -966,7 +970,7 @@ wc.doLogout = async function () {
             throw new Error(data.error || 'Logout failed');
         }
 
-        // reset client-side user state if you have one
+        // reset
         wc.currentUser = null;
 
         wc.log('logged out', data);
