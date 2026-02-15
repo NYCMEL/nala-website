@@ -24,7 +24,6 @@ wc.debug = location.hostname !== "production-domain.com";
 wc.log   = (...args) => wc.debug && console.log(...args);
 wc.warn  = (...args) => wc.debug && console.warn(...args);
 wc.error = (...args) => console.error(...args);
-wc.group = (...args) => console.group(...args);
 
 /////////////////////////////////////////////////////////////////////////////////
 //// wc.timeout(function(){
@@ -576,7 +575,7 @@ window.tkloading = {};
 //// tkloading.show('#xx')
 /////////////////////////////////////////////////////////////////////////////
 tkloading.show = function(ele = "body", img = null) {
-    wc.group("tkloading.show:", ele);
+    wc.log("tkloading.show:", ele);
     
     $(ele).css("position","relative");
     $(ele).append("<div class='tkloading'></div>");
@@ -595,8 +594,6 @@ tkloading.show = function(ele = "body", img = null) {
     }
     
     $(ele + " .tkloading").show();
-
-    wc.groupEnd();
 };
 
 /////////////////////////////////////////////////////////////////////////
@@ -606,8 +603,6 @@ tkloading.hide = function(ele = "body") {
     wc.group("tkloading.hide:", ele);
 
     $(ele + " .tkloading").remove();
-
-    wc.groupEnd();
 };
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -997,6 +992,8 @@ wc.doLogout = async function () {
 // });
 /////////////////////////////////////////////////////////////////////////////////
 wc.getSession = function (callback) {
+    alert("A")
+
     return fetch(wc.apiURL + '/api/me.php', {
         credentials: 'include'
     }).then(res => res.json()).then(data => {

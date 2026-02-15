@@ -116,7 +116,7 @@ class MTKHierarchy {
 	if (this.initialized) return;
 	
 	if (typeof wc !== 'undefined') {
-	    wc.group("MTKHierarchy: Initializing");
+	    wc.log("MTKHierarchy: Initializing");
 	}
 	
 	this.cacheElements();
@@ -127,7 +127,6 @@ class MTKHierarchy {
 	this.initialized = true;
 	
 	if (typeof wc !== 'undefined') {
-	    wc.groupEnd();
 	}
 	
 	// Publish initialization event
@@ -205,13 +204,12 @@ class MTKHierarchy {
      */
     render() {
 	if (typeof wc !== 'undefined') {
-	    wc.group("MTKHierarchy: Rendering");
+	    wc.log("MTKHierarchy: Rendering");
 	}
 	
 	this.renderCourses();
 	
 	if (typeof wc !== 'undefined') {
-	    wc.groupEnd();
 	}
 	
 	// Publish render complete event
