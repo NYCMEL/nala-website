@@ -1,40 +1,44 @@
-class MTKLogin {
+// Define the custom element
+class MTKLogin extends HTMLElement {
     constructor() {
+	super();
+	this._initialized = false;
+    }
+
+    connectedCallback() {
+	// Prevent double init if re-attached
+	if (this._initialized) return;
+	this._initialized = true;
+
 	this.init();
     }
 
-    async init() {
-	// Wait for the element in DOM
-	await this.waitForElement('mtk-login');
-	this.root = document.querySelector('mtk-login');
-	this.config = window.app['mtk-login'];
+    init() {
+	// Ensure config exists
+	this.config = window.app?.["mtk-login"];
+	if (!this.config) {
+	    console.error("MTK Login: missing config window.app['mtk-login']");
+	    return;
+	}
 
-	this.titleEl = this.root.querySelector('.mtk-login-title');
-	this.formEl = this.root.querySelector('form');
-	this.emailEl = this.root.querySelector('#mtk-email');
-	this.passwordEl = this.root.querySelector('#mtk-password');
-	this.submitBtn = this.formEl.querySelector('button[type="submit"]');
-	this.forgotLink = this.root.querySelector('.forgot-password');
-	this.registerLink = this.root.querySelector('.register');
+	// Cache elements
+	this.titleEl = this.querySelector(".mtk-login-title");
+	this.formEl = this.querySelector("form");
+	this.emailEl = this.querySelector("#mtk-email");
+	this.passwordEl = this.querySelector("#mtk-password");
+	this.submitBtn = this.querySelector('button[type="submit"]');
+	this.forgotLink = this.querySelector(".forgot-password");
+	this.registerLink = this.querySelector(".register");
+
+	// Guard against bad markup
+	if (!this.formEl) {
+	    console.error("MTK Login: required markup missing");
+	    return;
+	}
 
 	this.render();
 	this.addEvents();
 	this.subscribeEvents();
-    }
-
-    waitForElement(selector) {
-	return new Promise(resolve => {
-	    const el = document.querySelector(selector);
-	    if (el) return resolve(el);
-	    const observer = new MutationObserver(() => {
-		const el = document.querySelector(selector);
-		if (el) {
-		    resolve(el);
-		    observer.disconnect();
-		}
-	    });
-	    observer.observe(document.body, { childList: true, subtree: true });
-	});
     }
 
     render() {
@@ -49,73 +53,63 @@ class MTKLogin {
     }
 
     addEvents() {
-	this.formEl.addEventListener('submit', e => {
+	this.formEl.addEventListener("submit", e => {
 	    e.preventDefault();
 	    this.handleSubmit();
 	});
 
-	this.forgotLink.addEventListener('click', e => {
+	this.forgotLink.addEventListener("click", e => {
 	    e.preventDefault();
-	    let key = "mtk-login-forgot-password";
-	    let msg = (key, { source: 'mtk-login' }); wc.log(key + msg);
-	    wc.log(key, msg);
-	    wc.publish(key, msg);
+	    wc.publish("mtk-login-forgot-password", { source: "mtk-login" });
 	});
 
-	this.registerLink.addEventListener('click', e => {
+	this.registerLink.addEventListener("click", e => {
 	    e.preventDefault();
-	    let key = "mtk-login-register";
-	    let msg = (key, { source: 'mtk-login' });
-	    wc.log(key, msg);
-	    wc.publish(key, msg);
-	});
-
-	[this.emailEl, this.passwordEl].forEach(input => {
-	    // input.addEventListener('focus', () => {
-	    // 	let key = "mtk-login-focus";
-	    // 	let msg = (key, { source: 'mtk-login' }); wc.log(key + msg);
-	    // 	wc.log(key, msg);
-	    // 	wc.publish(key,msg);
-	    // });
+	    wc.publish("mtk-login-register", { source: "mtk-login" });
 	});
     }
 
     subscribeEvents() {
 	this.onMessage = this.onMessage.bind(this);
-	wc.subscribe('mtk-login-update', this.onMessage);
-	wc.subscribe('mtk-login-disable', this.onMessage);
-	wc.subscribe('mtk-login-enable', this.onMessage);
-	wc.subscribe('mtk-login-reset', this.onMessage);
+
+	wc.subscribe("mtk-login-update", this.onMessage);
+	wc.subscribe("mtk-login-disable", this.onMessage);
+	wc.subscribe("mtk-login-enable", this.onMessage);
+	wc.subscribe("mtk-login-reset", this.onMessage);
     }
 
-    onMessage(msg, data) {
+    onMessage(msg, data = {}) {
 	switch (msg) {
-	case 'mtk-login-update':
+	case "mtk-login-update":
             if (data.email) this.emailEl.value = data.email;
             if (data.password) this.passwordEl.value = data.password;
             break;
-	case 'mtk-login-disable':
-            this.emailEl.disabled = true;
-            this.passwordEl.disabled = true;
-            this.submitBtn.disabled = true;
+
+	case "mtk-login-disable":
+            this.setDisabled(true);
             break;
-	case 'mtk-login-enable':
-            this.emailEl.disabled = false;
-            this.passwordEl.disabled = false;
-            this.submitBtn.disabled = false;
+
+	case "mtk-login-enable":
+            this.setDisabled(false);
             break;
-	case 'mtk-login-reset':
+
+	case "mtk-login-reset":
             this.formEl.reset();
             this.clearErrors();
             break;
 	}
     }
 
+    setDisabled(state) {
+	this.emailEl.disabled = state;
+	this.passwordEl.disabled = state;
+	this.submitBtn.disabled = state;
+    }
+
     handleSubmit() {
 	this.clearErrors();
 	let valid = true;
 
-	// Email validation
 	if (!this.emailEl.value.trim()) {
 	    this.showError(this.emailEl, "Email is required");
 	    valid = false;
@@ -124,36 +118,32 @@ class MTKLogin {
 	    valid = false;
 	}
 
-	// Password validation
 	if (!this.passwordEl.value.trim()) {
 	    this.showError(this.passwordEl, "Password is required");
 	    valid = false;
 	}
 
 	if (valid) {
-	    let key = "mtk-login-success";
-	    let msg = (this.config.events.submit, {email: this.emailEl.value.trim(), password: this.passwordEl.value.trim()});
-	    wc.log(key, msg);
-
-	    wc.publish(key, msg);
+	    wc.publish("mtk-login-success", {
+		email: this.emailEl.value.trim(),
+		password: this.passwordEl.value.trim()
+	    });
 	}
     }
 
     validateEmail(email) {
-	const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-	return re.test(email);
+	return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
 
     showError(el, message) {
-	const errorEl = el.parentElement.querySelector('.error');
-	errorEl.textContent = message;
+	el.parentElement.querySelector(".error").textContent = message;
 	el.focus();
     }
 
     clearErrors() {
-	this.root.querySelectorAll('.error').forEach(el => (el.textContent = ''));
+	this.querySelectorAll(".error").forEach(el => (el.textContent = ""));
     }
 }
 
-// Initialize
-document.addEventListener('DOMContentLoaded', () => new MTKLogin());
+// Register the element
+customElements.define("mtk-login", MTKLogin);

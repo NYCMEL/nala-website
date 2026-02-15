@@ -4,6 +4,9 @@ $(".nav-link, .navbar-brand, .btn").on("click", function(e) {
     e.stopPropagation();
     e.stopImmediatePropagation();
     
+    $(".nav-link, .navbar-brand, .btn").removeClass("active");
+    $(this).addClass("active");
+
     // FOLD HAMBURGER MENU
     $(".navbar-collapse.show").removeClass("show");
 

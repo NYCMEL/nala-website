@@ -54,32 +54,37 @@ document.addEventListener("click", function (e) {
 
 // ADD RIPPLE EFFECT TO ALL BUTTONS
 (function applyRippleToButtons() {
-  function addRipple(root = document) {
-    root.querySelectorAll("button:not(.mtk-ripple)").forEach(btn => {
-      btn.classList.add("mtk-ripple");
+    function addRipple(root = document) {
+	root.querySelectorAll("button:not(.mtk-ripple)").forEach(btn => {
+	    btn.classList.add("mtk-ripple");
+	});
+    }
+
+    // Initial pass
+    addRipple();
+
+    // Watch for future buttons
+    const observer = new MutationObserver(mutations => {
+	mutations.forEach(mutation => {
+	    mutation.addedNodes.forEach(node => {
+		if (node.nodeType !== 1) return;
+
+		if (node.tagName === "BUTTON") {
+		    node.classList.add("mtk-ripple");
+		} else {
+		    addRipple(node);
+		}
+	    });
+	});
     });
-  }
 
-  // Initial pass
-  addRipple();
-
-  // Watch for future buttons
-  const observer = new MutationObserver(mutations => {
-    mutations.forEach(mutation => {
-      mutation.addedNodes.forEach(node => {
-        if (node.nodeType !== 1) return;
-
-        if (node.tagName === "BUTTON") {
-          node.classList.add("mtk-ripple");
-        } else {
-          addRipple(node);
-        }
-      });
+    observer.observe(document.body, {
+	childList: true,
+	subtree: true
     });
-  });
-
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
 })();
+
+// localhot. CHANGE BROWSER TITLE
+if (document.location.protocol == "http:") {
+    document.title = "NALA - Local";
+}

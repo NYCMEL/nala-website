@@ -1,0 +1,6 @@
+{
+    "user": {},
+    "settings": {},
+    "hierarchy": {},
+    "messages": {}
+}

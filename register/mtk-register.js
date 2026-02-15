@@ -1,82 +1,159 @@
-/* mtk-register.js */
+(function () {
+  const form = document.getElementById("mtk-register");
+  const fields = ["name", "email", "email2", "phone"];
 
-class MtkRegister extends HTMLElement {
+  const name = document.getElementById("name");
+  const email = document.getElementById("email");
+  const email2 = document.getElementById("email2");
+  const phone = document.getElementById("phone");
 
-    constructor() {
-        super();
-        this.config = window.mtkRegisterConfig;
+  const nameField = name.closest(".md-field");
+  const nameError = nameField.querySelector(".helper");
+
+  const emailError = email2
+    .closest(".md-field")
+    .querySelector("[data-error]");
+
+  const phoneField = phone.closest(".md-field");
+  const phoneError = phoneField.querySelector(".helper");
+
+  // Regex patterns
+  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const US_PHONE_REGEX =
+    /^(?:\+1\s?)?(?:\(\d{3}\)|\d{3})[\s.-]?\d{3}[\s.-]?\d{4}$/;
+
+  // Init values + floating labels
+  fields.forEach(id => {
+    const input = document.getElementById(id);
+
+    if (window.mtkRegisterConfig && window.mtkRegisterConfig[id]) {
+      input.value = window.mtkRegisterConfig[id];
     }
 
-    connectedCallback() {
-        if (!this.config) return;
+    input.setAttribute("placeholder", " ");
+  });
 
-        this.form = this.querySelector("form");
-        this.titleEl = this.querySelector(".mtk-register-title");
+  /* ---------- Error Helpers ---------- */
 
-        this.titleEl.innerHTML = this.config.title;
+  function showNameError(message) {
+    name.classList.add("error");
+    nameError.textContent = message;
+    nameError.classList.add("error");
+  }
 
-        this.populateFields();
-        this.bindEvents();
+  function clearNameError() {
+    name.classList.remove("error");
+    nameError.textContent = "First Name, Middle Initial, Last Name";
+    nameError.classList.remove("error");
+  }
+
+  function showEmailError(message) {
+    email2.classList.add("error");
+    emailError.textContent = message;
+    emailError.classList.add("error");
+  }
+
+  function clearEmailError() {
+    email2.classList.remove("error");
+    emailError.textContent = "";
+    emailError.classList.remove("error");
+  }
+
+  function showPhoneError(message) {
+    phone.classList.add("error");
+    phoneError.textContent = message;
+    phoneError.classList.add("error");
+  }
+
+  function clearPhoneError() {
+    phone.classList.remove("error");
+    phoneError.textContent = "Phone Number";
+    phoneError.classList.remove("error");
+  }
+
+  /* ---------- Live Validation ---------- */
+
+  name.addEventListener("input", () => {
+    if (name.value.trim().length >= 3) {
+      clearNameError();
+    }
+  });
+
+  email.addEventListener("input", () => {
+    if (EMAIL_REGEX.test(email.value.trim())) {
+      clearEmailError();
+    }
+  });
+
+  email2.addEventListener("input", () => {
+    if (
+      EMAIL_REGEX.test(email.value.trim()) &&
+      email.value.trim() === email2.value.trim()
+    ) {
+      clearEmailError();
+    }
+  });
+
+  phone.addEventListener("input", () => {
+    if (US_PHONE_REGEX.test(phone.value.trim())) {
+      clearPhoneError();
+    }
+  });
+
+  /* ---------- Submit ---------- */
+
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+
+    clearNameError();
+    clearEmailError();
+    clearPhoneError();
+
+    // Required fields
+    for (let i = 0; i < fields.length; i++) {
+      const input = document.getElementById(fields[i]);
+
+      if (!input.value.trim()) {
+        input.focus();
+        return;
+      }
     }
 
-    populateFields() {
-        Object.values(this.config.fields).forEach(field => {
-            const input = this.querySelector(`#${field.id}`);
-            const helper = input.nextElementSibling.nextElementSibling;
-
-            input.value = field.value || "";
-            input.placeholder = " ";
-
-            if (field.helper) {
-                helper.textContent = field.helper;
-            }
-        });
+    // Name length validation
+    if (name.value.trim().length < 3) {
+      showNameError("Name must be at least 3 characters");
+      name.focus();
+      return;
     }
 
-    bindEvents() {
-        this.form.addEventListener("submit", e => {
-            e.preventDefault();
-            this.handleSubmit();
-        });
+    // Email format validation
+    if (!EMAIL_REGEX.test(email.value.trim())) {
+      showEmailError("Enter a valid email address");
+      email.focus();
+      return;
     }
 
-    handleSubmit() {
-        const payload = {};
-        let firstInvalid = null;
-
-        const email = this.querySelector("#email");
-        const email2 = this.querySelector("#email2");
-
-        Object.values(this.config.fields).forEach(field => {
-            const input = this.querySelector(`#${field.id}`);
-            const value = input.value.trim();
-
-            if (field.required && !value && !firstInvalid) {
-                firstInvalid = input;
-            }
-
-            payload[field.id] = value;
-        });
-
-        if (firstInvalid) {
-            firstInvalid.focus();
-            return;
-        }
-
-        if (email.value.trim() !== email2.value.trim()) {
-            email2.focus();
-            email2.value = "";
-            wc.publish("mtk-register:error", {
-                error: "Emails do not match"
-            });
-            return;
-        }
-
-	let data = payload;
-	let msg = "mtk-register:submit";
-	wc.log(msg, data);
-        wc.publish(msg, data);
+    // Email match validation
+    if (email.value.trim() !== email2.value.trim()) {
+      showEmailError("Emails do not match");
+      email2.focus();
+      return;
     }
-}
 
-customElements.define("mtk-register", MtkRegister);
+    // US phone validation
+    if (!US_PHONE_REGEX.test(phone.value.trim())) {
+      showPhoneError("Enter a valid US phone number");
+      phone.focus();
+      return;
+    }
+
+    // Build payload
+    const payload = {};
+
+    fields.forEach(id => {
+      payload[id] = document.getElementById(id).value.trim();
+    });
+
+    wc.publish("mtk-register-submit", payload);
+  });
+})();

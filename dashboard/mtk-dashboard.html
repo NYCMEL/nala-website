@@ -1,0 +1,37 @@
+<link href="dashboard/mtk-dashboard.css" rel="stylesheet">
+
+<mtk-dashboard class="mtk-dashboard" role="main">
+    <div class="pull-right m-5">
+	<button class="btn btn-primary btn-continue-to-course">Continue my progress</button>
+    </div>
+    
+    <!-- Row 1: User Info and Progress -->
+    <div class="mtk-dashboard__header">
+	<h1 class="mtk-dashboard__user-name" id="userName"></h1>
+	
+	<div class="mtk-dashboard__progress-section">
+            <label class="mtk-dashboard__progress-label" id="progressLabel"></label>
+            
+            <div class="mtk-dashboard__progress-info">
+		<span class="mtk-dashboard__course-title" id="courseTitle"></span>
+		<span class="mtk-dashboard__progress-percentage" id="progressPercentage" aria-live="polite"></span>
+            </div>
+            
+            <div class="mtk-dashboard__progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+		<div class="mtk-dashboard__progress-fill" id="progressFill"></div>
+            </div>
+	</div>
+    </div>
+    
+    <!-- Row 2: Subscription Options -->
+    <div class="mtk-dashboard__subscriptions">
+	<h2 class="mtk-dashboard__subscriptions-title" id="subscriptionsTitle"></h2>
+	
+	<div class="mtk-dashboard__subscription-grid" id="subscriptionGrid">
+            <!-- Subscription cards will be generated dynamically -->
+	</div>
+    </div>
+</mtk-dashboard>
+
+<script src="dashboard/mtk-dashboard.config.js"></script>
+<script src="dashboard/mtk-dashboard.js"></script>
