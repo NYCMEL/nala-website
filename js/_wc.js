@@ -3,23 +3,13 @@ window.wcENV = window.wcENV || "prod";
 window.wcAPP = window.wcAPP || "NOT-SET";
 window.wcURL = window.wcURL || "";
 
-window.wc.working = false;
-
 // FOR WINDOZE
 if(typeof(console) === 'undefined') {console = {}}
-
-/************************************************************
- * CONFIG INACTIVITY TIMER
- ************************************************************/
-wc.inactivity = {
-    idleTime: 2 * 60 * 1000, /* one minute */
-    countdown: 30 /* 30 seconds countdown */
-};
 
 /////////////////////////////////////////////////////////////////////////////////
 //// LOGGING ON/OFF
 /////////////////////////////////////////////////////////////////////////////////
-wc.debug = location.hostname !== "production-domain.com";
+wc.debug = location.hostname !== wc.productionURL; // in app.config.js file
 
 wc.log   = (...args) => wc.debug && console.log(...args);
 wc.warn  = (...args) => wc.debug && console.warn(...args);
@@ -1021,6 +1011,11 @@ wc.getSession = function (callback) {
 };
 
 /************************************************************
+ * INACTIVITY TIMER
+ ************************************************************/
+// DEFAULTS IN app.config.js FILE
+
+/************************************************************
  * INACTIVITY LOGIC
  ************************************************************/
 wc.resetInactivity = function () {
@@ -1192,16 +1187,6 @@ wc.injectMaterialStyles = function () {
 
     document.head.appendChild(style);
 };
-
-/************************************************************
- * INACTIVITY TIMER
- ************************************************************/
-// Optional tuning
-// wc.inactivity.idleTime = 0.5 * 60 * 1000;
-// wc.inactivity.countdown = 10;
-
-// Start tracking AFTER login
-// wc.startInactivityTracking();
 
 /////////////////////////////////////////////////////////////////////////////////
 //// Curriculum API
