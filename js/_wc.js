@@ -932,6 +932,8 @@ wc.doLogin = async function (email, passwd) {
 
 	wc.configure = data;
 
+	$("#uname").html(wc.configure.user.name);
+
         return true;
     } catch (err) {
         wc.error("2 Login failed:", err);
