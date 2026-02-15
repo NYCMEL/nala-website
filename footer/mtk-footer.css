@@ -153,8 +153,6 @@
   padding: 10px; }
 
 @media (max-width: 767px) {
-  .mtk-footer {
-    padding: 32px 0 24px; }
   .mtk-footer__brand, .mtk-footer__contact, .mtk-footer__social {
     text-align: center; }
   .mtk-footer__logo {
@@ -167,3 +165,13 @@
     justify-content: center; }
   .mtk-footer__social-list {
     justify-content: center; } }
+tk-footer__logo {
+      margin-left: auto;
+      margin-right: auto; }
+    .mtk-footer__description {
+      margin-left: auto;
+      margin-right: auto; }
+    .mtk-footer__contact-item {
+      justify-content: center; }
+    .mtk-footer__social-list {
+      justify-content: center; } }
