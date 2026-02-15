@@ -168,17 +168,17 @@
   outline-offset: 2px; }
 
 .mtk-settings__btn--primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #0a6ffd;
   color: #ffffff;
-  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3); }
+  box-shadow: 0 2px 4px #0a6ffd; }
 
 .mtk-settings__btn--primary:hover {
-  box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 8px #0a6ffd;
   transform: translateY(-1px); }
 
 .mtk-settings__btn--primary:active {
   transform: translateY(0);
-  box-shadow: 0 1px 2px rgba(102, 126, 234, 0.3); }
+  box-shadow: 0 1px 2px #0a6ffd; }
 
 .mtk-settings__btn--primary:disabled {
   background: #e0e0e0;
@@ -193,10 +193,10 @@
   border: 1px solid #667eea; }
 
 .mtk-settings__btn--secondary:hover {
-  background-color: rgba(102, 126, 234, 0.08); }
+  background-color: #0a6ffd; }
 
 .mtk-settings__btn--secondary:active {
-  background-color: rgba(102, 126, 234, 0.16); }
+  background-color: #0a6ffd; }
 
 .mtk-settings__btn--secondary:disabled {
   border-color: rgba(0, 0, 0, 0.12);
