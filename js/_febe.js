@@ -148,6 +148,7 @@ class _febe {
 	    // "https://www.w3schools.com/html/mov_bbb.mp4",
 	    // LOAD VIDEO DYNAMICALLY
 	    wc.timeout(function(){
+		wc.log("_febe:", data.url, data.description);
 		window.MTKVideoInstance.load(data.url, data.description);
 	    }, 200, 1);
 	    break;
