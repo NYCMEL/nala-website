@@ -932,7 +932,7 @@ wc.doLogin = async function (email, passwd) {
 
 	wc.configure = data;
 
-	$("#uname").html(wc.configure.user.name);
+	wc.setCookie("uname", wc.configure.user.name);
 
         return true;
     } catch (err) {
@@ -950,6 +950,9 @@ wc.doLogout = async function () {
     wc.log('doLogout');
 
     wc.session = null;
+
+    // REMOVE USER NAME
+    wc.deleteCookie("uname");
 
     try {
         const res = await fetch(wc.apiURL + '/api/auth_logout.php', {

@@ -13,3 +13,6 @@ $(".nav-link, .navbar-brand, .btn").on("click", function(e) {
     let msg = this.id; wc.log(msg);
     wc.publish(msg);
 });
+
+$("#uname").html(wc.getCookie("uname"));
+//alert(wc.getCookie("uname"));
