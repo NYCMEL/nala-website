@@ -96,8 +96,7 @@ class _febe {
 	    .then(success => {
 		if (success) {
 		    wc.log("Logged in!");
-		    $(".app-header").hide(() => $("#header-private").show());
-		    mtk_pager.show("dashboard");
+		    $(".app-header").hide(() => $("#header-private").show(() => mtk_pager.show("dashboard")));
 		}
 	    })
 	    .catch(err => {
