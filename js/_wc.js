@@ -9,7 +9,7 @@ if(typeof(console) === 'undefined') {console = {}}
 /////////////////////////////////////////////////////////////////////////////////
 //// LOGGING ON/OFF
 /////////////////////////////////////////////////////////////////////////////////
-wc.debug = location.hostname !== wc.productionURL; // in app.config.js file
+wc.debug = location.hostname !== wc.productionURL; // in app.js file
 
 wc.log   = (...args) => wc.debug && console.log(...args);
 wc.warn  = (...args) => wc.debug && console.warn(...args);
@@ -1013,7 +1013,7 @@ wc.getSession = function (callback) {
 /************************************************************
  * INACTIVITY TIMER
  ************************************************************/
-// DEFAULTS IN app.config.js FILE
+// DEFAULTS IN app.js FILE
 
 /************************************************************
  * INACTIVITY LOGIC
