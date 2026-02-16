@@ -2,12 +2,6 @@ window.wc    = window.wc    || {};
 window.wcAPP = window.wcAPP || "NOT-SET";
 window.wcURL = window.wcURL || "";
 
-/*
-  prod = 'REMOVE ALL CONSOLE LOGS - except errors & warnings'
-  dev = 'SHOW ALL LOGS'
-*/
-window.wcENV = "dev";
-
 // FOR WINDOZE
 if(typeof(console) === 'undefined') {console = {}}
 
@@ -15,6 +9,12 @@ if(typeof(console) === 'undefined') {console = {}}
 //// LOGGING ON/OFF
 /////////////////////////////////////////////////////////////////////////////////
 wc.debug = location.hostname !== wc.productionURL; // in app.js file
+
+if (wc.debug) {
+    window.wcENV = "dev"; /* SHOW ALL LOGS */
+} else {
+    window.wcENV = "prod"; /* REMOVE ALL CONSOLE LOGS - except errors & warnings */
+}
 
 /////////////////////////////////////////////////////////////////////////////////
 //// 
