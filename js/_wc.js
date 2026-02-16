@@ -8,7 +8,7 @@ if(typeof(console) === 'undefined') {console = {}}
 /////////////////////////////////////////////////////////////////////////////////
 //// LOGGING ON/OFF
 /////////////////////////////////////////////////////////////////////////////////
-wc.debug = location.hostname !== wc.productionURL; // in app.js file
+wc.debug = location.hostname !== wc.productionURL; // SET IN app.js FILE
 
 if (wc.debug) {
     window.wcENV = "dev"; /* SHOW ALL LOGS */
