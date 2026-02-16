@@ -112,7 +112,7 @@
 .mtk-footer__social-link {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
   width: 48px;
   height: 48px;
   background-color: rgba(255, 255, 255, 0.08);
@@ -162,16 +162,6 @@
     margin-left: auto;
     margin-right: auto; }
   .mtk-footer__contact-item {
-    justify-content: center; }
+    justify-content: left; }
   .mtk-footer__social-list {
-    justify-content: center; } }
-tk-footer__logo {
-      margin-left: auto;
-      margin-right: auto; }
-    .mtk-footer__description {
-      margin-left: auto;
-      margin-right: auto; }
-    .mtk-footer__contact-item {
-      justify-content: center; }
-    .mtk-footer__social-list {
-      justify-content: center; } }
+    justify-content: left; } }

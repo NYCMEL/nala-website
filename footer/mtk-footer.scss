@@ -156,7 +156,7 @@ $motion-duration-medium: 300ms;
     &__social-link {
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: left;
 	width: 48px;
 	height: 48px;
 	background-color: $footer-social-bg;
@@ -225,11 +225,11 @@ $motion-duration-medium: 300ms;
 	}
 	
 	&__contact-item {
-	    justify-content: center;
+	    justify-content: left;
 	}
 	
 	&__social-list {
-	    justify-content: center;
+	    justify-content: left;
 	}
     }
 }
