@@ -10,12 +10,12 @@ window.app = {
 		{
 		    "module_id": "M1",
 		    "title": "TESTING: Foundations of Locksmithing",
-		    "access": true,
+		    "access": false,
 		    "lessons": [
 			{
 			    "lesson_no": 0,
 			    "title": "Introduction",
-			    "access": true,
+			    "access": false,
 			    "badge": {
 				"text": "Unlocked",
 				"color": "green"
@@ -33,7 +33,7 @@ window.app = {
 			{
 			    "lesson_no": 1,
 			    "title": "The Tools Needed in Your Toolbag",
-			    "access": true,
+			    "access": false,
 			    "badge": {
 				"text": "Unlocked",
 				"color": "green"
@@ -51,7 +51,7 @@ window.app = {
 			{
 			    "lesson_no": 2,
 			    "title": "Lock Grades: How Locks Are Classified",
-			    "access": true,
+			    "access": false,
 			    "badge": {
 				"text": "Unlocked",
 				"color": "green"
@@ -69,7 +69,7 @@ window.app = {
 			{
 			    "lesson_no": 3,
 			    "title": "Deadbolts: What They Are and How to Install Them",
-			    "access": true,
+			    "access": false,
 			    "badge": {
 				"text": "Unlocked",
 				"color": "green"
@@ -93,7 +93,7 @@ window.app = {
 			{
 			    "lesson_no": 4,
 			    "title": "Doorknobs: What They Are and How to Install Them",
-			    "access": true,
+			    "access": false,
 			    "badge": {
 				"text": "Unlocked",
 				"color": "green"
@@ -117,7 +117,7 @@ window.app = {
 			{
 			    "lesson_no": 5,
 			    "title": "Common Residential and Commercial Doors: A Quick Survey",
-			    "access": true,
+			    "access": false,
 			    "badge": {
 				"text": "Unlocked",
 				"color": "green"
@@ -167,7 +167,7 @@ window.app = {
 			"lesson_no": 6,
 			"title": "Module Quiz: Foundations of Locksmithing",
 			"module_id": "M1",
-			"access": true,
+			"access": false,
 			"badge": {
 			    "text": "Quiz Open",
 			    "color": "orange"
@@ -186,17 +186,17 @@ window.app = {
 	},
 	{
 	    "title": "Residential Locksmithing",
-	    "access": true,
+	    "access": false,
 	    "modules": [
 		{
 		    "module_id": "M2",
 		    "title": "Residential Lock Cylinders",
-		    "access": true,
+		    "access": false,
 		    "lessons": [
 			{
 			    "lesson_no": 7,
 			    "title": "Pin Tumbler Cylinders: How They Work",
-			    "access": true,
+			    "access": false,
 			    "badge": {
 				"text": "Unlocked",
 				"color": "green"
@@ -244,7 +244,7 @@ window.app = {
 			{
 			    "lesson_no": 8,
 			    "title": "KIK Cylinders: An Introduction",
-			    "access": true,
+			    "access": false,
 			    "badge": {
 				"text": "Unlocked",
 				"color": "green"
@@ -280,7 +280,7 @@ window.app = {
 			{
 			    "lesson_no": 9,
 			    "title": "Rim Cylinders: An Introduction",
-			    "access": true,
+			    "access": false,
 			    "badge": {
 				"text": "Unlocked",
 				"color": "green"
@@ -310,7 +310,7 @@ window.app = {
 			{
 			    "lesson_no": 10,
 			    "title": "Mortise Cylinders: Key Differences and Use Cases",
-			    "access": true,
+			    "access": false,
 			    "badge": {
 				"text": "Unlocked",
 				"color": "green"
@@ -340,7 +340,7 @@ window.app = {
 			{
 			    "lesson_no": 11,
 			    "title": "Profile Cylinders: An Introduction",
-			    "access": true,
+			    "access": false,
 			    "badge": {
 				"text": "Unlocked",
 				"color": "green"
@@ -360,7 +360,7 @@ window.app = {
 			"lesson_no": 12,
 			"title": "Module Quiz: Residential Lock Cylinders",
 			"module_id": "M2",
-			"access": true,
+			"access": false,
 			"badge": {
 			    "text": "Quiz Open",
 			    "color": "orange"
