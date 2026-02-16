@@ -838,7 +838,7 @@ class MTKHierarchy {
 // GET FRESH DATA
 if (wc.isLocal) {
     // Expose to window namespace
-    wc.log(">>>>>>>AAA", window.app.hierarchy);
+    wc.log("isLocal:", wc.isLocal, window.app.hierarchy);
 
     const hierarchy = new MTKHierarchy(window.app.hierarchy);
     
@@ -860,6 +860,8 @@ if (wc.isLocal) {
 
 	const hierarchy = new MTKHierarchy(window.app.hierarchy);
 	
+	wc.log("isLocal:", wc.isLocal, window.app.hierarchy);
+
 	// Expose to window namespace
 	window.MTKHierarchy = hierarchy;
 
