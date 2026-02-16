@@ -10,12 +10,12 @@ window.app = {
 		{
 		    "module_id": "M1",
 		    "title": "TESTING: Foundations of Locksmithing",
-		    "access": false,
+		    "access": true,
 		    "lessons": [
 			{
 			    "lesson_no": 0,
 			    "title": "Introduction",
-			    "access": false,
+			    "access": true,
 			    "badge": {
 				"text": "Unlocked",
 				"color": "green"
@@ -33,7 +33,7 @@ window.app = {
 			{
 			    "lesson_no": 1,
 			    "title": "The Tools Needed in Your Toolbag",
-			    "access": false,
+			    "access": true,
 			    "badge": {
 				"text": "Unlocked",
 				"color": "green"
