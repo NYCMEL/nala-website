@@ -112,7 +112,7 @@
 .mtk-footer__social-link {
   display: flex;
   align-items: center;
-  justify-content: left;
+  justify-content: center;
   width: 48px;
   height: 48px;
   background-color: rgba(255, 255, 255, 0.08);
@@ -164,4 +164,4 @@
   .mtk-footer__contact-item {
     justify-content: left; }
   .mtk-footer__social-list {
-    justify-content: left; } }
+    justify-content: right; } }
