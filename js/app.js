@@ -14,8 +14,8 @@ wc.inactivity = {
 wc.working       = false;
 app.baseUrl      = "/repo_deploy/";
 wc.isLocal       = true; /* = true SHOULD USE ALL LOCAL CONFIG FILES */
-wc.apiURL        = "https://nala-test.com";
 wc.productionURL = "https://nala-test.com" || "https://nalanetwork.com";
+wc.apiURL        = wc.productionURL;
 
 // START TRACKING. COMMENT TO BYPASS
 wc.startInactivityTracking();
