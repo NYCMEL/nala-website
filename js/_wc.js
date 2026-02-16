@@ -3,7 +3,7 @@ window.wcAPP = window.wcAPP || "NOT-SET";
 window.wcURL = window.wcURL || "";
 
 /*
-  prod = 'REMOVE ALL CONSOLE LOGS'
+  prod = 'REMOVE ALL CONSOLE LOGS - except errors & warnings'
   dev = 'SHOW ALL LOGS'
 */
 window.wcENV = "dev";
