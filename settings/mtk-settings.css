@@ -3,7 +3,8 @@
   display: block;
   width: 100%;
   margin: 0 auto;
-  color: rgba(0, 0, 0, 0.87); }
+  color: rgba(0, 0, 0, 0.87);
+  min-height: 800px; }
 
 .mtk-settings__card {
   background: #ffffff;
