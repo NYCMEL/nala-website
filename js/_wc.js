@@ -1,7 +1,12 @@
 window.wc    = window.wc    || {};
-window.wcENV = window.wcENV || "prod";
 window.wcAPP = window.wcAPP || "NOT-SET";
 window.wcURL = window.wcURL || "";
+
+/*
+  prod = 'REMOVE ALL CONSOLE LOGS'
+  dev = 'SHOW ALL LOGS'
+*/
+window.wcENV = "dev";
 
 // FOR WINDOZE
 if(typeof(console) === 'undefined') {console = {}}
@@ -52,6 +57,12 @@ wc.warn = function(...data) {
 /////////////////////////////////////////////////////////////////////////////////
 wc.error = function(...data) {
     return console.error(...data);
+}
+
+if (window.wcENV == "prod") {
+    console.log = function () {};
+    console.info = function () {};
+    console.debug = function () {};
 }
 
 /////////////////////////////////////////////////////////////////////////////////
