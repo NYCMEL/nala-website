@@ -9,7 +9,7 @@ window.app = {
 	    "modules": [
 		{
 		    "module_id": "M1",
-		    "title": "Foundations of Locksmithing",
+		    "title": "TESTING: Foundations of Locksmithing",
 		    "access": true,
 		    "lessons": [
 			{

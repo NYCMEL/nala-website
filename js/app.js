@@ -15,6 +15,7 @@ wc.working       = false;
 app.baseUrl      = "/repo_deploy/";
 wc.productionURL = "https://nala-test.com";
 wc.apiURL        = 'https://nala-test.com';
+wc.isLocal       = true;
 
 // START TRACKING. COMMENT TO BYPASS
 wc.startInactivityTracking();

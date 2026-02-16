@@ -836,13 +836,9 @@ class MTKHierarchy {
 }
 
 // GET FRESH DATA
-wc.getCurriculum(function (err, data) {
-    if (err) {
-	// handle error
-	return;
-    }
-    
-    window.app.hierarchy = data.hierarchy.parts;
+if (wc.isLocal) {
+    // Expose to window namespace
+    wc.log(">>>>>>>AAA", window.app.hierarchy);
 
     const hierarchy = new MTKHierarchy(window.app.hierarchy);
     
@@ -853,4 +849,23 @@ wc.getCurriculum(function (err, data) {
     if (typeof module !== 'undefined' && module.exports) {
 	module.exports = { MTKHierarchy };
     }
-});
+} else {
+    wc.getCurriculum(function (err, data) {
+	if (err) {
+	    // handle error
+	    return;
+	}
+	
+	window.app.hierarchy = data.hierarchy.parts;
+
+	const hierarchy = new MTKHierarchy(window.app.hierarchy);
+	
+	// Expose to window namespace
+	window.MTKHierarchy = hierarchy;
+
+	// Export for module systems
+	if (typeof module !== 'undefined' && module.exports) {
+	    module.exports = { MTKHierarchy };
+	}
+    });
+}
