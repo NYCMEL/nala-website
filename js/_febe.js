@@ -83,8 +83,36 @@ class _febe {
 	// NO-OP
     }
 
-    handleRegisterSubmit() {
-	alert("need code to process registeration!!");
+    handleRegisterSubmit(data) {
+	// data ={name: 'Mel Heravi', email: 'mel.heravi@gmail.com', email2: 'mel.heravi@gmail.com', phone: '6463031234'}
+
+	console.log(">>>>data:", data);
+
+	(() => {
+	    fetch(wc.apiURL + "/api/admin_create_user.php", {
+		method: "POST",
+		credentials: "include",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({
+		    name: data.name,
+		    email: data.email,
+		    password: "changeme123",
+		    role: "registered"
+		})
+	    })
+		.then(res => {
+		    return res.json().then(json => {
+			if (!res.ok) {
+			    throw new Error(json.error || "Create user failed");
+			}
+			return json;
+		    });
+		})
+		.then(json => {
+		    console.log("user created", json.user); // includes name
+		})
+		.catch(console.error);
+	})();
     }
 
     handleHome() {
