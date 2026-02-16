@@ -92,7 +92,7 @@ class _febe {
     }
 
     handleLoginSuccess(data) {
-	wc.doLogin(data.email, data.password)
+	wc.login(data.email, data.password)
 	    .then(success => {
 		if (success) {
 		    wc.log("Logged in!");
@@ -133,7 +133,7 @@ class _febe {
     }
 
     handleLogout() {
-	wc.doLogout();
+	wc.logout();
 	
 	// SHOW PUBLIC HEADER
 	$(".app-header").hide(() => $("#header-public").show(() => mtk_pager.show("home")));

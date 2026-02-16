@@ -953,8 +953,8 @@ if (typeof module !== 'undefined' && module.exports) {
 /////////////////////////////////////////////////////////////////////////////////
 //// LOGIN
 /////////////////////////////////////////////////////////////////////////////////
-wc.doLogin = async function (email, passwd) {
-    wc.log('doLogin');
+wc.login = async function (email, passwd) {
+    wc.log('login');
 
     try {
         const res = await fetch(wc.apiURL + '/api/login_api.php', {
@@ -1000,8 +1000,8 @@ wc.doLogin = async function (email, passwd) {
 /////////////////////////////////////////////////////////////////////////////////
 //// LOGOUT
 /////////////////////////////////////////////////////////////////////////////////
-wc.doLogout = async function () {
-    wc.log('doLogout');
+wc.logout = async function () {
+    wc.log('logout');
 
     wc.session = wc.user = null;
 
