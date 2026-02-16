@@ -1,11 +1,13 @@
-GLOBALS AVAILABLE TO YOUR APP
-
-MTKPager exposes:
-  - MTKPager.page < current page
-  - MTKPager.show(page)
-
-app.js:
-  - 
-
-
-
+session = {
+    user: {
+	current_lesson: 5,
+	...
+    },
+    dashboard: { /* REFER TO SCREEN */
+	progress: 28,
+	...
+    },
+    hierarchy: {
+	modules: ...
+    }
+}
