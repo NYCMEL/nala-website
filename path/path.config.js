@@ -24,7 +24,7 @@
                 id: "premium",
                 title: "Premium",
                 price: "$1,999",
-                period: "one-time payment · financing up to 24 months available via Klarna",
+                period: "One-time payment · financing up to 24 months available via Klarna",
                 description: "Full program access with a certificate of completion.",
                 features: [
                     "Full program access (all 5 parts)",
@@ -39,7 +39,7 @@
                 id: "business",
                 title: "Business-in-a-Box",
                 price: "$3,999",
-                period: "one-time payment · financing up to 24 months available via Klarna",
+                period: "One-time payment · financing up to 24 months available via Klarna",
                 description: "Everything in Premium, plus tools to help you launch your locksmith business.",
                 features: [
                     "Everything included in Premium",

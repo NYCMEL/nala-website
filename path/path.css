@@ -45,7 +45,8 @@
 .mtk-path .period {
   font-size: 1rem;
   color: #6b7280;
-  margin-left: 0.25rem; }
+  margin-left: 0.25rem;
+  display: block; }
 
 .mtk-path ul {
   padding-left: 0;
