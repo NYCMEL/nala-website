@@ -11,7 +11,6 @@ window.app = {
 		    "module_id": "M1",
 		    "title": "Foundations of Locksmithing",
 		    "access": true,
-		    "processed": 1,
 		    "lessons": [
 			{
 			    "lesson_no": 0,
@@ -172,7 +171,6 @@ window.app = {
 		{
 		    "module_id": "M2",
 		    "title": "Residential Lock Cylinders",
-		    "processed": 1,
 		    "access": false,
 		    "lessons": [
 			{
@@ -337,7 +335,6 @@ window.app = {
 		{
 		    "module_id": "M3",
 		    "title": "Keys and Key Machines",
-		    "processed": 1,
 		    "access": false,
 		    "lessons": [
 			{
@@ -435,7 +432,6 @@ window.app = {
 		{
 		    "module_id": "M4",
 		    "title": "Lock Picking Techniques",
-		    "processed": 1,
 		    "access": false,
 		    "lessons": [
 			{
@@ -529,7 +525,6 @@ window.app = {
 		{
 		    "module_id": "M5",
 		    "title": "Rekeying Fundamentals",
-		    "processed": 1,
 		    "access": false,
 		    "lessons": [
 			{
@@ -634,7 +629,6 @@ window.app = {
 		    "module_id": "M6",
 		    "title": "Advanced Rekeying",
 		    "access": false,
-		    "processed": 1,
 		    "lessons": [
 			{
 			    "lesson_no": 26,
@@ -716,7 +710,6 @@ window.app = {
 		{
 		    "module_id": "M7",
 		    "title": "Master Key Systems",
-		    "processed": 1,
 		    "access": false,
 		    "lessons": [
 			{
@@ -800,7 +793,6 @@ window.app = {
 		{
 		    "module_id": "M8",
 		    "title": "Automotive Locks and Entry",
-		    "processed": 1,
 		    "access": false,
 		    "lessons": [
 			{
@@ -888,7 +880,6 @@ window.app = {
 		{
 		    "module_id": "M9",
 		    "title": "Automotive Electronics",
-		    "processed": 1,
 		    "access": false,
 		    "lessons": [
 			{
@@ -935,7 +926,6 @@ window.app = {
 		{
 		    "module_id": "M10",
 		    "title": "Commercial Door Hardware",
-		    "processed": 1,
 		    "access": false,
 		    "lessons": [
 			{
@@ -1030,7 +1020,6 @@ window.app = {
 		{
 		    "module_id": "M11",
 		    "title": "The Business of Locksmithing",
-		    "processed": 1,
 		    "access": false,
 		    "lessons": [
 			{
@@ -1135,7 +1124,6 @@ window.app = {
 		{
 		    "module_id": "M12",
 		    "title": "Certification and Course Completion",
-		    "processed": 1,
 		    "access": false,
 		    "lessons": [
 			{
