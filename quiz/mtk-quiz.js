@@ -569,8 +569,8 @@ function waitForMtkQuizElement() {
 	// Check if element already exists
 	const checkElement = () => {
 	    const element = document.querySelector('mtk-quiz.mtk-quiz') || 
-			  document.querySelector('mtk-quiz') ||
-			  document.querySelector('[class*="mtk-quiz"]');
+		  document.querySelector('mtk-quiz') ||
+		  document.querySelector('[class*="mtk-quiz"]');
 	    
 	    if (element) {
 		wc.log('✅ mtk-quiz element found in DOM');
@@ -691,8 +691,8 @@ if (typeof wc !== 'undefined' && wc.isLocal) {
 	// Backup initialization on window load
 	window.addEventListener('load', async () => {
 	    const element = document.querySelector('mtk-quiz.mtk-quiz') || 
-			  document.querySelector('mtk-quiz') ||
-			  document.querySelector('[class*="mtk-quiz"]');
+		  document.querySelector('mtk-quiz') ||
+		  document.querySelector('[class*="mtk-quiz"]');
 	    
 	    if (element && !element.mtkQuizInstance) {
 		wc.log('🔄 MTK Quiz: Backup initialization on window load');
@@ -728,8 +728,8 @@ if (typeof wc !== 'undefined' && wc.isLocal) {
 	// Backup initialization on window load
 	window.addEventListener('load', async () => {
 	    const element = document.querySelector('mtk-quiz.mtk-quiz') || 
-			  document.querySelector('mtk-quiz') ||
-			  document.querySelector('[class*="mtk-quiz"]');
+		  document.querySelector('mtk-quiz') ||
+		  document.querySelector('[class*="mtk-quiz"]');
 	    
 	    if (element && !element.mtkQuizInstance) {
 		wc.log('🔄 MTK Quiz: Backup initialization on window load');
@@ -750,8 +750,8 @@ if (typeof wc !== 'undefined' && wc.isLocal) {
 	
 	window.addEventListener('load', async () => {
 	    const element = document.querySelector('mtk-quiz.mtk-quiz') || 
-			  document.querySelector('mtk-quiz') ||
-			  document.querySelector('[class*="mtk-quiz"]');
+		  document.querySelector('mtk-quiz') ||
+		  document.querySelector('[class*="mtk-quiz"]');
 	    
 	    if (element && !element.mtkQuizInstance) {
 		wc.log('🔄 MTK Quiz: Backup initialization on window load');
