@@ -127,6 +127,7 @@ CSS Requirements:
 *** CRITICAL: LHS and RHS must scroll independently with no page-level scrolling
 
 update hierarchy.js file as follows:
+add quiz link at the end of each module lessons
 if item has access=false it should be disabled and
 disable modules when access=false
 when "mtk-lesson__title" is clicked enable the next "mtk-lesson__title" and
