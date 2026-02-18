@@ -49,8 +49,9 @@
   box-shadow: var(--mtk-shadow-2);
   border-radius: 4px 4px 0 0; }
 
+.mtk-quiz body:has(.app-header) .mtk-quiz__header,
 .mtk-quiz body:has(.mtk-header) .mtk-quiz__header {
-  top: var(--mtk-header-height, 64px); }
+  top: var(--app-header-height, var(--mtk-header-height, 64px)); }
 
 .mtk-quiz .mtk-quiz__header-content {
   display: flex;

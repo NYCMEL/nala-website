@@ -42,6 +42,26 @@
     flex-direction: column;
   }
 
+  // ============================================================================
+  // STICKY HEADER
+  // ============================================================================
+  // The quiz header sticks below the app header when scrolling.
+  // 
+  // Configuration options:
+  // 1. Automatic detection (if browser supports :has()):
+  //    - Looks for .app-header or .mtk-header elements
+  //    - Uses --app-header-height or --mtk-header-height CSS variable
+  //    - Default: 64px if not specified
+  //
+  // 2. Manual configuration (set in your app's CSS):
+  //    :root {
+  //      --app-header-height: 64px;  /* Your app header height */
+  //    }
+  //
+  // 3. JavaScript configuration (in your app):
+  //    document.documentElement.style.setProperty('--app-header-height', '64px');
+  // ============================================================================
+
   .mtk-quiz__header {
     padding: 24px;
     margin-left:24px;
@@ -56,9 +76,10 @@
     border-radius: 4px 4px 0 0;
   }
 
-  // Sticky header when there's an mtk-header
+  // Sticky header when there's an app-header or mtk-header
+  body:has(.app-header) .mtk-quiz__header,
   body:has(.mtk-header) .mtk-quiz__header {
-    top: var(--mtk-header-height, 64px);
+    top: var(--app-header-height, var(--mtk-header-height, 64px));
   }
 
   .mtk-quiz__header-content {
