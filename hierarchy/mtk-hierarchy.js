@@ -773,6 +773,9 @@ class MTKHierarchy {
     handleQuizClick(event, quizElement) {
 	alert("AAAAAAAA");
 
+	mtk_pager.show("quiz");	
+	return;
+
 	console.log('==========================================');
 	console.log('🎯 handleQuizClick CALLED');
 	console.log('Event:', event);
