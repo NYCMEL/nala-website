@@ -126,5 +126,15 @@ CSS Requirements:
 *** IMPORTANT: All modules need "id", all lessons need "id", all resources need "id"
 *** CRITICAL: LHS and RHS must scroll independently with no page-level scrolling
 
+<<<<<<< HEAD
 UPDATE hierarchy.js file as follows:
 if item has access=false it should be disabled
+=======
+update hierarchy.js file as follows:
+add quiz link at the end of each module lessons
+if item has access=false it should be disabled and
+disable modules when access=false
+when "mtk-lesson__title" is clicked enable the next "mtk-lesson__title" and
+if it is the last "mtk-lesson__title", enable quiz link
+clicking on "Start Quiz" should change parent module's background to #198755 (btn-success)
+>>>>>>> 02.16.2026
