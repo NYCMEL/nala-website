@@ -977,6 +977,9 @@ wc.login = async function (email, passwd) {
             return false;
         }
 
+	// START TRACKING when loggediin
+	wc.startInactivityTracking();
+
 	// GET SESSION 
 	wc.getSession();
 
