@@ -28,6 +28,7 @@ class MTKHierarchy {
     this.handleLessonClick = this.handleLessonClick.bind(this);
     this.handleResourceClick = this.handleResourceClick.bind(this);
     this.handleQuizClick = this.handleQuizClick.bind(this);
+    this.handleQuizStart = this.handleQuizStart.bind(this);
     
     // Wait for DOM to be ready
     this.waitForElement();
@@ -768,7 +769,9 @@ class MTKHierarchy {
     // Quiz button/link
     contentHTML += `
       <div class="mtk-quiz-launch">
-        <button class="mtk-quiz-launch__button" onclick="window.open('${this.sanitizeUrl(quiz.url)}', '_blank')">
+        <button class="mtk-quiz-launch__button" 
+                data-module-id="${moduleId}"
+                onclick="window.MTKHierarchy.handleQuizStart('${moduleId}', '${this.sanitizeUrl(quiz.url)}')">
           <span class="material-icons">quiz</span>
           <span>Start Quiz</span>
         </button>
@@ -778,6 +781,53 @@ class MTKHierarchy {
     contentHTML += '</div>';
     
     this.elements.rhs.innerHTML = contentHTML;
+  }
+
+  /**
+   * Handle quiz start button click
+   */
+  handleQuizStart(moduleId, quizUrl) {
+    if (typeof wc !== 'undefined') {
+      wc.log("MTKHierarchy: Starting quiz for module", moduleId);
+    }
+    
+    // Find the module element
+    const moduleElement = this.elements.lhs.querySelector(`[data-module-id="${moduleId}"]`);
+    
+    if (moduleElement) {
+      // Find the module header
+      const moduleHeader = moduleElement.querySelector('.mtk-module__header');
+      
+      if (moduleHeader) {
+        // Change background to green (#198754)
+        moduleHeader.style.background = '#198754';
+        moduleHeader.style.backgroundImage = 'none';
+        
+        if (typeof wc !== 'undefined') {
+          wc.log("MTKHierarchy: Module background changed to green (completed)");
+        }
+        
+        // Mark module as completed in config
+        for (const course of this.config) {
+          if (!course.modules) continue;
+          
+          const module = course.modules.find(m => m.id === moduleId);
+          if (module) {
+            module.completed = true;
+            break;
+          }
+        }
+        
+        // Publish event
+        this.publish('mtk-hierarchy:module-completed', {
+          moduleId,
+          timestamp: new Date().toISOString()
+        });
+      }
+    }
+    
+    // Open quiz in new tab
+    window.open(quizUrl, '_blank');
   }
 
   /**
@@ -1109,6 +1159,10 @@ if (typeof window.app !== 'undefined' && window.app.hierarchy) {
     
     wc.subscribe('mtk-hierarchy:lesson-toggled', function(msg, data) {
       wc.info('📝 Lesson Toggled:', data);
+    });
+    
+    wc.subscribe('mtk-hierarchy:module-completed', function(msg, data) {
+      wc.info('✅ Module Completed:', data);
     });
     
     wc.subscribe('mtk-hierarchy:initialized', function(msg, data) {
