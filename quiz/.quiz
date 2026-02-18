@@ -13,7 +13,6 @@ CORE REQUIREMENTS
 Create the following files:
 - mtk-quiz.html - Semantic HTML structure
 - mtk-quiz.js - Component logic with wc.js integration
-- mtk-quiz.css - Compiled styles
 - mtk-quiz.scss - Source SCSS (do NOT compile, provide source only)
 - mtk-quiz.config.js - Sample quiz configuration data
 
@@ -371,7 +370,6 @@ DELIVERABLES
 ------------
 1. mtk-quiz.html - Complete HTML structure with Material Icons
 2. mtk-quiz.js - Component with wc.isLocal initialization
-3. mtk-quiz.css - Compiled styles (if provided)
 4. mtk-quiz.scss - Source SCSS with Bootstrap colors (DO NOT COMPILE)
 5. mtk-quiz.config.js - Sample quiz data
 
