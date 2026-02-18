@@ -249,7 +249,11 @@
 
 .mtk-quiz .mtk-quiz__actions {
   display: flex;
-  gap: 12px; }
+  gap: 12px;
+  align-items: center; }
+
+.mtk-quiz .mtk-quiz__actions-spacer {
+  flex: 1; }
 
 .mtk-quiz .mtk-quiz__button {
   padding: 12px 24px;
@@ -309,6 +313,24 @@
 
 .mtk-quiz .mtk-quiz__button--secondary:hover:not(:disabled) {
   background-color: rgba(98, 0, 234, 0.08); }
+
+.mtk-quiz .mtk-quiz__button--link {
+  background-color: transparent;
+  color: #6c757d;
+  border: none;
+  text-decoration: none;
+  padding: 12px 16px;
+  text-transform: none;
+  letter-spacing: normal; }
+
+.mtk-quiz .mtk-quiz__button--link:hover:not(:disabled) {
+  color: #212529;
+  background-color: rgba(0, 0, 0, 0.05);
+  text-decoration: none; }
+
+.mtk-quiz .mtk-quiz__button--link:focus {
+  outline: 2px solid var(--mtk-primary);
+  outline-offset: 2px; }
 
 .mtk-quiz .mtk-quiz__button-icon {
   font-family: 'Material Icons';

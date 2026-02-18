@@ -33,6 +33,7 @@ class MtkQuiz {
 	this.elements.questionsContainer = this.element.querySelector('#questionsContainer');
 	this.elements.submitBtn = this.element.querySelector('#submitBtn');
 	this.elements.clearBtn = this.element.querySelector('#clearBtn');
+	this.elements.cancelBtn = this.element.querySelector('#cancelBtn');
 	this.elements.testBtn = this.element.querySelector('#testBtn');
 	this.elements.progressFill = this.element.querySelector('#progressFill');
 	this.elements.progressText = this.element.querySelector('#progressText');
@@ -164,6 +165,12 @@ class MtkQuiz {
 	if (this.elements.clearBtn) {
 	    wc.log('🟢 Clear button found');
 	    this.elements.clearBtn.addEventListener('click', () => this.handleClear());
+	}
+
+	// Cancel button
+	if (this.elements.cancelBtn) {
+	    wc.log('🟢 Cancel button found');
+	    this.elements.cancelBtn.addEventListener('click', () => this.handleCancel());
 	}
 
 	// Test button (select first option)
@@ -343,6 +350,10 @@ class MtkQuiz {
 	    
 	    window.wc.publish('4-mtk-quiz-form-enabled', enabledData);
 	}
+    }
+
+    handleCancel() {
+	mtk_pager.show('dashboard');
     }
 
     handleTest() {
