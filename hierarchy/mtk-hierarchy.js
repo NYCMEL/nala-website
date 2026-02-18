@@ -385,29 +385,45 @@ class MTKHierarchy {
     
     // Module clicks
     this.elements.lhs.addEventListener('click', (e) => {
+      console.log('📍 LHS Click detected:', e.target);
+      
       const moduleHeader = e.target.closest('.mtk-module__header');
       if (moduleHeader) {
+        console.log('→ Module header clicked');
         this.handleModuleClick(e, moduleHeader);
         return;
       }
       
       const lessonHeader = e.target.closest('.mtk-lesson__header');
       if (lessonHeader) {
+        console.log('→ Lesson header clicked');
         this.handleLessonClick(e, lessonHeader);
         return;
       }
       
       const resource = e.target.closest('.mtk-resource');
-      if (resource && !resource.classList.contains('mtk-resource--disabled')) {
-        this.handleResourceClick(e, resource);
+      if (resource) {
+        console.log('→ Resource clicked, disabled?', resource.classList.contains('mtk-resource--disabled'));
+        if (!resource.classList.contains('mtk-resource--disabled')) {
+          this.handleResourceClick(e, resource);
+        }
         return;
       }
       
       const quiz = e.target.closest('.mtk-quiz');
-      if (quiz && !quiz.classList.contains('mtk-quiz--disabled')) {
-        this.handleQuizClick(e, quiz);
+      if (quiz) {
+        console.log('→ Quiz element found!');
+        console.log('→ Quiz disabled?', quiz.classList.contains('mtk-quiz--disabled'));
+        if (!quiz.classList.contains('mtk-quiz--disabled')) {
+          console.log('→ Calling handleQuizClick...');
+          this.handleQuizClick(e, quiz);
+        } else {
+          console.log('→ Quiz is disabled, not calling handler');
+        }
         return;
       }
+      
+      console.log('→ No matching element found');
     });
     
     // Keyboard navigation
@@ -698,16 +714,28 @@ class MTKHierarchy {
    * Handle quiz click
    */
   handleQuizClick(event, quizElement) {
+    console.log('==========================================');
+    console.log('🎯 handleQuizClick CALLED');
+    console.log('Event:', event);
+    console.log('Quiz Element:', quizElement);
+    console.log('==========================================');
+    
     // Check if quiz is disabled
     if (quizElement.classList.contains('mtk-quiz--disabled')) {
+      console.log('❌ Quiz is DISABLED - returning early');
       if (typeof wc !== 'undefined') {
         wc.warn("MTKHierarchy: Quiz is disabled (access=false)");
       }
       return;
     }
     
+    console.log('✅ Quiz is ENABLED - continuing...');
+    
     const quizId = quizElement.dataset.quizId;
     const moduleId = quizElement.dataset.moduleId;
+    
+    console.log('Quiz ID:', quizId);
+    console.log('Module ID:', moduleId);
     
     if (typeof wc !== 'undefined') {
       wc.log("MTKHierarchy: Quiz clicked", quizId);
@@ -715,22 +743,31 @@ class MTKHierarchy {
     
     // Find the quiz data
     let quiz = null;
+    console.log('Searching for quiz in config...');
+    console.log('Config:', this.config);
+    
     for (const course of this.config) {
       if (!course.modules) continue;
       
       const module = course.modules.find(m => m.id === moduleId);
+      console.log('Found module:', module);
+      
       if (module && module.quiz && module.quiz.id === quizId) {
         quiz = module.quiz;
+        console.log('✅ Found quiz:', quiz);
         break;
       }
     }
     
     if (!quiz) {
+      console.log('❌ Quiz NOT FOUND in config');
       if (typeof wc !== 'undefined') {
         wc.warn("MTKHierarchy: Quiz not found", quizId);
       }
       return;
     }
+    
+    console.log('Removing active class from all quizzes...');
     
     // Remove active class from all quizzes
     const allQuizzes = this.elements.lhs.querySelectorAll('.mtk-quiz');
@@ -740,8 +777,12 @@ class MTKHierarchy {
     this.activeQuiz = quizId;
     quizElement.classList.add('mtk-quiz--active');
     
+    console.log('Calling displayQuiz...');
+    
     // Display quiz content in RHS
     this.displayQuiz(quiz, moduleId);
+    
+    console.log('Publishing quiz-clicked event...');
     
     // Publish event
     this.publish('mtk-hierarchy:quiz-clicked', {
@@ -750,6 +791,9 @@ class MTKHierarchy {
       quiz,
       timestamp: new Date().toISOString()
     });
+    
+    console.log('✅ handleQuizClick COMPLETED');
+    console.log('==========================================');
   }
 
   /**
