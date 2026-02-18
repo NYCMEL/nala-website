@@ -353,7 +353,7 @@ class MtkQuiz {
     }
 
     handleCancel() {
-	mtk_pager.show('course');
+	mtk_pager.show('dashboard');
     }
 
     handleTest() {
