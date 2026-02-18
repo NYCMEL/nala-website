@@ -125,3 +125,7 @@ CSS Requirements:
 *** Config structure: window.app.hierarchy = [ { courses } ]
 *** IMPORTANT: All modules need "id", all lessons need "id", all resources need "id"
 *** CRITICAL: LHS and RHS must scroll independently with no page-level scrolling
+
+update hierarchy.js file as follows:
+if item has access=false it should be disabled and
+disable modules when access=false
