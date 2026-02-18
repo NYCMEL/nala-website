@@ -134,7 +134,7 @@ class MTKHierarchy {
     }
     
     // Publish initialization event
-    this.publish('mtk-hierarchy:initialized', {
+    wc.publish('mtk-hierarchy:initialized', {
       timestamp: new Date().toISOString()
     });
   }
@@ -218,7 +218,7 @@ class MTKHierarchy {
     }
     
     // Publish render complete event
-    this.publish('mtk-hierarchy:rendered', {
+    wc.publish('mtk-hierarchy:rendered', {
       timestamp: new Date().toISOString()
     });
   }
@@ -440,58 +440,10 @@ class MTKHierarchy {
   }
 
   /**
-   * Handle quiz click - just publish event for external handling
+   * Handle quiz click - delegate to mtk_pager
    */
   handleQuizClick(event, quizElement) {
-    // Check if quiz is disabled
-    if (quizElement.classList.contains('mtk-quiz--disabled')) {
-      if (typeof wc !== 'undefined') {
-        wc.warn("MTKHierarchy: Quiz is disabled (access=false)");
-      }
-      return;
-    }
-    
-    const quizId = quizElement.dataset.quizId;
-    const moduleId = quizElement.dataset.moduleId;
-    
-    if (typeof wc !== 'undefined') {
-      wc.log("MTKHierarchy: Quiz clicked", quizId);
-    }
-    
-    // Find the quiz data
-    let quiz = null;
-    for (const course of this.config) {
-      if (!course.modules) continue;
-      
-      const module = course.modules.find(m => m.id === moduleId);
-      if (module && module.quiz && module.quiz.id === quizId) {
-        quiz = module.quiz;
-        break;
-      }
-    }
-    
-    if (!quiz) {
-      if (typeof wc !== 'undefined') {
-        wc.warn("MTKHierarchy: Quiz not found", quizId);
-      }
-      return;
-    }
-    
-    // Remove active class from all quizzes
-    const allQuizzes = this.elements.lhs.querySelectorAll('.mtk-quiz');
-    allQuizzes.forEach(q => q.classList.remove('mtk-quiz--active'));
-    
-    // Set as active
-    this.activeQuiz = quizId;
-    quizElement.classList.add('mtk-quiz--active');
-    
-    // Publish event - external code handles the rest
-    this.publish('mtk-hierarchy:quiz-clicked', {
-      moduleId,
-      quizId,
-      quiz,
-      timestamp: new Date().toISOString()
-    });
+    mtk_pager.show("quiz");
   }
 
   /**
@@ -537,7 +489,7 @@ class MTKHierarchy {
     }
     
     // Publish event
-    this.publish('mtk-hierarchy:module-toggled', {
+    wc.publish('mtk-hierarchy:module-toggled', {
       moduleId,
       isOpen: !isOpen,
       timestamp: new Date().toISOString()
@@ -598,7 +550,7 @@ class MTKHierarchy {
     }
     
     // Publish event
-    this.publish('mtk-hierarchy:lesson-toggled', {
+    wc.publish('mtk-hierarchy:lesson-toggled', {
       moduleId,
       lessonId,
       isOpen: !isOpen,
@@ -651,7 +603,7 @@ class MTKHierarchy {
       }
       
       // Publish event to enable quiz
-      this.publish('mtk-hierarchy:enable-quiz', {
+      wc.publish('mtk-hierarchy:enable-quiz', {
         moduleId,
         lessonId,
         timestamp: new Date().toISOString()
@@ -696,7 +648,7 @@ class MTKHierarchy {
         }
         
         // Publish event
-        this.publish('mtk-hierarchy:lesson-enabled', {
+        wc.publish('mtk-hierarchy:lesson-enabled', {
           moduleId,
           lessonId: nextLesson.id,
           previousLessonId: lessonId,
@@ -749,7 +701,7 @@ class MTKHierarchy {
       }
       
       // Publish event
-      this.publish('mtk-hierarchy:lesson-resources-enabled', {
+      wc.publish('mtk-hierarchy:lesson-resources-enabled', {
         moduleId,
         lessonId,
         resourceCount: lesson.resources.length,
@@ -813,7 +765,7 @@ class MTKHierarchy {
     this.displayResource(resource);
     
     // Publish event
-    this.publish('mtk-hierarchy:resource-clicked', {
+    wc.publish('mtk-hierarchy:resource-clicked', {
       moduleId,
       lessonId,
       resourceId,
@@ -858,7 +810,7 @@ class MTKHierarchy {
         }
         
         // Publish event
-        this.publish('mtk-hierarchy:module-completed', {
+        wc.publish('mtk-hierarchy:module-completed', {
           moduleId,
           timestamp: new Date().toISOString()
         });
@@ -1131,17 +1083,6 @@ class MTKHierarchy {
   }
 
   /**
-   * Publish event using wc.publish or fallback
-   */
-  publish(event, data) {
-    if (typeof wc !== 'undefined' && wc.publish) {
-      wc.publish(event, data);
-    } else {
-      console.log('publish:', event, data);
-    }
-  }
-
-  /**
    * Subscribe to event using wc.subscribe or fallback
    */
   subscribe(event, callback) {
@@ -1169,7 +1110,7 @@ class MTKHierarchy {
     this.openLessons.clear();
     
     // Publish destroy event
-    this.publish('mtk-hierarchy:destroyed', {
+    wc.publish('mtk-hierarchy:destroyed', {
       timestamp: new Date().toISOString()
     });
   }
