@@ -771,7 +771,11 @@ class MTKHierarchy {
      * Handle quiz click
      */
     handleQuizClick(event, quizElement) {
-	alert("AAAAAAAA");
+	console.log(">>>>>>", quizElement, "<<<<<<<");
+	const mod = quizElement.getAttribute("data-module-id");
+	alert(mod);
+
+	// SHOULD FETCH quiz.config FILE HERE AND THEN A CALL TO SHOW
 
 	mtk_pager.show("quiz");	
 	return;
