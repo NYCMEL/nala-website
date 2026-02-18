@@ -2,10 +2,10 @@
 
 
 .mtk-quiz {
-  --mtk-primary: #64B5F6;
-  --mtk-primary-light: #64B5F6;
-  --mtk-primary-dark: #64B5F6;
-  --mtk-secondary: #03dac6;
+  --mtk-primary: #0d6efd;
+  --mtk-primary-light: #3d8bfd;
+  --mtk-primary-dark: #0a58ca;
+  --mtk-secondary: #6c757d;
   --mtk-surface: #ffffff;
   --mtk-background: #fafafa;
   --mtk-error: #b00020;
@@ -361,7 +361,14 @@
     border: 1px solid var(--mtk-primary);
 
     &:hover:not(:disabled) {
-      background-color: rgba(98, 0, 234, 0.08);
+      background-color: var(--mtk-primary);
+      color: var(--mtk-on-primary);
+      border-color: var(--mtk-primary);
+    }
+
+    &:active:not(:disabled) {
+      background-color: var(--mtk-primary-dark);
+      border-color: var(--mtk-primary-dark);
     }
   }
 
