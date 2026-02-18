@@ -863,8 +863,6 @@ class MTKHierarchy {
   }
 }
 
-alert(wc.isLocal);
-
 // GET FRESH DATA
 if (wc.isLocal) {
     // Expose to window namespace

@@ -5,17 +5,17 @@ window.app = {
     "hierarchy": [
 	{
             "title": "Introduction to Locksmithing",
-            "access": false,
+            "access": true,
             "modules": [
 		{
 		    "module_id": "M1",
 		    "title": "Foundations of Locksmithing",
-		    "access": false,
+		    "access": true,
 		    "lessons": [
 			{
 			    "lesson_no": 0,
 			    "title": "Introduction",
-			    "access": false,
+			    "access": true,
 			    "badge": {
 				"text": "Unlocked",
 				"color": "green"
