@@ -134,3 +134,4 @@ when "mtk-lesson__title" is clicked enable the next "mtk-lesson__title" and
 if it is the last "mtk-lesson__title", enable quiz link
 clicking on "Start Quiz" should change parent module's background to #198755 (btn-success)
 all mtk-resource(s) should be enabled for clicks if lesson is expanded
+when "Module Quiz" is clicked, replace right side with mtk-quiz component which I ALREADY HAVE
