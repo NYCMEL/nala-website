@@ -1,5 +1,4 @@
 // mtk-quiz.js
-
 class MtkQuiz {
     constructor(element, config) {
 	this.element = element;
@@ -34,6 +33,7 @@ class MtkQuiz {
 	this.elements.questionsContainer = this.element.querySelector('#questionsContainer');
 	this.elements.submitBtn = this.element.querySelector('#submitBtn');
 	this.elements.clearBtn = this.element.querySelector('#clearBtn');
+	this.elements.cancelBtn = this.element.querySelector('#cancelBtn');
 	this.elements.testBtn = this.element.querySelector('#testBtn');
 	this.elements.progressFill = this.element.querySelector('#progressFill');
 	this.elements.progressText = this.element.querySelector('#progressText');
@@ -165,6 +165,12 @@ class MtkQuiz {
 	if (this.elements.clearBtn) {
 	    wc.log('🟢 Clear button found');
 	    this.elements.clearBtn.addEventListener('click', () => this.handleClear());
+	}
+
+	// Cancel button
+	if (this.elements.cancelBtn) {
+	    wc.log('🟢 Cancel button found');
+	    this.elements.cancelBtn.addEventListener('click', () => this.handleCancel());
 	}
 
 	// Test button (select first option)
@@ -344,6 +350,10 @@ class MtkQuiz {
 	    
 	    window.wc.publish('4-mtk-quiz-form-enabled', enabledData);
 	}
+    }
+
+    handleCancel() {
+	mtk_pager.show('dashboard');
     }
 
     handleTest() {
@@ -562,95 +572,204 @@ class MtkQuiz {
     }
 }
 
-// Initialize function that waits for both element and config
-function initMtkQuiz() {
-    // Use MutationObserver to watch for element availability
-    const observer = new MutationObserver((mutations, obs) => {
-	// Look for mtk-quiz element (works with wc-include)
-	const element = document.querySelector('mtk-quiz.mtk-quiz') || 
-              document.querySelector('mtk-quiz') ||
-              document.querySelector('[class*="mtk-quiz"]');
-	
-	// Check if config is available
-	const configAvailable = typeof mtkQuizConfig !== 'undefined';
-	
-	if (element && configAvailable) {
-	    // Stop observing once we found the element
-	    obs.disconnect();
+/**
+ * Wait for mtk-quiz element to be ready in the DOM
+ */
+function waitForMtkQuizElement() {
+    return new Promise((resolve) => {
+	// Check if element already exists
+	const checkElement = () => {
+	    const element = document.querySelector('mtk-quiz.mtk-quiz') || 
+		  document.querySelector('mtk-quiz') ||
+		  document.querySelector('[class*="mtk-quiz"]');
 	    
-	    // Small delay to ensure all DOM is fully loaded
-	    setTimeout(() => {
-		// Initialize the quiz component
-		const quiz = new MtkQuiz(element, mtkQuizConfig);
-		
-		// Store instance on element for external access
-		element.mtkQuizInstance = quiz;
-		
-		wc.log('✅ MTK Quiz initialized successfully');
-		
-		// Publish initialization event
-		if (window.wc && window.wc.publish) {
-		    const initData = {
-			quiz_session_id: mtkQuizConfig.quiz_session_id,
-			module_id: mtkQuizConfig.module_id,
-			question_count: mtkQuizConfig.questions.length,
-			timestamp: new Date().toISOString()
-		    };
-		    
-		    if (window.wc.log) {
-			window.wc.log('4-mtk-quiz-initialized', initData);
-		    }
-		    
-		    window.wc.publish('4-mtk-quiz-initialized', initData);
-		}
-	    }, 50);
+	    if (element) {
+		wc.log('✅ mtk-quiz element found in DOM');
+		return element;
+	    }
+	    return null;
+	};
+	
+	// Immediate check
+	const existingElement = checkElement();
+	if (existingElement) {
+	    resolve(existingElement);
+	    return;
 	}
+	
+	wc.log('⏳ Waiting for mtk-quiz element to appear in DOM...');
+	
+	// Use MutationObserver to watch for element
+	const observer = new MutationObserver((mutations, obs) => {
+	    const element = checkElement();
+	    if (element) {
+		obs.disconnect();
+		resolve(element);
+	    }
+	});
+	
+	// Observe the entire document
+	observer.observe(document.body, {
+	    childList: true,
+	    subtree: true
+	});
+	
+	// Timeout after 30 seconds
+	setTimeout(() => {
+	    observer.disconnect();
+	    wc.error('❌ Timeout: mtk-quiz element not found after 30 seconds');
+	    resolve(null);
+	}, 30000);
     });
-    
-    // Start observing the document with the configured parameters
-    observer.observe(document.body, {
-	childList: true,
-	subtree: true
-    });
-    
-    // Timeout after 30 seconds
-    setTimeout(() => {
-	observer.disconnect();
-    }, 30000);
 }
 
-// Multiple initialization strategies to ensure component loads
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initMtkQuiz);
-} else {
-    initMtkQuiz();
-}
-
-// Also try on window load as backup
-window.addEventListener('load', () => {
-    const element = document.querySelector('mtk-quiz.mtk-quiz') || 
-          document.querySelector('mtk-quiz') ||
-          document.querySelector('[class*="mtk-quiz"]');
+/**
+ * Initialize MTK Quiz component
+ */
+async function initMtkQuiz(config) {
+    wc.log('🚀 Starting MTK Quiz initialization...');
     
-    if (element && !element.mtkQuizInstance && typeof mtkQuizConfig !== 'undefined') {
-	const quiz = new MtkQuiz(element, mtkQuizConfig);
+    try {
+	// Wait for element
+	const element = await waitForMtkQuizElement();
+	
+	// Check if element is available
+	if (!element) {
+	    wc.error('❌ Cannot initialize: mtk-quiz element not found');
+	    return;
+	}
+	
+	if (!config) {
+	    wc.error('❌ Cannot initialize: config not provided');
+	    return;
+	}
+	
+	// Check if already initialized
+	if (element.mtkQuizInstance) {
+	    wc.log('⚠️ MTK Quiz already initialized on this element');
+	    return;
+	}
+	
+	wc.log('✅ Element and config ready, initializing...');
+	
+	// Small delay to ensure DOM is stable
+	await new Promise(resolve => setTimeout(resolve, 100));
+	
+	// Initialize the quiz component
+	const quiz = new MtkQuiz(element, config);
+	
+	// Store instance on element
 	element.mtkQuizInstance = quiz;
-	wc.log('✅ MTK Quiz initialized on window load');
+	
+	// Expose to window namespace
+	window.MtkQuiz = quiz;
+	
+	wc.log('✅ MTK Quiz initialized successfully');
 	
 	// Publish initialization event
 	if (window.wc && window.wc.publish) {
 	    const initData = {
-		quiz_session_id: mtkQuizConfig.quiz_session_id,
-		module_id: mtkQuizConfig.module_id,
-		question_count: mtkQuizConfig.questions.length,
+		quiz_session_id: config.quiz_session_id,
+		module_id: config.module_id,
+		question_count: config.questions.length,
 		timestamp: new Date().toISOString()
 	    };
 	    
-	    if (window.wc.log) {
-		window.wc.log('4-mtk-quiz-initialized', initData);
-	    }
-	    
-	    window.wc.publish('4-mtk-quiz-initialized', initData);
+	    wc.log('4-mtk-quiz-initialized', initData);
+	    wc.publish('4-mtk-quiz-initialized', initData);
 	}
+	
+    } catch (error) {
+	wc.error('❌ Error initializing MTK Quiz:', error);
     }
-});
+}
+
+// Initialize quiz - support both local and remote config
+// GET FRESH DATA
+if (typeof wc !== 'undefined' && wc.isLocal) {
+    // LOCAL MODE - Use window.mtkQuizConfig
+    wc.log("MTK Quiz: Local mode - using window.mtkQuizConfig");
+    wc.log("isLocal:", wc.isLocal);
+    
+    if (typeof mtkQuizConfig !== 'undefined') {
+	// Start initialization when DOM is ready
+	if (document.readyState === 'loading') {
+	    document.addEventListener('DOMContentLoaded', () => initMtkQuiz(mtkQuizConfig));
+	} else {
+	    initMtkQuiz(mtkQuizConfig);
+	}
+	
+	// Backup initialization on window load
+	window.addEventListener('load', async () => {
+	    const element = document.querySelector('mtk-quiz.mtk-quiz') || 
+		  document.querySelector('mtk-quiz') ||
+		  document.querySelector('[class*="mtk-quiz"]');
+	    
+	    if (element && !element.mtkQuizInstance) {
+		wc.log('🔄 MTK Quiz: Backup initialization on window load');
+		await initMtkQuiz(mtkQuizConfig);
+	    }
+	});
+    } else {
+	console.error('Local mode but mtkQuizConfig is not defined. Please include quiz config before mtk-quiz.js');
+    }
+} else if (typeof wc !== 'undefined' && wc.getQuiz) {
+    // REMOTE MODE - Fetch from API
+    wc.log("MTK Quiz: Remote mode - fetching quiz from API");
+    
+    wc.getQuiz(function (err, data) {
+	if (err) {
+	    wc.error("MTK Quiz: Error fetching quiz:", err);
+	    return;
+	}
+	
+	// Set quiz data
+	window.mtkQuizConfig = data.quiz;
+	
+	wc.log("MTK Quiz: Quiz data loaded");
+	wc.log("isLocal:", wc.isLocal);
+	
+	// Initialize with fetched config
+	if (document.readyState === 'loading') {
+	    document.addEventListener('DOMContentLoaded', () => initMtkQuiz(window.mtkQuizConfig));
+	} else {
+	    initMtkQuiz(window.mtkQuizConfig);
+	}
+	
+	// Backup initialization on window load
+	window.addEventListener('load', async () => {
+	    const element = document.querySelector('mtk-quiz.mtk-quiz') || 
+		  document.querySelector('mtk-quiz') ||
+		  document.querySelector('[class*="mtk-quiz"]');
+	    
+	    if (element && !element.mtkQuizInstance) {
+		wc.log('🔄 MTK Quiz: Backup initialization on window load');
+		await initMtkQuiz(window.mtkQuizConfig);
+	    }
+	});
+    });
+} else {
+    // FALLBACK - Try window.mtkQuizConfig if wc is not available
+    wc.log("MTK Quiz: Fallback mode - using window.mtkQuizConfig");
+    
+    if (typeof mtkQuizConfig !== 'undefined') {
+	if (document.readyState === 'loading') {
+	    document.addEventListener('DOMContentLoaded', () => initMtkQuiz(mtkQuizConfig));
+	} else {
+	    initMtkQuiz(mtkQuizConfig);
+	}
+	
+	window.addEventListener('load', async () => {
+	    const element = document.querySelector('mtk-quiz.mtk-quiz') || 
+		  document.querySelector('mtk-quiz') ||
+		  document.querySelector('[class*="mtk-quiz"]');
+	    
+	    if (element && !element.mtkQuizInstance) {
+		wc.log('🔄 MTK Quiz: Backup initialization on window load');
+		await initMtkQuiz(mtkQuizConfig);
+	    }
+	});
+    } else {
+	console.error('mtkQuizConfig is not defined and wc.getQuiz is not available. Please include quiz config before mtk-quiz.js');
+    }
+}

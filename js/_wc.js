@@ -977,6 +977,9 @@ wc.login = async function (email, passwd) {
             return false;
         }
 
+	// START TRACKING when loggediin
+	wc.startInactivityTracking();
+
 	// GET SESSION 
 	wc.getSession();
 
@@ -1047,7 +1050,8 @@ wc.getSession = function (callback) {
     return fetch(wc.apiURL + '/api/me.php', {
         credentials: 'include'
     }).then(res => res.json()).then(data => {
-	wc.session = data;
+	wc.session = data; /* SAVE THIS FOR USE EVERYWHERE */
+
         wc.log('SESSION', data.logged_in);
 	
         if (typeof callback === 'function') {

@@ -3,31 +3,19 @@ window.app = window.app || {};
 
 window.app = {
     "hierarchy": [
-<<<<<<< HEAD
         {
             "title": "Introduction to Locksmithing",
             "access": true,
             "modules": [
 		{
 		    "module_id": "M1",
-=======
-	{
-	    "title": "Introduction to Locksmithing",
-	    "access": true,
-	    "modules": [
-		{
-		    "id": "module-1",
->>>>>>> 02.16.2026
 		    "title": "Foundations of Locksmithing",
 		    "access": true,
-		    "processed": 1,
 		    "lessons": [
 			{
-			    "id": "lesson-1-1",
-			    "access": true,
+			    "lesson_no": 0,
 			    "title": "Introduction",
-<<<<<<< HEAD
-			    "access": false,
+			    "access": true,
 			    "badge": {
 				"text": "Unlocked",
 				"color": "green"
@@ -37,20 +25,10 @@ window.app = {
 				    "description": "Introduction",
 				    "url": "https://vimeo.com/827172729",
 				    "type": "video"
-=======
-			    "resources": [
-				{
-				    "id": "resource-1-1-1",
-				    "access": false,
-				    "type": "video",
-				    "description": "Introduction to your instructor and the course",
-				    "url": "https://vimeo.com/827172729"
->>>>>>> 02.16.2026
 				}
 			    ]
 			},
 			{
-<<<<<<< HEAD
 			    "lesson_no": 1,
 			    "title": "The Tools Needed in Your Toolbag",
 			    "access": false,
@@ -69,34 +47,29 @@ window.app = {
 			{
 			    "lesson_no": 2,
 			    "title": "Lock Grades: How Locks Are Classified",
-=======
-			    "id": "lesson-1-2",
->>>>>>> 02.16.2026
 			    "access": false,
-			    "title": "The tools needed in your toolbag",
+			    "badge": {
+				"text": "Unlocked",
+				"color": "green"
+			    },
 			    "resources": [
 				{
-<<<<<<< HEAD
 				    "description": "Lesson 2 - Lock Grades: How Locks Are Classified",
 				    "url": "https://vimeo.com/827172783",
 				    "type": "video"
-=======
-				    "id": "resource-1-2-1",
-				    "access": false,
-				    "type": "video",
-				    "description": "Tools Overview Video",
-				    "url": "https://vimeo.com/827172768"
->>>>>>> 02.16.2026
 				}
 			    ]
 			},
 			{
-			    "id": "lesson-1-3",
+			    "lesson_no": 3,
+			    "title": "Deadbolts: What They Are and How to Install Them",
 			    "access": false,
-			    "title": "Understanding the deadbolt and how to install",
+			    "badge": {
+				"text": "Unlocked",
+				"color": "green"
+			    },
 			    "resources": [
 				{
-<<<<<<< HEAD
 				    "description": "Lesson 3 - Deadbolts: What They Are and How to Install Them",
 				    "url": "https://vimeo.com/827172807",
 				    "type": "video"
@@ -105,30 +78,19 @@ window.app = {
 				    "description": "Photo",
 				    "url": "L3-Deadbolt1.jpg",
 				    "type": "photo"
-=======
-				    "id": "resource-1-3-1",
-				    "access": false,
-				    "type": "video",
-				    "description": "Deadbolt Installation Video",
-				    "url": "https://vimeo.com/827172807"
-				},
-				{
-				    "id": "resource-1-3-2",
-				    "access": false,
-				    "type": "photo",
-				    "description": "Deadbolt Photo 1",
-				    "url": "https://via.placeholder.com/800x600/1976d2/ffffff?text=Deadbolt-1"
->>>>>>> 02.16.2026
 				}
 			    ]
 			},
 			{
-			    "id": "lesson-1-4",
+			    "lesson_no": 4,
+			    "title": "Doorknobs: What They Are and How to Install Them",
 			    "access": false,
-			    "title": "Different residential and commercial doors",
+			    "badge": {
+				"text": "Unlocked",
+				"color": "green"
+			    },
 			    "resources": [
 				{
-<<<<<<< HEAD
 				    "description": "Lesson 4 - Doorknobs: What They Are and How to Install Them",
 				    "url": "https://vimeo.com/827172821",
 				    "type": "video"
@@ -180,49 +142,11 @@ window.app = {
 				    "type": "photo"
 				}
 			    ]
-=======
-				    "id": "resource-1-4-1",
-				    "access": false,
-				    "type": "video",
-				    "description": "Residential and Commercial Doors Overview",
-				    "url": "https://vimeo.com/827172835"
-				},
-				{
-				    "id": "resource-1-4-2",
-				    "access": false,
-				    "type": "photo",
-				    "description": "Commercial Glass Door",
-				    "url": "https://via.placeholder.com/800x600/d32f2f/ffffff?text=Glass-Door-1"
-				},
-				{
-				    "id": "resource-1-4-3",
-				    "access": false,
-				    "type": "photo",
-				    "description": "Aluminum Door Type 1",
-				    "url": "https://via.placeholder.com/800x600/7b1fa2/ffffff?text=Aluminum-Door-1"
-				},
-				{
-				    "id": "resource-1-4-4",
-				    "access": false,
-				    "type": "photo",
-				    "description": "Aluminum Door Type 2",
-				    "url": "https://via.placeholder.com/800x600/0288d1/ffffff?text=Aluminum-Door-2"
-				},
-				{
-				    "id": "resource-1-4-5",
-				    "access": false,
-				    "type": "photo",
-				    "description": "Commercial Entry System",
-				    "url": "https://via.placeholder.com/800x600/f57c00/ffffff?text=Entry-System"
-				}
-			    ]
->>>>>>> 02.16.2026
 			}
 		    ],
 		    "quiz": {
-			"id": "quiz-module-1",
+			"lesson_no": 6,
 			"title": "Module Quiz: Foundations of Locksmithing",
-<<<<<<< HEAD
 			"module_id": "M1",
 			"access": false,
 			"badge": {
@@ -236,11 +160,6 @@ window.app = {
 			},
 			"type": "quiz",
 			"description": "Module Quiz: Foundations of Locksmithing"
-=======
-			"description": "Test your knowledge on the fundamentals of locksmithing.",
-			"url": "https://example.com/quiz/foundations",
-			"access": false
->>>>>>> 02.16.2026
 		    }
 		}
             ]
@@ -250,18 +169,20 @@ window.app = {
             "access": false,
             "modules": [
 		{
-		    "id": "module-2-1",
+		    "module_id": "M2",
 		    "title": "Residential Lock Cylinders",
-		    "processed": 1,
 		    "access": false,
 		    "lessons": [
 			{
-			    "id": "lesson-2-1-1",
+			    "lesson_no": 7,
+			    "title": "Pin Tumbler Cylinders: How They Work",
 			    "access": false,
-			    "title": "Understanding pin tumbler cylinders",
+			    "badge": {
+				"text": "Unlocked",
+				"color": "green"
+			    },
 			    "resources": [
 				{
-<<<<<<< HEAD
 				    "description": "Lesson 7 - Pin Tumbler Cylinders: How They Work",
 				    "url": "https://vimeo.com/827172850",
 				    "type": "video"
@@ -391,42 +312,11 @@ window.app = {
 				    "type": "video"
 				}
 			    ]
-=======
-				    "id": "resource-2-1-1-1",
-				    "access": false,
-				    "type": "video",
-				    "description": "Pin Tumbler Mechanism Explained",
-				    "url": "https://vimeo.com/827172850"
-				},
-				{
-				    "id": "resource-2-1-1-2",
-				    "access": false,
-				    "type": "photo",
-				    "description": "Pin Tumbler Diagram 1",
-				    "url": "https://via.placeholder.com/800x600/1976d2/ffffff?text=Pin-Diagram-1"
-				},
-				{
-				    "id": "resource-2-1-1-3",
-				    "access": false,
-				    "type": "photo",
-				    "description": "Pin Tumbler Diagram 2",
-				    "url": "https://via.placeholder.com/800x600/388e3c/ffffff?text=Pin-Diagram-2"
-				},
-				{
-				    "id": "resource-2-1-1-4",
-				    "access": false,
-				    "type": "photo",
-				    "description": "Cross Section View",
-				    "url": "https://via.placeholder.com/800x600/d32f2f/ffffff?text=Cross-Section"
-				}
-			    ]
->>>>>>> 02.16.2026
 			}
 		    ],
 		    "quiz": {
-			"id": "quiz-module-2-1",
+			"lesson_no": 12,
 			"title": "Module Quiz: Residential Lock Cylinders",
-<<<<<<< HEAD
 			"module_id": "M2",
 			"access": false,
 			"badge": {
@@ -445,7 +335,6 @@ window.app = {
 		{
 		    "module_id": "M3",
 		    "title": "Keys and Key Machines",
-		    "processed": 1,
 		    "access": false,
 		    "lessons": [
 			{
@@ -543,7 +432,6 @@ window.app = {
 		{
 		    "module_id": "M4",
 		    "title": "Lock Picking Techniques",
-		    "processed": 1,
 		    "access": false,
 		    "lessons": [
 			{
@@ -627,33 +515,6 @@ window.app = {
 			"type": "quiz",
 			"description": "Module Quiz: Lock Picking Techniques"
 		    }
-=======
-			"description": "Test your understanding of pin tumbler cylinders.",
-			"url": "https://example.com/quiz/cylinders",
-			"access": false
-		    }
-		},
-		{
-		    "id": "module-2-2",
-		    "title": "Advanced Locksmithing (Premium - Locked)",
-		    "access": false,
-		    "lessons": [
-			{
-			    "id": "lesson-2-2-1",
-			    "access": false,
-			    "title": "Advanced Lock Picking",
-			    "resources": [
-				{
-				    "id": "resource-2-2-1-1",
-				    "access": false,
-				    "type": "video",
-				    "description": "Advanced Techniques",
-				    "url": "https://vimeo.com/827172850"
-				}
-			    ]
-			}
-		    ]
->>>>>>> 02.16.2026
 		}
             ]
         },
@@ -664,7 +525,6 @@ window.app = {
 		{
 		    "module_id": "M5",
 		    "title": "Rekeying Fundamentals",
-		    "processed": 1,
 		    "access": false,
 		    "lessons": [
 			{
@@ -769,7 +629,6 @@ window.app = {
 		    "module_id": "M6",
 		    "title": "Advanced Rekeying",
 		    "access": false,
-		    "processed": 1,
 		    "lessons": [
 			{
 			    "lesson_no": 26,
@@ -851,7 +710,6 @@ window.app = {
 		{
 		    "module_id": "M7",
 		    "title": "Master Key Systems",
-		    "processed": 1,
 		    "access": false,
 		    "lessons": [
 			{
@@ -935,7 +793,6 @@ window.app = {
 		{
 		    "module_id": "M8",
 		    "title": "Automotive Locks and Entry",
-		    "processed": 1,
 		    "access": false,
 		    "lessons": [
 			{
@@ -1023,7 +880,6 @@ window.app = {
 		{
 		    "module_id": "M9",
 		    "title": "Automotive Electronics",
-		    "processed": 1,
 		    "access": false,
 		    "lessons": [
 			{
@@ -1070,7 +926,6 @@ window.app = {
 		{
 		    "module_id": "M10",
 		    "title": "Commercial Door Hardware",
-		    "processed": 1,
 		    "access": false,
 		    "lessons": [
 			{
@@ -1165,7 +1020,6 @@ window.app = {
 		{
 		    "module_id": "M11",
 		    "title": "The Business of Locksmithing",
-		    "processed": 1,
 		    "access": false,
 		    "lessons": [
 			{
@@ -1270,7 +1124,6 @@ window.app = {
 		{
 		    "module_id": "M12",
 		    "title": "Certification and Course Completion",
-		    "processed": 1,
 		    "access": false,
 		    "lessons": [
 			{

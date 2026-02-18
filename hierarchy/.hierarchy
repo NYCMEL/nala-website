@@ -1,140 +1,403 @@
-FORGET ALL PREVIOUS CONTEXT for mtk-hierarchy
-Create a reusable UI hierarchy named mtk-hierarchy using:
-- HTML
-- SCSS
-- Vanilla JavaScript
-- Bootstrap 5 (layout only)
-- Modern Material Design & Styles
-- Material Design icons
-- Always create a JS class form mtk-component
+MTK HIERARCHY COMPONENT - COMPLETE REQUIREMENTS
+================================================
 
-Rules:
-- mtk-hierarchy is wrapped in a <mtk-hierarchy class="mtk-hierarchy"> tag.
-- mtk-hierarchy has a display:block
-- The root element uses .mtk-hierarchy.
-- All styles are scoped to .mtk-hierarchy.
-- No global styles or IDs.
-- publish click events using wc.publish
-- subscribe to all 4-mtk-hierarchy events using wc.subscribe
+OVERVIEW
+--------
+Create a production-ready mtk-hierarchy component with Material Design styling for a three-level course navigation system (Courses → Modules → Lessons → Resources).
+The component should be event-driven, fully accessible, and support both local and remote config.
 
-Data:
-- The hierarchy is JSON driven.
-- Read config from window.app.hierarchy.
-- ALL modules MUST have an "id" field
-- ALL lessons MUST have an "id" field
-- ALL resources MUST have an "id" field
+CORE REQUIREMENTS
+-----------------
 
-Behavior:
-- WAIT for element to be available inside DOM
-- Use one namespace only: window.MTKHierarchy.
-- When opening a lesson, all resources should be displayed on the RHS
-- LHS and RHS must scroll independently (no page-level scrolling)
-- LHS and RHS must fill 100% of parent height with overflow: auto
+1. FILE STRUCTURE
+-----------------
+Create the following files:
+- mtk-hierarchy.html - Semantic HTML structure
+- mtk-hierarchy.js - Component logic with wc.js integration
+- mtk-hierarchy.scss - Source SCSS (do NOT compile, provide source only)
+- mtk-hierarchy.config.js - Sample configuration data
 
-Restrictions:
-- No frameworks.
-- No jQuery.
-- No Bootstrap JavaScript.
-- No external libraries.
-- ADA compliant CODE
+2. HTML STRUCTURE
+-----------------
+- Two-column Bootstrap layout (4/8 split)
+- Left-hand side (LHS): Course navigation tree
+- Right-hand side (RHS): Content viewer
+- Independent scrolling for LHS and RHS
+- Container with overflow: hidden to prevent page-level scrolling
+- Bootstrap row with flex-wrap: nowrap
 
-Accessibility:
-- Use semantic HTML.
-- Keyboard accessible.
-- Visible focus states.
-- ADA compliant
+3. DATA HIERARCHY
+-----------------
+window.app.hierarchy = [
+  {
+    title: "Course Title",
+    access: true,
+    modules: [
+      {
+        id: "module-1",
+        title: "Module Title",
+        access: true,
+        lessons: [
+          {
+            id: "lesson-1-1",
+            title: "Lesson Title",
+            access: true,
+            resources: [
+              {
+                id: "resource-1-1-1",
+                type: "video" | "photo",
+                description: "Resource Description",
+                url: "https://...",
+                access: true,
+                processed: false
+              }
+            ]
+          }
+        ],
+        quiz: {
+          id: "quiz-module-1",
+          title: "Module Quiz Title",
+          description: "Quiz description",
+          url: "https://quiz-url",
+          access: false
+        }
+      }
+    ]
+  }
+]
 
-Output, Create exactly four files:
-- mtk-hierarchy.config.js (JSON FILE)
-- mtk-hierarchy.scss
-- mtk-hierarchy.html
-- mtk-hierarchy.js
+4. UNIQUE IDS REQUIRED
+----------------------
+- Modules: module-1, module-2-1, etc. (course-module indexing)
+- Lessons: lesson-1-1, lesson-2-1-1, etc. (course-module-lesson indexing)
+- Resources: resource-1-1-1, resource-2-1-1-2, etc. (course-module-lesson-resource indexing)
+- Quiz: quiz-module-1, quiz-module-2-1, etc.
 
-mtk-hierarchy UI structure:
-- use nice material design elements
-- Any and all border-radius should have a max value of 4px
-- main screen has 2 sections, inside a bootstrap container
-  A lhs (.mtk-hierarchy-lhs)
-  A rhs (.mtk-hierarchy-rhs)
-  lhs and rhs height should occupy 100% of parent element's height 
-  lhs and rhs should have overflow auto (scrollable)
-  lhs and rhs must scroll independently (each has its own scroll container)
-  rhs:
-    - col-md-8 (add a border)
-    - can display a resizable, responsive video inside a <IFRAME> from link
-    - display a set of images from link, one next to another and below the video (if any)
-  lhs:
-    - col-md-4 (add a border)
-    - uses a structure like below as MODULES > LESSON > RESOURCE
-	{
-	    "title": "Introduction to Locksmithing",
-	    "access": true,
-	    "processed": false,
-	    "modules": [
-		{
-		    "id": "module-1",
-		    "title": "Foundations of Locksmithing",
-		    "access": true,
-		    "processed": true,
-		    "lessons": [
-			{
-			    "id": "lesson-1-1",
-			    "access": true,
-			    "title": "Introduction",
-			    "processed": true,
-			    "resources": [
-				{
-				    "id": "resource-1-1-1",
-				    "processed": true,
-				    "access": false,
-				    "type": "video",
-				    "description": "Introduction to your instructor and the course",
-				    "url": "https://vimeo.com/827172729"
-				}
-			    ]
-			}
-		...
+5. ACCESS CONTROL & DISABLED STATES
+------------------------------------
+- Items with access=false should be disabled
+- Disabled items should:
+  * Have 60% opacity
+  * Show cursor: not-allowed
+  * NOT have pointer-events: none (cursor must be visible)
+  * Be prevented from interaction via JavaScript checks
+  * Apply classes: mtk-module--disabled, mtk-lesson--disabled, mtk-resource--disabled, mtk-quiz--disabled
 
-lhs behavior:
-  - all titles should be ellipsis with 100% width and show ...
-  - modules and lessons and resources can be expanded. use folder & file icons for these
-  - use "Card" for modules that contain all lessons and resources
-  - opening a lesson should display all resources from that lesson on the rhs
-  - opening a resource should display all contents from that lesson on the rhs
-  - all resources accessed must have an "eye" icon on the right side of its title
-  - resources have types video or photo
-    - video should be displayed in an IFRAME
-    - photos are placed horizontally one after the other below the video IFRAME
-  - all click events should publish an event using wc.publish function
+6. SEQUENTIAL UNLOCKING SYSTEM
+-------------------------------
+- Only the first lesson in each module starts with access: true
+- When a lesson is clicked (expanded):
+  * All resources within that lesson are automatically enabled (access: true)
+  * The next lesson in the sequence becomes enabled
+  * If it's the last lesson, the quiz becomes enabled (access: true)
+- Resources within an expanded lesson should be clickable immediately
 
-prototype:
-  - create 5 elements in config file for MODULES, LESSON, RESOURCE and set all access=true & processed=true
-  - show elements disabled if access=false 
-  - automatically generate IDs for items that don't have them (fallback)
-  - automatically set type='photo' for resources missing the type field
+7. ELLIPSIS TEXT OVERFLOW
+--------------------------
+All titles should have text-overflow ellipsis:
+- .mtk-module__title
+- .mtk-lesson__title
+- .mtk-resource__title
+- .mtk-quiz__title
+- .mtk-hierarchy-rhs__content h2
 
-CSS Requirements:
-  - Container must have overflow: hidden
-  - Row must use flex-wrap: nowrap
-  - Columns must have explicit height: 100%
-  - LHS and RHS must each be independent scroll containers
-  - Use flex: 1 1 auto for proper flex behavior
+CSS pattern:
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+max-width: 100%;
 
-*** MUST USE MATERIAL DESIGN styles, colors, etc.
-*** Use wc.js library for PubSub (wc.publish and wc.subscribe)
-*** Config structure: window.app.hierarchy = [ { courses } ]
-*** IMPORTANT: All modules need "id", all lessons need "id", all resources need "id"
-*** CRITICAL: LHS and RHS must scroll independently with no page-level scrolling
+8. INDEPENDENT SCROLLING IMPLEMENTATION
+----------------------------------------
+.mtk-hierarchy__container {
+  height: calc(100vh - 120px);
+  overflow: hidden; // Prevent page scroll
+}
 
-<<<<<<< HEAD
-UPDATE hierarchy.js file as follows:
-if item has access=false it should be disabled
-=======
-update hierarchy.js file as follows:
-add quiz link at the end of each module lessons
-if item has access=false it should be disabled and
-disable modules when access=false
-when "mtk-lesson__title" is clicked enable the next "mtk-lesson__title" and
-if it is the last "mtk-lesson__title", enable quiz link
-clicking on "Start Quiz" should change parent module's background to #198755 (btn-success)
->>>>>>> 02.16.2026
+.mtk-hierarchy__row {
+  flex-wrap: nowrap; // Prevent wrapping
+  margin: 0;
+}
+
+.col-md-4, .col-md-8 {
+  height: 100%;
+  padding: 0;
+  flex: 0 0 [width]%;
+}
+
+.mtk-hierarchy-lhs, .mtk-hierarchy-rhs {
+  height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  
+  // Custom scrollbars (8px width)
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+}
+
+9. MATERIAL DESIGN STYLING
+---------------------------
+- Modules: Blue gradient header with folder icon, expand/collapse with rotate animation
+- Lessons: White background, folder_open icon, nested under modules
+- Resources: Indented, with video (play_circle_outline) or photo (image) icons
+- Quiz: Pink/magenta gradient with quiz icon and arrow_forward badge
+- Processed items: Show eye icon (visibility) when clicked
+- Active resource: Green background (#c8e6c9) with left border
+- Active quiz: Darker pink gradient
+- Hover states: Material elevation shadows
+- All styles scoped to .mtk-hierarchy
+
+10. RESOURCE DISPLAY IN RHS
+----------------------------
+When a lesson is expanded or resource is clicked:
+- Display lesson title as <h2>
+- Show first video in 16:9 responsive iframe container
+- Show all photos in responsive grid (minmax(250px, 1fr))
+- Each photo has caption below
+
+11. WC.JS LIBRARY INTEGRATION
+------------------------------
+Support both local and remote config initialization:
+
+// Local mode (development)
+if (wc.isLocal) {
+  const hierarchy = new MTKHierarchy(window.app.hierarchy);
+  window.MTKHierarchy = hierarchy;
+}
+// Remote mode (production)
+else {
+  wc.getCurriculum(function (err, data) {
+    if (err) return;
+    window.app.hierarchy = data.hierarchy.parts;
+    const hierarchy = new MTKHierarchy(window.app.hierarchy);
+    window.MTKHierarchy = hierarchy;
+  });
+}
+
+Use wc.js functions:
+- wc.log(), wc.info(), wc.warn(), wc.error()
+- wc.group(), wc.groupEnd()
+- wc.publish(), wc.subscribe()
+
+IMPORTANT: Use wc.publish() DIRECTLY - do NOT create a publish() helper method.
+All event publishing should be: wc.publish('event-name', data)
+
+12. EVENT-DRIVEN ARCHITECTURE
+------------------------------
+Publish these events using wc.publish() directly:
+- mtk-hierarchy:initialized
+- mtk-hierarchy:rendered
+- mtk-hierarchy:module-toggled
+- mtk-hierarchy:lesson-toggled
+- mtk-hierarchy:resource-clicked
+- mtk-hierarchy:lesson-enabled (when next lesson unlocks)
+- mtk-hierarchy:lesson-resources-enabled (when lesson expands)
+- mtk-hierarchy:enable-quiz (when last lesson enables quiz)
+- mtk-hierarchy:module-completed (when module is marked complete)
+
+13. QUIZ RENDERING & HANDLING
+------------------------------
+- Each module can have a quiz object
+- Quiz is rendered at the end of lessons in the module body
+- Quiz has disabled/active states with visual styling
+- When quiz is clicked, handleQuizClick() should ONLY call: mtk_pager.show("quiz")
+- Do NOT check disabled state in handleQuizClick
+- Do NOT publish events in handleQuizClick
+- Do NOT manage active state in handleQuizClick
+- ONLY call mtk_pager.show("quiz") - NOTHING ELSE
+- External code (mtk_pager) handles all quiz display and interaction
+- Quiz link is a clickable element in LHS only
+
+handleQuizClick implementation:
+```javascript
+handleQuizClick(event, quizElement) {
+  mtk_pager.show("quiz");
+}
+```
+
+14. MODULE COMPLETION METHOD
+-----------------------------
+Provide a public method handleQuizStart(moduleId, quizUrl) that:
+- Changes module header background to solid green #198754
+- Removes gradient
+- Marks module as completed: true in config
+- Publishes mtk-hierarchy:module-completed event using wc.publish()
+- Opens quizUrl in new tab
+
+This method can be called externally after quiz completion.
+
+15. ACCESSIBILITY REQUIREMENTS
+-------------------------------
+- Proper ARIA labels and roles
+- Keyboard navigation support (Enter/Space keys)
+- aria-expanded states on expandable items
+- role="button" and tabindex="0" on clickable items
+- Semantic HTML structure
+
+16. CLASS NAMING CONVENTION
+----------------------------
+All classes prefixed with mtk-:
+- mtk-hierarchy (root)
+- mtk-module, mtk-module__header, mtk-module__title, mtk-module__toggle, mtk-module__body
+- mtk-lesson, mtk-lesson__header, mtk-lesson__title, mtk-lesson__toggle, mtk-lesson__body
+- mtk-resource, mtk-resource__icon, mtk-resource__title, mtk-resource__status
+- mtk-quiz, mtk-quiz__icon, mtk-quiz__title, mtk-quiz__badge
+- mtk-hierarchy-lhs, mtk-hierarchy-rhs
+
+17. CONFIG FILE SAMPLE DATA
+----------------------------
+Provide config with:
+- Multiple courses (at least 2)
+- Modules with sequential lessons (first lesson access: true, rest access: false)
+- Lessons with both video and photo resources
+- Mix of processed and unprocessed resources
+- Example disabled module (access: false)
+- Quiz objects for each module (access: false by default)
+
+18. JAVASCRIPT METHODS REQUIRED
+--------------------------------
+class MTKHierarchy {
+  constructor(config)
+  waitForElement()
+  init()
+  cacheElements()
+  subscribeToEvents()
+  render()
+  renderCourses()
+  renderCourse(course)
+  renderModule(module)
+  renderQuiz(quiz, moduleId)
+  renderLesson(lesson, moduleId)
+  renderResource(resource, moduleId, lessonId)
+  attachEventListeners()
+  handleModuleClick(event, moduleHeader)
+  handleLessonClick(event, lessonHeader)
+  handleResourceClick(event, resourceElement)
+  handleQuizClick(event, quizElement)  // ONLY calls mtk_pager.show("quiz")
+  enableNextLessonOrQuiz(moduleId, lessonId)
+  enableLessonResources(moduleId, lessonId)
+  findResource(moduleId, lessonId, resourceId)
+  displayLessonResources(moduleId, lessonId)
+  displayResource(resource)
+  handleQuizStart(moduleId, quizUrl) // Public method
+  escapeHtml(text)
+  sanitizeUrl(url)
+  subscribe(event, callback) // Helper for wc.subscribe with fallback
+  destroy()
+}
+
+IMPORTANT: Do NOT create a publish() helper method. Use wc.publish() directly everywhere.
+
+19. CSS VARIABLES
+-----------------
+--mtk-primary: #1976d2;
+--mtk-primary-dark: #1565c0;
+--mtk-accent: #ff4081;
+--mtk-success: #4caf50;
+--mtk-text-primary: #212121;
+--mtk-text-secondary: #757575;
+--mtk-text-disabled: #bdbdbd;
+--mtk-shadow-1: 0 1px 3px rgba(0,0,0,0.12);
+--mtk-shadow-2: 0 3px 6px rgba(0,0,0,0.16);
+--mtk-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+20. QUIZ STYLING
+----------------
+.mtk-quiz {
+  display: flex;
+  align-items: center;
+  padding: 0.875rem 1rem;
+  margin-top: 0.5rem;
+  background: linear-gradient(135deg, var(--mtk-accent) 0%, #e91e63 100%);
+  color: #ffffff;
+  cursor: pointer;
+  transition: var(--mtk-transition);
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.mtk-quiz:hover {
+  background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
+  box-shadow: var(--mtk-shadow-2);
+}
+
+.mtk-quiz--active {
+  background: linear-gradient(135deg, #c2185b 0%, #880e4f 100%);
+}
+
+.mtk-quiz--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: linear-gradient(135deg, #9e9e9e 0%, #757575 100%);
+}
+
+.mtk-quiz__icon {
+  flex-shrink: 0;
+  margin-right: 0.75rem;
+  font-size: 20px;
+}
+
+.mtk-quiz__title {
+  flex: 1;
+  font-size: 0.875rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.mtk-quiz__badge {
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+  font-size: 18px;
+}
+
+21. IMPORTANT NOTES
+-------------------
+- NEVER compile SCSS - provide source only
+- All styles scoped to .mtk-hierarchy
+- Use Material Icons from Google Fonts
+- Use Roboto font family
+- Bootstrap 5.3.0 for grid system
+- Support both local config and remote API config
+- Remember code that begins with "mtk-" FOREVER
+- Always show updated code in FULL, not in pieces
+- Quiz link must be rendered in module body
+- handleQuizClick ONLY calls mtk_pager.show("quiz") - NOTHING ELSE
+- Use wc.publish() directly - do NOT create publish() helper method
+- External code (mtk_pager) handles all quiz display and interaction
+
+22. CRITICAL QUIZ CLICK IMPLEMENTATION
+---------------------------------------
+The handleQuizClick method must be EXACTLY this:
+
+handleQuizClick(event, quizElement) {
+  mtk_pager.show("quiz");
+}
+
+Do NOT add:
+- Disabled state checks
+- Quiz data lookups
+- Event publishing
+- Active state management
+- Logging
+- ANY other code
+
+Just call mtk_pager.show("quiz") and nothing else.
+
+DELIVERABLES
+------------
+1. mtk-hierarchy.html
+2. mtk-hierarchy.js (with wc.js integration)
+3. mtk-hierarchy.css (compiled)
+4. mtk-hierarchy.scss (source - DO NOT COMPILE)
+5. mtk-hierarchy.config.js (sample data with quiz objects)
+
+All files should be production-ready with proper error handling, comprehensive logging, and full accessibility compliance.
+

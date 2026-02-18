@@ -28,6 +28,7 @@ class MTKHierarchy {
     this.handleLessonClick = this.handleLessonClick.bind(this);
     this.handleResourceClick = this.handleResourceClick.bind(this);
     this.handleQuizClick = this.handleQuizClick.bind(this);
+    this.handleQuizStart = this.handleQuizStart.bind(this);
     
     // Wait for DOM to be ready
     this.waitForElement();
@@ -133,7 +134,7 @@ class MTKHierarchy {
     }
     
     // Publish initialization event
-    this.publish('mtk-hierarchy:initialized', {
+    wc.publish('mtk-hierarchy:initialized', {
       timestamp: new Date().toISOString()
     });
   }
@@ -217,7 +218,7 @@ class MTKHierarchy {
     }
     
     // Publish render complete event
-    this.publish('mtk-hierarchy:rendered', {
+    wc.publish('mtk-hierarchy:rendered', {
       timestamp: new Date().toISOString()
     });
   }
@@ -384,29 +385,45 @@ class MTKHierarchy {
     
     // Module clicks
     this.elements.lhs.addEventListener('click', (e) => {
+      console.log('📍 LHS Click detected:', e.target);
+      
       const moduleHeader = e.target.closest('.mtk-module__header');
       if (moduleHeader) {
+        console.log('→ Module header clicked');
         this.handleModuleClick(e, moduleHeader);
         return;
       }
       
       const lessonHeader = e.target.closest('.mtk-lesson__header');
       if (lessonHeader) {
+        console.log('→ Lesson header clicked');
         this.handleLessonClick(e, lessonHeader);
         return;
       }
       
       const resource = e.target.closest('.mtk-resource');
-      if (resource && !resource.classList.contains('mtk-resource--disabled')) {
-        this.handleResourceClick(e, resource);
+      if (resource) {
+        console.log('→ Resource clicked, disabled?', resource.classList.contains('mtk-resource--disabled'));
+        if (!resource.classList.contains('mtk-resource--disabled')) {
+          this.handleResourceClick(e, resource);
+        }
         return;
       }
       
       const quiz = e.target.closest('.mtk-quiz');
-      if (quiz && !quiz.classList.contains('mtk-quiz--disabled')) {
-        this.handleQuizClick(e, quiz);
+      if (quiz) {
+        console.log('→ Quiz element found!');
+        console.log('→ Quiz disabled?', quiz.classList.contains('mtk-quiz--disabled'));
+        if (!quiz.classList.contains('mtk-quiz--disabled')) {
+          console.log('→ Calling handleQuizClick...');
+          this.handleQuizClick(e, quiz);
+        } else {
+          console.log('→ Quiz is disabled, not calling handler');
+        }
         return;
       }
+      
+      console.log('→ No matching element found');
     });
     
     // Keyboard navigation
@@ -420,6 +437,13 @@ class MTKHierarchy {
     if (typeof wc !== 'undefined') {
       wc.log("MTKHierarchy: Event listeners attached");
     }
+  }
+
+  /**
+   * Handle quiz click - delegate to mtk_pager
+   */
+  handleQuizClick(event, quizElement) {
+    mtk_pager.show("quiz");
   }
 
   /**
@@ -465,7 +489,7 @@ class MTKHierarchy {
     }
     
     // Publish event
-    this.publish('mtk-hierarchy:module-toggled', {
+    wc.publish('mtk-hierarchy:module-toggled', {
       moduleId,
       isOpen: !isOpen,
       timestamp: new Date().toISOString()
@@ -504,6 +528,9 @@ class MTKHierarchy {
       // When opening a lesson, automatically display all its resources
       this.displayLessonResources(moduleId, lessonId);
       
+      // Enable all resources in this lesson
+      this.enableLessonResources(moduleId, lessonId);
+      
       // Enable next lesson or quiz link
       this.enableNextLessonOrQuiz(moduleId, lessonId);
     }
@@ -523,7 +550,7 @@ class MTKHierarchy {
     }
     
     // Publish event
-    this.publish('mtk-hierarchy:lesson-toggled', {
+    wc.publish('mtk-hierarchy:lesson-toggled', {
       moduleId,
       lessonId,
       isOpen: !isOpen,
@@ -576,7 +603,7 @@ class MTKHierarchy {
       }
       
       // Publish event to enable quiz
-      this.publish('mtk-hierarchy:enable-quiz', {
+      wc.publish('mtk-hierarchy:enable-quiz', {
         moduleId,
         lessonId,
         timestamp: new Date().toISOString()
@@ -621,13 +648,67 @@ class MTKHierarchy {
         }
         
         // Publish event
-        this.publish('mtk-hierarchy:lesson-enabled', {
+        wc.publish('mtk-hierarchy:lesson-enabled', {
           moduleId,
           lessonId: nextLesson.id,
           previousLessonId: lessonId,
           timestamp: new Date().toISOString()
         });
       }
+    }
+  }
+
+  /**
+   * Enable all resources in a lesson when it's expanded
+   */
+  enableLessonResources(moduleId, lessonId) {
+    if (typeof wc !== 'undefined') {
+      wc.log("MTKHierarchy: Enabling all resources for lesson", moduleId, lessonId);
+    }
+    
+    // Find the lesson in config
+    for (const course of this.config) {
+      if (!course.modules) continue;
+      
+      const module = course.modules.find(m => m.id === moduleId);
+      if (!module || !module.lessons) continue;
+      
+      const lesson = module.lessons.find(l => l.id === lessonId);
+      if (!lesson || !lesson.resources) continue;
+      
+      // Enable all resources in this lesson
+      lesson.resources.forEach(resource => {
+        if (!resource.access) {
+          resource.access = true;
+          
+          if (typeof wc !== 'undefined') {
+            wc.log("MTKHierarchy: Enabled resource", resource.id);
+          }
+        }
+      });
+      
+      // Update UI - remove disabled class from all resources in this lesson
+      const resourceElements = this.elements.lhs.querySelectorAll(
+        `[data-lesson-id="${lessonId}"][data-module-id="${moduleId}"].mtk-resource`
+      );
+      
+      resourceElements.forEach(resourceElement => {
+        resourceElement.classList.remove('mtk-resource--disabled');
+      });
+      
+      if (typeof wc !== 'undefined') {
+        wc.log(`MTKHierarchy: Enabled ${resourceElements.length} resources in UI`);
+      }
+      
+      // Publish event
+      wc.publish('mtk-hierarchy:lesson-resources-enabled', {
+        moduleId,
+        lessonId,
+        resourceCount: lesson.resources.length,
+        timestamp: new Date().toISOString()
+      });
+      
+      return;
     }
   }
 
@@ -684,7 +765,7 @@ class MTKHierarchy {
     this.displayResource(resource);
     
     // Publish event
-    this.publish('mtk-hierarchy:resource-clicked', {
+    wc.publish('mtk-hierarchy:resource-clicked', {
       moduleId,
       lessonId,
       resourceId,
@@ -694,90 +775,50 @@ class MTKHierarchy {
   }
 
   /**
-   * Handle quiz click
+   * Handle quiz start button click
    */
-  handleQuizClick(event, quizElement) {
-    // Check if quiz is disabled
-    if (quizElement.classList.contains('mtk-quiz--disabled')) {
-      if (typeof wc !== 'undefined') {
-        wc.warn("MTKHierarchy: Quiz is disabled (access=false)");
-      }
-      return;
-    }
-    
-    const quizId = quizElement.dataset.quizId;
-    const moduleId = quizElement.dataset.moduleId;
-    
+  handleQuizStart(moduleId, quizUrl) {
     if (typeof wc !== 'undefined') {
-      wc.log("MTKHierarchy: Quiz clicked", quizId);
+      wc.log("MTKHierarchy: Starting quiz for module", moduleId);
     }
     
-    // Find the quiz data
-    let quiz = null;
-    for (const course of this.config) {
-      if (!course.modules) continue;
+    // Find the module element
+    const moduleElement = this.elements.lhs.querySelector(`[data-module-id="${moduleId}"]`);
+    
+    if (moduleElement) {
+      // Find the module header
+      const moduleHeader = moduleElement.querySelector('.mtk-module__header');
       
-      const module = course.modules.find(m => m.id === moduleId);
-      if (module && module.quiz && module.quiz.id === quizId) {
-        quiz = module.quiz;
-        break;
+      if (moduleHeader) {
+        // Change background to green (#198754)
+        moduleHeader.style.background = '#198754';
+        moduleHeader.style.backgroundImage = 'none';
+        
+        if (typeof wc !== 'undefined') {
+          wc.log("MTKHierarchy: Module background changed to green (completed)");
+        }
+        
+        // Mark module as completed in config
+        for (const course of this.config) {
+          if (!course.modules) continue;
+          
+          const module = course.modules.find(m => m.id === moduleId);
+          if (module) {
+            module.completed = true;
+            break;
+          }
+        }
+        
+        // Publish event
+        wc.publish('mtk-hierarchy:module-completed', {
+          moduleId,
+          timestamp: new Date().toISOString()
+        });
       }
     }
     
-    if (!quiz) {
-      if (typeof wc !== 'undefined') {
-        wc.warn("MTKHierarchy: Quiz not found", quizId);
-      }
-      return;
-    }
-    
-    // Remove active class from all quizzes
-    const allQuizzes = this.elements.lhs.querySelectorAll('.mtk-quiz');
-    allQuizzes.forEach(q => q.classList.remove('mtk-quiz--active'));
-    
-    // Set as active
-    this.activeQuiz = quizId;
-    quizElement.classList.add('mtk-quiz--active');
-    
-    // Display quiz content in RHS
-    this.displayQuiz(quiz, moduleId);
-    
-    // Publish event
-    this.publish('mtk-hierarchy:quiz-clicked', {
-      moduleId,
-      quizId,
-      quiz,
-      timestamp: new Date().toISOString()
-    });
-  }
-
-  /**
-   * Display quiz in RHS
-   */
-  displayQuiz(quiz, moduleId) {
-    if (!this.elements.rhs) return;
-    
-    if (typeof wc !== 'undefined') {
-      wc.log("MTKHierarchy: Displaying quiz", quiz.title);
-    }
-    
-    let contentHTML = '<div class="mtk-hierarchy-rhs__content">';
-    contentHTML += `<h2>${this.escapeHtml(quiz.title)}</h2>`;
-    contentHTML += `<p style="color: var(--mtk-text-secondary); margin-bottom: 1.5rem;">${this.escapeHtml(quiz.description || 'Click the button below to start the quiz.')}</p>`;
-    
-    // Quiz button/link
-    contentHTML += `
-      <div class="mtk-quiz-launch">
-        <button class="mtk-quiz-launch__button" onclick="window.open('${this.sanitizeUrl(quiz.url)}', '_blank')">
-          <span class="material-icons">quiz</span>
-          <span>Start Quiz</span>
-        </button>
-      </div>
-    `;
-    
-    contentHTML += '</div>';
-    
-    this.elements.rhs.innerHTML = contentHTML;
+    // Open quiz in new tab
+    window.open(quizUrl, '_blank');
   }
 
   /**
@@ -1042,17 +1083,6 @@ class MTKHierarchy {
   }
 
   /**
-   * Publish event using wc.publish or fallback
-   */
-  publish(event, data) {
-    if (typeof wc !== 'undefined' && wc.publish) {
-      wc.publish(event, data);
-    } else {
-      console.log('publish:', event, data);
-    }
-  }
-
-  /**
    * Subscribe to event using wc.subscribe or fallback
    */
   subscribe(event, callback) {
@@ -1080,50 +1110,116 @@ class MTKHierarchy {
     this.openLessons.clear();
     
     // Publish destroy event
-    this.publish('mtk-hierarchy:destroyed', {
+    wc.publish('mtk-hierarchy:destroyed', {
       timestamp: new Date().toISOString()
     });
   }
 }
 
-// Initialize hierarchy when config is available
-if (typeof window.app !== 'undefined' && window.app.hierarchy) {
-  if (typeof wc !== 'undefined') {
-    wc.log("MTKHierarchy: Config found, creating instance");
+// Initialize hierarchy - support both local and remote config
+// GET FRESH DATA
+if (typeof wc !== 'undefined' && wc.isLocal) {
+  // LOCAL MODE - Use window.app.hierarchy
+  if (typeof window.app !== 'undefined' && window.app.hierarchy) {
+    wc.log("MTKHierarchy: Local mode - using window.app.hierarchy");
+    wc.log("isLocal:", wc.isLocal, window.app.hierarchy);
+    
+    const hierarchy = new MTKHierarchy(window.app.hierarchy);
+    
+    // Expose to window namespace
+    window.MTKHierarchy = hierarchy;
+    
+    // Subscribe to events
+    subscribeToEvents();
+    
+    // Export for module systems
+    if (typeof module !== 'undefined' && module.exports) {
+      module.exports = { MTKHierarchy };
+    }
+  } else {
+    console.error('Local mode but window.app.hierarchy is not defined. Please include mtk-hierarchy.config.js before mtk-hierarchy.js');
   }
+} else if (typeof wc !== 'undefined' && wc.getCurriculum) {
+  // REMOTE MODE - Fetch from API
+  wc.log("MTKHierarchy: Remote mode - fetching curriculum from API");
   
-  const hierarchy = new MTKHierarchy(window.app.hierarchy);
-  
-  // Expose to window namespace
-  window.MTKHierarchy = hierarchy;
-  
-  // Example: Listen to hierarchy events
-  if (typeof wc !== 'undefined') {
-    wc.subscribe('mtk-hierarchy:resource-clicked', function(msg, data) {
-      wc.info('🎯 Resource Clicked:', data);
-    });
+  wc.getCurriculum(function (err, data) {
+    if (err) {
+      wc.error("MTKHierarchy: Error fetching curriculum:", err);
+      return;
+    }
     
-    wc.subscribe('mtk-hierarchy:module-toggled', function(msg, data) {
-      wc.info('📂 Module Toggled:', data);
-    });
+    // Set curriculum data
+    window.app = window.app || {};
+    window.app.hierarchy = data.hierarchy.parts;
     
-    wc.subscribe('mtk-hierarchy:lesson-toggled', function(msg, data) {
-      wc.info('📝 Lesson Toggled:', data);
-    });
+    wc.log("MTKHierarchy: Curriculum loaded");
+    wc.log("isLocal:", wc.isLocal, window.app.hierarchy);
     
-    wc.subscribe('mtk-hierarchy:initialized', function(msg, data) {
-      wc.info('✅ Hierarchy Initialized:', data);
-    });
+    const hierarchy = new MTKHierarchy(window.app.hierarchy);
     
-    wc.subscribe('mtk-hierarchy:rendered', function(msg, data) {
-      wc.info('✅ Hierarchy Rendered:', data);
-    });
-  }
+    // Expose to window namespace
+    window.MTKHierarchy = hierarchy;
+    
+    // Subscribe to events
+    subscribeToEvents();
+    
+    // Export for module systems
+    if (typeof module !== 'undefined' && module.exports) {
+      module.exports = { MTKHierarchy };
+    }
+  });
 } else {
-  console.error('window.app.hierarchy is not defined. Please include mtk-hierarchy.config.js before mtk-hierarchy.js');
+  // FALLBACK - Try window.app.hierarchy if wc is not available
+  if (typeof window.app !== 'undefined' && window.app.hierarchy) {
+    console.log("MTKHierarchy: Fallback mode - using window.app.hierarchy");
+    
+    const hierarchy = new MTKHierarchy(window.app.hierarchy);
+    
+    // Expose to window namespace
+    window.MTKHierarchy = hierarchy;
+    
+    // Subscribe to events if wc is available
+    if (typeof wc !== 'undefined') {
+      subscribeToEvents();
+    }
+    
+    // Export for module systems
+    if (typeof module !== 'undefined' && module.exports) {
+      module.exports = { MTKHierarchy };
+    }
+  } else {
+    console.error('window.app.hierarchy is not defined and wc.getCurriculum is not available. Please include mtk-hierarchy.config.js before mtk-hierarchy.js');
+  }
 }
 
-// Export for module systems
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { MTKHierarchy };
+/**
+ * Subscribe to hierarchy events for logging
+ */
+function subscribeToEvents() {
+  if (typeof wc === 'undefined') return;
+  
+  wc.subscribe('mtk-hierarchy:resource-clicked', function(msg, data) {
+    wc.info('🎯 Resource Clicked:', data);
+  });
+  
+  wc.subscribe('mtk-hierarchy:module-toggled', function(msg, data) {
+    wc.info('📂 Module Toggled:', data);
+  });
+  
+  wc.subscribe('mtk-hierarchy:lesson-toggled', function(msg, data) {
+    wc.info('📝 Lesson Toggled:', data);
+  });
+  
+  wc.subscribe('mtk-hierarchy:module-completed', function(msg, data) {
+    wc.info('✅ Module Completed:', data);
+  });
+  
+  wc.subscribe('mtk-hierarchy:initialized', function(msg, data) {
+    wc.info('✅ Hierarchy Initialized:', data);
+  });
+  
+  wc.subscribe('mtk-hierarchy:rendered', function(msg, data) {
+    wc.info('✅ Hierarchy Rendered:', data);
+  });
 }

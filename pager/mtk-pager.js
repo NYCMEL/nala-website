@@ -361,7 +361,7 @@
             _showSection(sectionId);
 
 	    // FIX FOOTER IF CONTENT IS SHORTER THAN PAGE
-	    checkFooter();
+	    //checkFooter();
         },
         
         // Additional helper methods (not required but useful)

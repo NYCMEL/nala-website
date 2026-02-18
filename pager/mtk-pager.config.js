@@ -8,6 +8,7 @@ app.pager = {
     'dashboard': 'dashboard/index.inc.html',
     'course':    'hierarchy/index.inc.html',
     'settings':  'settings/index.inc.html',
+    'quiz':      'quiz/index.inc.html'
 };
 
 // OPTIONAL: DEFAULT SECTION TO LOAD ON INITIALIZATION
