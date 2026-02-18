@@ -1180,48 +1180,110 @@ class MTKHierarchy {
   }
 }
 
-// Initialize hierarchy when config is available
-if (typeof window.app !== 'undefined' && window.app.hierarchy) {
-  if (typeof wc !== 'undefined') {
-    wc.log("MTKHierarchy: Config found, creating instance");
+// Initialize hierarchy - support both local and remote config
+// GET FRESH DATA
+if (typeof wc !== 'undefined' && wc.isLocal) {
+  // LOCAL MODE - Use window.app.hierarchy
+  if (typeof window.app !== 'undefined' && window.app.hierarchy) {
+    wc.log("MTKHierarchy: Local mode - using window.app.hierarchy");
+    wc.log("isLocal:", wc.isLocal, window.app.hierarchy);
+    
+    const hierarchy = new MTKHierarchy(window.app.hierarchy);
+    
+    // Expose to window namespace
+    window.MTKHierarchy = hierarchy;
+    
+    // Subscribe to events
+    subscribeToEvents();
+    
+    // Export for module systems
+    if (typeof module !== 'undefined' && module.exports) {
+      module.exports = { MTKHierarchy };
+    }
+  } else {
+    console.error('Local mode but window.app.hierarchy is not defined. Please include mtk-hierarchy.config.js before mtk-hierarchy.js');
   }
+} else if (typeof wc !== 'undefined' && wc.getCurriculum) {
+  // REMOTE MODE - Fetch from API
+  wc.log("MTKHierarchy: Remote mode - fetching curriculum from API");
   
-  const hierarchy = new MTKHierarchy(window.app.hierarchy);
-  
-  // Expose to window namespace
-  window.MTKHierarchy = hierarchy;
-  
-  // Example: Listen to hierarchy events
-  if (typeof wc !== 'undefined') {
-    wc.subscribe('mtk-hierarchy:resource-clicked', function(msg, data) {
-      wc.info('🎯 Resource Clicked:', data);
-    });
+  wc.getCurriculum(function (err, data) {
+    if (err) {
+      wc.error("MTKHierarchy: Error fetching curriculum:", err);
+      return;
+    }
     
-    wc.subscribe('mtk-hierarchy:module-toggled', function(msg, data) {
-      wc.info('📂 Module Toggled:', data);
-    });
+    // Set curriculum data
+    window.app = window.app || {};
+    window.app.hierarchy = data.hierarchy.parts;
     
-    wc.subscribe('mtk-hierarchy:lesson-toggled', function(msg, data) {
-      wc.info('📝 Lesson Toggled:', data);
-    });
+    wc.log("MTKHierarchy: Curriculum loaded");
+    wc.log("isLocal:", wc.isLocal, window.app.hierarchy);
     
-    wc.subscribe('mtk-hierarchy:module-completed', function(msg, data) {
-      wc.info('✅ Module Completed:', data);
-    });
+    const hierarchy = new MTKHierarchy(window.app.hierarchy);
     
-    wc.subscribe('mtk-hierarchy:initialized', function(msg, data) {
-      wc.info('✅ Hierarchy Initialized:', data);
-    });
+    // Expose to window namespace
+    window.MTKHierarchy = hierarchy;
     
-    wc.subscribe('mtk-hierarchy:rendered', function(msg, data) {
-      wc.info('✅ Hierarchy Rendered:', data);
-    });
-  }
+    // Subscribe to events
+    subscribeToEvents();
+    
+    // Export for module systems
+    if (typeof module !== 'undefined' && module.exports) {
+      module.exports = { MTKHierarchy };
+    }
+  });
 } else {
-  console.error('window.app.hierarchy is not defined. Please include mtk-hierarchy.config.js before mtk-hierarchy.js');
+  // FALLBACK - Try window.app.hierarchy if wc is not available
+  if (typeof window.app !== 'undefined' && window.app.hierarchy) {
+    console.log("MTKHierarchy: Fallback mode - using window.app.hierarchy");
+    
+    const hierarchy = new MTKHierarchy(window.app.hierarchy);
+    
+    // Expose to window namespace
+    window.MTKHierarchy = hierarchy;
+    
+    // Subscribe to events if wc is available
+    if (typeof wc !== 'undefined') {
+      subscribeToEvents();
+    }
+    
+    // Export for module systems
+    if (typeof module !== 'undefined' && module.exports) {
+      module.exports = { MTKHierarchy };
+    }
+  } else {
+    console.error('window.app.hierarchy is not defined and wc.getCurriculum is not available. Please include mtk-hierarchy.config.js before mtk-hierarchy.js');
+  }
 }
 
-// Export for module systems
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { MTKHierarchy };
+/**
+ * Subscribe to hierarchy events for logging
+ */
+function subscribeToEvents() {
+  if (typeof wc === 'undefined') return;
+  
+  wc.subscribe('mtk-hierarchy:resource-clicked', function(msg, data) {
+    wc.info('🎯 Resource Clicked:', data);
+  });
+  
+  wc.subscribe('mtk-hierarchy:module-toggled', function(msg, data) {
+    wc.info('📂 Module Toggled:', data);
+  });
+  
+  wc.subscribe('mtk-hierarchy:lesson-toggled', function(msg, data) {
+    wc.info('📝 Lesson Toggled:', data);
+  });
+  
+  wc.subscribe('mtk-hierarchy:module-completed', function(msg, data) {
+    wc.info('✅ Module Completed:', data);
+  });
+  
+  wc.subscribe('mtk-hierarchy:initialized', function(msg, data) {
+    wc.info('✅ Hierarchy Initialized:', data);
+  });
+  
+  wc.subscribe('mtk-hierarchy:rendered', function(msg, data) {
+    wc.info('✅ Hierarchy Rendered:', data);
+  });
 }
