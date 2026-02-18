@@ -1,220 +1,378 @@
-FORGET ALL PREVIOUS CONTEXT for mtk-quiz
+MTK QUIZ COMPONENT - COMPLETE REQUIREMENTS
+==========================================
 
-Create a reusable UI component named mtk-quiz using:
-- HTML
-- SCSS
-- Vanilla JavaScript
-- Bootstrap 5 (layout only)
-- Modern Material Design, Material Design icons and styles
-- Always create a JS class form mtk-quiz
+OVERVIEW
+--------
+Create a production-ready mtk-quiz component with Material Design styling for displaying and managing quiz questions. The component should be event-driven, fully accessible, and support both local and remote config via wc.js integration.
 
-Rules:
-- The component is wrapped in a block element <mtk-quiz class="mtk-quiz">.
-- The root element uses .mtk-quiz.
-- All styles are scoped to .mtk-quiz.
-- No global styles or IDs.
-- publish click events using wc.publish
-- subscribe to all 4-mtk-quiz everns using wc.subscribe
-- create a onMessage function to be passed to wc.subscribe function
+CORE REQUIREMENTS
+-----------------
 
-Data:
-- The component is JSON driven.
-- any and all data must come from mtk-quiz.config.js file
-- use the JSON at the end of this pormpt 
+1. FILE STRUCTURE
+-----------------
+Create the following files:
+- mtk-quiz.html - Semantic HTML structure
+- mtk-quiz.js - Component logic with wc.js integration
+- mtk-quiz.css - Compiled styles
+- mtk-quiz.scss - Source SCSS (do NOT compile, provide source only)
+- mtk-quiz.config.js - Sample quiz configuration data
 
-Behavior:
-- MUST WAIT for element to be available inside DOM
+2. HTML STRUCTURE
+-----------------
+- Bootstrap container layout
+- Material Design card with header, body, and footer
+- Header with quiz title, metadata (module, question count, session ID), and progress bar
+- Body with message container and questions container
+- Footer with action buttons
+- All icons must use Material Icons with class="material-icons"
 
-Restrictions:
-- No frameworks.
-- No Bootstrap.
-- No external libraries.
-- Vanilla Javascript
+3. DATA STRUCTURE
+-----------------
+window.mtkQuizConfig = {
+  quiz_session_id: "session-123",
+  module_id: "module-1",
+  count: 10,
+  questions: [
+    {
+      id: 1,
+      question: "Question text here?",
+      choice_a: "First option",
+      choice_b: "Second option",
+      choice_c: "Third option",
+      choice_d: "Fourth option"
+    }
+  ]
+}
 
-Accessibility:
-- Use semantic HTML.
-- Keyboard accessible.
-- Visible focus states.
-- ADA compliant
+4. COMPONENT INITIALIZATION
+----------------------------
+Support both local and remote config using wc.isLocal pattern (same as mtk-hierarchy):
 
-Output! Create exactly these files:
-- mtk-quiz.config.js (JSON FILE)
-- mtk-quiz.scss
-- mtk-quiz.html
-- mtk-quiz.js
-
-use the following json to create the following:
- - quiz items are all single select from questions
- - on submit, create a combined answer json and use wc.publish("quiz", data) to publish
- - for testing, select the first option in each category and provide an option to clear all selection
-
-{
-    "quiz_session_id": 32,
-    "module_id": "M1",
-    "count": 20,
-    "questions": [
-	{
-	    "id": 29,
-	    "question": "A key cuts should match the lock’s:",
-	    "choice_a": "Pin depths",
-	    "choice_b": "Door color",
-	    "choice_c": "Weather",
-	    "choice_d": "Car model"
-	},
-	{
-	    "id": 37,
-	    "question": "A basic safety practice is:",
-	    "choice_a": "Verify ownership/authorization",
-	    "choice_b": "Open any lock anytime",
-	    "choice_c": "Never wear eye protection",
-	    "choice_d": "Use fire"
-	},
-	{
-	    "id": 6,
-	    "question": "A doorknob lock is typically installed in:",
-	    "choice_a": "A ceiling fan",
-	    "choice_b": "A door",
-	    "choice_c": "A shoe",
-	    "choice_d": "A bicycle"
-	},
-	{
-	    "id": 19,
-	    "question": "If a key breaks in a lock, you may need:",
-	    "choice_a": "A key extractor",
-	    "choice_b": "A paint brush",
-	    "choice_c": "A frying pan",
-	    "choice_d": "A broom"
-	},
-	{
-	    "id": 23,
-	    "question": "A mortise cylinder is often used in:",
-	    "choice_a": "Mortise locks",
-	    "choice_b": "Car tires",
-	    "choice_c": "Alarm clocks",
-	    "choice_d": "Microwaves"
-	},
-	{
-	    "id": 11,
-	    "question": "A “pin tumbler” lock uses:",
-	    "choice_a": "Pins",
-	    "choice_b": "Magnets only",
-	    "choice_c": "A battery",
-	    "choice_d": "A touchscreen"
-	},
-	{
-	    "id": 20,
-	    "question": "A door strike plate is on the:",
-	    "choice_a": "Door frame",
-	    "choice_b": "Roof",
-	    "choice_c": "Floor tile",
-	    "choice_d": "Window glass"
-	},
-	{
-	    "id": 17,
-	    "question": "A locksmith works mainly with:",
-	    "choice_a": "Locks and keys",
-	    "choice_b": "Dental tools",
-	    "choice_c": "Cooking tools",
-	    "choice_d": "Fishing nets"
-	},
-	{
-	    "id": 13,
-	    "question": "A key machine is used to:",
-	    "choice_a": "Cut keys",
-	    "choice_b": "Cook food",
-	    "choice_c": "Wash cars",
-	    "choice_d": "Print photos"
-	},
-	{
-	    "id": 14,
-	    "question": "A door closer helps a door:",
-	    "choice_a": "Stay open forever",
-	    "choice_b": "Close automatically",
-	    "choice_c": "Play music",
-	    "choice_d": "Change colors"
-	},
-	{
-	    "id": 34,
-	    "question": "Keys are usually cut from:",
-	    "choice_a": "Metal",
-	    "choice_b": "Glass",
-	    "choice_c": "Paper",
-	    "choice_d": "Wood chips"
-	},
-	{
-	    "id": 8,
-	    "question": "A lock cylinder is the part that:",
-	    "choice_a": "Holds paint",
-	    "choice_b": "Reads the key",
-	    "choice_c": "Measures door width",
-	    "choice_d": "Acts as a hinge"
-	},
-	{
-	    "id": 2,
-	    "question": "A key is mainly used to:",
-	    "choice_a": "Cut wood",
-	    "choice_b": "Open/lock a lock",
-	    "choice_c": "Measure voltage",
-	    "choice_d": "Paint a door"
-	},
-	{
-	    "id": 41,
-	    "question": "A “master key” can:",
-	    "choice_a": "Open multiple locks in a system",
-	    "choice_b": "Cook food",
-	    "choice_c": "Charge a phone",
-	    "choice_d": "Paint a wall"
-	},
-	{
-	    "id": 9,
-	    "question": "If you lose your house key, a common service is:",
-	    "choice_a": "Rekeying",
-	    "choice_b": "Oil change",
-	    "choice_c": "Tire rotation",
-	    "choice_d": "Window tinting"
-	},
-	{
-	    "id": 39,
-	    "question": "A cylinder “plug” is:",
-	    "choice_a": "The part the key turns",
-	    "choice_b": "A wall outlet",
-	    "choice_c": "A shoe",
-	    "choice_d": "A spoon"
-	},
-	{
-	    "id": 26,
-	    "question": "Kwikset SmartKey is related to:",
-	    "choice_a": "Rekeyable lock technology",
-	    "choice_b": "Garage paint",
-	    "choice_c": "Phone charging",
-	    "choice_d": "Music"
-	},
-	{
-	    "id": 45,
-	    "question": "A common door hardware is:",
-	    "choice_a": "Deadbolt",
-	    "choice_b": "Spark plug",
-	    "choice_c": "Fan belt",
-	    "choice_d": "Brake pad"
-	},
-	{
-	    "id": 30,
-	    "question": "A lock’s “bolt” is the part that:",
-	    "choice_a": "Extends into the frame",
-	    "choice_b": "Plays music",
-	    "choice_c": "Cleans the door",
-	    "choice_d": "Measures time"
-	},
-	{
-	    "id": 33,
-	    "question": "A “tumbler” refers to:",
-	    "choice_a": "Moving internal parts",
-	    "choice_b": "A type of car wheel",
-	    "choice_c": "A fruit",
-	    "choice_d": "A piece of clothing"
-	}
-    ],
-    "_http": {
-	"status": 200
+// Local mode (development)
+if (wc.isLocal) {
+    const element = await waitForMtkQuizElement();
+    if (element && mtkQuizConfig) {
+        const quiz = new MtkQuiz(element, mtkQuizConfig);
+        window.MtkQuiz = quiz;
     }
 }
+// Remote mode (production)
+else if (wc.getQuiz) {
+    wc.getQuiz(function (err, data) {
+        if (err) return;
+        window.mtkQuizConfig = data.quiz;
+        // Initialize with fetched config
+    });
+}
+// Fallback mode
+else {
+    // Use window.mtkQuizConfig if available
+}
+
+5. MATERIAL ICONS REQUIREMENT
+------------------------------
+ALL icons must use the material-icons class:
+
+Header Icons:
+<span class="material-icons mtk-quiz__icon">quiz</span>
+<span class="material-icons mtk-quiz__meta-icon">assignment</span>
+<span class="material-icons mtk-quiz__meta-icon">help_outline</span>
+<span class="material-icons mtk-quiz__meta-icon">tag</span>
+
+Button Icons:
+<span class="material-icons mtk-quiz__button-icon">close</span>
+<span class="material-icons mtk-quiz__button-icon">clear_all</span>
+<span class="material-icons mtk-quiz__button-icon">science</span>
+<span class="material-icons mtk-quiz__button-icon">send</span>
+
+Message Icons:
+<span class="material-icons mtk-quiz__message-icon">error</span>
+<span class="material-icons mtk-quiz__message-icon">check_circle</span>
+
+6. BUTTON LAYOUT AND STYLING
+-----------------------------
+Footer buttons layout (left to right):
+
+[Cancel]          [spacer]          [Clear All]  [Test]  [Submit Quiz]
+
+Button Classes:
+- Cancel: btn btn-link (gray text, no background, no border)
+- Clear All: btn btn-outline-primary (blue border, transparent background)
+- Test (Select First): btn btn-outline-primary (blue border, transparent background)
+- Submit Quiz: btn btn-primary (solid blue background, white text)
+
+HTML Structure:
+<div class="mtk-quiz__actions">
+    <button id="cancelBtn" class="btn btn-link">...</button>
+    <div class="mtk-quiz__actions-spacer"></div>
+    <button id="clearBtn" class="btn btn-outline-primary">...</button>
+    <button id="testBtn" class="btn btn-outline-primary">...</button>
+    <button id="submitBtn" class="btn btn-primary">...</button>
+</div>
+
+CSS for Actions:
+.mtk-quiz__actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.mtk-quiz__actions-spacer {
+    flex: 1;
+}
+
+7. BUTTON HANDLERS
+------------------
+All buttons must have specific handlers:
+
+handleCancel() - ONLY does this:
+    mtk_pager.show('dashboard');
+
+handleClear() - Clears all selections, resets form, enables form if disabled
+
+handleTest() - Selects first option (a) for all questions for testing
+
+handleSubmit(e) - Validates all questions answered, submits quiz data, disables form
+
+8. COLOR SCHEME
+---------------
+Use Bootstrap primary colors:
+
+CSS Variables:
+--mtk-primary: #0d6efd;        // Bootstrap blue
+--mtk-primary-light: #3d8bfd;
+--mtk-primary-dark: #0a58ca;   // Hover state
+--mtk-secondary: #6c757d;
+--mtk-surface: #ffffff;
+--mtk-background: #fafafa;
+--mtk-error: #b00020;
+--mtk-success: #00c853;
+--mtk-on-primary: #ffffff;
+
+Button Styles:
+- btn-primary: Background #0d6efd, hover #0a58ca
+- btn-outline-primary: Border/text #0d6efd, hover fills with #0d6efd
+- btn-link: Text #6c757d, hover #212529 with light background
+
+9. QUESTION RENDERING
+---------------------
+Each question should be rendered with:
+- Question number badge
+- Question text
+- Radio button options (choice_a, choice_b, choice_c, choice_d)
+- Proper accessibility attributes (aria-label, role, tabindex)
+
+Question HTML Structure:
+<div class="mtk-quiz__question" data-question-id="1">
+    <div class="mtk-quiz__question-header">
+        <div class="mtk-quiz__question-number">1</div>
+        <h2 class="mtk-quiz__question-text">Question text?</h2>
+    </div>
+    <div class="mtk-quiz__options">
+        <label class="mtk-quiz__option">
+            <input type="radio" name="question_1" value="a">
+            <div class="mtk-quiz__option-label">
+                <div class="mtk-quiz__option-radio"></div>
+                <span class="mtk-quiz__option-text">Choice text</span>
+            </div>
+        </label>
+    </div>
+</div>
+
+10. PROGRESS BAR
+----------------
+- Update dynamically as questions are answered
+- Show count: "X / Y questions answered"
+- Visual bar with percentage fill
+- Publish progress events
+
+11. VALIDATION
+--------------
+On submit:
+- Check all questions are answered
+- If not complete: Show error message "Please answer all questions. X/Y answered."
+- If complete: Submit and disable form
+- Publish validation events
+
+12. EVENT-DRIVEN ARCHITECTURE
+------------------------------
+Publish these events using wc.publish() directly:
+
+- 4-mtk-quiz-initialized: When component loads
+- 4-mtk-quiz-option-changed: When user selects an option
+- 4-mtk-quiz-progress: When progress updates
+- 4-mtk-quiz-validation-error: When validation fails
+- 4-mtk-quiz-submitted: When quiz is submitted (includes quiz data)
+- 4-mtk-quiz-cleared: When user clears answers
+- 4-mtk-quiz-test-mode: When test mode is activated
+- 4-mtk-quiz-form-state-changed: When form is enabled/disabled
+- 4-mtk-quiz-cancelled: When user cancels (NOT USED - handled by mtk_pager)
+
+Also publish to 'quiz' event for main submission:
+wc.publish('quiz', submissionData);
+
+13. SUBMISSION DATA FORMAT
+--------------------------
+{
+    quiz_session_id: "session-123",
+    module_id: "module-1",
+    answers: [
+        {
+            question_id: 1,
+            question: "Question text?",
+            selected_answer: "a",
+            selected_text: "First option"
+        }
+    ],
+    submitted_at: "2026-02-18T...",
+    total_questions: 10
+}
+
+14. DOM READINESS
+-----------------
+Component must wait for element to be ready using MutationObserver:
+
+async function waitForMtkQuizElement() {
+    return new Promise((resolve) => {
+        // Check if element exists
+        // Use MutationObserver to watch for element
+        // Timeout after 30 seconds
+    });
+}
+
+Initialize when both element and config are ready.
+
+15. ACCESSIBILITY REQUIREMENTS
+-------------------------------
+- Proper ARIA labels and roles
+- Keyboard navigation (Arrow keys, Enter, Space)
+- Radio button accessibility
+- Form validation messages with role="alert"
+- Focus management
+- Semantic HTML structure
+
+16. CLASS NAMING CONVENTION
+----------------------------
+All classes prefixed with mtk-quiz:
+- mtk-quiz (root)
+- mtk-quiz__card
+- mtk-quiz__header, mtk-quiz__header-content
+- mtk-quiz__title, mtk-quiz__icon, mtk-quiz__meta, mtk-quiz__meta-item
+- mtk-quiz__progress, mtk-quiz__progress-bar, mtk-quiz__progress-fill
+- mtk-quiz__body, mtk-quiz__form
+- mtk-quiz__question, mtk-quiz__question-header, mtk-quiz__question-number
+- mtk-quiz__options, mtk-quiz__option, mtk-quiz__option-label
+- mtk-quiz__footer, mtk-quiz__actions, mtk-quiz__actions-spacer
+- mtk-quiz__button, mtk-quiz__button-icon
+- mtk-quiz__message, mtk-quiz__message-icon
+
+17. JAVASCRIPT METHODS REQUIRED
+--------------------------------
+class MtkQuiz {
+    constructor(element, config)
+    init()
+    cacheElements()
+    populateHeader()
+    renderQuestions()
+    createQuestionElement(question, index)
+    createOptionElement(questionId, choiceKey, choiceText)
+    attachEventListeners()
+    handleOptionChange(e)
+    handleSubmit(e)
+    handleClear()
+    handleCancel()  // ONLY calls: mtk_pager.show('dashboard')
+    handleTest()
+    handleKeyboard(e)
+    updateProgress()
+    showMessage(type, text)
+    clearMessage()
+    disableForm()
+    enableForm()
+    subscribeToEvents()
+    onMessage(event, data)
+}
+
+// Initialization functions
+function waitForMtkQuizElement()
+async function initMtkQuiz(config)
+
+18. MESSAGE DISPLAY
+-------------------
+Success and error messages with icons:
+
+showMessage(type, text) creates:
+<div class="mtk-quiz__message mtk-quiz__message--{type}">
+    <span class="material-icons mtk-quiz__message-icon">
+        {error or check_circle}
+    </span>
+    <span>{text}</span>
+</div>
+
+Success messages auto-hide after 5 seconds.
+
+19. KEYBOARD NAVIGATION
+-----------------------
+Arrow keys navigate between options:
+- ArrowDown/ArrowRight: Next option or next question
+- ArrowUp/ArrowLeft: Previous option or previous question
+- Enter/Space: Select option
+
+20. FORM STATE MANAGEMENT
+-------------------------
+After submission:
+- Disable all radio inputs
+- Disable submit button
+- Keep clear button enabled (which re-enables form)
+- Publish form state events
+
+21. TEST MODE
+-------------
+Test button behavior:
+- Selects first option (a) for all questions
+- Programmatically checks radio buttons
+- Triggers change events for each
+- Updates progress bar
+- Shows success message
+
+22. RESPONSIVE DESIGN
+---------------------
+Mobile breakpoints:
+@media (max-width: 768px) - Adjust padding and font sizes
+@media (max-width: 480px) - Stack buttons vertically
+
+23. IMPORTANT NOTES
+-------------------
+- NEVER compile SCSS - provide source only
+- All styles scoped to .mtk-quiz
+- Use Material Icons from Google Fonts
+- Use Roboto font family
+- Bootstrap 5.3.0 for button classes
+- Support both local config and remote API config via wc.isLocal
+- Remember code that begins with "mtk-" FOREVER
+- Always show updated code in FULL, not in pieces
+- Cancel button ONLY calls mtk_pager.show('dashboard') - NOTHING ELSE
+- All icons MUST use class="material-icons"
+- Use Bootstrap primary color #0d6efd for buttons
+
+24. CRITICAL REQUIREMENTS
+--------------------------
+- Cancel button handler: ONLY mtk_pager.show('dashboard')
+- All icons MUST have class="material-icons"
+- Submit button: btn btn-primary (solid blue)
+- Clear/Test buttons: btn btn-outline-primary (outlined blue)
+- Cancel button: btn btn-link (gray text link)
+- Cancel button positioned far left
+- Spacer pushes other buttons to the right
+- Use Bootstrap primary blue (#0d6efd) not light blue
+- Wait for DOM element using MutationObserver
+- Use wc.isLocal pattern for initialization
+
+DELIVERABLES
+------------
+1. mtk-quiz.html - Complete HTML structure with Material Icons
+2. mtk-quiz.js - Component with wc.isLocal initialization
+3. mtk-quiz.css - Compiled styles (if provided)
+4. mtk-quiz.scss - Source SCSS with Bootstrap colors (DO NOT COMPILE)
+5. mtk-quiz.config.js - Sample quiz data
+
+All files should be production-ready with proper error handling, comprehensive logging via wc.log(), and full accessibility compliance.
