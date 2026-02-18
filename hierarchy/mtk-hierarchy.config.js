@@ -6,23 +6,19 @@ window.app = {
 	{
 	    "title": "Introduction to Locksmithing",
 	    "access": true,
-	    "processed": false,
 	    "modules": [
 		{
 		    "id": "module-1",
 		    "title": "Foundations of Locksmithing",
 		    "access": true,
-		    "processed": false,
 		    "lessons": [
 			{
 			    "id": "lesson-1-1",
 			    "access": true,
 			    "title": "Introduction",
-			    "processed": false,
 			    "resources": [
 				{
 				    "id": "resource-1-1-1",
-				    "processed": false,
 				    "access": false,
 				    "type": "video",
 				    "description": "Introduction to your instructor and the course",
@@ -34,11 +30,9 @@ window.app = {
 			    "id": "lesson-1-2",
 			    "access": false,
 			    "title": "The tools needed in your toolbag",
-			    "processed": false,
 			    "resources": [
 				{
 				    "id": "resource-1-2-1",
-				    "processed": false,
 				    "access": false,
 				    "type": "video",
 				    "description": "Tools Overview Video",
@@ -50,11 +44,9 @@ window.app = {
 			    "id": "lesson-1-3",
 			    "access": false,
 			    "title": "Understanding the deadbolt and how to install",
-			    "processed": false,
 			    "resources": [
 				{
 				    "id": "resource-1-3-1",
-				    "processed": false,
 				    "access": false,
 				    "type": "video",
 				    "description": "Deadbolt Installation Video",
@@ -63,7 +55,6 @@ window.app = {
 				{
 				    "id": "resource-1-3-2",
 				    "access": false,
-				    "processed": false,
 				    "type": "photo",
 				    "description": "Deadbolt Photo 1",
 				    "url": "https://via.placeholder.com/800x600/1976d2/ffffff?text=Deadbolt-1"
@@ -74,11 +65,9 @@ window.app = {
 			    "id": "lesson-1-4",
 			    "access": false,
 			    "title": "Different residential and commercial doors",
-			    "processed": false,
 			    "resources": [
 				{
 				    "id": "resource-1-4-1",
-				    "processed": false,
 				    "access": false,
 				    "type": "video",
 				    "description": "Residential and Commercial Doors Overview",
@@ -87,7 +76,6 @@ window.app = {
 				{
 				    "id": "resource-1-4-2",
 				    "access": false,
-				    "processed": false,
 				    "type": "photo",
 				    "description": "Commercial Glass Door",
 				    "url": "https://via.placeholder.com/800x600/d32f2f/ffffff?text=Glass-Door-1"
@@ -95,7 +83,6 @@ window.app = {
 				{
 				    "id": "resource-1-4-3",
 				    "access": false,
-				    "processed": false,
 				    "type": "photo",
 				    "description": "Aluminum Door Type 1",
 				    "url": "https://via.placeholder.com/800x600/7b1fa2/ffffff?text=Aluminum-Door-1"
@@ -103,7 +90,6 @@ window.app = {
 				{
 				    "id": "resource-1-4-4",
 				    "access": false,
-				    "processed": false,
 				    "type": "photo",
 				    "description": "Aluminum Door Type 2",
 				    "url": "https://via.placeholder.com/800x600/0288d1/ffffff?text=Aluminum-Door-2"
@@ -111,7 +97,6 @@ window.app = {
 				{
 				    "id": "resource-1-4-5",
 				    "access": false,
-				    "processed": false,
 				    "type": "photo",
 				    "description": "Commercial Entry System",
 				    "url": "https://via.placeholder.com/800x600/f57c00/ffffff?text=Entry-System"
@@ -132,7 +117,6 @@ window.app = {
 	{
 	    "title": "Residential Locksmithing",
 	    "access": false,
-	    "processed": false,
 	    "modules": [
 		{
 		    "id": "module-2-1",
@@ -143,11 +127,9 @@ window.app = {
 			    "id": "lesson-2-1-1",
 			    "access": false,
 			    "title": "Understanding pin tumbler cylinders",
-			    "processed": false,
 			    "resources": [
 				{
 				    "id": "resource-2-1-1-1",
-				    "processed": false,
 				    "access": false,
 				    "type": "video",
 				    "description": "Pin Tumbler Mechanism Explained",
@@ -156,7 +138,6 @@ window.app = {
 				{
 				    "id": "resource-2-1-1-2",
 				    "access": false,
-				    "processed": false,
 				    "type": "photo",
 				    "description": "Pin Tumbler Diagram 1",
 				    "url": "https://via.placeholder.com/800x600/1976d2/ffffff?text=Pin-Diagram-1"
@@ -164,7 +145,6 @@ window.app = {
 				{
 				    "id": "resource-2-1-1-3",
 				    "access": false,
-				    "processed": false,
 				    "type": "photo",
 				    "description": "Pin Tumbler Diagram 2",
 				    "url": "https://via.placeholder.com/800x600/388e3c/ffffff?text=Pin-Diagram-2"
@@ -172,7 +152,6 @@ window.app = {
 				{
 				    "id": "resource-2-1-1-4",
 				    "access": false,
-				    "processed": false,
 				    "type": "photo",
 				    "description": "Cross Section View",
 				    "url": "https://via.placeholder.com/800x600/d32f2f/ffffff?text=Cross-Section"
@@ -197,11 +176,9 @@ window.app = {
 			    "id": "lesson-2-2-1",
 			    "access": false,
 			    "title": "Advanced Lock Picking",
-			    "processed": false,
 			    "resources": [
 				{
 				    "id": "resource-2-2-1-1",
-				    "processed": false,
 				    "access": false,
 				    "type": "video",
 				    "description": "Advanced Techniques",
