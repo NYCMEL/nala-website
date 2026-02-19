@@ -323,7 +323,8 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 100%;
-  font-size: 16px !important; }
+  font-size: 16px !important;
+  font-family: fm !important; }
 
 .mtk-hierarchy .mtk-quiz__badge {
   flex-shrink: 0;
