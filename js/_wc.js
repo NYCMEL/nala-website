@@ -970,7 +970,6 @@ wc.login = async function (email, passwd) {
         });
 
         const data = await res.json();
-        wc.log('data:', data);
 
         if (!res.ok) {
             alert('1: Login Failed: combination of email and password');
@@ -983,6 +982,7 @@ wc.login = async function (email, passwd) {
 	// GET SESSION 
 	wc.getSession();
 
+        wc.log('wc.login > data:', data);
 	wc.configure = data;
 
 	wc.setCookie("user", JSON.stringify(wc.configure.user));
