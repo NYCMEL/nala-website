@@ -1051,9 +1051,11 @@ wc.getSession = function (callback) {
         credentials: 'include'
     }).then(res => res.json()).then(data => {
 	wc.session = data; /* SAVE THIS FOR USE EVERYWHERE */
-
+	
         wc.log('SESSION', data.logged_in);
 	
+	console.log("wc.getSession: BBBBBBBBBBBBBBB " + JSON.stringify(data));
+
         if (typeof callback === 'function') {
             callback(data.logged_in, data);
         }
