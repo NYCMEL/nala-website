@@ -2,6 +2,10 @@ window.wc    = window.wc    || {};
 window.wcAPP = window.wcAPP || "NOT-SET";
 window.wcURL = window.wcURL || "";
 
+wc.working       = false;
+wc.isLocal       = false; /* = true SHOULD USE ALL LOCAL CONFIG FILES */
+wc.apiURL        = "https://nala-test.com" || "https://nalanetwork.com";
+
 // FOR WINDOZE
 if(typeof(console) === 'undefined') {console = {}}
 
