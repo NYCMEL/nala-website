@@ -5,9 +5,6 @@ window.app = window.app || {};
 
 app.baseUrl      = "/repo_deploy/";
 
-// START TRACKING. COMMENT TO BYPASS
-// wc.startInactivityTracking();
-
 ////////////////////////////////////////////////////////////
 // SMOOTH SCROLLING TO TARGET
 (function () {
