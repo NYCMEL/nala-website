@@ -3,14 +3,6 @@
 /////////////////////////////////////////////////////////////////////////////////
 window.app = window.app || {};
 
-/************************************************************
- * CONFIG INACTIVITY TIMER
- ************************************************************/
-wc.inactivity = {
-    idleTime: 2 * 60 * 1000, /* one minute */
-    countdown: 40 /* 30 seconds countdown */
-};
-
 app.baseUrl      = "/repo_deploy/";
 
 // START TRACKING. COMMENT TO BYPASS

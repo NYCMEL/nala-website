@@ -6,6 +6,14 @@ wc.working       = false;
 wc.isLocal       = false; /* = true SHOULD USE ALL LOCAL CONFIG FILES */
 wc.apiURL        = "https://nala-test.com" || "https://nalanetwork.com";
 
+/************************************************************
+ * CONFIG INACTIVITY TIMER
+ ************************************************************/
+wc.inactivity = {
+    idleTime: 2 * 60 * 1000, /* one minute */
+    countdown: 40 /* 30 seconds countdown */
+};
+
 // FOR WINDOZE
 if(typeof(console) === 'undefined') {console = {}}
 
