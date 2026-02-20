@@ -451,3 +451,29 @@
     margin-bottom: 1rem; }
   .mtk-hierarchy .mtk-images-gallery {
     grid-template-columns: 1fr; } }
+ackground-color: var(--mtk-surface); }
+    .mtk-hierarchy .mtk-image-item:hover {
+      box-shadow: var(--mtk-shadow-2);
+      transform: translateY(-2px); }
+    .mtk-hierarchy .mtk-image-item img {
+      width: 100%;
+      height: auto;
+      display: block; }
+    .mtk-hierarchy .mtk-image-item .mtk-image-item__caption {
+      padding: 0.75rem;
+      font-size: 0.813rem;
+      color: var(--mtk-text-secondary);
+      background-color: var(--mtk-surface); }
+  .mtk-hierarchy.mtk-hierarchy--loading {
+    opacity: 0.6;
+    pointer-events: none; }
+  @media (max-width: 768px) {
+    .mtk-hierarchy .mtk-hierarchy__container {
+      height: auto; }
+    .mtk-hierarchy .mtk-hierarchy-lhs,
+    .mtk-hierarchy .mtk-hierarchy-rhs {
+      height: auto;
+      min-height: 400px;
+      margin-bottom: 1rem; }
+    .mtk-hierarchy .mtk-images-gallery {
+      grid-template-columns: 1fr; } }
