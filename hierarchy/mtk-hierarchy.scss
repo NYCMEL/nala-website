@@ -17,6 +17,7 @@
     --mtk-shadow-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     --mtk-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
+    font-family: fm;
     display: block;
     color: var(--mtk-text-primary);
     background-color: var(--mtk-background);
@@ -397,6 +398,8 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	max-width: 100%;
+	font-size: 16px!important;
+	font-family: fm!important;
     }
 
     .mtk-quiz__badge {

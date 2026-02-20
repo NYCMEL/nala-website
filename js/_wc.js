@@ -2,6 +2,19 @@ window.wc    = window.wc    || {};
 window.wcAPP = window.wcAPP || "NOT-SET";
 window.wcURL = window.wcURL || "";
 
+wc.working       = false;
+wc.isLocal       = false; /* = true SHOULD USE ALL LOCAL CONFIG FILES */
+wc.apiURL        = "https://nala-test.com" || "https://nalanetwork.com";
+
+/************************************************************
+ * CONFIG INACTIVITY TIMER
+   SEE wc.login FOR USAGE
+************************************************************/
+wc.inactivity = {
+    idleTime: 2 * 60 * 1000, /* one minute */
+    countdown: 40 /* 30 seconds countdown */
+};
+
 // FOR WINDOZE
 if(typeof(console) === 'undefined') {console = {}}
 
@@ -970,7 +983,6 @@ wc.login = async function (email, passwd) {
         });
 
         const data = await res.json();
-        wc.log('data:', data);
 
         if (!res.ok) {
             alert('1: Login Failed: combination of email and password');
@@ -983,6 +995,7 @@ wc.login = async function (email, passwd) {
 	// GET SESSION 
 	wc.getSession();
 
+        wc.log('wc.login > data:', data);
 	wc.configure = data;
 
 	wc.setCookie("user", JSON.stringify(wc.configure.user));
@@ -1051,9 +1064,11 @@ wc.getSession = function (callback) {
         credentials: 'include'
     }).then(res => res.json()).then(data => {
 	wc.session = data; /* SAVE THIS FOR USE EVERYWHERE */
-
+	
         wc.log('SESSION', data.logged_in);
 	
+	console.log("wc.getSession: BBBBBBBBBBBBBBB " + JSON.stringify(data));
+
         if (typeof callback === 'function') {
             callback(data.logged_in, data);
         }
@@ -1256,25 +1271,50 @@ wc.getCurriculum = function (callback) {
     fetch(wc.apiURL + "/api/curriculum_api.php", {
 	method: "GET",
 	credentials: "include"
-    })
-	.then(res => {
-	    if (!res.ok) {
-		throw new Error("Failed to fetch curriculum");
-	    }
-	    return res.json();
-	})
-	.then(data => {
-	    wc.log("Curriculum data:", data);
-
-	    if (typeof callback === "function") {
-		callback(null, data);
-	    }
-	})
-	.catch(err => {
-	    wc.error("getCurriculum error:", err);
-
-	    if (typeof callback === "function") {
-		callback(err, null);
-	    }
-	});
+    }).then(res => {
+	if (!res.ok) {
+	    throw new Error("Failed to fetch curriculum");
+	}
+	return res.json();
+    }).then(data => {
+	wc.log("Curriculum data:", data);
+	
+	if (typeof callback === "function") {
+	    callback(null, data);
+	}
+    }).catch(err => {
+	wc.error("getCurriculum error:", err);
+	
+	if (typeof callback === "function") {
+	    callback(err, null);
+	}
+    });
 };
+
+/////////////////////////////////////////////////////////////////////////////////
+//// Quiz API
+/////////////////////////////////////////////////////////////////////////////////
+wc.getQuiz = function (callback) {
+    fetch(wc.apiURL + "/api/quiz_api.php", {
+	method: "GET",
+	credentials: "include"
+    }).then(res => {
+	if (!res.ok) {
+	    throw new Error("Failed to fetch quiz");
+	}
+	return res.json();
+    }).then(data => {
+	wc.log("Quiz data:", data);
+	
+	if (typeof callback === "function") {
+	    callback(null, data);
+	}
+    }).catch(err => {
+	wc.error("getQuiz error:", err);
+	
+	if (typeof callback === "function") {
+	    callback(err, null);
+	}
+    });
+};
+

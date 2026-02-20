@@ -3,21 +3,7 @@
 /////////////////////////////////////////////////////////////////////////////////
 window.app = window.app || {};
 
-/************************************************************
- * CONFIG INACTIVITY TIMER
- ************************************************************/
-wc.inactivity = {
-    idleTime: 2 * 60 * 1000, /* one minute */
-    countdown: 40 /* 30 seconds countdown */
-};
-
-wc.working       = false;
 app.baseUrl      = "/repo_deploy/";
-wc.isLocal       = true; /* = true SHOULD USE ALL LOCAL CONFIG FILES */
-wc.apiURL        = "https://nala-test.com" || "https://nalanetwork.com";
-
-// START TRACKING. COMMENT TO BYPASS
-// wc.startInactivityTracking();
 
 ////////////////////////////////////////////////////////////
 // SMOOTH SCROLLING TO TARGET
