@@ -8,7 +8,7 @@ wc.apiURL        = "https://nala-test.com" || "https://nalanetwork.com";
 
 /************************************************************
  * CONFIG INACTIVITY TIMER
-   USAGE: wc.startInactivityTracking();
+   SEE wc.login FOR USAGE
 ************************************************************/
 wc.inactivity = {
     idleTime: 2 * 60 * 1000, /* one minute */
