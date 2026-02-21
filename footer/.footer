@@ -39,7 +39,6 @@ FILES TO CREATE
 1. mtk-footer.config.js
 2. mtk-footer.html (container only or optional static structure)
 3. mtk-footer.scss
-4. mtk-footer.css (compiled from SCSS)
 5. mtk-footer.js (production-ready vanilla JS)
 JAVASCRIPT REQUIREMENTS
 - Must wait for #mtk-footer to appear in the DOM before running
