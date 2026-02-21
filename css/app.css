@@ -98,12 +98,13 @@ h1 {
 h1.title {
   position: relative;
   padding-bottom: 0.5rem; }
-  h1.title::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    width: 30%;
-    height: 3px;
-    background-color: gold;
-    transform: translateX(-50%); }
+
+h1.title::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 30%;
+  height: 3px;
+  background-color: gold;
+  transform: translateX(-50%); }
