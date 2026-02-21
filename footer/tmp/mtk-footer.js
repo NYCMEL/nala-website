@@ -1,7 +1,7 @@
-// mtk-footer.js
 (function () {
   'use strict';
 
+  // Wait for element utility
   const waitForElement = (selector, callback, interval = 100, timeout = 5000) => {
     const start = Date.now();
     const timer = setInterval(() => {
@@ -16,6 +16,7 @@
     }, interval);
   };
 
+  // Wait for data utility
   const waitForData = (dataPath, callback, interval = 100, timeout = 5000) => {
     const start = Date.now();
     const timer = setInterval(() => {
@@ -28,6 +29,27 @@
         console.warn('mtk-footer: Data not found', dataPath);
       }
     }, interval);
+  };
+
+  // Wrap main content in #page-content if missing
+  const wrapPageContent = () => {
+    let content = document.querySelector('#page-content');
+    if (!content) {
+      content = document.createElement('div');
+      content.id = 'page-content';
+      // Move all body children except footer into #page-content
+      const footer = document.querySelector('#mtk-footer');
+      Array.from(document.body.children).forEach(el => {
+        if (el !== footer) content.appendChild(el);
+      });
+      document.body.insertBefore(content, document.body.firstChild);
+    }
+    // Apply body flex layout
+    document.documentElement.style.height = '100%';
+    document.body.style.height = '100%';
+    document.body.style.display = 'flex';
+    document.body.style.flexDirection = 'column';
+    content.style.flex = '1 0 auto';
   };
 
   const createFooter = (container, config) => {
@@ -53,7 +75,7 @@
         </div>
       `;
 
-      // Attach click handlers for event publishing
+      // Attach click handlers
       container.querySelectorAll('[data-event]').forEach(el => {
         el.addEventListener('click', e => {
           const eventName = el.getAttribute('data-event');
@@ -65,14 +87,14 @@
           e.preventDefault();
         });
       });
-
     } catch (err) {
       console.error('mtk-footer: Failed to create footer', err);
     }
   };
 
-  // Wait for footer element and data before rendering
+  // Run
   waitForElement('#mtk-footer', footerEl => {
+    wrapPageContent();
     waitForData(() => window.app && window.app.footer, footerData => {
       createFooter(footerEl, footerData);
     });
