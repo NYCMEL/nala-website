@@ -1,0 +1,74 @@
+/* mtk-footer.scss */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* ensures footer is pushed to bottom */
+    margin: 0;
+}
+
+#page-content {
+    flex: 1 0 auto; /* main page content expands to fill remaining space */
+}
+
+.mtk-footer {
+    background-color: #121212;
+    color: #ffffff;
+    padding: 2rem 0;
+    font-family: fm;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+    flex-shrink: 0; /* prevents shrinking */
+    
+    a {
+	color: #ffffff;
+	text-decoration: none;
+	transition: color 0.2s ease-in-out;
+	&:hover {
+	    color: #bb86fc;
+	}
+    }
+
+    img.brand-logo {
+	max-width: 120px;
+	height: auto;
+	margin-bottom: 0.5rem;
+    }
+
+    .brand-description {
+	font-size: 13px;
+	line-height: 1.4;
+	opacity: 0.87;
+    }
+
+    .footer-title {
+	font-weight: 500;
+	margin-bottom: 1rem;
+	font-size: 1rem;
+	color: gold;
+    }
+
+    .footer-link {
+	font-size: 13px;
+	display: block;
+	margin-bottom: 0.5rem;
+	cursor: pointer;
+	&:hover {
+	    text-decoration: underline;
+	}
+    }
+
+    .social-icon {
+	margin-right: 1rem;
+	font-size: 1.5rem;
+	cursor: pointer;
+	transition: transform 0.2s ease;
+	&:hover {
+	    transform: translateY(-2px);
+	    color: #bb86fc;
+	}
+    }
+}
