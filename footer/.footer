@@ -1,5 +1,4 @@
 Create a modern Material Design + Bootstrap 5 application footer component named mtk-footer.
-
 ASSUMPTIONS
 - Use Material Design styles and Bootstrap 5
 - Use vanilla JavaScript only
@@ -9,7 +8,6 @@ ASSUMPTIONS
 - Component must be fully JSON-driven
 - Component must be load-order safe
 - Do not use em dashes
-
 CORE REQUIREMENTS
 - Component name: mtk-footer
 - Dark mode background
@@ -17,21 +15,17 @@ CORE REQUIREMENTS
 - Responsive across all breakpoints
 - Content wrapped in a Bootstrap container (not container-fluid)
 - Uses Material Design styling principles
-
 LAYOUT
-- Footer has two rows
-- Row 1 contains five Bootstrap columns
-  - brand column with logo and description below logo
-- Row 2 contains two equal Bootstrap columns
-  - Left side copyright text
-  - Right side tagline or secondary text
-
+- Footer has one row
+- Row 1
+  - column 1 conains a brand with logo from "img/logo-nala-association.webp" file and description below logo
+  - column 2 "Contact information". phone, email and address
+  - column 3 "Social media" with icons (facebook, instagram, linkedin, youtube)
 BEHAVIOR
-- Footer must stick to the bottom when page content height is smaller than viewport
+- Footer MUST STICK to the bottom when page content height is smaller than viewport
 - Footer must scroll naturally when page content exceeds viewport height
 - Footer links must NOT navigate directly
-- Footer links must wc.publish navigation events
-
+- Footer link clicks must wc.publish navigation events
 DATA AND CONFIGURATION
 - All footer content must come from JSON
 - JSON file name: mtk-footer.config.js
@@ -41,16 +35,12 @@ DATA AND CONFIGURATION
   - brand description
   - navigation groups with titles and links
   - social icons with events
-  - bottom row left text
-  - bottom row right text
-
 FILES TO CREATE
 1. mtk-footer.config.js
 2. mtk-footer.html (container only or optional static structure)
 3. mtk-footer.scss
 4. mtk-footer.css (compiled from SCSS)
 5. mtk-footer.js (production-ready vanilla JS)
-
 JAVASCRIPT REQUIREMENTS
 - Must wait for #mtk-footer to appear in the DOM before running
 - Must wait for window.app.footer to exist before rendering
@@ -58,9 +48,9 @@ JAVASCRIPT REQUIREMENTS
 - Must not assume script load order
 - Must not throw errors if elements are missing
 - Must use an IIFE to avoid polluting the global scope
-
 OUTPUT REQUIREMENTS
 - html, scss, mtk-footer.config.js and mtk-footer.js
 - Code must be clean, readable, and production-ready
 - Do not omit error handling
 - Do not hardcode text in HTML
+- DO NOT compile scss files, EVER and REMEMBER this
