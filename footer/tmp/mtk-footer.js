@@ -1,22 +1,34 @@
 (function () {
   'use strict';
 
-  // Wait for element utility
+  // Wait for an element to appear in the DOM (works with wc-include)
   const waitForElement = (selector, callback, interval = 100, timeout = 5000) => {
     const start = Date.now();
+    const observer = new MutationObserver(() => {
+      const el = document.querySelector(selector);
+      if (el) {
+        observer.disconnect();
+        callback(el);
+      } else if (Date.now() - start > timeout) {
+        observer.disconnect();
+        console.warn('mtk-footer: Element not found', selector);
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    // fallback interval in case MutationObserver misses
     const timer = setInterval(() => {
       const el = document.querySelector(selector);
       if (el) {
         clearInterval(timer);
+        observer.disconnect();
         callback(el);
       } else if (Date.now() - start > timeout) {
         clearInterval(timer);
-        console.warn('mtk-footer: Element not found', selector);
       }
     }, interval);
   };
 
-  // Wait for data utility
+  // Wait for JSON config data
   const waitForData = (dataPath, callback, interval = 100, timeout = 5000) => {
     const start = Date.now();
     const timer = setInterval(() => {
@@ -31,20 +43,18 @@
     }, interval);
   };
 
-  // Wrap main content in #page-content if missing
+  // Wrap body content for sticky footer
   const wrapPageContent = () => {
     let content = document.querySelector('#page-content');
     if (!content) {
       content = document.createElement('div');
       content.id = 'page-content';
-      // Move all body children except footer into #page-content
       const footer = document.querySelector('#mtk-footer');
       Array.from(document.body.children).forEach(el => {
         if (el !== footer) content.appendChild(el);
       });
       document.body.insertBefore(content, document.body.firstChild);
     }
-    // Apply body flex layout
     document.documentElement.style.height = '100%';
     document.body.style.height = '100%';
     document.body.style.display = 'flex';
@@ -52,6 +62,7 @@
     content.style.flex = '1 0 auto';
   };
 
+  // Build footer DOM dynamically
   const createFooter = (container, config) => {
     try {
       container.classList.add('container');
@@ -65,7 +76,7 @@
             <div class="col-md-4 mb-3 mb-md-0">
               <div class="footer-title">${group.title}</div>
               ${group.links.map(link => {
-                if(link.icon) {
+                if (link.icon) {
                   return `<i class="${link.icon} social-icon" data-event="${link.event}"></i>`;
                 }
                 return `<span class="footer-link" data-event="${link.event}">${link.text}</span>`;
@@ -75,11 +86,11 @@
         </div>
       `;
 
-      // Attach click handlers
+      // Attach click handlers for wc.publish
       container.querySelectorAll('[data-event]').forEach(el => {
         el.addEventListener('click', e => {
           const eventName = el.getAttribute('data-event');
-          if(window.wc && typeof window.wc.publish === 'function') {
+          if (window.wc && typeof window.wc.publish === 'function') {
             window.wc.publish(eventName, { element: el });
           } else {
             console.log(`mtk-footer: Event published: ${eventName}`);
@@ -92,12 +103,21 @@
     }
   };
 
-  // Run
-  waitForElement('#mtk-footer', footerEl => {
-    wrapPageContent();
-    waitForData(() => window.app && window.app.footer, footerData => {
-      createFooter(footerEl, footerData);
+  // Main init function
+  const initFooter = () => {
+    waitForElement('#mtk-footer', footerEl => {
+      wrapPageContent();
+      waitForData(() => window.app && window.app.footer, footerData => {
+        createFooter(footerEl, footerData);
+      });
     });
-  });
+  };
+
+  // Start after DOMContentLoaded to ensure wc-include runs
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFooter);
+  } else {
+    initFooter();
+  }
 
 })();

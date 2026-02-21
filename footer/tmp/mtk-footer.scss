@@ -2,12 +2,13 @@
 html, body {
     height: 100%;
     margin: 0;
-    border: 3px lime dashed!important;
 }
 
 body {
     display: flex;
     flex-direction: column;
+    min-height: 100vh; /* ensures footer is pushed to bottom */
+    margin: 0;
 }
 
 #page-content {
