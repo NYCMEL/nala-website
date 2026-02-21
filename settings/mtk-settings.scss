@@ -1,11 +1,9 @@
 // mtk-settings Component Styles
 .mtk-settings {
-    margin-bottom: 80px!important;
     display: block;
     width: 100%;
     margin: 0 auto;
     color: rgba(0, 0, 0, 0.87);
-    min-height: 800px;
     
     // Material Design elevation
     &__card {
