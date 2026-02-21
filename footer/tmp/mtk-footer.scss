@@ -1,53 +1,71 @@
 /* mtk-footer.scss */
+html, body {
+    height: 100%; /* full height needed for flex layout */
+    margin: 0;
+    border: 5px lime dashed!important;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+#page-content {
+    flex: 1 0 auto; /* main page content expands to fill remaining space */
+}
+
 .mtk-footer {
-  background-color: #121212; // Dark mode background
-  color: #ffffff;
-  padding: 2rem 0;
-  font-family: 'Roboto', sans-serif;
-  box-shadow: 0 -2px 5px rgba(0,0,0,0.2); // subtle Material Design shadow
-  a {
+    background-color: #121212;
     color: #ffffff;
-    text-decoration: none;
-    transition: color 0.2s ease-in-out;
-    &:hover {
-      color: #bb86fc; // subtle Material Design accent
+    padding: 2rem 0;
+    font-family: 'Roboto', sans-serif;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+    flex-shrink: 0; /* prevents shrinking */
+    
+    a {
+	color: #ffffff;
+	text-decoration: none;
+	transition: color 0.2s ease-in-out;
+	&:hover {
+	    color: #bb86fc;
+	}
     }
-  }
-  img.brand-logo {
-    max-width: 120px;
-    height: auto;
-    margin-bottom: 0.5rem;
-  }
-  .brand-description {
-    font-size: 0.9rem;
-    line-height: 1.4;
-    opacity: 0.87;
-  }
-  .footer-title {
-    font-weight: 500;
-    margin-bottom: 1rem;
-    font-size: 1rem;
-  }
-  .footer-link {
-    display: block;
-    margin-bottom: 0.5rem;
-    cursor: pointer;
-    &:hover {
-      text-decoration: underline;
+
+    img.brand-logo {
+	max-width: 120px;
+	height: auto;
+	margin-bottom: 0.5rem;
     }
-  }
-  .social-icon {
-    margin-right: 1rem;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-    &:hover {
-      transform: translateY(-2px);
-      color: #bb86fc;
+
+    .brand-description {
+	font-size: 0.9rem;
+	line-height: 1.4;
+	opacity: 0.87;
     }
-  }
-  // Sticky footer when content is small
-  position: relative;
-  width: 100%;
-  bottom: 0;
+
+    .footer-title {
+	font-weight: 500;
+	margin-bottom: 1rem;
+	font-size: 1rem;
+    }
+
+    .footer-link {
+	display: block;
+	margin-bottom: 0.5rem;
+	cursor: pointer;
+	&:hover {
+	    text-decoration: underline;
+	}
+    }
+
+    .social-icon {
+	margin-right: 1rem;
+	font-size: 1.2rem;
+	cursor: pointer;
+	transition: transform 0.2s ease;
+	&:hover {
+	    transform: translateY(-2px);
+	    color: #bb86fc;
+	}
+    }
 }
