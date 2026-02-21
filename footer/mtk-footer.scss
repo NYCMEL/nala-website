@@ -231,5 +231,13 @@ $motion-duration-medium: 300ms;
 	&__social-list {
 	    justify-content: right;
 	}
+
+	.mtk-footer__contact,
+	.mtk-footer__social,
+	.mtk-footer__section-title,
+	.mtk-footer__contact-list {
+	    display: none;
+	    background: red!important;;
+	}
     }
 }

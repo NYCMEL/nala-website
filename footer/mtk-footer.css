@@ -164,4 +164,10 @@
   .mtk-footer__contact-item {
     justify-content: left; }
   .mtk-footer__social-list {
-    justify-content: right; } }
+    justify-content: right; }
+  .mtk-footer .mtk-footer__contact,
+  .mtk-footer .mtk-footer__social,
+  .mtk-footer .mtk-footer__section-title,
+  .mtk-footer .mtk-footer__contact-list {
+    display: none;
+    background: red !important; } }
