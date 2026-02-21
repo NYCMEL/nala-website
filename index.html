@@ -47,31 +47,33 @@
 
 	<!-- APP CODE STARTS... -->
 
-	<!-- FOOTER -->
-	<div class="app-header" id="header-public" style="display:none">
-	    <!-- HEADER-public -->
-	    <wc-include href="header/header.public.html" />
-	</div>
-	
-	<div class="app-header" id="header-private" style="display:none">
-	    <!-- HEADER-private -->
-	    <wc-include href="header/header.private.html" />
-	</div>
-	
-	<!-- MAIN -->
-	<main id="page-content">
-	    <!-- MSGS -->
-	    <div>
-		<wc-include href="msg/mtk-msgs.html" />
+	<div id="page-content">
+	    <!-- FOOTER -->
+	    <div class="app-header" id="header-public" style="display:none">
+		<!-- HEADER-public -->
+		<wc-include href="header/header.public.html" />
 	    </div>
-
-	    <div>
-		<wc-include href="pager/index.inc.html" />
+	    
+	    <div class="app-header" id="header-private" style="display:none">
+		<!-- HEADER-private -->
+		<wc-include href="header/header.private.html" />
 	    </div>
+	    
+	    <!-- MAIN -->
+	    <main id="page-content">
+		<!-- MSGS -->
+		<div>
+		    <wc-include href="msg/mtk-msgs.html" />
+		</div>
 
-	    <!-- mtk-pager Container -->
-	    <pager id="mtk-pager" />
-	</main>
+		<div>
+		    <wc-include href="pager/index.inc.html" />
+		</div>
+
+		<!-- mtk-pager Container -->
+		<pager id="mtk-pager" />
+	    </main>
+	</div>
 
 	<!-- FOOTER -->
 	<footer id="page-footer">
