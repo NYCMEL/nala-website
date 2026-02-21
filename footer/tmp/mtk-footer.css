@@ -18,7 +18,7 @@ body {
   background-color: #121212;
   color: #ffffff;
   padding: 2rem 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: fm;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
   flex-shrink: 0;
   /* prevents shrinking */ }
@@ -33,14 +33,16 @@ body {
     height: auto;
     margin-bottom: 0.5rem; }
   .mtk-footer .brand-description {
-    font-size: 0.9rem;
+    font-size: 13px;
     line-height: 1.4;
     opacity: 0.87; }
   .mtk-footer .footer-title {
     font-weight: 500;
     margin-bottom: 1rem;
-    font-size: 1rem; }
+    font-size: 1rem;
+    color: gold; }
   .mtk-footer .footer-link {
+    font-size: 13px;
     display: block;
     margin-bottom: 0.5rem;
     cursor: pointer; }
@@ -48,7 +50,7 @@ body {
       text-decoration: underline; }
   .mtk-footer .social-icon {
     margin-right: 1rem;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     cursor: pointer;
     transition: transform 0.2s ease; }
     .mtk-footer .social-icon:hover {
