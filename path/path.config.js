@@ -24,11 +24,11 @@
                 id: "premium",
                 title: "Premium",
                 price: "$1,999",
-                period: "One-time payment · financing up to 24 months available via Klarna",
+                period: "One-time payment · Financing up to 24 months available via Klarna",
                 description: "Full program access with a certificate of completion.",
                 features: [
                     "Full program access (all 5 parts)",
-                    "Full access included",
+                    "Free Car Lockout Kit Included",
                     "Certificate of completion",
                     "Learn at your own pace"
                 ],
