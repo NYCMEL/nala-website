@@ -1,183 +1,504 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NALA API Test Console</title>
 
 <style>
-body{font-family:system-ui,Arial;padding:16px;line-height:1.3;background:#fafafa}
-.card{border:1px solid #ddd;border-radius:10px;padding:12px;margin:12px 0;background:#fff}
-.row{display:flex;gap:12px;flex-wrap:wrap}
-label{display:block;font-weight:600;margin-top:8px}
-input{width:100%;padding:8px;border:1px solid #ccc;border-radius:8px}
-button{padding:10px 12px;border:0;border-radius:10px;cursor:pointer}
-.primary{background:#0b5;color:#fff}
-.secondary{background:#eee}
-.danger{background:#c33;color:#fff}
-pre{background:#0b0b0b;color:#e6e6e6;padding:12px;border-radius:10px;overflow:auto}
-.small{font-size:12px;color:#555}
-.mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+  body{font-family:system-ui,Arial;padding:16px;line-height:1.35;background:#fafafa}
+  h1,h2{margin:0 0 10px}
+  .card{border:1px solid #ddd;border-radius:12px;padding:14px;margin:14px 0;background:#fff}
+  .row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+  label{display:block;font-weight:650;margin-top:8px}
+  input, textarea, select{
+    width:100%;padding:9px;border:1px solid #ccc;border-radius:10px;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 13px;
+  }
+  textarea{min-height:92px}
+  button{padding:10px 12px;border:0;border-radius:12px;cursor:pointer}
+  .primary{background:#0b5;color:#fff}
+  .secondary{background:#eee}
+  .danger{background:#c33;color:#fff}
+  .warn{background:#f6c343;color:#111}
+  pre{
+    background:#0b0b0b;color:#e6e6e6;padding:12px;border-radius:12px;
+    overflow:auto;white-space:pre-wrap;word-break:break-word;
+  }
+  .small{font-size:12px;color:#555}
+  .mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+  .pill{display:inline-block;padding:2px 8px;border-radius:999px;background:#eee;font-size:12px}
 </style>
 </head>
 
 <body>
 
 <h1>NALA API Test Console</h1>
+<div class="small">
+  This page is designed for <span class="mono">/repo_deploy/test/index.html</span> and calls your API at <span class="mono">/api</span>.
+</div>
 
+<!-- BASE CONFIG -->
 <div class="card">
-<label>API Base URL</label>
-<input id="apiBase" class="mono" value="https://nala-test.com/api">
-<div class="small">Your APIs live in public_html/api</div>
+  <h2>Base Config</h2>
+  <div class="row">
+    <div style="flex:1;min-width:280px">
+      <label>API Base URL</label>
+      <input id="apiBase" />
+      <div class="small">Example: <span class="mono">https://nala-test.com/api</span></div>
+    </div>
+
+    <div style="flex:1;min-width:280px">
+      <label>Quiz Submit Endpoint (answers → grade)</label>
+      <input id="quizSubmitPath" value="/quiz_submit.php" />
+      <div class="small">Set this to your real endpoint name (e.g. <span class="mono">/quiz_grade.php</span>).</div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top:10px">
+    <button class="secondary" onclick="setApiBaseToCurrentHost()">Use current host</button>
+    <button class="secondary" onclick="clearPanels()">Clear panels</button>
+  </div>
+
+  <div class="small">
+    Uses <span class="mono">credentials: "include"</span> so cookie sessions work from <span class="mono">localhost:3000</span> (if CORS allows it).
+  </div>
 </div>
 
-<!-- LOGIN -->
+<!-- AUTH -->
 <div class="card">
-<h2>Login</h2>
-<div class="row">
-<div style="flex:1">
-<label>Email</label>
-<input id="email">
-</div>
-<div style="flex:1">
-<label>Password</label>
-<input id="password" type="password">
-</div>
+  <h2>Auth</h2>
+  <div class="row">
+    <div style="flex:1;min-width:260px">
+      <label>Email</label>
+      <input id="email" placeholder="email@example.com" />
+    </div>
+    <div style="flex:1;min-width:260px">
+      <label>Password</label>
+      <input id="password" type="password" placeholder="password" />
+    </div>
+  </div>
+
+  <div class="row" style="margin-top:10px">
+    <button class="primary" onclick="login()">POST /login_api.php</button>
+    <button class="secondary" onclick="me()">GET /me.php (optional)</button>
+    <button class="danger" onclick="logout()">POST /auth_logout.php (optional)</button>
+  </div>
+
+  <div class="small">
+    If login works but later calls 401, it’s usually cookie/CORS: your <span class="mono">_cors.php</span> must allow
+    <span class="mono">http://localhost:3000</span> and include <span class="mono">Access-Control-Allow-Credentials: true</span>.
+  </div>
 </div>
 
-<div class="row" style="margin-top:10px">
-<button class="primary" onclick="login()">Login</button>
-<button class="secondary" onclick="getCurriculum()">Fetch Curriculum</button>
-<button class="secondary" onclick="lessonComplete()">Lesson Complete</button>
-</div>
-</div>
-
-<!-- QUIZ -->
+<!-- CURRICULUM / PROGRESS -->
 <div class="card">
-<h2>Record Quiz</h2>
-<div class="row">
-<div style="flex:1">
-<label>quiz_key</label>
-<input id="quiz_key" value="p0_m0">
-</div>
-<div style="flex:1">
-<label>percent</label>
-<input id="percent" type="number" value="85">
-</div>
-<div style="flex:1">
-<label>score</label>
-<input id="score" type="number" value="17">
-</div>
-<div style="flex:1">
-<label>total</label>
-<input id="total" type="number" value="20">
-</div>
+  <h2>Curriculum / Progress</h2>
+  <div class="row">
+    <button class="primary" onclick="getCurriculum()">GET /curriculum_api.php</button>
+    <button class="secondary" onclick="lessonComplete()">POST /lesson_complete.php</button>
+  </div>
+  <div class="small">
+    Curriculum response should include <span class="mono">modules[].processed</span> and <span class="mono">user.progress</span>.
+  </div>
 </div>
 
-<div class="row" style="margin-top:10px">
-<button class="primary" onclick="recordQuiz()">Submit Quiz</button>
+<!-- QUIZ: SUBMIT ANSWERS → GET GRADE -->
+<div class="card">
+  <h2>Quiz (Submit Answers → API returns grade)</h2>
+  <div class="small">
+    Flow:
+    <span class="pill">1) submit answers</span> → API returns <span class="mono">{correct, incorrect, total, percent}</span>
+    <span class="pill">2) record best</span> (optional) → call <span class="mono">/quiz_record_score.php</span> with the returned percent.
+  </div>
+
+  <div class="row" style="margin-top:10px">
+    <div style="flex:1;min-width:220px">
+      <label>quiz_key</label>
+      <input id="quiz_key" value="p0_m0" />
+    </div>
+    <div style="flex:2;min-width:320px">
+      <label>answers (JSON)</label>
+      <textarea id="answersJson">{
+  "answers": [
+    {"question_id": 1, "choice": 2},
+    {"question_id": 2, "choice": 0}
+  ]
+}</textarea>
+      <div class="small">
+        Adjust to match your API schema. Common shapes:
+        <span class="mono">{"answers":[{"question_id":1,"choice":2}]}</span> or
+        <span class="mono">{"answers":[2,0,3,...]}</span>.
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top:10px">
+    <button class="primary" onclick="quizSubmit()">POST quiz submit (answers → grade)</button>
+    <button class="warn" onclick="quizSubmitThenRecordBest()">Submit → then record best (2-step)</button>
+  </div>
+
+  <div class="small">
+    The “2-step” button expects the submit response to include either:
+    <span class="mono">percent</span> and <span class="mono">total</span> (and optionally <span class="mono">correct</span>).
+  </div>
 </div>
+
+<!-- QUIZ: RECORD BEST (DIRECT) -->
+<div class="card">
+  <h2>Quiz (Record Best Percent)</h2>
+  <div class="small">
+    This endpoint stores best score in <span class="mono">user_quiz_best</span>.
+    It does <b>not</b> grade answers—so use it after your submit/grade call.
+  </div>
+
+  <div class="row" style="margin-top:10px">
+    <div style="flex:1;min-width:220px">
+      <label>quiz_key</label>
+      <input id="record_quiz_key" value="p0_m0" />
+    </div>
+    <div style="flex:1;min-width:160px">
+      <label>percent</label>
+      <input id="record_percent" type="number" min="0" max="100" value="85" />
+    </div>
+    <div style="flex:1;min-width:160px">
+      <label>score (optional)</label>
+      <input id="record_score" type="number" min="0" value="17" />
+    </div>
+    <div style="flex:1;min-width:160px">
+      <label>total (optional)</label>
+      <input id="record_total" type="number" min="0" value="20" />
+    </div>
+  </div>
+
+  <div class="row" style="margin-top:10px">
+    <button class="primary" onclick="recordBest()">POST /quiz_record_score.php</button>
+  </div>
+</div>
+
+<!-- ADMIN (OPTIONAL) -->
+<div class="card">
+  <h2>Admin Endpoints (optional)</h2>
+  <div class="small">
+    These only work if you are logged in as <span class="mono">role=admin</span>.
+  </div>
+
+  <div class="row">
+    <button class="secondary" onclick="adminListUsers()">GET /admin_list_users.php</button>
+    <button class="secondary" onclick="adminDeleteAllUsers()">POST /admin_delete_all_users.php</button>
+  </div>
+
+  <div class="row" style="margin-top:10px">
+    <div style="flex:1;min-width:260px">
+      <label>Create user (JSON)</label>
+      <textarea id="adminCreateJson">{
+  "email": "newuser@example.com",
+  "password": "Passw0rd!",
+  "name": "New User",
+  "role": "registered"
+}</textarea>
+      <button class="primary" style="margin-top:8px" onclick="adminCreateUser()">POST /admin_create_user.php</button>
+    </div>
+
+    <div style="flex:1;min-width:260px">
+      <label>Update user (JSON)</label>
+      <textarea id="adminUpdateJson">{
+  "id": 1,
+  "email": "user@example.com",
+  "name": "Updated Name",
+  "role": "purchased",
+  "current_lesson": 0
+}</textarea>
+      <button class="primary" style="margin-top:8px" onclick="adminUpdateUser()">POST /admin_update_user.php</button>
+    </div>
+
+    <div style="flex:1;min-width:260px">
+      <label>Delete user (JSON)</label>
+      <textarea id="adminDeleteJson">{
+  "id": 1
+}</textarea>
+      <button class="danger" style="margin-top:8px" onclick="adminDeleteUser()">POST /admin_delete_user.php</button>
+    </div>
+  </div>
+</div>
+
+<!-- GENERIC REQUEST BUILDER -->
+<div class="card">
+  <h2>Generic Request Builder</h2>
+  <div class="small">Use this to test any endpoint not listed above.</div>
+
+  <div class="row" style="margin-top:10px">
+    <div style="flex:1;min-width:220px">
+      <label>Method</label>
+      <select id="genMethod">
+        <option>GET</option>
+        <option>POST</option>
+        <option>PUT</option>
+        <option>PATCH</option>
+        <option>DELETE</option>
+        <option>OPTIONS</option>
+      </select>
+    </div>
+    <div style="flex:2;min-width:320px">
+      <label>Path (starts with /)</label>
+      <input id="genPath" value="/curriculum_api.php" />
+    </div>
+  </div>
+
+  <label>Body (JSON, optional)</label>
+  <textarea id="genBody">{}</textarea>
+
+  <div class="row" style="margin-top:10px">
+    <button class="primary" onclick="genericSend()">Send</button>
+  </div>
 </div>
 
 <!-- INPUT -->
 <div class="card">
-<h2>Input / Request</h2>
-<pre id="req">{}</pre>
+  <h2>Input / Request</h2>
+  <pre id="req">{}</pre>
 </div>
 
 <!-- OUTPUT -->
 <div class="card">
-<h2>Output</h2>
-<pre id="out">{}</pre>
+  <h2>Output / Response</h2>
+  <pre id="out">{}</pre>
 </div>
 
 <script>
+  // ----- helpers -----
+  function setApiBaseToCurrentHost() {
+    document.getElementById('apiBase').value = window.location.origin + "/api";
+  }
+  setApiBaseToCurrentHost();
 
-function apiBase(){
-  return document.getElementById('apiBase').value.replace(/\/+$/,'');
-}
-
-function showRequest(info){
-  document.getElementById('req').textContent =
-    JSON.stringify(info,null,2);
-}
-
-function showOutput(info){
-  document.getElementById('out').textContent =
-    JSON.stringify(info,null,2);
-}
-
-async function request(path,opts={}){
-  const url = apiBase()+path;
-
-  const finalOpts={
-    ...opts,
-    credentials:'include'
-  };
-
-  finalOpts.headers=finalOpts.headers||{};
-  if(finalOpts.method && finalOpts.method!=='GET'){
-    finalOpts.headers['Content-Type']='application/json';
+  function apiBase() {
+    return (document.getElementById('apiBase').value || '').replace(/\/+$/,'');
   }
 
-  showRequest({
-    url,
-    method:finalOpts.method||'GET',
-    headers:finalOpts.headers,
-    body:finalOpts.body?JSON.parse(finalOpts.body):null
-  });
+  function showRequest(info) {
+    document.getElementById('req').textContent = JSON.stringify(info, null, 2);
+  }
+  function showOutput(info) {
+    document.getElementById('out').textContent = JSON.stringify(info, null, 2);
+  }
+  function clearPanels() {
+    showRequest({});
+    showOutput({});
+  }
 
-  try{
-    const res=await fetch(url,finalOpts);
-    const text=await res.text();
-    let data;
-    try{data=JSON.parse(text);}catch{data={raw:text};}
+  function safeJsonParse(text) {
+    try { return JSON.parse(text); } catch { return null; }
+  }
 
-    showOutput({
-      status:res.status,
-      ok:res.ok,
-      response:data
+  async function request(path, opts = {}) {
+    const url = apiBase() + path;
+
+    const finalOpts = {
+      ...opts,
+      credentials: 'include',
+      headers: (opts.headers || {})
+    };
+
+    // Set JSON content-type only when sending a body (and caller hasn't set it)
+    if (finalOpts.body !== undefined && !finalOpts.headers['Content-Type']) {
+      finalOpts.headers['Content-Type'] = 'application/json';
+    }
+
+    // Show request (try to pretty-print body)
+    let bodyPreview = null;
+    if (typeof finalOpts.body === 'string') {
+      const parsed = safeJsonParse(finalOpts.body);
+      bodyPreview = parsed !== null ? parsed : finalOpts.body;
+    } else if (finalOpts.body !== undefined) {
+      bodyPreview = finalOpts.body;
+    }
+
+    showRequest({
+      url,
+      method: finalOpts.method || 'GET',
+      headers: finalOpts.headers,
+      body: bodyPreview
     });
 
-    return data;
+    try {
+      const res = await fetch(url, finalOpts);
+      const text = await res.text();
+
+      let data;
+      try { data = JSON.parse(text); }
+      catch { data = { raw: text }; }
+
+      showOutput({
+        status: res.status,
+        ok: res.ok,
+        response: data
+      });
+
+      return { res, data };
+    } catch (e) {
+      showOutput({ error: String(e), url });
+      return null;
+    }
   }
-  catch(e){
-    showOutput({error:String(e)});
+
+  // ----- AUTH -----
+  function login() {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    return request('/login_api.php', {
+      method: 'POST',
+      body: JSON.stringify({ email, password })
+    });
   }
-}
 
-/* -------- API FUNCTIONS -------- */
+  function me() {
+    return request('/me.php', { method: 'GET' });
+  }
 
-function login(){
-  const email=document.getElementById('email').value;
-  const password=document.getElementById('password').value;
+  function logout() {
+    return request('/auth_logout.php', { method: 'POST', body: JSON.stringify({}) });
+  }
 
-  request('/login_api.php',{
-    method:'POST',
-    body:JSON.stringify({email,password})
-  });
-}
+  // ----- CORE -----
+  function getCurriculum() {
+    return request('/curriculum_api.php', { method: 'GET' });
+  }
 
-function getCurriculum(){
-  request('/curriculum_api.php',{method:'GET'});
-}
+  function lessonComplete() {
+    return request('/lesson_complete.php', { method: 'POST', body: JSON.stringify({}) });
+  }
 
-function lessonComplete(){
-  request('/lesson_complete.php',{method:'POST'});
-}
+  // ----- QUIZ SUBMIT (answers -> grade) -----
+  function quizSubmit() {
+    const quiz_key = document.getElementById('quiz_key').value.trim();
+    const answersRaw = document.getElementById('answersJson').value;
 
-function recordQuiz(){
-  const quiz_key=document.getElementById('quiz_key').value;
-  const percent=parseInt(document.getElementById('percent').value,10);
-  const score=parseInt(document.getElementById('score').value,10);
-  const total=parseInt(document.getElementById('total').value,10);
+    const answersObj = safeJsonParse(answersRaw);
+    if (!answersObj) {
+      showOutput({ error: "answers JSON is invalid. Fix the JSON in the answers box." });
+      return;
+    }
 
-  request('/quiz_record_score.php',{
-    method:'POST',
-    body:JSON.stringify({quiz_key,percent,score,total})
-  });
-}
+    const submitPath = (document.getElementById('quizSubmitPath').value || '').trim();
+    if (!submitPath.startsWith('/')) {
+      showOutput({ error: "Quiz submit endpoint must start with / (example: /quiz_submit.php)" });
+      return;
+    }
 
+    // Common pattern: send quiz_key + answers payload
+    const payload = { quiz_key, ...answersObj };
+
+    return request(submitPath, {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+  }
+
+  async function quizSubmitThenRecordBest() {
+    const result = await quizSubmit();
+    if (!result || !result.data) return;
+
+    // Accept several possible response shapes
+    // Expected from you: correct, incorrect, total, percent
+    const r = result.data;
+
+    const quiz_key = document.getElementById('quiz_key').value.trim();
+
+    const percent = (r.percent ?? r.percent_correct ?? r.pct ?? null);
+    const total   = (r.total ?? r.total_questions ?? null);
+    const correct = (r.correct ?? r.num_correct ?? r.score ?? null);
+
+    if (percent === null) {
+      showOutput({
+        error: "Submit succeeded, but response did not include percent (percent/percent_correct/pct).",
+        response: r
+      });
+      return;
+    }
+
+    // Fill the record-best UI fields (so you can see what will be saved)
+    document.getElementById('record_quiz_key').value = quiz_key;
+    document.getElementById('record_percent').value = Number(percent);
+    if (correct !== null) document.getElementById('record_score').value = Number(correct);
+    if (total !== null) document.getElementById('record_total').value = Number(total);
+
+    // Now actually record best
+    return recordBest();
+  }
+
+  // ----- QUIZ RECORD BEST -----
+  function recordBest() {
+    const quiz_key = document.getElementById('record_quiz_key').value.trim();
+    const percent  = Number(document.getElementById('record_percent').value);
+
+    const scoreStr = document.getElementById('record_score').value;
+    const totalStr = document.getElementById('record_total').value;
+
+    if (!quiz_key) return showOutput({ error: "Missing quiz_key" });
+    if (!Number.isFinite(percent) || percent < 0 || percent > 100) {
+      return showOutput({ error: "percent must be 0..100" });
+    }
+
+    const payload = { quiz_key, percent: Math.round(percent) };
+
+    if (scoreStr !== '') payload.score = Number(scoreStr);
+    if (totalStr !== '') payload.total = Number(totalStr);
+
+    return request('/quiz_record_score.php', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+  }
+
+  // ----- ADMIN (optional) -----
+  function adminListUsers() {
+    return request('/admin_list_users.php', { method: 'GET' });
+  }
+  function adminDeleteAllUsers() {
+    return request('/admin_delete_all_users.php', { method: 'POST', body: JSON.stringify({}) });
+  }
+  function adminCreateUser() {
+    const raw = document.getElementById('adminCreateJson').value;
+    const obj = safeJsonParse(raw);
+    if (!obj) return showOutput({ error: "Invalid JSON in Create User box" });
+    return request('/admin_create_user.php', { method: 'POST', body: JSON.stringify(obj) });
+  }
+  function adminUpdateUser() {
+    const raw = document.getElementById('adminUpdateJson').value;
+    const obj = safeJsonParse(raw);
+    if (!obj) return showOutput({ error: "Invalid JSON in Update User box" });
+    return request('/admin_update_user.php', { method: 'POST', body: JSON.stringify(obj) });
+  }
+  function adminDeleteUser() {
+    const raw = document.getElementById('adminDeleteJson').value;
+    const obj = safeJsonParse(raw);
+    if (!obj) return showOutput({ error: "Invalid JSON in Delete User box" });
+    return request('/admin_delete_user.php', { method: 'POST', body: JSON.stringify(obj) });
+  }
+
+  // ----- GENERIC -----
+  function genericSend() {
+    const method = document.getElementById('genMethod').value;
+    const path = document.getElementById('genPath').value.trim();
+    const bodyRaw = document.getElementById('genBody').value;
+
+    if (!path.startsWith('/')) return showOutput({ error: "Path must start with /" });
+
+    const opts = { method };
+
+    // only attach a body for non-GET/HEAD
+    if (method !== 'GET' && method !== 'HEAD') {
+      const obj = safeJsonParse(bodyRaw);
+      if (bodyRaw.trim() !== '' && obj === null) {
+        return showOutput({ error: "Body is not valid JSON" });
+      }
+      opts.body = JSON.stringify(obj ?? {});
+    }
+
+    return request(path, opts);
+  }
 </script>
 
 </body>
