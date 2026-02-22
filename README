@@ -1,13 +1,20 @@
 session = {
     user: {
-	current_lesson: 5,
 	...
     },
-    dashboard: { /* REFER TO SCREEN */
+    dashboard: {
 	progress: 28,
+	panels: [1,2,3]
 	...
     },
     hierarchy: {
-	modules: ...
+	...
+    }
+    messages: {
+       []
+    }
+    settings: {
+       ...
     }
 }
+
