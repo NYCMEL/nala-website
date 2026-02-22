@@ -970,7 +970,7 @@ wc.login = async function (email, passwd) {
     wc.log('login');
 
     try {
-        const res = await fetch(wc.apiURL + '/api/login_api.php', {
+        const res = await fetch(wc.apiURL + '/api/login.php', {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -1025,7 +1025,7 @@ wc.logout = async function () {
     wc.deleteCookie("user");
 
     try {
-        const res = await fetch(wc.apiURL + '/api/auth_logout.php', {
+        const res = await fetch(wc.apiURL + '/api/logout.php', {
             method: 'POST',
             credentials: 'include'
         });
@@ -1268,7 +1268,7 @@ wc.injectMaterialStyles = function () {
 //// Curriculum API
 /////////////////////////////////////////////////////////////////////////////////
 wc.getCurriculum = function (callback) {
-    fetch(wc.apiURL + "/api/curriculum_api.php", {
+    fetch(wc.apiURL + "/api/getCurriculum.php", {
 	method: "GET",
 	credentials: "include"
     }).then(res => {
@@ -1295,7 +1295,39 @@ wc.getCurriculum = function (callback) {
 //// Quiz API
 /////////////////////////////////////////////////////////////////////////////////
 wc.getQuiz = function (callback) {
-    fetch(wc.apiURL + "/api/quiz_api.php", {
+    fetch(wc.apiURL + "/api/getQuiz.php", {
+	method: "GET",
+	credentials: "include"
+    }).then(res => {
+	if (!res.ok) {
+	    throw new Error("Failed to fetch quiz");
+	}
+	return res.json();
+    }).then(data => {
+	wc.log("Quiz data:", data);
+	
+	if (typeof callback === "function") {
+	    callback(null, data);
+	}
+    }).catch(err => {
+	wc.error("getQuiz error:", err);
+	
+	if (typeof callback === "function") {
+	    callback(err, null);
+	}
+    });
+};
+
+/////////////////////////////////////////////////////////////////////////////////
+//// ASSUME DIFFERENT USER TYPES
+/////////////////////////////////////////////////////////////////////////////////
+wc.setUser = function (callback) {
+    fetch(wc.apiURL + "/api/setUser.php", {
+	role: "registered || free || admin",
+
+	moudle: "M2" || null ,
+	lesson: 2 || 0,
+
 	method: "GET",
 	credentials: "include"
     }).then(res => {
