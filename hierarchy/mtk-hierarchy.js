@@ -858,9 +858,18 @@ class MTKHierarchy {
       const lesson = module.lessons.find(l => l.id === lessonId);
       if (!lesson || !lesson.resources) continue;
       
-      // Get accessible resources
-      const videos = lesson.resources.filter(r => r.type === 'video' && r.access);
-      const photos = lesson.resources.filter(r => r.type === 'photo' && r.access);
+      // Get accessible resources (support legacy 'photo' and newer 'image' types)
+      const resources = (lesson.resources || []).map(r => ({
+        ...r,
+        type: (r.type || '').toLowerCase()
+      }));
+      const isAccessible = (r) => (r.access !== false);
+      const isVideo = (r) => r.type === 'video' || /vimeo\.com|youtube\.com|youtu\.be/i.test(r.url || '');
+      const isImage = (r) => (r.type === 'photo' || r.type === 'image' || r.type === 'img' || r.type === 'picture' ||
+        /\.(png|jpe?g|webp|gif|svg)(\?|$)/i.test(r.url || '')
+      );
+      const videos = resources.filter(r => isAccessible(r) && isVideo(r));
+      const photos = resources.filter(r => isAccessible(r) && isImage(r));
       
       if (typeof wc !== 'undefined') {
         wc.log("MTKHierarchy: Displaying lesson resources", lesson.title, "Videos:", videos.length, "Photos:", photos.length);
@@ -1076,10 +1085,19 @@ class MTKHierarchy {
    * Sanitize URL
    */
   sanitizeUrl(url) {
-    if (url.startsWith('http://') || url.startsWith('https://')) {
-      return url;
-    }
-    return '#';
+    if (!url) return '';
+    // Allow absolute http(s)
+    if (url.startsWith('http://') || url.startsWith('https://')) return url;
+    // Allow root-relative URLs like /media/...
+    if (url.startsWith('/')) return url;
+    // Allow protocol-relative URLs like //player.vimeo.com/...
+    if (url.startsWith('//')) return window.location.protocol + url;
+
+    // Otherwise treat as path relative to app.baseUrl (defaults to /repo_deploy/)
+    const base = (window.app && window.app.baseUrl) ? window.app.baseUrl : '/';
+    const baseNorm = base.endsWith('/') ? base : (base + '/');
+    const rel = url.startsWith('./') ? url.slice(2) : url;
+    return baseNorm + rel.replace(/^\//, '');
   }
 
   /**
@@ -1139,36 +1157,64 @@ if (typeof wc !== 'undefined' && wc.isLocal) {
   } else {
     console.error('Local mode but window.app.hierarchy is not defined. Please include mtk-hierarchy.config.js before mtk-hierarchy.js');
   }
-} else if (typeof wc !== 'undefined' && wc.getCurriculum) {
-  // REMOTE MODE - Fetch from API
-  wc.log("MTKHierarchy: Remote mode - fetching curriculum from API");
-  
-  wc.getCurriculum(function (err, data) {
-    if (err) {
-      wc.error("MTKHierarchy: Error fetching curriculum:", err);
-      return;
-    }
-    
-    // Set curriculum data
+} else if (typeof wc !== 'undefined') {
+  // REMOTE MODE - Prefer session (single call), fallback to curriculum endpoint
+  wc.log("MTKHierarchy: Remote mode - initializing hierarchy");
+
+  const initFromParts = (parts) => {
     window.app = window.app || {};
-    window.app.hierarchy = data.hierarchy.parts;
-    
-    wc.log("MTKHierarchy: Curriculum loaded");
+    window.app.hierarchy = Array.isArray(parts) ? parts : [];
+
+    wc.log("MTKHierarchy: Hierarchy data ready");
     wc.log("isLocal:", wc.isLocal, window.app.hierarchy);
-    
+
     const hierarchy = new MTKHierarchy(window.app.hierarchy);
-    
+
     // Expose to window namespace
     window.MTKHierarchy = hierarchy;
-    
+
     // Subscribe to events
     subscribeToEvents();
-    
+
     // Export for module systems
     if (typeof module !== 'undefined' && module.exports) {
       module.exports = { MTKHierarchy };
     }
-  });
+  };
+
+  // If session already exists on the page, use it immediately
+  const existingParts =
+    (window.session && window.session.hierarchy && window.session.hierarchy.parts) ||
+    (window.app && window.app.session && window.app.session.hierarchy && window.app.session.hierarchy.parts) ||
+    null;
+
+  if (existingParts && Array.isArray(existingParts)) {
+    wc.log("MTKHierarchy: Using existing session hierarchy");
+    initFromParts(existingParts);
+  } else if (wc.getSession) {
+    wc.getSession(function (err, data) {
+      if (err) {
+        wc.error("MTKHierarchy: Error fetching session:", err);
+        if (wc.getCurriculum) {
+          wc.getCurriculum(function (err2, data2) {
+            if (err2) return wc.error("MTKHierarchy: Error fetching curriculum:", err2);
+            initFromParts((data2 && data2.hierarchy && data2.hierarchy.parts) ? data2.hierarchy.parts : []);
+          });
+        }
+        return;
+      }
+      window.session = data;
+      initFromParts((data && data.hierarchy && data.hierarchy.parts) ? data.hierarchy.parts : []);
+    });
+  } else if (wc.getCurriculum) {
+    wc.getCurriculum(function (err, data) {
+      if (err) return wc.error("MTKHierarchy: Error fetching curriculum:", err);
+      initFromParts((data && data.hierarchy && data.hierarchy.parts) ? data.hierarchy.parts : []);
+    });
+  } else {
+    wc.error("MTKHierarchy: No getSession or getCurriculum available.");
+    initFromParts([]);
+  }
 } else {
   // FALLBACK - Try window.app.hierarchy if wc is not available
   if (typeof window.app !== 'undefined' && window.app.hierarchy) {
