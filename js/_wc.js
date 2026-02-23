@@ -1321,32 +1321,111 @@ wc.getQuiz = function (callback) {
 /////////////////////////////////////////////////////////////////////////////////
 //// ASSUME DIFFERENT USER TYPES
 /////////////////////////////////////////////////////////////////////////////////
-wc.setUser = function (callback) {
-    fetch(wc.apiURL + "/api/setUser.php", {
-	role: "registered || free || admin",
+wc.setUser = function (opts, callback) {
+    // opts: { role: "registered|free|admin", module: "M1", lesson: 0 }
+    opts = opts || {};
+    const role = opts.role || null;
+    const module = opts.module || null;
+    let lesson = (opts.lesson === 0 || opts.lesson) ? opts.lesson : null;
 
-	moudle: "M2" || null ,
-	lesson: 2 || 0,
+    // If module is provided but lesson is not, default lesson to 0 (per requirement)
+    if (module && (lesson === null || lesson === undefined)) lesson = 0;
 
-	method: "GET",
-	credentials: "include"
+    const qs = new URLSearchParams();
+    if (role) qs.set("role", role);
+    if (module) qs.set("module", module);
+    if (lesson !== null && lesson !== undefined) qs.set("lesson", String(lesson));
+
+    fetch(wc.apiURL + "/api/setUser.php?" + qs.toString(), {
+        method: "GET",
+        credentials: "include"
     }).then(res => {
-	if (!res.ok) {
-	    throw new Error("Failed to fetch quiz");
-	}
-	return res.json();
+        if (!res.ok) {
+            throw new Error("Failed to set user");
+        }
+        return res.json();
     }).then(data => {
-	wc.log("Quiz data:", data);
-	
-	if (typeof callback === "function") {
-	    callback(null, data);
-	}
+        wc.log("setUser data:", data);
+
+        if (typeof callback === "function") {
+            callback(null, data);
+        }
     }).catch(err => {
-	wc.error("getQuiz error:", err);
-	
-	if (typeof callback === "function") {
-	    callback(err, null);
-	}
+        wc.error("setUser error:", err);
+
+        if (typeof callback === "function") {
+            callback(err, null);
+        }
     });
 };
 
+
+
+
+/************************************************************
+ * LESSON COMPLETE API
+ ************************************************************/
+wc.lessonComplete = function (lessonNo, callback) {
+    const payload = { lesson_no: lessonNo };
+
+    fetch(wc.apiURL + "/api/lessonComplete.php", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+    }).then(res => {
+        if (!res.ok) {
+            throw new Error("Failed to mark lesson complete");
+        }
+        return res.json();
+    }).then(data => {
+        wc.log("lessonComplete data:", data);
+
+        if (typeof callback === "function") {
+            callback(null, data);
+        }
+    }).catch(err => {
+        wc.error("lessonComplete error:", err);
+
+        if (typeof callback === "function") {
+            callback(err, null);
+        }
+    });
+};
+
+
+/************************************************************
+ * SUBMIT QUIZ API
+ * answersMap format: { "29":"a", "37":"c", ... }
+ ************************************************************/
+wc.submitQuiz = function (quizSessionId, moduleId, answersMap, callback) {
+    const payload = {
+        quiz_session_id: quizSessionId,
+        module_id: moduleId,
+        answers: answersMap || {}
+    };
+
+    fetch(wc.apiURL + "/api/submitQuiz.php", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+    }).then(res => {
+        if (!res.ok) {
+            throw new Error("Failed to submit quiz");
+        }
+        return res.json();
+    }).then(data => {
+        wc.log("submitQuiz data:", data);
+
+        if (typeof callback === "function") {
+            callback(null, data);
+        }
+    }).catch(err => {
+        wc.error("submitQuiz error:", err);
+
+        if (typeof callback === "function") {
+            callback(err, null);
+        }
+    });
+};
