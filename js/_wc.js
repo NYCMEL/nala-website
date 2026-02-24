@@ -1440,7 +1440,7 @@ wc.submitQuiz = function (quizSessionId, moduleId, answersMap, callback) {
 };
 
 /************************************************************
- * SUBMIT lessonComplete API
+ * SEND lessonComplete API
  ************************************************************/
 wc.setLessonComplete = function(moduleId, lessonNo, callback) {
     const url = wc.apiURL + "/api/lessonComplete.php";
