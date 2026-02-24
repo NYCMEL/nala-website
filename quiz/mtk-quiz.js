@@ -717,36 +717,13 @@ if (typeof wc !== 'undefined' && wc.isLocal) {
     // REMOTE MODE - Fetch from API
     wc.log("MTK Quiz: Remote mode - fetching quiz from API");
     
-    wc.getQuiz(function (err, data) {
+    wc.getQuiz("module_0_0", function(err, data) {
 	if (err) {
-	    wc.error("MTK Quiz: Error fetching quiz:", err);
+	    alert(err.message);
 	    return;
 	}
-	
-	// Set quiz data
-	window.mtkQuizConfig = data.quiz;
-	
-	wc.log("MTK Quiz: Quiz data loaded");
-	wc.log("isLocal:", wc.isLocal);
-	
-	// Initialize with fetched config
-	if (document.readyState === 'loading') {
-	    document.addEventListener('DOMContentLoaded', () => initMtkQuiz(window.mtkQuizConfig));
-	} else {
-	    initMtkQuiz(window.mtkQuizConfig);
-	}
-	
-	// Backup initialization on window load
-	window.addEventListener('load', async () => {
-	    const element = document.querySelector('mtk-quiz.mtk-quiz') || 
-		  document.querySelector('mtk-quiz') ||
-		  document.querySelector('[class*="mtk-quiz"]');
-	    
-	    if (element && !element.mtkQuizInstance) {
-		wc.log('🔄 MTK Quiz: Backup initialization on window load');
-		await initMtkQuiz(window.mtkQuizConfig);
-	    }
-	});
+
+	console.log(">>>>>>>>>>>", data);
     });
 } else {
     // FALLBACK - Try window.mtkQuizConfig if wc is not available

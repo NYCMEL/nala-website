@@ -1303,11 +1303,13 @@ wc.getCurriculum = function (callback) {
 
 /////////////////////////////////////////////////////////////////////////////////
 //// Quiz API
+////  "url": "https://nala-test.com/api/getQuiz.php?module_id=M1&count=20",
 /////////////////////////////////////////////////////////////////////////////////
-wc.getQuiz = function (module, callback) {
-    fetch(wc.apiURL + "/api/getQuiz.php", {
+wc.getQuiz = function (moduleId, callback) {
+    wc.log("wc.getQuiz:", wc.apiURL + "/api/getQuiz.php?module_id=" + moduleId + "&count=" + app.quizSize);
+
+    fetch(wc.apiURL + "/api/getQuiz.php?module_id=" + moduleId + "&count=" + app.quizSize, {
 	method: "GET",
-	module_id: module,
 	credentials: "include"
     }).then(res => {
 	if (!res.ok) {
@@ -1440,3 +1442,192 @@ wc.submitQuiz = function (quizSessionId, moduleId, answersMap, callback) {
         }
     });
 };
+
+/************************************************************
+ * SUBMIT lessonComplete API
+ ************************************************************/
+wc.setLessonComplete = function(moduleId, lessonNo, callback) {
+    const url = wc.apiURL + "/api/lessonComplete.php";
+    
+    wc.log('wc.setLessonComplete: Marking lesson complete', moduleId, lessonNo);
+    
+    fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+	    module_id: moduleId,
+	    lesson_no: lessonNo
+	}),
+
+        credentials: "include"
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        wc.log('wc.setLessonComplete: Success', data);
+        if (callback) callback(null, data);
+    })
+    .catch(error => {
+        wc.error('wc.setLessonComplete: Error', error);
+        if (callback) callback(error, null);
+    });
+};
+
+/**
+ * Update MTK Hierarchy configuration
+ * Sets access flags for modules and lessons based on current position
+ * 
+ * @param {string} moduleName - Module identifier (e.g., "M1", "M2")
+ * @param {number} lessonNumber - Lesson number (1-based index)
+ */
+wc.mtkHierarchyUpdate = function(moduleName, lessonNumber) {
+    wc.log('mtkHierarchyUpdate: Updating hierarchy', { moduleName, lessonNumber });
+    
+    // Validate inputs
+    if (!moduleName || typeof lessonNumber !== 'number') {
+        wc.error('mtkHierarchyUpdate: Invalid parameters', { moduleName, lessonNumber });
+        return false;
+    }
+    
+    // Check if hierarchy exists
+    if (!window.app || !window.app.hierarchy) {
+        wc.error('mtkHierarchyUpdate: window.app.hierarchy not found');
+        return false;
+    }
+    
+    let targetModuleFound = false;
+    let targetLessonFound = false;
+    
+    // Iterate through courses
+    window.app.hierarchy.forEach((course, courseIndex) => {
+        if (!course.modules) return;
+        
+        // Iterate through modules
+        course.modules.forEach((module, moduleIndex) => {
+            const isTargetModule = module.id === moduleName || 
+                  module.id === `module-${moduleName}` ||
+                  module.id.endsWith(`-${moduleName}`);
+            
+            if (isTargetModule) {
+                targetModuleFound = true;
+                
+                // Enable this module and all previous modules
+                module.access = true;
+                
+                // Update lessons in this module
+                if (module.lessons && Array.isArray(module.lessons)) {
+                    module.lessons.forEach((lesson, lessonIndex) => {
+                        const currentLessonNumber = lessonIndex + 1;
+                        
+                        if (currentLessonNumber <= lessonNumber) {
+                            // Enable this lesson and all previous lessons
+                            lesson.access = true;
+                            targetLessonFound = true;
+                            
+                            // Enable all resources in enabled lessons
+                            if (lesson.resources && Array.isArray(lesson.resources)) {
+                                lesson.resources.forEach(resource => {
+                                    resource.access = true;
+                                });
+                            }
+                        } else {
+                            // Disable future lessons
+                            lesson.access = false;
+                            
+                            // Disable resources in disabled lessons
+                            if (lesson.resources && Array.isArray(lesson.resources)) {
+                                lesson.resources.forEach(resource => {
+                                    resource.access = false;
+                                });
+                            }
+                        }
+                    });
+                }
+                
+                // Enable quiz if all lessons are completed
+                if (module.quiz) {
+                    const totalLessons = module.lessons ? module.lessons.length : 0;
+                    module.quiz.access = (lessonNumber >= totalLessons);
+                }
+            } else {
+                // Check if this is a previous module (should be enabled)
+                const moduleNumber = parseInt(module.id.match(/\d+$/)?.[0] || '0');
+                const targetModuleNumber = parseInt(moduleName.match(/\d+$/)?.[0] || '0');
+                
+                if (moduleNumber < targetModuleNumber) {
+                    // Enable all previous modules completely
+                    module.access = true;
+                    
+                    if (module.lessons) {
+                        module.lessons.forEach(lesson => {
+                            lesson.access = true;
+                            if (lesson.resources) {
+                                lesson.resources.forEach(resource => {
+                                    resource.access = true;
+                                });
+                            }
+                        });
+                    }
+                    
+                    if (module.quiz) {
+                        module.quiz.access = true;
+                    }
+                } else {
+                    // Disable future modules
+                    module.access = false;
+                    
+                    if (module.lessons) {
+                        module.lessons.forEach(lesson => {
+                            lesson.access = false;
+                            if (lesson.resources) {
+                                lesson.resources.forEach(resource => {
+                                    resource.access = false;
+                                });
+                            }
+                        });
+                    }
+                    
+                    if (module.quiz) {
+                        module.quiz.access = false;
+                    }
+                }
+            }
+        });
+    });
+    
+    if (!targetModuleFound) {
+        wc.error('mtkHierarchyUpdate: Module not found', moduleName);
+        return false;
+    }
+    
+    if (!targetLessonFound) {
+        wc.error('mtkHierarchyUpdate: Lesson not found', lessonNumber);
+        return false;
+    }
+    
+    // Re-render hierarchy if instance exists
+    if (window.MTKHierarchy && window.MTKHierarchy.render) {
+        wc.log('mtkHierarchyUpdate: Re-rendering hierarchy');
+        window.MTKHierarchy.render();
+    }
+    
+    // Publish update event
+    if (wc.publish) {
+        wc.publish('mtk-hierarchy:updated', {
+            moduleName,
+            lessonNumber,
+            timestamp: new Date().toISOString()
+        });
+    }
+    
+    wc.log('mtkHierarchyUpdate: Update complete', { moduleName, lessonNumber });
+    return true;
+}
+
