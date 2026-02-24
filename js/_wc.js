@@ -1442,3 +1442,40 @@ wc.submitQuiz = function (quizSessionId, moduleId, answersMap, callback) {
         }
     });
 };
+
+/************************************************************
+ * SUBMIT lessonComplete API
+ ************************************************************/
+wc.setLessonComplete = function(moduleId, lessonNo, callback) {
+    const url = wc.apiURL + "/api/lessonComplete.php";
+    
+    wc.log('wc.setLessonComplete: Marking lesson complete', moduleId, lessonNo);
+    
+    fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+	    module_id: moduleId,
+	    lesson_no: lessonNo
+	}),
+
+        credentials: "include"
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        wc.log('wc.setLessonComplete: Success', data);
+        if (callback) callback(null, data);
+    })
+    .catch(error => {
+        wc.error('wc.setLessonComplete: Error', error);
+        if (callback) callback(error, null);
+    });
+};
