@@ -982,32 +982,42 @@ wc.login = async function (email, passwd) {
             })
         });
 
-        const data = await res.json();
+        // Read response safely (handles PHP/HTML error pages that are not JSON)
+        const text = await res.text();
+        let data = null;
+        try {
+            data = JSON.parse(text);
+        } catch (e) {
+            wc.error("login.php returned non-JSON:", text);
+            throw new Error("Server returned non-JSON from login.php (see console). First 300 chars: " + text.slice(0, 300));
+        }
 
         if (!res.ok) {
-            alert('1: Login Failed: combination of email and password');
+            // If backend provides an error message, show it; else show a generic one
+            const msg = (data && (data.error || data.message)) ? (data.error || data.message) : 'combination of email and password';
+            alert('Login Failed: ' + msg);
             return false;
         }
 
-	// START TRACKING when loggediin
-	wc.startInactivityTracking();
+        // START TRACKING when logged in
+        wc.startInactivityTracking();
 
-	// GET SESSION 
-	wc.getSession();
+        // GET SESSION
+        wc.getSession();
 
         wc.log('wc.login > data:', data);
-	wc.configure = data;
+        wc.configure = data;
 
-	wc.setCookie("user", JSON.stringify(wc.configure.user));
+        wc.setCookie("user", JSON.stringify(wc.configure.user));
 
-	// SET USER IN HEADER
-	wc.user = JSON.parse(wc.getCookie("user"));
-	$("#uname").html(wc.user.name);
+        // SET USER IN HEADER
+        wc.user = JSON.parse(wc.getCookie("user"));
+        $("#uname").html(wc.user.name);
 
         return true;
     } catch (err) {
-        wc.error("2 Login failed:", err);
-	alert("2 Login failed:", err)
+        wc.error("Login failed:", err);
+        alert("Login failed: " + (err && err.message ? err.message : String(err)));
         return false;
     } finally {
     }
