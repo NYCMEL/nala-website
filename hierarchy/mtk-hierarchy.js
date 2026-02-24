@@ -1236,6 +1236,10 @@ function subscribeToEvents() {
   
   wc.subscribe('mtk-hierarchy:lesson-toggled', function(msg, data) {
     wc.info('📝 Lesson Toggled:', data);
+
+      console.log("AAAAAAAAAA", JSON.stringify(data))
+
+      wc.lessonComplete(data.moduleId, data.lessonId);
   });
   
   wc.subscribe('mtk-hierarchy:module-completed', function(msg, data) {
