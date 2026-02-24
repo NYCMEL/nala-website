@@ -1306,7 +1306,7 @@ wc.getCurriculum = function (callback) {
 ////  "url": "https://nala-test.com/api/getQuiz.php?module_id=M1&count=20",
 /////////////////////////////////////////////////////////////////////////////////
 wc.getQuiz = function (moduleId, callback) {
-    wc.log(">>>>>>wc.getQuiz:", wc.apiURL + "/api/getQuiz.php?module_id=" + moduleId + "&count=" + app.quizSize);
+    wc.log("wc.getQuiz:", wc.apiURL + "/api/getQuiz.php?module_id=" + moduleId + "&count=" + app.quizSize);
 
     fetch(wc.apiURL + "/api/getQuiz.php?module_id=" + moduleId + "&count=" + app.quizSize, {
 	method: "GET",
