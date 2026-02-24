@@ -1304,10 +1304,10 @@ wc.getCurriculum = function (callback) {
 /////////////////////////////////////////////////////////////////////////////////
 //// Quiz API
 /////////////////////////////////////////////////////////////////////////////////
-wc.getQuiz = function (module, size, callback) {
+wc.getQuiz = function (moduleId, callback) {
     fetch(wc.apiURL + "/api/getQuiz.php", {
 	method: "GET",
-	module_id: module,
+	module_id: moduleId,
 	credentials: "include"
     }).then(res => {
 	if (!res.ok) {
