@@ -1077,8 +1077,8 @@ wc.getSession = function (callback) {
 	
         wc.log('SESSION', data.logged_in);
 	
-	console.log("wc.getSession: BBBBBBBBBBBBBBB " + JSON.stringify(data));
-
+	console.log("wc.getSession:" + data);
+	
         if (typeof callback === 'function') {
             callback(data.logged_in, data);
         }
