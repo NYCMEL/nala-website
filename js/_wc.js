@@ -1476,13 +1476,13 @@ wc.setLessonComplete = function(moduleId, lessonNo, callback) {
     });
 };
 
-/**
+/************************************************************
  * Update MTK Hierarchy configuration
  * Sets access flags for modules and lessons based on current position
  * 
  * @param {string} moduleName - Module identifier (e.g., "M1", "M2")
  * @param {number} lessonNumber - Lesson number (1-based index)
- */
+ ************************************************************/
 wc.mtkHierarchyUpdate = function(moduleName, lessonNumber) {
     wc.log('mtkHierarchyUpdate: Updating hierarchy', { moduleName, lessonNumber });
     
