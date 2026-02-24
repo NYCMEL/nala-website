@@ -1372,9 +1372,6 @@ wc.setUser = function (opts, callback) {
     });
 };
 
-
-
-
 /************************************************************
  * LESSON COMPLETE API
  ************************************************************/
@@ -1405,7 +1402,6 @@ wc.lessonComplete = function (lessonNo, callback) {
         }
     });
 };
-
 
 /************************************************************
  * SUBMIT QUIZ API
@@ -1630,4 +1626,3 @@ wc.mtkHierarchyUpdate = function(moduleName, lessonNumber) {
     wc.log('mtkHierarchyUpdate: Update complete', { moduleName, lessonNumber });
     return true;
 }
-
