@@ -1303,33 +1303,49 @@ wc.getCurriculum = function (callback) {
 
 /////////////////////////////////////////////////////////////////////////////////
 //// Quiz API
-////  "url": "https://nala-test.com/api/getQuiz.php?module_id=M1&count=20",
 /////////////////////////////////////////////////////////////////////////////////
-wc.getQuiz = function (moduleId, callback) {
-    wc.log("wc.getQuiz:", wc.apiURL + "/api/getQuiz.php?module_id=" + moduleId + "&count=" + app.quizSize);
+wc.getQuiz = function (moduleId, callback, count) {
+    // Usage:
+    //   wc.getQuiz("module_0_0", function(err, data){ ... });
+    //   wc.getQuiz("module_0_0", function(err, data){ ... }, 10);
+    //
+    // moduleId must match the quiz_questions.module_id values (e.g., "M1", "M2"...).
+    if (typeof moduleId !== "string" || !moduleId.trim()) {
+        const err = new Error("Missing moduleId");
+        if (typeof callback === "function") callback(err, null);
+        return;
+    }
 
-    fetch(wc.apiURL + "/api/getQuiz.php?module_id=" + moduleId + "&count=" + app.quizSize, {
-	method: "GET",
-	credentials: "include"
-    }).then(res => {
-	if (!res.ok) {
-	    throw new Error("Failed to fetch quiz");
-	}
-	return res.json();
+    const qs = new URLSearchParams();
+    qs.set("module_id", moduleId.trim());
+    if (Number.isFinite(count) && count > 0) qs.set("count", String(Math.min(50, Math.floor(count))));
+
+    fetch(wc.apiURL + "/api/getQuiz.php?" + qs.toString(), {
+        method: "GET",
+        credentials: "include"
+    }).then(async (res) => {
+        const text = await res.text();
+        let data = null;
+        try { data = JSON.parse(text); } catch (e) {
+            throw new Error("getQuiz returned non-JSON. First 300 chars: " + text.slice(0, 300));
+        }
+        if (!res.ok || (data && data.ok === false)) {
+            const msg = (data && (data.error || data.message)) ? (data.error || data.message) : ("HTTP " + res.status);
+            const err = new Error(msg);
+            err.status = res.status;
+            err.data = data;
+            throw err;
+        }
+        return data;
     }).then(data => {
-	wc.log("Quiz data:", data);
-	
-	if (typeof callback === "function") {
-	    callback(null, data);
-	}
+        wc.log("Quiz data:", data);
+        if (typeof callback === "function") callback(null, data);
     }).catch(err => {
-	wc.error("getQuiz error:", err);
-	
-	if (typeof callback === "function") {
-	    callback(err, null);
-	}
+        wc.error("getQuiz error:", err);
+        if (typeof callback === "function") callback(err, null);
     });
 };
+
 
 /////////////////////////////////////////////////////////////////////////////////
 //// ASSUME DIFFERENT USER TYPES
@@ -1378,33 +1394,37 @@ wc.setUser = function (opts, callback) {
 /************************************************************
  * LESSON COMPLETE API
  ************************************************************/
-wc.lessonComplete = function (lessonNo, callback) {
-    const payload = { lesson_no: lessonNo };
 
-    fetch(wc.apiURL + "/api/lessonComplete.php", {
+wc.advanceLesson = function (callback) {
+    // Increments current_lesson for the logged-in user by +1.
+    // Call this when a lesson is viewed.
+    fetch(wc.apiURL + "/api/advanceLesson.php", {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-    }).then(res => {
-        if (!res.ok) {
-            throw new Error("Failed to mark lesson complete");
+        body: JSON.stringify({})
+    }).then(async (res) => {
+        const text = await res.text();
+        let data = null;
+        try { data = JSON.parse(text); } catch (e) {
+            throw new Error("advanceLesson returned non-JSON. First 300 chars: " + text.slice(0, 300));
         }
-        return res.json();
+        if (!res.ok || (data && data.ok === false)) {
+            const msg = (data && (data.error || data.message)) ? (data.error || data.message) : ("HTTP " + res.status);
+            const err = new Error(msg);
+            err.status = res.status;
+            err.data = data;
+            throw err;
+        }
+        return data;
     }).then(data => {
-        wc.log("lessonComplete data:", data);
-
-        if (typeof callback === "function") {
-            callback(null, data);
-        }
+        if (typeof callback === "function") callback(null, data);
     }).catch(err => {
-        wc.error("lessonComplete error:", err);
-
-        if (typeof callback === "function") {
-            callback(err, null);
-        }
+        wc.error("advanceLesson error:", err);
+        if (typeof callback === "function") callback(err, null);
     });
 };
+
 
 
 /************************************************************
@@ -1442,192 +1462,3 @@ wc.submitQuiz = function (quizSessionId, moduleId, answersMap, callback) {
         }
     });
 };
-
-/************************************************************
- * SUBMIT lessonComplete API
- ************************************************************/
-wc.setLessonComplete = function(moduleId, lessonNo, callback) {
-    const url = wc.apiURL + "/api/lessonComplete.php";
-    
-    wc.log('wc.setLessonComplete: Marking lesson complete', moduleId, lessonNo);
-    
-    fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-	    module_id: moduleId,
-	    lesson_no: lessonNo
-	}),
-
-        credentials: "include"
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        wc.log('wc.setLessonComplete: Success', data);
-        if (callback) callback(null, data);
-    })
-    .catch(error => {
-        wc.error('wc.setLessonComplete: Error', error);
-        if (callback) callback(error, null);
-    });
-};
-
-/**
- * Update MTK Hierarchy configuration
- * Sets access flags for modules and lessons based on current position
- * 
- * @param {string} moduleName - Module identifier (e.g., "M1", "M2")
- * @param {number} lessonNumber - Lesson number (1-based index)
- */
-wc.mtkHierarchyUpdate = function(moduleName, lessonNumber) {
-    wc.log('mtkHierarchyUpdate: Updating hierarchy', { moduleName, lessonNumber });
-    
-    // Validate inputs
-    if (!moduleName || typeof lessonNumber !== 'number') {
-        wc.error('mtkHierarchyUpdate: Invalid parameters', { moduleName, lessonNumber });
-        return false;
-    }
-    
-    // Check if hierarchy exists
-    if (!window.app || !window.app.hierarchy) {
-        wc.error('mtkHierarchyUpdate: window.app.hierarchy not found');
-        return false;
-    }
-    
-    let targetModuleFound = false;
-    let targetLessonFound = false;
-    
-    // Iterate through courses
-    window.app.hierarchy.forEach((course, courseIndex) => {
-        if (!course.modules) return;
-        
-        // Iterate through modules
-        course.modules.forEach((module, moduleIndex) => {
-            const isTargetModule = module.id === moduleName || 
-                  module.id === `module-${moduleName}` ||
-                  module.id.endsWith(`-${moduleName}`);
-            
-            if (isTargetModule) {
-                targetModuleFound = true;
-                
-                // Enable this module and all previous modules
-                module.access = true;
-                
-                // Update lessons in this module
-                if (module.lessons && Array.isArray(module.lessons)) {
-                    module.lessons.forEach((lesson, lessonIndex) => {
-                        const currentLessonNumber = lessonIndex + 1;
-                        
-                        if (currentLessonNumber <= lessonNumber) {
-                            // Enable this lesson and all previous lessons
-                            lesson.access = true;
-                            targetLessonFound = true;
-                            
-                            // Enable all resources in enabled lessons
-                            if (lesson.resources && Array.isArray(lesson.resources)) {
-                                lesson.resources.forEach(resource => {
-                                    resource.access = true;
-                                });
-                            }
-                        } else {
-                            // Disable future lessons
-                            lesson.access = false;
-                            
-                            // Disable resources in disabled lessons
-                            if (lesson.resources && Array.isArray(lesson.resources)) {
-                                lesson.resources.forEach(resource => {
-                                    resource.access = false;
-                                });
-                            }
-                        }
-                    });
-                }
-                
-                // Enable quiz if all lessons are completed
-                if (module.quiz) {
-                    const totalLessons = module.lessons ? module.lessons.length : 0;
-                    module.quiz.access = (lessonNumber >= totalLessons);
-                }
-            } else {
-                // Check if this is a previous module (should be enabled)
-                const moduleNumber = parseInt(module.id.match(/\d+$/)?.[0] || '0');
-                const targetModuleNumber = parseInt(moduleName.match(/\d+$/)?.[0] || '0');
-                
-                if (moduleNumber < targetModuleNumber) {
-                    // Enable all previous modules completely
-                    module.access = true;
-                    
-                    if (module.lessons) {
-                        module.lessons.forEach(lesson => {
-                            lesson.access = true;
-                            if (lesson.resources) {
-                                lesson.resources.forEach(resource => {
-                                    resource.access = true;
-                                });
-                            }
-                        });
-                    }
-                    
-                    if (module.quiz) {
-                        module.quiz.access = true;
-                    }
-                } else {
-                    // Disable future modules
-                    module.access = false;
-                    
-                    if (module.lessons) {
-                        module.lessons.forEach(lesson => {
-                            lesson.access = false;
-                            if (lesson.resources) {
-                                lesson.resources.forEach(resource => {
-                                    resource.access = false;
-                                });
-                            }
-                        });
-                    }
-                    
-                    if (module.quiz) {
-                        module.quiz.access = false;
-                    }
-                }
-            }
-        });
-    });
-    
-    if (!targetModuleFound) {
-        wc.error('mtkHierarchyUpdate: Module not found', moduleName);
-        return false;
-    }
-    
-    if (!targetLessonFound) {
-        wc.error('mtkHierarchyUpdate: Lesson not found', lessonNumber);
-        return false;
-    }
-    
-    // Re-render hierarchy if instance exists
-    if (window.MTKHierarchy && window.MTKHierarchy.render) {
-        wc.log('mtkHierarchyUpdate: Re-rendering hierarchy');
-        window.MTKHierarchy.render();
-    }
-    
-    // Publish update event
-    if (wc.publish) {
-        wc.publish('mtk-hierarchy:updated', {
-            moduleName,
-            lessonNumber,
-            timestamp: new Date().toISOString()
-        });
-    }
-    
-    wc.log('mtkHierarchyUpdate: Update complete', { moduleName, lessonNumber });
-    return true;
-}
-
