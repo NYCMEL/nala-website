@@ -1429,9 +1429,8 @@ wc.lessonComplete = function (callback) {
 /************************************************************
  * SET CURRENT LESSON API
  ************************************************************/
-
 wc.setCurrentLesson = function(role, module, lesson) {
-  fetch('/api/setCurrentLesson.php?role='+ role + '&module=' + module + '&lesson=' + lesson, {
+    fetch(wc.apiURL + '/api/setCurrentLesson.php?role='+ role + '&module=' + module + '&lesson=' + lesson, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
