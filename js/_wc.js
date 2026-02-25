@@ -1012,8 +1012,7 @@ wc.login = async function (email, passwd) {
         wc.configure = data;
 	
         // SET USER IN HEADER
-        wc.user = JSON.parse(wc.getCookie("user"));
-        $("#uname").html(wc.user.name);
+        $("#uname").html(wc.configure.user.name);
 
         return true;
     } catch (err) {
