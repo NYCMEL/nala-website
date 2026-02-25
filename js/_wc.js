@@ -1278,6 +1278,8 @@ wc.injectMaterialStyles = function () {
 //// Curriculum API
 /////////////////////////////////////////////////////////////////////////////////
 wc.getCurriculum = function (callback) {
+    alert("wc.getCurriculum: MUST BE REMOVBED")
+
     fetch(wc.apiURL + "/api/getCurriculum.php", {
 	method: "GET",
 	credentials: "include"
