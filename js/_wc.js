@@ -1009,10 +1009,10 @@ wc.login = async function (email, passwd) {
 
 	// SAVE ENTIRE SESSION DATA
         wc.log('ZZZZZZZZZZZZZZZ wc.login > data:', data);
+
         wc.configure = data;
 	
         // SET USER IN HEADER
-
         $("#uname").html(wc.configure.user.name);
 
         return true;
@@ -1072,6 +1072,8 @@ wc.getSession = function (callback) {
         wc.log('SESSION', data.logged_in);
 	
 	console.log("wc.getSession: BBBBBBBBBBBBBBB " + JSON.stringify(data));
+
+	wc.configure = data;
 
         if (typeof callback === 'function') {
             callback(data.logged_in, data);
