@@ -1007,11 +1007,10 @@ wc.login = async function (email, passwd) {
         // GET SESSION
         wc.getSession();
 
+	// SAVE ENTIRE SESSION DATA
         wc.log('wc.login > data:', data);
         wc.configure = data;
-
-        // wc.setCookie("user", JSON.stringify(wc.configure.user));
-
+	
         // SET USER IN HEADER
         wc.user = JSON.parse(wc.getCookie("user"));
         $("#uname").html(wc.user.name);

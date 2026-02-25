@@ -51,7 +51,7 @@ class MTKHierarchy {
 		// Only add ID if missing - otherwise use from JSON
 		// Use M1, M2, M3 format for fallback IDs
 		if (!module.id) {
-		    wc.warn(`MTKHierarchy: Module missing ID, generating fallback: M${globalModuleCounter}`);
+		    //wc.warn(`MTKHierarchy: Module missing ID, generating fallback: M${globalModuleCounter}`);
 		    module.id = `M${globalModuleCounter}`;
 		}
 		globalModuleCounter++;
@@ -61,7 +61,7 @@ class MTKHierarchy {
 		module.lessons.forEach((lesson, lIdx) => {
 		    // Only add ID if missing - otherwise use from JSON
 		    if (!lesson.id) {
-			wc.warn(`MTKHierarchy: Lesson missing ID, generating fallback: ${module.id}-L${lIdx + 1}`);
+			//wc.warn(`MTKHierarchy: Lesson missing ID, generating fallback: ${module.id}-L${lIdx + 1}`);
 			lesson.id = `${module.id}-L${lIdx + 1}`;
 		    }
 		    
@@ -70,7 +70,7 @@ class MTKHierarchy {
 		    lesson.resources.forEach((resource, rIdx) => {
 			// Only add ID if missing - otherwise use from JSON
 			if (!resource.id) {
-			    wc.warn(`MTKHierarchy: Resource missing ID, generating fallback: ${lesson.id}-R${rIdx + 1}`);
+			    //wc.warn(`MTKHierarchy: Resource missing ID, generating fallback: ${lesson.id}-R${rIdx + 1}`);
 			    resource.id = `${lesson.id}-R${rIdx + 1}`;
 			}
 			
@@ -83,7 +83,7 @@ class MTKHierarchy {
 		
 		// Handle quiz ID
 		if (module.quiz && !module.quiz.id) {
-		    wc.warn(`MTKHierarchy: Quiz missing ID, generating fallback: ${module.id}-Quiz`);
+		    //wc.warn(`MTKHierarchy: Quiz missing ID, generating fallback: ${module.id}-Quiz`);
 		    module.quiz.id = `${module.id}-Quiz`;
 		}
 	    });
@@ -1178,7 +1178,7 @@ if (typeof wc !== 'undefined' && wc.isLocal) {
 	
 	// Set curriculum data
 	window.app = window.app || {};
-	window.app.hierarchy = data.hierarchy.parts;
+	window.app.hierarchy = wc.configure.hierarchy.parts;
 	
 	wc.log("MTKHierarchy: Curriculum loaded");
 	wc.log("isLocal:", wc.isLocal, window.app.hierarchy);
