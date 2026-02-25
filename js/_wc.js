@@ -1430,19 +1430,14 @@ wc.lessonComplete = function (callback) {
  * SET CURRENT LESSON API
  ************************************************************/
 
-wc.setCurrentLesson = function(lesson, cb) {
-  fetch('/api/setCurrentLesson.php', {
+wc.setCurrentLesson = function(role, module, lesson) {
+  fetch('/api/setCurrentLesson.php?role='+ role + '&module' + module + '&lesson' + lesson, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
     body: JSON.stringify({ lesson })
   })
   .then(r => r.json())
-  .then(data => {
-    if (!data.ok) return cb(new Error(data.error));
-    cb(null, data);
-  })
-  .catch(err => cb(err));
 };
 
 /************************************************************
