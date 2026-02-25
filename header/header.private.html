@@ -51,12 +51,7 @@
 <script src="header/header.js"></script>
 
 <script>
- try {
-     // SET USER IN HEADER
-     wc.user = JSON.parse(wc.getCookie("user"));
-     $("#uname").html(wc.user.name);
- }
- catch(e) {
-     wc.warn(e.name + ' > ' + e.message);
- }
+ wc.timeout(function(){
+     $("#uname").html(wc.configure.user.name);
+ }, 1000, 1);
 </script>
