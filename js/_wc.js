@@ -1012,6 +1012,7 @@ wc.login = async function (email, passwd) {
         wc.configure = data;
 	
         // SET USER IN HEADER
+
         $("#uname").html(wc.configure.user.name);
 
         return true;
@@ -1028,11 +1029,6 @@ wc.login = async function (email, passwd) {
 /////////////////////////////////////////////////////////////////////////////////
 wc.logout = async function () {
     wc.log('logout');
-
-    wc.session = wc.user = null;
-
-    // REMOVE USER NAME
-    wc.deleteCookie("user");
 
     try {
         const res = await fetch(wc.apiURL + '/api/logout.php', {
@@ -1073,8 +1069,6 @@ wc.getSession = function (callback) {
     return fetch(wc.apiURL + '/api/me.php', {
         credentials: 'include'
     }).then(res => res.json()).then(data => {
-	wc.session = data; /* SAVE THIS FOR USE EVERYWHERE */
-	
         wc.log('SESSION', data.logged_in);
 	
 	console.log("wc.getSession: BBBBBBBBBBBBBBB " + JSON.stringify(data));
