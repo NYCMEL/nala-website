@@ -27,8 +27,6 @@
 
      wc.configure = session;
 
-     alert("========: " +  JSON.stringify(session.user));
-
      if (loggedIn) {
 	 wc.log('IS LOGGED IN');
 	 mtk_pager.show('dashboard');
@@ -36,6 +34,8 @@
 	 // SHOW PUBLIC HEADER
 	 $(".app-header").hide(function() {
 	     $("#header-private").show();
+
+	     alert("========: " + JSON.stringify(session.user));
 	 });
      } else {
 	 wc.log('IS NOT LOGGED IN');
