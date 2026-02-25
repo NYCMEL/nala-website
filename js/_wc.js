@@ -985,6 +985,7 @@ wc.login = async function (email, passwd) {
         // Read response safely (handles PHP/HTML error pages that are not JSON)
         const text = await res.text();
         let data = null;
+
         try {
             data = JSON.parse(text);
         } catch (e) {
@@ -1070,9 +1071,7 @@ wc.getSession = function (callback) {
     }).then(res => res.json()).then(data => {
 	wc.session = data; /* SAVE THIS FOR USE EVERYWHERE */
 	
-        wc.log('SESSION', data.logged_in);
-	
-	console.log("wc.getSession: BBBBBBBBBBBBBBB " + JSON.stringify(data));
+	wc.log("wc.getSession:", data);
 
         if (typeof callback === 'function') {
             callback(data.logged_in, data);

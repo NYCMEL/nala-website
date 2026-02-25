@@ -1145,7 +1145,7 @@ class MTKHierarchy {
 
 // Initialize hierarchy - support both local and remote config
 // GET FRESH DATA
-if (typeof wc !== 'undefined' && wc.isLocal) {
+if (wc.isLocal) {
     // LOCAL MODE - Use window.app.hierarchy
     if (typeof window.app !== 'undefined' && window.app.hierarchy) {
 	wc.log("MTKHierarchy: Local mode - using window.app.hierarchy");
@@ -1166,57 +1166,28 @@ if (typeof wc !== 'undefined' && wc.isLocal) {
     } else {
 	console.error('Local mode but window.app.hierarchy is not defined. Please include mtk-hierarchy.config.js before mtk-hierarchy.js');
     }
-} else if (typeof wc !== 'undefined' && wc.getCurriculum) {
+} else if (wc.session.hierarchy) {
     // REMOTE MODE - Fetch from API
     wc.log("MTKHierarchy: Remote mode - fetching curriculum from API");
     
-    wc.getCurriculum(function (err, data) {
-	if (err) {
-	    wc.error("MTKHierarchy: Error fetching curriculum:", err);
-	    return;
-	}
-	
-	// Set curriculum data
-	window.app = window.app || {};
-	window.app.hierarchy = data.hierarchy.parts;
-	
-	wc.log("MTKHierarchy: Curriculum loaded");
-	wc.log("isLocal:", wc.isLocal, window.app.hierarchy);
-	
-	const hierarchy = new MTKHierarchy(window.app.hierarchy);
-	
-	// Expose to window namespace
-	window.MTKHierarchy = hierarchy;
-	
-	// Subscribe to events
-	subscribeToEvents();
-	
-	// Export for module systems
-	if (typeof module !== 'undefined' && module.exports) {
-	    module.exports = { MTKHierarchy };
-	}
-    });
-} else {
-    // FALLBACK - Try window.app.hierarchy if wc is not available
-    if (typeof window.app !== 'undefined' && window.app.hierarchy) {
-	console.log("MTKHierarchy: Fallback mode - using window.app.hierarchy");
-	
-	const hierarchy = new MTKHierarchy(window.app.hierarchy);
-	
-	// Expose to window namespace
-	window.MTKHierarchy = hierarchy;
-	
-	// Subscribe to events if wc is available
-	if (typeof wc !== 'undefined') {
-	    subscribeToEvents();
-	}
-	
-	// Export for module systems
-	if (typeof module !== 'undefined' && module.exports) {
-	    module.exports = { MTKHierarchy };
-	}
-    } else {
-	console.error('window.app.hierarchy is not defined and wc.getCurriculum is not available. Please include mtk-hierarchy.config.js before mtk-hierarchy.js');
+    // Set curriculum data
+    window.app = window.app || {};
+    window.app.hierarchy = wc.session.hierarchy.parts;
+    
+    wc.log("MTKHierarchy: Curriculum loaded");
+    wc.log("isLocal:", wc.isLocal, window.app.hierarchy);
+    
+    const hierarchy = new MTKHierarchy(window.app.hierarchy);
+    
+    // Expose to window namespace
+    window.MTKHierarchy = hierarchy;
+    
+    // Subscribe to events
+    subscribeToEvents();
+    
+    // Export for module systems
+    if (typeof module !== 'undefined' && module.exports) {
+	module.exports = { MTKHierarchy };
     }
 }
 
