@@ -51,11 +51,8 @@
 <script src="header/header.js"></script>
 
 <script>
- try {
-     // SET USER IN HEADER
+ wc.timeout(function(){
+     alert(wc.configure.user.name);
      $("#uname").html(wc.configure.user.name);
- }
- catch(e) {
-     wc.warn(e.name + ' > ' + e.message);
- }
+ }, 1000, 1);
 </script>

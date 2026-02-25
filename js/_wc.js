@@ -883,8 +883,6 @@ wc.copyCookie = function(sourceName, targetName, days = null) {
 //// Set multiple cookies at once
 /////////////////////////////////////////////////////////////////////////////////
 wc.setMultipleCookies = function(cookiesObj, days = null) {
-    alert("wc.setMultipleCookies");
-
     for (let name in cookiesObj) {
 	const config = cookiesObj[name];
 	if (typeof config === 'object' && config.value !== undefined) {
@@ -1008,7 +1006,7 @@ wc.login = async function (email, passwd) {
         wc.getSession();
 
 	// SAVE ENTIRE SESSION DATA
-        wc.log('ZZZZZZZZZZZZZZZ wc.login > data:', data);
+        alert('ZZZZZZZZZZZZZZZ wc.login > data:' + JSON.stringify(data.user));
 
         wc.configure = data;
 	
@@ -1043,7 +1041,7 @@ wc.logout = async function () {
         }
 
         // reset
-        wc.currentUser = null;
+	wc.configure = data;
 
         wc.log('logged out', data);
         return true;
@@ -1071,15 +1069,15 @@ wc.getSession = function (callback) {
     }).then(res => res.json()).then(data => {
         wc.log('SESSION', data.logged_in);
 	
-	console.log("wc.getSession: BBBBBBBBBBBBBBB " + JSON.stringify(data));
-
 	wc.configure = data;
 
+	console.log("BBBBBBBBBBB wc.getSession:" + JSON.stringify(wc.configure.user));
+
         if (typeof callback === 'function') {
-            callback(data.logged_in, data);
+            callback(wc.configure.ok, data);
         }
 
-        return data.logged_in;
+        return wc.configure.ok;
     }).catch(err => {
         wc.error('getSession failed', err);
 	

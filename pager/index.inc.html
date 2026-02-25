@@ -22,8 +22,12 @@
 		 timer: 3, // Auto-close after 5 seconds
 		 block: true
 	     });
-	 }, 100, 1);
+	 }, 300, 1);
      }
+
+     wc.configure = session;
+
+     alert("========: " +  JSON.stringify(session.user));
 
      if (loggedIn) {
 	 wc.log('IS LOGGED IN');
