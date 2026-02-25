@@ -996,24 +996,29 @@ wc.login = async function (email, passwd) {
         if (!res.ok) {
             // If backend provides an error message, show it; else show a generic one
             const msg = (data && (data.error || data.message)) ? (data.error || data.message) : 'combination of email and password';
-            alert('Login Failed: ' + msg);
+            alert('1) Login Failed: ' + msg);
             return false;
         }
 
-        // START TRACKING when logged in
-        wc.startInactivityTracking();
-
         // GET SESSION
-        wc.getSession();
+	wc.getSession(function (loggedIn, session, err) {
+	    if (err) return;
 
-        wc.log('wc.login > data:', data);
+	    if (loggedIn) {
+		// START TRACKING when logged in
+		wc.startInactivityTracking();
 
-        $("#uname").html(wc.session.user.name);
-
+		$("#uname").html(wc.session.user.name);
+	    } else {
+		wc.log('IS NOT LOGGED IN');
+		mtk_pager.show('home');
+	    };
+	});
+	
         return true;
     } catch (err) {
         wc.error("Login failed:", err);
-        alert("Login failed: " + (err && err.message ? err.message : String(err)));
+        alert("2) Login failed: " + (err && err.message ? err.message : String(err)));
         return false;
     } finally {
     }
