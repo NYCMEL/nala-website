@@ -1274,35 +1274,6 @@ wc.injectMaterialStyles = function () {
 };
 
 /////////////////////////////////////////////////////////////////////////////////
-//// Curriculum API
-/////////////////////////////////////////////////////////////////////////////////
-wc.getCurriculum = function (callback) {
-    alert("wc.getCurriculum: MUST BE REMOVBED")
-
-    fetch(wc.apiURL + "/api/getCurriculum.php", {
-	method: "GET",
-	credentials: "include"
-    }).then(res => {
-	if (!res.ok) {
-	    throw new Error("Failed to fetch curriculum");
-	}
-	return res.json();
-    }).then(data => {
-	wc.log("Curriculum data:", data);
-	
-	if (typeof callback === "function") {
-	    callback(null, data);
-	}
-    }).catch(err => {
-	wc.error("getCurriculum error:", err);
-	
-	if (typeof callback === "function") {
-	    callback(err, null);
-	}
-    });
-};
-
-/////////////////////////////////////////////////////////////////////////////////
 //// Quiz API
 /////////////////////////////////////////////////////////////////////////////////
 wc.getQuiz = function (moduleId, callback, count) {
