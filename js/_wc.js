@@ -1008,7 +1008,7 @@ wc.login = async function (email, passwd) {
         wc.getSession();
 
 	// SAVE ENTIRE SESSION DATA
-        wc.log('wc.login > data:', data);
+        wc.log('ZZZZZZZZZZZZZZZ wc.login > data:', data);
         wc.configure = data;
 	
         // SET USER IN HEADER
@@ -1078,16 +1078,15 @@ wc.getSession = function (callback) {
         }
 
         return data.logged_in;
-    })
-	.catch(err => {
-            wc.error('getSession failed', err);
-
-            if (typeof callback === 'function') {
-		callback(false, null, err);
-            }
-
-            throw err;
-	});
+    }).catch(err => {
+        wc.error('getSession failed', err);
+	
+        if (typeof callback === 'function') {
+	    callback(false, null, err);
+        }
+	
+        throw err;
+    });
 };
 
 /************************************************************
