@@ -1006,9 +1006,8 @@ wc.login = async function (email, passwd) {
         wc.getSession();
 
         wc.log('wc.login > data:', data);
-        wc.configure = data;
 
-        $("#uname").html(wc.configure.user.name);
+        $("#uname").html(wc.session.user.name);
 
         return true;
     } catch (err) {
