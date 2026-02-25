@@ -1395,7 +1395,7 @@ wc.setUser = function (opts, callback) {
  * LESSON COMPLETE API
  ************************************************************/
 
-wc.advanceLesson = function (callback) {
+wc.lessonComplete = function (callback) {
     // Increments current_lesson for the logged-in user by +1.
     // Call this when a lesson is viewed.
     fetch(wc.apiURL + "/api/advanceLesson.php", {
