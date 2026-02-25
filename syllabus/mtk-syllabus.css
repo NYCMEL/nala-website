@@ -3,56 +3,72 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", Arial, sans-serif;
   background-color: #ffffff;
   padding: 0; }
+
+.mtk-syllabus__section {
+  margin-bottom: 48px; }
+
+.mtk-syllabus__section:last-child {
+  margin-bottom: 0; }
+
+.mtk-syllabus__section-title {
+  font-size: 28px;
+  font-weight: 400;
+  color: #1a1a1a;
+  margin: 0 0 24px 0;
+  line-height: 1.3;
+  letter-spacing: -0.5px; }
+
+.mtk-syllabus__lessons {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0 0; }
+
+.mtk-syllabus__lesson {
+  margin-bottom: 0;
+  position: relative;
+  padding-left: 24px; }
+
+.mtk-syllabus__lesson::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #1a1a1a;
+  font-size: 20px;
+  line-height: 1.6; }
+
+.mtk-syllabus__lesson-link {
+  display: inline-block;
+  padding: 4px 0;
+  text-decoration: none;
+  color: #1a1a1a;
+  cursor: pointer;
+  transition: color 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+
+.mtk-syllabus__lesson-link:hover {
+  color: rgba(0, 0, 0, 0.6); }
+
+.mtk-syllabus__lesson-title {
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.6;
+  letter-spacing: -0.2px; }
+
+@media (max-width: 767px) {
   .mtk-syllabus__section {
-    margin-bottom: 48px; }
-    .mtk-syllabus__section:last-child {
-      margin-bottom: 0; }
+    margin-bottom: 36px; }
   .mtk-syllabus__section-title {
-    font-size: 28px;
-    font-weight: 400;
-    color: #1a1a1a;
-    margin: 0 0 24px 0;
-    line-height: 1.3;
-    letter-spacing: -0.5px; }
-  .mtk-syllabus__lessons {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 0 0; }
+    font-size: 24px;
+    margin-bottom: 20px; }
   .mtk-syllabus__lesson {
-    margin-bottom: 0;
-    position: relative;
-    padding-left: 24px; }
-    .mtk-syllabus__lesson::before {
-      content: '•';
-      position: absolute;
-      left: 0;
-      color: #1a1a1a;
-      font-size: 20px;
-      line-height: 1.6; }
-  .mtk-syllabus__lesson-link {
-    display: inline-block;
-    padding: 4px 0;
-    text-decoration: none;
-    color: #1a1a1a;
-    cursor: pointer;
-    transition: color 200ms cubic-bezier(0.4, 0, 0.2, 1); }
-    .mtk-syllabus__lesson-link:hover {
-      color: rgba(0, 0, 0, 0.6); }
+    padding-left: 20px; }
   .mtk-syllabus__lesson-title {
-    font-size: 18px;
-    font-weight: 400;
-    margin: 0;
-    line-height: 1.6;
-    letter-spacing: -0.2px; }
-  @media (max-width: 767px) {
-    .mtk-syllabus__section {
-      margin-bottom: 36px; }
-    .mtk-syllabus__section-title {
-      font-size: 24px;
-      margin-bottom: 20px; }
-    .mtk-syllabus__lesson {
-      padding-left: 20px; }
-    .mtk-syllabus__lesson-title {
+    font-size: 16px; } }
+
+body {
+  background-color: #fafafa;
+  color: #1a1a1a; }
+.mtk-syllabus__lesson-title {
       font-size: 16px; } }
 
 body {

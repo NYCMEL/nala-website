@@ -369,19 +369,3 @@ body {
     flex-direction: column; }
   .client-sidebar {
     order: -1; } }
-
-.btn-primary:active {
-  transform: translateY(0); }
-
-@media (max-width: 768px) {
-  .client-header {
-    flex-direction: column;
-    text-align: center; }
-  .client-logo {
-    margin: 0 auto; }
-  .client-name {
-    font-size: 24px; }
-  .client-layout {
-    flex-direction: column; }
-  .client-sidebar {
-    order: -1; } }
