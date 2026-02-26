@@ -559,7 +559,8 @@ class MTKHierarchy {
 	    this.enableLessonResources(moduleId, lessonId);
 	    
 	    // Enable next lesson or quiz link
-	    this.enableNextLessonOrQuiz(moduleId, lessonId);
+	    // NOTE: do NOT locally unlock next lessons; progress is controlled by server current_lesson
+	    // this.enableNextLessonOrQuiz(moduleId, lessonId);
 	}
 	
 	// Update UI without full re-render
@@ -577,23 +578,10 @@ class MTKHierarchy {
 	}
 	
 	// Publish event
-	let lessonNo = null;
-	// Try to pull numeric lesson_no from config (provided by backend).
-	for (const course of this.config) {
-	    if (!course.modules) continue;
-	    const module = course.modules.find(m => m.id === moduleId);
-	    if (!module || !module.lessons) continue;
-	    const lessonObj = module.lessons.find(l => l.id === lessonId);
-	    if (lessonObj && lessonObj.lesson_no !== undefined && lessonObj.lesson_no !== null) {
-	        lessonNo = parseInt(lessonObj.lesson_no, 10);
-	    }
-	    break;
-	}
-
 	wc.publish('mtk-hierarchy:lesson-toggled', {
 	    moduleId,
 	    lessonId,
-	    lessonNo,
+	    lessonNo: (currentLesson && typeof currentLesson.lesson_no !== 'undefined') ? parseInt(currentLesson.lesson_no, 10) : null,
 	    isOpen: !isOpen,
 	    timestamp: new Date().toISOString()
 	});
@@ -1210,35 +1198,64 @@ if (wc.isLocal) {
  */
 function subscribeToEvents() {
     if (typeof wc === 'undefined') return;
-    
-    wc.subscribe('mtk-hierarchy:resource-clicked', function(msg, data) {
-	wc.info('🎯 Resource Clicked:', data);
-    });
-    
-    wc.subscribe('mtk-hierarchy:module-toggled', function(msg, data) {
-	wc.info('📂 Module Toggled:', data);
-    });
-    
+
+    // When a lesson is clicked/toggled in the UI
     wc.subscribe('mtk-hierarchy:lesson-toggled', function(msg, data) {
-	wc.info('📝 Lesson Toggled:', data);
+        wc.info('📝 Lesson Toggled:', data);
 
-	console.log("AAAAAAAAAA", JSON.stringify(data))
+        // We MUST have a numeric lesson number to apply gating.
+        var lessonNo = null;
+        if (data) {
+            if (data.lessonNo !== undefined) lessonNo = data.lessonNo;
+            else if (data.lesson_no !== undefined) lessonNo = data.lesson_no;
+            else if (data.lesson && (data.lesson.lesson_no !== undefined)) lessonNo = data.lesson.lesson_no;
+        }
+        lessonNo = (lessonNo === null || lessonNo === undefined) ? null : parseInt(lessonNo, 10);
+        if (lessonNo === null || Number.isNaN(lessonNo)) return;
 
-	wc.lessonComplete(data.lessonNo, function(err, res) {
-	    if (err) { console.error(err); return; }
-	    // res.skipped === true means we clicked an older lesson or could not determine lesson number.
-	});
+        // Only advances when the newest accessible lesson is clicked.
+        // _wc.js enforces the rule and returns skipped:true for older lessons.
+        if (typeof wc.lessonComplete !== 'function') return;
+
+        wc.lessonComplete(lessonNo, function(err, res) {
+            if (err) {
+                wc.error("lessonComplete failed:", err);
+                return;
+            }
+
+            // If server advanced, refresh session to get updated access flags and re-render hierarchy
+            if (res && res.ok === true && res.skipped !== true) {
+                if (typeof wc.getSession === 'function') {
+                    wc.getSession(function(loggedIn, session) {
+                        if (!loggedIn || !session || !session.hierarchy) return;
+
+                        window.app = window.app || {};
+                        // session.hierarchy is expected to be { parts: [...] }
+                        if (session.hierarchy.parts) {
+                            window.app.hierarchy = session.hierarchy.parts;
+                        } else if (Array.isArray(session.hierarchy)) {
+                            window.app.hierarchy = session.hierarchy;
+                        }
+
+                        if (window.MTKHierarchy) {
+                            window.MTKHierarchy.config = window.app.hierarchy;
+                            window.MTKHierarchy.render();
+                        }
+                    });
+                }
+            }
+        });
     });
-    
+
     wc.subscribe('mtk-hierarchy:module-completed', function(msg, data) {
-	wc.info('✅ Module Completed:', data);
+        wc.info('✅ Module Completed:', data);
     });
-    
+
     wc.subscribe('mtk-hierarchy:initialized', function(msg, data) {
-	wc.info('✅ Hierarchy Initialized:', data);
+        wc.info('✅ Hierarchy Initialized:', data);
     });
-    
+
     wc.subscribe('mtk-hierarchy:rendered', function(msg, data) {
-	wc.info('✅ Hierarchy Rendered:', data);
+        wc.info('✅ Hierarchy Rendered:', data);
     });
 }

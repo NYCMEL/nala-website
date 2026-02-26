@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,13 +10,15 @@
     body { font-family: Arial, sans-serif; margin: 0; background: #0f1115; color: #e8e8e8; }
     header { padding: 16px 20px; background: #151924; border-bottom: 1px solid #2a2f3a; }
     header h1 { margin: 0; font-size: 18px; }
-    main { display: grid; grid-template-columns: 360px 1fr; gap: 14px; padding: 14px; }
+    main { display: grid; grid-template-columns: 380px 1fr; gap: 14px; padding: 14px; }
     .card { background: #151924; border: 1px solid #2a2f3a; border-radius: 10px; padding: 12px; }
     .card h2 { margin: 0 0 10px 0; font-size: 14px; color: #b9c0d0; text-transform: uppercase; letter-spacing: .06em; }
     label { display: block; font-size: 12px; color: #b9c0d0; margin-top: 10px; }
     input, select, textarea { width: 100%; box-sizing: border-box; border-radius: 8px; border: 1px solid #2a2f3a; background: #0f1115; color: #e8e8e8; padding: 8px 10px; }
     textarea { min-height: 120px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
     .btnrow { display: grid; gap: 8px; margin-top: 10px; }
+    .row2 { display:grid; grid-template-columns: 1fr auto; gap: 8px; align-items: end; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     button { border: 0; border-radius: 8px; padding: 10px 12px; background: #2a6df4; color: #fff; font-weight: 600; cursor: pointer; }
     button.secondary { background: #2a2f3a; }
     button.danger { background: #c83b3b; }
@@ -27,7 +30,8 @@
     pre { margin: 0; padding: 12px; border-radius: 10px; border: 1px solid #2a2f3a; background: #0b0d12; overflow: auto; }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
     .small { font-size: 12px; color: #b9c0d0; }
-    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .hint { font-size: 12px; color: #9aa3b7; margin-top: 6px; line-height: 1.4; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
   </style>
 </head>
 <body>
@@ -49,7 +53,6 @@
     <input id="email" placeholder="email" />
     <label>Password</label>
     <input id="password" type="password" placeholder="password" />
-
     <div class="btnrow">
       <button id="btnLogin">POST /api/login.php</button>
       <button id="btnMe" class="secondary">GET /api/me.php</button>
@@ -66,6 +69,9 @@
     <input id="lessonNo" type="number" value="0" />
     <div class="btnrow">
       <button id="btnLesson" class="secondary">POST /api/lessonComplete.php</button>
+    </div>
+    <div class="hint">
+      <div><b>Important:</b> <code>lessonComplete.php</code> only advances progress when <code>lesson_no</code> equals the user's current (latest unlocked) lesson. Clicking older lessons won't advance.</div>
     </div>
 
     <h2 style="margin-top:14px;">Quiz</h2>
@@ -93,21 +99,26 @@
       <button id="btnSubmitQuiz">POST /api/submitQuiz.php</button>
     </div>
 
-    <h2 style="margin-top:14px;">Admin Test: setUser (admin only)</h2>
-    <label>role</label>
-    <input id="suRole" value="admin" />
-    <div class="grid2">
+    <h2 style="margin-top:14px;">Admin: set current lesson (admin only)</h2>
+    <div class="row2">
       <div>
-        <label>module</label>
-        <input id="suModule" value="M1" />
+        <label>Target user</label>
+        <select id="targetUser"></select>
       </div>
-      <div>
-        <label>lesson index</label>
-        <input id="suLesson" type="number" value="0" />
-      </div>
+      <button id="btnReloadUsers" class="secondary" type="button">Reload</button>
     </div>
+    <div class="hint">
+      Populated from <code>/api/admin_list_users.php</code>. If it fails, you can still set by email below.
+    </div>
+    <label>Target email (fallback)</label>
+    <input id="targetEmail" placeholder="student@google.com" />
+
+    <label>Set current_lesson to</label>
+    <input id="setLessonNo" type="number" value="0" />
+
     <div class="btnrow">
-      <button id="btnSetUser" class="secondary">GET /api/setUser.php</button>
+      <button id="btnSetCurrentLesson" class="secondary">POST /api/lessonComplete.php (action=set)</button>
+      <button id="btnResetLesson0" class="danger" type="button">Reset to 0</button>
     </div>
   </section>
 
@@ -126,9 +137,9 @@
       <div class="small">
         <ul>
           <li>All requests use <span class="mono">credentials: "include"</span> for cookie sessions.</li>
-          <li><span class="mono">getQuiz.php</span> requires <span class="mono">module_id</span>.</li>
+          <li><span class="mono">getQuiz.php</span> requires <span class="mono">module_id</span>. <span class="mono">count</span> is number of random questions (1–50).</li>
           <li><span class="mono">submitQuiz.php</span> expects <span class="mono">{ quiz_session_id, module_id, answers }</span>.</li>
-          <li><span class="mono">setUser.php</span> is admin-only and supports <span class="mono">role</span>, <span class="mono">module</span>, <span class="mono">lesson</span>.</li>
+          <li><span class="mono">lessonComplete.php</span> advances only on the latest lesson; <span class="mono">action=set</span> is admin-only.</li>
         </ul>
       </div>
     </div>
@@ -136,113 +147,258 @@
 </main>
 
 <script>
-function setState(kind, text) {
-  const el = document.getElementById("state");
-  el.classList.remove("ok","bad");
-  if (kind) el.classList.add(kind);
-  el.textContent = text || "—";
-}
-function show(obj, targetId) {
-  document.getElementById(targetId).textContent = JSON.stringify(obj, null, 2);
-}
-function base() {
-  const b = document.getElementById("apiBase").value.trim().replace(/\/$/, "");
-  document.getElementById("base").textContent = b;
-  return b;
-}
-async function apiFetch(path, opts) {
-  const url = base() + path;
-  opts = opts || {};
-  opts.credentials = "include";
-  show({ url, ...opts }, "req");
-  const res = await fetch(url, opts);
-  const text = await res.text();
-  let json = null;
-  try { json = JSON.parse(text); } catch(e) {}
-  show(json || { raw: text }, "out");
-  if (res.ok) setState("ok", "OK");
-  else setState("bad", "HTTP " + res.status);
-  return { res, json, text };
-}
+(() => {
+  const $ = (id) => document.getElementById(id);
 
-document.getElementById("btnLogin").onclick = async () => {
-  const payload = { email: email.value, password: password.value };
-  await apiFetch("/api/login.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
+  // Show runtime errors on the page (so you don't miss console errors)
+  window.addEventListener('error', (e) => {
+    const msg = e?.error?.stack || e?.message || String(e);
+    const el = $('state');
+    if (el) el.textContent = `JS ERROR: ${msg}`;
   });
-};
 
-document.getElementById("btnMe").onclick = async () => {
-  await apiFetch("/api/me.php", { method: "GET" });
-};
-
-document.getElementById("btnLogout").onclick = async () => {
-  await apiFetch("/api/logout.php", { method: "POST" });
-};
-
-document.getElementById("btnCurr").onclick = async () => {
-  await apiFetch("/api/getCurriculum.php", { method: "GET" });
-};
-
-document.getElementById("btnLesson").onclick = async () => {
-  const payload = { lesson_no: Number(document.getElementById("lessonNo").value || 0) };
-  await apiFetch("/api/lessonComplete.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
-};
-
-document.getElementById("btnGetQuiz").onclick = async () => {
-  const moduleId = document.getElementById("quizModule").value.trim();
-  const count = Number(document.getElementById("quizCount").value || 20);
-  const qs = new URLSearchParams({ module_id: moduleId, count: String(count) });
-  const { json } = await apiFetch("/api/getQuiz.php?" + qs.toString(), { method: "GET" });
-  if (json && json.quiz && json.quiz.quiz_session_id) {
-    document.getElementById("quizSessionId").value = json.quiz.quiz_session_id;
+  function setState(txt) {
+    const el = $('state');
+    if (el) el.textContent = txt || '';
   }
-  if (json && json.quiz && Array.isArray(json.quiz.questions)) {
-    // Pre-fill answers map with blanks
-    const map = {};
-    json.quiz.questions.forEach(q => map[String(q.id)] = "");
-    document.getElementById("answers").value = JSON.stringify(map, null, 2);
+
+  function pretty(x) {
+    try { return JSON.stringify(x, null, 2); } catch { return String(x); }
   }
-};
 
-document.getElementById("btnSubmitQuiz").onclick = async () => {
-  let answersMap = {};
-  try { answersMap = JSON.parse(document.getElementById("answers").value || "{}"); } catch(e) {}
-  const payload = {
-    quiz_session_id: Number(document.getElementById("quizSessionId").value || 0),
-    module_id: document.getElementById("quizModule").value.trim(),
-    answers: answersMap
-  };
-  await apiFetch("/api/submitQuiz.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
+  function setOut(obj) {
+    const el = $('out');
+    if (el) el.textContent = (typeof obj === 'string') ? obj : pretty(obj);
+  }
+
+  function getApiBase() {
+    const raw = ($('apiBase')?.value || '').trim();
+    // Accept values like "/repo_deploy" or "/repo_deploy/" or full URL.
+    if (!raw) return '';
+    if (/^https?:\/\//i.test(raw)) return raw.replace(/\/+$/, '');
+    return raw.replace(/\/+$/, '');
+  }
+
+  async function fetchJson(path, opts = {}) {
+    const apiBase = getApiBase();
+    if (!apiBase) throw new Error('Set API Base first (example: /repo_deploy)');
+    const url = `${apiBase}${path.startsWith('/') ? '' : '/'}${path}`;
+
+    const method = (opts.method || 'GET').toUpperCase();
+    const headers = Object.assign({}, opts.headers || {});
+    const bodyObj = opts.body;
+
+    const init = { method, headers, credentials: 'include' };
+    if (bodyObj !== undefined) {
+      headers['Content-Type'] = 'application/json';
+      init.body = JSON.stringify(bodyObj);
+    }
+
+    $('req') && ($('req').textContent = `${method} ${url}
+${bodyObj !== undefined ? pretty(bodyObj) : ''}`);
+
+    const res = await fetch(url, init);
+    const text = await res.text();
+
+    let data;
+    try {
+      data = text ? JSON.parse(text) : null;
+    } catch {
+      // Non-JSON response, show first chunk
+      throw new Error(`Non-JSON response (${res.status}). First 300 chars:
+${text.slice(0, 300)}`);
+    }
+
+    if (!res.ok || (data && data.ok === false)) {
+      const msg = (data && (data.error || data.message)) ? (data.error || data.message) : `HTTP ${res.status}`;
+      const err = new Error(msg);
+      err.data = data;
+      err.status = res.status;
+      throw err;
+    }
+
+    return data;
+  }
+
+  async function loadUsersIntoDropdown() {
+    // This endpoint name may differ on your backend. We'll try common options.
+    const candidates = [
+      '/api/admin_list_all_users.php',
+      '/api/admin_list_users.php',
+      '/api/admin_get_all_users.php',
+    ];
+
+    for (const path of candidates) {
+      try {
+        const data = await fetchJson(path, { method: 'GET' });
+        const users = data?.users || data?.all_users || data?.data || [];
+        if (!Array.isArray(users)) continue;
+
+        const sel = $('targetUser');
+        if (!sel) return;
+
+        sel.innerHTML = '';
+        for (const u of users) {
+          const email = u.email || u.user?.email || '';
+          if (!email) continue;
+          const opt = document.createElement('option');
+          opt.value = email;
+          opt.textContent = `${email}${u.role ? ' (' + u.role + ')' : ''}${(u.current_lesson !== undefined) ? ' — lesson ' + u.current_lesson : ''}`;
+          sel.appendChild(opt);
+        }
+        setState(`Loaded ${sel.options.length} users from ${path}`);
+        return;
+      } catch (e) {
+        // try next candidate
+      }
+    }
+
+    setState('Could not load users list (no admin list endpoint succeeded). You can still type an email in Target Email.');
+  }
+
+  function getTargetEmail() {
+    const sel = $('targetUser');
+    const typed = ($('targetEmail')?.value || '').trim();
+    return typed || (sel?.value || '').trim();
+  }
+
+  // ---------------- UI handlers ----------------
+
+  async function onLogin() {
+    setState('Logging in...');
+    const email = ($('email')?.value || '').trim();
+    const password = ($('password')?.value || '');
+    const data = await fetchJson('/api/login.php', { method: 'POST', body: { email, password } });
+    setOut(data);
+    setState(`Logged in as ${data?.user?.email || email}`);
+    await loadUsersIntoDropdown();
+  }
+
+  async function onMe() {
+    setState('Fetching /me...');
+    const data = await fetchJson('/api/me.php', { method: 'GET' });
+    setOut(data);
+    setState('OK');
+  }
+
+  async function onLogout() {
+    setState('Logging out...');
+    // Some backends use POST, some GET. Try POST then fallback.
+    try {
+      const data = await fetchJson('/api/logout.php', { method: 'POST' });
+      setOut(data);
+    } catch (e) {
+      const data = await fetchJson('/api/logout.php', { method: 'GET' });
+      setOut(data);
+    }
+    setState('Logged out');
+  }
+
+  async function onGetCurriculum() {
+    setState('Fetching curriculum...');
+    const data = await fetchJson('/api/getCurriculum.php', { method: 'GET' });
+    setOut(data);
+    setState('OK');
+  }
+
+  async function onLessonComplete() {
+    setState('Marking lesson complete...');
+    const lessonNo = parseInt(($('lessonNo')?.value || '0'), 10);
+    const data = await fetchJson('/api/lessonComplete.php', { method: 'POST', body: { lesson_no: lessonNo } });
+    setOut(data);
+    setState(`lessonComplete OK (current_lesson=${data?.current_lesson ?? '??'})`);
+  }
+
+  async function onSetCurrentLesson() {
+    setState('Setting current lesson...');
+    const email = getTargetEmail();
+    if (!email) throw new Error('Pick a user (dropdown) or enter Target Email');
+    const lessonNo = parseInt(($('setLessonNo')?.value || '0'), 10);
+
+    // If your backend supports direct current_lesson updates, this should work.
+    // If not, you can adjust this endpoint / payload once you confirm setUser.php’s expected fields.
+    const body = { email, current_lesson: lessonNo };
+    let data;
+    try {
+      data = await fetchJson('/api/setUser.php', { method: 'POST', body });
+    } catch (e) {
+      // fallback to legacy payload fields (module + lesson_index)
+      const module = ($('module')?.value || '').trim();
+      const lesson_index = parseInt(($('lessonIndex')?.value || '0'), 10);
+      const role = ($('role')?.value || '').trim();
+      data = await fetchJson('/api/setUser.php', { method: 'POST', body: { email, role, module, lesson_index } });
+    }
+
+    setOut(data);
+    setState('setUser OK');
+    await loadUsersIntoDropdown();
+  }
+
+  async function onGetQuiz() {
+    setState('Getting quiz...');
+    const moduleId = ($('quizModule')?.value || '').trim();
+    const count = parseInt(($('quizCount')?.value || '10'), 10);
+    const qs = new URLSearchParams({ module_id: moduleId, count: String(count) }).toString();
+    const data = await fetchJson(`/api/getQuiz.php?${qs}`, { method: 'GET' });
+    setOut(data);
+    if (data?.quiz?.quiz_session_id !== undefined) {
+      $('quizSessionId') && ($('quizSessionId').value = String(data.quiz.quiz_session_id));
+    }
+    setState('OK');
+  }
+
+  async function onSubmitQuiz() {
+    setState('Submitting quiz...');
+    const quizSessionId = parseInt(($('quizSessionId')?.value || '0'), 10);
+    let answers = {};
+    try {
+      answers = JSON.parse(($('answers')?.value || '{}') || '{}');
+    } catch {
+      throw new Error('Answers JSON is invalid');
+    }
+    const data = await fetchJson('/api/submitQuiz.php', { method: 'POST', body: { quiz_session_id: quizSessionId, answers } });
+    setOut(data);
+    setState('OK');
+  }
+
+  function bind(id, fn) {
+    const el = $(id);
+    if (!el) return;
+    el.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      (async () => {
+        try {
+          setOut('');
+          await fn();
+        } catch (e) {
+          console.error(e);
+          setState(`ERROR: ${e.message || e}`);
+          setOut(e.data || { error: e.message || String(e) });
+          alert(e.message || String(e));
+        }
+      })();
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    console.log('[test console] loaded');
+    setState('Ready');
+
+    // Bind buttons
+    bind('btnLogin', onLogin);
+    bind('btnMe', onMe);
+    bind('btnLogout', onLogout);
+    bind('btnGetCurriculum', onGetCurriculum);
+    bind('btnLessonComplete', onLessonComplete);
+    bind('btnSetCurrentLesson', onSetCurrentLesson);
+    bind('btnGetQuiz', onGetQuiz);
+    bind('btnSubmitQuiz', onSubmitQuiz);
+    bind('btnReloadUsers', loadUsersIntoDropdown);
+
+    // auto-load users list if already logged in
+    loadUsersIntoDropdown();
   });
-};
-
-document.getElementById("btnSetUser").onclick = async () => {
-  const qs = new URLSearchParams();
-  const role = document.getElementById("suRole").value.trim();
-  const module = document.getElementById("suModule").value.trim();
-  const lesson = document.getElementById("suLesson").value;
-
-  if (role) qs.set("role", role);
-  if (module) qs.set("module", module);
-  if (lesson !== "") qs.set("lesson", String(Number(lesson)));
-
-  await apiFetch("/api/setUser.php?" + qs.toString(), { method: "GET" });
-};
-
-window.addEventListener("load", () => {
-  setState(null, "Ready");
-  base();
-});
+})();
 </script>
 
 </body>
