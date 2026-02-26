@@ -386,12 +386,9 @@ window.myConfig = {
 
 // Wait for mtk-dashboard element to be completely loaded into DOM
 function initializeDashboard(config) {
-    const resolvedConfig =
-	  config ||
-	  (typeof window.mtkDashboardConfig !== "undefined"
-	   ? window.mtkDashboardConfig
-	   : null);
-
+    console.log(">>>>>>>>>", config);
+    const resolvedConfig = config || (typeof window.mtkDashboardConfig !== "undefined" ? window.mtkDashboardConfig : null);
+    
     if (!resolvedConfig) {
 	console.error(
 	    "MTK Dashboard: Configuration not found. Pass config to initializeDashboard() or include mtk-dashboard.config.js"
@@ -430,8 +427,29 @@ function initializeDashboard(config) {
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializeDashboard);
 } else {
-    initializeDashboard();
-
     // FOR TESTING
-    //initializeDashboard(window.myConfig);
+    wc.session.dashboard.panels = ["mentorship", "career-services"]
+    
+    // UPDATE USER NAME AND PROGRESS
+    window.myConfig.user.fullName = wc.session.user.name;
+    window.myConfig.progress.percentage = wc.session.dashboard.progress;
+
+    // UPDATE PER-USER PANELS
+    wc.timeout(function(){
+	// INITIALLY HIDE ALL PANELS
+	for (let i = 0; i < window.myConfig.subscriptions.options.length; i++) {
+	    let id = window.myConfig.subscriptions.options[i].id;
+	    let panel = "[data-subscription-id=" + id + "]";
+	    
+	    $(panel).hide();
+	}
+
+	for (let i = 0; i < wc.session.dashboard.panels.length; i++) {
+	    let panel = "[data-subscription-id=" + wc.session.dashboard.panels[i] + "]";
+
+	    $(panel).css("display","inline-block");
+	}    
+    }, 0, 1);
+
+    initializeDashboard(window.myConfig);
 }
