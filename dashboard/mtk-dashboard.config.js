@@ -12,7 +12,6 @@ window.mtkDashboardConfig = {
 	title: "You can also subscribe to our premium features:",
 	options: [
 	    {
-		show: false,
 		id: "premium-course",
 		icon: "school",
 		title: "Premium Courses",
@@ -20,7 +19,6 @@ window.mtkDashboardConfig = {
 		price: "$29.99/month"
 	    },
 	    {
-		show: false,
 		id: "mentorship",
 		icon: "people",
 		title: "1-on-1 Mentorship",
@@ -28,7 +26,6 @@ window.mtkDashboardConfig = {
 		price: "$99.99/month"
 	    },
 	    {
-		show: false,
 		id: "career-services",
 		icon: "work",
 		title: "Career Services",
