@@ -251,12 +251,14 @@ class MTKDashboard {
      */
     handleSubscriptionClick(option) {
 	// Publish subscription clicked event
-	wc.publish('mtk-dashboard:subscription-clicked', {
+	let msg = {
 	    subscriptionId: option.id,
 	    title: option.title,
 	    price: option.price,
 	    timestamp: new Date().toISOString()
-	});
+	}
+
+	wc.publish('mtk-dashboard:subscription-clicked', msg);
     }
     
     /**
