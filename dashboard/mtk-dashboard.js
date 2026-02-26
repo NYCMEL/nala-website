@@ -447,9 +447,9 @@ if (document.readyState === 'loading') {
 	for (let i = 0; i < wc.session.dashboard.panels.length; i++) {
 	    let panel = "[data-subscription-id=" + wc.session.dashboard.panels[i] + "]";
 
-	    $(panel).css("display","inline-block");
+	    $(panel).show();
 	}    
-    }, 0, 1);
+    }, 100, 1);
 
     initializeDashboard(window.myConfig);
 }
