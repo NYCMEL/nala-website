@@ -2,8 +2,8 @@
 const mtkSettingsConfig = {
     user: {
 	firstName: "John",
-	middleInitial: "M",
-	lastName: "Doe",
+	middleInitial: "",
+	lastName: "",
 	email: "john.doe@example.com",
 	currentPassword: "password123" // In production, never store plain text passwords
     },
