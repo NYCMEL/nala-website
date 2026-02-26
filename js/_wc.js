@@ -1367,37 +1367,109 @@ wc.setUser = function (opts, callback) {
  * LESSON COMPLETE API
  ************************************************************/
 
-wc.lessonComplete = function (callback) {
-    // Increments current_lesson for the logged-in user by +1.
-    // Call this when a lesson is viewed.
+wc.getMaxAccessibleLessonNo = function () {
+    // "Latest unlocked lesson" = max lesson_no where access === true in wc.session.hierarchy
+    try {
+        var h = wc.session && wc.session.hierarchy;
+        if (!h || !h.parts) return null;
+
+        var maxNo = null;
+        h.parts.forEach(function (part) {
+            (part.modules || []).forEach(function (mod) {
+                (mod.lessons || []).forEach(function (lesson) {
+                    if (lesson && lesson.access === true) {
+                        var n = parseInt(lesson.lesson_no, 10);
+                        if (!Number.isNaN(n)) {
+                            maxNo = (maxNo === null) ? n : Math.max(maxNo, n);
+                        }
+                    }
+                });
+            });
+        });
+        return maxNo;
+    } catch (e) {
+        return null;
+    }
+};
+
+wc.lessonComplete = function (lessonNo, callback) {
+    // Backward-compatible signatures:
+    //   wc.lessonComplete(callback)              (legacy - will NOT advance, returns skipped)
+    //   wc.lessonComplete(lessonNo, callback)    (preferred)
+    if (typeof lessonNo === "function") {
+        callback = lessonNo;
+        lessonNo = null;
+    }
+    callback = callback || function () {};
+
+    // If we don't know what lesson was clicked, do NOT advance (safe).
+    if (lessonNo === null || lessonNo === undefined) {
+        return callback(null, { ok: true, skipped: true, reason: "missing_lesson_no" });
+    }
+    lessonNo = parseInt(lessonNo, 10);
+    if (Number.isNaN(lessonNo)) {
+        return callback(null, { ok: true, skipped: true, reason: "invalid_lesson_no" });
+    }
+
+    var latestUnlocked = wc.getMaxAccessibleLessonNo();
+    if (latestUnlocked === null) {
+        return callback(null, { ok: true, skipped: true, reason: "missing_hierarchy" });
+    }
+
+    // Only advance when user clicks the newest unlocked lesson.
+    if (lessonNo !== latestUnlocked) {
+        return callback(null, {
+            ok: true,
+            skipped: true,
+            reason: "not_latest",
+            clicked_lesson: lessonNo,
+            latest_unlocked: latestUnlocked
+        });
+    }
+
+    // Prevent double-advancing the same "latest" lesson on repeated clicks.
+    try {
+        var uid = (wc.session && wc.session.user && wc.session.user.id) ? wc.session.user.id : "anon";
+        var key = "nala_advanced_from_" + uid;
+        var already = parseInt(localStorage.getItem(key) || "-9999", 10);
+        if (!Number.isNaN(already) && already === latestUnlocked) {
+            return callback(null, {
+                ok: true,
+                skipped: true,
+                reason: "already_advanced",
+                latest_unlocked: latestUnlocked
+            });
+        }
+    } catch (e) {
+        // ignore localStorage failures
+    }
+
+    // Increment current_lesson for the logged-in user by +1.
     fetch(wc.apiURL + "/api/advanceLesson.php", {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({})
-    }).then(async (res) => {
-        const text = await res.text();
-        let data = null;
-        try { data = JSON.parse(text); } catch (e) {
-            throw new Error("advanceLesson returned non-JSON. First 300 chars: " + text.slice(0, 300));
-        }
-        if (!res.ok || (data && data.ok === false)) {
-            const msg = (data && (data.error || data.message)) ? (data.error || data.message) : ("HTTP " + res.status);
-            const err = new Error(msg);
-            err.status = res.status;
-            err.data = data;
-            throw err;
-        }
-        return data;
-    }).then(data => {
-        if (typeof callback === "function") callback(null, data);
-    }).catch(err => {
-        wc.error("advanceLesson error:", err);
-        if (typeof callback === "function") callback(err, null);
-    });
+        body: JSON.stringify({ expected_current: latestUnlocked })
+    })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+            if (!data || data.ok !== true) {
+                callback(new Error((data && data.error) ? data.error : "advanceLesson failed"), data || null);
+                return;
+            }
+
+            // Mark advanced to avoid double-advances.
+            try {
+                var uid2 = (wc.session && wc.session.user && wc.session.user.id) ? wc.session.user.id : "anon";
+                localStorage.setItem("nala_advanced_from_" + uid2, String(latestUnlocked));
+            } catch (e) {}
+
+            callback(null, data);
+        })
+        .catch(function (err) { callback(err, null); });
 };
 
-
+// Alias (if your code calls wc.advanceLesson)
 /************************************************************
  * SET CURRENT LESSON API
  ************************************************************/

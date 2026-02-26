@@ -577,9 +577,23 @@ class MTKHierarchy {
 	}
 	
 	// Publish event
+	let lessonNo = null;
+	// Try to pull numeric lesson_no from config (provided by backend).
+	for (const course of this.config) {
+	    if (!course.modules) continue;
+	    const module = course.modules.find(m => m.id === moduleId);
+	    if (!module || !module.lessons) continue;
+	    const lessonObj = module.lessons.find(l => l.id === lessonId);
+	    if (lessonObj && lessonObj.lesson_no !== undefined && lessonObj.lesson_no !== null) {
+	        lessonNo = parseInt(lessonObj.lesson_no, 10);
+	    }
+	    break;
+	}
+
 	wc.publish('mtk-hierarchy:lesson-toggled', {
 	    moduleId,
 	    lessonId,
+	    lessonNo,
 	    isOpen: !isOpen,
 	    timestamp: new Date().toISOString()
 	});
@@ -1210,7 +1224,10 @@ function subscribeToEvents() {
 
 	console.log("AAAAAAAAAA", JSON.stringify(data))
 
-	wc.lessonComplete(data.moduleId, data.lessonId);
+	wc.lessonComplete(data.lessonNo, function(err, res) {
+	    if (err) { console.error(err); return; }
+	    // res.skipped === true means we clicked an older lesson or could not determine lesson number.
+	});
     });
     
     wc.subscribe('mtk-hierarchy:module-completed', function(msg, data) {
