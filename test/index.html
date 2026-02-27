@@ -93,21 +93,36 @@
       <button id="btnSubmitQuiz">POST /api/submitQuiz.php</button>
     </div>
 
-    <h2 style="margin-top:14px;">Admin Test: setUser (admin only)</h2>
-    <label>role</label>
-    <input id="suRole" value="admin" />
+    <h2 style="margin-top:14px;">Admin Tools (admin only)</h2>
+
+    <label>Load / select user</label>
     <div class="grid2">
       <div>
-        <label>module</label>
-        <input id="suModule" value="M1" />
+        <button id="btnLoadUsers" class="secondary">GET /api/admin_list_users.php</button>
       </div>
       <div>
-        <label>lesson index</label>
-        <input id="suLesson" type="number" value="0" />
+        <input id="userSearch" placeholder="filter (email/name/id)" />
       </div>
     </div>
+    <label>Target user</label>
+    <select id="userSelect">
+      <option value="">(load users first)</option>
+    </select>
+
+    <label>Set current_lesson (0 = only Intro unlocked)</label>
+    <input id="setCurrentLesson" type="number" value="0" />
+
     <div class="btnrow">
-      <button id="btnSetUser" class="secondary">GET /api/setUser.php</button>
+      <button id="btnAdminSetLesson" class="secondary">POST /api/lessonComplete.php (action:set)</button>
+      <button id="btnReset" class="danger">Reset progress (set current_lesson=0)</button>
+    </div>
+
+    <div class="small" style="margin-top:10px;">
+      Notes:
+      <ul>
+        <li>This sets <span class="mono">users.current_lesson</span> directly for the selected user.</li>
+        <li>Normal students should advance ONLY by clicking their newest unlocked lesson.</li>
+      </ul>
     </div>
   </section>
 
@@ -128,7 +143,6 @@
           <li>All requests use <span class="mono">credentials: "include"</span> for cookie sessions.</li>
           <li><span class="mono">getQuiz.php</span> requires <span class="mono">module_id</span>.</li>
           <li><span class="mono">submitQuiz.php</span> expects <span class="mono">{ quiz_session_id, module_id, answers }</span>.</li>
-          <li><span class="mono">setUser.php</span> is admin-only and supports <span class="mono">role</span>, <span class="mono">module</span>, <span class="mono">lesson</span>.</li>
         </ul>
       </div>
     </div>
@@ -166,7 +180,7 @@ async function apiFetch(path, opts) {
 }
 
 document.getElementById("btnLogin").onclick = async () => {
-  const payload = { email: email.value, password: password.value };
+  const payload = { email: document.getElementById('email').value, password: document.getElementById('password').value };
   await apiFetch("/api/login.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -226,17 +240,75 @@ document.getElementById("btnSubmitQuiz").onclick = async () => {
   });
 };
 
-document.getElementById("btnSetUser").onclick = async () => {
-  const qs = new URLSearchParams();
-  const role = document.getElementById("suRole").value.trim();
-  const module = document.getElementById("suModule").value.trim();
-  const lesson = document.getElementById("suLesson").value;
+function populateUsers(list) {
+  const sel = document.getElementById("userSelect");
+  sel.innerHTML = "";
+  if (!Array.isArray(list) || list.length === 0) {
+    const opt = document.createElement("option");
+    opt.value = "";
+    opt.textContent = "(no users returned)";
+    sel.appendChild(opt);
+    return;
+  }
+  list.forEach(u => {
+    const opt = document.createElement("option");
+    opt.value = String(u.id);
+    opt.dataset.currentLesson = String(u.current_lesson ?? 0);
+    const label = `${u.id} — ${(u.name||"").trim()} <${u.email||""}> (${u.role||""}) — current_lesson=${u.current_lesson ?? 0}`;
+    opt.textContent = label;
+    sel.appendChild(opt);
+  });
+  // default select first
+  sel.value = String(list[0].id);
+  document.getElementById("setCurrentLesson").value = String(list[0].current_lesson ?? 0);
+}
 
-  if (role) qs.set("role", role);
-  if (module) qs.set("module", module);
-  if (lesson !== "") qs.set("lesson", String(Number(lesson)));
+document.getElementById("btnLoadUsers").onclick = async () => {
+  const q = document.getElementById("userSearch").value.trim();
+  const qs = new URLSearchParams({ limit: "500" });
+  if (q) qs.set("q", q);
+  const { json } = await apiFetch("/api/admin_list_users.php?" + qs.toString(), { method: "GET" });
+  if (json && json.ok && Array.isArray(json.users)) {
+    populateUsers(json.users);
+  }
+};
 
-  await apiFetch("/api/setUser.php?" + qs.toString(), { method: "GET" });
+document.getElementById("userSelect").addEventListener("change", (e) => {
+  const opt = e.target.selectedOptions && e.target.selectedOptions[0];
+  if (opt && opt.dataset && opt.dataset.currentLesson != null) {
+    document.getElementById("setCurrentLesson").value = opt.dataset.currentLesson;
+  }
+});
+
+async function adminSetCurrentLesson(lessonVal) {
+  const userId = Number(document.getElementById("userSelect").value || 0);
+  if (!userId) {
+    show({ error: "Select a target user (Load users first)." }, "out");
+    setState("bad", "No user selected");
+    return;
+  }
+  const payload = {
+    action: "set",
+    user_id: userId,
+    lesson: Number(lessonVal || 0),
+  };
+  await apiFetch("/api/lessonComplete.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+  // refresh users list label (optional)
+  document.getElementById("btnLoadUsers").click();
+}
+
+document.getElementById("btnAdminSetLesson").onclick = async () => {
+  const lessonVal = document.getElementById("setCurrentLesson").value;
+  await adminSetCurrentLesson(lessonVal);
+};
+
+document.getElementById("btnReset").onclick = async () => {
+  document.getElementById("setCurrentLesson").value = "0";
+  await adminSetCurrentLesson(0);
 };
 
 window.addEventListener("load", () => {
