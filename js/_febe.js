@@ -104,8 +104,6 @@ class _febe {
     handleRegisterSubmit(data) {
 	// data ={name: 'Mel Heravi', email: 'mel.heravi@gmail.com', email2: 'mel.heravi@gmail.com', phone: '6463031234'}
 
-	console.log(">>>>data:", data);
-
 	(() => {
 	    fetch(wc.apiURL + "/api/admin_create_user.php", {
 		method: "POST",

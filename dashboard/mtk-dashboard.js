@@ -388,7 +388,6 @@ window.myConfig = {
 
 // Wait for mtk-dashboard element to be completely loaded into DOM
 function initializeDashboard(config) {
-    console.log(">>>>>>>>>", config);
     const resolvedConfig = config || (typeof window.mtkDashboardConfig !== "undefined" ? window.mtkDashboardConfig : null);
     
     if (!resolvedConfig) {
