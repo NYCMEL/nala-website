@@ -1,5 +1,4 @@
-// mtk-quiz.config.js
-const mtkQuizConfig = {
+window.mtkQuizConfig = {
     "quiz_session_id": 32,
     "module_id": "M1",
     "count": 20,
