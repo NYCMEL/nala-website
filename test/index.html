@@ -11,44 +11,38 @@
     header h1 { margin: 0; font-size: 18px; }
     main { display: grid; grid-template-columns: 360px 1fr; gap: 14px; padding: 14px; }
     .card { background: #151924; border: 1px solid #2a2f3a; border-radius: 10px; padding: 12px; }
-    .card h2 { margin: 0 0 10px 0; font-size: 14px; color: #b9c0d0; text-transform: uppercase; letter-spacing: .06em; }
+    .card h2 { margin: 0 0 10px 0; font-size: 14px; color: #b9c0d0; text-transform: uppercase; }
     label { display: block; font-size: 12px; color: #b9c0d0; margin-top: 10px; }
-    input, select, textarea { width: 100%; box-sizing: border-box; border-radius: 8px; border: 1px solid #2a2f3a; background: #0f1115; color: #e8e8e8; padding: 8px 10px; }
-    textarea { min-height: 120px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    input, select, textarea { width: 100%; box-sizing: border-box; border-radius: 8px; border: 1px solid #2a2f3a; background: #0f1115; color: #e8e8e8; padding: 10px; }
+    textarea { min-height: 120px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
     .btnrow { display: grid; gap: 8px; margin-top: 10px; }
     button { border: 0; border-radius: 8px; padding: 10px 12px; background: #2a6df4; color: #fff; font-weight: 600; cursor: pointer; }
     button.secondary { background: #2a2f3a; }
     button.danger { background: #c83b3b; }
     button:disabled { opacity: .55; cursor: not-allowed; }
-    .split { display: grid; grid-template-rows: auto auto 1fr; gap: 10px; }
-    .pill { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 12px; background: #2a2f3a; color: #b9c0d0; }
-    .pill.ok { background: rgba(46, 160, 67, .2); color: #9be9a8; border: 1px solid rgba(46, 160, 67, .35); }
-    .pill.bad { background: rgba(248, 81, 73, .18); color: #ffb1aa; border: 1px solid rgba(248, 81, 73, .35); }
-    pre { margin: 0; padding: 12px; border-radius: 10px; border: 1px solid #2a2f3a; background: #0b0d12; overflow: auto; }
-    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-    .small { font-size: 12px; color: #b9c0d0; }
     .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .ok { display:inline-block; margin-left: 10px; padding: 2px 8px; border-radius: 999px; background:#1f7a3b; font-size: 12px; }
+    pre { margin:0; white-space: pre-wrap; word-break: break-word; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: 12px; }
+    .muted { color:#aab2c5; font-size: 12px; line-height: 1.35; }
   </style>
 </head>
 <body>
-
 <header>
-  <h1>NALA API Test Console <span id="state" class="pill">—</span></h1>
-  <div class="small">Base: <span class="mono" id="base"></span></div>
+  <h1>NALA API Test Console <span id="status" class="ok" style="display:none">OK</span></h1>
+  <div class="muted">Base: <span id="baseText"></span></div>
 </header>
 
 <main>
-  <!-- Left controls -->
-  <section class="card">
+  <div class="card">
     <h2>Connection</h2>
     <label>API base URL</label>
-    <input id="apiBase" placeholder="https://nala-test.com" value="https://nala-test.com" />
+    <input id="base" value="https://nala-test.com" />
 
     <h2 style="margin-top:14px;">Auth</h2>
     <label>Email</label>
-    <input id="email" placeholder="email" />
+    <input id="email" value="mel@google.com" />
     <label>Password</label>
-    <input id="password" type="password" placeholder="password" />
+    <input id="pw" type="password" value="" />
 
     <div class="btnrow">
       <button id="btnLogin">POST /api/login.php</button>
@@ -56,7 +50,7 @@
       <button id="btnLogout" class="danger">POST /api/logout.php</button>
     </div>
 
-    <h2 style="margin-top:14px;">Session / Curriculum</h2>
+    <h2 style="margin-top:14px;">Session / curriculum</h2>
     <div class="btnrow">
       <button id="btnCurr" class="secondary">GET /api/getCurriculum.php</button>
     </div>
@@ -68,254 +62,168 @@
       <button id="btnLesson" class="secondary">POST /api/lessonComplete.php</button>
     </div>
 
-    <h2 style="margin-top:14px;">Quiz</h2>
-    <div class="grid2">
-      <div>
-        <label>module_id</label>
-        <input id="quizModule" value="M1" />
-      </div>
-      <div>
-        <label>count</label>
-        <input id="quizCount" type="number" value="20" />
-      </div>
+    <h2 style="margin-top:14px;">Admin tools (admin only)</h2>
+    <div class="muted">
+      • Uses <code>/api/admin_list_users.php</code> to populate dropdown<br>
+      • Uses <code>/api/lessonComplete.php</code> with <code>{"action":"set","user_id":X,"lesson":N}</code>
     </div>
-    <div class="btnrow">
-      <button id="btnGetQuiz" class="secondary">GET /api/getQuiz.php</button>
-    </div>
-
-    <label>quiz_session_id (from getQuiz)</label>
-    <input id="quizSessionId" type="number" value="0" />
-
-    <label>answers JSON (map question_id -> choice letter)</label>
-    <textarea id="answers" class="mono">{}</textarea>
 
     <div class="btnrow">
-      <button id="btnSubmitQuiz">POST /api/submitQuiz.php</button>
+      <button id="btnUsers" class="secondary">GET /api/admin_list_users.php</button>
     </div>
 
-    <h2 style="margin-top:14px;">Admin Tools (admin only)</h2>
-
-    <label>Load / select user</label>
-    <div class="grid2">
-      <div>
-        <button id="btnLoadUsers" class="secondary">GET /api/admin_list_users.php</button>
-      </div>
-      <div>
-        <input id="userSearch" placeholder="filter (email/name/id)" />
-      </div>
-    </div>
     <label>Target user</label>
-    <select id="userSelect">
-      <option value="">(load users first)</option>
-    </select>
+    <select id="targetUser"></select>
 
-    <label>Set current_lesson (0 = only Intro unlocked)</label>
-    <input id="setCurrentLesson" type="number" value="0" />
+    <label>Set current_lesson (0 = 0%)</label>
+    <input id="adminLesson" type="number" value="0" />
 
     <div class="btnrow">
-      <button id="btnAdminSetLesson" class="secondary">POST /api/lessonComplete.php (action:set)</button>
-      <button id="btnReset" class="danger">Reset progress (set current_lesson=0)</button>
+      <button id="btnAdminSet" class="secondary">POST /api/lessonComplete.php (action:set)</button>
+      <button id="btnAdminReset" class="danger">Reset progress (set current_lesson=0)</button>
     </div>
 
-    <div class="small" style="margin-top:10px;">
-      Notes:
-      <ul>
-        <li>This sets <span class="mono">users.current_lesson</span> directly for the selected user.</li>
-        <li>Normal students should advance ONLY by clicking their newest unlocked lesson.</li>
-      </ul>
+    <div class="muted" style="margin-top:10px;">
+      Note: <b>admin accounts always show progress=100</b> in <code>/api/me.php</code>.
+      To verify a student’s progress, either log in as that student or check the dropdown list (it includes current_lesson).
     </div>
-  </section>
+  </div>
 
-  <!-- Right output -->
-  <section class="split">
-    <div class="card">
-      <h2>Request</h2>
-      <pre id="req" class="mono">{}</pre>
-    </div>
-    <div class="card">
-      <h2>Response</h2>
-      <pre id="out" class="mono">{}</pre>
-    </div>
-    <div class="card">
-      <h2>Notes</h2>
-      <div class="small">
-        <ul>
-          <li>All requests use <span class="mono">credentials: "include"</span> for cookie sessions.</li>
-          <li><span class="mono">getQuiz.php</span> requires <span class="mono">module_id</span>.</li>
-          <li><span class="mono">submitQuiz.php</span> expects <span class="mono">{ quiz_session_id, module_id, answers }</span>.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+  <div class="card">
+    <h2>Request</h2>
+    <pre id="req">{}</pre>
+
+    <h2 style="margin-top:14px;">Response</h2>
+    <pre id="res">{}</pre>
+  </div>
 </main>
 
 <script>
-function setState(kind, text) {
-  const el = document.getElementById("state");
-  el.classList.remove("ok","bad");
-  if (kind) el.classList.add(kind);
-  el.textContent = text || "—";
-}
-function show(obj, targetId) {
-  document.getElementById(targetId).textContent = JSON.stringify(obj, null, 2);
-}
-function base() {
-  const b = document.getElementById("apiBase").value.trim().replace(/\/$/, "");
-  document.getElementById("base").textContent = b;
-  return b;
-}
-async function apiFetch(path, opts) {
-  const url = base() + path;
-  opts = opts || {};
-  opts.credentials = "include";
-  show({ url, ...opts }, "req");
-  const res = await fetch(url, opts);
-  const text = await res.text();
-  let json = null;
-  try { json = JSON.parse(text); } catch(e) {}
-  show(json || { raw: text }, "out");
-  if (res.ok) setState("ok", "OK");
-  else setState("bad", "HTTP " + res.status);
-  return { res, json, text };
-}
+  const $ = (id) => document.getElementById(id);
 
-document.getElementById("btnLogin").onclick = async () => {
-  const payload = { email: document.getElementById('email').value, password: document.getElementById('password').value };
-  await apiFetch("/api/login.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
-};
-
-document.getElementById("btnMe").onclick = async () => {
-  await apiFetch("/api/me.php", { method: "GET" });
-};
-
-document.getElementById("btnLogout").onclick = async () => {
-  await apiFetch("/api/logout.php", { method: "POST" });
-};
-
-document.getElementById("btnCurr").onclick = async () => {
-  await apiFetch("/api/getCurriculum.php", { method: "GET" });
-};
-
-document.getElementById("btnLesson").onclick = async () => {
-  const payload = { lesson_no: Number(document.getElementById("lessonNo").value || 0) };
-  await apiFetch("/api/lessonComplete.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
-};
-
-document.getElementById("btnGetQuiz").onclick = async () => {
-  const moduleId = document.getElementById("quizModule").value.trim();
-  const count = Number(document.getElementById("quizCount").value || 20);
-  const qs = new URLSearchParams({ module_id: moduleId, count: String(count) });
-  const { json } = await apiFetch("/api/getQuiz.php?" + qs.toString(), { method: "GET" });
-  if (json && json.quiz && json.quiz.quiz_session_id) {
-    document.getElementById("quizSessionId").value = json.quiz.quiz_session_id;
+  function baseURL() {
+    return ($('base').value || '').replace(/\/+$/, '');
   }
-  if (json && json.quiz && Array.isArray(json.quiz.questions)) {
-    // Pre-fill answers map with blanks
-    const map = {};
-    json.quiz.questions.forEach(q => map[String(q.id)] = "");
-    document.getElementById("answers").value = JSON.stringify(map, null, 2);
-  }
-};
 
-document.getElementById("btnSubmitQuiz").onclick = async () => {
-  let answersMap = {};
-  try { answersMap = JSON.parse(document.getElementById("answers").value || "{}"); } catch(e) {}
-  const payload = {
-    quiz_session_id: Number(document.getElementById("quizSessionId").value || 0),
-    module_id: document.getElementById("quizModule").value.trim(),
-    answers: answersMap
+  function showReq(obj) {
+    $('req').textContent = JSON.stringify(obj, null, 2);
+  }
+  function showRes(obj) {
+    $('res').textContent = (typeof obj === 'string') ? obj : JSON.stringify(obj, null, 2);
+  }
+
+  async function api(path, opts={}) {
+    const url = baseURL() + path;
+    const method = opts.method || 'GET';
+
+    const reqObj = {
+      url,
+      method,
+      credentials: 'include'
+    };
+    if (opts.body) reqObj.body = opts.body;
+    showReq(reqObj);
+
+    const res = await fetch(url, {
+      method,
+      credentials: 'include',
+      headers: Object.assign({ 'Content-Type': 'application/json' }, (opts.headers||{})),
+      body: opts.body ? JSON.stringify(opts.body) : undefined
+    });
+
+    const text = await res.text();
+    let data = null;
+    try { data = JSON.parse(text); }
+    catch(e) { data = text; }
+
+    showRes(data);
+
+    $('status').style.display = res.ok ? 'inline-block' : 'none';
+
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+
+    return data;
+  }
+
+  async function refreshUsers(keepSelected=true) {
+    const prev = $('targetUser').value;
+    const data = await api('/api/admin_list_users.php', { method: 'GET' });
+    const users = (data && data.users) ? data.users : [];
+
+    $('targetUser').innerHTML = '';
+    for (const u of users) {
+      const opt = document.createElement('option');
+      opt.value = String(u.id);
+      opt.textContent = `${u.id} — ${u.email} (${u.role}) — cl=${u.current_lesson}`;
+      $('targetUser').appendChild(opt);
+    }
+
+    if (keepSelected && prev) {
+      const found = [...$('targetUser').options].some(o => o.value === prev);
+      if (found) $('targetUser').value = prev;
+    }
+  }
+
+  $('baseText').textContent = baseURL();
+  $('base').addEventListener('input', () => $('baseText').textContent = baseURL());
+
+  $('btnLogin').onclick = async () => {
+    await api('/api/login.php', {
+      method: 'POST',
+      body: { email: $('email').value.trim(), password: $('pw').value }
+    });
   };
-  await apiFetch("/api/submitQuiz.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
-};
 
-function populateUsers(list) {
-  const sel = document.getElementById("userSelect");
-  sel.innerHTML = "";
-  if (!Array.isArray(list) || list.length === 0) {
-    const opt = document.createElement("option");
-    opt.value = "";
-    opt.textContent = "(no users returned)";
-    sel.appendChild(opt);
-    return;
-  }
-  list.forEach(u => {
-    const opt = document.createElement("option");
-    opt.value = String(u.id);
-    opt.dataset.currentLesson = String(u.current_lesson ?? 0);
-    const label = `${u.id} — ${(u.name||"").trim()} <${u.email||""}> (${u.role||""}) — current_lesson=${u.current_lesson ?? 0}`;
-    opt.textContent = label;
-    sel.appendChild(opt);
-  });
-  // default select first
-  sel.value = String(list[0].id);
-  document.getElementById("setCurrentLesson").value = String(list[0].current_lesson ?? 0);
-}
-
-document.getElementById("btnLoadUsers").onclick = async () => {
-  const q = document.getElementById("userSearch").value.trim();
-  const qs = new URLSearchParams({ limit: "500" });
-  if (q) qs.set("q", q);
-  const { json } = await apiFetch("/api/admin_list_users.php?" + qs.toString(), { method: "GET" });
-  if (json && json.ok && Array.isArray(json.users)) {
-    populateUsers(json.users);
-  }
-};
-
-document.getElementById("userSelect").addEventListener("change", (e) => {
-  const opt = e.target.selectedOptions && e.target.selectedOptions[0];
-  if (opt && opt.dataset && opt.dataset.currentLesson != null) {
-    document.getElementById("setCurrentLesson").value = opt.dataset.currentLesson;
-  }
-});
-
-async function adminSetCurrentLesson(lessonVal) {
-  const userId = Number(document.getElementById("userSelect").value || 0);
-  if (!userId) {
-    show({ error: "Select a target user (Load users first)." }, "out");
-    setState("bad", "No user selected");
-    return;
-  }
-  const payload = {
-    action: "set",
-    user_id: userId,
-    lesson: Number(lessonVal || 0),
+  $('btnMe').onclick = async () => {
+    await api('/api/me.php', { method: 'GET' });
   };
-  await apiFetch("/api/lessonComplete.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
-  // refresh users list label (optional)
-  document.getElementById("btnLoadUsers").click();
-}
 
-document.getElementById("btnAdminSetLesson").onclick = async () => {
-  const lessonVal = document.getElementById("setCurrentLesson").value;
-  await adminSetCurrentLesson(lessonVal);
-};
+  $('btnLogout').onclick = async () => {
+    await api('/api/logout.php', { method: 'POST', body: {} });
+  };
 
-document.getElementById("btnReset").onclick = async () => {
-  document.getElementById("setCurrentLesson").value = "0";
-  await adminSetCurrentLesson(0);
-};
+  $('btnCurr').onclick = async () => {
+    await api('/api/getCurriculum.php', { method: 'GET' });
+  };
 
-window.addEventListener("load", () => {
-  setState(null, "Ready");
-  base();
-});
+  $('btnLesson').onclick = async () => {
+    const n = parseInt($('lessonNo').value, 10) || 0;
+    await api('/api/lessonComplete.php', { method: 'POST', body: { lesson_no: n } });
+  };
+
+  $('btnUsers').onclick = async () => {
+    await refreshUsers(false);
+  };
+
+  $('btnAdminSet').onclick = async () => {
+    const user_id = parseInt($('targetUser').value, 10) || 0;
+    const lesson = parseInt($('adminLesson').value, 10) || 0;
+
+    // IMPORTANT: admin set requires "lesson"
+    await api('/api/lessonComplete.php', {
+      method: 'POST',
+      body: { action: 'set', user_id, lesson }
+    });
+
+    await refreshUsers(true);
+  };
+
+  $('btnAdminReset').onclick = async () => {
+    const user_id = parseInt($('targetUser').value, 10) || 0;
+
+    await api('/api/lessonComplete.php', {
+      method: 'POST',
+      body: { action: 'set', user_id, lesson: 0 }
+    });
+
+    $('adminLesson').value = '0';
+    await refreshUsers(true);
+  };
+
+  // auto-load user list on open (non-fatal if not admin)
+  (async () => {
+    try { await refreshUsers(false); } catch(e) {}
+  })();
 </script>
-
 </body>
 </html>

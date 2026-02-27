@@ -1367,6 +1367,9 @@ wc.setUser = function (opts, callback) {
  * LESSON COMPLETE API
  ************************************************************/
 
+/************************************************************
+ * LESSON COMPLETE API  (PATCHED: refresh session + rerender)
+ ************************************************************/
 wc.lessonComplete = function (callback) {
     // Increments current_lesson for the logged-in user by +1.
     // Call this when a lesson is viewed.
@@ -1389,7 +1392,25 @@ wc.lessonComplete = function (callback) {
             throw err;
         }
         return data;
-    }).then(data => {
+    }).then(async (data) => {
+        // ✅ KEY FIX: pull fresh /api/me.php so hierarchy access/processed updates immediately
+        try {
+            await wc.getSession();
+            if (wc.session && wc.session.hierarchy && wc.session.hierarchy.parts) {
+                window.app = window.app || {};
+                window.app.hierarchy = wc.session.hierarchy.parts;
+
+                // If hierarchy UI exists, re-render it
+                if (window.MTKHierarchy && typeof window.MTKHierarchy.render === "function") {
+                    window.MTKHierarchy.config = window.app.hierarchy;
+                    window.MTKHierarchy.render();
+                }
+            }
+        } catch (e) {
+            wc.error("Session refresh after lessonComplete failed", e);
+            // don't throw; progress already advanced in DB
+        }
+
         if (typeof callback === "function") callback(null, data);
     }).catch(err => {
         wc.error("advanceLesson error:", err);
