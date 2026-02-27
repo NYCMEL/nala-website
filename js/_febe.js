@@ -87,7 +87,9 @@ class _febe {
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
     handleQuiz() {
-	alert("_febe: handleQuiz");
+	// remove the section from cache and reload
+	mtk_pager.remove('dashboard');
+
 	mtk_pager.show("quiz");
     }
 

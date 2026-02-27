@@ -17,6 +17,21 @@
     };
     
     // Private methods
+    const _log = (message, type = 'info') => {
+        if (!state.debugMode && type === 'debug') return;
+        
+        const prefix = '[mtk-pager]';
+        const styles = {
+            info: 'color: #2196F3',
+            success: 'color: #4CAF50',
+            error: 'color: #F44336',
+            warning: 'color: #FF9800',
+            debug: 'color: #9E9E9E'
+        };
+        
+        console.log(`%c${prefix} ${message}`, styles[type] || styles.info);
+    };
+    
     const _dispatchEvent = (eventName, detail = {}) => {
         const event = new CustomEvent(eventName, {
             detail: detail,
@@ -26,7 +41,7 @@
         
         if (state.container) {
             state.container.dispatchEvent(event);
-            wc.log(`Event dispatched: ${eventName}`, 'debug');
+            _log(`Event dispatched: ${eventName}`, 'debug');
         }
     };
     
@@ -38,17 +53,17 @@
             const container = document.getElementById('mtk-pager');
             
             if (container) {
-                wc.log(`Container found after ${attempts} attempt(s)`, 'success');
+                _log(`Container found after ${attempts} attempt(s)`, 'success');
                 callback(container);
                 return true;
             }
             
             if (attempts >= maxAttempts) {
-                wc.log(`ERROR: Container not found after ${maxAttempts} attempts (${maxAttempts * 50}ms)`, 'error');
+                _log(`ERROR: Container not found after ${maxAttempts} attempts (${maxAttempts * 50}ms)`, 'error');
                 return false;
             }
             
-            wc.log(`Container not found yet, attempt ${attempts}/${maxAttempts}...`, 'debug');
+            _log(`Container not found yet, attempt ${attempts}/${maxAttempts}...`, 'debug');
             setTimeout(checkContainer, 50);
         };
         
@@ -59,15 +74,15 @@
         const container = document.getElementById('mtk-pager');
         
         if (!container) {
-            wc.log('Container <PAGER id="mtk-pager"> not found in DOM', 'warning');
+            _log('Container <PAGER id="mtk-pager"> not found in DOM', 'warning');
             return null;
         }
         
         if (container.tagName !== 'PAGER') {
-            wc.log('WARNING: Container found but is not a <PAGER> element', 'warning');
+            _log('WARNING: Container found but is not a <PAGER> element', 'warning');
         }
         
-        wc.log('Container found successfully', 'success');
+        _log('Container found successfully', 'success');
         return container;
     };
     
@@ -77,7 +92,7 @@
         section.className = 'mtk-pager-section';
         section.setAttribute('data-section-id', sectionId);
         
-        wc.log(`Section created: ${sectionId}`, 'debug');
+        _log(`Section created: ${sectionId}`, 'debug');
         return section;
     };
     
@@ -88,7 +103,7 @@
             if (section.classList.contains('active')) {
                 section.classList.remove('active');
                 const sectionId = section.getAttribute('data-section-id');
-                wc.log(`Section hidden: ${sectionId}`, 'debug');
+                _log(`Section hidden: ${sectionId}`, 'debug');
                 
                 // Dispatch hide event
                 _dispatchEvent('mtk-pager:hide', {
@@ -107,7 +122,7 @@
     
     const _loadContent = (section, sectionId, callback) => {
         if (!state.config || !state.config[sectionId]) {
-            wc.log(`No URL configured for section: ${sectionId}`, 'warning');
+            _log(`No URL configured for section: ${sectionId}`, 'warning');
             section.innerHTML = `
                 <div class="mtk-pager-error">
                     <span class="material-icons">error_outline</span>
@@ -119,7 +134,7 @@
         }
         
         const url = state.config[sectionId];
-        wc.log(`Loading content from: ${url}`, 'info');
+        _log(`Loading content from: ${url}`, 'info');
         
         // Add loading state
         if (state.container) {
@@ -128,7 +143,7 @@
         
         // Try jQuery first (if available)
         if (typeof jQuery !== 'undefined' && jQuery.fn.load) {
-            wc.log('Using jQuery to load content', 'debug');
+            _log('Using jQuery to load content', 'debug');
             
             jQuery(section).load(url, function(response, status, xhr) {
                 if (state.container) {
@@ -136,7 +151,7 @@
                 }
                 
                 if (status === 'error') {
-                    wc.log(`Failed to load content: ${xhr.status} ${xhr.statusText}`, 'error');
+                    _log(`Failed to load content: ${xhr.status} ${xhr.statusText}`, 'error');
                     section.innerHTML = `
                         <div class="mtk-pager-error">
                             <span class="material-icons">error_outline</span>
@@ -146,13 +161,13 @@
                     `;
                     if (callback) callback(false);
                 } else {
-                    wc.log(`Content loaded successfully for: ${sectionId}`, 'success');
+                    _log(`Content loaded successfully for: ${sectionId}`, 'success');
                     if (callback) callback(true);
                 }
             });
         } else {
             // Fallback to fetch API
-            wc.log('jQuery not available, using fetch API', 'debug');
+            _log('jQuery not available, using fetch API', 'debug');
             
             fetch(url)
                 .then(response => {
@@ -166,14 +181,14 @@
                         state.container.classList.remove('loading');
                     }
                     section.innerHTML = html;
-                    wc.log(`Content loaded successfully for: ${sectionId}`, 'success');
+                    _log(`Content loaded successfully for: ${sectionId}`, 'success');
                     if (callback) callback(true);
                 })
                 .catch(error => {
                     if (state.container) {
                         state.container.classList.remove('loading');
                     }
-                    wc.log(`Failed to load content: ${error.message}`, 'error');
+                    _log(`Failed to load content: ${error.message}`, 'error');
                     section.innerHTML = `
                         <div class="mtk-pager-error">
                             <span class="material-icons">error_outline</span>
@@ -187,22 +202,12 @@
     };
     
     const _showSection = (sectionId) => {
-	// ADD ACTIVE TO CURRENT LINK
-	$(".nav-link, .navbar-brand, .btn").removeClass("active");
-
-	if (sectionId == "course") {
-	    $("#mtk-header-hierarchy").addClass("active");
-
-	} else {
-	    $("#mtk-header-" + sectionId).addClass("active");
-	}
-
         if (!state.container) {
-            wc.log('Cannot show section: Container not initialized', 'error');
+            _log('Cannot show section: Container not initialized', 'error');
             return;
         }
         
-        wc.log(`Attempting to show section: ${sectionId}`, 'info');
+        _log(`Attempting to show section: ${sectionId}`, 'info');
         
         // Hide all sections first
         _hideAllSections();
@@ -212,8 +217,7 @@
         
         if (section) {
             // Section exists, just activate it
-            wc.log(`Section already exists: ${sectionId}`, 'debug');
-
+            _log(`Section already exists: ${sectionId}`, 'debug');
             section.classList.add('active');
             state.currentSection = sectionId;
             
@@ -222,10 +226,8 @@
                 isNew: false
             });
         } else {
-	    alert("mtk-pager.js:" + sectionId);
-
             // Section doesn't exist, create it
-            wc.log(`Creating new section: ${sectionId}`, 'debug');
+            _log(`Creating new section: ${sectionId}`, 'debug');
             section = _createSection(sectionId);
             
             // Load content
@@ -237,16 +239,15 @@
                 }
             });
             
-	    // Add to container
-	    state.container.appendChild(section);
-	    
-	    // Store reference
-	    state.sections.set(sectionId, section);
+            // Add to container
+            state.container.appendChild(section);
+            
+            // Store reference
+            state.sections.set(sectionId, section);
             
             // Activate it
             section.classList.add('active');
-
-	    state.currentSection = sectionId;
+            state.currentSection = sectionId;
             
             _dispatchEvent('mtk-pager:show', {
                 sectionId: sectionId,
@@ -254,7 +255,7 @@
             });
         }
         
-        wc.log(`Current section: ${state.currentSection}`, 'success');
+        _log(`Current section: ${state.currentSection}`, 'success');
     };
     
     const _subscribeToEvents = () => {
@@ -263,46 +264,47 @@
             'mtk-pager:show',
             'mtk-pager:loaded',
             'mtk-pager:hide',
+            'mtk-pager:removed',
             'mtk-pager:error'
         ];
         
         eventNames.forEach(eventName => {
             document.addEventListener(eventName, (e) => {
-                wc.log(`Event received: ${eventName}`, 'debug');
+                _log(`Event received: ${eventName}`, 'debug');
                 if (e.detail) {
-                    wc.log(`Event detail: ${JSON.stringify(e.detail)}`, 'debug');
+                    _log(`Event detail: ${JSON.stringify(e.detail)}`, 'debug');
                 }
             });
         });
         
-        wc.log('Subscribed to mtk-pager events', 'debug');
+        _log('Subscribed to mtk-pager events', 'debug');
     };
     
     const _initialize = () => {
         if (state.isInitialized) {
-            wc.log('Already initialized', 'warning');
+            _log('Already initialized', 'warning');
             return;
         }
         
-        wc.log('Initializing mtk-pager...', 'info');
+        _log('Initializing mtk-pager...', 'info');
         
         // Load configuration
         if (typeof app !== 'undefined' && app.pager) {
             state.config = app.pager;
-            wc.log('Configuration loaded from app.pager', 'success');
+            _log('Configuration loaded from app.pager', 'success');
             
             // Load defaults if available
             if (app.pagerDefaults) {
                 state.debugMode = app.pagerDefaults.debugMode || false;
-                wc.log(`Debug mode: ${state.debugMode}`, 'debug');
+                _log(`Debug mode: ${state.debugMode}`, 'debug');
             }
         } else {
-            wc.log('WARNING: app.pager configuration not found!', 'warning');
+            _log('WARNING: app.pager configuration not found!', 'warning');
             state.config = {};
         }
         
         // Wait for container to be in DOM
-        wc.log('Waiting for PAGER container to be in DOM...', 'info');
+        _log('Waiting for PAGER container to be in DOM...', 'info');
         _waitForContainer((container) => {
             state.container = container;
             
@@ -311,7 +313,7 @@
             
             // Mark as initialized
             state.isInitialized = true;
-            wc.log('mtk-pager initialized successfully', 'success');
+            _log('mtk-pager initialized successfully', 'success');
             
             // Dispatch initialization event
             _dispatchEvent('mtk-pager:initialized', {
@@ -325,7 +327,7 @@
                 initialSection = app.pagerDefaults.initialSection;
             }
             
-            wc.log(`Auto-loading first page: ${initialSection}`, 'info');
+            _log(`Auto-loading first page: ${initialSection}`, 'info');
             
             // Small delay to ensure DOM is fully ready
             setTimeout(() => {
@@ -338,19 +340,56 @@
     const mtk_pager = {
         show: function(sectionId) {
             if (!sectionId) {
-                wc.log('ERROR: sectionId is required', 'error');
+                _log('ERROR: sectionId is required', 'error');
                 return;
             }
             
             if (!state.isInitialized) {
-                wc.log('WARNING: Not initialized, initializing now...', 'warning');
+                _log('WARNING: Not initialized, initializing now...', 'warning');
                 _initialize();
             }
             
             _showSection(sectionId);
-
-	    // FIX FOOTER IF CONTENT IS SHORTER THAN PAGE
-	    //checkFooter();
+        },
+        
+        // Remove a section completely (from DOM and state)
+        // This forces the section to reload on next show
+        remove: function(sectionId) {
+            if (!sectionId) {
+                _log('ERROR: sectionId is required', 'error');
+                return false;
+            }
+            
+            const section = state.sections.get(sectionId);
+            
+            if (!section) {
+                _log(`Section '${sectionId}' not found, nothing to remove`, 'warning');
+                return false;
+            }
+            
+            // Remove from DOM
+            if (section.parentNode) {
+                section.parentNode.removeChild(section);
+                _log(`Section '${sectionId}' removed from DOM`, 'info');
+            }
+            
+            // Remove from state
+            state.sections.delete(sectionId);
+            _log(`Section '${sectionId}' removed from state`, 'info');
+            
+            // Clear current section if it was the active one
+            if (state.currentSection === sectionId) {
+                state.currentSection = null;
+                _log(`Current section cleared`, 'debug');
+            }
+            
+            // Dispatch remove event
+            _dispatchEvent('mtk-pager:removed', {
+                sectionId: sectionId
+            });
+            
+            _log(`Section '${sectionId}' removed successfully`, 'success');
+            return true;
         },
         
         // Additional helper methods (not required but useful)
@@ -371,7 +410,7 @@
     window.mtk_pager = mtk_pager;
     
     // Auto-initialize immediately
-    wc.log('mtk-pager component loaded', 'info');
+    _log('mtk-pager component loaded', 'info');
     _initialize();
     
 })();

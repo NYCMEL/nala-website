@@ -477,9 +477,6 @@ class MTKHierarchy {
 
 	wc.log("quizElement:", module);
 
-	// REMOVE TO REPLACE THE SECTION
-	$("#mtk-pager-quiz").remove();
-
 	mtk_pager.show("quiz");
     }
 
