@@ -353,7 +353,7 @@ class MtkQuiz {
     }
 
     handleCancel() {
-	mtk_pager.show('dashboard');
+	mtk_pager.show('course');
     }
 
     handleTest() {
@@ -686,7 +686,7 @@ async function initMtkQuiz(config) {
 
 // Initialize quiz - support both local and remote config
 // GET FRESH DATA
-if (typeof wc !== 'undefined' && wc.isLocal) {
+if (wc.isLocal) {
     // LOCAL MODE - Use window.mtkQuizConfig
     wc.log("MTK Quiz: Local mode - using window.mtkQuizConfig");
     wc.log("isLocal:", wc.isLocal);
@@ -713,40 +713,18 @@ if (typeof wc !== 'undefined' && wc.isLocal) {
     } else {
 	console.error('Local mode but mtkQuizConfig is not defined. Please include quiz config before mtk-quiz.js');
     }
-} else if (typeof wc !== 'undefined' && wc.getQuiz) {
+} else {
     // REMOTE MODE - Fetch from API
     wc.log("MTK Quiz: Remote mode - fetching quiz from API");
     
-    wc.getQuiz("module_0_0", function(err, data) {
+    wc.getQuiz("M1", function(err, data) {
 	if (err) {
 	    alert(err.message);
 	    return;
 	}
 
-	console.log(">>>>>>>>>>>", data);
+	wc.log("mtk-quiz.js: > data:", JSON.stringify(data));
+
+	initMtkQuiz(data.quiz);
     });
-} else {
-    // FALLBACK - Try window.mtkQuizConfig if wc is not available
-    wc.log("MTK Quiz: Fallback mode - using window.mtkQuizConfig");
-    
-    if (typeof mtkQuizConfig !== 'undefined') {
-	if (document.readyState === 'loading') {
-	    document.addEventListener('DOMContentLoaded', () => initMtkQuiz(mtkQuizConfig));
-	} else {
-	    initMtkQuiz(mtkQuizConfig);
-	}
-	
-	window.addEventListener('load', async () => {
-	    const element = document.querySelector('mtk-quiz.mtk-quiz') || 
-		  document.querySelector('mtk-quiz') ||
-		  document.querySelector('[class*="mtk-quiz"]');
-	    
-	    if (element && !element.mtkQuizInstance) {
-		wc.log('🔄 MTK Quiz: Backup initialization on window load');
-		await initMtkQuiz(mtkQuizConfig);
-	    }
-	});
-    } else {
-	console.error('mtkQuizConfig is not defined and wc.getQuiz is not available. Please include quiz config before mtk-quiz.js');
-    }
 }
