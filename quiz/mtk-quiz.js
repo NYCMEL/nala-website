@@ -723,8 +723,6 @@ if (wc.isLocal) {
 
 	quiz.module_id = wc.quizModule;
 
-	alert(quiz.module_id);
-
 	wc.log("mtk-quiz.js: > data:", JSON.stringify(quiz));
 
 	initMtkQuiz(quiz);
