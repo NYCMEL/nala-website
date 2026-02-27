@@ -367,6 +367,10 @@
                 return false;
             }
             
+            // Remove active class first (hide it immediately)
+            section.classList.remove('active');
+            _log(`Section '${sectionId}' hidden`, 'debug');
+            
             // Remove from DOM
             if (section.parentNode) {
                 section.parentNode.removeChild(section);
