@@ -627,6 +627,8 @@ function waitForMtkQuizElement() {
  * Initialize MTK Quiz component
  */
 async function initMtkQuiz(config) {
+    alert("initMtkQuiz");
+
     wc.log('🚀 Starting MTK Quiz initialization...');
     
     try {
@@ -713,6 +715,8 @@ if (wc.isLocal) {
     // REMOTE MODE - Fetch from API
     wc.log("MTK Quiz: Remote mode - fetching quiz from API");
     
+    alert(wc.quizModule);
+
     wc.getQuiz(wc.quizModule, function(err, data) {
 	if (err) {
 	    alert(err.message);

@@ -18,3 +18,15 @@ app.pagerDefaults = {
     animationDuration: 10,
     debugMode: false
 };
+
+app.pagerDefaults = {
+    cache: true  // true = load once, false = reload every visit
+};
+
+app.pagerCache = {
+    'home': true,        // Cache - load once
+    'about': true,
+    'contact': true,
+    'dashboard': true,
+    'course': false,     // Don't cache - reload every time
+};
