@@ -88,7 +88,7 @@ class _febe {
     //////////////////////////////////////////////////////////////////
     handleQuiz() {
 	// remove the section from cache and reload
-	mtk_pager.remove('dashboard');
+	mtk_pager.remove('course');
 
 	mtk_pager.show("quiz");
     }
