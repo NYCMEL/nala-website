@@ -87,7 +87,6 @@ class _febe {
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
     handleQuiz() {
-	alert("_febe: handleQuiz");
 	mtk_pager.show("quiz");
     }
 

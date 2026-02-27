@@ -202,14 +202,9 @@
     };
     
     const _showSection = (sectionId) => {
-	// ADD ACTIVE TO CURRENT LINK
-	$(".nav-link, .navbar-brand, .btn").removeClass("active");
-
-	if (sectionId == "course") {
-	    $("#mtk-header-hierarchy").addClass("active");
-
-	} else {
-	    $("#mtk-header-" + sectionId).addClass("active");
+	if (sectionId == "quiz") {
+	    // remove the section from cache and reload
+	    mtk_pager.remove('quiz');
 	}
 
         if (!state.container) {
@@ -274,6 +269,7 @@
             'mtk-pager:show',
             'mtk-pager:loaded',
             'mtk-pager:hide',
+            'mtk-pager:removed',
             'mtk-pager:error'
         ];
         
@@ -359,9 +355,50 @@
             }
             
             _showSection(sectionId);
-
-	    // FIX FOOTER IF CONTENT IS SHORTER THAN PAGE
-	    //checkFooter();
+        },
+        
+        // Remove a section completely (from DOM and state)
+        // This forces the section to reload on next show
+        remove: function(sectionId) {
+            if (!sectionId) {
+                _log('ERROR: sectionId is required', 'error');
+                return false;
+            }
+            
+            const section = state.sections.get(sectionId);
+            
+            if (!section) {
+                _log(`Section '${sectionId}' not found, nothing to remove`, 'warning');
+                return false;
+            }
+            
+            // Remove active class first (hide it immediately)
+            section.classList.remove('active');
+            _log(`Section '${sectionId}' hidden`, 'debug');
+            
+            // Remove from DOM
+            if (section.parentNode) {
+                section.parentNode.removeChild(section);
+                _log(`Section '${sectionId}' removed from DOM`, 'info');
+            }
+            
+            // Remove from state
+            state.sections.delete(sectionId);
+            _log(`Section '${sectionId}' removed from state`, 'info');
+            
+            // Clear current section if it was the active one
+            if (state.currentSection === sectionId) {
+                state.currentSection = null;
+                _log(`Current section cleared`, 'debug');
+            }
+            
+            // Dispatch remove event
+            _dispatchEvent('mtk-pager:removed', {
+                sectionId: sectionId
+            });
+            
+            _log(`Section '${sectionId}' removed successfully`, 'success');
+            return true;
         },
         
         // Additional helper methods (not required but useful)
