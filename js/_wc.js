@@ -1292,6 +1292,7 @@ wc.getQuiz = function (moduleId, callback, count) {
     qs.set("module_id", moduleId.trim());
     if (Number.isFinite(count) && count > 0) qs.set("count", String(Math.min(50, Math.floor(count))));
 
+    // https://nala-test.com/api/getQuiz.php?module_id=M2
     fetch(wc.apiURL + "/api/getQuiz.php?" + qs.toString(), {
         method: "GET",
         credentials: "include"
