@@ -470,6 +470,13 @@ class MTKHierarchy {
      * Handle quiz click - delegate to mtk_pager
      */
     handleQuizClick(event, quizElement) {
+	let module = $(quizElement).attr("data-module-id");
+
+	// CONSUMED BY QUIZ
+	wc.quizModule = module;
+
+	wc.log("quizElement:", module);
+
 	mtk_pager.show("quiz");
     }
 

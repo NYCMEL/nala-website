@@ -717,7 +717,7 @@ if (wc.isLocal) {
     // REMOTE MODE - Fetch from API
     wc.log("MTK Quiz: Remote mode - fetching quiz from API");
     
-    wc.getQuiz("M1", function(err, data) {
+    wc.getQuiz(wc.quizModule, function(err, data) {
 	if (err) {
 	    alert(err.message);
 	    return;
