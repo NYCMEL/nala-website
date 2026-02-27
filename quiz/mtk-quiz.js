@@ -691,28 +691,24 @@ if (wc.isLocal) {
     wc.log("MTK Quiz: Local mode - using window.mtkQuizConfig");
     wc.log("isLocal:", wc.isLocal);
     
-    if (typeof mtkQuizConfig !== 'undefined') {
-	// Start initialization when DOM is ready
-	if (document.readyState === 'loading') {
-	    document.addEventListener('DOMContentLoaded', () => initMtkQuiz(mtkQuizConfig));
-	} else {
-	    initMtkQuiz(mtkQuizConfig);
-	}
-	
-	// Backup initialization on window load
-	window.addEventListener('load', async () => {
-	    const element = document.querySelector('mtk-quiz.mtk-quiz') || 
-		  document.querySelector('mtk-quiz') ||
-		  document.querySelector('[class*="mtk-quiz"]');
-	    
-	    if (element && !element.mtkQuizInstance) {
-		wc.log('🔄 MTK Quiz: Backup initialization on window load');
-		await initMtkQuiz(mtkQuizConfig);
-	    }
-	});
+    // Start initialization when DOM is ready
+    if (document.readyState === 'loading') {
+	document.addEventListener('DOMContentLoaded', () => initMtkQuiz(mtkQuizConfig));
     } else {
-	console.error('Local mode but mtkQuizConfig is not defined. Please include quiz config before mtk-quiz.js');
+	initMtkQuiz(mtkQuizConfig);
     }
+    
+    // Backup initialization on window load
+    window.addEventListener('load', async () => {
+	const element = document.querySelector('mtk-quiz.mtk-quiz') || 
+	      document.querySelector('mtk-quiz') ||
+	      document.querySelector('[class*="mtk-quiz"]');
+	
+	if (element && !element.mtkQuizInstance) {
+	    wc.log('🔄 MTK Quiz: Backup initialization on window load');
+	    await initMtkQuiz(mtkQuizConfig);
+	}
+    });
 } else {
     // REMOTE MODE - Fetch from API
     wc.log("MTK Quiz: Remote mode - fetching quiz from API");
@@ -723,8 +719,14 @@ if (wc.isLocal) {
 	    return;
 	}
 
-	wc.log("mtk-quiz.js: > data:", JSON.stringify(data));
+	let quiz = data.quiz;
 
-	initMtkQuiz(data.quiz);
+	quiz.module_id = wc.quizModule;
+
+	alert(quiz.module_id);
+
+	wc.log("mtk-quiz.js: > data:", JSON.stringify(quiz));
+
+	initMtkQuiz(quiz);
     });
 }
