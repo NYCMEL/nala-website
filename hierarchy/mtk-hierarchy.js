@@ -477,8 +477,6 @@ class MTKHierarchy {
 
 	wc.log("quizElement:", module);
 
-	alert(wc.quizModule);
-
 	mtk_pager.show("quiz");
     }
 
