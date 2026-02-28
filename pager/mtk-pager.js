@@ -202,10 +202,10 @@
     };
     
     const _showSection = (sectionId) => {
-	// if (sectionId == "quiz") {
-	//     // remove the section from cache and reload
-	//     mtk_pager.remove('quiz');
-	// }
+	if (sectionId == "quiz") {
+	    // remove the section from cache and reload
+	    mtk_pager.remove('quiz');
+	}
 
         if (!state.container) {
             _log('Cannot show section: Container not initialized', 'error');
