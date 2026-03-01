@@ -1,8 +1,8 @@
 .mtk-dashboard {
-  max-width: 1200px;
   margin: 0 auto;
-  padding: 24px;
-  display: block; }
+  padding: 0px;
+  display: block;
+  margin-top: 24px; }
 
 .mtk-dashboard * {
   box-sizing: border-box; }
@@ -175,3 +175,12 @@
 .mtk-dashboard__subscriptions {
   animation-delay: 0.1s;
   animation-fill-mode: both; }
+anslateY(20px); }
+  to {
+    opacity: 1;
+    transform: translateY(0); } }
+  .mtk-dashboard__header, .mtk-dashboard__subscriptions {
+    animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+  .mtk-dashboard__subscriptions {
+    animation-delay: 0.1s;
+    animation-fill-mode: both; }
