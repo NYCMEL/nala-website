@@ -8,7 +8,7 @@ app.quizSize = 20;
 
 // Message storage
 app.emsgs = [
-    { id: 1000, text: "Login Failed! Please try again." },
+    { id: 1000, text: "Email or Password combination not allowed" },
     { id: 1001, text: "Create user failed" },
     { id: 1002, text: "Question not found." },
     { id: 1003, text: "Invalid answer selected." },
