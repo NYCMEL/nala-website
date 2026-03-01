@@ -27,6 +27,7 @@ class _febe {
 	    "mtk-msgs:button-click",
 	    "header-logo-public",
 	    "header-logo-private",
+	    "4-mtk-quiz-submitted",
 	];
 
 	// create handlers mapping
@@ -67,6 +68,7 @@ class _febe {
 	    "mtk-msgs:button-click": this.handleMsgButtonClick,
 	    "header-logo-public": this.handleHeaderLogoPublicClick,
 	    "header-logo-private": this.handleHeaderLogoPrivateClick,
+	    "4-mtk-quiz-submitted": this.handleQuizSubmitted,
 	};
     }
 
@@ -81,6 +83,15 @@ class _febe {
 	    wc.error("_febe: DO NOT HAVE:" + msg);
 	    alert("_febe: DO NOT HAVE:" + msg);
 	}
+    }
+
+    //////////////////////////////////////////////////////////////////
+    ///// HANDLERS
+    //////////////////////////////////////////////////////////////////
+    handleQuizSubmitted(data) {
+	wc.log(">>>>>>>>", data);
+
+	alert("_febe: SUBMIT QUIZ NOT IMPLEMENTED YET!")
     }
 
     //////////////////////////////////////////////////////////////////
