@@ -267,11 +267,6 @@
 				closable: false,
 				timer: 0
 			    });
-
-			    // Scroll to first unanswered question
-			    //this.scrollToFirstUnanswered();
-
-			    window.scrollTo({top: 0})
 			}
 			
 			window.wc.publish('4-mtk-quiz-validation-error', errorData);
