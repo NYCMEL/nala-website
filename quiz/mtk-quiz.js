@@ -363,7 +363,7 @@
 	    }
 
 	    handleCancel() {
-		mtk_pager.show('course');
+		app.pager.show('course');
 	    }
 
 	    handleTest() {
@@ -769,7 +769,7 @@
 		    alert(err.message);
 
 		    // TAKE ME BACK TO COURSES
-		    mtk_pager.show("course");
+		    app.pager.show("course");
 		    return;
 		}
 
