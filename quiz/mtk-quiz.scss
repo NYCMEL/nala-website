@@ -56,7 +56,7 @@
       border-radius: 4px 4px 0 0;
   }
 
-  // Sticky header when there's an app-header or mtk-header
+  // Sticky header when there is an app-header or mtk-header
   body:has(.app-header) .mtk-quiz__header,
   body:has(.mtk-header) .mtk-quiz__header {
     top: var(--app-header-height, var(--mtk-header-height, 64px));
