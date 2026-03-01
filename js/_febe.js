@@ -105,8 +105,6 @@ class _febe {
 
 	    console.log("Server response:", response);
 	});
-
-	console.log("Submit success:", JSON.strinfify(data.answers);
     }
 
     //////////////////////////////////////////////////////////////////
