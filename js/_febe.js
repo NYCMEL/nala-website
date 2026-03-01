@@ -153,19 +153,24 @@ class _febe {
 		    password: "changeme123",
 		    role: "registered"
 		})
-	    })
-		.then(res => {
-		    return res.json().then(json => {
-			if (!res.ok) {
-			    throw new Error(json.error || "Create user failed");
-			}
-			return json;
-		    });
-		})
-		.then(json => {
-		    console.log("user created", json.user); // includes name
-		})
-		.catch(console.error);
+	    }).then(res => {
+		return res.json().then(json => {
+		    if (!res.ok) {
+			MTKMsgs.show({
+			    type: 'error',
+			    icon: 'error',
+			    message: app.emsg(1001),
+			    closable: true,
+			    timer: 10
+			});
+
+			throw new Error(json.error || "Create user failed");
+		    }
+		    return json;
+		});
+	    }).then(json => {
+		console.log("user created", json.user); // includes name
+	    }).catch(console.error);
 	})();
     }
 
