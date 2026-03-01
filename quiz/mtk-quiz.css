@@ -39,14 +39,15 @@
   padding: 24px;
   margin-left: 0px;
   margin-right: 0px;
-  background: linear-gradient(135deg, var(--mtk-primary) 0%, var(--mtk-primary-light) 100%);
+  background: #4e5862;
   color: var(--mtk-on-primary);
   position: sticky;
   top: 0;
   z-index: 100;
   transition: var(--mtk-transition);
   box-shadow: var(--mtk-shadow-2);
-  border-radius: 4px 4px 0 0; }
+  border-radius: 4px 4px 0 0;
+  margin-bottom: 20px; }
 
 .mtk-quiz body:has(.app-header) .mtk-quiz__header,
 .mtk-quiz body:has(.mtk-header) .mtk-quiz__header {
@@ -127,7 +128,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--mtk-primary);
+  background: #4e5862;
   color: var(--mtk-on-primary);
   border-radius: 50%;
   font-size: 14px;
