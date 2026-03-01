@@ -10,6 +10,7 @@ app.quizSize = 20;
 app.emsgs = [
     { id: 1000, text: "Error(1000): Wrong 'Email' or 'Password' combination" },
     { id: 1001, text: "Error(1001): Create user failed" },
+    { id: 1002, text: "Error(1002): No questions found for module" },
 ];
 
 app.emsg = function (id) {
