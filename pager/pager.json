@@ -49,10 +49,10 @@
 	"url": "<wc-include href='logout/index.inc.html'></wc-include>"
     },
     {
-	"cache": "true",
+	"cache": "false",
 	"page": "quiz",
 	"label": "Quiz",
-	"url": "<wc-include href='quiz/index.inc.html'></wc-include>"
+	"url": "<wc-include href='quiz/mtk-quiz.html'></wc-include>"
     }
 ]
 
