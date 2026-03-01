@@ -1001,11 +1001,12 @@ wc.login = async function (email, passwd) {
 	    MTKMsgs.show({
 		type: 'error',
 		icon: 'error',
-		message: 'Error: ' + msg + " Please try again !",
+		message: 'Error(1000): ' + msg + " Please try again !",
 		buttons: [],
 		closable: false,
-		timer: 5
+		timer: 7
 	    });	    
+
             return false;
         }
 
