@@ -1456,3 +1456,40 @@ wc.submitQuiz = function (quizSessionId, moduleId, answersMap, callback) {
         }
     });
 };
+
+/////////////////////////////////////////////////////////////////////////////////
+////
+/////////////////////////////////////////////////////////////////////////////////
+wc.getSearchParam = function(variable) {
+    wc.group("wc.getSearchParam")
+
+    var query = window.location.search.substring(1);
+    var vars = query.split('&');
+
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        if (decodeURIComponent(pair[0]) == variable) {
+	    wc.groupEnd();
+            return decodeURIComponent(pair[1]);
+        }
+    }
+
+    wc.groupEnd();
+    return "";
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+//// 
+////////////////////////////////////////////////////////////////////////////////////
+wc.getAttributes = function(node) {
+    wc.group("wc.getAttributes", node);
+
+    var i, attributeNodes = node.attributes, length = attributeNodes.length, attrs = {};
+    
+    for ( i = 0; i < length; i++ ) {
+	attrs[attributeNodes[i].name] = attributeNodes[i].value;
+    }
+
+    wc.groupEnd();
+    return attrs;
+}

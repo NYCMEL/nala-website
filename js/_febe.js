@@ -41,7 +41,7 @@ class _febe {
     //////////////////////////////////////////////////////////////////
     subscribe() {
 	this.topics.forEach(topic => {
-	    wc.log("_febe: subscribed to", topic);
+	    //wc.log("_febe: subscribed to", topic);
 	    PubSub.subscribe(topic, this.onMessage.bind(this));
 	});
     }

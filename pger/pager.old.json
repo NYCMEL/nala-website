@@ -2,8 +2,8 @@
     {
 	"cache": "true",
 	"page": "home",
-	"label": "Home",
-	"url": "<wc-include href='home/index.inc.html'></wc-include>"
+	"label": "Welcome",
+	"url": "<wc-include href='/tk/lib/components/w/html/parts/pager/home.html'></wc-include>"
 
     },
     {
