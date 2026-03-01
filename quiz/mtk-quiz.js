@@ -248,7 +248,7 @@
 
 		if (answeredCount < totalQuestions) {
 		    wc.log('🔴 VALIDATION FAILED - NOT ALL ANSWERED');
-		    this.showMessage('error', `Please answer all questions. ${answeredCount}/${totalQuestions} answered.`);
+		    //this.showMessage('error', `Please answer all questions. ${answeredCount}/${totalQuestions} answered.`);
 		    
 		    // Publish validation error event
 		    if (window.wc && window.wc.publish) {
@@ -260,7 +260,22 @@
 			};
 			
 			if (window.wc.log) {
-			    window.wc.log('4-mtk-quiz-validation-error', errorData);
+			    //window.wc.log('4-mtk-quiz-validation-error', errorData);
+			    
+			    MTKMsgs.show({
+				type: 'error',
+				icon: 'error',
+				message: errorData.message,
+				buttons: [],
+				closable: false,
+				timer: 5
+			    });
+
+			    // SCROLL TO TOP TO SHOW THE ERROR
+			    window.scrollTo({
+				top: 0,
+				behavior: 'instant'
+			    });
 			}
 			
 			window.wc.publish('4-mtk-quiz-validation-error', errorData);
