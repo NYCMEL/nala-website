@@ -181,7 +181,7 @@ class MTKMsgs {
 
     // Handle close button visibility
     // Use closable flag to determine if X button should be shown
-    if (this.closeButton) {
+      if (this.closeButton) {
       if (msgConfig.closable === false) {
         this.closeButton.style.display = 'none';
       } else {
