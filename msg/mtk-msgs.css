@@ -9,172 +9,129 @@
   z-index: 1000;
   position: relative;
   margin-top: 5px; }
-
-.mtk-msgs.visible {
-  height: 40px;
-  opacity: 1; }
-
-.mtk-msgs__overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.6s ease; }
-
-.mtk-msgs__overlay.visible {
-  opacity: 1;
-  pointer-events: all; }
-
-.mtk-msgs.locked {
-  z-index: 1001; }
-
-.mtk-msgs .mtk-msgs__container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 40px;
-  padding: 0 16px;
-  gap: 12px;
-  width: 100%; }
-
-.mtk-msgs .mtk-msgs__left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-shrink: 0; }
-
-.mtk-msgs .mtk-msgs__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Material Icons';
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0; }
-
-.mtk-msgs .mtk-msgs__message {
-  font-family: 'Roboto', sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; }
-
-.mtk-msgs .mtk-msgs__buttons {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: auto;
-  flex-shrink: 0; }
-
-.mtk-msgs .mtk-msgs__button {
-  background: transparent;
-  border: none;
-  padding: 6px 12px;
-  font-family: 'Roboto', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  text-transform: uppercase;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
-  white-space: nowrap;
-  outline: none; }
-
-.mtk-msgs .mtk-msgs__button:hover {
-  background-color: rgba(0, 0, 0, 0.08); }
-
-.mtk-msgs .mtk-msgs__button:focus {
-  outline: 2px solid currentColor;
-  outline-offset: 2px; }
-
-.mtk-msgs .mtk-msgs__button:active {
-  background-color: rgba(0, 0, 0, 0.12); }
-
-.mtk-msgs .mtk-msgs__close {
-  background: transparent;
-  border: none;
-  padding: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: background-color 0.2s ease;
-  flex-shrink: 0;
-  margin-left: 8px;
-  outline: none; }
-
-.mtk-msgs .mtk-msgs__close .material-icons {
-  font-size: 18px; }
-
-.mtk-msgs .mtk-msgs__close:hover {
-  background-color: rgba(0, 0, 0, 0.08); }
-
-.mtk-msgs .mtk-msgs__close:focus {
-  outline: 2px solid currentColor;
-  outline-offset: 2px; }
-
-.mtk-msgs .mtk-msgs__close:active {
-  background-color: rgba(0, 0, 0, 0.12); }
-
-.mtk-msgs.mtk-msgs--info {
-  background-color: #0dcaf0;
-  color: #055160; }
-
-.mtk-msgs.mtk-msgs--info .mtk-msgs__button {
-  color: #055160; }
-
-.mtk-msgs.mtk-msgs--info .mtk-msgs__close {
-  color: #055160; }
-
-.mtk-msgs.mtk-msgs--warning {
-  background-color: #ffc107;
-  color: #664d03; }
-
-.mtk-msgs.mtk-msgs--warning .mtk-msgs__button {
-  color: #664d03; }
-
-.mtk-msgs.mtk-msgs--warning .mtk-msgs__close {
-  color: #664d03; }
-
-.mtk-msgs.mtk-msgs--error {
-  background-color: #dc3545;
-  color: #ffffff; }
-
-.mtk-msgs.mtk-msgs--error .mtk-msgs__button {
-  color: #ffffff; }
-
-.mtk-msgs.mtk-msgs--error .mtk-msgs__close {
-  color: #ffffff; }
-
-.mtk-msgs.mtk-msgs--success {
-  background-color: #198754;
-  color: #ffffff; }
-
-.mtk-msgs.mtk-msgs--success .mtk-msgs__button {
-  color: #ffffff; }
-
-.mtk-msgs.mtk-msgs--success .mtk-msgs__close {
-  color: #ffffff; }
-
--msgs--error .mtk-msgs__close {
-  color: #ffffff; }
-
-.mtk-msgs.mtk-msgs--success {
-  background-color: #198754;
-  color: #ffffff; }
-
-.mtk-msgs.mtk-msgs--success .mtk-msgs__button {
-  color: #ffffff; }
-
-.mtk-msgs.mtk-msgs--success .mtk-msgs__close {
-  color: #ffffff; }
+  .mtk-msgs.visible {
+    height: 40px;
+    opacity: 1; }
+  .mtk-msgs__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease; }
+    .mtk-msgs__overlay.visible {
+      opacity: 1;
+      pointer-events: all; }
+  .mtk-msgs.locked {
+    z-index: 1001; }
+  .mtk-msgs .mtk-msgs__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 40px;
+    padding: 0 16px;
+    gap: 12px;
+    width: 100%; }
+  .mtk-msgs .mtk-msgs__left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0; }
+  .mtk-msgs .mtk-msgs__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Material Icons';
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0; }
+  .mtk-msgs .mtk-msgs__message {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; }
+  .mtk-msgs .mtk-msgs__buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+    flex-shrink: 0; }
+  .mtk-msgs .mtk-msgs__button {
+    background: transparent;
+    border: none;
+    padding: 6px 12px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+    outline: none; }
+    .mtk-msgs .mtk-msgs__button:hover {
+      background-color: rgba(0, 0, 0, 0.08); }
+    .mtk-msgs .mtk-msgs__button:focus {
+      outline: 2px solid currentColor;
+      outline-offset: 2px; }
+    .mtk-msgs .mtk-msgs__button:active {
+      background-color: rgba(0, 0, 0, 0.12); }
+  .mtk-msgs .mtk-msgs__close {
+    background: transparent;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+    flex-shrink: 0;
+    margin-left: 8px;
+    outline: none; }
+    .mtk-msgs .mtk-msgs__close .material-icons {
+      font-size: 18px; }
+    .mtk-msgs .mtk-msgs__close:hover {
+      background-color: rgba(0, 0, 0, 0.08); }
+    .mtk-msgs .mtk-msgs__close:focus {
+      outline: 2px solid currentColor;
+      outline-offset: 2px; }
+    .mtk-msgs .mtk-msgs__close:active {
+      background-color: rgba(0, 0, 0, 0.12); }
+  .mtk-msgs.mtk-msgs--info {
+    background-color: #0dcaf0;
+    color: #055160; }
+    .mtk-msgs.mtk-msgs--info .mtk-msgs__button {
+      color: #055160; }
+    .mtk-msgs.mtk-msgs--info .mtk-msgs__close {
+      color: #055160; }
+  .mtk-msgs.mtk-msgs--warning {
+    background-color: #ffc107;
+    color: #664d03; }
+    .mtk-msgs.mtk-msgs--warning .mtk-msgs__button {
+      color: #664d03; }
+    .mtk-msgs.mtk-msgs--warning .mtk-msgs__close {
+      color: #664d03; }
+  .mtk-msgs.mtk-msgs--error {
+    background-color: #dc3545;
+    color: #ffffff; }
+    .mtk-msgs.mtk-msgs--error .mtk-msgs__button {
+      color: #ffffff; }
+    .mtk-msgs.mtk-msgs--error .mtk-msgs__close {
+      color: #ffffff; }
+  .mtk-msgs.mtk-msgs--success {
+    background-color: #198754;
+    color: #ffffff; }
+    .mtk-msgs.mtk-msgs--success .mtk-msgs__button {
+      color: #ffffff; }
+    .mtk-msgs.mtk-msgs--success .mtk-msgs__close {
+      color: #ffffff; }
