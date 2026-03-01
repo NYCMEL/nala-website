@@ -1,8 +1,8 @@
 .mtk-dashboard {
-  max-width: 1200px;
   margin: 0 auto;
-  padding: 24px;
-  display: block; }
+  padding: 0px;
+  display: block;
+  margin-top: 24px; }
 
 .mtk-dashboard * {
   box-sizing: border-box; }
