@@ -89,6 +89,9 @@ class _febe {
 	{
 	    case "NextEmptyQuestion":
 	    window.MtkQuiz.scrollToFirstUnanswered();
+
+	    // CLOSE THE MSG
+	    $(".mtk-msgs__close").click();
 	    break;
 	}
     }
