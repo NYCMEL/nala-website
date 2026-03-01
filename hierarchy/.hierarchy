@@ -206,18 +206,18 @@ Publish these events using wc.publish() directly:
 - Each module can have a quiz object
 - Quiz is rendered at the end of lessons in the module body
 - Quiz has disabled/active states with visual styling
-- When quiz is clicked, handleQuizClick() should ONLY call: mtk_pager.show("quiz")
+- When quiz is clicked, handleQuizClick() should ONLY call: app.pager.show("quiz")
 - Do NOT check disabled state in handleQuizClick
 - Do NOT publish events in handleQuizClick
 - Do NOT manage active state in handleQuizClick
-- ONLY call mtk_pager.show("quiz") - NOTHING ELSE
-- External code (mtk_pager) handles all quiz display and interaction
+- ONLY call app.pager.show("quiz") - NOTHING ELSE
+- External code (app.pager) handles all quiz display and interaction
 - Quiz link is a clickable element in LHS only
 
 handleQuizClick implementation:
 ```javascript
 handleQuizClick(event, quizElement) {
-  mtk_pager.show("quiz");
+  app.pager.show("quiz");
 }
 ```
 
@@ -279,7 +279,7 @@ class MTKHierarchy {
   handleModuleClick(event, moduleHeader)
   handleLessonClick(event, lessonHeader)
   handleResourceClick(event, resourceElement)
-  handleQuizClick(event, quizElement)  // ONLY calls mtk_pager.show("quiz")
+  handleQuizClick(event, quizElement)  // ONLY calls app.pager.show("quiz")
   enableNextLessonOrQuiz(moduleId, lessonId)
   enableLessonResources(moduleId, lessonId)
   findResource(moduleId, lessonId, resourceId)
@@ -369,16 +369,16 @@ IMPORTANT: Do NOT create a publish() helper method. Use wc.publish() directly ev
 - Remember code that begins with "mtk-" FOREVER
 - Always show updated code in FULL, not in pieces
 - Quiz link must be rendered in module body
-- handleQuizClick ONLY calls mtk_pager.show("quiz") - NOTHING ELSE
+- handleQuizClick ONLY calls app.pager.show("quiz") - NOTHING ELSE
 - Use wc.publish() directly - do NOT create publish() helper method
-- External code (mtk_pager) handles all quiz display and interaction
+- External code (app.pager) handles all quiz display and interaction
 
 22. CRITICAL QUIZ CLICK IMPLEMENTATION
 ---------------------------------------
 The handleQuizClick method must be EXACTLY this:
 
 handleQuizClick(event, quizElement) {
-  mtk_pager.show("quiz");
+  app.pager.show("quiz");
 }
 
 Do NOT add:
@@ -389,7 +389,7 @@ Do NOT add:
 - Logging
 - ANY other code
 
-Just call mtk_pager.show("quiz") and nothing else.
+Just call app.pager.show("quiz") and nothing else.
 
 DELIVERABLES
 ------------
