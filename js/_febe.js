@@ -55,7 +55,6 @@ class _febe {
 	    "mtk-login-success": this.handleLoginSuccess.bind(this),
 	    "mtk-dashboard:continue": this.handleCourse,
 	    "mtk-header-hierarchy": this.handleCourse,
-	    "mtk-hierarchy:resource:click": this.handleResource.bind(this),
 	    "MTK-parts.click": this.handlePartsClick,
 	    "mtk-header-logo": this.handleDashboard,
 	    "mtk-header-dashboard": this.handleDashboard,
@@ -164,8 +163,6 @@ class _febe {
     }
 
     handleRegisterSubmit(data) {
-	// data ={name: 'Mel Heravi', email: 'mel.heravi@gmail.com', email2: 'mel.heravi@gmail.com', phone: '6463031234'}
-
 	(() => {
 	    fetch(wc.apiURL + "/api/admin_create_user.php", {
 		method: "POST",
@@ -203,27 +200,21 @@ class _febe {
     }
 
     handleLoginSuccess(data) {
-	wc.login(data.email, data.password)
-	    .then(success => {
-		if (success) {
-		    wc.log("Logged in!");
-
-		    // SHOW PRIVATE HEADER
-		    $(".app-header").hide(() => $("#header-private").show(() => mtk_pager.show("dashboard")));
-		}
-	    })
-	    .catch(err => {
-		wc.error(err);
-		alert(err);
-	    });
+	wc.login(data.email, data.password).then(success => {
+	    if (success) {
+		wc.log("Logged in!");
+		
+		// SHOW PRIVATE HEADER
+		$(".app-header").hide(() => $("#header-private").show(() => mtk_pager.show("dashboard")));
+	    }
+	}).catch(err => {
+	    wc.error(err);
+	    alert(err);
+	});
     }
 
     handleCourse() {
 	mtk_pager.show("course");
-    }
-
-    handleResource(data) {
-	this.resource(data);
     }
 
     handlePartsClick() {
@@ -248,37 +239,6 @@ class _febe {
 	
 	// SHOW PUBLIC HEADER
 	$(".app-header").hide(() => $("#header-public").show(() => mtk_pager.show("home")));
-    }
-
-    //////////////////////////////////////////////////////////////////
-    ///// RESOURCE HANDLERS
-    //////////////////////////////////////////////////////////////////
-    resource(data) {
-	if (!data) {
-	    wc.warn("_febe.resource: no data received");
-	    return;
-	}
-
-	wc.log("_febe.resource:", data.description, data.url);
-
-	const typeHandlers = {
-	    video: () => {
-		$(".mtk-hierarchy-rhs-video, .mtk-hierarchy-rhs-image, .mtk-hierarchy-rhs-intro").hide();
-		$(".mtk-hierarchy-rhs-video").fadeIn();
-		wc.timeout(() => {
-		    wc.log("_febe:", data.url, data.description);
-		    window.MTKVideoInstance.load(data.url, data.description);
-		}, 200, 1);
-	    },
-	    image: () => wc.log("_febe:", data.type, data.url)
-	};
-
-	const action = typeHandlers[data.type];
-	if (action) {
-	    action();
-	} else {
-	    wc.error("NO SUCH TYPE:", data.type);
-	}
     }
 }
 
