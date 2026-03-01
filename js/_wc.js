@@ -996,7 +996,16 @@ wc.login = async function (email, passwd) {
         if (!res.ok) {
             // If backend provides an error message, show it; else show a generic one
             const msg = (data && (data.error || data.message)) ? (data.error || data.message) : 'combination of email and password';
-            alert('1) Login Failed: ' + msg);
+            //alert('1) Login Failed: ' + msg);
+
+	    MTKMsgs.show({
+		type: 'error',
+		icon: 'error',
+		message: 'Error: ' + msg + " Please try again !",
+		buttons: [],
+		closable: false,
+		timer: 5
+	    });	    
             return false;
         }
 
