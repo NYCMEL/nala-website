@@ -91,7 +91,7 @@ class _febe {
     handleQuizSubmitted(data) {
 	wc.log(">>>>>>>>", JSON.stringify(data.answers));
 
-	wc.submitQuiz(data.quiz_session_id, data.module_id, JSON.stringify(data.answers), function (err, response) {
+	wc.submitQuiz(data.quiz_session_id, data.module_id, data.answers, function (err, response) {
 	    if (err) {
 		alert("_febe.handleQuizSubmitted > Error submitting quiz.");
 		return;
