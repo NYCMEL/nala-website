@@ -720,6 +720,9 @@
 	    wc.getQuiz(wc.quizModule, function(err, data) {
 		if (err) {
 		    alert(err.message);
+
+		    // TAKE ME BACK TO COURSES
+		    mtk_pager.show("course");
 		    return;
 		}
 
