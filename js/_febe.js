@@ -156,8 +156,6 @@ class _febe {
 	    }).then(res => {
 		return res.json().then(json => {
 		    if (!res.ok) {
-			window.scrollTo({top: 0});
-
 			MTKMsgs.show({
 			    type: 'error',
 			    icon: 'error',
