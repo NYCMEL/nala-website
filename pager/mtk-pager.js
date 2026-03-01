@@ -262,7 +262,7 @@
             });
         }
         
-	window.scrollTo({top: 0});
+	window.scrollTo(0, 0);
 
         _log(`Current section: ${state.currentSection}`, 'success');
     };
