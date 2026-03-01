@@ -11,6 +11,7 @@ app.emsgs = [
     { id: 1000, text: "Error(1000): Wrong 'Email' or 'Password' combination" },
     { id: 1001, text: "Error(1001): Create user failed" },
     { id: 1002, text: "Error(1002): No questions found for module" },
+    { id: 1003, text: "Error(1003): Registeration Failed!" },
 ];
 
 app.emsg = function (id) {
