@@ -8,27 +8,51 @@
     },
     {
 	"cache": "true",
-	"page": "products",
-	"label": "Our Products",
-	"url": "<wc-include href='/tk/lib/components/w/html/parts/pager/products.html'></wc-include>"
-    },
-    {
-	"cache": "false",
-	"page": "contact",
-	"label": "Contact us",
-	"url": "<wc-include href='/tk/lib/components/w/html/parts/pager/contact.html'></wc-include>"
-    },
-    {
-	"cache": "true",
 	"page": "login",
-	"label": "Sign-In",
-	"url": "<wc-include href='/tk/lib/components/w/html/parts/pager/login.html'></wc-include>"
+	"label": "Login",
+	"url": "<wc-include href='login/index.inc.html'></wc-include>"
     },
     {
 	"cache": "true",
-	"page": "cart",
-	"label": "Shopping Cart",
-	"url": "<wc-include href='/tk/lib/components/w/html/parts/pager/cart.html'></wc-include>"
+	"page": "register",
+	"label": "Register",
+	"url": "<wc-include href='register/index.inc.html'></wc-include>"
+    },
+    {
+	"cache": "true",
+	"page": "settings",
+	"label": "Settings",
+	"url": "<wc-include href='settings/index.inc.html'></wc-include>"
+    },
+    {
+	"cache": "true",
+	"page": "dashboard",
+	"label": "Dashboard",
+	"url": "<wc-include href='dashboard/index.inc.html'></wc-include>"
+    },
+    {
+	"cache": "true",
+	"page": "logout",
+	"label": "Logout",
+	"url": "<wc-include href='logout/index.inc.html'></wc-include>"
+    },
+    {
+	"cache": "true",
+	"page": "course",
+	"label": "Course",
+	"url": "<wc-include href='hierarchy/index.inc.html'></wc-include>"
+    },
+    {
+	"cache": "true",
+	"page": "logout",
+	"label": "Logout",
+	"url": "<wc-include href='logout/index.inc.html'></wc-include>"
+    },
+    {
+	"cache": "true",
+	"page": "quiz",
+	"label": "Quiz",
+	"url": "<wc-include href='quiz/index.inc.html'></wc-include>"
     }
 ]
 

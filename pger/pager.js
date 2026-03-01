@@ -298,7 +298,7 @@ class Pager extends HTMLElement {
      */
     show(page) {
 	wc.group("Pager.show:", page);
-
+	
 	// CHANGE URL
 	//wc.pushstate(page);
 	
@@ -407,3 +407,6 @@ class Pager extends HTMLElement {
 }
 
 window.customElements.define('wc-pager', Pager);
+
+window.pager = document.querySelector("wc-pager");
+
