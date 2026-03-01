@@ -50,8 +50,6 @@ class _febe {
     ///// createHandlers
     //////////////////////////////////////////////////////////////////
     createHandlers() {
-	window.pager = document.querySelector("wc-pager");
-
 	return {
 	    "mtk-path:click": this.handleRegister,
 	    "mtk-ready:click": this.handleRegister,
@@ -121,14 +119,14 @@ class _febe {
     ///// handleHeaderLogoPublicClick
     //////////////////////////////////////////////////////////////////
     handleHeaderLogoPublicClick() {
-	window.pager.show("home");
+	app.pager.show("home");
     }
 
     //////////////////////////////////////////////////////////////////
     ///// handleHeaderLogoPrivateClick
     //////////////////////////////////////////////////////////////////
     handleHeaderLogoPrivateClick() {
-	window.pager.show("dashboard");
+	app.pager.show("dashboard");
     }
 
     //////////////////////////////////////////////////////////////////
@@ -159,14 +157,14 @@ class _febe {
     ///// handleQuiz
     //////////////////////////////////////////////////////////////////
     handleQuiz() {
-	window.pager.show("quiz");
+	app.pager.show("quiz");
     }
 
     //////////////////////////////////////////////////////////////////
     ///// handleRegister
     //////////////////////////////////////////////////////////////////
     handleRegister() {
-	window.pager.show("register");
+	app.pager.show("register");
     }
 
     handleLessonToggled() {
@@ -213,7 +211,7 @@ class _febe {
     ///// handleHome
     //////////////////////////////////////////////////////////////////
     handleHome() {
-	window.pager.show("home");
+	app.pager.show("home");
     }
 
     //////////////////////////////////////////////////////////////////
@@ -225,7 +223,7 @@ class _febe {
 		wc.log("Logged in!");
 		
 		// SHOW PRIVATE HEADER
-		$(".app-header").hide(() => $("#header-private").show(() => window.pager.show("dashboard")));
+		$(".app-header").hide(() => $("#header-private").show(() => app.pager.show("dashboard")));
 	    }
 	}).catch(err => {
 	    wc.error(err);
@@ -237,14 +235,14 @@ class _febe {
     ///// handleCourse
     //////////////////////////////////////////////////////////////////
     handleCourse() {
-	window.pager.show("course");
+	app.pager.show("course");
     }
 
     //////////////////////////////////////////////////////////////////
     ///// handlePartsClick
     //////////////////////////////////////////////////////////////////
     handlePartsClick() {
-	window.pager.show("lessons");
+	app.pager.show("lessons");
 	wc.timeout(() => lessonClicked(cIndex, cTitle), 500, 1);
     }
 
@@ -252,21 +250,21 @@ class _febe {
     ///// handleDashboard
     //////////////////////////////////////////////////////////////////
     handleDashboard() {
-	window.pager.show("dashboard");
+	app.pager.show("dashboard");
     }
 
     //////////////////////////////////////////////////////////////////
     ///// handleSettings
     //////////////////////////////////////////////////////////////////
     handleSettings() {
-	window.pager.show("settings");
+	app.pager.show("settings");
     }
 
     //////////////////////////////////////////////////////////////////
     ///// handleLogin
     //////////////////////////////////////////////////////////////////
     handleLogin() {
-	window.pager.show("login");
+	app.pager.show("login");
     }
 
     //////////////////////////////////////////////////////////////////
@@ -276,7 +274,7 @@ class _febe {
 	wc.logout();
 	
 	// SHOW PUBLIC HEADER
-	$(".app-header").hide(() => $("#header-public").show(() => window.pager.show("home")));
+	$(".app-header").hide(() => $("#header-public").show(() => app.pager.show("home")));
     }
 }
 
