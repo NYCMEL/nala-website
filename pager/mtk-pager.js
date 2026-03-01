@@ -202,9 +202,11 @@
     };
     
     const _showSection = (sectionId) => {
+	// REMOVE THE SECTION FROM CACHE AND RELOAD
 	if (sectionId == "quiz") {
-	    // remove the section from cache and reload
 	    mtk_pager.remove('quiz');
+
+	    window.MtkQuiz = null;
 	}
 
         if (!state.container) {
@@ -360,8 +362,6 @@
         // Remove a section completely (from DOM and state)
         // This forces the section to reload on next show
         remove: function(sectionId) {
-	    window.MtkQuiz = null;
-
             if (!sectionId) {
                 _log('ERROR: sectionId is required', 'error');
                 return false;
