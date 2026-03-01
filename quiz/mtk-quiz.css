@@ -51,6 +51,7 @@
 
 .mtk-quiz body:has(.app-header) .mtk-quiz__header,
 .mtk-quiz body:has(.mtk-header) .mtk-quiz__header {
+  border: 10px red solid !important;
   top: var(--app-header-height, var(--mtk-header-height, 64px)); }
 
 .mtk-quiz .mtk-quiz__header-content {
