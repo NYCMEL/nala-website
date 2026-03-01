@@ -91,7 +91,22 @@ class _febe {
     handleQuizSubmitted(data) {
 	wc.log(">>>>>>>>", data);
 
-	alert("_febe: SUBMIT QUIZ NOT IMPLEMENTED YET!")
+	wc.submitQuiz(data.quiz_session_id, data.module_id, JSON.stringify(data.answers), function (err, response) {
+	    if (err) {
+		alert("_febe.handleQuizSubmitted > Error submitting quiz.");
+		return;
+	    }
+
+	    if (response.passed) {
+		alert("You passed!");
+	    } else {
+		alert("You did not pass. Try again.");
+	    }
+
+	    console.log("Server response:", response);
+	});
+
+	console.log("Submit success:", data);
     }
 
     //////////////////////////////////////////////////////////////////
