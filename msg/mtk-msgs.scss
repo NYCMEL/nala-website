@@ -84,6 +84,8 @@
     gap: 8px;
     margin-left: auto;
     flex-shrink: 0;
+    border:1px yellow solid!important;
+    border-radius: 8px;
   }
 
   .mtk-msgs__button {
@@ -101,7 +103,8 @@
     outline: none;
 
     &:hover {
-      background-color: rgba(0, 0, 0, 0.08);
+	background-color: rgba(0, 0, 0, 0.08);
+	border: 1px gold solid;
     }
 
     &:focus {

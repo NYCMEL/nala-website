@@ -73,7 +73,9 @@
   align-items: center;
   gap: 8px;
   margin-left: auto;
-  flex-shrink: 0; }
+  flex-shrink: 0;
+  border: 1px yellow solid !important;
+  border-radius: 8px; }
 
 .mtk-msgs .mtk-msgs__button {
   background: transparent;
@@ -90,7 +92,8 @@
   outline: none; }
 
 .mtk-msgs .mtk-msgs__button:hover {
-  background-color: rgba(0, 0, 0, 0.08); }
+  background-color: rgba(0, 0, 0, 0.08);
+  border: 1px gold solid; }
 
 .mtk-msgs .mtk-msgs__button:focus {
   outline: 2px solid currentColor;
@@ -154,19 +157,6 @@
   color: #ffffff; }
 
 .mtk-msgs.mtk-msgs--error .mtk-msgs__close {
-  color: #ffffff; }
-
-.mtk-msgs.mtk-msgs--success {
-  background-color: #198754;
-  color: #ffffff; }
-
-.mtk-msgs.mtk-msgs--success .mtk-msgs__button {
-  color: #ffffff; }
-
-.mtk-msgs.mtk-msgs--success .mtk-msgs__close {
-  color: #ffffff; }
-
--msgs--error .mtk-msgs__close {
   color: #ffffff; }
 
 .mtk-msgs.mtk-msgs--success {
