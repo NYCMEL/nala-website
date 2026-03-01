@@ -159,7 +159,7 @@ class _febe {
 			MTKMsgs.show({
 			    type: 'error',
 			    icon: 'error',
-			    message: 'Error(1001): Create user failed',
+			    message: app.emsg(1000),
 			    closable: true,
 			    timer: 10
 			});

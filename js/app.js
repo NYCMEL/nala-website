@@ -6,6 +6,21 @@ window.app = window.app || {};
 app.baseUrl  = "/repo_deploy/";
 app.quizSize = 20; 
 
+// Message storage
+app.emsgs = [
+    { id: 1000, text: "Login Failed! Please try again." },
+    { id: 1001, text: "Create user failed" },
+    { id: 1002, text: "Question not found." },
+    { id: 1003, text: "Invalid answer selected." },
+    { id: 1004, text: "Quiz completed successfully." }
+];
+
+app.emsg = function (id) {
+    const msg = this.emsgs.find(m => m.id === id);
+    return msg ? msg.text : `Message ID ${id} not found`;
+};
+// let msg = app.emsg(1000);
+
 ////////////////////////////////////////////////////////////
 // SMOOTH SCROLLING TO TARGET
 (function () {
@@ -92,3 +107,4 @@ document.addEventListener("click", function (e) {
 if (document.location.protocol == "http:") {
     document.title = "NALA - Local";
 }
+
