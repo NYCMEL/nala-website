@@ -280,3 +280,5 @@ class _febe {
 
 /* auto-init */
 window._febe = new _febe();
+
+app.pager = document.querySelector("wc-pager");

@@ -1,8 +1,4 @@
-/**
- * MTK Hierarchy - Material Design Course Hierarchy Component
- * A reusable, accessible hierarchy component with event-driven architecture
- * Uses wc.js library for PubSub and utilities
- */
+app.pager = document.querySelector("wc-pager");
 
 /**
  * MTKHierarchy Class
