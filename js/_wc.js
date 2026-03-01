@@ -1002,7 +1002,6 @@ wc.login = async function (email, passwd) {
 		type: 'error',
 		icon: 'error',
 		message: 'Error(1000): ' + msg + " Please try again !",
-		buttons: [],
 		closable: false,
 		timer: 7
 	    });	    
