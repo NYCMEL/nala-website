@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+	<meta charset="UTF-8" />
+	<title>Pager Component</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link href="../dist/wc.css" rel="stylesheet" />
+
+	<!-- DO NOT ALLOW BROWSERS OTHER THAN CHROME -->
+	<script src="../js/ext/dev.js"></script>
+	<link href="/Melify/fonts/fonts.css" rel="stylesheet">
+
+	<script>
+	 wcCFG="/tk/lib/components/w/html/parts/pager/pager.json";
+	 wcENV="dev";
+	 wcAPP="pager";
+	 wcURL="http://www.melify.com/tk/lib/components/w";
+	</script>
+    </head>
+
+    <body id="wc">
+	<!-- UTILITIES BLOCK (4 MEL ONLY) -->
+	<div><wc-include href="_actions.1.html"/></div>
+
+	<div style="position:fixed;top:130px;right:30px;z-index:1000">
+	    <button id="btn-add" class="btn btn-warning btn-sm shadow" type="button">ADD NEW PAGE</button>
+	</div>
+
+	<!-- SAMPLE -->
+	<wc-pager id="my-pager" class="wc-maximize" env="dev" cfg="/tk/lib/components/w/html/parts/pager/pager.json"></wc-pager>
+	<!-- SAMPLE -->
+
+	<script src="../dist/wc.js"></script>
+
+	<script>
+	 yepnope({
+	     test : wc.detectIE(),
+	     yep  : ['../es5/include.js', '../es5/pager.js'],
+	     nope : [ '../js/include.js',  '../js/pager.js']
+	 });
+
+	 $("#btn-add").on("click", function() {
+	     $(this).fadeOut();
+	     var w = document.querySelector("wc-pager");
+	     w.newTest();
+	 });
+	</script>
+    </body>
+</html>
