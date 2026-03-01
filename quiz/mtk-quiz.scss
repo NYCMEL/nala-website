@@ -46,7 +46,7 @@
       padding: 24px;
       margin-left:0px;
       margin-right:0px;
-      background: linear-gradient(135deg, var(--mtk-primary) 0%, var(--mtk-primary-light) 100%);
+      background: lighten(#212529,20);
       color: var(--mtk-on-primary);
       position: sticky;
       top: 0;
@@ -152,7 +152,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--mtk-primary);
+    background: lighten(#212529,20);
     color: var(--mtk-on-primary);
     border-radius: 50%;
     font-size: 14px;
