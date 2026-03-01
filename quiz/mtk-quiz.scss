@@ -23,10 +23,11 @@
   --mtk-border-radius: 4px;
   --mtk-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-  max-width: 900px;
+  display: block;
+  margin-top: 20px!important;
+
   margin: 0 auto;
   background-color: var(--mtk-background);
-  padding: 24px;
 
   * {
     box-sizing: border-box;
@@ -41,38 +42,18 @@
     flex-direction: column;
   }
 
-  // ============================================================================
-  // STICKY HEADER
-  // ============================================================================
-  // The quiz header sticks below the app header when scrolling.
-  // 
-  // Configuration options:
-  // 1. Automatic detection (if browser supports :has()):
-  //    - Looks for .app-header or .mtk-header elements
-  //    - Uses --app-header-height or --mtk-header-height CSS variable
-  //    - Default: 64px if not specified
-  //
-  // 2. Manual configuration (set in your app's CSS):
-  //    :root {
-  //      --app-header-height: 64px;  /* Your app header height */
-  //    }
-  //
-  // 3. JavaScript configuration (in your app):
-  //    document.documentElement.style.setProperty('--app-header-height', '64px');
-  // ============================================================================
-
   .mtk-quiz__header {
-    padding: 24px;
-    margin-left:24px;
-    margin-right:24px;
-    background: linear-gradient(135deg, var(--mtk-primary) 0%, var(--mtk-primary-light) 100%);
-    color: var(--mtk-on-primary);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    transition: var(--mtk-transition);
-    box-shadow: var(--mtk-shadow-2);
-    border-radius: 4px 4px 0 0;
+      padding: 24px;
+      margin-left:0px;
+      margin-right:0px;
+      background: linear-gradient(135deg, var(--mtk-primary) 0%, var(--mtk-primary-light) 100%);
+      color: var(--mtk-on-primary);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: var(--mtk-transition);
+      box-shadow: var(--mtk-shadow-2);
+      border-radius: 4px 4px 0 0;
   }
 
   // Sticky header when there's an app-header or mtk-header
@@ -136,7 +117,7 @@
   }
 
   .mtk-quiz__body {
-    padding: 24px;
+    padding: 0px;
   }
 
   .mtk-quiz__question {
