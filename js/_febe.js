@@ -159,7 +159,7 @@ class _febe {
 			MTKMsgs.show({
 			    type: 'error',
 			    icon: 'error',
-			    message: app.emsg(1000),
+			    message: app.emsg(1001),
 			    closable: true,
 			    timer: 10
 			});
