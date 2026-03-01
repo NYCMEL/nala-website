@@ -1377,19 +1377,62 @@ wc.setUser = function (opts, callback) {
  * LESSON COMPLETE API
  ************************************************************/
 
-wc.lessonComplete = function (callback) {
-    // Increments current_lesson for the logged-in user by +1.
-    // Call this when a lesson is viewed.
-    fetch(wc.apiURL + "/api/advanceLesson.php", {
+wc.lessonComplete = function (clickedLessonNo, currentLessonNo, callback) {
+    // FIXED:
+    // Only advance progress when the user clicks the LATEST unlocked lesson:
+    // clickedLessonNo === currentLessonNo (which should match users.current_lesson in DB).
+    //
+    // New recommended signature:
+    //   wc.lessonComplete(clickedLessonNo, currentLessonNo, callback)
+    //
+    // Backwards compatible:
+    //   wc.lessonComplete(callback) => NO-OP (prevents unintended advancement on any click)
+
+    if (typeof clickedLessonNo === "function") {
+        wc.warn("wc.lessonComplete called without lesson numbers - NO-OP to prevent unintended advancement.");
+        try { clickedLessonNo(null, { ok: true, advanced: false, updated: false, reason: "client_guard_no_args" }); } catch (e) {}
+        return;
+    }
+
+    if (typeof currentLessonNo === "function") {
+        callback = currentLessonNo;
+        currentLessonNo = null;
+    }
+
+    const ln = Number(clickedLessonNo);
+    const cur = (currentLessonNo === null || currentLessonNo === undefined) ? null : Number(currentLessonNo);
+
+    if (!Number.isFinite(ln) || ln < 0) {
+        const err = new Error("wc.lessonComplete: invalid clickedLessonNo");
+        wc.error(err);
+        if (typeof callback === "function") callback(err, null);
+        return;
+    }
+
+    // If we don't know the current lesson, refuse to advance.
+    if (cur === null || !Number.isFinite(cur) || cur < 0) {
+        wc.warn("wc.lessonComplete missing currentLessonNo - NO-OP to prevent unintended advancement.", { clickedLessonNo: ln });
+        if (typeof callback === "function") callback(null, { ok: true, advanced: false, updated: false, reason: "client_guard_missing_current" });
+        return;
+    }
+
+    // Only advance if they clicked the latest lesson
+    if (ln !== cur) {
+        if (typeof callback === "function") callback(null, { ok: true, advanced: false, updated: false, reason: "client_guard_not_latest", current_lesson: cur });
+        return;
+    }
+
+    // Call the correct endpoint
+    fetch(wc.apiURL + "/api/lessonComplete.php", {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({})
+        body: JSON.stringify({ lesson_no: ln, expected_current: cur })
     }).then(async (res) => {
         const text = await res.text();
         let data = null;
         try { data = JSON.parse(text); } catch (e) {
-            throw new Error("advanceLesson returned non-JSON. First 300 chars: " + text.slice(0, 300));
+            throw new Error("lessonComplete returned non-JSON. First 300 chars: " + text.slice(0, 300));
         }
         if (!res.ok || (data && data.ok === false)) {
             const msg = (data && (data.error || data.message)) ? (data.error || data.message) : ("HTTP " + res.status);
@@ -1402,7 +1445,7 @@ wc.lessonComplete = function (callback) {
     }).then(data => {
         if (typeof callback === "function") callback(null, data);
     }).catch(err => {
-        wc.error("advanceLesson error:", err);
+        wc.error("lessonComplete error:", err);
         if (typeof callback === "function") callback(err, null);
     });
 };

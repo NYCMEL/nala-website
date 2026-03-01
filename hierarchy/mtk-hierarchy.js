@@ -51,7 +51,6 @@ class MTKHierarchy {
 		// Only add ID if missing - otherwise use from JSON
 		// Use M1, M2, M3 format for fallback IDs
 		if (!module.id) {
-		    //wc.warn(`MTKHierarchy: Module missing ID, generating fallback: M${globalModuleCounter}`);
 		    module.id = `M${globalModuleCounter}`;
 		}
 		globalModuleCounter++;
@@ -61,7 +60,6 @@ class MTKHierarchy {
 		module.lessons.forEach((lesson, lIdx) => {
 		    // Only add ID if missing - otherwise use from JSON
 		    if (!lesson.id) {
-			//wc.warn(`MTKHierarchy: Lesson missing ID, generating fallback: ${module.id}-L${lIdx + 1}`);
 			lesson.id = `${module.id}-L${lIdx + 1}`;
 		    }
 		    
@@ -70,7 +68,6 @@ class MTKHierarchy {
 		    lesson.resources.forEach((resource, rIdx) => {
 			// Only add ID if missing - otherwise use from JSON
 			if (!resource.id) {
-			    //wc.warn(`MTKHierarchy: Resource missing ID, generating fallback: ${lesson.id}-R${rIdx + 1}`);
 			    resource.id = `${lesson.id}-R${rIdx + 1}`;
 			}
 			
@@ -83,7 +80,6 @@ class MTKHierarchy {
 		
 		// Handle quiz ID
 		if (module.quiz && !module.quiz.id) {
-		    //wc.warn(`MTKHierarchy: Quiz missing ID, generating fallback: ${module.id}-Quiz`);
 		    module.quiz.id = `${module.id}-Quiz`;
 		}
 	    });
@@ -1173,7 +1169,7 @@ if (wc.isLocal) {
     } else {
 	console.error('Local mode but window.app.hierarchy is not defined. Please include mtk-hierarchy.config.js before mtk-hierarchy.js');
     }
-} else if (wc.session.hierarchy) {
+} else if (wc.session && wc.session.hierarchy) {
     // REMOTE MODE - Fetch from API
     wc.log("MTKHierarchy: Remote mode - fetching curriculum from API");
     
@@ -1199,6 +1195,28 @@ if (wc.isLocal) {
 }
 
 /**
+ * Helper: find lesson object in the hierarchy config by moduleId + lessonId
+ */
+function findLessonInHierarchy(moduleId, lessonId) {
+    try {
+	const parts = (window.app && window.app.hierarchy) ? window.app.hierarchy : null;
+	if (!parts || !Array.isArray(parts)) return null;
+
+	for (const part of parts) {
+	    if (!part.modules) continue;
+	    const mod = part.modules.find(m => m.id === moduleId);
+	    if (!mod || !mod.lessons) continue;
+	    const lesson = mod.lessons.find(l => l.id === lessonId);
+	    if (lesson) return lesson;
+	}
+	return null;
+    } catch (e) {
+	console.error("findLessonInHierarchy error:", e);
+	return null;
+    }
+}
+
+/**
  * Subscribe to hierarchy events for logging
  */
 function subscribeToEvents() {
@@ -1215,9 +1233,42 @@ function subscribeToEvents() {
     wc.subscribe('mtk-hierarchy:lesson-toggled', function(msg, data) {
 	wc.info('📝 Lesson Toggled:', data);
 
-	console.log("AAAAAAAAAA", JSON.stringify(data))
+	// Only act when OPENING a lesson (not when collapsing)
+	if (!data || data.isOpen !== true) return;
 
-	wc.lessonComplete(data.moduleId, data.lessonId);
+	const moduleId = data.moduleId;
+	const lessonId = data.lessonId;
+
+	const lessonObj = findLessonInHierarchy(moduleId, lessonId);
+	const lessonNo = lessonObj && Number.isFinite(Number(lessonObj.lesson_no)) ? Number(lessonObj.lesson_no) : null;
+
+	const current = wc.session && wc.session.user && Number.isFinite(Number(wc.session.user.current_lesson))
+	    ? Number(wc.session.user.current_lesson)
+	    : null;
+
+	if (lessonNo === null) {
+	    wc.warn("lesson-toggled: missing lesson_no on lesson object; not advancing", { moduleId, lessonId, lessonObj });
+	    return;
+	}
+
+	if (current === null) {
+	    wc.warn("lesson-toggled: missing wc.session.user.current_lesson; not advancing", { lessonNo });
+	    return;
+	}
+
+	// This will only advance when lessonNo === current
+	wc.lessonComplete(lessonNo, current, function(err, resp) {
+	    if (err) {
+		wc.error("wc.lessonComplete error:", err);
+		return;
+	    }
+	    wc.log("wc.lessonComplete response:", resp);
+
+	    // Optional: if advanced, update local current_lesson so future clicks behave correctly
+	    if (resp && resp.advanced && Number.isFinite(Number(resp.current_lesson))) {
+		wc.session.user.current_lesson = Number(resp.current_lesson);
+	    }
+	});
     });
     
     wc.subscribe('mtk-hierarchy:module-completed', function(msg, data) {
