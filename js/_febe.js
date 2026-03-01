@@ -23,7 +23,8 @@ class _febe {
 	    "mtk-register-submit",
 	    "mtk-hierarchy:lesson-toggled",
 	    "mtk-hierarchy:quiz-clicked",
-	    "mtk-dashboard:subscription-clicked"
+	    "mtk-dashboard:subscription-clicked",
+	    "mtk-msgs:button-click"
 	];
 
 	// create handlers mapping
@@ -61,6 +62,7 @@ class _febe {
 	    "mtk-header-register": this.handleRegister,
 	    "mtk-hierarchy:quiz-clicked": this.handleQuiz,
 	    "mtk-dashboard:subscription-clicked": this.handleDashboardClicks,
+	    "mtk-msgs:button-click": this.handleMsgButtonClick
 	};
     }
 
@@ -68,11 +70,26 @@ class _febe {
 	wc.log("_febe: onMessage", msg, data);
 
 	const handler = this.handlers[msg];
+
 	if (handler) {
 	    handler(data);
 	} else {
 	    wc.error("_febe: DO NOT HAVE:" + msg);
 	    alert("_febe: DO NOT HAVE:" + msg);
+	}
+    }
+
+    //////////////////////////////////////////////////////////////////
+    ///// HANDLERS
+    //////////////////////////////////////////////////////////////////
+    handleMsgButtonClick(data) {
+	wc.log("_febe: handleMsgButtonClick: ", JSON.stringify(data));
+
+	switch(data.action) 
+	{
+	    case "NextEmptyQuestion":
+	    window.MtkQuiz.scrollToFirstUnanswered();
+	    break;
 	}
     }
 

@@ -248,7 +248,6 @@
 
 		if (answeredCount < totalQuestions) {
 		    wc.log('🔴 VALIDATION FAILED - NOT ALL ANSWERED');
-		    //this.showMessage('error', `Please answer all questions. ${answeredCount}/${totalQuestions} answered.`);
 		    
 		    // Publish validation error event
 		    if (window.wc && window.wc.publish) {
@@ -260,22 +259,19 @@
 			};
 			
 			if (window.wc.log) {
-			    //window.wc.log('4-mtk-quiz-validation-error', errorData);
-			    
 			    MTKMsgs.show({
 				type: 'error',
 				icon: 'error',
 				message: errorData.message,
-				buttons: [],
+				buttons: [{label: "Go to Unanswered question", action: "NextEmptyQuestion"}],
 				closable: false,
-				timer: 5
+				timer: 0
 			    });
 
-			    // SCROLL TO TOP TO SHOW THE ERROR
-			    window.scrollTo({
-				top: 0,
-				behavior: 'instant'
-			    });
+			    // Scroll to first unanswered question
+			    //this.scrollToFirstUnanswered();
+
+			    window.scrollTo({top: 0})
 			}
 			
 			window.wc.publish('4-mtk-quiz-validation-error', errorData);
@@ -483,6 +479,47 @@
 		    
 		    window.wc.publish('4-mtk-quiz-progress', progressData);
 		}
+	    }
+
+	    scrollToFirstUnanswered() {
+		wc.log('🔍 Looking for first unanswered question...');
+		
+		const questions = this.element.querySelectorAll('.mtk-quiz__question');
+		
+		for (let question of questions) {
+		    const questionId = question.getAttribute('data-question-id');
+		    
+		    // Check if this question is answered
+		    if (!this.answers[questionId]) {
+			wc.log(`📍 Found unanswered question: ${questionId}`);
+			
+			// Get header heights for offset
+			const quizHeader = this.element.querySelector('.mtk-quiz__header');
+			const quizHeaderHeight = quizHeader ? quizHeader.offsetHeight : 0;
+			const appHeader = document.querySelector('.app-header');
+			const appHeaderHeight = appHeader ? appHeader.offsetHeight : 0;
+			const totalOffset = quizHeaderHeight + appHeaderHeight + 20; // 20px padding
+			
+			// Get question position
+			const questionTop = question.getBoundingClientRect().top + window.pageYOffset;
+			
+			// Scroll with offset
+			window.scrollTo({
+			    top: questionTop - totalOffset,
+			    behavior: 'smooth'
+			});
+			
+			// Optional: highlight the question
+			question.classList.add('highlight');
+			setTimeout(() => {
+			    question.classList.remove('highlight');
+			}, 2000);
+			
+			return;
+		    }
+		}
+		
+		wc.log('✅ All questions answered!');
 	    }
 
 	    showMessage(type, text) {
