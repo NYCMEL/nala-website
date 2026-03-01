@@ -24,7 +24,9 @@ class _febe {
 	    "mtk-hierarchy:lesson-toggled",
 	    "mtk-hierarchy:quiz-clicked",
 	    "mtk-dashboard:subscription-clicked",
-	    "mtk-msgs:button-click"
+	    "mtk-msgs:button-click",
+	    "header-logo-public",
+	    "header-logo-private",
 	];
 
 	// create handlers mapping
@@ -62,7 +64,9 @@ class _febe {
 	    "mtk-header-register": this.handleRegister,
 	    "mtk-hierarchy:quiz-clicked": this.handleQuiz,
 	    "mtk-dashboard:subscription-clicked": this.handleDashboardClicks,
-	    "mtk-msgs:button-click": this.handleMsgButtonClick
+	    "mtk-msgs:button-click": this.handleMsgButtonClick,
+	    "header-logo-public": this.handleHeaderLogoPublicClick,
+	    "header-logo-private": this.handleHeaderLogoPrivateClick,
 	};
     }
 
@@ -77,6 +81,20 @@ class _febe {
 	    wc.error("_febe: DO NOT HAVE:" + msg);
 	    alert("_febe: DO NOT HAVE:" + msg);
 	}
+    }
+
+    //////////////////////////////////////////////////////////////////
+    ///// HANDLERS
+    //////////////////////////////////////////////////////////////////
+    handleHeaderLogoPublicClick() {
+	mtk_pager.show("home");
+    }
+
+    //////////////////////////////////////////////////////////////////
+    ///// HANDLERS
+    //////////////////////////////////////////////////////////////////
+    handleHeaderLogoPrivateClick() {
+	mtk_pager.show("dashboard");
     }
 
     //////////////////////////////////////////////////////////////////
