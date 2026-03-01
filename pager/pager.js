@@ -235,9 +235,6 @@ class Pager extends HTMLElement {
 
 	this.classList.add("wc");
 
-	// ADD ANALYTICS HERE
-	wc.setStats(this, this.properties.cname, this.properties.version);
-
 	// SHOW IT NOW (NO FLICKERS)
 	this.style.visibility = "visible";
 
