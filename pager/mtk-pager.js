@@ -262,6 +262,8 @@
             });
         }
         
+	window.scrollTo({top: 0});
+
         _log(`Current section: ${state.currentSection}`, 'success');
     };
     
