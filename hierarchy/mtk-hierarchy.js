@@ -475,7 +475,7 @@ class MTKHierarchy {
 	// CONSUMED BY QUIZ
 	wc.quizModule = module;
 
-	wc.log("quizElement:", module);
+	wc.log("handleQuizClick > Module:", module);
 
 	mtk_pager.show("quiz");
     }

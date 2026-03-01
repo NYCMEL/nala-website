@@ -1,5 +1,6 @@
 (function () {
     // if class is not available
+
     if (!window.MtkQuiz) {
 	// mtk-quiz.js
 	class MtkQuiz {

@@ -360,6 +360,8 @@
         // Remove a section completely (from DOM and state)
         // This forces the section to reload on next show
         remove: function(sectionId) {
+	    window.MtkQuiz = null;
+
             if (!sectionId) {
                 _log('ERROR: sectionId is required', 'error');
                 return false;
