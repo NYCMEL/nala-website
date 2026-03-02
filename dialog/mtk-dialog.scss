@@ -1,0 +1,259 @@
+// mtk-dialog.scss
+// All styles scoped to .mtk-dialog
+
+mtk-dialog.mtk-dialog {
+  display: contents;
+}
+
+.mtk-dialog {
+
+  // ── Backdrop ──────────────────────────────────────────────────────────
+  &__backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1040;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+    padding: 1rem;
+
+    &.is-open {
+      opacity: 1;
+      visibility: visible;
+
+      .mtk-dialog__container {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+  }
+
+  // ── Container ─────────────────────────────────────────────────────────
+  &__container {
+    position: relative;
+    z-index: 1050;
+    background: #fff;
+    border-radius: 28px;
+    box-shadow:
+      0 11px 15px -7px rgba(0, 0, 0, 0.2),
+      0 24px 38px 3px rgba(0, 0, 0, 0.14),
+      0 9px 46px 8px rgba(0, 0, 0, 0.12);
+    width: 100%;
+    max-width: var(--mtk-dialog-max-width, 480px);
+    overflow: hidden;
+    transform: translateY(24px) scale(0.97);
+    opacity: 0;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.25s ease;
+    outline: none;
+
+    &:focus-visible {
+      outline: 3px solid #1976D2;
+      outline-offset: 2px;
+    }
+  }
+
+  // ── Header ────────────────────────────────────────────────────────────
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 1.5rem 0.75rem;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--mtk-icon-bg, #FEF3C7);
+    flex-shrink: 0;
+
+    .material-icons {
+      font-size: 22px;
+      color: var(--mtk-icon-color, #F59E0B);
+    }
+  }
+
+  &__title {
+    flex: 1;
+    font-family: 'Google Sans', 'Roboto', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #1C1B1F;
+    margin: 0;
+  }
+
+  &__close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: #49454F;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    flex-shrink: 0;
+    padding: 0;
+
+    &:hover {
+      background-color: rgba(73, 69, 79, 0.08);
+    }
+
+    &:focus-visible {
+      outline: 3px solid #1976D2;
+      outline-offset: 2px;
+      background-color: rgba(73, 69, 79, 0.12);
+    }
+
+    .material-icons {
+      font-size: 20px;
+    }
+  }
+
+  // ── Body ──────────────────────────────────────────────────────────────
+  &__body {
+    padding: 0.25rem 1.5rem 1.25rem;
+  }
+
+  &__message {
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #49454F;
+    margin: 0;
+  }
+
+  // ── Footer ────────────────────────────────────────────────────────────
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem 1.5rem;
+    flex-wrap: wrap;
+
+    // Material-style overrides for Bootstrap btn classes
+    .btn {
+      font-family: 'Google Sans', 'Roboto', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.00625em;
+      border-radius: 100px;
+      padding: 0.5rem 1.25rem;
+      height: 40px;
+      transition: box-shadow 0.2s ease, background-color 0.15s ease;
+      text-transform: none;
+      cursor: pointer;
+      border: none;
+
+      &:focus-visible {
+        outline: 3px solid #1976D2;
+        outline-offset: 2px;
+      }
+    }
+
+    .btn-primary {
+      background-color: #1976D2;
+      color: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+
+      &:hover {
+        background-color: #1565C0;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.24);
+      }
+
+      &:active {
+        background-color: #0D47A1;
+      }
+    }
+
+    .btn-danger {
+      background-color: #D32F2F;
+      color: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+
+      &:hover {
+        background-color: #B71C1C;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.24);
+      }
+    }
+
+    .btn-success {
+      background-color: #388E3C;
+      color: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+
+      &:hover {
+        background-color: #2E7D32;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.24);
+      }
+    }
+
+    .btn-secondary {
+      background-color: #E0E0E0;
+      color: #1C1B1F;
+
+      &:hover {
+        background-color: #BDBDBD;
+      }
+    }
+
+    .btn-warning {
+      background-color: #F57C00;
+      color: #fff;
+
+      &:hover {
+        background-color: #E65100;
+      }
+    }
+
+    .btn-link {
+      background: transparent;
+      color: #1976D2;
+      box-shadow: none;
+
+      &:hover {
+        background-color: rgba(25, 118, 210, 0.08);
+      }
+
+      &:active {
+        background-color: rgba(25, 118, 210, 0.16);
+      }
+    }
+  }
+
+  // ── Divider ───────────────────────────────────────────────────────────
+  &__divider {
+    height: 1px;
+    background-color: #E7E0EC;
+    margin: 0 1.5rem;
+  }
+
+  // ── Responsive ───────────────────────────────────────────────────────
+  @media (max-width: 480px) {
+    &__footer {
+      flex-direction: column-reverse;
+      align-items: stretch;
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    &__container {
+      border-radius: 16px;
+    }
+  }
+}

@@ -1,0 +1,56 @@
+<!--
+  mtk-dialog.html
+  Reusable Material Design dialog component.
+  Driven entirely by mtk-dialog.config.js
+-->
+<mtk-dialog class="mtk-dialog" role="dialog" aria-modal="true" aria-labelledby="mtk-dialog-title" aria-describedby="mtk-dialog-message" tabindex="-1">
+
+  <!-- Backdrop -->
+  <div class="mtk-dialog__backdrop" data-mtk-backdrop>
+
+    <!-- Bootstrap container for centering/sizing -->
+    <div class="container-fluid p-0">
+      <div class="row justify-content-center">
+        <div class="col-auto p-0">
+
+          <!-- Dialog container -->
+          <div class="mtk-dialog__container" data-mtk-container tabindex="-1">
+
+            <!-- Header -->
+            <div class="mtk-dialog__header">
+              <div class="mtk-dialog__icon" data-mtk-icon-wrap aria-hidden="true">
+                <span class="material-icons" data-mtk-icon></span>
+              </div>
+              <h2 class="mtk-dialog__title" id="mtk-dialog-title" data-mtk-title></h2>
+              <button
+                class="mtk-dialog__close-btn"
+                data-mtk-close
+                aria-label="Close dialog"
+                type="button"
+              >
+                <span class="material-icons" aria-hidden="true">close</span>
+              </button>
+            </div>
+
+            <!-- Divider -->
+            <div class="mtk-dialog__divider" role="separator" aria-hidden="true"></div>
+
+            <!-- Body -->
+            <div class="mtk-dialog__body">
+              <p class="mtk-dialog__message" id="mtk-dialog-message" data-mtk-message></p>
+            </div>
+
+            <!-- Footer / Actions -->
+            <div class="mtk-dialog__footer" data-mtk-footer role="group" aria-label="Dialog actions">
+              <!-- Buttons injected by JS from config -->
+            </div>
+
+          </div><!-- /.mtk-dialog__container -->
+
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.mtk-dialog__backdrop -->
+
+</mtk-dialog>
