@@ -285,8 +285,6 @@ class _febe {
 			{ label: 'Re-take the test',  action: 'cancel', classes: 'btn btn-warning' }
 		    ]
 		});
-
-		alert("You did not pass. Please try again.");
 	    }
 
 	    console.log("Server response:", response);
