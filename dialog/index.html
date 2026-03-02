@@ -48,20 +48,13 @@
 	<!-- YOUR CODE FROM HERE... -->
 
 	<!-- DIALOG -->
-	<div style="border:2px red dashed">
-	    <link href="dialog/mtk-dialog.css" rel="stylesheet">
-	    
-	    <div>
-		<wc-include href="dialog/mtk-dialog.html" />
-	    </div>
-
-	    <script src="dialog/mtk-dialog.config.js"></script>
-	    <script src="dialog/mtk-dialog.js"></script>
-
-	    <button class="btn btn-primary" onclick=dialog.open()>
-		Open Dialog
-	    </button>
+	<div>
+	    <wc-include href="dialog/mtk-dialog.html" />
 	</div>
+	
+	<button class="btn btn-primary" onclick="wc.publish('dialog.open')">
+	    Open Dialog
+	</button>
 
 	<!-- YOUR CODE TO HERE -->
     </body>
