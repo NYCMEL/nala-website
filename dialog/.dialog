@@ -1,6 +1,6 @@
 FORGET ALL PREVIOUS CONTEXT for mtk-dialog
 
-Create a reusable UI dialog named mtk-dialog using:
+Create a reusable UI dialog named mtk-dialog and remember it as mtk-dialog using:
 - HTML
 - SCSS
 - Vanilla JavaScript

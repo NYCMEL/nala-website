@@ -10,26 +10,21 @@ class MtkDialog {
         this.waitForElement();
     }
 
-    async waitForElement() {
+    waitForElement() {
         const check = setInterval(() => {
             const el = document.querySelector("mtk-dialog.mtk-dialog");
-            if (el) {
+            if (el && window.app && window.app.dialog) {
                 clearInterval(check);
                 this.root = el;
+                this.config = window.app.dialog;
                 this.init();
             }
         }, 50);
     }
 
-    async init() {
-        await this.loadConfig();
+    init() {
         this.render();
         this.bindEvents();
-    }
-
-    async loadConfig() {
-        const response = await fetch("mtk-dialog.config.js");
-        this.config = await response.json();
     }
 
     render() {
@@ -102,10 +97,15 @@ class MtkDialog {
         this.focusableElements = this.root.querySelectorAll("button");
         this.firstFocusable = this.focusableElements[0];
         this.lastFocusable = this.focusableElements[this.focusableElements.length - 1];
-        this.firstFocusable.focus();
+
+        if (this.firstFocusable) {
+            this.firstFocusable.focus();
+        }
     }
 
     trapFocus(e) {
+        if (!this.firstFocusable || !this.lastFocusable) return;
+
         if (e.shiftKey) {
             if (document.activeElement === this.firstFocusable) {
                 e.preventDefault();
@@ -131,6 +131,6 @@ class MtkDialog {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const dialog = new MtkDialog();
+    window.dialog = new MtkDialog();
     wc.subscribe(dialog.onMessage.bind(dialog));
 });
