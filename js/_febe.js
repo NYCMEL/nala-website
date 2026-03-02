@@ -98,7 +98,21 @@ class _febe {
 	    }
 
 	    if (response.passed) {
-		alert("Congratulations! You passed.");
+		mtkDialog.open({
+		    id      : 'success',
+		    title   : 'You passed the Quiz',
+		    message : 'You have Successfully completed this set of tests',
+		    icon    : 'check_circle',
+		    iconColor: 'green',
+		    maxWidth: '700px',
+		    closeOnBackdrop: false,
+		    closeOnEscape  : false,
+		    buttons: [
+			{ label: 'Save & Continue',  action: 'cancel', classes: 'btn btn-primary' }
+		    ]
+		});
+		
+		wc.log("Congratulations! You passed.");
 	    } else {
 		alert("You did not pass. Please try again.");
 	    }
