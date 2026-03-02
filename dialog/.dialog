@@ -1,0 +1,55 @@
+FORGET ALL PREVIOUS CONTEXT for mtk-component
+
+Create a reusable UI component named mtk-component using:
+- HTML
+- SCSS
+- Vanilla JavaScript
+- Bootstrap 5 (layout only)
+- Modern Material Design, Material Design icons and styles
+- Always create a JS class for mtk-component and initialize it inside the JS file itself
+
+Rules:
+- The component is wrapped in a display:block element <mtk-component class="mtk-component">.
+- The root element uses .mtk-component.
+- All styles must be scoped to .mtk-component.
+- No global styles or IDs.
+- publish click events using wc.publish
+- subscribe to all 4-mtk-component everns using wc.subscribe
+- create a onMessage function to be passed to wc.subscribe function
+
+Data:
+- The component is JSON driven.
+  - any and all data must come from mtk-component.config.js file
+
+Restrictions:
+- No frameworks.
+- No Bootstrap.
+- No external libraries.
+- Vanilla Javascript
+
+Accessibility:
+- Use semantic HTML.
+- Keyboard accessible.
+- Visible focus states.
+- ADA compliant
+
+Output! Create exactly these files:
+- mtk-component.config.js (JSON FILE)
+- mtk-component.scss
+- mtk-component.html
+- mtk-component.js
+- A minimal index.html file
+
+Behavior:
+- MUST WAIT for element to be available inside DOM, since i will be using <wc-include> for dynamic inclusion
+- all published (wc.publish) messages should be logged using wc.log to console before being published
+
+#######################################################
+# example:
+#  
+#  about my mtk-component
+#   - it has a group of 3 buttons
+#     - primary
+#     - warning
+#     - danger
+#######################################################
