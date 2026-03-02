@@ -89,7 +89,7 @@ class _febe {
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
     handleQuizSubmitted(data) {
-	wc.log(">>>>>>>>", JSON.stringify(data.answers));
+	//wc.log(">>>>>>>>", JSON.stringify(data.answers));
 
 	wc.submitQuiz(data.quiz_session_id, data.module_id, data.answers, function (err, response) {
 	    if (err) {
