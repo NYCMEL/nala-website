@@ -36,7 +36,6 @@ Output! Create exactly these files:
 - mtk-dialog.scss
 - mtk-dialog.html
 - mtk-dialog.js
-- A minimal index.html file
 
 Behavior:
 - MUST WAIT for element to be available inside DOM, since i will be using <wc-include> for dynamic inclusion
