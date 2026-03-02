@@ -28,6 +28,7 @@ class _febe {
 	    "header-logo-public",
 	    "header-logo-private",
 	    "4-mtk-quiz-submitted",
+	    "mtk-dialog:action",
 	];
 
 	// create handlers mapping
@@ -69,6 +70,7 @@ class _febe {
 	    "header-logo-public": this.handleHeaderLogoPublicClick,
 	    "header-logo-private": this.handleHeaderLogoPrivateClick,
 	    "4-mtk-quiz-submitted": this.handleQuizSubmitted,
+	    "mtk-dialog:action": this.handleDialogActions,
 	};
     }
 
@@ -108,7 +110,7 @@ class _febe {
 		    closeOnBackdrop: false,
 		    closeOnEscape  : false,
 		    buttons: [
-			{ label: 'Save & Continue',  action: 'cancel', classes: 'btn btn-primary' }
+			{ label: 'Save & Continue',  action: 'alert("cancel")', classes: 'btn btn-primary' }
 		    ]
 		});
 		
@@ -119,6 +121,15 @@ class _febe {
 
 	    console.log("Server response:", response);
 	});
+    }
+
+    //////////////////////////////////////////////////////////////////
+    ///// HANDLERS
+    //////////////////////////////////////////////////////////////////
+    handleDialogActions() {
+	mtk_pager.show("course");
+
+	mtkDialog.close();
     }
 
     //////////////////////////////////////////////////////////////////
