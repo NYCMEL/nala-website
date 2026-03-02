@@ -90,42 +90,6 @@ class _febe {
     //////////////////////////////////////////////////////////////////
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
-    handleQuizSubmitted(data) {
-	//wc.log(">>>>>>>>", JSON.stringify(data.answers));
-
-	wc.submitQuiz(data.quiz_session_id, data.module_id, data.answers, function (err, response) {
-	    if (err) {
-		alert("_febe.handleQuizSubmitted > Error submitting quiz.");
-		return;
-	    }
-
-	    if (response.passed) {
-		mtkDialog.open({
-		    id      : 'success',
-		    title   : 'You passed the Quiz',
-		    message : 'You have Successfully completed this set of tests',
-		    icon    : 'check_circle',
-		    iconColor: 'green',
-		    maxWidth: '700px',
-		    closeOnBackdrop: false,
-		    closeOnEscape  : false,
-		    buttons: [
-			{ label: 'Save & Continue',  action: 'alert("cancel")', classes: 'btn btn-primary' }
-		    ]
-		});
-		
-		wc.log("Congratulations! You passed.");
-	    } else {
-		alert("You did not pass. Please try again.");
-	    }
-
-	    console.log("Server response:", response);
-	});
-    }
-
-    //////////////////////////////////////////////////////////////////
-    ///// HANDLERS
-    //////////////////////////////////////////////////////////////////
     handleDialogActions() {
 	mtk_pager.show("course");
 
@@ -277,6 +241,42 @@ class _febe {
 	wc.timeout(function(){
 	    document.location.reload();
 	}, 100, 1);
+    }
+
+    //////////////////////////////////////////////////////////////////
+    ///// HANDLERS
+    //////////////////////////////////////////////////////////////////
+    handleQuizSubmitted(data) {
+	//wc.log(">>>>>>>>", JSON.stringify(data.answers));
+
+	wc.submitQuiz(data.quiz_session_id, data.module_id, data.answers, function (err, response) {
+	    if (err) {
+		alert("_febe.handleQuizSubmitted > Error submitting quiz.");
+		return;
+	    }
+
+	    if (response.passed) {
+		mtkDialog.open({
+		    id      : 'success',
+		    title   : 'You passed the Quiz',
+		    message : 'You have Successfully completed this set of tests',
+		    icon    : 'check_circle',
+		    iconColor: 'green',
+		    maxWidth: '700px',
+		    closeOnBackdrop: false,
+		    closeOnEscape  : false,
+		    buttons: [
+			{ label: 'Save & Continue',  action: 'alert("cancel")', classes: 'btn btn-primary' }
+		    ]
+		});
+		
+		wc.log("Congratulations! You passed.");
+	    } else {
+		alert("You did not pass. Please try again.");
+	    }
+
+	    console.log("Server response:", response);
+	});
     }
 
     //////////////////////////////////////////////////////////////////
