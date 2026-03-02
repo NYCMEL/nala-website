@@ -98,9 +98,9 @@ class _febe {
 	    }
 
 	    if (response.passed) {
-		alert("You passed!");
+		alert("Congratulations! You passed.");
 	    } else {
-		alert("You did not pass. Try again.");
+		alert("You did not pass. Please try again.");
 	    }
 
 	    console.log("Server response:", response);
