@@ -248,6 +248,10 @@ class _febe {
 	
 	// SHOW PUBLIC HEADER
 	$(".app-header").hide(() => $("#header-public").show(() => mtk_pager.show("home")));
+
+	wc.timeout(function(){
+	    document.location.reload();
+	}, 100, 1);
     }
 
     //////////////////////////////////////////////////////////////////
