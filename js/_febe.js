@@ -268,7 +268,7 @@ class _febe {
 		    closeOnBackdrop: false,
 		    closeOnEscape  : false,
 		    buttons: [
-			{ label: 'Save & Continue',  action: 'alert("cancel")', classes: 'btn btn-primary' }
+			{ label: 'Save & Continue',  action: 'TBD', classes: 'btn btn-primary' }
 		    ]
 		});
 		
