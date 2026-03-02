@@ -51,19 +51,29 @@
 	<!-- DIALOG -->
 	<div>
 	    <wc-include href="dialog/index.inc.html" />
-
-	    <!-- OPEN DIALOG LIKE: window.mtkDialog.open() -->
 	</div>
 
-	<div style=text-align:center>
-	    <button class="btn btn-primary demo-open-btn" id="open-dialog-btn" type="button">Open Dialog</button>
-
-	    <script>
-	     document.getElementById('open-dialog-btn').addEventListener('click', () => {
-		 wc.publish('mtk-dialog:open', {});
+	<script>
+	 wc.timeout(function(){
+	     mtkDialog.open({
+		 id      : 'unsaved-changes',
+		 title   : 'Unsaved Changes',
+		 message : 'You have unsaved changes. Do you want to save them before leaving?',
+		 icon    : 'warning_amber',
+		 iconColor: '#F57C00',
+		 maxWidth: '500px',
+		 closeOnBackdrop: false,
+		 closeOnEscape  : false,
+		 buttons: [
+		     { label: 'Cancel',        action: 'cancel',   classes: 'btn btn-link'    },
+		     { label: 'Discard',       action: 'discard',  classes: 'btn btn-warning' },
+		     { label: 'Save & Leave',  action: 'save',     classes: 'btn btn-primary' }
+		 ]
 	     });
-	    </script>
-	</div>
+
+	     alert("HELLO")
+	 }, 2000, 1);
+	</script>
 	
 	<!-- YOUR CODE TO HERE -->
     </body>
