@@ -272,6 +272,20 @@ class _febe {
 		
 		wc.log("Congratulations! You passed.");
 	    } else {
+		mtkDialog.open({
+		    id      : 'failed',
+		    title   : 'You did not pass the Quiz',
+		    message : 'We recommand that you re-take the test for better result',
+		    icon    : 'warning',
+		    iconColor: 'red',
+		    maxWidth: '700px',
+		    closeOnBackdrop: false,
+		    closeOnEscape  : false,
+		    buttons: [
+			{ label: 'Re-take the test',  action: 'cancel', classes: 'btn btn-warning' }
+		    ]
+		});
+
 		alert("You did not pass. Please try again.");
 	    }
 
