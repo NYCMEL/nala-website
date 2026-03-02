@@ -254,6 +254,8 @@ class _febe {
 		alert("_febe.handleQuizSubmitted > Error submitting quiz.");
 		return;
 	    }
+	    
+	    wc.log("_febe.handleQuizSubmitted > Server response:", response);
 
 	    if (response.passed) {
 		mtkDialog.open({
@@ -286,8 +288,6 @@ class _febe {
 		    ]
 		});
 	    }
-
-	    console.log("Server response:", response);
 	});
     }
 
