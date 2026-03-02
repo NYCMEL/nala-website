@@ -49,7 +49,7 @@
 	<!-- YOUR CODE FROM HERE... -->
 
 	<!-- DIALOG -->
-	<div style="border:2px red dashed">
+	<div>
 	    <link href="dialog/mtk-dialog.css" rel="stylesheet">
 	    
 	    <wc-include href="dialog/mtk-dialog.html" />
@@ -58,6 +58,18 @@
 	    <script src="dialog/mtk-dialog.js"></script>
 	</div>
 
+	<div style=text-align:center>
+	    <button class="btn btn-primary demo-open-btn" id="open-dialog-btn" type="button">
+		Open Dialog
+	    </button>
+
+	    <script>
+	     document.getElementById('open-dialog-btn').addEventListener('click', () => {
+		 wc.publish('mtk-dialog:open', {});
+	     });
+	    </script>
+	</div>
+	
 	<!-- YOUR CODE TO HERE -->
     </body>
 </html>
