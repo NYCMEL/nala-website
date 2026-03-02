@@ -53,21 +53,21 @@
 	    <wc-include href="dialog/index.inc.html" />
 	</div>
 
+	<h1 align="center">Wait for dialog...</h1>
+
 	<script>
 	 wc.timeout(function(){
 	     mtkDialog.open({
-		 id      : 'unsaved-changes',
-		 title   : 'Unsaved Changes',
-		 message : 'You have unsaved changes. Do you want to save them before leaving?',
+		 id      : 'success',
+		 title   : 'You passed the Quiz',
+		 message : 'You have Successfully completed this set of tests',
 		 icon    : 'warning_amber',
 		 iconColor: '#F57C00',
 		 maxWidth: '500px',
 		 closeOnBackdrop: false,
 		 closeOnEscape  : false,
 		 buttons: [
-		     { label: 'Cancel',        action: 'cancel',   classes: 'btn btn-link'    },
-		     { label: 'Discard',       action: 'discard',  classes: 'btn btn-warning' },
-		     { label: 'Save & Leave',  action: 'save',     classes: 'btn btn-primary' }
+		     { label: 'Save & Continue',  action: 'cancel', classes: 'btn btn-primary' }
 		 ]
 	     });
 	 }, 300, 1);
