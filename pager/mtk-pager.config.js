@@ -19,13 +19,6 @@ app.pager = [
         "label": "Login",
         "url": "login/index.inc.html"
     },
-
-    {
-        "cache": "false",
-        "page": "settings",
-        "label": "Settings",
-        "url": "settings/index.inc.html"
-    },
     {
         "cache": "false",
         "page": "dashboard",
@@ -37,6 +30,12 @@ app.pager = [
         "page": "course",
         "label": "Course",
         "url": "hierarchy/index.inc.html"
+    },
+    {
+        "cache": "true",
+        "page": "settings",
+        "label": "Settings",
+        "url": "settings/index.inc.html"
     },
     {
         "cache": "false",
