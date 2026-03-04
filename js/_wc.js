@@ -5,6 +5,7 @@ window.wcURL = window.wcURL || "";
 wc.working   = location.origin != 'http://localhost:3000';
 wc.isLocal   = false; /* = true SHOULD USE ALL LOCAL CONFIG FILES */
 wc.apiURL    = "https://nala-test.com" || "https://nalanetwork.com";
+wc.testing   = true;
 
 /************************************************************
  * CONFIG INACTIVITY TIMER
