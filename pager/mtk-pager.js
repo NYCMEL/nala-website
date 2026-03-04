@@ -566,8 +566,10 @@
         }
     };
 
-    // Expose globally
-    window.mtk_pager = mtk_pager;
+    // Expose globally if not already defined
+    if (typeof window.mtk_pager === 'undefined') {
+	window.mtk_pager = mtk_pager;
+    }
 
     // Auto-initialize immediately
     _log('mtk-pager component loaded', 'info');
