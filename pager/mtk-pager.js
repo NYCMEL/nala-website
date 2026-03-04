@@ -15,7 +15,7 @@
         config: null,
         debugMode: false,
 
-        // Tracks which external asset src/href URLs have already been injected
+        // Tracks external asset src/href URLs already injected for cache:true sections
         loadedAssetUrls: new Set(),
 
         // Tracks injected asset DOM elements per section (for removal on reload)
@@ -106,7 +106,7 @@
     };
 
     // ─────────────────────────────────────────────────────────────────────────
-    // Simple numeric hash for inline script content.
+    // Simple numeric hash for inline script content deduplication.
     // ─────────────────────────────────────────────────────────────────────────
     const _hashContent = (str) => {
         let hash = 0;
@@ -119,13 +119,19 @@
     };
 
     // ─────────────────────────────────────────────────────────────────────────
-    // After content is loaded into a section, find all <script> and <link>
-    // tags, move them to <head>, and register them for later cleanup.
+    // Process <script> and <link> tags found in loaded section HTML.
+    //
+    // useCache = true  → deduplicate: skip assets already injected
+    // useCache = false → always re-inject scripts so components reinitialise,
+    //                    but still deduplicate stylesheets (no need to reload CSS)
+    //
+    // All assets are moved out of the section HTML into <head> so they
+    // execute in the correct global scope.
     // ─────────────────────────────────────────────────────────────────────────
-    const _registerAndMoveAssets = (section, sectionId) => {
+    const _registerAndMoveAssets = (section, sectionId, useCache) => {
         const assets = [];
 
-        // ── Stylesheets ──────────────────────────────────────────────────────
+        // ── Stylesheets — always deduplicated regardless of cache setting ────
         const links = Array.from(section.querySelectorAll('link[rel="stylesheet"]'));
         links.forEach(link => {
             const href = link.getAttribute('href');
@@ -156,7 +162,9 @@
 
             if (src) {
                 // ── External script ──────────────────────────────────────────
-                if (state.loadedAssetUrls.has(src)) {
+                // cache:true  → skip if already loaded
+                // cache:false → always re-inject so the component reinitialises
+                if (useCache && state.loadedAssetUrls.has(src)) {
                     _log(`External script already loaded, skipping: ${src}`, 'debug');
                     return;
                 }
@@ -167,15 +175,22 @@
                 });
                 clone.setAttribute('data-mtk-pager-section', sectionId);
                 document.head.appendChild(clone);
-                state.loadedAssetUrls.add(src);
+
+                // Only track in loadedAssetUrls for cache:true sections
+                if (useCache) {
+                    state.loadedAssetUrls.add(src);
+                }
+
                 assets.push(clone);
                 _log(`Injected external script for '${sectionId}': ${src}`, 'debug');
 
             } else if (content) {
                 // ── Inline script ────────────────────────────────────────────
+                // cache:true  → skip if same hash already in <head>
+                // cache:false → always re-inject
                 const hash = _hashContent(content);
 
-                if (document.head.querySelector(`script[data-mtk-hash="${hash}"]`)) {
+                if (useCache && document.head.querySelector(`script[data-mtk-hash="${hash}"]`)) {
                     _log(`Inline script already executed, skipping (hash: ${hash})`, 'debug');
                     return;
                 }
@@ -218,7 +233,7 @@
     // Load HTML content into a section element.
     // Calls callback(true/false) AFTER content is loaded AND assets processed.
     // ─────────────────────────────────────────────────────────────────────────
-    const _loadContent = (section, sectionId, callback) => {
+    const _loadContent = (section, sectionId, useCache, callback) => {
         if (!state.config || !state.config[sectionId]) {
             _log(`No URL configured for section: ${sectionId}`, 'warning');
             section.innerHTML = `
@@ -245,9 +260,8 @@
                 state.container.classList.remove('loading');
             }
             if (success) {
-                _registerAndMoveAssets(section, sectionId);
+                _registerAndMoveAssets(section, sectionId, useCache);
             }
-            // Callback fires AFTER assets are moved — section is ready
             if (callback) callback(success);
         };
 
@@ -317,56 +331,43 @@
 
         _hideAllSections();
 
+        const entry    = state.config && state.config[sectionId];
+        const useCache = entry ? (entry.cache === 'true' || entry.cache === true) : true;
+
         let section = state.sections.get(sectionId);
 
-        if (section) {
-            const entry    = state.config && state.config[sectionId];
-            const useCache = entry ? (entry.cache === 'true' || entry.cache === true) : true;
-
-            if (useCache) {
-                // Cache hit — activate immediately, no reload needed
-                _log(`Section '${sectionId}' found in cache, re-activating`, 'debug');
-                section.classList.add('active');
-                state.currentSection = sectionId;
-                window.scrollTo(0, 0);
-                _dispatchEvent('mtk-pager:show', { sectionId, isNew: false });
-                _log(`Current section: ${state.currentSection}`, 'success');
-
-            } else {
-                // cache:false — clear assets, reload content, THEN activate
-                _log(`Section '${sectionId}' cache disabled, removing old assets and reloading`, 'info');
-                _removeInjectedAssets(sectionId);
-                section.innerHTML = '';
-
-                _loadContent(section, sectionId, (success) => {
-                    section.classList.add('active');
-                    state.currentSection = sectionId;
-                    window.scrollTo(0, 0);
-                    _log(`Current section: ${state.currentSection}`, 'success');
-
-                    _dispatchEvent('mtk-pager:show', { sectionId, isNew: false });
-                    if (success) {
-                        _dispatchEvent('mtk-pager:loaded', { sectionId });
-                    }
-                });
-            }
+        if (section && useCache) {
+            // ── Cache hit — activate immediately, no reload ──────────────────
+            _log(`Section '${sectionId}' found in cache, re-activating`, 'debug');
+            section.classList.add('active');
+            state.currentSection = sectionId;
+            window.scrollTo(0, 0);
+            _log(`Current section: ${state.currentSection}`, 'success');
+            _dispatchEvent('mtk-pager:show', { sectionId, isNew: false });
 
         } else {
-            // New section — create, load content, THEN activate
-            _log(`Creating new section: ${sectionId}`, 'debug');
-            section = _createSection(sectionId);
+            // ── cache:false or first load — (re)load content then activate ───
+            if (section) {
+                // Existing section being reloaded — clear old assets and HTML
+                _log(`Section '${sectionId}' cache disabled, reloading`, 'info');
+                _removeInjectedAssets(sectionId);
+                section.innerHTML = '';
+            } else {
+                // Brand new section — create and append to DOM first so
+                // wc-include tags inside loaded HTML can resolve
+                _log(`Creating new section: ${sectionId}`, 'debug');
+                section = _createSection(sectionId);
+                state.container.appendChild(section);
+                state.sections.set(sectionId, section);
+            }
 
-            // Append to DOM before loading so wc-include can resolve
-            state.container.appendChild(section);
-            state.sections.set(sectionId, section);
-
-            _loadContent(section, sectionId, (success) => {
+            _loadContent(section, sectionId, useCache, (success) => {
                 section.classList.add('active');
                 state.currentSection = sectionId;
                 window.scrollTo(0, 0);
                 _log(`Current section: ${state.currentSection}`, 'success');
 
-                _dispatchEvent('mtk-pager:show', { sectionId, isNew: true });
+                _dispatchEvent('mtk-pager:show', { sectionId, isNew: false });
                 if (success) {
                     _dispatchEvent('mtk-pager:loaded', { sectionId });
                 }
