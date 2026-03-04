@@ -106,81 +106,23 @@
     };
 
     // ─────────────────────────────────────────────────────────────────────────
-    // Execute an inline script safely using Function() so it runs in its own
-    // scope. This means class/const/let declarations inside it do NOT land in
-    // the global scope and cannot cause "already been declared" errors on
-    // subsequent reloads.
+    // Simple numeric hash for inline script content.
     // ─────────────────────────────────────────────────────────────────────────
-    const _executeInlineScript = (content, sectionId) => {
-        try {
-            // Using Function() runs the code in a fresh function scope,
-            // not the top-level global scope — so redeclarations are safe.
-            // eslint-disable-next-line no-new-func
-            const fn = new Function(content);
-            fn();
-            _log(`Inline script executed for '${sectionId}'`, 'debug');
-        } catch (e) {
-            _log(`Inline script error in '${sectionId}': ${e.message}`, 'error');
-            console.error(`[mtk-pager] Inline script error in section '${sectionId}':`, e);
+    const _hashContent = (str) => {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            const chr = str.charCodeAt(i);
+            hash = ((hash << 5) - hash) + chr;
+            hash |= 0;
         }
+        return 'mtk-inline-' + Math.abs(hash);
     };
 
     // ─────────────────────────────────────────────────────────────────────────
-    // Load an external script by appending a <script src="..."> to <head>.
-    // Returns a Promise that resolves when loaded.
+    // After content is loaded into a section, find all <script> and <link>
+    // tags, move them to <head>, and register them for later cleanup.
     // ─────────────────────────────────────────────────────────────────────────
-    const _loadExternalScript = (src, sectionId) => {
-        return new Promise((resolve) => {
-            if (state.loadedAssetUrls.has(src)) {
-                _log(`External script already loaded, skipping: ${src}`, 'debug');
-                resolve(null);
-                return;
-            }
-
-            const script = document.createElement('script');
-            script.src = src;
-            script.setAttribute('data-mtk-pager-section', sectionId);
-
-            script.onload = () => {
-                _log(`External script loaded for '${sectionId}': ${src}`, 'debug');
-                state.loadedAssetUrls.add(src);
-                resolve(script);
-            };
-
-            script.onerror = () => {
-                _log(`External script failed to load for '${sectionId}': ${src}`, 'error');
-                resolve(null);
-            };
-
-            document.head.appendChild(script);
-        });
-    };
-
-    // ─────────────────────────────────────────────────────────────────────────
-    // Inject a stylesheet into <head>, skipping duplicates.
-    // ─────────────────────────────────────────────────────────────────────────
-    const _loadExternalStyle = (href, originalEl, sectionId) => {
-        if (state.loadedAssetUrls.has(href)) {
-            _log(`Stylesheet already loaded, skipping: ${href}`, 'debug');
-            return null;
-        }
-
-        const clone = originalEl.cloneNode(true);
-        clone.setAttribute('data-mtk-pager-section', sectionId);
-        document.head.appendChild(clone);
-        state.loadedAssetUrls.add(href);
-        _log(`Injected stylesheet for '${sectionId}': ${href}`, 'debug');
-        return clone;
-    };
-
-    // ─────────────────────────────────────────────────────────────────────────
-    // After content is loaded into a section, process all <script> and <link>
-    // tags found inside it:
-    //   - External scripts  → append to <head> once, track element
-    //   - Inline scripts    → execute via Function() scope, never re-append
-    //   - Stylesheets       → append to <head> once, track element
-    // ─────────────────────────────────────────────────────────────────────────
-    const _registerAndMoveAssets = async (section, sectionId) => {
+    const _registerAndMoveAssets = (section, sectionId) => {
         const assets = [];
 
         // ── Stylesheets ──────────────────────────────────────────────────────
@@ -191,40 +133,69 @@
 
             if (!href) return;
 
-            const el = _loadExternalStyle(href, link, sectionId);
-            if (el) assets.push(el);
+            if (state.loadedAssetUrls.has(href)) {
+                _log(`Stylesheet already loaded, skipping: ${href}`, 'debug');
+                return;
+            }
+
+            const clone = link.cloneNode(true);
+            clone.setAttribute('data-mtk-pager-section', sectionId);
+            document.head.appendChild(clone);
+            state.loadedAssetUrls.add(href);
+            assets.push(clone);
+            _log(`Injected stylesheet for '${sectionId}': ${href}`, 'debug');
         });
 
         // ── Scripts ──────────────────────────────────────────────────────────
         const scripts = Array.from(section.querySelectorAll('script'));
-
-        for (const script of scripts) {
+        scripts.forEach(script => {
             const src     = script.getAttribute('src');
             const content = script.innerHTML.trim();
 
-            // Remove from section HTML immediately
             script.parentNode.removeChild(script);
 
             if (src) {
-                // External script — load once, track the element
-                const el = await _loadExternalScript(src, sectionId);
-                if (el) assets.push(el);
+                // ── External script ──────────────────────────────────────────
+                if (state.loadedAssetUrls.has(src)) {
+                    _log(`External script already loaded, skipping: ${src}`, 'debug');
+                    return;
+                }
+
+                const clone = document.createElement('script');
+                Array.from(script.attributes).forEach(attr => {
+                    clone.setAttribute(attr.name, attr.value);
+                });
+                clone.setAttribute('data-mtk-pager-section', sectionId);
+                document.head.appendChild(clone);
+                state.loadedAssetUrls.add(src);
+                assets.push(clone);
+                _log(`Injected external script for '${sectionId}': ${src}`, 'debug');
+
             } else if (content) {
-                // Inline script — execute in isolated Function() scope
-                // We do NOT append to DOM, so no redeclaration is possible
-                _executeInlineScript(content, sectionId);
-                // Nothing to track for removal (never appended to DOM)
+                // ── Inline script ────────────────────────────────────────────
+                const hash = _hashContent(content);
+
+                if (document.head.querySelector(`script[data-mtk-hash="${hash}"]`)) {
+                    _log(`Inline script already executed, skipping (hash: ${hash})`, 'debug');
+                    return;
+                }
+
+                const clone = document.createElement('script');
+                clone.innerHTML = content;
+                clone.setAttribute('data-mtk-pager-section', sectionId);
+                clone.setAttribute('data-mtk-hash', hash);
+                document.head.appendChild(clone);
+                assets.push(clone);
+                _log(`Injected inline script for '${sectionId}' (hash: ${hash})`, 'debug');
             }
-        }
+        });
 
         state.injectedAssets[sectionId] = assets;
-        _log(`Assets processed for '${sectionId}': ${assets.length} tracked`, 'debug');
+        _log(`Assets processed for '${sectionId}': ${assets.length} injected`, 'debug');
     };
 
     // ─────────────────────────────────────────────────────────────────────────
-    // Remove tracked external assets for a section and clear them from the
-    // URL registry so they reload fresh next time.
-    // Inline scripts are never tracked here (they run in Function scope).
+    // Remove all assets injected by a section and clear their registry keys.
     // ─────────────────────────────────────────────────────────────────────────
     const _removeInjectedAssets = (sectionId) => {
         const assets = state.injectedAssets[sectionId];
@@ -235,7 +206,7 @@
                 const key = asset.getAttribute('src') || asset.getAttribute('href');
                 if (key) state.loadedAssetUrls.delete(key);
                 asset.parentNode.removeChild(asset);
-                _log(`Removed asset for '${sectionId}': ${key}`, 'debug');
+                _log(`Removed asset for '${sectionId}': ${key || '(inline)'}`, 'debug');
             }
         });
 
@@ -243,6 +214,10 @@
         _log(`All injected assets removed for section '${sectionId}'`, 'info');
     };
 
+    // ─────────────────────────────────────────────────────────────────────────
+    // Load HTML content into a section element.
+    // Calls callback(true/false) AFTER content is loaded AND assets processed.
+    // ─────────────────────────────────────────────────────────────────────────
     const _loadContent = (section, sectionId, callback) => {
         if (!state.config || !state.config[sectionId]) {
             _log(`No URL configured for section: ${sectionId}`, 'warning');
@@ -265,13 +240,14 @@
             state.container.classList.add('loading');
         }
 
-        const _onLoaded = async (success) => {
+        const _onLoaded = (success) => {
             if (state.container) {
                 state.container.classList.remove('loading');
             }
             if (success) {
-                await _registerAndMoveAssets(section, sectionId);
+                _registerAndMoveAssets(section, sectionId);
             }
+            // Callback fires AFTER assets are moved — section is ready
             if (callback) callback(success);
         };
 
@@ -348,46 +324,54 @@
             const useCache = entry ? (entry.cache === 'true' || entry.cache === true) : true;
 
             if (useCache) {
+                // Cache hit — activate immediately, no reload needed
                 _log(`Section '${sectionId}' found in cache, re-activating`, 'debug');
                 section.classList.add('active');
                 state.currentSection = sectionId;
+                window.scrollTo(0, 0);
                 _dispatchEvent('mtk-pager:show', { sectionId, isNew: false });
+                _log(`Current section: ${state.currentSection}`, 'success');
+
             } else {
-                // cache:false — remove old assets and reload fresh
+                // cache:false — clear assets, reload content, THEN activate
                 _log(`Section '${sectionId}' cache disabled, removing old assets and reloading`, 'info');
                 _removeInjectedAssets(sectionId);
                 section.innerHTML = '';
 
                 _loadContent(section, sectionId, (success) => {
+                    section.classList.add('active');
+                    state.currentSection = sectionId;
+                    window.scrollTo(0, 0);
+                    _log(`Current section: ${state.currentSection}`, 'success');
+
+                    _dispatchEvent('mtk-pager:show', { sectionId, isNew: false });
                     if (success) {
                         _dispatchEvent('mtk-pager:loaded', { sectionId });
                     }
                 });
-
-                section.classList.add('active');
-                state.currentSection = sectionId;
-                _dispatchEvent('mtk-pager:show', { sectionId, isNew: false });
             }
+
         } else {
+            // New section — create, load content, THEN activate
             _log(`Creating new section: ${sectionId}`, 'debug');
             section = _createSection(sectionId);
 
+            // Append to DOM before loading so wc-include can resolve
+            state.container.appendChild(section);
+            state.sections.set(sectionId, section);
+
             _loadContent(section, sectionId, (success) => {
+                section.classList.add('active');
+                state.currentSection = sectionId;
+                window.scrollTo(0, 0);
+                _log(`Current section: ${state.currentSection}`, 'success');
+
+                _dispatchEvent('mtk-pager:show', { sectionId, isNew: true });
                 if (success) {
                     _dispatchEvent('mtk-pager:loaded', { sectionId });
                 }
             });
-
-            state.container.appendChild(section);
-            state.sections.set(sectionId, section);
-
-            section.classList.add('active');
-            state.currentSection = sectionId;
-            _dispatchEvent('mtk-pager:show', { sectionId, isNew: true });
         }
-
-        window.scrollTo(0, 0);
-        _log(`Current section: ${state.currentSection}`, 'success');
     };
 
     const _subscribeToEvents = () => {
@@ -525,7 +509,6 @@
                 return false;
             }
 
-            // Clean up injected assets before removing
             _removeInjectedAssets(sectionId);
 
             section.classList.remove('active');
@@ -566,10 +549,8 @@
         }
     };
 
-    // Expose globally if not already defined
-    if (typeof window.mtk_pager === 'undefined') {
-	window.mtk_pager = mtk_pager;
-    }
+    // Expose globally
+    window.mtk_pager = mtk_pager;
 
     // Auto-initialize immediately
     _log('mtk-pager component loaded', 'info');

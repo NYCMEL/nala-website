@@ -32,7 +32,7 @@ app.pager = [
         "url": "hierarchy/index.inc.html"
     },
     {
-        "cache": "true",
+        "cache": "false",
         "page": "settings",
         "label": "Settings",
         "url": "settings/index.inc.html"
