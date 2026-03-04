@@ -27,6 +27,9 @@ app.pagerCache = {
     'home': true,        // Cache - load once
     'about': true,
     'contact': true,
-    'dashboard': true,
-    'course': false,     // Don't cache - reload every time
+
+    'dashboard': false,
+    'login': false,     // Don't cache - reload every time
+    'course': false,
+    'quiz': false,
 };
