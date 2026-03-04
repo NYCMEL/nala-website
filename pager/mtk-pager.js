@@ -103,12 +103,47 @@
     };
 
     // ─────────────────────────────────────────────────────────────────────────
+    // Map of script src substrings → window global they define.
+    // If the global already exists on window, the script is skipped entirely
+    // on reload — preventing "already been declared" errors.
+    // Add entries here for any component scripts that should only run once.
+    // ─────────────────────────────────────────────────────────────────────────
+    const SCRIPT_GLOBAL_GUARDS = {
+        'mtk-hierarchy':  'MTKHierarchy',
+        'mtk-dashboard':  'MTKDashboard',
+        'mtk-settings':   'MtkSettings',
+        'mtk-quiz':       'MtkQuiz',
+        'mtk-login':      'MtkLogin',
+        'mtk-register':   'MtkRegister',
+        'mtk-msgs':       'MTKMsgs',
+        'mtk-footer':     'MTKFooter',
+        'mtk-header':     'MTKHeader'
+    };
+
+    // Returns the window global name guarding this script src, or null
+    const _getGlobalGuard = (src) => {
+        for (const [key, globalName] of Object.entries(SCRIPT_GLOBAL_GUARDS)) {
+            if (src.indexOf(key) !== -1) return globalName;
+        }
+        return null;
+    };
+
+    // ─────────────────────────────────────────────────────────────────────────
     // Load an external script:
     //   First load  → real <script src> tag appended to <head>
     //   Subsequent  → fetch + indirect eval (re-runs init without redeclaring)
+    //   Global guard → if window[global] already exists, skip entirely
     // ─────────────────────────────────────────────────────────────────────────
     const _runExternalScript = (src, useCache) => {
         return new Promise((resolve) => {
+
+            // Check global guard — if the class/object is already on window, skip
+            const guard = _getGlobalGuard(src);
+            if (guard && window[guard]) {
+                _log(`Global '${guard}' already exists, skipping script: ${src}`, 'debug');
+                resolve();
+                return;
+            }
 
             if (useCache && state.loadedScriptUrls.has(src)) {
                 _log(`Script cached, skipping: ${src}`, 'debug');
