@@ -1,15 +1,49 @@
 var app = app || {};
 
-app.pager = {
-    // Section ID to URL mapping
-    'home':	 'home/index.inc.html',
-    'register':  'register/index.inc.html',
-    'login':	 'login/index.inc.html',
-    'dashboard': 'dashboard/index.inc.html',
-    'course':    'hierarchy/index.inc.html',
-    'settings':  'settings/index.inc.html',
-    'quiz':      'quiz/index.inc.html'
-};
+app.pager = [
+    {
+        "cache": "true",
+        "page": "home",
+        "label": "Home",
+        "url": "home/index.inc.html"
+    },
+    {
+        "cache": "true",
+        "page": "register",
+        "label": "Register",
+        "url": "register/index.inc.html"
+    },
+    {
+        "cache": "true",
+        "page": "login",
+        "label": "Login",
+        "url": "login/index.inc.html"
+    },
+    {
+        "cache": "false",
+        "page": "dashboard",
+        "label": "Dashboard",
+        "url": "dashboard/index.inc.html"
+    },
+    {
+        "cache": "false",
+        "page": "course",
+        "label": "Course",
+        "url": "hierarchy/index.inc.html"
+    },
+    {
+        "cache": "true",
+        "page": "settings",
+        "label": "Settings",
+        "url": "settings/index.inc.html"
+    },
+    {
+        "cache": "false",
+        "page": "quiz",
+        "label": "Quiz",
+        "url": "quiz/index.inc.html"
+    }
+];
 
 // OPTIONAL: DEFAULT SECTION TO LOAD ON INITIALIZATION
 app.pagerDefaults = {
@@ -17,19 +51,4 @@ app.pagerDefaults = {
     loadOnInit: true,        // ALWAYS LOAD THE FIRST PAGE ON INIT
     animationDuration: 10,
     debugMode: false
-};
-
-app.pagerDefaults = {
-    cache: true  // true = load once, false = reload every visit
-};
-
-app.pagerCache = {
-    'home': true,        // Cache - load once
-    'about': true,
-    'contact': true,
-
-    'dashboard': false,
-    'login': false,     // Don't cache - reload every time
-    'course': false,
-    'quiz': false,
 };
