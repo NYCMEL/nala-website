@@ -2,13 +2,13 @@ const MTK_FINAL_CONFIG = {
 
     /* ── User data ─────────────────────────────────────────────────── */
     user: {
-	currentEmail: "jane.doe@example.com",
+	currentEmail: "mel@google.com",
 	courseName:   "Advanced Web Development"
     },
 
     /* ── UI strings ─────────────────────────────────────────────────── */
     strings: {
-	successHeading:    "You successfully completed the course!",
+	successHeading:    "successfully completed 'Nala Locksmith' course!",
 	successSubheading: "Please specify which email to use for your certificate to be mailed to.",
 	currentEmailLabel: "Current email on file",
 	optionKeep:        "Use my current email on file",
