@@ -1,0 +1,33 @@
+[
+    {
+	"cache": "true",
+	"page": "home",
+	"url": "http://links.melify.com/tk/lib/components/w/html/parts/pager/.react/home.html"
+
+    },
+    {
+	"cache": "true",
+	"page": "products",
+	"url": "http://links.melify.com/tk/lib/components/w/html/parts/pager/.react/products.html"
+    },
+    {
+	"cache": "true",
+	"page": "downloads",
+	"url": "http://links.melify.com/tk/lib/components/w/html/parts/pager/.react/downloads.html"
+    },
+    {
+	"cache": "false",
+	"page": "contact",
+	"url": "http://links.melify.com/tk/lib/components/w/html/parts/pager/.react/contact.html"
+    },
+    {
+	"cache": "true",
+	"page": "login",
+	"url": "http://links.melify.com/tk/lib/components/w/html/parts/pager/.react/login.html"
+    },
+    {
+	"cache": "true",
+	"page": "cart",
+	"url": "http://links.melify.com/tk/lib/components/w/html/parts/pager/.react/cart.html"
+    }
+]
