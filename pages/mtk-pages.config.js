@@ -12,31 +12,31 @@ window.app.pages = [
         "cache": "true",
         "page":  "home",
         "label": "Welcome",
-        "url":   "<wc-include href='/Melify/mtk/dev/tk/lib/components/w/html/parts/pager/home.html'></wc-include>"
+        "url":   "<wc-include href='tmp/home.html'></wc-include>"
     },
     {
         "cache": "true",
         "page":  "products",
         "label": "Our Products",
-        "url":   "<wc-include href='/Melify/mtk/dev/tk/lib/components/w/html/parts/pager/products.html'></wc-include>"
+        "url":   "<wc-include href='tmp/products.html'></wc-include>"
     },
     {
         "cache": "false",
         "page":  "contact",
         "label": "Contact us",
-        "url":   "<wc-include href='/Melify/mtk/dev/tk/lib/components/w/html/parts/pager/contact.html'></wc-include>"
+        "url":   "<wc-include href='tmp/contact.html'></wc-include>"
     },
     {
         "cache": "true",
         "page":  "login",
         "label": "Sign-In",
-        "url":   "<wc-include href='/Melify/mtk/dev/tk/lib/components/w/html/parts/pager/login.html'></wc-include>"
+        "url":   "<wc-include href='tmp/login.html'></wc-include>"
     },
     {
         "cache": "true",
         "page":  "cart",
         "label": "Shopping Cart",
-        "url":   "<wc-include href='/Melify/mtk/dev/tk/lib/components/w/html/parts/pager/cart.html'></wc-include>"
+        "url":   "<wc-include href='tmp/cart.html'></wc-include>"
     }
 ];
 
