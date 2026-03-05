@@ -59,7 +59,7 @@ class _febe {
 	    "mtk-hierarchy:resource:click": this.handleResource.bind(this),
 	    "MTK-parts.click": this.handlePartsClick,
 	    "mtk-header-logo": this.handleDashboard,
-	    "mtk-header-dashboard": this.handleDashboard,
+	    "mtk-header-dashboard": this.handleHeaderDashboard,
 	    "mtk-header-settings": this.handleSettings,
 	    "mtk-header-login": this.handleLogin,
 	    "mtk-header-logout": this.handleLogout,
@@ -85,6 +85,14 @@ class _febe {
 	    wc.error("_febe: DO NOT HAVE:" + msg);
 	    alert("_febe: DO NOT HAVE:" + msg);
 	}
+    }
+
+    //////////////////////////////////////////////////////////////////
+    ///// HANDLERS
+    //////////////////////////////////////////////////////////////////
+    handleHeaderDashboard() {
+	// RE-LOAD TO UPDATE PROGRESS
+	document.location.reload();
     }
 
     //////////////////////////////////////////////////////////////////
