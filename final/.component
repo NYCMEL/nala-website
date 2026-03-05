@@ -1,0 +1,56 @@
+FORGET ALL PREVIOUS CONTEXT for mtk-final and remember this as mtk-final forever
+
+Create a reusable UI final named mtk-final using:
+- HTML
+- SCSS
+- Vanilla JavaScript
+- Bootstrap 5 (layout only)
+- Modern Material Design, Material Design icons and styles
+- Always create a JS class for mtk-final and initialize it inside the JS file itself
+
+Rules:
+- The final is wrapped in a display:block element <mtk-final class="mtk-final">.
+- The root element uses .mtk-final.
+- All styles must be scoped to .mtk-final.
+- No global styles or IDs.
+- publish click events using wc.publish
+- subscribe to all 4-mtk-final everns using wc.subscribe
+- create a onMessage function to be passed to wc.subscribe function
+
+Data:
+- The final is JSON driven.
+  - any and all data must come from mtk-final.config.js file
+
+Restrictions:
+- No frameworks.
+- No Bootstrap.
+- No external libraries.
+- Vanilla Javascript
+
+Accessibility:
+- Use semantic HTML.
+- Keyboard accessible.
+- Visible focus states.
+- ADA compliant
+
+Output! Create exactly these files:
+- mtk-final.config.js (JSON FILE)
+- mtk-final.scss
+- mtk-final.html
+- mtk-final.js
+
+Behavior:
+- MUST WAIT for element to be available inside DOM, since i will be using <wc-include> for dynamic inclusion
+- all published (wc.publish) messages should be logged using wc.log to console before being published
+
+create a form to allow users to see their current email and allow them to change it.
+remember this as mtk-final
+should display a message "You successfuly completed the course"
+should display a secondary message "Please specify which email to use for your certificate to be mailed to.
+
+use can either select the current email on file or...
+select a new email with a verfication to enter the new email.
+these two emails must match.
+
+should also display "Submit you choice"
+
