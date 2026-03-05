@@ -12,12 +12,36 @@ window.app.pages = [
         "cache": "false",
         "page":  "home",
         "label": "Welcome",
-        "url":   "<wc-include href='pages/tmp/home.html'></wc-include>"
+        "url":   "<wc-include href='home/index.inc.html' />"
     },
     {
         "cache": "false",
-        "page":  "products",
-        "label": "Our Products",
-        "url":   "<wc-include href='pages/tmp/products.html'></wc-include>"
+        "page":  "courses",
+        "label": "Courses",
+        "url":   "<wc-include href='courses/index.inc.html' />"
+    },
+    {
+        "cache": "false",
+        "page":  "register",
+        "label": "Register",
+        "url":   "<wc-include href='register/index.inc.html' />"
+    },
+    {
+        "cache": "false",
+        "page":  "dashboard",
+        "label": "Dashboard",
+        "url":   "<wc-include href='dashboard/index.inc.html' />"
+    },
+    {
+        "cache": "false",
+        "page":  "login",
+        "label": "Login",
+        "url":   "<wc-include href='login/index.inc.html' />"
+    },
+    {
+        "cache": "false",
+        "page":  "final",
+        "label": "Final",
+        "url":   "<wc-include href='final/index.inc.html' />"
     }
 ];
