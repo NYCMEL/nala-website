@@ -1516,3 +1516,19 @@ wc.submitQuiz = function (quizSessionId, moduleId, answersMap, callback) {
         }
     });
 };
+
+////////////////////////////////////////////////////////////////////////////////////
+//// 
+////////////////////////////////////////////////////////////////////////////////////
+wc.getAttributes = function(node) {
+    wc.group("wc.getAttributes", node);
+
+    var i, attributeNodes = node.attributes, length = attributeNodes.length, attrs = {};
+    
+    for ( i = 0; i < length; i++ ) {
+	attrs[attributeNodes[i].name] = attributeNodes[i].value;
+    }
+
+    wc.groupEnd();
+    return attrs;
+}

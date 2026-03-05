@@ -1,36 +1,36 @@
-const MTK_FINAL_CONFIG = {
+/**
+ * mtk-final.config.js
+ * Safe to load multiple times — uses window guard instead of const.
+ */
 
-    /* ── User data ─────────────────────────────────────────────────── */
+window.MTK_FINAL_CONFIG = window.MTK_FINAL_CONFIG || {
     user: {
-	currentEmail: "mel@google.com",
-	courseName:   "Advanced Web Development"
+        currentEmail: 'mel@google.com'
     },
 
-    /* ── UI strings ─────────────────────────────────────────────────── */
     strings: {
-	successHeading:    "successfully completed 'Nala Locksmith' course!",
-	successSubheading: "Please specify which email to use for your certificate to be mailed to.",
-	currentEmailLabel: "Current email on file",
-	optionKeep:        "Use my current email on file",
-	optionNew:         "Use a different email address",
-	newEmailLabel:     "New email address",
-	newEmailHint:      "Enter the email you want on your certificate",
-	confirmEmailLabel: "Confirm new email address",
-	confirmEmailHint:  "Re-enter to confirm",
-	submitLabel:       "Submit Your Choice",
-	successToast:      "Your certificate email has been saved.",
-	mismatchError:     "Email addresses do not match.",
-	invalidEmailError: "Please enter a valid email address.",
-	requiredError:     "This field is required.",
-	matchConfirmed:    "Emails match \u2714"
+        successHeading:     'Congratulations!',
+        successSubheading:  'You have successfully completed the course.',
+        currentEmailLabel:  'Your current email address',
+        currentEmail:       'john.doe@example.com',
+        optionKeep:         'Send certificate to my current email',
+        optionNew:          'Send certificate to a different email',
+        newEmailLabel:      'New email address',
+        newEmailHint:       'Enter a valid email address',
+        confirmEmailLabel:  'Confirm new email address',
+        confirmEmailHint:   'Re-enter your new email address',
+        submitLabel:        'Send My Certificate',
+        successToast:       'Certificate sent! Check your inbox.',
+        requiredError:      'This field is required.',
+        invalidEmailError:  'Please enter a valid email address.',
+        mismatchError:      'Email addresses do not match.',
+        matchConfirmed:     'Emails match!'
     },
 
-    /* ── Event names ─────────────────────────────────────────────────── */
     events: {
-	ready:  "mtk-final:ready",
-	submit: "mtk-final:submit",
-	change: "mtk-final:change",
-	error:  "mtk-final:error"
+        ready:  'mtk-final:ready',
+        change: 'mtk-final:change',
+        submit: 'mtk-final:submit',
+        error:  'mtk-final:error'
     }
-
 };
