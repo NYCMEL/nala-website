@@ -45,5 +45,5 @@ window.app.pagesDefaults = {
     initialPage:       "home",
     loadOnInit:        true,
     animationDuration: 10,
-    debugMode:         false
+    debugMode:         true
 };
