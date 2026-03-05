@@ -29,6 +29,7 @@ class MTKHierarchy {
 	this.handleResourceClick = this.handleResourceClick.bind(this);
 	this.handleQuizClick = this.handleQuizClick.bind(this);
 	this.handleQuizStart = this.handleQuizStart.bind(this);
+	this.enableNextModule = this.enableNextModule.bind(this);
 
 	// Wait for DOM to be ready
 	this.waitForElement();
@@ -888,6 +889,78 @@ class MTKHierarchy {
 
 	// Open quiz in new tab
 	window.open(quizUrl, '_blank');
+    }
+
+    /**
+     * Enable the next disabled module.
+     * Scans all modules across all courses in order and enables
+     * the first one with access: false.
+     *
+     * Call this publicly from outside, e.g.:
+     *   window.MTKHierarchy.enableNextModule();
+     */
+    enableNextModule() {
+	if (typeof wc !== 'undefined') {
+	    wc.log("MTKHierarchy: enableNextModule called");
+	}
+
+	if (!this.config || !Array.isArray(this.config)) {
+	    if (typeof wc !== 'undefined') {
+		wc.warn("MTKHierarchy: enableNextModule - no config available");
+	    }
+	    return;
+	}
+
+	// Flatten all modules across all courses into one ordered list
+	const allModules = [];
+	this.config.forEach(course => {
+	    if (!course.modules) return;
+	    course.modules.forEach(module => {
+		allModules.push(module);
+	    });
+	});
+
+	// Find the first disabled module
+	const nextModule = allModules.find(m => !m.access);
+
+	if (!nextModule) {
+	    if (typeof wc !== 'undefined') {
+		wc.log("MTKHierarchy: enableNextModule - no disabled modules found");
+	    }
+	    return;
+	}
+
+	// Enable in config
+	nextModule.access = true;
+
+	// Enable in DOM
+	const nextModuleEl = this.elements.lhs
+	    ? this.elements.lhs.querySelector(`[data-module-id="${nextModule.id}"]`)
+	    : null;
+
+	if (nextModuleEl) {
+	    nextModuleEl.classList.remove('mtk-module--disabled');
+
+	    const nextModuleHeader = nextModuleEl.querySelector('.mtk-module__header');
+	    if (nextModuleHeader) {
+		nextModuleHeader.style.cursor = 'pointer';
+	    }
+
+	    if (typeof wc !== 'undefined') {
+		wc.log("MTKHierarchy: enableNextModule - enabled in DOM:", nextModule.id, nextModule.title);
+	    }
+	} else {
+	    if (typeof wc !== 'undefined') {
+		wc.warn("MTKHierarchy: enableNextModule - DOM element not found for", nextModule.id);
+	    }
+	}
+
+	// Publish event
+	wc.publish('mtk-hierarchy:module-enabled', {
+	    moduleId: nextModule.id,
+	    moduleTitle: nextModule.title,
+	    timestamp: new Date().toISOString()
+	});
     }
 
     /**

@@ -288,6 +288,9 @@ class _febe {
 		    timer: 5
 		});
 
+		// ENABLE NEXT MODULE
+		window.MTKHierarchy.enableNextModule();
+
 		wc.log("Congratulations! You passed.");
 	    } else {
 		mtkDialog.open({
@@ -305,10 +308,6 @@ class _febe {
 		});
 	    }
 	});
-
-	// wc.timeout(function(){
-	//     document.location.reload();
-	// }, 2000, 1);
     }
 
     //////////////////////////////////////////////////////////////////
