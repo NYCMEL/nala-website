@@ -152,96 +152,93 @@
 
     <script src="mtk-pages.config.js"></script>
     <script>
-        (function () {
+     (function () {
 
-            const pages   = window.app.pages;
-            const btnWrap = document.getElementById('mtk-test-buttons');
-            const pageWrap = document.getElementById('mtk-test-pages');
+         const pages   = window.app.pages;
+         const btnWrap = document.getElementById('mtk-test-buttons');
+         const pageWrap = document.getElementById('mtk-test-pages');
 
-            // Extract href from a wc-include string
-            function extractHref(urlStr) {
-                const match = urlStr.match(/href=['"]([^'"]+)['"]/);
-                return match ? match[1] : null;
-            }
+         // Extract href from a wc-include string
+         function extractHref(urlStr) {
+             const match = urlStr.match(/href=['"]([^'"]+)['"]/);
+             return match ? match[1] : null;
+         }
 
-            // Show a page panel and mark its button active
-            function showPage(pageId) {
-                // Deactivate all panels
-                document.querySelectorAll('.mtk-test-page').forEach(el => el.classList.remove('active'));
-                // Deactivate all buttons
-                document.querySelectorAll('.mtk-test-nav__btn').forEach(el => el.classList.remove('active'));
+         // Show a page panel and mark its button active
+         function showPage(pageId) {
+             // Deactivate all panels
+             document.querySelectorAll('.mtk-test-page').forEach(el => el.classList.remove('active'));
+             // Deactivate all buttons
+             document.querySelectorAll('.mtk-test-nav__btn').forEach(el => el.classList.remove('active'));
 
-                // Activate target panel
-                const panel = document.getElementById('panel-' + pageId);
-                if (panel) panel.classList.add('active');
+             // Activate target panel
+             const panel = document.getElementById('panel-' + pageId);
+             if (panel) panel.classList.add('active');
 
-                // Activate target button
-                const btn = document.getElementById('btn-' + pageId);
-                if (btn) btn.classList.add('active');
+             // Activate target button
+             const btn = document.getElementById('btn-' + pageId);
+             if (btn) btn.classList.add('active');
 
-                // Load iframe if not yet loaded
-                const iframe = document.getElementById('iframe-' + pageId);
-                if (iframe && !iframe.getAttribute('data-loaded')) {
-                    const href = iframe.getAttribute('data-src');
-                    iframe.src = href;
-                    iframe.setAttribute('data-loaded', 'true');
-                }
-            }
+             // Load iframe if not yet loaded
+             const iframe = document.getElementById('iframe-' + pageId);
 
-            // Build buttons and page panels from config
-            pages.forEach(function (page) {
-                const href = extractHref(page.url);
+             if (iframe && !iframe.getAttribute('data-loaded')) {
+                 const href = iframe.getAttribute('data-src');
+                 iframe.src = href;
+		 console.log("-------", iframe.src);
+		 
+                 iframe.setAttribute('data-loaded', 'true');
+             }
+         }
+	 
+	 // Build buttons and page panels from config
+	 pages.forEach(function (page) {
+	     const href = extractHref(page.url);
 
-                // BUTTON
-                const btn = document.createElement('button');
-                btn.id        = 'btn-' + page.page;
-                btn.className = 'mtk-test-nav__btn';
-                btn.textContent = page.label;
-                btn.addEventListener('click', function () { showPage(page.page); });
-                btnWrap.appendChild(btn);
+	     // BUTTON
+	     const btn = document.createElement('button');
+	     btn.id        = 'btn-' + page.page;
+	     btn.className = 'mtk-test-nav__btn';
+	     btn.textContent = page.label;
+	     btn.addEventListener('click', function () { showPage(page.page); });
+	     btnWrap.appendChild(btn);
 
-                // PAGE PANEL
-                const cacheClass = page.cache === 'true' ? 'mtk-badge--cache-true' : 'mtk-badge--cache-false';
-                const cacheText  = page.cache === 'true' ? 'cached' : 'no cache';
+	     // PAGE PANEL
+	     const cacheClass = page.cache === 'true' ? 'mtk-badge--cache-true' : 'mtk-badge--cache-false';
+	     const cacheText  = page.cache === 'true' ? 'cached' : 'no cache';
 
-                const panel = document.createElement('div');
-                panel.id        = 'panel-' + page.page;
-                panel.className = 'mtk-test-page';
-                panel.innerHTML = `
-                    <div class="mtk-test-card">
-                        <div class="mtk-test-card__header">
-                            <span class="mtk-test-card__header-label">${page.label}</span>
-                            <span class="mtk-test-card__header-meta">
-                                page: <strong style="color:#bb86fc">${page.page}</strong>
-                                &nbsp;&nbsp;
-                                <span class="mtk-badge ${cacheClass}">${cacheText}</span>
-                                &nbsp;&nbsp;
-                                ${href ? `<a href="${href}" target="_blank" style="color:rgba(255,255,255,0.5);font-size:11px;text-decoration:none;" title="Open in new tab">&#x2197; ${href}</a>` : 'no href'}
+	     const panel = document.createElement('div');
+	     panel.id        = 'panel-' + page.page;
+	     panel.className = 'mtk-test-page';
+	     panel.innerHTML = `
+		 <div class="mtk-test-card">
+		     <div class="mtk-test-card__header">
+			 <span class="mtk-test-card__header-label">${page.label}</span>
+			 <span class="mtk-test-card__header-meta">
+			     page: <strong style="color:#bb86fc">${page.page}</strong>
+			     &nbsp;&nbsp;
+			     <span class="mtk-badge ${cacheClass}">${cacheText}</span>
+			     &nbsp;&nbsp;
+			     ${href ? `<a href="${href}" target="_blank" style="color:rgba(255,255,255,0.5);font-size:11px;text-decoration:none;" title="Open in new tab">&#x2197; ${href}</a>` : 'no href'}
                             </span>
                         </div>
                         <div class="mtk-test-card__body" style="padding:0">
                             ${href
-                                ? `<iframe
-                                        id="iframe-${page.page}"
-                                        class="mtk-test-iframe"
-                                        data-src="${href}"
-                                        title="${page.label}">
-                                   </iframe>`
+                                ? `<iframe id="iframe-${page.page}" class="mtk-test-iframe" data-src="${href}" title="${page.label}"></iframe>`
                                 : `<div style="padding:24px;color:#999">No URL found in config for this page.</div>`
                             }
                         </div>
                     </div>
-                `;
-                pageWrap.appendChild(panel);
-            });
+				`;
+	     pageWrap.appendChild(panel);
+	 });
 
-            // Show first page by default
-            if (pages.length) {
-                showPage(pages[0].page);
-            }
+	 // Show first page by default
+	 if (pages.length) {
+	     showPage(pages[0].page);
+	 }
 
-        })();
+     })();
     </script>
-
 </body>
 </html>
