@@ -1,273 +1,161 @@
 /**
- * Pages Component
+ * mtk-pages
  * Web component for managing multi-page navigation without page reloads.
- * Renamed from Pager to Pages.
+ * Reads config from window.app.pages
  */
 class Pages extends HTMLElement {
-    constructor() {
-        wc.group("Pages.constructor");
 
-        super();
-
-        wc.groupEnd();
-    };
-
-    /**
-     * Set observable values here. When changed, attributeChangedCallback is invoked.
-     * @observedAttributes
-     */
-    static get observedAttributes() {
-        wc.group("Pages.observedAttributes");
-
-        this.observables = [];
-
-        wc.groupEnd();
-        return this.observables;
-    };
-
-    /**
-     * Called when this is attached to the DOM.
-     * @connectedCallback
-     */
     connectedCallback() {
-        wc.group("Pages.connectedCallback");
+        wc.group("mtk-pages.connectedCallback");
 
-        // ADD A RANDOM ID IF NONE EXISTS
         if (!this.id) {
-            this.id = this.constructor.name.toLowerCase() + "-" + wc.uid();
+            this.id = "mtk-pages";
         }
 
-        // GET PROPERTIES AND INTERESTING ELEMENTS
-        this._initialize();
-
-        if (this.properties.cfg) {
-            this.configure();
-        }
-
-        // ADD STATS AND OTHER FINAL STUFF
-        this._finalize();
+        this._waitForData();
 
         wc.groupEnd();
     };
 
-    /**
-     * Called with .setAttribute(...) function call.
-     * @attributeChangedCallback
-     */
-    attributeChangedCallback(attr, oldval, newval) {
-        wc.group("Pages.attributeChangedCallback:", attr, oldval, newval);
-
-        this.properties = this.properties || [];
-
-        let obs = Pages.observedAttributes;
-
-        for (let i = 0; i < obs.length; i++) {
-            if (newval) {
-                this.properties[obs[i]] = newval;
-            }
-        }
-
-        try {
-            switch (attr) {
-                case "header":
-                    break;
-                default:
-                    break;
-            }
-        } catch (e) {
-            wc.warn(e.name + ' > ' + e.message);
-        }
-
+    disconnectedCallback() {
+        wc.group("mtk-pages.disconnectedCallback");
         wc.groupEnd();
     };
 
     /**
-     * Stores DOM elements of interest for future use.
+     * Wait for window.app.pages to be available then initialize.
      * @private
-     * @_fetchElements
      */
-    _fetchElements() {
-        wc.group("Pages._fetchElements");
+    _waitForData() {
+        wc.group("mtk-pages._waitForData");
 
-        this.dom = this.dom || [];
-        this.dom.content = this.innerHTML;
+        const maxRetries = 50;
+        let attempts = 0;
 
-        wc.groupEnd();
-    };
+        const check = () => {
+            attempts++;
 
-    /**
-     * Component attributes are fetched and defaults are set if undefined.
-     * @private
-     * @_fetchAttributes
-     */
-    _fetchAttributes() {
-        wc.group("Pages._fetchAttributes");
+            if (window.app && window.app.pages && window.app.pages.length) {
+                wc.log("mtk-pages: data found after", attempts, "attempt(s)");
+                this._process(window.app.pages);
+                return;
+            }
 
-        this.properties = {
-            uparam:  "",
-            cname:   "Pages",
-            author:  "Mel M. Heravi",
-            id:      "1561999078",
-            version: "1.0",
-            env:     "prod"
+            if (attempts >= maxRetries) {
+                wc.warn("mtk-pages: window.app.pages not found after", maxRetries, "attempts");
+                return;
+            }
+
+            setTimeout(check, 100);
         };
 
-        // SAVE WIDGET SPECIFIC PROPERTIES
-        this.propertiesW = [];
-
-        // SAVE ALL OTHER PROPERTIES
-        let attrs = wc.getAttributes(this);
-
-        for (var key in attrs) {
-            let attr = this.getAttribute(key) || this.properties.key;
-            this.properties[key]  = this.getAttribute(key);
-            this.propertiesW[key] = this.getAttribute(key);
-            wc.log(key + ": " + attrs[key]);
-        }
-
-        // SET ALL INITIAL ATTRIBUTES
-        for (var key in this.properties) {
-            switch (key) {
-                case "header":
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        wc.log("ATTRIBUTES: ", this.properties);
+        check();
 
         wc.groupEnd();
     };
 
     /**
-     * Configure the instance object and artifacts.
-     * @configure
-     * @param {Object} data - Use data if provided, else use this.properties.cfg
-     */
-    configure(data) {
-        wc.group("Pages.configure:", data);
-
-        if (data) {
-            this._process(data);
-        } else {
-            let self = this;
-
-            $.getJSON(this.properties.cfg, function (data) {
-                self._process(data);
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                alert("ERROR: INCOMING TEXT " + jqXHR.responseText);
-            });
-        }
-
-        wc.groupEnd();
-    };
-
-    /**
-     * Process the instance object and artifacts.
+     * Build page containers and show the default page.
      * @private
-     * @_process
      */
     _process(data) {
-        wc.group("Pages._process:", data);
+        wc.group("mtk-pages._process", data);
 
         this.data  = data;
-        this.cname = this.properties.cname.toLowerCase();
+        this.cname = "pages";
 
-        let tstr = "";
-
-        for (var i = 0; i < data.length; i++) {
-            tstr += `<div class="mtk-${this.cname}__page ${data[i].page}" mtk-pages-id="${data[i].page}"></div>`;
+        // BUILD PAGE DIV FOR EACH ENTRY
+        let html = "";
+        for (let i = 0; i < data.length; i++) {
+            html += `<div class="mtk-pages__page ${data[i].page}" mtk-pages-id="${data[i].page}" style="display:none"></div>`;
         }
+        this.innerHTML = html;
 
-        // ADD COMPONENT MARKUP
-        this.innerHTML = tstr;
+        // SHOW DEFAULT PAGE FROM ATTRIBUTE OR FIRST IN LIST
+        const defaultPage = this.getAttribute("page") || data[0].page;
+        this.show(defaultPage);
 
-        var page = wc.getSearchParam("page");
-
-        if (page) {
-            // IF PAGE IS ON URL
-            this.show(page);
-        } else {
-            // SHOW DEFAULT PAGE
-            this.show(this.properties.page || this.data[0].page);
-        }
-
-        // ADD DEVELOPMENT TOOLS
-        if (this.properties.env == "dev") {
+        // DEV TOOLBAR
+        if (this.getAttribute("env") === "dev") {
             this._dev();
         }
 
-        wc.groupEnd();
-    };
-
-    /**
-     * Initialize component.
-     * @private
-     * @_initialize
-     */
-    _initialize() {
-        wc.group("Pages._initialize:", this.id);
-
-        this._fetchElements();
-        this._fetchAttributes();
-
-        wc.groupEnd();
-    };
-
-    /**
-     * Save data for analytics and final wrap up.
-     * @private
-     * @_finalize
-     */
-    _finalize() {
-        wc.group("Pages._finalize:", this.id);
-
-        this.classList.add("mtk");
-
-        // SHOW IT NOW (NO FLICKERS)
         this.style.visibility = "visible";
 
         wc.groupEnd();
     };
 
     /**
-     * Invoked when component is removed from DOM.
-     * @disconnectedCallback
+     * Show a page by ID. Creates content on first visit, respects cache setting.
+     * @param {string} page - The page ID to display
      */
-    disconnectedCallback() {
-        wc.group("Pages.disconnectedCallback");
+    show(page) {
+        wc.group("mtk-pages.show:", page);
 
-        // FREE MEMORY AND CLEANUP
+        if (!this.data) {
+            wc.warn("mtk-pages: not initialized yet");
+            wc.groupEnd();
+            return;
+        }
 
+        // FIND PAGE CONFIG
+        const obj = this.data.find(o => o.page === page);
+
+        if (!obj) {
+            wc.warn("mtk-pages: page not found in config:", page);
+            wc.groupEnd();
+            return;
+        }
+
+        // HIDE ALL PAGES
+        const allPages = this.querySelectorAll(".mtk-pages__page");
+        allPages.forEach(el => el.style.display = "none");
+
+        // GET TARGET PAGE ELEMENT
+        const target = this.querySelector(`.${page}`);
+
+        if (!target) {
+            wc.warn("mtk-pages: DOM element not found for page:", page);
+            wc.groupEnd();
+            return;
+        }
+
+        const isEmpty = target.innerHTML.trim() === "";
+
+        // LOAD CONTENT IF EMPTY OR CACHE IS FALSE
+        if (isEmpty || obj.cache === "false") {
+            target.innerHTML = obj.url;
+        }
+
+        // SHOW THE PAGE
+        target.style.display = "block";
+
+        // SCROLL TO TOP
+        window.scrollTo(0, 0);
+
+        // PUBLISH EVENT
+        wc.publish("mtk-pages", {
+            time:   new Date().getTime(),
+            action: "show",
+            page:   page,
+            label:  obj.label || page
+        });
+
+        wc.log("mtk-pages: showing page:", page);
         wc.groupEnd();
+        return page;
     };
 
     /**
-     * Destroy the instance object and artifacts.
-     * @destroy
-     */
-    destroy() {
-        wc.group("Pages.destroy");
-
-        delete this;
-        this.parentNode.removeChild(this);
-
-        wc.groupEnd();
-    };
-
-    /**
-     * Refresh a page by clearing and reloading its content.
-     * @refresh
-     * @param {string} page - Page ID to refresh
+     * Refresh a page - clears content and reloads it.
+     * @param {string} page - The page ID to refresh
      */
     refresh(page) {
-        wc.group("Pages.refresh:", page);
+        wc.group("mtk-pages.refresh:", page);
 
-        // EMPTY CONTENT
-        $(`#${this.id} .` + page).empty();
+        const target = this.querySelector(`.${page}`);
+        if (target) target.innerHTML = "";
 
-        // RE-LOAD THE PAGE
         this.show(page);
 
         wc.groupEnd();
@@ -275,102 +163,37 @@ class Pages extends HTMLElement {
     };
 
     /**
-     * Show a page by ID.
-     * @show
-     * @param {string} page - Page ID to display
-     */
-    show(page) {
-        wc.group("Pages.show:", page);
-
-        // CHANGE URL
-        // wc.pushstate(page);
-
-        // HIDE ALL PAGES
-        $(`#${this.id} .mtk-${this.cname}__page`).hide();
-
-        let obj = $.grep(this.data, function (obj) {
-            return obj.page === page;
-        });
-
-        let apage = $(`#${this.id} .${page}`);
-        let empty = apage.is(":empty");
-
-        // IF IT IS THE FIRST TIME, ADD THE PAGE
-        if ($(apage).is(":empty")) {
-            apage.html(obj[0].url);
-        }
-
-        if (obj[0].cache == "false" || empty) {
-            apage.html(obj[0].url);
-        }
-
-        // SHOW THIS PAGE
-        apage.show();
-
-        // PUBLISH SHOW EVENT
-        wc.publish(`mtk-${this.cname}`, {
-            time:   new Date().getTime(),
-            action: "show",
-            id:     page
-        });
-
-        wc.groupEnd();
-        return page;
-    };
-
-    /**
-     * Development toolbar for quickly switching pages.
-     * @private
-     * @_dev
-     */
-    _dev(page) {
-        wc.group("Pages._dev:", page);
-
-        let self = this;
-
-        let str = `<div class="btn-group btn-group-sm btn-group-tester border border-dark" role="group" aria-label="btn-tester" style="position:fixed;bottom:50px;right:10px;z-index:99999999">`;
-
-        for (var i = 0; i < this.data.length; i++) {
-            str += `<button type="button" class="btn btn-sm btn-success mtk-pages-btn-tester" style="font-size:11px;border-radius:0">${this.data[i].page}</button>`;
-        }
-
-        str += "</div>";
-
-        $("body").append(str);
-
-        $(`.mtk-pages-btn-tester`).on("click", function () {
-            self.show($(this).text());
-        });
-
-        wc.groupEnd();
-    };
-
-    /**
-     * Dynamically add a new page at runtime.
-     * @new
-     * @param {Object} values - Page config object { page, url, cache }
+     * Add a new page dynamically at runtime.
+     * @param {Object} values - { page, url, cache, label }
      */
     new(values) {
-        wc.group("Pages.new:", values);
+        wc.group("mtk-pages.new:", values);
 
-        let self = this;
+        if (!values || !values.page || !values.url) {
+            wc.warn("mtk-pages.new: missing required fields (page, url)");
+            wc.groupEnd();
+            return;
+        }
 
         this.data.push(values);
 
-        var tstr =
-            `<div class="mtk-${this.cname}__page ${values.page}" cache="${values.cache}" style="display:none">
-                <wc-include href="${values.url}"></wc-include>
-            </div>`;
+        const div = document.createElement("div");
+        div.className = `mtk-pages__page ${values.page}`;
+        div.setAttribute("mtk-pages-id", values.page);
+        div.style.display = "none";
+        this.appendChild(div);
 
-        $(`#${this.id} .btn-group-tester`).append(
-            `<button type="button" class="btn btn-sm btn-danger mtk-pages-btn-tester" style="font-size:11px;border-radius:0">${values.page}</button>`
-        );
-
-        $(`#${this.id} .mtk-pages-btn-tester`).unbind().on("click", function () {
-            self.show($(this).text());
-        });
-
-        this.innerHTML += tstr;
+        // ADD TO DEV TOOLBAR IF PRESENT
+        const toolbar = document.querySelector(".mtk-pages-toolbar");
+        if (toolbar) {
+            const btn = document.createElement("button");
+            btn.type      = "button";
+            btn.className = "btn btn-sm btn-danger mtk-pages-btn-tester";
+            btn.style.cssText = "font-size:11px;border-radius:0";
+            btn.textContent = values.label || values.page;
+            btn.addEventListener("click", () => this.show(values.page));
+            toolbar.appendChild(btn);
+        }
 
         this.show(values.page);
 
@@ -378,17 +201,34 @@ class Pages extends HTMLElement {
     };
 
     /**
-     * Test helper to add a sample new page.
-     * @newTest
+     * Dev toolbar - renders fixed buttons for each page.
+     * Only shown when env="dev" attribute is set.
+     * @private
      */
-    newTest() {
-        wc.group("Pages.newTest");
+    _dev() {
+        wc.group("mtk-pages._dev");
 
-        this.new({
-            "cache": "true",
-            "page":  "new-page",
-            "url":   "/tk/lib/components/w/html/parts/pages/test.html"
-        });
+        const self = this;
+
+        const toolbar = document.createElement("div");
+        toolbar.className = "btn-group btn-group-sm mtk-pages-toolbar border border-dark";
+        toolbar.setAttribute("role", "group");
+        toolbar.style.cssText = "position:fixed;bottom:50px;right:10px;z-index:99999999";
+
+        for (let i = 0; i < this.data.length; i++) {
+            const idx = i;
+            const btn = document.createElement("button");
+            btn.type      = "button";
+            btn.className = "btn btn-sm btn-success mtk-pages-btn-tester";
+            btn.style.cssText = "font-size:11px;border-radius:0";
+            btn.textContent = this.data[idx].label || this.data[idx].page;
+            btn.addEventListener("click", function() {
+                self.show(self.data[idx].page);
+            });
+            toolbar.appendChild(btn);
+        }
+
+        document.body.appendChild(toolbar);
 
         wc.groupEnd();
     };
