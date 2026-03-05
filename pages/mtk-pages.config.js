@@ -15,7 +15,7 @@ window.app.pages = [
         "url":   "<wc-include href='pages/tmp/home.html'></wc-include>"
     },
     {
-        "cache": "true",
+        "cache": "false",
         "page":  "products",
         "label": "Our Products",
         "url":   "<wc-include href='pages/tmp/products.html'></wc-include>"
