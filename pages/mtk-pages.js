@@ -235,3 +235,7 @@ class Pages extends HTMLElement {
 }
 
 window.customElements.define('mtk-pages', Pages);
+
+wc.timeout(function(){
+    wc.pages = document.getElementById('mtk-pages');
+}, 300, 1);
