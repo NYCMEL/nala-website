@@ -11,7 +11,7 @@ window.app.pages = [
     {
         "cache": "false",
         "page":  "home",
-        "label": "Welcome",
+        "label": "Home",
         "url":   "<wc-include href='home/index.inc.html' />"
     },
     {
