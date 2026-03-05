@@ -1,22 +1,2 @@
 <!-- 2. Place the component in your HTML -->
-<mtk-pages id="mtk-pages" cfg="" page="home"env="prod" />
-
-<!-- 3. Show a page programmatically -->
-<script>
-    // Show a page by ID
-    document.querySelector('mtk-pages').show('dashboard');
-
-    // Or use the element reference directly
-    const pages = document.getElementById('mtk-pages');
-    pages.show('login');
-
-    // Add a new page at runtime
-    pages.new({
-        page:  "profile",
-        url:   "profile/index.inc.html",
-        cache: "true"
-    });
-
-    // Refresh a page (clear cache and reload)
-    pages.refresh('dashboard');
-</script>
+<mtk-pages id="mtk-pages" page="products" />
