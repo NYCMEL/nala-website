@@ -6,21 +6,6 @@ window.app = window.app || {};
 app.baseUrl  = "/repo_deploy/";
 app.quizSize = 20; 
 
-// Message storage
-app.emsgs = [
-    { id: 1000, text: "Wrong 'Email' or 'Password' combination" },
-    { id: 1001, text: "Create user failed" },
-    { id: 1002, text: "No questions found for module" },
-    { id: 1003, text: "Registeration Failed!" },
-];
-
-app.emsg = function (id) {
-    const msg = this.emsgs.find(m => m.id === id);
-    if (!msg) return `Error(${id}): Message not found`;
-    return `Error(${id}): ${msg.text}`;
-};
-// let msg = app.emsg(1000);
-
 ////////////////////////////////////////////////////////////
 // SMOOTH SCROLLING TO TARGET
 (function () {

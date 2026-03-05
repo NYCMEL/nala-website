@@ -180,7 +180,7 @@ class _febe {
 			MTKMsgs.show({
 			    type: 'error',
 			    icon: 'error',
-			    message: app.emsg(1003),
+			    message: wc.emsg(1003),
 			    closable: true,
 			    timer: 10
 			});
@@ -280,6 +280,14 @@ class _febe {
 		    ]
 		});
 		
+		MTKMsgs.show({
+		    type: 'success',
+		    icon: 'success',
+		    message: wc.emsg(1004),
+		    closable: false,
+		    timer: 5
+		});
+
 		wc.log("Congratulations! You passed.");
 	    } else {
 		mtkDialog.open({
@@ -298,9 +306,9 @@ class _febe {
 	    }
 	});
 
-	wc.timeout(function(){
-	    document.location.reload();
-	}, 2000, 1);
+	// wc.timeout(function(){
+	//     document.location.reload();
+	// }, 2000, 1);
     }
 
     //////////////////////////////////////////////////////////////////

@@ -7,6 +7,22 @@ wc.isLocal   = false; /* = true SHOULD USE ALL LOCAL CONFIG FILES */
 wc.apiURL    = "https://nala-test.com" || "https://nalanetwork.com";
 wc.testing   = true;
 
+// Message storage
+wc.emsgs = [
+    { id: 1000, text: "Wrong 'Email' or 'Password' combination" },
+    { id: 1001, text: "Create user failed" },
+    { id: 1002, text: "No questions found for module" },
+    { id: 1003, text: "Registeration Failed!" },
+    { id: 1004, text: 'You have Successfully completed this set of tests' },
+];
+
+wc.emsg = function (id) {
+    const msg = this.emsgs.find(m => m.id === id);
+    if (!msg) return `Error(${id}): Message not found`;
+    return `Error(${id}): ${msg.text}`;
+};
+// let msg = wc.emsg(1000);
+
 /************************************************************
  * CONFIG INACTIVITY TIMER
    SEE wc.login FOR USAGE
@@ -1002,7 +1018,7 @@ wc.login = async function (email, passwd) {
 	    MTKMsgs.show({
 		type: 'error',
 		icon: 'error',
-		message: app.emsg(1000),
+		message: wc.emsg(1000),
 		closable: false,
 		timer: 7
 	    });	    
