@@ -1,0 +1,34 @@
+[
+    {
+	"cache": "true",
+	"page": "home",
+	"label": "Welcome",
+	"url": "<wc-include href='/tk/lib/components/w/html/parts/pager/home.html'></wc-include>"
+
+    },
+    {
+	"cache": "true",
+	"page": "products",
+	"label": "Our Products",
+	"url": "<wc-include href='/tk/lib/components/w/html/parts/pager/products.html'></wc-include>"
+    },
+    {
+	"cache": "false",
+	"page": "contact",
+	"label": "Contact us",
+	"url": "<wc-include href='/tk/lib/components/w/html/parts/pager/contact.html'></wc-include>"
+    },
+    {
+	"cache": "true",
+	"page": "login",
+	"label": "Sign-In",
+	"url": "<wc-include href='/tk/lib/components/w/html/parts/pager/login.html'></wc-include>"
+    },
+    {
+	"cache": "true",
+	"page": "cart",
+	"label": "Shopping Cart",
+	"url": "<wc-include href='/tk/lib/components/w/html/parts/pager/cart.html'></wc-include>"
+    }
+]
+
