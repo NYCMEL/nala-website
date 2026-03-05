@@ -225,9 +225,6 @@ class Pages extends HTMLElement {
 
         this.classList.add("mtk");
 
-        // ADD ANALYTICS HERE
-        wc.setStats(this, this.properties.cname, this.properties.version);
-
         // SHOW IT NOW (NO FLICKERS)
         this.style.visibility = "visible";
 
@@ -362,7 +359,7 @@ class Pages extends HTMLElement {
 
         var tstr =
             `<div class="mtk-${this.cname}__page ${values.page}" cache="${values.cache}" style="display:none">
-                <mtk-include href="${values.url}"></mtk-include>
+                <wc-include href="${values.url}"></wc-include>
             </div>`;
 
         $(`#${this.id} .btn-group-tester`).append(
