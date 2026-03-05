@@ -12,31 +12,31 @@ window.app.pages = [
         "cache": "true",
         "page":  "home",
         "label": "Welcome",
-        "url":   "<wc-include href='tmp/home.html'></wc-include>"
+        "url":   "<wc-include href='pages/tmp/home.html'></wc-include>"
     },
     {
         "cache": "true",
         "page":  "products",
         "label": "Our Products",
-        "url":   "<wc-include href='tmp/products.html'></wc-include>"
+        "url":   "<wc-include href='pages/tmp/products.html'></wc-include>"
     },
     {
         "cache": "false",
         "page":  "contact",
         "label": "Contact us",
-        "url":   "<wc-include href='tmp/contact.html'></wc-include>"
+        "url":   "<wc-include href='pages/tmp/contact.html'></wc-include>"
     },
     {
         "cache": "true",
         "page":  "login",
         "label": "Sign-In",
-        "url":   "<wc-include href='tmp/login.html'></wc-include>"
+        "url":   "<wc-include href='pages/tmp/login.html'></wc-include>"
     },
     {
         "cache": "true",
         "page":  "cart",
         "label": "Shopping Cart",
-        "url":   "<wc-include href='tmp/cart.html'></wc-include>"
+        "url":   "<wc-include href='pages/tmp/cart.html'></wc-include>"
     }
 ];
 
