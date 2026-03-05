@@ -429,12 +429,25 @@
     if (document.readyState === 'loading') {
 	document.addEventListener('DOMContentLoaded', initializeDashboard);
     } else {
-	// FOR TESTING
-	wc.session.dashboard.panels = ["mentorship", "career-services"]
-	
-	// UPDATE USER NAME AND PROGRESS
-	window.myConfig.user.fullName = wc.session.user.name;
-	window.myConfig.progress.percentage = wc.session.dashboard.progress;
+	try {
+	    // FOR TESTING
+	    wc.session.dashboard.panels = ["mentorship", "career-services"]
+	    
+	    // UPDATE USER NAME AND PROGRESS
+	    window.myConfig.user.fullName = wc.session.user.name;
+	    window.myConfig.progress.percentage = wc.session.dashboard.progress;
+	} catch(e) {
+	    // STAND ALONE TESTING WITH "pages"
+	    if (!window.wc) wc = {};
+	    if (!wc.session) wc.session = {};
+	    if (!wc.session.dashboard) wc.session.dashboard = {};
+
+	    ((window.wc ??= {}).session ??= {}).dashboard ??= {};
+
+	    wc.session.dashboard.panels = ["mentorship", "career-services"]
+	    
+	    console.error("MEL FIX ME: " + e.name + ' > ' + e.message);
+	}
 
 	// UPDATE PER-USER PANELS
 	wc.timeout(function(){
