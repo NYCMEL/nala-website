@@ -15,35 +15,9 @@ window.app.pages = [
         "url":   "<wc-include href='pages/tmp/home.html'></wc-include>"
     },
     {
-        "cache": "false",
+        "cache": "true",
         "page":  "products",
         "label": "Our Products",
         "url":   "<wc-include href='pages/tmp/products.html'></wc-include>"
-    },
-    {
-        "cache": "false",
-        "page":  "contact",
-        "label": "Contact us",
-        "url":   "<wc-include href='pages/tmp/contact.html'></wc-include>"
-    },
-    {
-        "cache": "true",
-        "page":  "login",
-        "label": "Sign-In",
-        "url":   "<wc-include href='pages/tmp/login.html'></wc-include>"
-    },
-    {
-        "cache": "true",
-        "page":  "cart",
-        "label": "Shopping Cart",
-        "url":   "<wc-include href='pages/tmp/cart.html'></wc-include>"
     }
 ];
-
-// DEFAULT PAGE TO SHOW ON LOAD
-window.app.pagesDefaults = {
-    initialPage:       "home",
-    loadOnInit:        true,
-    animationDuration: 10,
-    debugMode:         true
-};
