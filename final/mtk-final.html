@@ -1,0 +1,222 @@
+<!--
+  mtk-final.html
+  Include via <wc-include> — JS waits for DOM availability.
+  Requires: mtk-final.config.js  →  mtk-final.js  →  mtk-final.css (compiled from .scss)
+  Material Icons CDN must be loaded on the host page.
+-->
+
+<mtk-final class="mtk-final" role="main" aria-label="Certificate email selection">
+
+  <div class="mtk-final__card">
+
+    <!-- ── Success banner ──────────────────────────────────────── -->
+    <div class="mtk-final__banner" role="status" aria-live="polite">
+      <div class="mtk-final__banner-icon-wrap" aria-hidden="true">
+        <span class="mtk-final__banner-icon material-icons">check_circle</span>
+      </div>
+      <div class="mtk-final__banner-body">
+        <h1 class="mtk-final__banner-title" data-mtk="successHeading"></h1>
+        <p  class="mtk-final__banner-sub"   data-mtk="successSubheading"></p>
+      </div>
+    </div>
+
+    <!-- ── Form body ───────────────────────────────────────────── -->
+    <div class="mtk-final__body">
+
+      <!-- Current email on file -->
+      <div class="mtk-final__current-email-row">
+        <span class="mtk-final__current-email-label" data-mtk="currentEmailLabel"></span>
+        <div class="mtk-final__current-email-pill" aria-label="Current email on file">
+          <span class="material-icons" aria-hidden="true">mail_outline</span>
+          <span class="mtk-final__current-email-value" data-mtk="currentEmail"></span>
+        </div>
+      </div>
+
+      <!-- ── Email choice form ──────────────────────────────────── -->
+      <form
+        class="mtk-final__form"
+        novalidate
+        aria-label="Certificate email form"
+      >
+
+        <!-- Radio options -->
+        <fieldset
+          class="mtk-final__options"
+          style="border:none;padding:0;margin:0"
+          aria-required="true"
+        >
+          <legend class="mtk-final__sr-only">Choose certificate email</legend>
+
+          <!-- Option A: keep current -->
+          <label
+            class="mtk-final__option mtk-final__option--selected"
+            data-mtk-option="keep"
+          >
+            <input
+              class="mtk-final__radio"
+              type="radio"
+              name="mtk-email-choice"
+              value="keep"
+              checked
+              aria-describedby="mtk-opt-keep-desc"
+            >
+            <span class="material-icons mtk-final__option-icon" aria-hidden="true">check_circle_outline</span>
+            <span class="mtk-final__option-text">
+              <span class="mtk-final__option-title" data-mtk="optionKeep"></span>
+              <span class="mtk-final__option-desc"
+                    id="mtk-opt-keep-desc"
+                    data-mtk-desc="currentEmail"></span>
+            </span>
+          </label>
+
+          <!-- Option B: new email -->
+          <label
+            class="mtk-final__option"
+            data-mtk-option="new"
+          >
+            <input
+              class="mtk-final__radio"
+              type="radio"
+              name="mtk-email-choice"
+              value="new"
+              aria-describedby="mtk-opt-new-desc"
+            >
+            <span class="material-icons mtk-final__option-icon" aria-hidden="true">edit</span>
+            <span class="mtk-final__option-text">
+              <span class="mtk-final__option-title" data-mtk="optionNew"></span>
+              <span class="mtk-final__option-desc"
+                    id="mtk-opt-new-desc">Enter and verify a new address below</span>
+            </span>
+          </label>
+
+        </fieldset>
+
+        <!-- ── New email panel (collapsible) ──────────────────── -->
+        <div
+          class="mtk-final__new-email-panel"
+          id="mtk-new-email-panel"
+          aria-hidden="true"
+        >
+
+          <!-- Field: new email -->
+          <div class="mtk-final__field" id="mtk-field-email1">
+            <div class="mtk-final__field-inner">
+              <input
+                class="mtk-final__field-input"
+                type="email"
+                id="mtk-input-email1"
+                name="newEmail"
+                autocomplete="email"
+                aria-required="true"
+                aria-describedby="mtk-hint-email1"
+                aria-invalid="false"
+                placeholder=" "
+                tabindex="-1"
+              >
+              <label
+                class="mtk-final__field-label"
+                for="mtk-input-email1"
+                data-mtk="newEmailLabel"
+              ></label>
+              <button
+                type="button"
+                class="mtk-final__field-action"
+                data-mtk-toggle="email1"
+                aria-label="Toggle email visibility"
+                tabindex="-1"
+              >
+                <span class="material-icons">visibility</span>
+              </button>
+            </div>
+            <span
+              class="mtk-final__field-hint"
+              id="mtk-hint-email1"
+              aria-live="polite"
+              data-mtk="newEmailHint"
+            ></span>
+          </div>
+
+          <!-- Field: confirm email -->
+          <div class="mtk-final__field" id="mtk-field-email2">
+            <div class="mtk-final__field-inner">
+              <input
+                class="mtk-final__field-input"
+                type="email"
+                id="mtk-input-email2"
+                name="confirmEmail"
+                autocomplete="email"
+                aria-required="true"
+                aria-describedby="mtk-hint-email2"
+                aria-invalid="false"
+                placeholder=" "
+                tabindex="-1"
+              >
+              <label
+                class="mtk-final__field-label"
+                for="mtk-input-email2"
+                data-mtk="confirmEmailLabel"
+              ></label>
+              <button
+                type="button"
+                class="mtk-final__field-action"
+                data-mtk-toggle="email2"
+                aria-label="Toggle confirm email visibility"
+                tabindex="-1"
+              >
+                <span class="material-icons">visibility</span>
+              </button>
+            </div>
+            <span
+              class="mtk-final__field-hint"
+              id="mtk-hint-email2"
+              aria-live="polite"
+              data-mtk="confirmEmailHint"
+            ></span>
+          </div>
+
+          <!-- Match badge -->
+          <div
+            class="mtk-final__match-badge"
+            id="mtk-match-badge"
+            role="status"
+            aria-live="polite"
+          ></div>
+
+        </div>
+        <!-- /new-email-panel -->
+
+        <hr class="mtk-final__divider" role="separator">
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          class="mtk-final__submit"
+          aria-label="Submit your email choice for certificate delivery"
+        >
+          <span class="mtk-final__submit-spinner" aria-hidden="true"></span>
+          <span class="material-icons" aria-hidden="true">send</span>
+          <span class="mtk-final__submit-label" data-mtk="submitLabel"></span>
+        </button>
+
+        <!-- Success toast -->
+        <div
+          class="mtk-final__toast"
+          id="mtk-toast"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+        >
+          <span class="material-icons" aria-hidden="true">check_circle</span>
+          <span class="mtk-final__toast-msg" data-mtk="successToast"></span>
+        </div>
+
+      </form>
+      <!-- /form -->
+
+    </div>
+    <!-- /body -->
+
+  </div>
+  <!-- /card -->
+
+</mtk-final>
