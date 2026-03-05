@@ -9,7 +9,7 @@ window.app = window.app || {};
 // cache: "false" = reload every time the page is shown
 window.app.pages = [
     {
-        "cache": "true",
+        "cache": "false",
         "page":  "home",
         "label": "Welcome",
         "url":   "<wc-include href='pages/tmp/home.html'></wc-include>"
