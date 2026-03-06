@@ -21,12 +21,6 @@ window.app.pages = [
         "url":   "<wc-include href='login/index.inc.html' />"
     },
     {
-        "cache": "false",
-        "page":  "course",
-        "label": "Course",
-        "url":   "<wc-include href='hierarchy/index.inc.html' />"
-    },
-    {
         "cache": "true",
         "page":  "register",
         "label": "Register",
