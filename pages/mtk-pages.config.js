@@ -40,6 +40,12 @@ window.app.pages = [
     },
     {
         "cache": "false",
+        "page":  "hierarchy",
+        "label": "Hierarchy",
+        "url":   "<wc-include href='hierarchy/index.inc.html' />"
+    },
+    {
+        "cache": "false",
         "page":  "quiz",
         "label": "Quiz",
         "url":   "<wc-include href='quiz/index.inc.html' />"
