@@ -82,7 +82,6 @@
 
 .mtk-settings__input--password {
   padding-right: 48px;
-  font-family: 'Courier New', monospace;
   letter-spacing: 2px; }
 
 .mtk-settings__input--password:not([type="text"]) {
