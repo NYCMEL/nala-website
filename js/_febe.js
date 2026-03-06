@@ -200,19 +200,17 @@ class _febe {
     }
 
     handleLoginSuccess(data) {
-	wc.login(data.email, data.password)
-	    .then(success => {
-		if (success) {
-		    wc.log("Logged in!");
-
-		    // SHOW PRIVATE HEADER
-		    $(".app-header").hide(() => $("#header-private").show(() => wc.pages.show("dashboard")));
-		}
-	    })
-	    .catch(err => {
-		wc.error(err);
-		alert(err);
-	    });
+	wc.login(data.email, data.password).then(success => {
+	    if (success) {
+		wc.log("Logged in!");
+		
+		// SHOW PRIVATE HEADER
+		wc.pages.show("dashboard");
+	    }
+	}).catch(err => {
+	    wc.error(err);
+	    alert(err);
+	});
     }
 
     handleCourse() {
