@@ -98,7 +98,9 @@ class _febe {
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
     handleDialogActions() {
-	wc.pages.show("course");
+	alert("_febe.handleDialogActions: EEEEEEEEEEE")
+
+	wc.pages.show("hierarchy");
 
 	mtkDialog.close();
     }
@@ -205,8 +207,6 @@ class _febe {
 		
 		// SHOW PRIVATE HEADER
 		$(".app-header").hide(() => $("#header-private").show(() => wc.pages.show("dashboard")));
-
-		console.log(">>>>>>>>>>", wc.session);
 	    }
 	}).catch(err => {
 	    wc.error(err);
@@ -215,7 +215,7 @@ class _febe {
     }
 
     handleCourse() {
-	wc.pages.show("course");
+	wc.pages.show("hierarchy");
     }
 
     handleResource(data) {
