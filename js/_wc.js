@@ -1037,7 +1037,7 @@ wc.login = async function (email, passwd) {
 		$("#uname").html(wc.session.user.name);
 	    } else {
 		wc.log('IS NOT LOGGED IN');
-		mtk_pager.show('home');
+		wc.pages.show('home');
 	    };
 	});
 	

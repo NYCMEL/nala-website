@@ -1,2 +1,23 @@
+<!-- HEAER -->
+<div class="app-header" id="header-public">
+    <!-- HEADER-public -->
+    <wc-include href="header/header.public.html" />
+</div>
+
+<div class="app-header" id="header-private" style="display:none">
+    <!-- HEADER-private -->
+    <wc-include href="header/header.private.html" />
+</div>
+
 <!-- 2. Place the component in your HTML -->
-<mtk-pages id="mtk-pages" page="home" />
+<div>
+    <mtk-pages id="mtk-pages" page="home" />
+</div>
+
+<!-- FOOTER -->
+<footer id="page-footer">
+    <wc-include href="footer/mtk-footer.html" />
+</footer>
+
+<!-- SCROLL TO TOP -->
+<wc-include href="home/parts/top.html" />

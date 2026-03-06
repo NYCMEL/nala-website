@@ -54,6 +54,11 @@
 
 <script>
  wc.timeout(function(){
-     $("#uname").html(wc.session.user.name);
+     try {
+	 $("#uname").html(wc.session.user.name);
+     }
+     catch(e) {
+	 console.info("header.private.html: NO user.name YET...");
+     }
  }, 300, 1);
 </script>

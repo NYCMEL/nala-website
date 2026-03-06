@@ -1,75 +1,71 @@
 /* mtk-ready.js */
-
-class MtkReady {
-    constructor(el) {
-	this.el = el;
-	this.config = window.app && window.app.ready;
-
-	if (!this.config) {
-	    wc.warn && wc.warn('mtk-ready: missing window.app.ready config');
-	    return;
-	}
-
-	this.render();
-	this.bindEvents();
+if (typeof MtkReady === 'undefined') {
+    class MtkReady {
+        constructor(el) {
+            this.el = el;
+            this.config = window.app && window.app.ready;
+            if (!this.config) {
+                wc.warn && wc.warn('mtk-ready: missing window.app.ready config');
+                return;
+            }
+            this.render();
+            this.bindEvents();
+        }
+        render() {
+            const titleEl = this.el.querySelector('.mtk-ready-title');
+            const descEl = this.el.querySelector('.mtk-ready-desc');
+            const btnLabelEl = this.el.querySelector('.mtk-ready-btn-label');
+            if (titleEl) titleEl.innerHTML = this.config.title || '';
+            if (descEl) descEl.innerHTML = this.config.description || '';
+            if (btnLabelEl) btnLabelEl.innerHTML =
+                this.config.button?.label || 'Get Started';
+        }
+        bindEvents() {
+            const btn = this.el.querySelector('.mtk-ready-btn');
+            if (!btn) return;
+            btn.addEventListener('click', () => {
+                wc.publish('mtk-ready:click', {
+                    component: 'mtk-ready',
+                    id: 'primary',
+                    action: this.config.button?.action || null
+                });
+            });
+        }
     }
-
-    render() {
-	const titleEl = this.el.querySelector('.mtk-ready-title');
-	const descEl = this.el.querySelector('.mtk-ready-desc');
-	const btnLabelEl = this.el.querySelector('.mtk-ready-btn-label');
-
-	if (titleEl) titleEl.innerHTML = this.config.title || '';
-	if (descEl) descEl.innerHTML = this.config.description || '';
-	if (btnLabelEl) btnLabelEl.innerHTML =
-	    this.config.button?.label || 'Get Started';
-    }
-
-    bindEvents() {
-	const btn = this.el.querySelector('.mtk-ready-btn');
-	if (!btn) return;
-
-	btn.addEventListener('click', () => {
-	    wc.publish('mtk-ready:click', {
-		component: 'mtk-ready',
-		id: 'primary',
-		action: this.config.button?.action || null
-	    });
-	});
-    }
+    window.MtkReady = MtkReady;
 }
 
 /* ---------- DOM availability watcher ---------- */
 (function waitForMtkReady() {
+    if (window.__mtkReadyWatcherActive) return;
+    window.__mtkReadyWatcherActive = true;
+
     let initialized = false;
-
     const init = (el) => {
-	if (initialized) return;
-	initialized = true;
-
-	new MtkReady(el);
-
-	wc.publish && wc.publish('mtk-ready:ready', {
-	    component: 'mtk-ready'
-	});
+        if (initialized) return;
+        initialized = true;
+        new window.MtkReady(el);
+        wc.publish && wc.publish('mtk-ready:ready', {
+            component: 'mtk-ready'
+        });
     };
 
     const existing = document.querySelector('.mtk-ready');
     if (existing) {
-	init(existing);
-	return;
+        init(existing);
+        return;
     }
 
     const observer = new MutationObserver(() => {
-	const el = document.querySelector('.mtk-ready');
-	if (el) {
-	    observer.disconnect();
-	    init(el);
-	}
+        const el = document.querySelector('.mtk-ready');
+        if (el) {
+            observer.disconnect();
+            init(el);
+        }
     });
 
     observer.observe(document.documentElement, {
-	childList: true,
-	subtree: true
+        childList: true,
+        subtree: true
     });
 })();

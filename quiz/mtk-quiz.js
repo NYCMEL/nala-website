@@ -363,7 +363,7 @@
 	    }
 
 	    handleCancel() {
-		mtk_pager.show('course');
+		wc.pages.show('hierarchy');
 	    }
 
 	    handleTest() {
@@ -769,7 +769,7 @@
 		    alert(err.message);
 
 		    // TAKE ME BACK TO COURSES
-		    mtk_pager.show("course");
+		    wc.pages.show('hierarchy');
 		    return;
 		}
 

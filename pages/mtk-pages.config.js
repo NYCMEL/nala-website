@@ -9,19 +9,19 @@ window.app = window.app || {};
 // cache: "false" = reload every time the page is shown
 window.app.pages = [
     {
-        "cache": "false",
+        "cache": "true",
         "page":  "home",
         "label": "Home",
         "url":   "<wc-include href='home/index.inc.html' />"
     },
     {
-        "cache": "false",
-        "page":  "courses",
-        "label": "Courses",
-        "url":   "<wc-include href='courses/index.inc.html' />"
+        "cache": "true",
+        "page":  "login",
+        "label": "Login",
+        "url":   "<wc-include href='login/index.inc.html' />"
     },
     {
-        "cache": "false",
+        "cache": "true",
         "page":  "register",
         "label": "Register",
         "url":   "<wc-include href='register/index.inc.html' />"
@@ -34,14 +34,32 @@ window.app.pages = [
     },
     {
         "cache": "false",
-        "page":  "login",
-        "label": "Login",
-        "url":   "<wc-include href='login/index.inc.html' />"
+        "page":  "final",
+        "label": "Final",
+        "url":   "<wc-include href='final/index.inc.html' />"
+    },
+    {
+        "cache": "true",
+        "page":  "hierarchy",
+        "label": "Hierarchy",
+        "url":   "<wc-include href='hierarchy/index.inc.html' />"
     },
     {
         "cache": "false",
         "page":  "final",
         "label": "Final",
         "url":   "<wc-include href='final/index.inc.html' />"
+    },
+    {
+        "cache": "false",
+        "page":  "settings",
+        "label": "Settings",
+        "url":   "<wc-include href='settings/index.inc.html' />"
+    },
+    {
+        "cache": "false",
+        "page":  "quiz",
+        "label": "Quiz",
+        "url":   "<wc-include href='quiz/index.inc.html' />"
     }
 ];

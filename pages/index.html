@@ -47,13 +47,95 @@
 	
 	<!-- YOUR CODE FROM HERE... -->
 
-	<!-- PAGES -->
-	<div style="border:2px red dashed">
-	    <wc-include href="pages/index.inc.html" />
+	<!-- DIALOG FOR LATER USE-->
+	<div>
+	    <wc-include href="dialog/index.inc.html" />
+	</div>
 
+	<!-- MSGS -->
+	<div>
+	    <wc-include href="msg/mtk-msgs.html" />
+	</div>
+
+	<!-- PAGES -->
+	<div>
+	    <wc-include href="pages/index.inc.html" />
+	    
 	    <script src="pages/mtk-pages.config.js"></script>
 	    <script src="pages/mtk-pages.js"></script>
 	</div>
+
+	<script>
+	 // INITIAL PAGE
+	 wc.getSession(function (loggedIn, session, err) {
+	     if (err) return;
+	     
+	     if (wc.working) {
+		 wc.timeout(function(){
+		     MTKMsgs.show({
+			 type: 'success',
+			 icon: 'check_circle',
+			 message: 'Loading in progress. Please wait...',
+			 buttons: [],
+			 closable: false, // No X button
+			 timer: 3, // Auto-close after 5 seconds
+			 block: true
+		     });
+		 }, 100, 1);
+	     }
+
+	     if (loggedIn) {
+		 try {
+		     wc.timeout(function(){
+			 wc.pages.show('dashboard');
+
+			 // SHOW PUBLIC HEADER
+			 $(".app-header").hide(function() {
+			     $("#header-private").show();
+			 });
+		     }, 200, 1);
+
+		     wc.log('IS LOGGED IN');
+		 } catch(e) {
+		     console.error(e.name + ' > ' + e.message);
+		 }
+	     } else {
+		 wc.log('IS NOT LOGGED IN');
+		 wc.pages.show('home');
+		 
+		 // SHOW PUBLIC HEADER
+		 $(".app-header").hide(function() {
+		     $("#header-public").show();
+		 });
+	     }
+	 });
+
+	 function checkFooter() {
+	     const footer = document.getElementById("page-footer");
+	     if (!footer) return;
+
+	     function adjustFooter() {
+		 const docHeight = document.documentElement.scrollHeight;
+		 const viewportHeight = window.innerHeight;
+
+		 if (docHeight <= viewportHeight) {
+		     footer.style.position = "fixed";
+		     footer.style.bottom = "0";
+		     footer.style.left = "0";
+		     footer.style.width = "100%";
+		 } else {
+		     footer.style.position = "static";
+		 }
+	     }
+
+	     // Run after layout is truly ready
+	     window.addEventListener("load", adjustFooter);
+	     window.addEventListener("resize", adjustFooter);
+
+	     // Extra safety: re-run after fonts/images
+	     setTimeout(adjustFooter, 50);
+	 }
+	</script>
 
 	<!-- YOUR CODE TO HERE -->
     </body>

@@ -125,7 +125,7 @@ CSS for Actions:
 All buttons must have specific handlers:
 
 handleCancel() - ONLY does this:
-    mtk_pager.show('dashboard');
+    wc.pages.show('dashboard');
 
 handleClear() - Clears all selections, resets form, enables form if disabled
 
@@ -205,7 +205,7 @@ Publish these events using wc.publish() directly:
 - 4-mtk-quiz-cleared: When user clears answers
 - 4-mtk-quiz-test-mode: When test mode is activated
 - 4-mtk-quiz-form-state-changed: When form is enabled/disabled
-- 4-mtk-quiz-cancelled: When user cancels (NOT USED - handled by mtk_pager)
+- 4-mtk-quiz-cancelled: When user cancels (NOT USED - handled by wc.pages)
 
 Also publish to 'quiz' event for main submission:
 wc.publish('quiz', submissionData);
@@ -279,7 +279,7 @@ class MtkQuiz {
     handleOptionChange(e)
     handleSubmit(e)
     handleClear()
-    handleCancel()  // ONLY calls: mtk_pager.show('dashboard')
+    handleCancel()  // ONLY calls: wc.pages.show('dashboard')
     handleTest()
     handleKeyboard(e)
     updateProgress()
@@ -349,13 +349,13 @@ Mobile breakpoints:
 - Support both local config and remote API config via wc.isLocal
 - Remember code that begins with "mtk-" FOREVER
 - Always show updated code in FULL, not in pieces
-- Cancel button ONLY calls mtk_pager.show('dashboard') - NOTHING ELSE
+- Cancel button ONLY calls wc.pages.show('dashboard') - NOTHING ELSE
 - All icons MUST use class="material-icons"
 - Use Bootstrap primary color #0d6efd for buttons
 
 24. CRITICAL REQUIREMENTS
 --------------------------
-- Cancel button handler: ONLY mtk_pager.show('dashboard')
+- Cancel button handler: ONLY wc.pages.show('dashboard')
 - All icons MUST have class="material-icons"
 - Submit button: btn btn-primary (solid blue)
 - Clear/Test buttons: btn btn-outline-primary (outlined blue)

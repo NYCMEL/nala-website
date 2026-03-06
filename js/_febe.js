@@ -91,15 +91,16 @@ class _febe {
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
     handleHeaderDashboard() {
-	// RE-LOAD TO UPDATE PROGRESS
-	document.location.reload();
+	wc.pages.show("dashboard");
     }
 
     //////////////////////////////////////////////////////////////////
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
     handleDialogActions() {
-	mtk_pager.show("course");
+	alert("_febe.handleDialogActions: EEEEEEEEEEE")
+
+	wc.pages.show("hierarchy");
 
 	mtkDialog.close();
     }
@@ -108,14 +109,14 @@ class _febe {
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
     handleHeaderLogoPublicClick() {
-	mtk_pager.show("home");
+	wc.pages.show("home");
     }
 
     //////////////////////////////////////////////////////////////////
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
     handleHeaderLogoPrivateClick() {
-	mtk_pager.show("dashboard");
+	wc.pages.show("dashboard");
     }
 
     //////////////////////////////////////////////////////////////////
@@ -146,14 +147,14 @@ class _febe {
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
     handleQuiz() {
-	mtk_pager.show("quiz");
+	wc.pages.show("quiz");
     }
 
     //////////////////////////////////////////////////////////////////
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
     handleRegister() {
-	mtk_pager.show("register");
+	wc.pages.show("register");
     }
 
     handleLessonToggled() {
@@ -201,27 +202,25 @@ class _febe {
     }
 
     handleHome() {
-	mtk_pager.show("home");
+	wc.pages.show("home");
     }
 
     handleLoginSuccess(data) {
-	wc.login(data.email, data.password)
-	    .then(success => {
-		if (success) {
-		    wc.log("Logged in!");
-
-		    // SHOW PRIVATE HEADER
-		    $(".app-header").hide(() => $("#header-private").show(() => mtk_pager.show("dashboard")));
-		}
-	    })
-	    .catch(err => {
-		wc.error(err);
-		alert(err);
-	    });
+	wc.login(data.email, data.password).then(success => {
+	    if (success) {
+		wc.log("Logged in!");
+		
+		// SHOW PRIVATE HEADER
+		$(".app-header").hide(() => $("#header-private").show(() => wc.pages.show("dashboard")));
+	    }
+	}).catch(err => {
+	    wc.error(err);
+	    alert(err);
+	});
     }
 
     handleCourse() {
-	mtk_pager.show("course");
+	wc.pages.show("hierarchy");
     }
 
     handleResource(data) {
@@ -229,31 +228,29 @@ class _febe {
     }
 
     handlePartsClick() {
-	mtk_pager.show("lessons");
+	wc.pages.show("lessons");
 	wc.timeout(() => lessonClicked(cIndex, cTitle), 500, 1);
     }
 
     handleDashboard() {
-	mtk_pager.show("dashboard");
+	wc.pages.show("dashboard");
     }
 
     handleSettings() {
-	mtk_pager.show("settings");
+	wc.pages.show("settings");
     }
 
     handleLogin() {
-	mtk_pager.show("login");
+	wc.pages.show("login");
     }
 
     handleLogout() {
 	wc.logout();
 	
 	// SHOW PUBLIC HEADER
-	$(".app-header").hide(() => $("#header-public").show(() => mtk_pager.show("home")));
+	$(".app-header").hide(() => $("#header-public").show(() => wc.pages.show("home")));
 
-	wc.timeout(function(){
-	    document.location.reload();
-	}, 100, 1);
+	wc.pages.show("dashboard");
     }
 
     //////////////////////////////////////////////////////////////////

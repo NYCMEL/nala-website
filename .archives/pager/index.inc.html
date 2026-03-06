@@ -27,7 +27,7 @@
 
      if (loggedIn) {
 	 wc.log('IS LOGGED IN');
-	 mtk_pager.show('dashboard');
+	 wc.pages.show('dashboard');
 	 
 	 // SHOW PUBLIC HEADER
 	 $(".app-header").hide(function() {
@@ -35,7 +35,7 @@
 	 });
      } else {
 	 wc.log('IS NOT LOGGED IN');
-	 mtk_pager.show('home');
+	 wc.pages.show('home');
 	 
 	 // SHOW PUBLIC HEADER
 	 $(".app-header").hide(function() {
