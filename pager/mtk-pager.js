@@ -204,7 +204,7 @@
     const _showSection = (sectionId) => {
 	// REMOVE THE SECTION FROM CACHE AND RELOAD
 	if (sectionId == "quiz") {
-	    mtk_pager.remove('quiz');
+	    wc.pages.remove('quiz');
 
 	    window.MtkQuiz = null;
 	}
@@ -346,7 +346,7 @@
     };
     
     // Public API
-    const mtk_pager = {
+    const wc.pages = {
         show: function(sectionId) {
             if (!sectionId) {
                 _log('ERROR: sectionId is required', 'error');
@@ -420,7 +420,7 @@
     };
     
     // Expose globally
-    window.mtk_pager = mtk_pager;
+    window.wc.pages = wc.pages;
     
     // Auto-initialize immediately
     _log('mtk-pager component loaded', 'info');
