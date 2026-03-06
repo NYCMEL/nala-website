@@ -91,8 +91,7 @@ class _febe {
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
     handleHeaderDashboard() {
-	// RE-LOAD TO UPDATE PROGRESS
-	document.location.reload();
+	wc.pages.show("dashboard");
     }
 
     //////////////////////////////////////////////////////////////////
@@ -206,6 +205,8 @@ class _febe {
 		
 		// SHOW PRIVATE HEADER
 		$(".app-header").hide(() => $("#header-private").show(() => wc.pages.show("dashboard")));
+
+		console.log(">>>>>>>>>>", wc.session);
 	    }
 	}).catch(err => {
 	    wc.error(err);
