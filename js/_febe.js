@@ -164,15 +164,15 @@ class _febe {
 	// data ={name: 'Mel Heravi', email: 'mel.heravi@gmail.com', email2: 'mel.heravi@gmail.com', phone: '6463031234'}
 
 	(() => {
-	    fetch(wc.apiURL + "/api/admin_create_user.php", {
+	    fetch(wc.apiURL + "/api/register.php", {
 		method: "POST",
 		credentials: "include",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({
 		    name: data.name,
 		    email: data.email,
-		    password: "changeme123",
-		    role: "registered"
+		    password: data.password,
+		    phone: data.phone
 		})
 	    }).then(res => {
 		return res.json().then(json => {

@@ -1,10 +1,12 @@
 (function () {
   const form = document.getElementById("mtk-register");
-  const fields = ["name", "email", "email2", "phone"];
+  const fields = ["name", "email", "email2", "password", "password2", "phone"];
 
   const name = document.getElementById("name");
   const email = document.getElementById("email");
   const email2 = document.getElementById("email2");
+  const password = document.getElementById("password");
+  const password2 = document.getElementById("password2");
   const phone = document.getElementById("phone");
 
   const nameField = name.closest(".md-field");
@@ -12,17 +14,19 @@
 
   const emailError = email2
     .closest(".md-field")
-    .querySelector("[data-error]");
+    .querySelector("[data-error-email]");
+
+  const passwordError = password2
+    .closest(".md-field")
+    .querySelector("[data-error-password]");
 
   const phoneField = phone.closest(".md-field");
   const phoneError = phoneField.querySelector(".helper");
 
-  // Regex patterns
   const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const US_PHONE_REGEX =
     /^(?:\+1\s?)?(?:\(\d{3}\)|\d{3})[\s.-]?\d{3}[\s.-]?\d{4}$/;
 
-  // Init values + floating labels
   fields.forEach(id => {
     const input = document.getElementById(id);
 
@@ -32,8 +36,6 @@
 
     input.setAttribute("placeholder", " ");
   });
-
-  /* ---------- Error Helpers ---------- */
 
   function showNameError(message) {
     name.classList.add("error");
@@ -59,6 +61,18 @@
     emailError.classList.remove("error");
   }
 
+  function showPasswordError(message) {
+    password2.classList.add("error");
+    passwordError.textContent = message;
+    passwordError.classList.add("error");
+  }
+
+  function clearPasswordError() {
+    password2.classList.remove("error");
+    passwordError.textContent = "";
+    passwordError.classList.remove("error");
+  }
+
   function showPhoneError(message) {
     phone.classList.add("error");
     phoneError.textContent = message;
@@ -70,8 +84,6 @@
     phoneError.textContent = "Phone Number";
     phoneError.classList.remove("error");
   }
-
-  /* ---------- Live Validation ---------- */
 
   name.addEventListener("input", () => {
     if (name.value.trim().length >= 3) {
@@ -94,22 +106,35 @@
     }
   });
 
+  password.addEventListener("input", () => {
+    if (password.value.trim().length >= 8) {
+      clearPasswordError();
+    }
+  });
+
+  password2.addEventListener("input", () => {
+    if (
+      password.value.trim().length >= 8 &&
+      password.value.trim() === password2.value.trim()
+    ) {
+      clearPasswordError();
+    }
+  });
+
   phone.addEventListener("input", () => {
     if (US_PHONE_REGEX.test(phone.value.trim())) {
       clearPhoneError();
     }
   });
 
-  /* ---------- Submit ---------- */
-
   form.addEventListener("submit", event => {
     event.preventDefault();
 
     clearNameError();
     clearEmailError();
+    clearPasswordError();
     clearPhoneError();
 
-    // Required fields
     for (let i = 0; i < fields.length; i++) {
       const input = document.getElementById(fields[i]);
 
@@ -119,35 +144,42 @@
       }
     }
 
-    // Name length validation
     if (name.value.trim().length < 3) {
       showNameError("Name must be at least 3 characters");
       name.focus();
       return;
     }
 
-    // Email format validation
     if (!EMAIL_REGEX.test(email.value.trim())) {
       showEmailError("Enter a valid email address");
       email.focus();
       return;
     }
 
-    // Email match validation
     if (email.value.trim() !== email2.value.trim()) {
       showEmailError("Emails do not match");
       email2.focus();
       return;
     }
 
-    // US phone validation
+    if (password.value.trim().length < 8) {
+      showPasswordError("Password must be at least 8 characters");
+      password.focus();
+      return;
+    }
+
+    if (password.value.trim() !== password2.value.trim()) {
+      showPasswordError("Passwords do not match");
+      password2.focus();
+      return;
+    }
+
     if (!US_PHONE_REGEX.test(phone.value.trim())) {
       showPhoneError("Enter a valid US phone number");
       phone.focus();
       return;
     }
 
-    // Build payload
     const payload = {};
 
     fields.forEach(id => {
