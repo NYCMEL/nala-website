@@ -1,12 +1,10 @@
 (function () {
   const form = document.getElementById("mtk-register");
-  const fields = ["name", "email", "email2", "password", "password2", "phone"];
+  const fields = ["name", "email", "email2", "phone"];
 
   const name = document.getElementById("name");
   const email = document.getElementById("email");
   const email2 = document.getElementById("email2");
-  const password = document.getElementById("password");
-  const password2 = document.getElementById("password2");
   const phone = document.getElementById("phone");
 
   const nameField = name.closest(".md-field");
@@ -15,10 +13,6 @@
   const emailError = email2
     .closest(".md-field")
     .querySelector("[data-error-email]");
-
-  const passwordError = password2
-    .closest(".md-field")
-    .querySelector("[data-error-password]");
 
   const phoneField = phone.closest(".md-field");
   const phoneError = phoneField.querySelector(".helper");
@@ -29,11 +23,9 @@
 
   fields.forEach(id => {
     const input = document.getElementById(id);
-
     if (window.mtkRegisterConfig && window.mtkRegisterConfig[id]) {
       input.value = window.mtkRegisterConfig[id];
     }
-
     input.setAttribute("placeholder", " ");
   });
 
@@ -61,18 +53,6 @@
     emailError.classList.remove("error");
   }
 
-  function showPasswordError(message) {
-    password2.classList.add("error");
-    passwordError.textContent = message;
-    passwordError.classList.add("error");
-  }
-
-  function clearPasswordError() {
-    password2.classList.remove("error");
-    passwordError.textContent = "";
-    passwordError.classList.remove("error");
-  }
-
   function showPhoneError(message) {
     phone.classList.add("error");
     phoneError.textContent = message;
@@ -86,45 +66,21 @@
   }
 
   name.addEventListener("input", () => {
-    if (name.value.trim().length >= 3) {
-      clearNameError();
-    }
+    if (name.value.trim().length >= 3) clearNameError();
   });
 
   email.addEventListener("input", () => {
-    if (EMAIL_REGEX.test(email.value.trim())) {
-      clearEmailError();
-    }
+    if (EMAIL_REGEX.test(email.value.trim())) clearEmailError();
   });
 
   email2.addEventListener("input", () => {
-    if (
-      EMAIL_REGEX.test(email.value.trim()) &&
-      email.value.trim() === email2.value.trim()
-    ) {
+    if (EMAIL_REGEX.test(email.value.trim()) && email.value.trim() === email2.value.trim()) {
       clearEmailError();
-    }
-  });
-
-  password.addEventListener("input", () => {
-    if (password.value.trim().length >= 8) {
-      clearPasswordError();
-    }
-  });
-
-  password2.addEventListener("input", () => {
-    if (
-      password.value.trim().length >= 8 &&
-      password.value.trim() === password2.value.trim()
-    ) {
-      clearPasswordError();
     }
   });
 
   phone.addEventListener("input", () => {
-    if (US_PHONE_REGEX.test(phone.value.trim())) {
-      clearPhoneError();
-    }
+    if (US_PHONE_REGEX.test(phone.value.trim())) clearPhoneError();
   });
 
   form.addEventListener("submit", event => {
@@ -132,12 +88,10 @@
 
     clearNameError();
     clearEmailError();
-    clearPasswordError();
     clearPhoneError();
 
     for (let i = 0; i < fields.length; i++) {
       const input = document.getElementById(fields[i]);
-
       if (!input.value.trim()) {
         input.focus();
         return;
@@ -162,18 +116,6 @@
       return;
     }
 
-    if (password.value.trim().length < 8) {
-      showPasswordError("Password must be at least 8 characters");
-      password.focus();
-      return;
-    }
-
-    if (password.value.trim() !== password2.value.trim()) {
-      showPasswordError("Passwords do not match");
-      password2.focus();
-      return;
-    }
-
     if (!US_PHONE_REGEX.test(phone.value.trim())) {
       showPhoneError("Enter a valid US phone number");
       phone.focus();
@@ -181,7 +123,6 @@
     }
 
     const payload = {};
-
     fields.forEach(id => {
       payload[id] = document.getElementById(id).value.trim();
     });

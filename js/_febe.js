@@ -171,7 +171,6 @@ class _febe {
 		body: JSON.stringify({
 		    name: data.name,
 		    email: data.email,
-		    password: data.password,
 		    phone: data.phone
 		})
 	    }).then(res => {
@@ -190,7 +189,13 @@ class _febe {
 		    return json;
 		});
 	    }).then(json => {
-		console.log("user created", json.user); // includes name
+        MTKMsgs.show({
+            type: "success",
+            icon: "success",
+            message: "Registration submitted. Check your email to set your password.",
+            closable: true,
+            timer: 12
+        });
 	    }).catch(console.error);
 	})();
     }
@@ -344,3 +349,4 @@ class _febe {
 
 /* auto-init */
 window._febe = new _febe();
+
