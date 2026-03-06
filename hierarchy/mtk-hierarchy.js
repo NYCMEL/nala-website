@@ -1255,6 +1255,8 @@ class MTKHierarchy {
     }
 }
 
+alert(wc.isLocal)
+
 // Initialize hierarchy - support both local and remote config
 // GET FRESH DATA
 if (wc.isLocal) {
