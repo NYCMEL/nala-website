@@ -19,8 +19,6 @@
     }
 
     ready("#MTK-courses", function (root) {
-	alert("BBBBBBBB");
-
         waitForData(function (data) {
             try {
                 var container = root.querySelector(".container");
