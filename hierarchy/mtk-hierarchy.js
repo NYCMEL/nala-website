@@ -463,7 +463,7 @@ class MTKHierarchy {
     }
 
     /**
-     * Handle quiz click - delegate to mtk_pager
+     * Handle quiz click - delegate to mtk-pages
      */
     handleQuizClick(event, quizElement) {
 	let module = $(quizElement).attr("data-module-id");
@@ -473,7 +473,7 @@ class MTKHierarchy {
 
 	wc.log("handleQuizClick > Module:", module);
 
-	mtk_pager.show("quiz");
+	wc.pages.show"quiz");
     }
 
     /**
