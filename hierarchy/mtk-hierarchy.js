@@ -473,7 +473,7 @@ class MTKHierarchy {
 
 	wc.log("handleQuizClick > Module:", module);
 
-	wc.pages.show"quiz");
+	wc.pages.show("quiz");
     }
 
     /**
