@@ -46,6 +46,18 @@ window.app.pages = [
     },
     {
         "cache": "false",
+        "page":  "final",
+        "label": "Final",
+        "url":   "<wc-include href='final/index.inc.html' />"
+    },
+    {
+        "cache": "false",
+        "page":  "settings",
+        "label": "Settings",
+        "url":   "<wc-include href='settings/index.inc.html' />"
+    },
+    {
+        "cache": "false",
         "page":  "quiz",
         "label": "Quiz",
         "url":   "<wc-include href='quiz/index.inc.html' />"
