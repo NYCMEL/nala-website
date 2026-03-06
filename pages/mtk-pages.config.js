@@ -24,7 +24,7 @@ window.app.pages = [
         "cache": "false",
         "page":  "course",
         "label": "Course",
-        "url":   "<wc-include href='courses/index.inc.html' />"
+        "url":   "<wc-include href='hierarchy/index.inc.html' />"
     },
     {
         "cache": "true",
@@ -43,5 +43,11 @@ window.app.pages = [
         "page":  "final",
         "label": "Final",
         "url":   "<wc-include href='final/index.inc.html' />"
+    },
+    {
+        "cache": "false",
+        "page":  "quiz",
+        "label": "Quiz",
+        "url":   "<wc-include href='quiz/index.inc.html' />"
     }
 ];
