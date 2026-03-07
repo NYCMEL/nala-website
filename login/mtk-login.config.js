@@ -26,3 +26,11 @@ window.app['mtk-login'] = {
 	focusChange: "mtk-login-focus"
     }
 };
+
+// FILL VALUES WHEN TESTING
+if (wc.testing) {
+    wc.timeout(function(){
+	$("#mtk-email").attr("value", "mel@google.com");
+	$("#mtk-password").attr("value", "test");
+    }, 200, 1);
+}
