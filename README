@@ -55,3 +55,54 @@ window.app.pages = [
     ...
     }
 ]
+
+
+ADDITIONAL IMPORTANT OPERATIONAL NOTES (2026-03-07)
+------------------------------------
+Repository and deployment layout
+- `repo_deploy` is the git-tracked website frontend and client JS.
+- `api` is outside this repo and must be synced manually to server.
+- `media` is outside this repo and must be synced manually to server.
+
+Git workflow safety (MEL + Josh collaboration)
+- Always run before any work:
+  `git -C ~/www/nala-test.com/public_html/repo_deploy pull --ff-only origin main`
+- Do feature work in a branch, not directly on `main`.
+- Merge to `main` using fast-forward when possible (no force push / no history rewrite).
+- If you need a safety snapshot before pulling:
+  `git -C ~/www/nala-test.com/public_html/repo_deploy branch codex/backup-YYYY-MM-DD-HHMM`
+
+Registration flow (current behavior)
+- Registration form does not collect password in the UI.
+- `api/register.php` creates user with `current_lesson = 3` (intro + first 3 lessons access).
+- Registration sends password-setup email link to:
+  `https://nala-test.com/repo_deploy/set-password/index.html?token=...`
+- Password is set through `api/set_password.php`.
+
+SMTP email setup (Google Workspace / Gmail authenticated SMTP)
+- Register endpoint uses SMTP auth (not plain `mail()`).
+- Required config keys (in env or `config.php`):
+  - `NALA_SMTP_HOST` (example: `smtp.gmail.com`)
+  - `NALA_SMTP_PORT` (`587` for TLS or `465` for SSL)
+  - `NALA_SMTP_ENCRYPTION` (`tls`, `ssl`, or `none`)
+  - `NALA_SMTP_USER` (example: `support@nalanetwork.com`)
+  - `NALA_SMTP_PASS` (Google App Password)
+  - `NALA_SMTP_FROM_EMAIL`
+  - `NALA_SMTP_FROM_NAME`
+  - `NALA_SMTP_REPLY_TO`
+  - `NALA_SMTP_TIMEOUT`
+
+Quick production verification commands
+- Check deployed git revision:
+  `git -C ~/www/nala-test.com/public_html/repo_deploy rev-parse --short HEAD`
+- Confirm register endpoint response:
+  `curl -i -sS -X POST https://nala-test.com/api/register.php -H "Content-Type: application/json" -d '{"name":"test","email":"your+alias@gmail.com","phone":"1112223333"}'`
+- Check API log:
+  `tail -n 120 ~/www/nala-test.com/public_html/api/php_errorlog`
+
+Notes about manual sync (non-git folders)
+- If `api` files change locally, upload them manually to:
+  `~/www/nala-test.com/public_html/api/`
+- If `media` files change locally, upload them manually to:
+  `~/www/nala-test.com/public_html/media/`
+- Do not assume `git pull` updates `api`/`media`.
