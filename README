@@ -2,3 +2,6 @@ UPDATE PROGRESS IN DASHBOARD
 ------------------------------------
 window.mtkDashboard.updateProgress({ percentage: 75 });
 
+SET CURRICULUM TO ...
+------------------------------------
+wc.setCurrentLesson("admin", "M1", 0);
