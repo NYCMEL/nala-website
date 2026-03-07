@@ -41,3 +41,17 @@ All fonts are using Roboto with classes
   .fr  "Roboto Light"
   .fb  "Roboto-Medium"
   
+IMPORTANT...IMPORTANT...IMPORTANT...
+------------------------------------
+window.app.pages = [
+    {
+        "cache": "true", /* true = DO NOT RELOAD ON CLICKS */
+	                 /* false = RELOAD ON EVERY CLICK */
+        "page":  "home",
+        "label": "Home",
+        "url":   "<wc-include href='home/index.inc.html' />"
+    },
+    {
+    ...
+    }
+]
