@@ -1,20 +1,4 @@
-session = {
-    user: {
-	...
-    },
-    dashboard: {
-	progress: 28,
-	panels: [1,2,3]
-	...
-    },
-    hierarchy: {
-	...
-    }
-    messages: {
-       []
-    }
-    settings: {
-       ...
-    }
-}
+UPDATE PROGRESS IN DASHBOARD
+------------------------------------
+window.mtkDashboard.updateProgress({ percentage: 75 });
 
