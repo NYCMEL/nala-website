@@ -16,7 +16,7 @@ function headerSelect(id) {
     // FOLD HAMBURGER MENU
     $(".navbar-collapse.show").removeClass("show");
 
-    let msg = this.id; wc.log(msg);
+    let msg = id; wc.log(msg);
     wc.publish(msg);
 
     $("#" + id).addClass("active");
