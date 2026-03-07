@@ -21,12 +21,6 @@ window.app.pages = [
         "url":   "<wc-include href='login/index.inc.html' />"
     },
     {
-        "cache": "true",
-        "page":  "register",
-        "label": "Register",
-        "url":   "<wc-include href='register/index.inc.html' />"
-    },
-    {
         "cache": "false",
         "page":  "dashboard",
         "label": "Dashboard",
@@ -55,6 +49,12 @@ window.app.pages = [
         "page":  "settings",
         "label": "Settings",
         "url":   "<wc-include href='settings/index.inc.html' />"
+    },
+    {
+        "cache": "true",
+        "page":  "register",
+        "label": "Register",
+        "url":   "<wc-include href='register/index.inc.html' />"
     },
     {
         "cache": "false",
