@@ -1,6 +1,6 @@
 UPDATE PROGRESS IN DASHBOARD
 ------------------------------------
-mtkDashboard.updateProgress({ percentage: 75 });
+wc.setDasbboardProgress(75)
 
 SET CURRICULUM TO ...
 ------------------------------------
