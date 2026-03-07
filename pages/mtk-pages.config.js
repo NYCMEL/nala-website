@@ -45,7 +45,7 @@ window.app.pages = [
         "url":   "<wc-include href='hierarchy/index.inc.html' />"
     },
     {
-        "cache": "false",
+        "cache": "true",
         "page":  "final",
         "label": "Final",
         "url":   "<wc-include href='final/index.inc.html' />"
