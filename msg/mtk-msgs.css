@@ -166,12 +166,16 @@
 
 .mtk-msgs.mtk-msgs--success .mtk-msgs__close {
   color: #ffffff; }
+
 .mtk-msgs--error .mtk-msgs__close {
-      color: #ffffff; }
-  .mtk-msgs.mtk-msgs--success {
-    background-color: #198754;
-    color: #ffffff; }
-    .mtk-msgs.mtk-msgs--success .mtk-msgs__button {
-      color: #ffffff; }
-    .mtk-msgs.mtk-msgs--success .mtk-msgs__close {
-      color: #ffffff; }
+  color: #ffffff; }
+
+.mtk-msgs.mtk-msgs--success {
+  background-color: #198754;
+  color: #ffffff; }
+
+.mtk-msgs.mtk-msgs--success .mtk-msgs__button {
+  color: #ffffff; }
+
+.mtk-msgs.mtk-msgs--success .mtk-msgs__close {
+  color: #ffffff; }
