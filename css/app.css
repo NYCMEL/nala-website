@@ -1,4 +1,3 @@
-@import url("fonts/fonts.css");
 :root {
   --mtk-primary:          #1976d2;
   --mtk-primary-dark:     #1565c0;
@@ -216,8 +215,5 @@ img {
   pointer-events: none; }
 
 [class*="--disabled"] {
-  opacity: 0.6;
-  cursor: not-allowed; }
---disabled"] {
   opacity: 0.6;
   cursor: not-allowed; }
