@@ -15,13 +15,13 @@ window.app.pages = [
         "url":   "<wc-include href='home/index.inc.html' />"
     },
     {
-        "cache": "true",
+        "cache": "false",
         "page":  "login",
         "label": "Login",
         "url":   "<wc-include href='login/index.inc.html' />"
     },
     {
-        "cache": "true",
+        "cache": "false",
         "page":  "register",
         "label": "Register",
         "url":   "<wc-include href='register/index.inc.html' />"
