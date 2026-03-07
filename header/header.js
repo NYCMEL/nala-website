@@ -7,6 +7,9 @@ $(".nav-link, .navbar-brand, .btn").on("click", function(e) {
     let eid = this.id;
 
     headerSelect(eid);
+
+    let msg = eid; wc.log(msg);
+    wc.publish(msg);
 });
 
 function headerSelect(id) {
@@ -15,9 +18,6 @@ function headerSelect(id) {
     
     // FOLD HAMBURGER MENU
     $(".navbar-collapse.show").removeClass("show");
-
-    let msg = id; wc.log(msg);
-    wc.publish(msg);
 
     $("#" + id).addClass("active");
 }

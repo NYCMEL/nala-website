@@ -92,6 +92,12 @@ class Pages extends HTMLElement {
     show(page) {
         wc.group("mtk-pages.show:", page);
 
+	try {
+	    headerSelect("mtk-header-" + page);
+	} catch(e) {
+	    //wc.error(e.name + ' > ' + e.message);
+	}
+
         if (!this.data) {
             wc.warn("mtk-pages: not initialized yet");
             wc.groupEnd();
