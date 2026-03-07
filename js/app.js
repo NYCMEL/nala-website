@@ -7,7 +7,8 @@ app.baseUrl  = "/repo_deploy/";
 app.quizSize = 20; 
 
 ////////////////////////////////////////////////////////////
-// SMOOTH SCROLLING TO TARGET
+//// SMOOTH SCROLLING TO TARGET
+////////////////////////////////////////////////////////////
 (function () {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -33,6 +34,9 @@ app.quizSize = 20;
     });
 })();
 
+////////////////////////////////////////////////////////////
+//// RIPPLE
+////////////////////////////////////////////////////////////
 document.addEventListener("click", function (e) {
     const target = e.target.closest(".mtk-ripple");
     if (!target) return;
@@ -56,7 +60,9 @@ document.addEventListener("click", function (e) {
     });
 });
 
-// ADD RIPPLE EFFECT TO ALL BUTTONS
+////////////////////////////////////////////////////////////
+//// ADD RIPPLE EFFECT TO ALL BUTTONS
+////////////////////////////////////////////////////////////
 (function applyRippleToButtons() {
     function addRipple(root = document) {
 	root.querySelectorAll("button:not(.mtk-ripple)").forEach(btn => {
@@ -88,7 +94,9 @@ document.addEventListener("click", function (e) {
     });
 })();
 
-// localhot. CHANGE BROWSER TITLE
+////////////////////////////////////////////////////////////
+//// localhot. CHANGE BROWSER TITLE
+////////////////////////////////////////////////////////////
 if (document.location.protocol == "http:") {
     document.title = "NALA - Local";
 }
