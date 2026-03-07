@@ -98,8 +98,6 @@ class _febe {
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
     handleDialogActions() {
-	alert("_febe.handleDialogActions: EEEEEEEEEEE")
-
 	wc.pages.show("hierarchy");
 
 	mtkDialog.close();
@@ -257,8 +255,6 @@ class _febe {
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
     handleQuizSubmitted(data) {
-	//wc.log(">>>>>>>>", JSON.stringify(data.answers));
-
 	wc.submitQuiz(data.quiz_session_id, data.module_id, data.answers, function (err, response) {
 	    if (err) {
 		alert("_febe.handleQuizSubmitted > Error submitting quiz.");
