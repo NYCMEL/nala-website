@@ -29,3 +29,15 @@ logout if inactive
       countdown: 40 /* 30 seconds countdown */
   };
 
+FILE: nala-website/css/fonts/roboto.css
+------------------------------------
+All fonts are using Roboto with classes
+  .fl  "Roboto Thin"
+  .fli "Roboto Thin Italic"
+  .fri "Roboto Light Italic"
+  .fm  "Roboto-Regular"
+  .fmi "Roboto Italic"
+  .fbi "Roboto Medium Italic"
+  .fr  "Roboto Light"
+  .fb  "Roboto-Medium"
+  
