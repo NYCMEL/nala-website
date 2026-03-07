@@ -92,8 +92,3 @@ document.addEventListener("click", function (e) {
 if (document.location.protocol == "http:") {
     document.title = "NALA - Local";
 }
-
-/////////////////////////////////
-//// TESTING
-/////////////////////////////////
-wc.getSession();
