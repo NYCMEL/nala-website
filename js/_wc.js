@@ -1467,19 +1467,24 @@ wc.lessonComplete = function (clickedLessonNo, currentLessonNo, callback) {
     });
 };
 
-
 /************************************************************
  * SET CURRENT LESSON API
  ************************************************************/
 wc.setCurrentLesson = function(role, module, lesson) {
     fetch(wc.apiURL + '/api/setCurrentLesson.php?role='+ role + '&module=' + module + '&lesson=' + lesson, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
-    body: JSON.stringify({ lesson })
-  })
-  .then(r => r.json())
+	method: 'POST',
+	headers: { 'Content-Type': 'application/json' },
+	credentials: 'include',
+	body: JSON.stringify({ lesson })
+    }).then(r => r.json())
 };
+
+/************************************************************
+ * SET CURRENT LESSON API
+ ************************************************************/
+wc.setDasbboardProgress = function(percentage) {
+    mtkDashboard.updateProgress({ percentage:  percentage});
+}
 
 /************************************************************
  * SUBMIT QUIZ API
