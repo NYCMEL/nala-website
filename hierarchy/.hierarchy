@@ -166,7 +166,7 @@ When a lesson is expanded or resource is clicked:
 Support both local and remote config initialization:
 
 // Local mode (development)
-if (wc.isLocal) {
+if (wc.testing) {
   const hierarchy = new MTKHierarchy(window.app.hierarchy);
   window.MTKHierarchy = hierarchy;
 }
