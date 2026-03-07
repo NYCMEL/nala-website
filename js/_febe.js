@@ -155,8 +155,6 @@ class _febe {
 	wc.pages.show("register");
 
 	wc.timeout(function(){
-	    wc.pages.show("register");
-
 	    // NEED TO FIND WHY NOT SHOWING AFTER CLICKING ON LOGIN
 	    $('[mtk-pages-id="register"]').css("display","block");
 	}, 200, 1);
