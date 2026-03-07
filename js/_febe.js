@@ -157,7 +157,7 @@ class _febe {
 	wc.timeout(function(){
 	    // NEED TO FIND WHY NOT SHOWING AFTER CLICKING ON LOGIN
 	    $('[mtk-pages-id="register"]').css("display","block");
-	}, 200, 1);
+	}, 300, 1);
     }
 
     handleLessonToggled() {
