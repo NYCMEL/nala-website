@@ -78,13 +78,3 @@
 .mtk-login form .links a:focus {
   text-decoration: underline;
   outline: none; }
-
-.mtk-login form .links a {
-  color: #1976d2;
-  text-decoration: none;
-  cursor: pointer; }
-
-.mtk-login form .links a:hover,
-.mtk-login form .links a:focus {
-  text-decoration: underline;
-  outline: none; }
