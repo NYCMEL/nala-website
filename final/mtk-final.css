@@ -580,6 +580,7 @@
   to {
     opacity: 1;
     transform: scale(1); } }
+<<<<<<< HEAD
 or: #e8f0fe;
     border-radius: var(--_r-md);
     padding: 14px 18px;
@@ -640,3 +641,5 @@ or: #e8f0fe;
   to {
     opacity: 1;
     transform: scale(1); } }
+=======
+>>>>>>> 06.03.2026
