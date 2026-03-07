@@ -15,13 +15,13 @@ window.app.pages = [
         "url":   "<wc-include href='home/index.inc.html' />"
     },
     {
-        "cache": "false",
+        "cache": "true",
         "page":  "login",
         "label": "Login",
         "url":   "<wc-include href='login/index.inc.html' />"
     },
     {
-        "cache": "false",
+        "cache": "true",
         "page":  "register",
         "label": "Register",
         "url":   "<wc-include href='register/index.inc.html' />"
@@ -45,7 +45,7 @@ window.app.pages = [
         "url":   "<wc-include href='hierarchy/index.inc.html' />"
     },
     {
-        "cache": "false",
+        "cache": "true",
         "page":  "final",
         "label": "Final",
         "url":   "<wc-include href='final/index.inc.html' />"
