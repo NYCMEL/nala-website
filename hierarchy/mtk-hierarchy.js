@@ -1278,11 +1278,11 @@ class MTKHierarchy {
 
 // ─── Initialization ───────────────────────────────────────────────────────────
 
-if (wc.isLocal) {
+if (wc.testing) {
     // LOCAL MODE - Use window.app.hierarchy
     if (typeof window.app !== 'undefined' && window.app.hierarchy) {
         wc.log("MTKHierarchy: Local mode - using window.app.hierarchy");
-        wc.log("isLocal:", wc.isLocal, window.app.hierarchy);
+        wc.log("testing:", wc.testing, window.app.hierarchy);
 
         const hierarchy = new MTKHierarchy(window.app.hierarchy);
         window.MTKHierarchy = hierarchy;
@@ -1303,7 +1303,7 @@ if (wc.isLocal) {
     window.app.hierarchy = wc.session.hierarchy.parts;
 
     wc.log("MTKHierarchy: Curriculum loaded");
-    wc.log("isLocal:", wc.isLocal, window.app.hierarchy);
+    wc.log("testing:", wc.testing, window.app.hierarchy);
 
     const hierarchy = new MTKHierarchy(window.app.hierarchy);
     window.MTKHierarchy = hierarchy;

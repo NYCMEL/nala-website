@@ -737,10 +737,10 @@
 
 	// Initialize quiz - support both local and remote config
 	// GET FRESH DATA
-	if (wc.isLocal) {
+	if (wc.testing) {
 	    // LOCAL MODE - Use window.mtkQuizConfig
 	    wc.log("MTK Quiz: Local mode - using window.mtkQuizConfig");
-	    wc.log("isLocal:", wc.isLocal);
+	    wc.log("testing:", wc.testing);
 	    
 	    // Start initialization when DOM is ready
 	    if (document.readyState === 'loading') {

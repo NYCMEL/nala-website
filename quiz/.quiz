@@ -45,10 +45,10 @@ window.mtkQuizConfig = {
 
 4. COMPONENT INITIALIZATION
 ----------------------------
-Support both local and remote config using wc.isLocal pattern (same as mtk-hierarchy):
+Support both local and remote config using wc.testing pattern (same as mtk-hierarchy):
 
 // Local mode (development)
-if (wc.isLocal) {
+if (wc.testing) {
     const element = await waitForMtkQuizElement();
     if (element && mtkQuizConfig) {
         const quiz = new MtkQuiz(element, mtkQuizConfig);
@@ -346,7 +346,7 @@ Mobile breakpoints:
 - Use Material Icons from Google Fonts
 - Use Roboto font family
 - Bootstrap 5.3.0 for button classes
-- Support both local config and remote API config via wc.isLocal
+- Support both local config and remote API config via wc.testing
 - Remember code that begins with "mtk-" FOREVER
 - Always show updated code in FULL, not in pieces
 - Cancel button ONLY calls wc.pages.show('dashboard') - NOTHING ELSE
@@ -364,12 +364,12 @@ Mobile breakpoints:
 - Spacer pushes other buttons to the right
 - Use Bootstrap primary blue (#0d6efd) not light blue
 - Wait for DOM element using MutationObserver
-- Use wc.isLocal pattern for initialization
+- Use wc.testing pattern for initialization
 
 DELIVERABLES
 ------------
 1. mtk-quiz.html - Complete HTML structure with Material Icons
-2. mtk-quiz.js - Component with wc.isLocal initialization
+2. mtk-quiz.js - Component with wc.testing initialization
 4. mtk-quiz.scss - Source SCSS with Bootstrap colors (DO NOT COMPILE)
 5. mtk-quiz.config.js - Sample quiz data
 

@@ -5,3 +5,27 @@ wc.setDasbboardProgress(75)
 SET CURRICULUM TO ...
 ------------------------------------
 wc.setCurrentLesson("admin", "M1", 0);
+
+IN _wc.js FILE
+------------------------------------
+wc.apiURL = "https://nala-test.com" || "https://nalanetwork.com";
+
+wc.testing:
+  "true"  = USE LOCAL CONFIG FILE AND OTHER STUFF
+  "false" = NORMAL OPERATIONS
+
+wc.debug = location.hostname !== wc.apiURL; // SET IN app.js FILE
+
+window.wcENV: 
+  "dev"  = print all development console logs
+  "prod" = no logs are printed to console
+
+all error messages are set here. DO NOT USE YOUR OWN TEXT PLEASE
+  wc.emsgs = [...]
+
+logout if inactive
+  wc.inactivity = {
+      idleTime: 2 * 60 * 1000, /* one minute */
+      countdown: 40 /* 30 seconds countdown */
+  };
+

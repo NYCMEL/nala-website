@@ -3,9 +3,8 @@ window.wcAPP = window.wcAPP || "NOT-SET";
 window.wcURL = window.wcURL || "";
 
 wc.working   = location.origin != 'http://localhost:3000';
-wc.isLocal   = false; /* = true SHOULD USE ALL LOCAL CONFIG FILES */
 wc.apiURL    = "https://nala-test.com" || "https://nalanetwork.com";
-wc.testing   = true;
+wc.testing   = false;  /* = true SHOULD USE ALL LOCAL CONFIG FILES and others */
 
 // Message storage
 wc.emsgs = [
@@ -93,6 +92,22 @@ if (window.wcENV == "prod") {
     console.log = function () {};
     console.info = function () {};
     console.debug = function () {};
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+//// 
+////////////////////////////////////////////////////////////////////////////////////
+wc.getAttributes = function(node) {
+    wc.group("wc.getAttributes", node);
+
+    var i, attributeNodes = node.attributes, length = attributeNodes.length, attrs = {};
+    
+    for ( i = 0; i < length; i++ ) {
+	attrs[attributeNodes[i].name] = attributeNodes[i].value;
+    }
+
+    wc.groupEnd();
+    return attrs;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -1522,18 +1537,3 @@ wc.submitQuiz = function (quizSessionId, moduleId, answersMap, callback) {
     });
 };
 
-////////////////////////////////////////////////////////////////////////////////////
-//// 
-////////////////////////////////////////////////////////////////////////////////////
-wc.getAttributes = function(node) {
-    wc.group("wc.getAttributes", node);
-
-    var i, attributeNodes = node.attributes, length = attributeNodes.length, attrs = {};
-    
-    for ( i = 0; i < length; i++ ) {
-	attrs[attributeNodes[i].name] = attributeNodes[i].value;
-    }
-
-    wc.groupEnd();
-    return attrs;
-}

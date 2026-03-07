@@ -46,7 +46,7 @@ if (typeof MtkSettings === 'undefined') {
 	 * CONFIG LOADING LOGIC
 	 */
 	loadConfig() {
-            if (wc.isLocal) {
+            if (wc.testing) {
 		// LOCAL → use global config
 		if (typeof window.mtkSettingsConfig !== 'undefined') {
                     this.config = window.mtkSettingsConfig;
@@ -233,7 +233,7 @@ if (typeof MtkSettings === 'undefined') {
      * CLEAN INITIALIZATION
      */
     function initMtkSettings() {
-	if (wc.isLocal) {
+	if (wc.testing) {
             new MtkSettings(); // uses window.mtkSettingsConfig
 	} else {
             // must provide config in production
@@ -244,7 +244,7 @@ if (typeof MtkSettings === 'undefined') {
     if (document.readyState === 'loading') {
 	document.addEventListener('DOMContentLoaded', initMtkSettings);
     } else {
-	if (wc.isLocal) {
+	if (wc.testing) {
             new MtkSettings(); // uses window.mtkSettingsConfig
 	} else {
 	    mtkSettingsConfig.user.firstName = wc.session.user.name;
