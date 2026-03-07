@@ -70,7 +70,9 @@
 
 	<!-- YOUR CODE TO HERE -->
 	<script>
-	 $('[mtk-pages-id="home"]').css("display","block");
+	 wc.timeout(function(){
+	     $("#mtk-header-home").addClass("active")
+	 }, 500, 1);
 	</script>
     </body>
 </html>
