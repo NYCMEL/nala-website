@@ -1,17 +1,25 @@
+// =============================================================================
+// ready/mtk-ready.scss
+// Requires: css/app.scss  (included globally via app.css)
+// All $variables and --mtk-* tokens are defined in app.scss — do not redefine.
+// DO NOT COMPILE
+// =============================================================================
+
 .mtk-ready {
-  background-color: #5b88b1;
-  padding: 48px 0;
+  background-color: #5b88b1;  // Component-specific brand colour — intentionally hardcoded
+  padding: $mtk-spacing-xxl 0;
   overflow: hidden;
+  font-family: $mtk-font-base;
 
   .mtk-ready-inner {
-    animation: mtk-ready-fade-up 600ms ease-out both;
+    animation: mtk-ready-fade-up $mtk-duration-long ease-out both;
   }
 
   .mtk-ready-title {
     font-size: 1.75rem;
     font-weight: 600;
     color: #bfe7ff;
-    margin-bottom: 8px;
+    margin-bottom: $mtk-spacing-sm;
   }
 
   .mtk-ready-desc {
@@ -22,22 +30,22 @@
   }
 
   .mtk-ready-btn {
-    background-color: #ffffff;
-    color: #1565c0;
+    background-color: $mtk-bg-white;
+    color: $mtk-primary-dark;
     font-weight: 500;
-    padding: 12px 24px;
-    border-radius: 8px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    font-family: $mtk-font-base;
+    padding: 12px $mtk-spacing-lg;
+    border-radius: $mtk-border-radius-lg;
+    box-shadow: $mtk-shadow-2;
     transition: transform 180ms ease, box-shadow 180ms ease;
 
-    &:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    &:active {
-      transform: translateY(0);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
+    &:hover  { transform: translateY(-1px); box-shadow: $mtk-shadow-3; }
+    &:active { transform: translateY(0);    box-shadow: $mtk-shadow-1; }
   }
+}
+
+// Keyframe lives outside the component scope so it is globally available
+@keyframes mtk-ready-fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

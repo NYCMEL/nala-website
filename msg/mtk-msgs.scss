@@ -1,66 +1,57 @@
-// mtk-msgs.scss - Material Design message panel component
+// =============================================================================
+// msg/mtk-msgs.scss
+// Requires: css/app.scss  (included globally via app.css)
+// All $variables and --mtk-* tokens are defined in app.scss — do not redefine.
+// DO NOT COMPILE
+// =============================================================================
+
 .mtk-msgs {
   display: block;
   width: 100%;
   height: 0;
   overflow: hidden;
-  transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
   opacity: 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
   position: relative;
   margin-top: 5px;
+  z-index: $mtk-z-toast;
+  box-shadow: $mtk-shadow-1;
+  transition: height 0.6s $mtk-easing, opacity 0.6s ease;
 
-  &.visible {
-    height: 40px;
-    opacity: 1;
-  }
+  &.visible { height: 40px; opacity: 1; }
+  &.locked  { z-index: $mtk-z-modal + 1; }
 
-  // Overlay for error messages (locks screen)
+  // ── Overlay ─────────────────────────────────────────────────────────────
+
   &__overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: $mtk-z-modal;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.6s ease;
-
-    &.visible {
-      opacity: 1;
-      pointer-events: all;
-    }
+    &.visible { opacity: 1; pointer-events: all; }
   }
 
-  &.locked {
-    z-index: 1001;
-  }
+  // ── Inner container ─────────────────────────────────────────────────────
 
   .mtk-msgs__container {
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 40px;
-    padding: 0 16px;
+    padding: 0 $mtk-spacing-md;
     gap: 12px;
     width: 100%;
   }
 
-  .mtk-msgs__left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-shrink: 0;
-  }
+  .mtk-msgs__left { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 
   .mtk-msgs__icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Material Icons';
     font-size: 20px;
     width: 20px;
     height: 20px;
@@ -68,6 +59,7 @@
   }
 
   .mtk-msgs__message {
+    font-family: $mtk-font-base;
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
@@ -80,126 +72,69 @@
   .mtk-msgs__buttons {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: $mtk-spacing-sm;
     margin-left: auto;
     flex-shrink: 0;
-    border:1px yellow solid!important;
-    border-radius: 8px;
   }
 
   .mtk-msgs__button {
     background: transparent;
     border: none;
     padding: 6px 12px;
+    font-family: $mtk-font-base;
     font-size: 13px;
     font-weight: 500;
     text-transform: uppercase;
     cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.2s ease;
+    border-radius: $mtk-border-radius;
     white-space: nowrap;
     outline: none;
+    transition: background-color $mtk-duration-short ease;
 
-    &:hover {
-	background-color: rgba(0, 0, 0, 0.08);
-	border: 1px gold solid;
-    }
-
-    &:focus {
-      outline: 2px solid currentColor;
-      outline-offset: 2px;
-    }
-
-    &:active {
-      background-color: rgba(0, 0, 0, 0.12);
-    }
+    &:hover  { background-color: rgba(0,0,0,0.08); }
+    &:focus  { outline: 2px solid currentColor; outline-offset: 2px; }
+    &:active { background-color: rgba(0,0,0,0.12); }
   }
 
   .mtk-msgs__close {
     background: transparent;
     border: none;
-    padding: 8px;
+    padding: $mtk-spacing-sm;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    transition: background-color 0.2s ease;
     flex-shrink: 0;
-    margin-left: 8px;
+    margin-left: $mtk-spacing-sm;
     outline: none;
+    transition: background-color $mtk-duration-short ease;
 
-    .material-icons {
-      font-size: 18px;
-    }
-
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.08);
-    }
-
-    &:focus {
-      outline: 2px solid currentColor;
-      outline-offset: 2px;
-    }
-
-    &:active {
-      background-color: rgba(0, 0, 0, 0.12);
-    }
+    .material-icons { font-size: 18px; }
+    &:hover  { background-color: rgba(0,0,0,0.08); }
+    &:focus  { outline: 2px solid currentColor; outline-offset: 2px; }
+    &:active { background-color: rgba(0,0,0,0.12); }
   }
 
-  // Info variant
+  // ── Colour variants ─────────────────────────────────────────────────────
+
   &.mtk-msgs--info {
-    background-color: #0dcaf0;
-    color: #055160;
-
-    .mtk-msgs__button {
-      color: #055160;
-    }
-
-    .mtk-msgs__close {
-      color: #055160;
-    }
+    background-color: $mtk-info; color: #055160;
+    .mtk-msgs__button, .mtk-msgs__close { color: #055160; }
   }
 
-  // Warning variant
   &.mtk-msgs--warning {
-    background-color: #ffc107;
-    color: #664d03;
-
-    .mtk-msgs__button {
-      color: #664d03;
-    }
-
-    .mtk-msgs__close {
-      color: #664d03;
-    }
+    background-color: $mtk-warning; color: #664d03;
+    .mtk-msgs__button, .mtk-msgs__close { color: #664d03; }
   }
 
-  // Error variant
   &.mtk-msgs--error {
-    background-color: #dc3545;
-    color: #ffffff;
-
-    .mtk-msgs__button {
-      color: #ffffff;
-    }
-
-    .mtk-msgs__close {
-      color: #ffffff;
-    }
+    background-color: $mtk-error; color: #ffffff;
+    .mtk-msgs__button, .mtk-msgs__close { color: #ffffff; }
   }
 
-  // Success variant
   &.mtk-msgs--success {
-    background-color: #198754;
-    color: #ffffff;
-
-    .mtk-msgs__button {
-      color: #ffffff;
-    }
-
-    .mtk-msgs__close {
-      color: #ffffff;
-    }
+    background-color: $mtk-success-dark; color: #ffffff;
+    .mtk-msgs__button, .mtk-msgs__close { color: #ffffff; }
   }
 }

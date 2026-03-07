@@ -1,84 +1,88 @@
-$primary: #1b76d2;
-$error: #d32f2f;
-$text: #333;
-$muted: #777;
+// =============================================================================
+// register/mtk-register.scss
+// Requires: css/app.scss  (included globally via app.css)
+// All $variables and --mtk-* tokens are defined in app.scss — do not redefine.
+// DO NOT COMPILE
+// =============================================================================
 
 .md-form {
-    background: #fff;
-    max-width: 600px;
-    margin: auto;
-    padding: 32px;
-    margin-top: 40px;
-    margin-bottom: 40px;
+  background: $mtk-bg-white;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: $mtk-spacing-xl;
+  font-family: $mtk-font-base;
+  border-radius: $mtk-border-radius;
+  box-shadow: $mtk-shadow-1;
 }
 
 .form-title {
-    margin-bottom: 24px;
-    color: $text;
+  margin-bottom: $mtk-spacing-lg;
+  color: $mtk-text-primary;
+  font-size: 22px;
+  font-weight: 500;
 }
 
 .md-field {
-    position: relative;
-    margin-bottom: 28px;
+  position: relative;
+  margin-bottom: 28px;
 
-    input {
-	width: 100%;
-	border: none;
-	border-bottom: 2px solid #ccc;
-	padding: 12px 4px;
-	font-size: 16px;
-	background: transparent;
+  input {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid $mtk-border;
+    padding: 12px 4px;
+    font-size: 16px;
+    background: transparent;
+    font-family: $mtk-font-base;
+    color: $mtk-text-primary;
+    transition: border-bottom-color $mtk-duration-short $mtk-easing;
 
-	&:focus {
-	    outline: none;
-	    border-bottom-color: $primary;
-	}
+    &:focus { outline: none; border-bottom-color: $mtk-primary; }
 
-	&:focus + label,
-	&:not(:placeholder-shown) + label {
-	    transform: translateY(-18px);
-	    font-size: 12px;
-	    color: $primary;
-	}
+    &:focus + label,
+    &:not(:placeholder-shown) + label {
+      transform: translateY(-18px);
+      font-size: 12px;
+      color: $mtk-primary;
     }
+  }
 
-    label {
-	position: absolute;
-	left: 4px;
-	top: 14px;
-	color: $muted;
-	pointer-events: none;
-	transition: 0.2s ease;
-    }
+  label {
+    position: absolute;
+    left: 4px;
+    top: 14px;
+    color: $mtk-text-secondary;
+    pointer-events: none;
+    transition: transform $mtk-duration-short $mtk-easing,
+                font-size  $mtk-duration-short $mtk-easing,
+                color      $mtk-duration-short $mtk-easing;
+  }
 
-    .helper {
-	font-size: 12px;
-	color: $muted;
-	margin-top: 4px;
-	display: block;
-    }
+  .helper {
+    font-size: 12px;
+    color: $mtk-text-secondary;
+    margin-top: $mtk-spacing-xs;
+    display: block;
+
+    &.error { color: $mtk-error; }
+  }
 }
 
-.required {
-    color: $error;
-}
+.required { color: $mtk-error; }
 
 .submit-btn {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    background: $primary;
-    color: white;
-    font-size: 16px;
-    border-radius: 4px;
-    cursor: pointer;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: $mtk-primary;
+  color: #ffffff;
+  font-size: 16px;
+  font-family: $mtk-font-base;
+  font-weight: 500;
+  border-radius: $mtk-border-radius;
+  cursor: pointer;
+  transition: background-color $mtk-duration-short $mtk-easing;
 
-    &:hover {
-	color: #FFF;
-	background: darken($primary, 10%);
-    }
-}
-
-.helper.error {
-    color: #d32f2f;
+  &:hover { background: $mtk-primary-dark; }
+  &:focus { outline: 2px solid $mtk-primary; outline-offset: 2px; }
 }

@@ -1,76 +1,66 @@
+// =============================================================================
+// login/mtk-login.scss
+// Requires: css/app.scss  (included globally via app.css)
+// All $variables and --mtk-* tokens are defined in app.scss — do not redefine.
+// DO NOT COMPILE
+// =============================================================================
+
 .mtk-login {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 30px auto;
   padding: 30px;
-  border-radius: 12px;
-  background-color: #ffffff;
-  font-family: "Roboto", sans-serif;
+  border-radius: $mtk-border-radius-lg;
+  background-color: $mtk-bg-white;
+  font-family: $mtk-font-base;
 
-  .mtk-login-content {
-      padding: 25px;
-      width: 500px;
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 24px;
-    font-weight: 500;
-  }
+  &-content { padding: 25px; width: 500px; }
+
+  h2 { text-align: center; margin-bottom: $mtk-spacing-lg; font-weight: 500; color: $mtk-text-primary; }
 
   form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: $mtk-spacing-lg;
 
     .form-group {
       position: relative;
 
-      label {
-        display: block;
-        font-size: 14px;
-        margin-bottom: 4px;
-      }
+      label { display: block; font-size: 14px; margin-bottom: $mtk-spacing-xs; color: $mtk-text-secondary; }
 
       input {
         width: 100%;
         padding: 14px 12px;
         font-size: 16px;
-        border-radius: 8px;
-        border: 1px solid #ccc;
+        border-radius: $mtk-border-radius-lg;
+        border: 1px solid $mtk-border;
         outline: none;
-        transition: border-color 0.2s;
+        font-family: $mtk-font-base;
+        color: $mtk-text-primary;
+        transition: border-color $mtk-duration-short $mtk-easing,
+                    box-shadow   $mtk-duration-short $mtk-easing;
+
+        &:focus { border-color: $mtk-primary; box-shadow: 0 0 0 2px rgba($mtk-primary, 0.2); }
       }
 
-      input:focus {
-        border-color: #1976d2;
-        box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
-      }
-
-      .error {
-        font-size: 12px;
-        color: #d32f2f;
-        margin-top: 4px;
-      }
+      .error { font-size: 12px; color: $mtk-error; margin-top: $mtk-spacing-xs; }
     }
 
     button {
       padding: 14px;
       font-size: 16px;
       font-weight: 500;
-      color: #fff;
-      background-color: #1976d2;
+      color: #ffffff;
+      background-color: $mtk-primary;
       border: none;
-      border-radius: 8px;
+      border-radius: $mtk-border-radius-lg;
       cursor: pointer;
-      transition: background-color 0.2s;
-    }
+      font-family: $mtk-font-base;
+      transition: background-color $mtk-duration-short $mtk-easing;
 
-    button:hover,
-    button:focus {
-      background-color: #1565c0;
-      outline: none;
+      &:hover,
+      &:focus { background-color: $mtk-primary-dark; outline: none; }
     }
 
     .links {
@@ -79,16 +69,17 @@
       font-size: 14px;
 
       a {
-        color: #1976d2;
+        color: $mtk-primary;
         text-decoration: none;
         cursor: pointer;
-      }
-
-      a:hover,
-      a:focus {
-        text-decoration: underline;
-        outline: none;
+        transition: color $mtk-duration-short $mtk-easing;
+        &:hover, &:focus { color: $mtk-primary-dark; text-decoration: underline; outline: none; }
       }
     }
+  }
+
+  @media (max-width: $bp-sm) {
+    padding: $mtk-spacing-md;
+    &-content { width: 100%; padding: $mtk-spacing-md; }
   }
 }

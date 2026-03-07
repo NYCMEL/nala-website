@@ -1,47 +1,42 @@
-$primary: #1a73e8;
-$surface: #ffffff;
-$text: #1f1f1f;
-$muted: #5f6368;
-$radius: 16px;
+// =============================================================================
+// certification/mtk-certification.scss
+// Requires: css/app.scss  (included globally via app.css)
+// All $variables and --mtk-* tokens are defined in app.scss — do not redefine.
+// DO NOT COMPILE
+// =============================================================================
 
 .mtk-certification {
-    background: #FFF!important;
-    border-radius: 8px;
+  background: $mtk-bg-white;
+  border-radius: $mtk-border-radius-lg;
+  font-family: $mtk-font-base;
 
-    .mtk-title {
-	font-weight: 700;
-	color: $text;
+  .mtk-title    { font-weight: 700; color: $mtk-text-primary; }
+  .mtk-subtitle { color: $mtk-text-secondary; }
+
+  .mtk-icon {
+    font-size: 32px;
+    color: $mtk-primary;
+    margin-bottom: 12px;
+  }
+
+  .mtk-card-title { font-weight: 600; margin-bottom: $mtk-spacing-sm; color: $mtk-text-primary; }
+  .mtk-card-desc  { color: $mtk-text-secondary; font-size: 0.95rem; }
+
+  .mtk-list {
+    margin-top: $mtk-spacing-md;
+    padding-left: 0;
+    list-style: none;
+
+    li {
+      color: $mtk-text-primary;
+      margin-bottom: $mtk-spacing-sm;
+
+      &::before {
+        content: "✓";
+        color: $mtk-primary;
+        margin-right: $mtk-spacing-sm;
+        font-weight: 700;
+      }
     }
-
-    .mtk-subtitle {
-	color: $muted;
-    }
-
-    .mtk-icon {
-	font-size: 32px;
-	color: $primary;
-	margin-bottom: 12px;
-    }
-
-    .mtk-card-title {
-	font-weight: 600;
-	margin-bottom: 8px;
-    }
-
-    .mtk-card-desc {
-	color: $muted;
-	font-size: 0.95rem;
-    }
-
-    .mtk-list {
-	margin-top: 16px;
-	padding-left: 0;
-	list-style: none;
-
-	li::before {
-	    content: "✓";
-	    color: $primary;
-	    margin-right: 8px;
-	}
-    }
+  }
 }

@@ -1,75 +1,61 @@
-// MTK Syllabus - Material Design + Bootstrap 5
-// SCSS Source File - DO NOT COMPILE
+// =============================================================================
+// syllabus/mtk-syllabus.scss
+// Requires: css/app.scss  (included globally via app.css)
+// All $variables and --mtk-* tokens are defined in app.scss — do not redefine.
+// Global body styles (background, color) are now handled by app.scss.
+// DO NOT COMPILE
+// =============================================================================
 
-// Material Design Variables
-$bg-white: #ffffff;
-$bg-light: #fafafa;
-$text-primary: #1a1a1a;
-$text-secondary: rgba(0, 0, 0, 0.60);
-$text-disabled: rgba(0, 0, 0, 0.38);
-
-// Timing functions
-$motion-easing-standard: cubic-bezier(0.4, 0.0, 0.2, 1);
-$motion-duration-short: 200ms;
-
-// MTK Syllabus Component
 .mtk-syllabus {
-  background-color: $bg-white;
+  font-family: $mtk-font-base;
+  background-color: $mtk-bg-white;
   padding: 0;
-  
-  // Section (Course Level)
+
+  // ── Section ───────────────────────────────────────────────────────────────
+
   &__section {
-    margin-bottom: 48px;
-    
-    &:last-child {
-      margin-bottom: 0;
-    }
+    margin-bottom: $mtk-spacing-xxl;
+    &:last-child { margin-bottom: 0; }
   }
-  
+
   &__section-title {
     font-size: 28px;
     font-weight: 400;
-    color: $text-primary;
-    margin: 0 0 24px 0;
+    color: $mtk-text-primary;
+    margin: 0 0 $mtk-spacing-lg 0;
     line-height: 1.3;
     letter-spacing: -0.5px;
   }
-  
-  // Lessons List
-  &__lessons {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 0 0;
-  }
-  
+
+  // ── Lessons ───────────────────────────────────────────────────────────────
+
+  &__lessons { list-style: none; padding: 0; margin: 0; }
+
   &__lesson {
     margin-bottom: 0;
     position: relative;
-    padding-left: 24px;
-    
+    padding-left: $mtk-spacing-lg;
+
     &::before {
       content: '•';
       position: absolute;
       left: 0;
-      color: $text-primary;
+      color: $mtk-text-primary;
       font-size: 20px;
       line-height: 1.6;
     }
   }
-  
+
   &__lesson-link {
     display: inline-block;
-    padding: 4px 0;
+    padding: $mtk-spacing-xs 0;
     text-decoration: none;
-    color: $text-primary;
+    color: $mtk-text-primary;
     cursor: pointer;
-    transition: color $motion-duration-short $motion-easing-standard;
-    
-    &:hover {
-      color: $text-secondary;
-    }
+    transition: color $mtk-duration-short $mtk-easing;
+    &:hover { color: $mtk-text-secondary; }
   }
-  
+
   &__lesson-title {
     font-size: 18px;
     font-weight: 400;
@@ -77,30 +63,13 @@ $motion-duration-short: 200ms;
     line-height: 1.6;
     letter-spacing: -0.2px;
   }
-  
-  // Responsive adjustments
-  @media (max-width: 767px) {
-    &__section {
-      margin-bottom: 36px;
-    }
-    
-    &__section-title {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-    
-    &__lesson {
-      padding-left: 20px;
-    }
-    
-    &__lesson-title {
-      font-size: 16px;
-    }
-  }
-}
 
-// Global body styles
-body {
-  background-color: $bg-light;
-  color: $text-primary;
+  // ── Responsive ────────────────────────────────────────────────────────────
+
+  @media (max-width: $bp-md) {
+    &__section       { margin-bottom: 36px; }
+    &__section-title { font-size: 24px; margin-bottom: $mtk-spacing-lg; }
+    &__lesson        { padding-left: $mtk-spacing-lg; }
+    &__lesson-title  { font-size: 16px; }
+  }
 }
