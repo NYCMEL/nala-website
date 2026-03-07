@@ -64,26 +64,29 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-family: fb !important;
   border: none; }
-  h1.title {
-    position: relative;
-    padding-bottom: 0.5rem;
-    text-align: center; }
-    h1.title::after {
-      content: '';
-      position: absolute;
-      left: 50%;
-      bottom: 0;
-      width: 30%;
-      height: 3px;
-      background-color: gold;
-      transform: translateX(-50%); }
+
+h1.title {
+  position: relative;
+  padding-bottom: 0.5rem;
+  text-align: center; }
+
+h1.title::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 30%;
+  height: 3px;
+  background-color: gold;
+  transform: translateX(-50%); }
 
 a {
   color: #1976d2;
   text-decoration: none;
   transition: color 200ms cubic-bezier(0.4, 0, 0.2, 1); }
-  a:hover {
-    color: #1565c0; }
+
+a:hover {
+  color: #1565c0; }
 
 img {
   max-width: 100%;
@@ -150,9 +153,10 @@ img {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1), transform 300ms cubic-bezier(0.4, 0, 0.2, 1); }
-  .animate-fade-up.active {
-    opacity: 1;
-    transform: translateY(0); }
+
+.animate-fade-up.active {
+  opacity: 1;
+  transform: translateY(0); }
 
 .mtk-ripple {
   position: relative;
@@ -177,8 +181,9 @@ img {
   background: #ffffff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1); }
-  .course-card:hover {
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+
+.course-card:hover {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
 
 .mtk-card {
   background: #ffffff;
@@ -186,8 +191,9 @@ img {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   padding: 24px;
   transition: box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1); }
-  .mtk-card:hover {
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+
+.mtk-card:hover {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
 
 .tkloading {
   display: none;
@@ -210,5 +216,8 @@ img {
   pointer-events: none; }
 
 [class*="--disabled"] {
+  opacity: 0.6;
+  cursor: not-allowed; }
+--disabled"] {
   opacity: 0.6;
   cursor: not-allowed; }

@@ -64,29 +64,26 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-family: fb !important;
   border: none; }
-
-h1.title {
-  position: relative;
-  padding-bottom: 0.5rem;
-  text-align: center; }
-
-h1.title::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  width: 30%;
-  height: 3px;
-  background-color: gold;
-  transform: translateX(-50%); }
+  h1.title {
+    position: relative;
+    padding-bottom: 0.5rem;
+    text-align: center; }
+    h1.title::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 30%;
+      height: 3px;
+      background-color: gold;
+      transform: translateX(-50%); }
 
 a {
   color: #1976d2;
   text-decoration: none;
   transition: color 200ms cubic-bezier(0.4, 0, 0.2, 1); }
-
-a:hover {
-  color: #1565c0; }
+  a:hover {
+    color: #1565c0; }
 
 img {
   max-width: 100%;
@@ -153,10 +150,9 @@ img {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1), transform 300ms cubic-bezier(0.4, 0, 0.2, 1); }
-
-.animate-fade-up.active {
-  opacity: 1;
-  transform: translateY(0); }
+  .animate-fade-up.active {
+    opacity: 1;
+    transform: translateY(0); }
 
 .mtk-ripple {
   position: relative;
@@ -181,9 +177,8 @@ img {
   background: #ffffff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1); }
-
-.course-card:hover {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+  .course-card:hover {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
 
 .mtk-card {
   background: #ffffff;
@@ -191,9 +186,8 @@ img {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   padding: 24px;
   transition: box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1); }
-
-.mtk-card:hover {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+  .mtk-card:hover {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
 
 .tkloading {
   display: none;
@@ -228,86 +222,72 @@ img {
   border-radius: 8px;
   background-color: #ffffff;
   font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; }
-
-.mtk-login-content {
-  padding: 25px;
-  width: 500px; }
-
-.mtk-login h2 {
-  text-align: center;
-  margin-bottom: 24px;
-  font-weight: 500;
-  color: #212121; }
-
-.mtk-login form {
-  display: flex;
-  flex-direction: column;
-  gap: 24px; }
-
-.mtk-login form .form-group {
-  position: relative; }
-
-.mtk-login form .form-group label {
-  display: block;
-  font-size: 14px;
-  margin-bottom: 4px;
-  color: #757575; }
-
-.mtk-login form .form-group input {
-  width: 100%;
-  padding: 14px 12px;
-  font-size: 16px;
-  border-radius: 8px;
-  border: 1px solid #cecece;
-  outline: none;
-  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-  color: #212121;
-  transition: border-color 200ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1); }
-
-.mtk-login form .form-group input:focus {
-  border-color: #1976d2;
-  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2); }
-
-.mtk-login form .form-group .error {
-  font-size: 12px;
-  color: #dc3545;
-  margin-top: 4px; }
-
-.mtk-login form button {
-  padding: 14px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #ffffff;
-  background-color: #1976d2;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-  transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1); }
-
-.mtk-login form button:hover, .mtk-login form button:focus {
-  background-color: #1565c0;
-  outline: none; }
-
-.mtk-login form .links {
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px; }
-
-.mtk-login form .links a {
-  color: #1976d2;
-  text-decoration: none;
-  cursor: pointer;
-  transition: color 200ms cubic-bezier(0.4, 0, 0.2, 1); }
-
-.mtk-login form .links a:hover, .mtk-login form .links a:focus {
-  color: #1565c0;
-  text-decoration: underline;
-  outline: none; }
-
-@media (max-width: 576px) {
-  .mtk-login {
-    padding: 16px; }
   .mtk-login-content {
-    width: 100%;
-    padding: 16px; } }
+    padding: 25px;
+    width: 500px; }
+  .mtk-login h2 {
+    text-align: center;
+    margin-bottom: 24px;
+    font-weight: 500;
+    color: #212121; }
+  .mtk-login form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px; }
+    .mtk-login form .form-group {
+      position: relative; }
+      .mtk-login form .form-group label {
+        display: block;
+        font-size: 14px;
+        margin-bottom: 4px;
+        color: #757575; }
+      .mtk-login form .form-group input {
+        width: 100%;
+        padding: 14px 12px;
+        font-size: 16px;
+        border-radius: 8px;
+        border: 1px solid #cecece;
+        outline: none;
+        font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+        color: #212121;
+        transition: border-color 200ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+        .mtk-login form .form-group input:focus {
+          border-color: #1976d2;
+          box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2); }
+      .mtk-login form .form-group .error {
+        font-size: 12px;
+        color: #dc3545;
+        margin-top: 4px; }
+    .mtk-login form button {
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #ffffff;
+      background-color: #1976d2;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+      .mtk-login form button:hover, .mtk-login form button:focus {
+        background-color: #1565c0;
+        outline: none; }
+    .mtk-login form .links {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px; }
+      .mtk-login form .links a {
+        color: #1976d2;
+        text-decoration: none;
+        cursor: pointer;
+        transition: color 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+        .mtk-login form .links a:hover, .mtk-login form .links a:focus {
+          color: #1565c0;
+          text-decoration: underline;
+          outline: none; }
+  @media (max-width: 576px) {
+    .mtk-login {
+      padding: 16px; }
+      .mtk-login-content {
+        width: 100%;
+        padding: 16px; } }
