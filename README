@@ -1,20 +1,7 @@
-session = {
-    user: {
-	...
-    },
-    dashboard: {
-	progress: 28,
-	panels: [1,2,3]
-	...
-    },
-    hierarchy: {
-	...
-    }
-    messages: {
-       []
-    }
-    settings: {
-       ...
-    }
-}
+UPDATE PROGRESS IN DASHBOARD
+------------------------------------
+wc.setDasbboardProgress(75)
 
+SET CURRICULUM TO ...
+------------------------------------
+wc.setCurrentLesson("admin", "M1", 0);

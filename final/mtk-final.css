@@ -550,6 +550,68 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0; }
+<<<<<<< HEAD
+=======
+
+@keyframes mtk-spin {
+  to {
+    transform: rotate(360deg); } }
+
+@keyframes mtk-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98); }
+  to {
+    opacity: 1;
+    transform: none; } }
+
+@keyframes mtk-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px); }
+  to {
+    opacity: 1;
+    transform: none; } }
+
+@keyframes mtk-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.5); }
+  to {
+    opacity: 1;
+    transform: scale(1); } }
+or: #e8f0fe;
+    border-radius: var(--_r-md);
+    padding: 14px 18px;
+    font-size: 14px;
+    line-height: 1.45;
+    margin-top: 20px;
+    box-shadow: var(--_elev-3);
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+    transition: opacity var(--_dur-med) var(--_ease), transform var(--_dur-med) var(--_ease);
+    pointer-events: none;
+    visibility: hidden; }
+    .mtk-final__toast .material-icons {
+      font-size: 22px;
+      color: #81c995;
+      flex-shrink: 0; }
+    .mtk-final__toast--show {
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+      visibility: visible; }
+  .mtk-final__sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0; }
+>>>>>>> 06.03.2026
 
 @keyframes mtk-spin {
   to {
