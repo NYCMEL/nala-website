@@ -5,3 +5,12 @@ wc.setDasbboardProgress(75)
 SET CURRICULUM TO ...
 ------------------------------------
 wc.setCurrentLesson("admin", "M1", 0);
+
+wc.testing in (_wc.js file)
+  "true"  = USE LOCAL CONFIG FILE AND OTHER STUFF
+  "false" = NORMAL OPERATIONS
+
+window.wcENV (_wc.js file)
+  "dev"  = print all development console logs
+  "prod" = no logs are printed to console
+
