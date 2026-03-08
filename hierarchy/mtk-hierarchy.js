@@ -22,6 +22,7 @@ class MTKHierarchy {
 
         // Add IDs to items that don't have them
         this.ensureIds();
+        this.enforceRegisteredAccessCaps();
 
         // Bind methods
         this.onMessage = this.onMessage.bind(this);
@@ -34,6 +35,58 @@ class MTKHierarchy {
 
         // Wait for DOM to be ready
         this.waitForElement();
+    }
+
+    /**
+     * Return true if the current logged-in role is registered (unpaid).
+     */
+    isRegisteredRole() {
+        const role = (typeof wc !== 'undefined' && wc.session && wc.session.user && wc.session.user.role)
+            ? String(wc.session.user.role).toLowerCase()
+            : '';
+        return role === 'registered';
+    }
+
+    /**
+     * Hard-cap registered users to intro + first 3 lessons (lesson_no 0..3)
+     * regardless of overly-permissive payloads.
+     */
+    enforceRegisteredAccessCaps() {
+        if (!this.isRegisteredRole()) return;
+        if (!this.config || !Array.isArray(this.config)) return;
+
+        this.config.forEach(course => {
+            if (!course.modules) return;
+
+            course.modules.forEach(module => {
+                let moduleHasAccess = false;
+
+                if (Array.isArray(module.lessons)) {
+                    module.lessons.forEach(lesson => {
+                        const lessonNo = Number(lesson.lesson_no);
+                        const allowed = Number.isFinite(lessonNo) && lessonNo <= 3;
+
+                        lesson.access = allowed;
+                        if (allowed) moduleHasAccess = true;
+
+                        if (Array.isArray(lesson.resources)) {
+                            lesson.resources.forEach(resource => {
+                                resource.access = allowed;
+                            });
+                        }
+                    });
+                }
+
+                module.access = moduleHasAccess;
+                if (module.quiz) {
+                    module.quiz.access = false;
+                }
+            });
+        });
+
+        if (typeof wc !== 'undefined') {
+            wc.log('MTKHierarchy: enforced registered access cap (lesson_no <= 3)');
+        }
     }
 
     /**
@@ -1095,6 +1148,13 @@ class MTKHierarchy {
                 for (const lesson of module.lessons) {
                     const resource = lesson.resources.find(r => r.id === resourceId);
                     if (resource) {
+                        if (!resource.access) {
+                            if (typeof wc !== 'undefined') {
+                                wc.warn('MTKHierarchy: Skipping loadResourceById for disabled resource', resourceId);
+                            }
+                            return;
+                        }
+
                         this.openModules.add(module.id);
                         this.openLessons.add(`${module.id}-${lesson.id}`);
 
