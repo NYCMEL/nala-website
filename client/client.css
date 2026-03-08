@@ -370,8 +370,8 @@ body {
   .client-sidebar {
     order: -1; } }
 
-  .btn-primary:active {
-    transform: translateY(0); }
+.btn-primary:active {
+  transform: translateY(0); }
 
 @media (max-width: 768px) {
   .client-header {
@@ -385,3 +385,4 @@ body {
     flex-direction: column; }
   .client-sidebar {
     order: -1; } }
+} }
