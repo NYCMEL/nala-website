@@ -65,7 +65,8 @@
   --app-header-height:      64px; }
 
 body {
-  margin-top: 80px; }
+  margin-top: 80px;
+  font-family: fm !important; }
 
 .mtk-video {
   display: block;
