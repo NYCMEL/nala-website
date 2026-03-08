@@ -254,8 +254,6 @@ class _febe {
 	
 	// SHOW PUBLIC HEADER
 	$(".app-header").hide(() => $("#header-public").show(() => wc.pages.show("home")));
-
-	wc.pages.show("dashboard");
     }
 
     //////////////////////////////////////////////////////////////////
