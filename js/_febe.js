@@ -156,11 +156,20 @@ class _febe {
 	wc.pages.show("register");
 
 	wc.timeout(function(){
-	    wc.pages.show("register");
+	    // Force a reload if register page exists but is blank.
+	    const page = document.querySelector('[mtk-pages-id="register"]');
+	    if (page && page.innerHTML.trim() === "") {
+		wc.pages.refresh("register");
+	    } else {
+		wc.pages.show("register");
+	    }
 
-	    // NEED TO FIND WHY NOT SHOWING AFTER CLICKING ON LOGIN
 	    $('[mtk-pages-id="register"]').css("display","block");
+<<<<<<< HEAD
 	}, 500, 1);
+=======
+	}, 200, 1);
+>>>>>>> 318d7b6 (Josh 2026-03-08 (Codex): fix register nav blank-page fallback by refreshing empty register view)
     }
     handleForgotPassword() {
 	const emailInput = document.querySelector("#mtk-email");
