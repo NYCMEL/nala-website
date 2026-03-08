@@ -185,7 +185,7 @@ class _febe {
 			MTKMsgs.show({
 			    type: 'error',
 			    icon: 'error',
-			    message: wc.emsg(1003),
+			    message: (json && (json.error || json.message)) ? (json.error || json.message) : wc.emsg(1003),
 			    closable: true,
 			    timer: 10
 			});
@@ -347,4 +347,5 @@ class _febe {
 
 /* auto-init */
 window._febe = new _febe();
+
 
