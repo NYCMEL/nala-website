@@ -116,7 +116,7 @@ if (typeof MtkSettings === 'undefined') {
 	}
 
 	setup() {
-            if (this.config.labels?.title) {
+            if (this.config.labels && this.config.labels.title) {
 		this.elements.title.textContent = this.config.labels.title;
             }
 
@@ -213,7 +213,8 @@ if (typeof MtkSettings === 'undefined') {
         }
 
         sendResetLink() {
-            const email = String(this.elements.email?.value || '').trim().toLowerCase();
+            const emailEl = this.elements && this.elements.email ? this.elements.email : null;
+            const email = String(emailEl ? emailEl.value : '').trim().toLowerCase();
             if (!email) {
                 this.showMessage('error', 'No account email found for password reset.');
                 return;
@@ -224,12 +225,13 @@ if (typeof MtkSettings === 'undefined') {
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email })
-            }).then(async (res) => {
-                const json = await res.json().catch(() => ({}));
-                if (!res.ok) {
-                    throw new Error((json && (json.error || json.message)) || 'Could not send reset link.');
-                }
-                return json;
+            }).then((res) => {
+                return res.json().catch(() => ({})).then((json) => {
+                    if (!res.ok) {
+                        throw new Error((json && (json.error || json.message)) || 'Could not send reset link.');
+                    }
+                    return json;
+                });
             }).then(() => {
                 this.showMessage('success', 'Password reset email sent. Please check your inbox.');
                 wc.publish('4-mtk-settings', {
