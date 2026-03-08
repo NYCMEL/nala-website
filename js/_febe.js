@@ -81,7 +81,18 @@ class _febe {
 	const handler = this.handlers[msg];
 
 	if (handler) {
-	    handler(data);
+	    const pagesRef = wc.pages || document.getElementById("mtk-pages");
+	    if (pagesRef && typeof pagesRef.show === "function") {
+		wc.pages = pagesRef;
+	    }
+
+	    if (!wc.pages || typeof wc.pages.show !== "function") {
+		wc.warn("_febe: wc.pages not ready, retrying", msg);
+		wc.timeout(() => this.onMessage(msg, data), 150, 1);
+		return;
+	    }
+
+	    handler.call(this, data);
 	} else {
 	    wc.error("_febe: DO NOT HAVE:" + msg);
 	    alert("_febe: DO NOT HAVE:" + msg);
