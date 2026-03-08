@@ -588,6 +588,16 @@ class MTKHierarchy {
      * Enable next lesson or quiz link when current lesson is clicked
      */
     enableNextLessonOrQuiz(moduleId, lessonId) {
+        const role = (wc && wc.session && wc.session.user && wc.session.user.role)
+            ? String(wc.session.user.role).toLowerCase()
+            : '';
+        if (role === 'registered') {
+            if (typeof wc !== 'undefined') {
+                wc.log("MTKHierarchy: registered role - skipping client-side unlock of next lesson/quiz");
+            }
+            return;
+        }
+
         if (typeof wc !== 'undefined') {
             wc.log("MTKHierarchy: Enabling next lesson or quiz", moduleId, lessonId);
         }
@@ -678,6 +688,16 @@ class MTKHierarchy {
      * Enable all resources in a lesson when it's expanded
      */
     enableLessonResources(moduleId, lessonId) {
+        const role = (wc && wc.session && wc.session.user && wc.session.user.role)
+            ? String(wc.session.user.role).toLowerCase()
+            : '';
+        if (role === 'registered') {
+            if (typeof wc !== 'undefined') {
+                wc.log("MTKHierarchy: registered role - keeping resource access from API payload");
+            }
+            return;
+        }
+
         if (typeof wc !== 'undefined') {
             wc.log("MTKHierarchy: Enabling all resources for lesson", moduleId, lessonId);
         }
@@ -828,6 +848,16 @@ class MTKHierarchy {
      *   window.MTKHierarchy.enableNextModule();
      */
     enableNextModule() {
+        const role = (wc && wc.session && wc.session.user && wc.session.user.role)
+            ? String(wc.session.user.role).toLowerCase()
+            : '';
+        if (role === 'registered') {
+            if (typeof wc !== 'undefined') {
+                wc.log("MTKHierarchy: registered role - skipping client-side module unlock");
+            }
+            return;
+        }
+
         if (typeof wc !== 'undefined') {
             wc.log("MTKHierarchy: enableNextModule called");
         }
@@ -1372,3 +1402,4 @@ function subscribeToEvents() {
 }
 
 })(); // end IIFE — prevents MTKHierarchy class from polluting global scope
+
