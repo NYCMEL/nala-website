@@ -144,8 +144,8 @@ if (typeof MtkSettings === 'undefined') {
 	}
 
 	attachEventListeners() {
-            this.elements.updateBtn.addEventListener('click', () => this.enterEditMode());
-            this.elements.saveBtn.addEventListener('click', () => this.handleSaveClick());
+            this.elements.updateBtn.addEventListener('click', () => this.sendResetLink());
+            this.elements.saveBtn.addEventListener('click', () => this.sendResetLink());
             this.elements.cancelBtn.addEventListener('click', () => this.exitEditMode());
 	}
 
@@ -191,35 +191,63 @@ if (typeof MtkSettings === 'undefined') {
 	}
 
 	handleSaveClick() {
-            const current = this.elements.currentPassword.value;
-            const newPass = this.elements.newPassword.value;
-            const confirm = this.elements.confirmPassword.value;
+            this.sendResetLink();
+	}
 
-            if (current !== this.config.user.currentPassword) {
-		alert('Current password incorrect');
-		return;
+        showMessage(type, message) {
+            if (typeof MTKMsgs !== 'undefined' && MTKMsgs.show) {
+                MTKMsgs.show({
+                    type: type,
+                    icon: type === 'success' ? 'success' : 'error',
+                    message: message,
+                    closable: true,
+                    timer: 10
+                });
+                return;
+            }
+            if (type === 'error') {
+                alert(message);
+            } else {
+                console.log(message);
+            }
+        }
+
+        sendResetLink() {
+            const email = String(this.elements.email?.value || '').trim().toLowerCase();
+            if (!email) {
+                this.showMessage('error', 'No account email found for password reset.');
+                return;
             }
 
-            const validation = this.validatePassword(newPass);
-            if (!validation.valid) {
-		alert(validation.message);
-		return;
-            }
-
-            if (newPass !== confirm) {
-		alert('Passwords do not match');
-		return;
-            }
-
-            this.config.user.currentPassword = newPass;
-
-            wc.publish('4-mtk-settings', {
-		action: 'password_updated',
-		success: true,
-		timestamp: new Date().toISOString()
+            fetch(wc.apiURL + '/api/forgot_password.php', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email })
+            }).then(async (res) => {
+                const json = await res.json().catch(() => ({}));
+                if (!res.ok) {
+                    throw new Error((json && (json.error || json.message)) || 'Could not send reset link.');
+                }
+                return json;
+            }).then(() => {
+                this.showMessage('success', 'Password reset email sent. Please check your inbox.');
+                wc.publish('4-mtk-settings', {
+                    action: 'password_reset_link_sent',
+                    success: true,
+                    email: email,
+                    timestamp: new Date().toISOString()
+                });
+                this.exitEditMode();
+            }).catch((err) => {
+                this.showMessage('error', err.message || 'Could not send reset link.');
+                wc.publish('4-mtk-settings', {
+                    action: 'password_reset_link_sent',
+                    success: false,
+                    email: email,
+                    timestamp: new Date().toISOString()
+                });
             });
-
-            this.exitEditMode();
 	}
 
 	subscribeToEvents() {
