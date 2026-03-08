@@ -20,6 +20,10 @@
 
 // ── SCSS Variables (for @use in component files) ─────────────
 
+h1, h2, h3, h4, h5, h6 {
+    font-family: fm!important;
+}
+
 // Backgrounds
 $bg-white:              #ffffff;
 $bg-light:              #fafafa;

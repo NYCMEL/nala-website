@@ -22,6 +22,9 @@
 .fbi {
   font-family: 'Amplitude Bold Italic', sans-serif; }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: fm !important; }
+
 :root {
   --mtk-primary:            #1976d2;
   --mtk-primary-dark:       #1565c0;
