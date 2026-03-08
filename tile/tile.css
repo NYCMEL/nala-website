@@ -1,52 +1,111 @@
-.mtk-tile {
-  perspective: 1200px;
-  width: 100%;
-  max-width: 360px;
-  height: 220px;
-  margin: 1rem auto;
-  cursor: pointer;
-  /* JUST ADDED THIS TO CENTER TITLES */ }
+@import url("fonts/font-awesome.css");
+@import url("fonts/roboto.css");
+@import url("fonts/amplitude.css");
+.fl {
+  font-family: 'Amplitude', sans-serif; }
 
-.mtk-tile-inner {
+.fb {
+  font-family: 'Amplitude Bold', sans-serif; }
+
+.fr {
+  font-family: 'Roboto', sans-serif; }
+
+.fm {
+  font-family: 'Amplitude Medium', sans-serif; }
+
+.fri {
+  font-family: 'Roboto Italic', sans-serif; }
+
+.fmi {
+  font-family: 'Amplitude Medium Italic', sans-serif; }
+
+.fbi {
+  font-family: 'Amplitude Bold Italic', sans-serif; }
+
+:root {
+  --mtk-primary:            #1976d2;
+  --mtk-primary-dark:       #1565c0;
+  --mtk-primary-light:      #42a5f5;
+  --mtk-primary-deep:       #0d47a1;
+  --mtk-bs-primary:         #0d6efd;
+  --mtk-bs-primary-light:   #3d8bfd;
+  --mtk-bs-primary-dark:    #0a58ca;
+  --mtk-accent:             #ff4081;
+  --mtk-accent-dark:        #e91e63;
+  --mtk-accent-darker:      #c2185b;
+  --mtk-accent-deep:        #880e4f;
+  --mtk-secondary:          #6c757d;
+  --mtk-success:            #4caf50;
+  --mtk-success-bs:         #00c853;
+  --mtk-warning:            #ff9800;
+  --mtk-warning-icon:       #F59E0B;
+  --mtk-error:              #b00020;
+  --mtk-info:               #0dcaf0;
+  --mtk-info-text:          #055160;
+  --mtk-background:         #fafafa;
+  --mtk-background-light:   #f5f8ff;
+  --mtk-background-grey:    #f5f5f5;
+  --mtk-surface:            #ffffff;
+  --mtk-text-primary:       rgba(0, 0, 0, 0.87);
+  --mtk-text-secondary:     rgba(0, 0, 0, 0.6);
+  --mtk-text-disabled:      rgba(0, 0, 0, 0.38);
+  --mtk-shadow-1:           0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --mtk-shadow-2:           0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  --mtk-shadow-3:           0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  --mtk-shadow-card:        0 6px 18px rgba(0, 0, 0, 0.18);
+  --mtk-transition:         all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --mtk-easing-standard:    cubic-bezier(0.4, 0, 0.2, 1);
+  --mtk-duration-short:     200ms;
+  --mtk-duration-standard:  300ms;
+  --mtk-flip-duration:      0.6s;
+  --mtk-border-radius:      4px;
+  --mtk-border-radius-card: 16px;
+  --mtk-border-radius-pill: 100px;
+  --mtk-header-height:      64px;
+  --app-header-height:      64px; }
+
+body {
+  margin-top: 80px; }
+
+.mtk-tile {
+  perspective: 1000px;
+  cursor: pointer; }
+
+.mtk-tile__inner {
   position: relative;
   width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 16px; }
+  transform-style: preserve-3d; }
 
-.mtk-tile.is-flipped .mtk-tile-inner {
+.mtk-tile:hover .mtk-tile__inner,
+.mtk-tile.flipped .mtk-tile__inner {
   transform: rotateY(180deg); }
 
-.mtk-tile-face {
+.mtk-tile__front, .mtk-tile__back {
   position: absolute;
-  inset: 0;
+  width: 100%;
   backface-visibility: hidden;
   border-radius: 16px;
-  padding: 1.25rem;
-  color: #fff;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  display: flex;
-  flex-direction: column; }
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  padding: 2rem;
+  background-color: #3A87D1;
+  color: #ffffff; }
 
-.mtk-tile-title {
-  font-size: 1.1rem;
+.mtk-tile__back {
+  transform: rotateY(180deg);
+  background-color: #1565c0; }
+
+.mtk-tile__icon {
+  font-family: "Material Icons";
+  font-size: 48px;
+  margin-bottom: 1rem; }
+
+.mtk-tile__title {
+  font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 0.5rem; }
 
-.mtk-tile-body {
+.mtk-tile__desc {
   font-size: 0.95rem;
-  line-height: 1.4;
-  flex: 1; }
-
-.mtk-tile-back {
-  background: #1f5486 !important;
-  transform: rotateY(180deg); }
-
-.mtk-tile-front {
-  background: #3A87D1 !important; }
-
-.mtk-tile .mtk-tile-front > .mtk-tile-title {
-  padding-top: 60px;
-  text-align: center;
-  font-family: fmi; }
+  opacity: 0.9;
+  line-height: 1.5; }

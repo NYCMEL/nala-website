@@ -1,16 +1,86 @@
+@import url("fonts/font-awesome.css");
+@import url("fonts/roboto.css");
+@import url("fonts/amplitude.css");
+.fl {
+  font-family: 'Amplitude', sans-serif; }
+
+.fb {
+  font-family: 'Amplitude Bold', sans-serif; }
+
+.fr {
+  font-family: 'Roboto', sans-serif; }
+
+.fm {
+  font-family: 'Amplitude Medium', sans-serif; }
+
+.fri {
+  font-family: 'Roboto Italic', sans-serif; }
+
+.fmi {
+  font-family: 'Amplitude Medium Italic', sans-serif; }
+
+.fbi {
+  font-family: 'Amplitude Bold Italic', sans-serif; }
+
+:root {
+  --mtk-primary:            #1976d2;
+  --mtk-primary-dark:       #1565c0;
+  --mtk-primary-light:      #42a5f5;
+  --mtk-primary-deep:       #0d47a1;
+  --mtk-bs-primary:         #0d6efd;
+  --mtk-bs-primary-light:   #3d8bfd;
+  --mtk-bs-primary-dark:    #0a58ca;
+  --mtk-accent:             #ff4081;
+  --mtk-accent-dark:        #e91e63;
+  --mtk-accent-darker:      #c2185b;
+  --mtk-accent-deep:        #880e4f;
+  --mtk-secondary:          #6c757d;
+  --mtk-success:            #4caf50;
+  --mtk-success-bs:         #00c853;
+  --mtk-warning:            #ff9800;
+  --mtk-warning-icon:       #F59E0B;
+  --mtk-error:              #b00020;
+  --mtk-info:               #0dcaf0;
+  --mtk-info-text:          #055160;
+  --mtk-background:         #fafafa;
+  --mtk-background-light:   #f5f8ff;
+  --mtk-background-grey:    #f5f5f5;
+  --mtk-surface:            #ffffff;
+  --mtk-text-primary:       rgba(0, 0, 0, 0.87);
+  --mtk-text-secondary:     rgba(0, 0, 0, 0.6);
+  --mtk-text-disabled:      rgba(0, 0, 0, 0.38);
+  --mtk-shadow-1:           0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --mtk-shadow-2:           0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  --mtk-shadow-3:           0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  --mtk-shadow-card:        0 6px 18px rgba(0, 0, 0, 0.18);
+  --mtk-transition:         all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --mtk-easing-standard:    cubic-bezier(0.4, 0, 0.2, 1);
+  --mtk-duration-short:     200ms;
+  --mtk-duration-standard:  300ms;
+  --mtk-flip-duration:      0.6s;
+  --mtk-border-radius:      4px;
+  --mtk-border-radius-card: 16px;
+  --mtk-border-radius-pill: 100px;
+  --mtk-header-height:      64px;
+  --app-header-height:      64px; }
+
+body {
+  margin-top: 80px; }
+
 .carousel-card {
   padding-left: 60px;
   padding-right: 60px;
   border-radius: 4px;
   min-height: 300px; }
-  .carousel-card h2 {
-    font-family: fm;
-    color: #000;
-    padding: 20px;
-    font-family: fbi;
-    font-size: 26px; }
-  .carousel-card p {
-    font-size: 20px; }
+
+.carousel-card h2 {
+  font-family: fbi;
+  color: #000;
+  padding: 20px;
+  font-size: 26px; }
+
+.carousel-card p {
+  font-size: 20px; }
 
 .mtk-carousel {
   position: relative;
@@ -19,53 +89,61 @@
   background: #ffffff;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   overflow: hidden; }
-  .mtk-carousel .mtk-carousel-viewport {
-    overflow: hidden;
-    width: 100%;
-    background: #ccedfd; }
-  .mtk-carousel .mtk-carousel-track {
-    display: flex;
-    width: 100%;
-    transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1); }
-  .mtk-carousel .mtk-carousel-slide {
-    min-width: 100%;
-    box-sizing: border-box; }
-  .mtk-carousel .mtk-carousel-btn {
-    border: 1px #cecece solid !important;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-    background: #82d4fa;
-    color: #000;
-    font-size: 24px;
-    cursor: pointer; }
-    .mtk-carousel .mtk-carousel-btn.prev {
-      left: 12px; }
-    .mtk-carousel .mtk-carousel-btn.next {
-      right: 12px; }
-  .mtk-carousel .mtk-carousel-dots {
-    display: flex;
-    justify-content: center;
-    padding: 12px 0; }
-    .mtk-carousel .mtk-carousel-dots .mtk-carousel-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      border: none;
-      margin: 0 6px;
-      background: #ccc;
-      cursor: pointer; }
-      .mtk-carousel .mtk-carousel-dots .mtk-carousel-dot.active {
-        background: #82d4fa; }
+
+.mtk-carousel .mtk-carousel-viewport {
+  overflow: hidden;
+  width: 100%;
+  background: #ccedfd; }
+
+.mtk-carousel .mtk-carousel-track {
+  display: flex;
+  width: 100%;
+  transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1); }
+
+.mtk-carousel .mtk-carousel-slide {
+  min-width: 100%;
+  box-sizing: border-box; }
+
+.mtk-carousel .mtk-carousel-btn {
+  border: 1px #cecece solid !important;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #82d4fa;
+  color: #000;
+  font-size: 24px;
+  cursor: pointer; }
+
+.mtk-carousel .mtk-carousel-btn.prev {
+  left: 12px; }
+
+.mtk-carousel .mtk-carousel-btn.next {
+  right: 12px; }
+
+.mtk-carousel .mtk-carousel-dots {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0; }
+
+.mtk-carousel .mtk-carousel-dots .mtk-carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  margin: 0 6px;
+  background: #ccc;
+  cursor: pointer; }
+
+.mtk-carousel .mtk-carousel-dots .mtk-carousel-dot.active {
+  background: #82d4fa; }
 
 @media (max-width: 576px) {
   .mtk-carousel {
     border-radius: 0; }
-    .mtk-carousel .mtk-carousel-btn {
-      width: 34px;
-      height: 34px;
-      font-size: 20px; } }
+  .mtk-carousel .mtk-carousel-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 20px; } }

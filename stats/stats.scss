@@ -1,7 +1,8 @@
-/* _stats.scss */
+// stats/stats.scss — DO NOT COMPILE
+@import '../css/app.scss';
 
 #_stats {
-  background-color: #f5f8ff;
+  background-color: $bg-light-blue;
 
   ._stats-item {
     padding: 1.5rem;
@@ -9,7 +10,7 @@
     ._stats-value {
       font-size: 3rem;
       font-weight: 700;
-      color: #2663eb;
+      color: $stats-value-color;
       line-height: 1.2;
     }
 
@@ -17,18 +18,11 @@
       margin-top: 0.5rem;
       font-size: 1.1rem;
       font-weight: 400;
-      color: #5f6368;
+      color: $text-grey;
     }
   }
 }
 
-/* Responsive tuning */
 @media (max-width: 768px) {
-  #_stats {
-    ._stats-item {
-      ._stats-value {
-        font-size: 2.4rem;
-      }
-    }
-  }
+  #_stats ._stats-item ._stats-value { font-size: 2.4rem; }
 }

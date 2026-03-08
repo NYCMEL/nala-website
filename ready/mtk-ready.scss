@@ -1,5 +1,12 @@
+// ready/mtk-ready.scss — DO NOT COMPILE
+@import '../css/app.scss';
+
+// Local tokens (ready-specific steel-blue palette)
+$ready-bg:          #5b88b1;
+$ready-title-color: #bfe7ff;
+
 .mtk-ready {
-  background-color: #5b88b1;
+  background-color: $ready-bg;
   padding: 48px 0;
   overflow: hidden;
 
@@ -10,24 +17,24 @@
   .mtk-ready-title {
     font-size: 1.75rem;
     font-weight: 600;
-    color: #bfe7ff;
+    color: $ready-title-color;
     margin-bottom: 8px;
   }
 
   .mtk-ready-desc {
     font-size: 1rem;
-    color: #ffffff;
+    color: $text-white;
     opacity: 0.95;
     margin: 0;
   }
 
   .mtk-ready-btn {
-    background-color: #ffffff;
-    color: #1565c0;
+    background-color: $bg-white;
+    color: $color-primary-dark;
     font-weight: 500;
     padding: 12px 24px;
-    border-radius: 8px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-2;
     transition: transform 180ms ease, box-shadow 180ms ease;
 
     &:hover {
@@ -40,4 +47,9 @@
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
   }
+}
+
+@keyframes mtk-ready-fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

@@ -1,67 +1,147 @@
+@import url("fonts/font-awesome.css");
+@import url("fonts/roboto.css");
+@import url("fonts/amplitude.css");
+.fl {
+  font-family: 'Amplitude', sans-serif; }
+
+.fb {
+  font-family: 'Amplitude Bold', sans-serif; }
+
+.fr {
+  font-family: 'Roboto', sans-serif; }
+
+.fm {
+  font-family: 'Amplitude Medium', sans-serif; }
+
+.fri {
+  font-family: 'Roboto Italic', sans-serif; }
+
+.fmi {
+  font-family: 'Amplitude Medium Italic', sans-serif; }
+
+.fbi {
+  font-family: 'Amplitude Bold Italic', sans-serif; }
+
+:root {
+  --mtk-primary:            #1976d2;
+  --mtk-primary-dark:       #1565c0;
+  --mtk-primary-light:      #42a5f5;
+  --mtk-primary-deep:       #0d47a1;
+  --mtk-bs-primary:         #0d6efd;
+  --mtk-bs-primary-light:   #3d8bfd;
+  --mtk-bs-primary-dark:    #0a58ca;
+  --mtk-accent:             #ff4081;
+  --mtk-accent-dark:        #e91e63;
+  --mtk-accent-darker:      #c2185b;
+  --mtk-accent-deep:        #880e4f;
+  --mtk-secondary:          #6c757d;
+  --mtk-success:            #4caf50;
+  --mtk-success-bs:         #00c853;
+  --mtk-warning:            #ff9800;
+  --mtk-warning-icon:       #F59E0B;
+  --mtk-error:              #b00020;
+  --mtk-info:               #0dcaf0;
+  --mtk-info-text:          #055160;
+  --mtk-background:         #fafafa;
+  --mtk-background-light:   #f5f8ff;
+  --mtk-background-grey:    #f5f5f5;
+  --mtk-surface:            #ffffff;
+  --mtk-text-primary:       rgba(0, 0, 0, 0.87);
+  --mtk-text-secondary:     rgba(0, 0, 0, 0.6);
+  --mtk-text-disabled:      rgba(0, 0, 0, 0.38);
+  --mtk-shadow-1:           0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --mtk-shadow-2:           0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  --mtk-shadow-3:           0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  --mtk-shadow-card:        0 6px 18px rgba(0, 0, 0, 0.18);
+  --mtk-transition:         all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --mtk-easing-standard:    cubic-bezier(0.4, 0, 0.2, 1);
+  --mtk-duration-short:     200ms;
+  --mtk-duration-standard:  300ms;
+  --mtk-flip-duration:      0.6s;
+  --mtk-border-radius:      4px;
+  --mtk-border-radius-card: 16px;
+  --mtk-border-radius-pill: 100px;
+  --mtk-header-height:      64px;
+  --app-header-height:      64px; }
+
+body {
+  margin-top: 80px; }
+
 .mtk-login {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 30px auto;
   padding: 30px;
-  border-radius: 12px;
+  border-radius: 8px;
   background-color: #ffffff;
-  font-family: "Roboto", sans-serif; }
-  .mtk-login .mtk-login-content {
-    padding: 25px;
-    width: 500px; }
-  .mtk-login h2 {
-    text-align: center;
-    margin-bottom: 24px;
-    font-weight: 500; }
-  .mtk-login form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px; }
-    .mtk-login form .form-group {
-      position: relative; }
-      .mtk-login form .form-group label {
-        display: block;
-        font-size: 14px;
-        margin-bottom: 4px; }
-      .mtk-login form .form-group input {
-        width: 100%;
-        padding: 14px 12px;
-        font-size: 16px;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        outline: none;
-        transition: border-color 0.2s; }
-      .mtk-login form .form-group input:focus {
-        border-color: #1976d2;
-        box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2); }
-      .mtk-login form .form-group .error {
-        font-size: 12px;
-        color: #d32f2f;
-        margin-top: 4px; }
-    .mtk-login form button {
-      padding: 14px;
-      font-size: 16px;
-      font-weight: 500;
-      color: #fff;
-      background-color: #1976d2;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.2s; }
-    .mtk-login form button:hover,
-    .mtk-login form button:focus {
-      background-color: #1565c0;
-      outline: none; }
-    .mtk-login form .links {
-      display: flex;
-      justify-content: space-between;
-      font-size: 14px; }
-      .mtk-login form .links a {
-        color: #1976d2;
-        text-decoration: none;
-        cursor: pointer; }
-      .mtk-login form .links a:hover,
-      .mtk-login form .links a:focus {
-        text-decoration: underline;
-        outline: none; }
+  font-family: "Roboto", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+
+.mtk-login .mtk-login-content {
+  padding: 25px;
+  width: 500px; }
+
+.mtk-login h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  font-weight: 500; }
+
+.mtk-login form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; }
+
+.mtk-login form .form-group {
+  position: relative; }
+
+.mtk-login form .form-group label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 4px; }
+
+.mtk-login form .form-group input {
+  width: 100%;
+  padding: 14px 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: border-color 0.2s; }
+
+.mtk-login form .form-group input:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2); }
+
+.mtk-login form .form-group .error {
+  font-size: 12px;
+  color: #d32f2f;
+  margin-top: 4px; }
+
+.mtk-login form button {
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  background-color: #1976d2;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s; }
+
+.mtk-login form button:hover, .mtk-login form button:focus {
+  background-color: #1565c0;
+  outline: none; }
+
+.mtk-login form .links {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px; }
+
+.mtk-login form .links a {
+  color: #1976d2;
+  text-decoration: none;
+  cursor: pointer; }
+
+.mtk-login form .links a:hover, .mtk-login form .links a:focus {
+  text-decoration: underline;
+  outline: none; }

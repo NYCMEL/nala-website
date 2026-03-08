@@ -1,100 +1,86 @@
+// carousel/carousel.scss — DO NOT COMPILE
+@import '../css/app.scss';
+
 .carousel-card {
-    padding-left:60px;
-    padding-right:60px;
-    border-radius: 4px;
-    min-height:300px;
+    padding-left: 60px;
+    padding-right: 60px;
+    border-radius: $border-radius;
+    min-height: 300px;
 
     h2 {
-	font-family: fm;
-	color: #000;
-	padding: 20px;
-	font-family: fbi;
-	font-size: 26px;
+        font-family: fbi;
+        color: #000;
+        padding: 20px;
+        font-size: 26px;
     }
 
-    p {
-	font-size: 20px;
-    }
+    p { font-size: 20px; }
 }
 
 .mtk-carousel {
     position: relative;
     width: 100%;
-    border-radius: 4px;
-    background: #ffffff;
+    border-radius: $border-radius;
+    background: $bg-white;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     overflow: hidden;
 
-
     .mtk-carousel-viewport {
-	overflow: hidden;
-	width: 100%;
-	background: lighten(#82d4fa,15);
+        overflow: hidden;
+        width: 100%;
+        background: lighten($carousel-blue, 15%);
     }
 
     .mtk-carousel-track {
-	display: flex;
-	width: 100%;
-	transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        width: 100%;
+        transition: transform 400ms $motion-easing-standard;
     }
 
     .mtk-carousel-slide {
-	min-width: 100%;
-	box-sizing: border-box;
+        min-width: 100%;
+        box-sizing: border-box;
     }
 
     .mtk-carousel-btn {
-	border:1px #cecece solid!important;
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	width: 40px;
-	height: 40px;
-	border-radius: 50%;
-	border: none;
-	background: #82d4fa;
-	color: #000;
-	font-size: 24px;
-	cursor: pointer;
+        border: 1px $border-light solid !important;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: $carousel-blue;
+        color: #000;
+        font-size: 24px;
+        cursor: pointer;
 
-	&.prev {
-	    left: 12px;
-	}
-
-	&.next {
-	    right: 12px;
-	}
+        &.prev { left: 12px; }
+        &.next { right: 12px; }
     }
 
     .mtk-carousel-dots {
-	display: flex;
-	justify-content: center;
-	padding: 12px 0;
+        display: flex;
+        justify-content: center;
+        padding: 12px 0;
 
-	.mtk-carousel-dot {
-	    width: 10px;
-	    height: 10px;
-	    border-radius: 50%;
-	    border: none;
-	    margin: 0 6px;
-	    background: #ccc;
-	    cursor: pointer;
+        .mtk-carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: none;
+            margin: 0 6px;
+            background: #ccc;
+            cursor: pointer;
 
-	    &.active {
-		background: #82d4fa;
-	    }
-	}
+            &.active { background: $carousel-blue; }
+        }
     }
 }
 
 @media (max-width: 576px) {
     .mtk-carousel {
-	border-radius: 0;
-
-	.mtk-carousel-btn {
-	    width: 34px;
-	    height: 34px;
-	    font-size: 20px;
-	}
+        border-radius: 0;
+        .mtk-carousel-btn { width: 34px; height: 34px; font-size: 20px; }
     }
 }

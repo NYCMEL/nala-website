@@ -1,5 +1,74 @@
+@import url("fonts/font-awesome.css");
+@import url("fonts/roboto.css");
+@import url("fonts/amplitude.css");
+.fl {
+  font-family: 'Amplitude', sans-serif; }
+
+.fb {
+  font-family: 'Amplitude Bold', sans-serif; }
+
+.fr {
+  font-family: 'Roboto', sans-serif; }
+
+.fm {
+  font-family: 'Amplitude Medium', sans-serif; }
+
+.fri {
+  font-family: 'Roboto Italic', sans-serif; }
+
+.fmi {
+  font-family: 'Amplitude Medium Italic', sans-serif; }
+
+.fbi {
+  font-family: 'Amplitude Bold Italic', sans-serif; }
+
+:root {
+  --mtk-primary:            #1976d2;
+  --mtk-primary-dark:       #1565c0;
+  --mtk-primary-light:      #42a5f5;
+  --mtk-primary-deep:       #0d47a1;
+  --mtk-bs-primary:         #0d6efd;
+  --mtk-bs-primary-light:   #3d8bfd;
+  --mtk-bs-primary-dark:    #0a58ca;
+  --mtk-accent:             #ff4081;
+  --mtk-accent-dark:        #e91e63;
+  --mtk-accent-darker:      #c2185b;
+  --mtk-accent-deep:        #880e4f;
+  --mtk-secondary:          #6c757d;
+  --mtk-success:            #4caf50;
+  --mtk-success-bs:         #00c853;
+  --mtk-warning:            #ff9800;
+  --mtk-warning-icon:       #F59E0B;
+  --mtk-error:              #b00020;
+  --mtk-info:               #0dcaf0;
+  --mtk-info-text:          #055160;
+  --mtk-background:         #fafafa;
+  --mtk-background-light:   #f5f8ff;
+  --mtk-background-grey:    #f5f5f5;
+  --mtk-surface:            #ffffff;
+  --mtk-text-primary:       rgba(0, 0, 0, 0.87);
+  --mtk-text-secondary:     rgba(0, 0, 0, 0.6);
+  --mtk-text-disabled:      rgba(0, 0, 0, 0.38);
+  --mtk-shadow-1:           0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --mtk-shadow-2:           0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  --mtk-shadow-3:           0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  --mtk-shadow-card:        0 6px 18px rgba(0, 0, 0, 0.18);
+  --mtk-transition:         all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --mtk-easing-standard:    cubic-bezier(0.4, 0, 0.2, 1);
+  --mtk-duration-short:     200ms;
+  --mtk-duration-standard:  300ms;
+  --mtk-flip-duration:      0.6s;
+  --mtk-border-radius:      4px;
+  --mtk-border-radius-card: 16px;
+  --mtk-border-radius-pill: 100px;
+  --mtk-header-height:      64px;
+  --app-header-height:      64px; }
+
+body {
+  margin-top: 80px; }
+
 .md-form {
-  background: #fff;
+  background: #ffffff;
   max-width: 600px;
   margin: auto;
   padding: 32px;
@@ -8,38 +77,43 @@
 
 .form-title {
   margin-bottom: 24px;
-  color: #333; }
+  color: #333333; }
 
 .md-field {
   position: relative;
   margin-bottom: 28px; }
-  .md-field input {
-    width: 100%;
-    border: none;
-    border-bottom: 2px solid #ccc;
-    padding: 12px 4px;
-    font-size: 16px;
-    background: transparent; }
-    .md-field input:focus {
-      outline: none;
-      border-bottom-color: #1b76d2; }
-    .md-field input:focus + label,
-    .md-field input:not(:placeholder-shown) + label {
-      transform: translateY(-18px);
-      font-size: 12px;
-      color: #1b76d2; }
-  .md-field label {
-    position: absolute;
-    left: 4px;
-    top: 14px;
-    color: #777;
-    pointer-events: none;
-    transition: 0.2s ease; }
-  .md-field .helper {
-    font-size: 12px;
-    color: #777;
-    margin-top: 4px;
-    display: block; }
+
+.md-field input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  padding: 12px 4px;
+  font-size: 16px;
+  background: transparent; }
+
+.md-field input:focus {
+  outline: none;
+  border-bottom-color: #1b76d2; }
+
+.md-field input:focus + label,
+.md-field input:not(:placeholder-shown) + label {
+  transform: translateY(-18px);
+  font-size: 12px;
+  color: #1b76d2; }
+
+.md-field label {
+  position: absolute;
+  left: 4px;
+  top: 14px;
+  color: #616161;
+  pointer-events: none;
+  transition: 0.2s ease; }
+
+.md-field .helper {
+  font-size: 12px;
+  color: #616161;
+  margin-top: 4px;
+  display: block; }
 
 .required {
   color: #d32f2f; }
@@ -49,13 +123,14 @@
   padding: 12px;
   border: none;
   background: #1b76d2;
-  color: white;
+  color: #ffffff;
   font-size: 16px;
   border-radius: 4px;
   cursor: pointer; }
-  .submit-btn:hover {
-    color: #FFF;
-    background: #155da5; }
+
+.submit-btn:hover {
+  color: #ffffff;
+  background: #155da5; }
 
 .helper.error {
   color: #d32f2f; }

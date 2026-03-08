@@ -1,3 +1,72 @@
+@import url("fonts/font-awesome.css");
+@import url("fonts/roboto.css");
+@import url("fonts/amplitude.css");
+.fl {
+  font-family: 'Amplitude', sans-serif; }
+
+.fb {
+  font-family: 'Amplitude Bold', sans-serif; }
+
+.fr {
+  font-family: 'Roboto', sans-serif; }
+
+.fm {
+  font-family: 'Amplitude Medium', sans-serif; }
+
+.fri {
+  font-family: 'Roboto Italic', sans-serif; }
+
+.fmi {
+  font-family: 'Amplitude Medium Italic', sans-serif; }
+
+.fbi {
+  font-family: 'Amplitude Bold Italic', sans-serif; }
+
+:root {
+  --mtk-primary:            #1976d2;
+  --mtk-primary-dark:       #1565c0;
+  --mtk-primary-light:      #42a5f5;
+  --mtk-primary-deep:       #0d47a1;
+  --mtk-bs-primary:         #0d6efd;
+  --mtk-bs-primary-light:   #3d8bfd;
+  --mtk-bs-primary-dark:    #0a58ca;
+  --mtk-accent:             #ff4081;
+  --mtk-accent-dark:        #e91e63;
+  --mtk-accent-darker:      #c2185b;
+  --mtk-accent-deep:        #880e4f;
+  --mtk-secondary:          #6c757d;
+  --mtk-success:            #4caf50;
+  --mtk-success-bs:         #00c853;
+  --mtk-warning:            #ff9800;
+  --mtk-warning-icon:       #F59E0B;
+  --mtk-error:              #b00020;
+  --mtk-info:               #0dcaf0;
+  --mtk-info-text:          #055160;
+  --mtk-background:         #fafafa;
+  --mtk-background-light:   #f5f8ff;
+  --mtk-background-grey:    #f5f5f5;
+  --mtk-surface:            #ffffff;
+  --mtk-text-primary:       rgba(0, 0, 0, 0.87);
+  --mtk-text-secondary:     rgba(0, 0, 0, 0.6);
+  --mtk-text-disabled:      rgba(0, 0, 0, 0.38);
+  --mtk-shadow-1:           0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --mtk-shadow-2:           0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  --mtk-shadow-3:           0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  --mtk-shadow-card:        0 6px 18px rgba(0, 0, 0, 0.18);
+  --mtk-transition:         all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --mtk-easing-standard:    cubic-bezier(0.4, 0, 0.2, 1);
+  --mtk-duration-short:     200ms;
+  --mtk-duration-standard:  300ms;
+  --mtk-flip-duration:      0.6s;
+  --mtk-border-radius:      4px;
+  --mtk-border-radius-card: 16px;
+  --mtk-border-radius-pill: 100px;
+  --mtk-header-height:      64px;
+  --app-header-height:      64px; }
+
+body {
+  margin-top: 80px; }
+
 * {
   margin: 0;
   padding: 0;
@@ -7,7 +76,7 @@
   width: 100%; }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #333333;
   background-color: #f5f5f5;
   line-height: 1.6; }
@@ -120,7 +189,7 @@ body {
   gap: 6px;
   padding: 6px 12px;
   background-color: #009fd9;
-  color: white;
+  color: #ffffff;
   border-radius: 16px;
   font-size: 14px;
   font-weight: 500; }
@@ -134,7 +203,7 @@ body {
   gap: 8px;
   padding: 10px 20px;
   border: 1px solid #e0e0e0;
-  background-color: white;
+  background-color: #ffffff;
   color: #333333;
   border-radius: 8px;
   font-size: 14px;
@@ -144,7 +213,7 @@ body {
 
 .btn-share:hover {
   background-color: #f5f5f5;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); }
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
 
 .btn-share .material-icons {
   font-size: 20px; }
@@ -238,7 +307,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #ffffff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
 
 .top-pro-badges .pro-badge .badge-icon .material-icons {
@@ -250,7 +319,7 @@ body {
   font-weight: 500; }
 
 .card {
-  background: white;
+  background: #ffffff;
   border-radius: 8px;
   padding: 24px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -275,8 +344,7 @@ body {
   display: inline-block;
   color: #009fd9;
   text-decoration: none;
-  font-size: 14px;
-  margin-bottom: 16px; }
+  font-size: 14px; }
 
 .contact-card .link-details:hover {
   text-decoration: underline; }
@@ -340,14 +408,14 @@ body {
 .btn-primary {
   padding: 12px 24px;
   background-color: #009fd9;
-  color: white;
+  color: #ffffff;
   border: none;
   border-radius: 8px;
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); }
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
 
 .btn-primary:hover {
   background-color: #0088ba;
@@ -356,22 +424,6 @@ body {
 
 .btn-primary:active {
   transform: translateY(0); }
-
-@media (max-width: 768px) {
-  .client-header {
-    flex-direction: column;
-    text-align: center; }
-  .client-logo {
-    margin: 0 auto; }
-  .client-name {
-    font-size: 24px; }
-  .client-layout {
-    flex-direction: column; }
-  .client-sidebar {
-    order: -1; } }
-
-  .btn-primary:active {
-    transform: translateY(0); }
 
 @media (max-width: 768px) {
   .client-header {

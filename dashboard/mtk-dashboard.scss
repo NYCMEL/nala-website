@@ -1,194 +1,176 @@
+// dashboard/mtk-dashboard.scss — DO NOT COMPILE
+@import '../css/app.scss';
+
+// Local tokens
+$progress-blue-light: $progress-blue-light;
+$label-dark:          $text-label-dark;
+
+mtk-dashboard.mtk-dashboard { display: block; }
+
 .mtk-dashboard {
-    margin: 0 auto;
-    padding: 0px;
-    display: block;
-    margin-top: 24px;
-    margin-bottom: 48px;
-    
-    * {
-	box-sizing: border-box;
-    }
-    // Dashboard Header
+    font-family: $font-family-roboto;
+    background-color: $bg-light;
+    padding: 24px;
+
+    --mtk-primary: #{$color-primary};
+
     &__header {
-	background: #ffffff;
-	border-radius: 4px;
-	padding: 32px;
-	margin-bottom: 24px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	border: 1px #cecece solid;
+        background-color: $bg-white;
+        padding: 24px;
+        margin-bottom: 24px;
+        border-bottom: 1px solid $border-color;
     }
-    &__user-name {
-	font-size: 32px;
-	font-weight: 500;
-	color: #1976d2;
-	margin: 0 0 24px 0;
-	letter-spacing: -0.5px;
+
+    &__greeting {
+        font-size: 24px;
+        font-weight: 400;
+        color: $text-primary;
+        margin: 0 0 4px;
     }
+
+    &__subtitle {
+        font-size: 14px;
+        color: $text-secondary-hex;
+        margin: 0;
+    }
+
     &__progress-section {
-	margin-top: 24px;
+        background-color: $bg-white;
+        padding: 24px;
+        margin-bottom: 24px;
+        box-shadow: $shadow-1;
     }
+
     &__progress-label {
-	font-size: 16px;
-	font-weight: 500;
-	color: #424242;
-	margin-bottom: 16px;
-	display: block;
+        font-size: 12px;
+        font-weight: 500;
+        color: $text-label-dark;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 8px;
     }
-    &__progress-info {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 8px;
+
+    &__progress-pct {
+        font-size: 32px;
+        font-weight: 700;
+        color: $color-primary;
+        line-height: 1;
+        margin-bottom: 12px;
     }
-    &__course-title {
-	font-size: 14px;
-	color: #757575;
-	font-weight: 400;
-    }
-    &__progress-percentage {
-	font-size: 24px;
-	font-weight: 500;
-	color: #1976d2;
-    }
+
     &__progress-bar {
-	width: 100%;
-	height: 8px;
-	background: #e0e0e0;
-	border-radius: 4px;
-	overflow: hidden;
-	position: relative;
+        height: 8px;
+        background-color: $border-color;
+        border-radius: 4px;
+        overflow: hidden;
     }
+
     &__progress-fill {
-	height: 100%;
-	background: linear-gradient(90deg, #1976d2 0%, #2196f3 100%);
-	border-radius: 4px;
-	transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        height: 100%;
+        border-radius: 4px;
+        background: linear-gradient(90deg, $color-primary 0%, $progress-blue-light 100%);
+        transition: width $motion-duration-standard $motion-easing-standard;
     }
-    // Subscriptions Section
-    &__subscriptions {
-	background: #ffffff;
-	border-radius: 4px;
-	padding: 32px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    &__subscription {
+        background-color: $bg-white;
+        padding: 24px;
+        box-shadow: $shadow-1;
+        margin-bottom: 24px;
     }
-    &__subscriptions-title {
-	font-size: 20px;
-	font-weight: 500;
-	color: #212121;
-	margin: 0 0 24px 0;
+
+    &__subscription-title {
+        font-size: 18px;
+        font-weight: 500;
+        color: $text-primary;
+        margin: 0 0 16px;
     }
-    &__subscription-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-	gap: 20px;
+
+    &__subscription-cards {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
     }
+
     &__subscription-card {
-	background: #fafafa;
-	border: 1px solid #e0e0e0;
-	border-radius: 4px;
-	padding: 24px;
-	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-	cursor: pointer;
-	position: relative;
-	&:hover {
-	    transform: translateY(-4px);
-	    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-	    border-color: #1976d2;
-	}
-	&:focus {
-	    outline: 2px solid #1976d2;
-	    outline-offset: 2px;
-	}
+        flex: 1;
+        min-width: 200px;
+        padding: 20px;
+        border: 1px solid $border-color;
+        border-radius: $border-radius;
+        cursor: pointer;
+        transition: all $motion-duration-short $motion-easing-standard;
+        background-color: $bg-white;
+
+        &:hover  { box-shadow: $shadow-1; border-color: $color-primary; transform: translateY(-2px); }
+        &:focus  { outline: 2px solid $color-primary; outline-offset: 2px; }
+        &.active { border-color: $color-primary; background-color: rgba(25, 118, 210, 0.04); }
     }
-    &__card-icon {
-	width: 48px;
-	height: 48px;
-	background: linear-gradient(135deg, #1976d2 0%, #2196f3 100%);
-	border-radius: 50%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin-bottom: 16px;
-	.material-icons {
-	    font-size: 28px;
-	    color: #ffffff;
-	}
-    }
+
     &__card-title {
-	font-size: 18px;
-	font-weight: 500;
-	color: #212121;
-	margin: 0 0 8px 0;
+        font-size: 16px;
+        font-weight: 500;
+        color: $text-primary;
+        margin: 0 0 8px;
     }
-    &__card-description {
-	font-size: 14px;
-	color: #757575;
-	line-height: 1.5;
-	margin: 0 0 16px 0;
-	min-height: 42px;
-    }
+
     &__card-price {
-	font-size: 20px;
-	font-weight: 500;
-	color: #1976d2;
-	margin: 0;
+        font-size: 24px;
+        font-weight: 700;
+        color: $color-primary;
+        margin: 0 0 8px;
     }
-    // Material Icons
-    .material-icons {
-	font-family: 'Material Icons';
-	font-weight: normal;
-	font-style: normal;
-	font-size: 24px;
-	line-height: 1;
-	letter-spacing: normal;
-	text-transform: none;
-	display: inline-block;
-	white-space: nowrap;
-	word-wrap: normal;
-	direction: ltr;
-	-webkit-font-feature-settings: 'liga';
-	-webkit-font-smoothing: antialiased;
+
+    &__card-desc {
+        font-size: 13px;
+        color: $text-secondary-hex;
+        margin: 0;
     }
-    // Responsive Design
+
+    &__actions {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    &__btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 24px;
+        border: none;
+        border-radius: $border-radius;
+        font-family: $font-family-roboto;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all $motion-duration-short $motion-easing-standard;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+
+        &--primary {
+            background-color: $color-primary;
+            color: $text-white;
+            box-shadow: $shadow-1;
+            &:hover  { background-color: $color-primary-dark; box-shadow: $shadow-2; }
+            &:focus  { outline: 2px solid $color-primary; outline-offset: 2px; }
+        }
+
+        &--outline {
+            background-color: transparent;
+            color: $color-primary;
+            border: 2px solid $color-primary;
+            &:hover  { background-color: rgba(25, 118, 210, 0.04); }
+            &:focus  { outline: 2px solid $color-primary; outline-offset: 2px; }
+        }
+
+        .material-icons { font-family: $font-family-material; font-size: 18px; }
+    }
+
     @media (max-width: 768px) {
-	padding: 16px;
-	&__header {
-	    padding: 24px;
-	}
-	&__user-name {
-	    font-size: 24px;
-	}
-	&__subscriptions {
-	    padding: 24px;
-	}
-	&__subscription-grid {
-	    grid-template-columns: 1fr;
-	}
-    }
-    // Accessibility
-    &__subscription-card {
-	&:focus-visible {
-	    outline: 3px solid #1976d2;
-	    outline-offset: 2px;
-	}
-    }
-    // Animation
-    @keyframes fadeIn {
-	from {
-	    opacity: 0;
-	    transform: translateY(20px);
-	}
-	to {
-	    opacity: 1;
-	    transform: translateY(0);
-	}
-    }
-    &__header,
-    &__subscriptions {
-	animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    &__subscriptions {
-	animation-delay: 0.1s;
-	animation-fill-mode: both;
+        padding: 16px;
+        &__subscription-cards { flex-direction: column; }
+        &__actions { flex-direction: column; }
+        &__btn { width: 100%; justify-content: center; }
     }
 }

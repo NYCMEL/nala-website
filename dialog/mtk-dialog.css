@@ -1,3 +1,72 @@
+@import url("fonts/font-awesome.css");
+@import url("fonts/roboto.css");
+@import url("fonts/amplitude.css");
+.fl {
+  font-family: 'Amplitude', sans-serif; }
+
+.fb {
+  font-family: 'Amplitude Bold', sans-serif; }
+
+.fr {
+  font-family: 'Roboto', sans-serif; }
+
+.fm {
+  font-family: 'Amplitude Medium', sans-serif; }
+
+.fri {
+  font-family: 'Roboto Italic', sans-serif; }
+
+.fmi {
+  font-family: 'Amplitude Medium Italic', sans-serif; }
+
+.fbi {
+  font-family: 'Amplitude Bold Italic', sans-serif; }
+
+:root {
+  --mtk-primary:            #1976d2;
+  --mtk-primary-dark:       #1565c0;
+  --mtk-primary-light:      #42a5f5;
+  --mtk-primary-deep:       #0d47a1;
+  --mtk-bs-primary:         #0d6efd;
+  --mtk-bs-primary-light:   #3d8bfd;
+  --mtk-bs-primary-dark:    #0a58ca;
+  --mtk-accent:             #ff4081;
+  --mtk-accent-dark:        #e91e63;
+  --mtk-accent-darker:      #c2185b;
+  --mtk-accent-deep:        #880e4f;
+  --mtk-secondary:          #6c757d;
+  --mtk-success:            #4caf50;
+  --mtk-success-bs:         #00c853;
+  --mtk-warning:            #ff9800;
+  --mtk-warning-icon:       #F59E0B;
+  --mtk-error:              #b00020;
+  --mtk-info:               #0dcaf0;
+  --mtk-info-text:          #055160;
+  --mtk-background:         #fafafa;
+  --mtk-background-light:   #f5f8ff;
+  --mtk-background-grey:    #f5f5f5;
+  --mtk-surface:            #ffffff;
+  --mtk-text-primary:       rgba(0, 0, 0, 0.87);
+  --mtk-text-secondary:     rgba(0, 0, 0, 0.6);
+  --mtk-text-disabled:      rgba(0, 0, 0, 0.38);
+  --mtk-shadow-1:           0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --mtk-shadow-2:           0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  --mtk-shadow-3:           0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  --mtk-shadow-card:        0 6px 18px rgba(0, 0, 0, 0.18);
+  --mtk-transition:         all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --mtk-easing-standard:    cubic-bezier(0.4, 0, 0.2, 1);
+  --mtk-duration-short:     200ms;
+  --mtk-duration-standard:  300ms;
+  --mtk-flip-duration:      0.6s;
+  --mtk-border-radius:      4px;
+  --mtk-border-radius-card: 16px;
+  --mtk-border-radius-pill: 100px;
+  --mtk-header-height:      64px;
+  --app-header-height:      64px; }
+
+body {
+  margin-top: 80px; }
+
 mtk-dialog.mtk-dialog {
   display: contents; }
 
@@ -16,17 +85,19 @@ mtk-dialog.mtk-dialog {
   visibility: hidden;
   transition: opacity 0.25s ease, visibility 0.25s ease;
   padding: 1rem; }
-  .mtk-dialog__backdrop.is-open {
-    opacity: 1;
-    visibility: visible; }
-    .mtk-dialog__backdrop.is-open .mtk-dialog__container {
-      transform: translateY(0) scale(1);
-      opacity: 1; }
+
+.mtk-dialog__backdrop.is-open {
+  opacity: 1;
+  visibility: visible; }
+
+.mtk-dialog__backdrop.is-open .mtk-dialog__container {
+  transform: translateY(0) scale(1);
+  opacity: 1; }
 
 .mtk-dialog__container {
   position: relative;
   z-index: 1050;
-  background: #fff;
+  background: #ffffff;
   border-radius: 8px;
   box-shadow: 0 11px 15px -7px rgba(0, 0, 0, 0.2), 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12);
   width: 100%;
@@ -36,9 +107,10 @@ mtk-dialog.mtk-dialog {
   opacity: 0;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
   outline: none; }
-  .mtk-dialog__container:focus-visible {
-    outline: 3px solid #1976D2;
-    outline-offset: 2px; }
+
+.mtk-dialog__container:focus-visible {
+  outline: 3px solid #1976d2;
+  outline-offset: 2px; }
 
 .mtk-dialog__header {
   display: flex;
@@ -55,12 +127,14 @@ mtk-dialog.mtk-dialog {
   border-radius: 50%;
   background-color: var(--mtk-icon-bg, #FEF3C7);
   flex-shrink: 0; }
-  .mtk-dialog__icon .material-icons {
-    font-size: 22px;
-    color: var(--mtk-icon-color, #F59E0B); }
+
+.mtk-dialog__icon .material-icons {
+  font-size: 22px;
+  color: var(--mtk-icon-color, #F59E0B); }
 
 .mtk-dialog__title {
   flex: 1;
+  font-family: "Google Sans", "Roboto", sans-serif;
   font-size: 1.25rem;
   font-weight: 500;
   line-height: 1.4;
@@ -81,19 +155,23 @@ mtk-dialog.mtk-dialog {
   transition: background-color 0.15s ease;
   flex-shrink: 0;
   padding: 0; }
-  .mtk-dialog__close-btn:hover {
-    background-color: rgba(73, 69, 79, 0.08); }
-  .mtk-dialog__close-btn:focus-visible {
-    outline: 3px solid #1976D2;
-    outline-offset: 2px;
-    background-color: rgba(73, 69, 79, 0.12); }
-  .mtk-dialog__close-btn .material-icons {
-    font-size: 20px; }
+
+.mtk-dialog__close-btn:hover {
+  background-color: rgba(73, 69, 79, 0.08); }
+
+.mtk-dialog__close-btn:focus-visible {
+  outline: 3px solid #1976d2;
+  outline-offset: 2px;
+  background-color: rgba(73, 69, 79, 0.12); }
+
+.mtk-dialog__close-btn .material-icons {
+  font-size: 20px; }
 
 .mtk-dialog__body {
   padding: 0.25rem 1.5rem 1.25rem; }
 
 .mtk-dialog__message {
+  font-family: "Roboto", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 0.9375rem;
   line-height: 1.6;
   color: #49454F;
@@ -106,73 +184,34 @@ mtk-dialog.mtk-dialog {
   gap: 0.5rem;
   padding: 0.75rem 1.5rem 1.5rem;
   flex-wrap: wrap; }
-  .mtk-dialog__footer .btn {
-    font-size: 0.875rem;
-    font-weight: 500;
-    letter-spacing: 0.00625em;
-    border-radius: 100px;
-    padding: 0.5rem 1.25rem;
-    height: 40px;
-    transition: box-shadow 0.2s ease, background-color 0.15s ease;
-    text-transform: none;
-    cursor: pointer;
-    border: none; }
-    .mtk-dialog__footer .btn:focus-visible {
-      outline: 3px solid #1976D2;
-      outline-offset: 2px; }
-  .mtk-dialog__footer .btn-primary {
-    background-color: #1976D2;
-    color: #fff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
-    .mtk-dialog__footer .btn-primary:hover {
-      background-color: #1565C0;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.24); }
-    .mtk-dialog__footer .btn-primary:active {
-      background-color: #0D47A1; }
-  .mtk-dialog__footer .btn-danger {
-    background-color: #D32F2F;
-    color: #fff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
-    .mtk-dialog__footer .btn-danger:hover {
-      background-color: #B71C1C;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.24); }
-  .mtk-dialog__footer .btn-success {
-    background-color: #388E3C;
-    color: #fff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
-    .mtk-dialog__footer .btn-success:hover {
-      background-color: #2E7D32;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.24); }
-  .mtk-dialog__footer .btn-secondary {
-    background-color: #E0E0E0;
-    color: #1C1B1F; }
-    .mtk-dialog__footer .btn-secondary:hover {
-      background-color: #BDBDBD; }
-  .mtk-dialog__footer .btn-warning {
-    background-color: #F57C00;
-    color: #fff; }
-    .mtk-dialog__footer .btn-warning:hover {
-      background-color: #E65100; }
-  .mtk-dialog__footer .btn-link {
-    background: transparent;
-    color: #1976D2;
-    box-shadow: none; }
-    .mtk-dialog__footer .btn-link:hover {
-      background-color: rgba(25, 118, 210, 0.08); }
-    .mtk-dialog__footer .btn-link:active {
-      background-color: rgba(25, 118, 210, 0.16); }
 
-.mtk-dialog__divider {
-  height: 1px;
-  background-color: #E7E0EC;
-  margin: 0 1.5rem; }
+.mtk-dialog__footer .btn {
+  font-family: "Google Sans", "Roboto", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.00625em;
+  border-radius: 100px !important;
+  padding: 0.5rem 1.25rem;
+  height: 40px;
+  transition: box-shadow 0.2s ease, background-color 0.15s ease;
+  text-transform: none;
+  cursor: pointer;
+  border: none; }
 
-@media (max-width: 480px) {
-  .mtk-dialog__footer {
-    flex-direction: column-reverse;
-    align-items: stretch; }
-    .mtk-dialog__footer .btn {
-      width: 100%;
-      justify-content: center; }
-  .mtk-dialog__container {
-    border-radius: 16px; } }
+.mtk-dialog__footer .btn:focus {
+  outline: 3px solid #1976d2;
+  outline-offset: 2px; }
+
+.mtk-dialog__footer .btn-primary {
+  background-color: #1976d2;
+  color: #ffffff; }
+
+.mtk-dialog__footer .btn-primary:hover {
+  background-color: #1565c0; }
+
+.mtk-dialog__footer .btn-secondary {
+  background-color: transparent;
+  color: #6c757d; }
+
+.mtk-dialog__footer .btn-secondary:hover {
+  background-color: rgba(0, 0, 0, 0.04); }

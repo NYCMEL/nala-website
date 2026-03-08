@@ -1,19 +1,17 @@
-$primary: #2e7d32;
-$text: #212121;
-$muted: #616161;
-$bg: #ffffff;
+// client/box/_box.scss — DO NOT COMPILE
+@import '../../css/app.scss';
 
 .md-list-wrapper {
   max-width: 480px;
   padding: 24px;
-  background: $bg;
+  background: $bg-white;
 }
 
 .md-title {
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 16px;
-  color: $text;
+  color: $text-primary;
 }
 
 .md-list {
@@ -28,24 +26,21 @@ $bg: #ffffff;
     padding: 10px 0;
     border-bottom: 1px solid #eee;
     font-size: 15px;
-    color: $muted;
+    color: $text-muted;
 
-    &:last-child {
-      border-bottom: none;
-    }
+    &:last-child { border-bottom: none; }
   }
 }
 
 .checkmark {
   flex-shrink: 0;
-  width: 22px;
-  height: 22px;
+  width: 22px; height: 22px;
   border-radius: 50%;
-  background: rgba($primary, 0.12);
+  background: rgba($box-primary, 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: $primary;
+  color: $box-primary;
   font-size: 14px;
   font-weight: 700;
 }

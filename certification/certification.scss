@@ -1,47 +1,31 @@
-$primary: #1a73e8;
-$surface: #ffffff;
-$text: #1f1f1f;
-$muted: #5f6368;
-$radius: 16px;
+// certification/certification.scss — DO NOT COMPILE
+@import '../css/app.scss';
 
 .mtk-certification {
-    background: #FFF!important;
-    border-radius: 8px;
+    background: $bg-white !important;
+    border-radius: $border-radius-lg;
 
-    .mtk-title {
-	font-weight: 700;
-	color: $text;
-    }
-
-    .mtk-subtitle {
-	color: $muted;
-    }
+    .mtk-title    { font-weight: 700; color: $text-primary; }
+    .mtk-subtitle { color: $text-grey; }
 
     .mtk-icon {
-	font-size: 32px;
-	color: $primary;
-	margin-bottom: 12px;
+        font-size: 32px;
+        color: $cert-primary;
+        margin-bottom: 12px;
     }
 
-    .mtk-card-title {
-	font-weight: 600;
-	margin-bottom: 8px;
-    }
-
-    .mtk-card-desc {
-	color: $muted;
-	font-size: 0.95rem;
-    }
+    .mtk-card-title { font-weight: 600; margin-bottom: 8px; }
+    .mtk-card-desc  { color: $text-grey; font-size: 0.95rem; }
 
     .mtk-list {
-	margin-top: 16px;
-	padding-left: 0;
-	list-style: none;
+        margin-top: 16px;
+        padding-left: 0;
+        list-style: none;
 
-	li::before {
-	    content: "✓";
-	    color: $primary;
-	    margin-right: 8px;
-	}
+        li::before {
+            content: "✓";
+            color: $cert-primary;
+            margin-right: 8px;
+        }
     }
 }

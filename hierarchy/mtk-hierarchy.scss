@@ -1,563 +1,212 @@
-// Material Design Hierarchy Styles - Scoped to .mtk-hierarchy
+// hierarchy/mtk-hierarchy.scss — DO NOT COMPILE
+@import '../css/app.scss';
+
 .mtk-hierarchy {
-  --mtk-primary: #1976d2;
-  --mtk-primary-dark: #1565c0;
-  --mtk-primary-light: #42a5f5;
-  --mtk-accent: #ff4081;
-  --mtk-success: #4caf50;
-  --mtk-warning: #ff9800;
-  --mtk-text-primary: #212121;
-  --mtk-text-secondary: #757575;
-  --mtk-text-disabled: #bdbdbd;
-  --mtk-divider: #e0e0e0;
-  --mtk-background: #fafafa;
-  --mtk-surface: #ffffff;
-  --mtk-border: #e0e0e0;
-  --mtk-shadow-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  --mtk-shadow-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  --mtk-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --mtk-primary:       #{$color-primary};
+    --mtk-primary-dark:  #{$color-primary-dark};
+    --mtk-accent:        #{$color-accent};
+    --mtk-success:       #{$color-success};
+    --mtk-text-primary:  #{$text-primary-hex};
+    --mtk-text-secondary:#{$text-secondary-hex};
+    --mtk-text-disabled: #{$text-disabled-hex};
+    --mtk-shadow-1:      #{$shadow-1};
+    --mtk-shadow-2:      #{$shadow-2};
+    --mtk-transition:    #{$transition-standard};
 
-  display: block;
-  color: var(--mtk-text-primary);
-  background-color: var(--mtk-background);
-  padding: 1rem 0;
+    font-family: $font-family-roboto;
+    background-color: $bg-light;
+    min-height: 100vh;
 
-  * {
-    box-sizing: border-box;
-  }
+    // Module
+    .mtk-module {
+        margin-bottom: 8px;
+        border-radius: $border-radius;
+        overflow: hidden;
+        box-shadow: var(--mtk-shadow-1);
+        transition: var(--mtk-transition);
 
-  // Main Container
-  .mtk-hierarchy__container {
-    height: calc(100vh - 120px);
-    min-height: 600px;
-    max-height: 100%;
-    overflow: hidden;
-  }
-
-  .mtk-hierarchy__row {
-    height: 100%;
-    display: flex;
-    flex-wrap: nowrap;
-    margin: 0;
-  }
-
-  // Column containers need to fill height
-  .col-md-4,
-  .col-md-8 {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-  }
-
-  .col-md-4 {
-    flex: 0 0 33.333333%;
-    max-width: 33.333333%;
-    padding-right: 0.5rem;
-  }
-
-  .col-md-8 {
-    flex: 0 0 66.666667%;
-    max-width: 66.666667%;
-    padding-left: 0.5rem;
-  }
-
-  // Left Hand Side (LHS)
-  .mtk-hierarchy-lhs {
-    height: 100%;
-    max-height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    border: 1px solid var(--mtk-border);
-    border-radius: 4px;
-    background-color: var(--mtk-surface);
-    padding: 1rem;
-    flex: 1 1 auto;
-
-    &::-webkit-scrollbar {
-      width: 8px;
+        &:hover { box-shadow: var(--mtk-shadow-2); }
     }
 
-    &::-webkit-scrollbar-track {
-      background: #f1f1f1;
+    .mtk-module__header {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        background: linear-gradient(135deg, var(--mtk-primary) 0%, var(--mtk-primary-dark) 100%);
+        color: $text-white;
+        cursor: pointer;
+        user-select: none;
+        transition: var(--mtk-transition);
+
+        &:hover { filter: brightness(1.05); }
+        &:focus { outline: 2px solid var(--mtk-accent); outline-offset: 2px; }
+
+        &.completed { background: linear-gradient(135deg, $color-success 0%, darken($color-success, 10%) 100%); }
     }
 
-    &::-webkit-scrollbar-thumb {
-      background: #888;
-      border-radius: 4px;
+    .mtk-module__toggle {
+        flex-shrink: 0;
+        margin-right: 0.75rem;
+        font-size: 20px;
+        transition: transform $motion-duration-short $motion-easing-standard;
+        font-family: $font-family-material;
+
+        &.expanded { transform: rotate(90deg); }
     }
 
-    &::-webkit-scrollbar-thumb:hover {
-      background: #555;
-    }
-  }
-
-  // Right Hand Side (RHS)
-  .mtk-hierarchy-rhs {
-    height: 100%;
-    max-height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    border: 1px solid var(--mtk-border);
-    border-radius: 4px;
-    background-color: var(--mtk-surface);
-    padding: 1.5rem;
-    flex: 1 1 auto;
-
-    &::-webkit-scrollbar {
-      width: 8px;
+    .mtk-module__title {
+        flex: 1;
+        font-size: 1rem;
+        font-weight: 500;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
-    &::-webkit-scrollbar-track {
-      background: #f1f1f1;
+    .mtk-module__body {
+        display: none;
+        padding: 0.5rem;
+        background-color: $bg-light;
+        &.expanded { display: block; }
     }
 
-    &::-webkit-scrollbar-thumb {
-      background: #888;
-      border-radius: 4px;
+    // Lesson
+    .mtk-lesson {
+        margin-bottom: 4px;
+        border-radius: $border-radius;
+        background-color: $bg-white;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
     }
 
-    &::-webkit-scrollbar-thumb:hover {
-      background: #555;
-    }
-  }
+    .mtk-lesson__header {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        cursor: pointer;
+        transition: background-color $motion-duration-short $motion-easing-standard;
 
-  // Module Card
-  .mtk-module {
-    background: var(--mtk-surface);
-    border: 1px solid var(--mtk-border);
-    border-radius: 4px;
-    margin-bottom: 1rem;
-    overflow: hidden;
-    box-shadow: var(--mtk-shadow-1);
-    transition: var(--mtk-transition);
+        &:hover  { background-color: $bg-grey; }
+        &:focus  { outline: 2px solid var(--mtk-primary); outline-offset: -2px; }
 
-    &:hover {
-      box-shadow: var(--mtk-shadow-2);
+        &.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
     }
 
-    &.mtk-module--disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      
-      .mtk-module__header {
-        cursor: not-allowed;
-      }
-    }
-  }
+    .mtk-lesson__toggle {
+        flex-shrink: 0;
+        margin-right: 0.5rem;
+        font-size: 18px;
+        color: var(--mtk-text-secondary);
+        font-family: $font-family-material;
+        transition: transform $motion-duration-short $motion-easing-standard;
 
-  .mtk-module__header {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    background: linear-gradient(135deg, var(--mtk-primary) 0%, var(--mtk-primary-dark) 100%);
-    color: #ffffff;
-    cursor: pointer;
-    user-select: none;
-    transition: var(--mtk-transition);
-
-    &:hover {
-      background: linear-gradient(135deg, var(--mtk-primary-dark) 0%, #0d47a1 100%);
+        &.expanded { transform: rotate(90deg); }
     }
 
-    &:focus {
-      outline: 2px solid var(--mtk-accent);
-      outline-offset: -2px;
+    .mtk-lesson__title {
+        flex: 1;
+        font-size: 0.9rem;
+        color: var(--mtk-text-primary);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
-    .material-icons {
-      margin-right: 0.75rem;
-      font-size: 24px;
-    }
-  }
-
-  .mtk-module__title {
-    flex: 1;
-    font-size: 1rem;
-    font-weight: 500;
-    letter-spacing: 0.25px;
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .mtk-module__toggle {
-    .material-icons {
-      transition: transform 0.3s ease;
-      margin-right: 0;
+    .mtk-lesson__body {
+        display: none;
+        padding: 0.25rem 0.5rem 0.5rem;
+        &.expanded { display: block; }
     }
 
-    &.mtk-module__toggle--open .material-icons {
-      transform: rotate(180deg);
-    }
-  }
+    // Resource
+    .mtk-resource {
+        display: flex;
+        align-items: center;
+        padding: 0.625rem 1rem;
+        margin-bottom: 2px;
+        border-radius: $border-radius;
+        cursor: pointer;
+        transition: background-color $motion-duration-short $motion-easing-standard;
 
-  .mtk-module__body {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-in-out;
-    background-color: #f5f5f5;
-
-    &.mtk-module__body--open {
-      max-height: 2000px;
-    }
-  }
-
-  // Lesson Item
-  .mtk-lesson {
-    border-bottom: 1px solid var(--mtk-divider);
-    transition: var(--mtk-transition);
-
-    &:last-child {
-      border-bottom: none;
+        &:hover  { background-color: $bg-light-blue; }
+        &:focus  { outline: 2px solid var(--mtk-primary); outline-offset: 2px; }
+        &.active { background-color: rgba(25, 118, 210, 0.08); }
+        &.disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
     }
 
-    &.mtk-lesson--disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      
-      .mtk-lesson__header {
-        cursor: not-allowed;
-      }
-    }
-  }
-
-  .mtk-lesson__header {
-    display: flex;
-    align-items: center;
-    padding: 0.875rem 1rem;
-    background-color: var(--mtk-surface);
-    cursor: pointer;
-    user-select: none;
-    transition: var(--mtk-transition);
-
-    &:hover {
-      background-color: #e3f2fd;
+    .mtk-resource__icon {
+        flex-shrink: 0;
+        margin-right: 0.75rem;
+        font-size: 20px;
+        color: var(--mtk-primary);
+        font-family: $font-family-material;
     }
 
-    &:focus {
-      outline: 2px solid var(--mtk-primary);
-      outline-offset: -2px;
+    .mtk-resource__title {
+        flex: 1;
+        font-size: 0.875rem;
+        color: var(--mtk-text-primary);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 100%;
     }
 
-    .material-icons {
-      margin-right: 0.75rem;
-      font-size: 20px;
-      color: var(--mtk-primary);
-    }
-  }
-
-  .mtk-lesson__title {
-    flex: 1;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--mtk-text-primary);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 100%;
-  }
-
-  .mtk-lesson__toggle {
-    .material-icons {
-      transition: transform 0.3s ease;
-      margin-right: 0;
-      color: var(--mtk-text-secondary);
+    .mtk-resource__status {
+        flex-shrink: 0;
+        margin-left: 0.5rem;
+        .material-icons { color: var(--mtk-success); font-size: 18px; }
     }
 
-    &.mtk-lesson__toggle--open .material-icons {
-      transform: rotate(180deg);
-    }
-  }
+    // Quiz
+    .mtk-quiz {
+        display: flex;
+        align-items: center;
+        padding: 0.875rem 1rem;
+        margin-top: 0.5rem;
+        background: linear-gradient(135deg, var(--mtk-accent) 0%, $color-accent-dark 100%);
+        color: $text-white;
+        cursor: pointer;
+        transition: var(--mtk-transition);
+        border-radius: $border-radius;
+        font-weight: 500;
 
-  .mtk-lesson__body {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-in-out;
-    background-color: #fafafa;
+        &:hover  { background: linear-gradient(135deg, $color-accent-dark 0%, $color-accent-darker 100%); box-shadow: var(--mtk-shadow-2); }
+        &:focus  { outline: 2px solid var(--mtk-accent); outline-offset: 2px; }
 
-    &.mtk-lesson__body--open {
-      max-height: 1000px;
-    }
-  }
-
-  // Resource Item
-  .mtk-resource {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 1rem 0.75rem 3rem;
-    cursor: pointer;
-    transition: var(--mtk-transition);
-    position: relative;
-
-    &:hover {
-      background-color: #e8f5e9;
+        &.mtk-quiz--active   { background: linear-gradient(135deg, $color-accent-darker 0%, $color-accent-deep 100%); box-shadow: var(--mtk-shadow-2); }
+        &.mtk-quiz--disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: linear-gradient(135deg, var(--mtk-accent) 0%, $color-accent-dark 100%);
+            &:hover { background: linear-gradient(135deg, var(--mtk-accent) 0%, $color-accent-dark 100%); box-shadow: none; }
+        }
     }
 
-    &:focus {
-      outline: 2px solid var(--mtk-success);
-      outline-offset: -2px;
+    .mtk-quiz__icon  { flex-shrink: 0; margin-right: 0.75rem; font-size: 20px; }
+    .mtk-quiz__title { flex: 1; font-size: 0.875rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+    .mtk-quiz__badge { flex-shrink: 0; margin-left: 0.5rem; font-size: 18px; }
+
+    // Quiz Launch
+    .mtk-quiz-launch { margin-top: 2rem; }
+
+    .mtk-quiz-launch__button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1rem 2rem;
+        background: linear-gradient(135deg, var(--mtk-accent) 0%, $color-accent-dark 100%);
+        color: $text-white;
+        border: none;
+        border-radius: $border-radius;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: var(--mtk-transition);
+        box-shadow: var(--mtk-shadow-1);
+
+        &:hover  { background: linear-gradient(135deg, $color-accent-dark 0%, $color-accent-darker 100%); box-shadow: var(--mtk-shadow-2); transform: translateY(-2px); }
+        &:active { transform: translateY(0); }
+
+        .material-icons { font-size: 24px; }
     }
-
-    &.mtk-resource--active {
-      background-color: #c8e6c9;
-      border-left: 3px solid var(--mtk-success);
-    }
-
-    &.mtk-resource--disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    .material-icons {
-      margin-right: 0.75rem;
-      font-size: 18px;
-      color: var(--mtk-text-secondary);
-    }
-  }
-
-  .mtk-resource__icon {
-    flex-shrink: 0;
-  }
-
-  .mtk-resource__title {
-    flex: 1;
-    font-size: 0.813rem;
-    color: var(--mtk-text-primary);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 100%;
-  }
-
-  .mtk-resource__status {
-    flex-shrink: 0;
-    margin-left: 0.5rem;
-
-    .material-icons {
-      color: var(--mtk-success);
-      font-size: 18px;
-    }
-  }
-
-  // Quiz Link
-  .mtk-quiz {
-    display: flex;
-    align-items: center;
-    padding: 0.875rem 1rem;
-    margin-top: 0.5rem;
-    background: linear-gradient(135deg, var(--mtk-accent) 0%, #e91e63 100%);
-    color: #ffffff;
-    cursor: pointer;
-    transition: var(--mtk-transition);
-    border-radius: 4px;
-    font-weight: 500;
-
-    &:hover {
-      background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
-      box-shadow: var(--mtk-shadow-2);
-    }
-
-    &:focus {
-      outline: 2px solid var(--mtk-accent);
-      outline-offset: 2px;
-    }
-
-    &.mtk-quiz--active {
-      background: linear-gradient(135deg, #c2185b 0%, #880e4f 100%);
-      box-shadow: var(--mtk-shadow-2);
-    }
-
-    &.mtk-quiz--disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      // Keep the same pink/magenta gradient, just with reduced opacity
-      background: linear-gradient(135deg, var(--mtk-accent) 0%, #e91e63 100%);
-      
-      &:hover {
-        // Prevent hover effect when disabled
-        background: linear-gradient(135deg, var(--mtk-accent) 0%, #e91e63 100%);
-        box-shadow: none;
-      }
-    }
-  }
-
-  .mtk-quiz__icon {
-    flex-shrink: 0;
-    margin-right: 0.75rem;
-    font-size: 20px;
-  }
-
-  .mtk-quiz__title {
-    flex: 1;
-    font-size: 0.875rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 100%;
-  }
-
-  .mtk-quiz__badge {
-    flex-shrink: 0;
-    margin-left: 0.5rem;
-    font-size: 18px;
-  }
-
-  // Quiz Launch Button in RHS
-  .mtk-quiz-launch {
-    margin-top: 2rem;
-  }
-
-  .mtk-quiz-launch__button {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem 2rem;
-    background: linear-gradient(135deg, var(--mtk-accent) 0%, #e91e63 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--mtk-transition);
-    box-shadow: var(--mtk-shadow-1);
-
-    &:hover {
-      background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
-      box-shadow: var(--mtk-shadow-2);
-      transform: translateY(-2px);
-    }
-
-    &:active {
-      transform: translateY(0);
-    }
-
-    .material-icons {
-      font-size: 24px;
-    }
-  }
-
-  // RHS Content Area
-  .mtk-hierarchy-rhs__empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    color: var(--mtk-text-secondary);
-    text-align: center;
-
-    .material-icons {
-      font-size: 64px;
-      margin-bottom: 1rem;
-      opacity: 0.3;
-    }
-
-    p {
-      font-size: 1rem;
-      margin: 0;
-    }
-  }
-
-  .mtk-hierarchy-rhs__content {
-    h2 {
-      font-size: 1.5rem;
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-      color: var(--mtk-text-primary);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      max-width: 100%;
-    }
-
-    p {
-      color: var(--mtk-text-secondary);
-      margin-bottom: 1.5rem;
-      line-height: 1.6;
-    }
-  }
-
-  // Video Container
-  .mtk-video-container {
-    position: relative;
-    width: 100%;
-    padding-bottom: 56.25%; // 16:9 aspect ratio
-    margin-bottom: 1.5rem;
-    background-color: #000;
-    border-radius: 4px;
-    overflow: hidden;
-    box-shadow: var(--mtk-shadow-2);
-
-    iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-  }
-
-  // Images Gallery
-  .mtk-images-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1rem;
-    margin-top: 1.5rem;
-  }
-
-  .mtk-image-item {
-    position: relative;
-    border-radius: 4px;
-    overflow: hidden;
-    box-shadow: var(--mtk-shadow-1);
-    transition: var(--mtk-transition);
-    background-color: var(--mtk-surface);
-
-    &:hover {
-      box-shadow: var(--mtk-shadow-2);
-      transform: translateY(-2px);
-    }
-
-    img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .mtk-image-item__caption {
-      padding: 0.75rem;
-      font-size: 0.813rem;
-      color: var(--mtk-text-secondary);
-      background-color: var(--mtk-surface);
-    }
-  }
-
-  // Loading State
-  &.mtk-hierarchy--loading {
-    opacity: 0.6;
-    pointer-events: none;
-  }
-
-  // Responsive
-  @media (max-width: 768px) {
-    .mtk-hierarchy__container {
-      height: auto;
-    }
-
-    .mtk-hierarchy-lhs,
-    .mtk-hierarchy-rhs {
-      height: auto;
-      min-height: 400px;
-      margin-bottom: 1rem;
-    }
-
-    .mtk-images-gallery {
-      grid-template-columns: 1fr;
-    }
-  }
 }
