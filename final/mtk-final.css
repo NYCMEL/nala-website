@@ -70,7 +70,7 @@ body {
 
 .mtk-final {
   display: block;
-  font-family: "Roboto", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: fr !important;
   background-color: #fafafa;
   padding: 48px 24px;
   text-align: center; }
@@ -124,7 +124,7 @@ body {
   padding: 14px 28px;
   border: none;
   border-radius: 4px;
-  font-family: "Roboto", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: fr !important;
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;

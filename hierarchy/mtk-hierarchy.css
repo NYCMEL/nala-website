@@ -79,197 +79,241 @@ body {
   --mtk-shadow-1:      0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   --mtk-shadow-2:      0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   --mtk-transition:    all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  font-family: "Roboto", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: fr !important;
   background-color: #fafafa;
   min-height: 100vh; }
-  .mtk-hierarchy .mtk-module {
-    margin-bottom: 8px;
-    border-radius: 4px;
-    overflow: hidden;
-    box-shadow: var(--mtk-shadow-1);
-    transition: var(--mtk-transition); }
-    .mtk-hierarchy .mtk-module:hover {
-      box-shadow: var(--mtk-shadow-2); }
-  .mtk-hierarchy .mtk-module__header {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    background: linear-gradient(135deg, var(--mtk-primary) 0%, var(--mtk-primary-dark) 100%);
-    color: #ffffff;
-    cursor: pointer;
-    user-select: none;
-    transition: var(--mtk-transition); }
-    .mtk-hierarchy .mtk-module__header:hover {
-      filter: brightness(1.05); }
-    .mtk-hierarchy .mtk-module__header:focus {
-      outline: 2px solid var(--mtk-accent);
-      outline-offset: 2px; }
-    .mtk-hierarchy .mtk-module__header.completed {
-      background: linear-gradient(135deg, #4caf50 0%, #3d8b40 100%); }
-  .mtk-hierarchy .mtk-module__toggle {
-    flex-shrink: 0;
-    margin-right: 0.75rem;
-    font-size: 20px;
-    transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
-    font-family: "Material Icons"; }
-    .mtk-hierarchy .mtk-module__toggle.expanded {
-      transform: rotate(90deg); }
-  .mtk-hierarchy .mtk-module__title {
-    flex: 1;
-    font-size: 1rem;
-    font-weight: 500;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap; }
-  .mtk-hierarchy .mtk-module__body {
-    display: none;
-    padding: 0.5rem;
-    background-color: #fafafa; }
-    .mtk-hierarchy .mtk-module__body.expanded {
-      display: block; }
-  .mtk-hierarchy .mtk-lesson {
-    margin-bottom: 4px;
-    border-radius: 4px;
-    background-color: #ffffff;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08); }
-  .mtk-hierarchy .mtk-lesson__header {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 1rem;
-    cursor: pointer;
-    transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1); }
-    .mtk-hierarchy .mtk-lesson__header:hover {
-      background-color: #f5f5f5; }
-    .mtk-hierarchy .mtk-lesson__header:focus {
-      outline: 2px solid var(--mtk-primary);
-      outline-offset: -2px; }
-    .mtk-hierarchy .mtk-lesson__header.disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      pointer-events: none; }
-  .mtk-hierarchy .mtk-lesson__toggle {
-    flex-shrink: 0;
-    margin-right: 0.5rem;
-    font-size: 18px;
-    color: var(--mtk-text-secondary);
-    font-family: "Material Icons";
-    transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1); }
-    .mtk-hierarchy .mtk-lesson__toggle.expanded {
-      transform: rotate(90deg); }
-  .mtk-hierarchy .mtk-lesson__title {
-    flex: 1;
-    font-size: 0.9rem;
-    color: var(--mtk-text-primary);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap; }
-  .mtk-hierarchy .mtk-lesson__body {
-    display: none;
-    padding: 0.25rem 0.5rem 0.5rem; }
-    .mtk-hierarchy .mtk-lesson__body.expanded {
-      display: block; }
-  .mtk-hierarchy .mtk-resource {
-    display: flex;
-    align-items: center;
-    padding: 0.625rem 1rem;
-    margin-bottom: 2px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1); }
-    .mtk-hierarchy .mtk-resource:hover {
-      background-color: #f5f8ff; }
-    .mtk-hierarchy .mtk-resource:focus {
-      outline: 2px solid var(--mtk-primary);
-      outline-offset: 2px; }
-    .mtk-hierarchy .mtk-resource.active {
-      background-color: rgba(25, 118, 210, 0.08); }
-    .mtk-hierarchy .mtk-resource.disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      pointer-events: none; }
-  .mtk-hierarchy .mtk-resource__icon {
-    flex-shrink: 0;
-    margin-right: 0.75rem;
-    font-size: 20px;
-    color: var(--mtk-primary);
-    font-family: "Material Icons"; }
-  .mtk-hierarchy .mtk-resource__title {
-    flex: 1;
-    font-size: 0.875rem;
-    color: var(--mtk-text-primary);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 100%; }
-  .mtk-hierarchy .mtk-resource__status {
-    flex-shrink: 0;
-    margin-left: 0.5rem; }
-    .mtk-hierarchy .mtk-resource__status .material-icons {
-      color: var(--mtk-success);
-      font-size: 18px; }
-  .mtk-hierarchy .mtk-quiz {
-    display: flex;
-    align-items: center;
-    padding: 0.875rem 1rem;
-    margin-top: 0.5rem;
-    background: linear-gradient(135deg, var(--mtk-accent) 0%, #e91e63 100%);
-    color: #ffffff;
-    cursor: pointer;
-    transition: var(--mtk-transition);
-    border-radius: 4px;
-    font-weight: 500; }
-    .mtk-hierarchy .mtk-quiz:hover {
-      background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
-      box-shadow: var(--mtk-shadow-2); }
-    .mtk-hierarchy .mtk-quiz:focus {
-      outline: 2px solid var(--mtk-accent);
-      outline-offset: 2px; }
-    .mtk-hierarchy .mtk-quiz.mtk-quiz--active {
-      background: linear-gradient(135deg, #c2185b 0%, #880e4f 100%);
-      box-shadow: var(--mtk-shadow-2); }
-    .mtk-hierarchy .mtk-quiz.mtk-quiz--disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      background: linear-gradient(135deg, var(--mtk-accent) 0%, #e91e63 100%); }
-      .mtk-hierarchy .mtk-quiz.mtk-quiz--disabled:hover {
-        background: linear-gradient(135deg, var(--mtk-accent) 0%, #e91e63 100%);
-        box-shadow: none; }
-  .mtk-hierarchy .mtk-quiz__icon {
-    flex-shrink: 0;
-    margin-right: 0.75rem;
-    font-size: 20px; }
-  .mtk-hierarchy .mtk-quiz__title {
-    flex: 1;
-    font-size: 0.875rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 100%; }
-  .mtk-hierarchy .mtk-quiz__badge {
-    flex-shrink: 0;
-    margin-left: 0.5rem;
-    font-size: 18px; }
-  .mtk-hierarchy .mtk-quiz-launch {
-    margin-top: 2rem; }
-  .mtk-hierarchy .mtk-quiz-launch__button {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem 2rem;
-    background: linear-gradient(135deg, var(--mtk-accent) 0%, #e91e63 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--mtk-transition);
-    box-shadow: var(--mtk-shadow-1); }
-    .mtk-hierarchy .mtk-quiz-launch__button:hover {
-      background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
-      box-shadow: var(--mtk-shadow-2);
-      transform: translateY(-2px); }
-    .mtk-hierarchy .mtk-quiz-launch__button:active {
-      transform: translateY(0); }
-    .mtk-hierarchy .mtk-quiz-launch__button .material-icons {
-      font-size: 24px; }
+
+.mtk-hierarchy .mtk-module {
+  margin-bottom: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: var(--mtk-shadow-1);
+  transition: var(--mtk-transition); }
+
+.mtk-hierarchy .mtk-module:hover {
+  box-shadow: var(--mtk-shadow-2); }
+
+.mtk-hierarchy .mtk-module__header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: linear-gradient(135deg, var(--mtk-primary) 0%, var(--mtk-primary-dark) 100%);
+  color: #ffffff;
+  cursor: pointer;
+  user-select: none;
+  transition: var(--mtk-transition); }
+
+.mtk-hierarchy .mtk-module__header:hover {
+  filter: brightness(1.05); }
+
+.mtk-hierarchy .mtk-module__header:focus {
+  outline: 2px solid var(--mtk-accent);
+  outline-offset: 2px; }
+
+.mtk-hierarchy .mtk-module__header.completed {
+  background: linear-gradient(135deg, #4caf50 0%, #3d8b40 100%); }
+
+.mtk-hierarchy .mtk-module__toggle {
+  flex-shrink: 0;
+  margin-right: 0.75rem;
+  font-size: 20px;
+  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: "Material Icons"; }
+
+.mtk-hierarchy .mtk-module__toggle.expanded {
+  transform: rotate(90deg); }
+
+.mtk-hierarchy .mtk-module__title {
+  flex: 1;
+  font-size: 1rem;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
+
+.mtk-hierarchy .mtk-module__body {
+  display: none;
+  padding: 0.5rem;
+  background-color: #fafafa; }
+
+.mtk-hierarchy .mtk-module__body.expanded {
+  display: block; }
+
+.mtk-hierarchy .mtk-lesson {
+  margin-bottom: 4px;
+  border-radius: 4px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08); }
+
+.mtk-hierarchy .mtk-lesson__header {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+
+.mtk-hierarchy .mtk-lesson__header:hover {
+  background-color: #f5f5f5; }
+
+.mtk-hierarchy .mtk-lesson__header:focus {
+  outline: 2px solid var(--mtk-primary);
+  outline-offset: -2px; }
+
+.mtk-hierarchy .mtk-lesson__header.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none; }
+
+.mtk-hierarchy .mtk-lesson__toggle {
+  flex-shrink: 0;
+  margin-right: 0.5rem;
+  font-size: 18px;
+  color: var(--mtk-text-secondary);
+  font-family: "Material Icons";
+  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+
+.mtk-hierarchy .mtk-lesson__toggle.expanded {
+  transform: rotate(90deg); }
+
+.mtk-hierarchy .mtk-lesson__title {
+  flex: 1;
+  font-size: 0.9rem;
+  color: var(--mtk-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
+
+.mtk-hierarchy .mtk-lesson__body {
+  display: none;
+  padding: 0.25rem 0.5rem 0.5rem; }
+
+.mtk-hierarchy .mtk-lesson__body.expanded {
+  display: block; }
+
+.mtk-hierarchy .mtk-resource {
+  display: flex;
+  align-items: center;
+  padding: 0.625rem 1rem;
+  margin-bottom: 2px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+
+.mtk-hierarchy .mtk-resource:hover {
+  background-color: #f5f8ff; }
+
+.mtk-hierarchy .mtk-resource:focus {
+  outline: 2px solid var(--mtk-primary);
+  outline-offset: 2px; }
+
+.mtk-hierarchy .mtk-resource.active {
+  background-color: rgba(25, 118, 210, 0.08); }
+
+.mtk-hierarchy .mtk-resource.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none; }
+
+.mtk-hierarchy .mtk-resource__icon {
+  flex-shrink: 0;
+  margin-right: 0.75rem;
+  font-size: 20px;
+  color: var(--mtk-primary);
+  font-family: "Material Icons"; }
+
+.mtk-hierarchy .mtk-resource__title {
+  flex: 1;
+  font-size: 0.875rem;
+  color: var(--mtk-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%; }
+
+.mtk-hierarchy .mtk-resource__status {
+  flex-shrink: 0;
+  margin-left: 0.5rem; }
+
+.mtk-hierarchy .mtk-resource__status .material-icons {
+  color: var(--mtk-success);
+  font-size: 18px; }
+
+.mtk-hierarchy .mtk-quiz {
+  display: flex;
+  align-items: center;
+  padding: 0.875rem 1rem;
+  margin-top: 0.5rem;
+  background: linear-gradient(135deg, var(--mtk-accent) 0%, #e91e63 100%);
+  color: #ffffff;
+  cursor: pointer;
+  transition: var(--mtk-transition);
+  border-radius: 4px;
+  font-weight: 500; }
+
+.mtk-hierarchy .mtk-quiz:hover {
+  background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
+  box-shadow: var(--mtk-shadow-2); }
+
+.mtk-hierarchy .mtk-quiz:focus {
+  outline: 2px solid var(--mtk-accent);
+  outline-offset: 2px; }
+
+.mtk-hierarchy .mtk-quiz.mtk-quiz--active {
+  background: linear-gradient(135deg, #c2185b 0%, #880e4f 100%);
+  box-shadow: var(--mtk-shadow-2); }
+
+.mtk-hierarchy .mtk-quiz.mtk-quiz--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: linear-gradient(135deg, var(--mtk-accent) 0%, #e91e63 100%); }
+
+.mtk-hierarchy .mtk-quiz.mtk-quiz--disabled:hover {
+  background: linear-gradient(135deg, var(--mtk-accent) 0%, #e91e63 100%);
+  box-shadow: none; }
+
+.mtk-hierarchy .mtk-quiz__icon {
+  flex-shrink: 0;
+  margin-right: 0.75rem;
+  font-size: 20px; }
+
+.mtk-hierarchy .mtk-quiz__title {
+  flex: 1;
+  font-size: 0.875rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%; }
+
+.mtk-hierarchy .mtk-quiz__badge {
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+  font-size: 18px; }
+
+.mtk-hierarchy .mtk-quiz-launch {
+  margin-top: 2rem; }
+
+.mtk-hierarchy .mtk-quiz-launch__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, var(--mtk-accent) 0%, #e91e63 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--mtk-transition);
+  box-shadow: var(--mtk-shadow-1); }
+
+.mtk-hierarchy .mtk-quiz-launch__button:hover {
+  background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
+  box-shadow: var(--mtk-shadow-2);
+  transform: translateY(-2px); }
+
+.mtk-hierarchy .mtk-quiz-launch__button:active {
+  transform: translateY(0); }
+
+.mtk-hierarchy .mtk-quiz-launch__button .material-icons {
+  font-size: 24px; }
