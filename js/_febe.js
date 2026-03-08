@@ -49,6 +49,7 @@ class _febe {
 	    "mtk-path:click": this.handleRegister,
 	    "mtk-ready:click": this.handleRegister,
 	    "mtk-courses:click": this.handleRegister,
+	    "mtk-login-forgot-password": this.handleForgotPassword,
 	    "mtk-login-register": this.handleRegister,
 	    "mtk-hierarchy:lesson-toggled": this.handleLessonToggled,
 	    "mtk-register-submit": this.handleRegisterSubmit,
@@ -161,7 +162,52 @@ class _febe {
 	    $('[mtk-pages-id="register"]').css("display","block");
 	}, 500, 1);
     }
+    handleForgotPassword() {
+	const emailInput = document.querySelector("#mtk-email");
+	const email = emailInput ? String(emailInput.value || "").trim() : "";
 
+	if (!email) {
+	    MTKMsgs.show({
+		type: "error",
+		icon: "error",
+		message: "Enter your email first, then click Forgot Password.",
+		closable: true,
+		timer: 8
+	    });
+	    return;
+	}
+
+	(() => {
+	    fetch(wc.apiURL + "/api/forgot_password.php", {
+		method: "POST",
+		credentials: "include",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({ email })
+	    }).then(res => {
+		return res.json().then(json => {
+		    if (!res.ok) {
+			MTKMsgs.show({
+			    type: "error",
+			    icon: "error",
+			    message: (json && (json.error || json.message)) ? (json.error || json.message) : "Could not process password reset.",
+			    closable: true,
+			    timer: 10
+			});
+			throw new Error(json.error || "forgot_password failed");
+		    }
+		    return json;
+		});
+	    }).then(() => {
+		MTKMsgs.show({
+		    type: "success",
+		    icon: "success",
+		    message: "If this email exists, a reset link has been sent.",
+		    closable: true,
+		    timer: 10
+		});
+	    }).catch(console.error);
+	})();
+    }
     handleLessonToggled() {
 	// NO-OP
     }
