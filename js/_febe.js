@@ -176,7 +176,11 @@ class _febe {
 	    }
 
 	    $('[mtk-pages-id="register"]').css("display","block");
+<<<<<<< HEAD
 	}, 200, 1);
+=======
+	}, 500, 1);
+>>>>>>> 07.03.2026
     }
     handleForgotPassword() {
 	const emailInput = document.querySelector("#mtk-email");
@@ -316,8 +320,6 @@ class _febe {
 	
 	// SHOW PUBLIC HEADER
 	$(".app-header").hide(() => $("#header-public").show(() => wc.pages.show("home")));
-
-	wc.pages.show("dashboard");
     }
 
     //////////////////////////////////////////////////////////////////

@@ -92,8 +92,14 @@ class Pages extends HTMLElement {
     show(page) {
         wc.group("mtk-pages.show:", page);
 
+	// FIX FOOTER TO BOTTOM
+	checkFooter()
+
 	try {
 	    headerSelect("mtk-header-" + page);
+
+	    // FIX FOOTER TO BOTTOM ON SMALL PAGES
+	    //checkFooter();
 	} catch(e) {
 	    //wc.error(e.name + ' > ' + e.message);
 	}
