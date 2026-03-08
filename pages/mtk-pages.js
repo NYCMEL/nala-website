@@ -96,7 +96,7 @@ class Pages extends HTMLElement {
 	    headerSelect("mtk-header-" + page);
 
 	    // FIX FOOTER TO BOTTOM ON SMALL PAGES
-	    checkFooter();
+	    //checkFooter();
 	} catch(e) {
 	    //wc.error(e.name + ' > ' + e.message);
 	}
