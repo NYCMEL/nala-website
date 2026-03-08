@@ -1,21 +1,46 @@
-html, body {
-  height: 100%;
-  margin: 0; }
+@import url("fonts/fonts.css");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+:root {
+  --mtk-primary:            #1976d2;
+  --mtk-primary-dark:       #1565c0;
+  --mtk-primary-light:      #42a5f5;
+  --mtk-primary-client:     #009fd9;
+  --mtk-primary-hover:      #0088ba;
+  --mtk-bootstrap-primary:  #0d6efd;
+  --mtk-accent:             #ff4081;
+  --mtk-accent-dark:        #e91e63;
+  --mtk-accent-darker:      #c2185b;
+  --mtk-accent-deepest:     #880e4f;
+  --mtk-success:            #4caf50;
+  --mtk-warning:            #ff9800;
+  --mtk-error:              #f44336;
+  --mtk-star:               #ffc107;
+  --mtk-gold:               gold;
+  --mtk-text-primary:       #212121;
+  --mtk-text-secondary:     #757575;
+  --mtk-text-disabled:      #bdbdbd;
+  --mtk-text-dark:          #333333;
+  --mtk-text-muted:         #5f6368;
+  --mtk-background:         #fafafa;
+  --mtk-surface:            #ffffff;
+  --mtk-bg-light:           #f5f5f5;
+  --mtk-bg-stats:           #f5f8ff;
+  --mtk-bg-syllabus:        #fafafa;
+  --mtk-border:             #e0e0e0;
+  --mtk-divider:            #e0e0e0;
+  --mtk-shadow-1:           0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --mtk-shadow-2:           0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  --mtk-shadow-sm:          0 1px 3px rgba(0, 0, 0, 0.12);
+  --mtk-shadow-md:          0 2px 8px rgba(0, 0, 0, 0.10);
+  --mtk-shadow-hover:       0 4px 12px rgba(0, 0, 0, 0.15);
+  --mtk-stats-value:        #2663eb;
+  --mtk-stats-label:        #5f6368;
+  --mtk-transition:         all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --mtk-transition-short:   all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --mtk-radius:             8px;
+  --mtk-radius-sm:          4px; }
 
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  /* ensures footer is pushed to bottom */
-  margin: 0;
-  font-family: fm;
-  padding-top: 80px; }
-
-#page-content {
-  flex: 1 0 auto;
-  /* main page content expands to fill remaining space */ }
-
-/* FONT CLASSES */
 .fl {
   font-family: fl; }
 
@@ -37,9 +62,30 @@ body {
 .fbi {
   font-family: fbi; }
 
+html, body {
+  height: 100%;
+  margin: 0; }
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  font-family: fm;
+  padding-top: 80px; }
+
+#page-content {
+  flex: 1 0 auto; }
+
 .course-card {
   border: 1px #cecece solid;
   border-radius: 5px; }
+
+.ellipsis {
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
 
 .mtk-hidden {
   opacity: 0;
@@ -52,15 +98,6 @@ body {
 
 .mtk-animate {
   transition: opacity 220ms cubic-bezier(0.4, 0, 0.2, 1), transform 220ms cubic-bezier(0.4, 0, 0.2, 1); }
-
-.ellipsis {
-  width: 200px;
-  /* required */
-  white-space: nowrap;
-  /* required */
-  overflow: hidden;
-  /* required */
-  text-overflow: ellipsis; }
 
 .tkloading {
   display: none;
@@ -106,5 +143,8 @@ h1.title::after {
   bottom: 0;
   width: 30%;
   height: 3px;
-  background-color: gold;
+  background-color: var(--mtk-gold);
   transform: translateX(-50%); }
+
+.nav-link.active {
+  color: var(--mtk-gold) !important; }
