@@ -12,6 +12,10 @@ class Pages extends HTMLElement {
             this.id = "mtk-pages";
         }
 
+        // Make page manager available immediately for early click handlers.
+        wc.pages = this;
+
+
         this._waitForData();
 
         wc.groupEnd();
@@ -63,6 +67,7 @@ class Pages extends HTMLElement {
 
         this.data  = data;
         this.cname = "pages";
+        wc.pages = this;
 
         // BUILD PAGE DIV FOR EACH ENTRY
         let html = "";
