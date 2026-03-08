@@ -351,6 +351,8 @@ class _febe {
 	    wc.log("_febe.handleQuizSubmitted > Server response:", response);
 
 	    if (response.passed) {
+		const isFinalModule = String(data.module_id || "") === "M12";
+
 		mtkDialog.open({
 		    id      : 'success',
 		    title   : 'You passed the Quiz',
@@ -376,6 +378,11 @@ class _febe {
 		// ENABLE NEXT MODULE
 		window.MTKHierarchy.enableNextModule();
 
+		// Final module pass should route to certificate email prompt.
+		if (isFinalModule) {
+		    wc.timeout(() => wc.pages.show("final"), 250, 1);
+		}
+
 		wc.log("Congratulations! You passed.");
 	    } else {
 		mtkDialog.open({
@@ -394,7 +401,6 @@ class _febe {
 	    }
 	});
     }
-
     //////////////////////////////////////////////////////////////////
     ///// RESOURCE HANDLERS
     //////////////////////////////////////////////////////////////////
@@ -429,5 +435,6 @@ class _febe {
 
 /* auto-init */
 window._febe = new _febe();
+
 
 
