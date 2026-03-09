@@ -92,6 +92,13 @@ class Pages extends HTMLElement {
     show(page) {
         wc.group("mtk-pages.show:", page);
 
+	if (page == "register") {
+	    // DO NOT KNOW WHY IT DOES NOT SHOW UP
+	    wc.timeout(function(){
+		$('[mtk-pages-id=register]').css("display","block");
+	    }, 500, 1);
+	}
+
 	// FIX FOOTER TO BOTTOM
 	//checkFooter()
 
