@@ -142,13 +142,6 @@ class Pages extends HTMLElement {
         // SHOW THE PAGE
         target.style.display = "block";
 
-	if (page == "register") {
-	    // DO NOT KNOW WHY IT DOES NOT SHOW UP
-	    wc.timeout(function(){
-		$('[mtk-pages-id=register]').css("display","block");
-	    }, 500, 1);
-	}
-
         // SCROLL TO TOP
         window.scrollTo(0, 0);
 
