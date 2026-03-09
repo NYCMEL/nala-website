@@ -22,33 +22,39 @@
   flex-direction: column;
   gap: 20px; }
 
-.mtk-login form .form-group {
-  position: relative; }
+.mtk-login .form-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px; }
 
-.mtk-login form .form-group label {
+.mtk-login .form-group label {
   display: block;
   font-size: 14px;
-  margin-bottom: 4px; }
+  margin-bottom: 4px;
+  color: rgba(0, 0, 0, 0.7); }
 
-.mtk-login form .form-group input {
+.mtk-login .form-group input {
   width: 100%;
   padding: 14px 12px;
   font-size: 16px;
   border-radius: 8px;
   border: 1px solid #ccc;
   outline: none;
-  transition: border-color 0.2s; }
+  transition: border-color 0.2s;
+  box-sizing: border-box; }
 
-.mtk-login form .form-group input:focus {
+.mtk-login .form-group input:focus {
   border-color: #1976d2;
   box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2); }
 
-.mtk-login form .form-group .error {
+.mtk-login .form-group .error {
   font-size: 12px;
   color: #d32f2f;
-  margin-top: 4px; }
+  margin-top: 2px;
+  min-height: 16px; }
 
-.mtk-login form button {
+.mtk-login form button[type="submit"] {
   padding: 14px;
   font-size: 16px;
   font-weight: 500;
@@ -57,34 +63,68 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s; }
+  transition: background-color 0.2s;
+  width: 100%; }
 
-.mtk-login form button:hover,
-.mtk-login form button:focus {
+.mtk-login form button[type="submit"]:hover, .mtk-login form button[type="submit"]:focus {
   background-color: #1565c0;
   outline: none; }
 
-.mtk-login form .links {
+.mtk-login .links {
   display: flex;
   justify-content: space-between;
   font-size: 14px; }
 
-.mtk-login form .links a {
+.mtk-login .links a {
   color: #1976d2;
   text-decoration: none;
   cursor: pointer; }
 
-.mtk-login form .links a:hover,
-.mtk-login form .links a:focus {
+.mtk-login .links a:hover, .mtk-login .links a:focus {
   text-decoration: underline;
   outline: none; }
 
-.mtk-login form .links a {
-  color: #1976d2;
-  text-decoration: none;
-  cursor: pointer; }
+.mtk-login .form-group small.mtk-forgot-help {
+  display: block;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.55);
+  line-height: 1.5;
+  margin-top: 6px; }
 
-.mtk-login form .links a:hover,
-.mtk-login form .links a:focus {
-  text-decoration: underline;
+.mtk-login .mtk-forgot-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px; }
+
+.mtk-login .mtk-forgot-actions .mtk-forgot-submit {
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  background-color: #1976d2;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%; }
+
+.mtk-login .mtk-forgot-actions .mtk-forgot-submit:hover, .mtk-login .mtk-forgot-actions .mtk-forgot-submit:focus {
+  background-color: #1565c0;
+  outline: none; }
+
+.mtk-login .mtk-forgot-actions .mtk-forgot-cancel {
+  padding: 13px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #1976d2;
+  background-color: transparent;
+  border: 1px solid #1976d2;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  width: 100%; }
+
+.mtk-login .mtk-forgot-actions .mtk-forgot-cancel:hover, .mtk-login .mtk-forgot-actions .mtk-forgot-cancel:focus {
+  background-color: rgba(25, 118, 210, 0.08);
   outline: none; }
