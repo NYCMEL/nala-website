@@ -16,12 +16,6 @@ window.app.pages = [
     },
     {
         "cache": "true",
-        "page":  "login",
-        "label": "Login",
-        "url":   "<wc-include href='login/index.inc.html' />"
-    },
-    {
-        "cache": "true",
         "page":  "register",
         "label": "Register",
         "url":   "<wc-include href='register/index.inc.html' />"
@@ -61,5 +55,11 @@ window.app.pages = [
         "page":  "quiz",
         "label": "Quiz",
         "url":   "<wc-include href='quiz/index.inc.html' />"
-    }
+    },
+    {
+        "cache": "true",
+        "page":  "login",
+        "label": "Login",
+        "url":   "<wc-include href='login/index.inc.html' />"
+    },
 ];
