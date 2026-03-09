@@ -93,9 +93,31 @@
 
 .mtk-login .mtk-forgot-actions {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
   margin-top: 8px; }
+
+.mtk-login .mtk-forgot-actions .mtk-forgot-cancel,
+.mtk-login .mtk-forgot-actions .mtk-forgot-submit {
+  width: calc(50% - 8px);
+  box-sizing: border-box; }
+
+.mtk-login .mtk-forgot-actions .mtk-forgot-cancel {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1976d2;
+  background: none;
+  border: none;
+  padding: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+  white-space: nowrap;
+  transition: color 0.2s; }
+
+.mtk-login .mtk-forgot-actions .mtk-forgot-cancel:hover, .mtk-login .mtk-forgot-actions .mtk-forgot-cancel:focus {
+  color: #1565c0;
+  outline: none; }
 
 .mtk-login .mtk-forgot-actions .mtk-forgot-submit {
   padding: 14px;
@@ -106,25 +128,8 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s;
-  width: 100%; }
+  transition: background-color 0.2s; }
 
 .mtk-login .mtk-forgot-actions .mtk-forgot-submit:hover, .mtk-login .mtk-forgot-actions .mtk-forgot-submit:focus {
   background-color: #1565c0;
-  outline: none; }
-
-.mtk-login .mtk-forgot-actions .mtk-forgot-cancel {
-  padding: 13px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #1976d2;
-  background-color: transparent;
-  border: 1px solid #1976d2;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
-  width: 100%; }
-
-.mtk-login .mtk-forgot-actions .mtk-forgot-cancel:hover, .mtk-login .mtk-forgot-actions .mtk-forgot-cancel:focus {
-  background-color: rgba(25, 118, 210, 0.08);
   outline: none; }

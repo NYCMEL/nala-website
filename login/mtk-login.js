@@ -168,8 +168,8 @@ class MTKLogin extends HTMLElement {
 		<div class="error"></div>
 	    </div>
 	    <div class="mtk-forgot-actions">
-		<button type="button" class="mtk-forgot-submit">${fp.submitLabel}</button>
 		<button type="button" class="mtk-forgot-cancel">${fp.cancelLabel}</button>
+		<button type="button" class="mtk-forgot-submit">${fp.submitLabel}</button>
 	    </div>
 	`;
 
