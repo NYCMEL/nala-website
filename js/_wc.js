@@ -35,8 +35,9 @@ wc.inactivity = {
 if(typeof(console) === 'undefined') {console = {}}
 
 if (window.wcENV == "prod") {
-    wc.log  = console.log  = function () {};
-    wc.info = console.info = function () {};
+    wc.log   = console.log   = function () {};
+    wc.info  = console.info  = function () {};
+    wc.group = console.group = function () {};
 }
 
 /////////////////////////////////////////////////////////////////////////////////
