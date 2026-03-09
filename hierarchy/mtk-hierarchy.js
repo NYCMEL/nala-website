@@ -635,6 +635,52 @@ class MTKHierarchy {
             isOpen: !isOpen,
             timestamp: new Date().toISOString()
         });
+
+        if (!isOpen) {
+            this.syncLessonProgress(moduleId, lessonId);
+        }
+    }
+
+    /**
+     * Persist lesson progress when a lesson is opened.
+     * Progress advances only when opened lesson_no equals current_lesson.
+     */
+    syncLessonProgress(moduleId, lessonId) {
+        if (typeof wc === 'undefined' || typeof wc.lessonComplete !== 'function') return;
+        if (!wc.session || !wc.session.user) return;
+
+        let lessonNo = null;
+        for (const course of this.config || []) {
+            if (!course.modules) continue;
+            const module = course.modules.find(m => m.id === moduleId);
+            if (!module || !module.lessons) continue;
+            const lesson = module.lessons.find(l => l.id === lessonId);
+            if (!lesson) continue;
+            if (Number.isFinite(Number(lesson.lesson_no))) {
+                lessonNo = Number(lesson.lesson_no);
+            }
+            break;
+        }
+
+        const current = Number(wc.session.user.current_lesson);
+        if (!Number.isFinite(lessonNo) || !Number.isFinite(current)) return;
+
+        wc.lessonComplete(lessonNo, current, function(err, result) {
+            if (err) {
+                wc.warn("MTKHierarchy: lessonComplete failed", err);
+                return;
+            }
+
+            if (result && Number.isFinite(Number(result.current_lesson))) {
+                wc.session.user.current_lesson = Number(result.current_lesson);
+            }
+
+            wc.log("MTKHierarchy: lesson progress sync", {
+                lesson_no: lessonNo,
+                previous_current: current,
+                response: result
+            });
+        });
     }
 
     /**
