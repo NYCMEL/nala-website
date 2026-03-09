@@ -1,5 +1,5 @@
 // PUBLISH ALL CLICKS
-$(".navbar-toggler, .nav-link, .navbar-brand, .btn").on("click", function(e) {
+$(".nav-link, .navbar-brand, .btn").on("click", function(e) {
     e.preventDefault();
     e.stopPropagation();
     e.stopImmediatePropagation();
