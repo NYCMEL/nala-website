@@ -1,162 +1,94 @@
 .mtk-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px auto;
+  padding: 30px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  font-family: "Roboto", sans-serif;
+
+  .mtk-login-content {
+      padding: 25px;
+      width: 500px;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+
+  form {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 30px auto;
-    padding: 30px;
-    border-radius: 12px;
-    background-color: #ffffff;
-    font-family: "Roboto", sans-serif;
-
-    .mtk-login-content {
-	padding: 25px;
-	width: 500px;
-    }
-
-    h2 {
-	text-align: center;
-	margin-bottom: 24px;
-	font-weight: 500;
-    }
-
-    form {
-	display: flex;
-	flex-direction: column;
-	gap: 20px;
-    }
+    flex-direction: column;
+    gap: 20px;
 
     .form-group {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	gap: 4px;
+      position: relative;
 
-	label {
-	    display: block;
-	    font-size: 14px;
-	    margin-bottom: 4px;
-	    color: rgba(0, 0, 0, 0.7);
-	}
+      label {
+        display: block;
+        font-size: 14px;
+        margin-bottom: 4px;
+      }
 
-	input {
-	    width: 100%;
-	    padding: 14px 12px;
-	    font-size: 16px;
-	    border-radius: 8px;
-	    border: 1px solid #ccc;
-	    outline: none;
-	    transition: border-color 0.2s;
-	    box-sizing: border-box;
+      input {
+        width: 100%;
+        padding: 14px 12px;
+        font-size: 16px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        outline: none;
+        transition: border-color 0.2s;
+      }
 
-	    &:focus {
-		border-color: #1976d2;
-		box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
-	    }
-	}
+      input:focus {
+        border-color: #1976d2;
+        box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+      }
 
-	.error {
-	    font-size: 12px;
-	    color: #d32f2f;
-	    margin-top: 2px;
-	    min-height: 16px;
-	}
+      .error {
+        font-size: 12px;
+        color: #d32f2f;
+        margin-top: 4px;
+      }
     }
 
-    // ── Login form buttons ──────────────────────────────────────────────────
-    form button[type="submit"] {
-	padding: 14px;
-	font-size: 16px;
-	font-weight: 500;
-	color: #fff;
-	background-color: #1976d2;
-	border: none;
-	border-radius: 8px;
-	cursor: pointer;
-	transition: background-color 0.2s;
-	width: 100%;
+    button {
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #fff;
+      background-color: #1976d2;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
 
-	&:hover,
-	&:focus {
-	    background-color: #1565c0;
-	    outline: none;
-	}
+    button:hover,
+    button:focus {
+      background-color: #1565c0;
+      outline: none;
     }
 
     .links {
-	display: flex;
-	justify-content: space-between;
-	font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
 
-	a {
-	    color: #1976d2;
-	    text-decoration: none;
-	    cursor: pointer;
+      a {
+        color: #1976d2;
+        text-decoration: none;
+        cursor: pointer;
+      }
 
-	    &:hover,
-	    &:focus {
-		text-decoration: underline;
-		outline: none;
-	    }
-	}
+      a:hover,
+      a:focus {
+        text-decoration: underline;
+        outline: none;
+      }
     }
-
-    // ── Forgot Password screen ──────────────────────────────────────────────
-    .form-group small.mtk-forgot-help {
-	display: block;
-	font-size: 12px;
-	color: rgba(0, 0, 0, 0.55);
-	line-height: 1.5;
-	margin-top: 6px;
-    }
-
-    .mtk-forgot-actions {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	gap: 16px;
-	margin-top: 8px;
-
-	.mtk-forgot-cancel,
-	.mtk-forgot-submit {
-	    width: calc(50% - 8px);
-	    box-sizing: border-box;
-	}
-
-	.mtk-forgot-cancel {
-	    font-size: 14px;
-	    font-weight: 500;
-	    color: #1976d2;
-	    background: none;
-	    border: none;
-	    padding: 14px;
-	    cursor: pointer;
-	    text-decoration: underline;
-	    white-space: nowrap;
-	    transition: color 0.2s;
-
-	    &:hover,
-	    &:focus {
-		color: #1565c0;
-		outline: none;
-	    }
-	}
-
-	.mtk-forgot-submit {
-	    padding: 14px;
-	    font-size: 16px;
-	    font-weight: 500;
-	    color: #fff;
-	    background-color: #1976d2;
-	    border: none;
-	    border-radius: 8px;
-	    cursor: pointer;
-	    transition: background-color 0.2s;
-
-	    &:hover,
-	    &:focus {
-		background-color: #1565c0;
-		outline: none;
-	    }
-	}
-    }
+  }
 }
