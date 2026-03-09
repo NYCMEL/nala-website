@@ -19,6 +19,8 @@ class MTKHierarchy {
         this.activeQuiz = null;
         this.openModules = new Set();
         this.openLessons = new Set();
+        this._vimeoApiLoading = false;
+        this._vimeoApiCallbacks = [];
 
         // Add IDs to items that don't have them
         this.ensureIds();
@@ -635,50 +637,102 @@ class MTKHierarchy {
             isOpen: !isOpen,
             timestamp: new Date().toISOString()
         });
-
-        if (!isOpen) {
-            this.syncLessonProgress(moduleId, lessonId);
-        }
     }
 
     /**
-     * Persist lesson progress when a lesson is opened.
-     * Progress advances only when opened lesson_no equals current_lesson.
+     * Load Vimeo player API once and invoke callback when ready.
      */
-    syncLessonProgress(moduleId, lessonId) {
+    ensureVimeoApi(callback) {
+        if (typeof window !== 'undefined' && window.Vimeo && window.Vimeo.Player) {
+            callback();
+            return;
+        }
+
+        this._vimeoApiCallbacks.push(callback);
+        if (this._vimeoApiLoading) return;
+        this._vimeoApiLoading = true;
+
+        const existing = document.querySelector('script[data-vimeo-player-api="1"]');
+        if (existing) return;
+
+        const script = document.createElement('script');
+        script.src = 'https://player.vimeo.com/api/player.js';
+        script.async = true;
+        script.setAttribute('data-vimeo-player-api', '1');
+
+        script.onload = () => {
+            this._vimeoApiLoading = false;
+            const callbacks = this._vimeoApiCallbacks.slice();
+            this._vimeoApiCallbacks = [];
+            callbacks.forEach(fn => {
+                try { fn(); } catch (e) { wc.warn('MTKHierarchy: Vimeo callback error', e); }
+            });
+        };
+
+        script.onerror = () => {
+            this._vimeoApiLoading = false;
+            this._vimeoApiCallbacks = [];
+            wc.warn('MTKHierarchy: failed to load Vimeo API');
+        };
+
+        document.head.appendChild(script);
+    }
+
+    /**
+     * Find lesson_no for a resource id.
+     */
+    findLessonNoForResource(resourceId) {
+        if (!this.config || !Array.isArray(this.config)) return null;
+        for (const course of this.config) {
+            if (!course.modules) continue;
+            for (const module of course.modules) {
+                if (!module.lessons) continue;
+                for (const lesson of module.lessons) {
+                    if (!lesson.resources) continue;
+                    if (lesson.resources.some(r => r.id === resourceId)) {
+                        return Number.isFinite(Number(lesson.lesson_no)) ? Number(lesson.lesson_no) : null;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Advance progress only when the lesson video is fully watched (Vimeo ended).
+     */
+    attachVideoCompletionTracking(lessonNo) {
+        if (!Number.isFinite(Number(lessonNo))) return;
         if (typeof wc === 'undefined' || typeof wc.lessonComplete !== 'function') return;
         if (!wc.session || !wc.session.user) return;
 
-        let lessonNo = null;
-        for (const course of this.config || []) {
-            if (!course.modules) continue;
-            const module = course.modules.find(m => m.id === moduleId);
-            if (!module || !module.lessons) continue;
-            const lesson = module.lessons.find(l => l.id === lessonId);
-            if (!lesson) continue;
-            if (Number.isFinite(Number(lesson.lesson_no))) {
-                lessonNo = Number(lesson.lesson_no);
-            }
-            break;
-        }
+        const iframe = this.elements && this.elements.rhs
+            ? this.elements.rhs.querySelector('.mtk-video-container iframe')
+            : null;
+        if (!iframe) return;
+        if (iframe.dataset.progressBound === '1') return;
+        iframe.dataset.progressBound = '1';
 
-        const current = Number(wc.session.user.current_lesson);
-        if (!Number.isFinite(lessonNo) || !Number.isFinite(current)) return;
-
-        wc.lessonComplete(lessonNo, current, function(err, result) {
-            if (err) {
-                wc.warn("MTKHierarchy: lessonComplete failed", err);
-                return;
-            }
-
-            if (result && Number.isFinite(Number(result.current_lesson))) {
-                wc.session.user.current_lesson = Number(result.current_lesson);
-            }
-
-            wc.log("MTKHierarchy: lesson progress sync", {
-                lesson_no: lessonNo,
-                previous_current: current,
-                response: result
+        this.ensureVimeoApi(() => {
+            if (!(window.Vimeo && window.Vimeo.Player)) return;
+            const player = new window.Vimeo.Player(iframe);
+            player.on('ended', () => {
+                const current = Number(wc.session.user.current_lesson);
+                if (!Number.isFinite(current)) return;
+                wc.lessonComplete(Number(lessonNo), current, function(err, result) {
+                    if (err) {
+                        wc.warn('MTKHierarchy: lessonComplete failed on video end', err);
+                        return;
+                    }
+                    if (result && Number.isFinite(Number(result.current_lesson))) {
+                        wc.session.user.current_lesson = Number(result.current_lesson);
+                    }
+                    wc.log('MTKHierarchy: video-ended progress sync', {
+                        lesson_no: Number(lessonNo),
+                        previous_current: current,
+                        response: result
+                    });
+                });
             });
         });
     }
@@ -1061,8 +1115,9 @@ class MTKHierarchy {
             let contentHTML = '<div class="mtk-hierarchy-rhs__content">';
             contentHTML += `<h2>${this.escapeHtml(lesson.title)}</h2>`;
 
+            let firstVideo = null;
             if (videos.length > 0) {
-                const firstVideo = videos[0];
+                firstVideo = videos[0];
                 contentHTML += `<p style="color: var(--mtk-text-secondary); margin-bottom: 1rem;">${this.escapeHtml(firstVideo.description)}</p>`;
                 contentHTML += `
           <div class="mtk-video-container">
@@ -1098,6 +1153,10 @@ class MTKHierarchy {
 
             this.elements.rhs.innerHTML = contentHTML;
 
+            if (firstVideo && Number.isFinite(Number(lesson.lesson_no))) {
+                this.attachVideoCompletionTracking(Number(lesson.lesson_no));
+            }
+
             return;
         }
     }
@@ -1123,8 +1182,9 @@ class MTKHierarchy {
         let contentHTML = '<div class="mtk-hierarchy-rhs__content">';
         contentHTML += `<h2>${this.escapeHtml(resource.description)}</h2>`;
 
+        let firstVideo = null;
         if (videos.length > 0) {
-            const firstVideo = videos[0];
+            firstVideo = videos[0];
             contentHTML += `
         <div class="mtk-video-container">
           <iframe src="${this.sanitizeUrl(firstVideo.url)}"
@@ -1158,6 +1218,11 @@ class MTKHierarchy {
         contentHTML += '</div>';
 
         this.elements.rhs.innerHTML = contentHTML;
+
+        const lessonNo = this.findLessonNoForResource(resource.id);
+        if (firstVideo && Number.isFinite(Number(lessonNo))) {
+            this.attachVideoCompletionTracking(Number(lessonNo));
+        }
     }
 
     /**
