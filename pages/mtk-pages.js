@@ -92,9 +92,6 @@ class Pages extends HTMLElement {
     show(page) {
         wc.group("mtk-pages.show:", page);
 
-	// FIX FOOTER TO BOTTOM
-	checkFooter()
-
 	try {
 	    headerSelect("mtk-header-" + page);
 
