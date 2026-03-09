@@ -198,7 +198,7 @@ class _febe {
 		MTKMsgs.show({
 		    type: "success",
 		    icon: "success",
-		    message: "If this email exists, a reset link has been sent.",
+		    message: "If this email exists, a reset link will be emailed to you.",
 		    closable: true,
 		    timer: 10
 		});
