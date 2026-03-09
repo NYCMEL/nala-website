@@ -34,15 +34,9 @@ wc.inactivity = {
 // FOR WINDOZE
 if(typeof(console) === 'undefined') {console = {}}
 
-/////////////////////////////////////////////////////////////////////////////////
-//// LOGGING ON/OFF
-/////////////////////////////////////////////////////////////////////////////////
-wc.debug = location.hostname !== wc.apiURL; // SET IN app.js FILE
-
-if (wc.debug) {
-    window.wcENV = "dev"; /* SHOW ALL LOGS */
-} else {
-    window.wcENV = "prod"; /* REMOVE ALL CONSOLE LOGS - except errors & warnings */
+if (window.wcENV == "prod") {
+    wc.log  = console.log  = function () {};
+    wc.info = console.info = function () {};
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -86,12 +80,6 @@ wc.warn = function(...data) {
 /////////////////////////////////////////////////////////////////////////////////
 wc.error = function(...data) {
     return console.error(...data);
-}
-
-if (window.wcENV == "prod") {
-    console.log = function () {};
-    console.info = function () {};
-    console.debug = function () {};
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
