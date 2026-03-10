@@ -25,9 +25,13 @@
 
 .mtk-hierarchy .mtk-hierarchy__container {
   height: calc(100vh - 120px);
-  min-height: 600px;
+  min-height: 420px;
   max-height: 100%;
   overflow: hidden; }
+body.footer-fixed .mtk-hierarchy .mtk-hierarchy__container {
+  height: calc(100vh - 120px - var(--page-footer-height, 0px));
+  min-height: 320px;
+}
 
 .mtk-hierarchy .mtk-hierarchy__row {
   height: 100%;
