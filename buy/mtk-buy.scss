@@ -1,12 +1,36 @@
+@import "../css/nala.scss";
+
 // =============================================================================
 // mtk-buy.scss
 // Scoped entirely to .mtk-buy — no global styles, no IDs
-// Uses nala.scss design tokens, mixins & placeholders throughout
-// @import 'nala' must precede this file in your build
+// Requires nala.scss to be @import-ed before this file in your build.
+// Every value below traces back to a nala token, mixin, or placeholder.
 // =============================================================================
 
+// -----------------------------------------------------------------------------
+// Component-local constants
+// These fill gaps where nala has no exact token.
+// Kept here (not in nala) because they are specific to this component.
+// -----------------------------------------------------------------------------
+$_buy-dialog-max-width:    $bp-xs;                     // 480px — reuses nala breakpoint
+$_buy-close-btn-size:      36px;                       // icon-button touch target
+$_buy-icon-size-header:    36px;                       // school icon in header
+$_buy-icon-size-action:    18px;                       // icon inside CTA button
+$_buy-icon-size-close:     20px;                       // × icon
+$_buy-header-icon-opacity: rgba(255, 255, 255, 0.92);  // on-primary icon tint
+$_buy-close-hover-bg:      rgba(255, 255, 255, 0.28);  // close btn hover — between nala's 0.16 & full white
+$_buy-ripple-wave-color:   rgba(255, 255, 255, 0.35);  // ripple on filled button
+$_buy-dialog-scale-from:   scale(0.97);                // enter animation start scale
+$_buy-stripe-dot-lo:       rgba($color-primary, 0.15); // nala $color-primary tinted
+$_buy-stripe-dot-mid:      rgba($color-primary, 0.35);
+$_buy-hover-state-text:    rgba($color-primary, 0.08); // MD3 hover state layer
+$_buy-active-state-text:   rgba($color-primary, 0.16); // MD3 pressed state layer
+$_buy-ripple-text:         rgba($color-primary, 0.12); // ripple on text button
 
-// ─── Host element ────────────────────────────────────────────────────────────
+
+// =============================================================================
+// Host element
+// =============================================================================
 mtk-buy.mtk-buy {
   display: block;
 }
@@ -16,21 +40,21 @@ mtk-buy.mtk-buy {
 // .mtk-buy root
 // =============================================================================
 .mtk-buy {
-  font-family: $font-primary;                          // nala: 'Roboto', Arial, sans-serif
+  font-family: $font-primary;                          // nala → 'Roboto', Arial, sans-serif
 
 
   // ── Backdrop / Scrim ──────────────────────────────────────────────────────
   &__backdrop {
     position:   fixed;
     inset:      0;
-    z-index:    $z-backdrop;                           // nala: 1040
-    background: $color-overlay-dark;                   // nala: rgba(0,0,0,.5)
+    z-index:    $z-backdrop;                           // nala → 1040
+    background: $color-overlay-dark;                   // nala → rgba(0,0,0,.5)
     @include    flex-center;                           // nala mixin
-    padding:    $spacing-lg;                           // nala: 16px
+    padding:    $spacing-lg;                           // nala → 16px
     opacity:    0;
     visibility: hidden;
     transition:
-      opacity    $duration-medium $ease-standard,      // nala: 300ms cubic-bezier(...)
+      opacity    $duration-medium $ease-standard,      // nala → 300ms cubic-bezier(0.4,0,0.2,1)
       visibility $duration-medium $ease-standard;
 
     &.is-open {
@@ -48,38 +72,38 @@ mtk-buy.mtk-buy {
   // ── Dialog surface ────────────────────────────────────────────────────────
   &__dialog {
     position:      relative;
-    background:    $color-white;                       // nala: #ffffff
-    border-radius: $radius-lg;                         // nala: 16px
-    box-shadow:    $shadow-lg;                         // nala: 0 10px 20px / 0 6px 6px
+    background:    $color-white;                        // nala → #ffffff
+    border-radius: $radius-lg;                          // nala → 16px
+    box-shadow:    $shadow-lg;                          // nala → 0 10px 20px … / 0 6px 6px …
     width:         100%;
-    max-width:     480px;
+    max-width:     $_buy-dialog-max-width;              // local → $bp-xs (480px)
     outline:       none;
     opacity:       0;
-    transform:     translateY($spacing-xl) scale(0.97); // nala: 24px
+    transform:     translateY($spacing-xl) $_buy-dialog-scale-from; // nala 24px + local scale
     transition:
-      opacity   $duration-long  $ease-decelerate,      // nala: 400ms
-      transform $duration-long  $ease-decelerate;
+      opacity   $duration-long $ease-decelerate,        // nala → 400ms
+      transform $duration-long $ease-decelerate;
     overflow:      hidden;
 
-    @include elevation-transition;                     // nala mixin
+    @include elevation-transition;                      // nala mixin
   }
 
 
   // ── Header band ───────────────────────────────────────────────────────────
   &__header {
-    background: $color-primary;                        // nala: #1976d2
-    padding:    $spacing-xl $spacing-xl $spacing-lg;   // nala: 24px 24px 16px
-    display:    flex;
+    background:  $color-primary;                        // nala → #1976d2
+    padding:     $spacing-xl $spacing-xl $spacing-lg;   // nala → 24px 24px 16px
+    display:     flex;
     align-items: flex-start;
-    gap:        $spacing-lg;                           // nala: 16px
-    position:   relative;
+    gap:         $spacing-lg;                           // nala → 16px
+    position:    relative;
   }
 
   &__header-icon {
-    @include material-icon(36px);                      // nala mixin
-    color:       rgba(255, 255, 255, 0.92);
+    @include material-icon($_buy-icon-size-header);     // nala mixin (36px)
+    color:       $_buy-header-icon-opacity;             // local → rgba(255,255,255,0.92)
     flex-shrink: 0;
-    margin-top:  2px;
+    margin-top:  $spacing-xs * 0.5;                     // nala $spacing-xs=4px → 2px optical tweak
   }
 
   &__header-text {
@@ -88,150 +112,151 @@ mtk-buy.mtk-buy {
   }
 
   &__title {
-    font-size:      $font-size-xl;                     // nala: 18px
-    font-weight:    $font-weight-semibold;             // nala: 600
-    line-height:    $line-height-tight;                // nala: 1.2
-    color:          $color-white;
-    margin:         0 0 $spacing-xs;                   // nala: 4px
+    font-size:      $font-size-xl;                      // nala → 18px
+    font-weight:    $font-weight-semibold;              // nala → 600
+    line-height:    $line-height-tight;                 // nala → 1.2
+    color:          $color-white;                       // nala → #ffffff
+    margin:         0 0 $spacing-xs;                    // nala → 4px
     letter-spacing: 0.01em;
   }
 
 
   // ── Body ──────────────────────────────────────────────────────────────────
   &__body {
-    padding: $spacing-xl $spacing-xl $spacing-sm;      // nala: 24px 24px 8px
+    padding: $spacing-xl $spacing-xl $spacing-sm;       // nala → 24px 24px 8px
   }
 
   &__subtitle {
-    font-size:   $font-size-md;                        // nala: 15px
-    line-height: $line-height-loose;                   // nala: 1.6
-    color:       $color-text-secondary;                // nala: #757575
+    font-size:   $font-size-md;                         // nala → 15px
+    line-height: $line-height-loose;                    // nala → 1.6
+    color:       $color-text-secondary;                 // nala → #757575
     margin:      0;
   }
 
 
-  // ── Decorative stripe ─────────────────────────────────────────────────────
+  // ── Decorative progress stripe ────────────────────────────────────────────
   &__stripe {
-    @include flex-center;                              // nala mixin
-    gap:     $spacing-sm;                              // nala: 8px
-    padding: $spacing-lg $spacing-xl;                  // nala: 16px 24px
+    @include flex-center;                               // nala mixin
+    gap:     $spacing-sm;                               // nala → 8px
+    padding: $spacing-lg $spacing-xl;                   // nala → 16px 24px
 
     span {
       display:       inline-block;
-      width:         $spacing-sm;                      // nala: 8px
+      width:         $spacing-sm;                       // nala → 8px
       height:        $spacing-sm;
-      border-radius: $radius-circle;                   // nala: 50%
-      background:    rgba($color-primary, 0.15);
+      border-radius: $radius-circle;                    // nala → 50%
+      background:    $_buy-stripe-dot-lo;               // local → rgba(primary, 0.15)
 
-      &:nth-child(2) { background: rgba($color-primary, 0.35); }
-      &:nth-child(3) { background: $color-primary; }
-      &:nth-child(4) { background: rgba($color-primary, 0.35); }
-      &:nth-child(5) { background: rgba($color-primary, 0.15); }
+      &:nth-child(2) { background: $_buy-stripe-dot-mid; }  // local → rgba(primary, 0.35)
+      &:nth-child(3) { background: $color-primary; }         // nala → #1976d2
+      &:nth-child(4) { background: $_buy-stripe-dot-mid; }
+      &:nth-child(5) { background: $_buy-stripe-dot-lo; }
     }
   }
 
 
   // ── Actions footer ────────────────────────────────────────────────────────
   &__actions {
-    padding:         $spacing-sm $spacing-lg $spacing-xl; // nala: 8px 16px 24px
+    padding:         $spacing-sm $spacing-lg $spacing-xl; // nala → 8px 16px 24px
     display:         flex;
     justify-content: flex-end;
-    gap:             $spacing-sm;                      // nala: 8px
-    border-top:      1px solid $color-divider;         // nala: rgba(0,0,0,.12)
+    gap:             $spacing-sm;                        // nala → 8px
+    border-top:      1px solid $color-divider;           // nala → rgba(0,0,0,.12)
   }
 
 
   // ── Buttons ───────────────────────────────────────────────────────────────
 
-  // Shared base — extends nala %btn-base
+  // Base — extends nala %btn-base (inline-flex, padding, font, ripple-base, focus-ring)
   &__btn {
     @extend %btn-base;
 
-    // Ripple wave — piggybacks nala's .mtk-ripple-wave keyframe
     .mtk-ripple-wave {
-      background-color: rgba(255, 255, 255, 0.35);
+      background-color: $_buy-ripple-wave-color;        // local → rgba(255,255,255,0.35)
     }
 
     .material-icons {
-      @include material-icon(18px);                    // nala mixin
+      @include material-icon($_buy-icon-size-action);   // nala mixin → 18px
     }
   }
 
-  // Ghost / text — "Maybe Later"
+  // Text / ghost — "Maybe Later"
   &__btn--text {
     background: transparent;
-    color:      $color-primary;                        // nala: #1976d2
+    color:      $color-primary;                         // nala → #1976d2
     box-shadow: none;
 
     .mtk-ripple-wave {
-      background-color: rgba($color-primary, 0.12);
+      background-color: $_buy-ripple-text;              // local → rgba(primary, 0.12)
     }
 
     &:hover {
-      background: rgba($color-primary, 0.08);
+      background: $_buy-hover-state-text;               // local → rgba(primary, 0.08)
       box-shadow: none;
       transform:  none;
     }
 
     &:active {
-      background: rgba($color-primary, 0.16);
+      background: $_buy-active-state-text;              // local → rgba(primary, 0.16)
     }
 
-    @include focus-ring($color-primary);               // nala mixin
+    @include focus-ring($color-primary);                // nala mixin
   }
 
-  // Filled CTA — "Purchase Course"  →  extends nala %btn-primary, amber tint
+  // Filled CTA — "Purchase Course" — extends nala %btn-primary, amber override
   &__btn--filled {
     @extend %btn-primary;
-    background: $color-warning-dialog;                 // nala: #f57c00
-    box-shadow: $shadow-elev1;                         // nala shadow token
+    background: $color-warning-dialog;                  // nala → #f57c00
+    box-shadow: $shadow-elev1;                          // nala → 0 1px 2px … / 0 1px 3px …
 
     &:hover {
-      background: $color-warning-dark;                 // nala: #e65100
-      box-shadow: $shadow-elev2;
+      background: $color-warning-dark;                  // nala → #e65100
+      box-shadow: $shadow-elev2;                        // nala → 0 2px 6px … / 0 1px 2px …
     }
 
     &:active {
-      background: darken($color-warning-dark, 6%);
+      background: $color-warning-dark;
+      box-shadow: $shadow-elev1;
       transform:  translateY(0);
     }
 
-    @include focus-ring($color-warning-dialog);        // nala mixin
+    @include focus-ring($color-warning-dialog);         // nala mixin
   }
 
 
   // ── Close button (× in header) ────────────────────────────────────────────
   &__close {
     position:      absolute;
-    top:           $spacing-sm + 2;                    // nala: 8px + 2
-    right:         $spacing-sm + 2;
-    width:         36px;
-    height:        36px;
+    top:           calc(#{$spacing-sm} + 2px);          // nala 8px + 2px optical alignment
+    right:         calc(#{$spacing-sm} + 2px);
+    width:         $_buy-close-btn-size;                // local → 36px touch target
+    height:        $_buy-close-btn-size;
     border:        none;
-    border-radius: $radius-circle;                     // nala: 50%
-    background:    $color-overlay-white-16;            // nala: rgba(255,255,255,.16)
-    color:         $color-white;
-    @include       flex-center;                        // nala mixin
+    border-radius: $radius-circle;                      // nala → 50%
+    background:    $color-overlay-white-16;             // nala → rgba(255,255,255,.16)
+    color:         $color-white;                        // nala → #ffffff
+    @include       flex-center;                         // nala mixin
     cursor:        pointer;
     padding:       0;
-    transition:    background $duration-short $ease-standard; // nala tokens
+    transition:    background $duration-short $ease-standard; // nala → 200ms cubic-bezier
 
     &:hover {
-      background: rgba(255, 255, 255, 0.28);
+      background: $_buy-close-hover-bg;                 // local → rgba(255,255,255,0.28)
     }
 
-    @include focus-ring($color-warning-dialog, 3px);   // nala mixin
+    @include focus-ring($color-warning-dialog, $spacing-xs - 1px); // nala mixin, 3px offset
 
     .material-icons {
-      @include material-icon(20px);                    // nala mixin
+      @include material-icon($_buy-icon-size-close);    // nala mixin → 20px
     }
   }
 
 
   // ── Responsive ────────────────────────────────────────────────────────────
-  @media (max-width: $bp-xs) {                         // nala: 480px
+  @media (max-width: $bp-xs) {                          // nala → 480px
+
     &__dialog {
-      border-radius: $radius-md;                       // nala: 12px
+      border-radius: $radius-md;                        // nala → 12px
     }
 
     &__actions {
