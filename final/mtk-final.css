@@ -663,3 +663,51 @@ a:hover {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0; }
+, 255, 0.35);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: mtk-spin 600ms linear infinite;
+      flex-shrink: 0; }
+    .mtk-final__submit--loading {
+      pointer-events: none;
+      opacity: 0.8; }
+      .mtk-final__submit--loading .material-icons {
+        display: none; }
+      .mtk-final__submit--loading .mtk-final__submit-spinner {
+        display: block; }
+  .mtk-final__toast {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #1b2a3b;
+    color: #e8f0fe;
+    border-radius: var(--_r-md);
+    padding: 14px 18px;
+    font-size: 14px;
+    line-height: 1.45;
+    margin-top: 24px;
+    box-shadow: var(--_elev-3);
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+    transition: opacity var(--_dur-med) var(--_ease), transform var(--_dur-med) var(--_ease);
+    pointer-events: none;
+    visibility: hidden; }
+    .mtk-final__toast .material-icons {
+      font-size: 22px;
+      color: #81c995;
+      flex-shrink: 0; }
+    .mtk-final__toast--show {
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+      visibility: visible; }
+  .mtk-final__sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0; }
