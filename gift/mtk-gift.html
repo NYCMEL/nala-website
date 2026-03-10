@@ -1,0 +1,269 @@
+<!-- mtk-gift component markup -->
+<mtk-gift class="mtk-gift" role="region" aria-label="Free Lockout Kit Request Form">
+  <div class="mtk-gift__card">
+
+    <!-- Header -->
+    <header class="mtk-gift__header">
+      <div class="mtk-gift__header-icon" aria-hidden="true">
+        <span class="material-icons">card_giftcard</span>
+      </div>
+      <div class="mtk-gift__header-text">
+        <h2 class="mtk-gift__title">Your Free Lockout Kit</h2>
+        <p class="mtk-gift__subtitle">We'll ship it right to your door — completely free.</p>
+      </div>
+    </header>
+
+    <!-- Body -->
+    <div class="mtk-gift__body">
+
+      <form
+        class="mtk-gift__form"
+        id="mtk-gift-form"
+        novalidate
+        aria-label="Shipping address form"
+      >
+
+        <!-- Address section label -->
+        <p class="mtk-gift__address-label">
+          <span class="material-icons" aria-hidden="true">local_shipping</span>
+          Where do you want us to send your free Lockout Kit?
+        </p>
+
+        <!-- Full Name -->
+        <div class="mtk-gift__row">
+          <div class="mtk-gift__field" data-field="fullName">
+            <div class="mtk-gift__input-wrap">
+              <input
+                class="mtk-gift__input"
+                id="mtk-gift-full-name"
+                type="text"
+                name="fullName"
+                placeholder=" "
+                required
+                autocomplete="name"
+                aria-required="true"
+                aria-describedby="mtk-gift-full-name-error"
+              />
+              <label class="mtk-gift__label" for="mtk-gift-full-name">
+                Full Name<span class="mtk-gift__required" aria-hidden="true">*</span>
+              </label>
+              <span class="mtk-gift__field-icon" aria-hidden="true">
+                <span class="material-icons">person</span>
+              </span>
+            </div>
+            <span
+              class="mtk-gift__field-error"
+              id="mtk-gift-full-name-error"
+              role="alert"
+              aria-live="polite"
+            >
+              <span class="material-icons" aria-hidden="true">error_outline</span>
+              Please enter your full name.
+            </span>
+          </div>
+        </div>
+
+        <!-- Street Address -->
+        <div class="mtk-gift__row">
+          <div class="mtk-gift__field" data-field="addressLine1">
+            <div class="mtk-gift__input-wrap">
+              <input
+                class="mtk-gift__input"
+                id="mtk-gift-address-line1"
+                type="text"
+                name="addressLine1"
+                placeholder=" "
+                required
+                autocomplete="address-line1"
+                aria-required="true"
+                aria-describedby="mtk-gift-address-line1-error"
+              />
+              <label class="mtk-gift__label" for="mtk-gift-address-line1">
+                Street Address<span class="mtk-gift__required" aria-hidden="true">*</span>
+              </label>
+              <span class="mtk-gift__field-icon" aria-hidden="true">
+                <span class="material-icons">home</span>
+              </span>
+            </div>
+            <span
+              class="mtk-gift__field-error"
+              id="mtk-gift-address-line1-error"
+              role="alert"
+              aria-live="polite"
+            >
+              <span class="material-icons" aria-hidden="true">error_outline</span>
+              Please enter a street address.
+            </span>
+          </div>
+        </div>
+
+        <!-- Apt / Suite -->
+        <div class="mtk-gift__row">
+          <div class="mtk-gift__field" data-field="addressLine2">
+            <div class="mtk-gift__input-wrap">
+              <input
+                class="mtk-gift__input"
+                id="mtk-gift-address-line2"
+                type="text"
+                name="addressLine2"
+                placeholder=" "
+                autocomplete="address-line2"
+              />
+              <label class="mtk-gift__label" for="mtk-gift-address-line2">
+                Apt, Suite, Unit (optional)
+              </label>
+              <span class="mtk-gift__field-icon" aria-hidden="true">
+                <span class="material-icons">apartment</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- City / State / ZIP -->
+        <div class="mtk-gift__row">
+
+          <!-- City -->
+          <div class="mtk-gift__field mtk-gift__field--half" data-field="city">
+            <div class="mtk-gift__input-wrap">
+              <input
+                class="mtk-gift__input"
+                id="mtk-gift-city"
+                type="text"
+                name="city"
+                placeholder=" "
+                required
+                autocomplete="address-level2"
+                aria-required="true"
+                aria-describedby="mtk-gift-city-error"
+              />
+              <label class="mtk-gift__label" for="mtk-gift-city">
+                City<span class="mtk-gift__required" aria-hidden="true">*</span>
+              </label>
+              <span class="mtk-gift__field-icon" aria-hidden="true">
+                <span class="material-icons">location_city</span>
+              </span>
+            </div>
+            <span
+              class="mtk-gift__field-error"
+              id="mtk-gift-city-error"
+              role="alert"
+              aria-live="polite"
+            >
+              <span class="material-icons" aria-hidden="true">error_outline</span>
+              Please enter a city.
+            </span>
+          </div>
+
+          <!-- State -->
+          <div class="mtk-gift__field mtk-gift__field--quarter" data-field="state">
+            <div class="mtk-gift__input-wrap">
+              <select
+                class="mtk-gift__select"
+                id="mtk-gift-state"
+                name="state"
+                required
+                autocomplete="address-level1"
+                aria-required="true"
+                aria-describedby="mtk-gift-state-error"
+              >
+                <!-- options injected by JS from config -->
+              </select>
+              <label class="mtk-gift__label" for="mtk-gift-state">
+                State<span class="mtk-gift__required" aria-hidden="true">*</span>
+              </label>
+              <span class="mtk-gift__field-icon" aria-hidden="true">
+                <span class="material-icons">map</span>
+              </span>
+              <span class="mtk-gift__select-arrow" aria-hidden="true">
+                <span class="material-icons">expand_more</span>
+              </span>
+            </div>
+            <span
+              class="mtk-gift__field-error"
+              id="mtk-gift-state-error"
+              role="alert"
+              aria-live="polite"
+            >
+              <span class="material-icons" aria-hidden="true">error_outline</span>
+              Select a state.
+            </span>
+          </div>
+
+          <!-- ZIP -->
+          <div class="mtk-gift__field mtk-gift__field--quarter" data-field="zip">
+            <div class="mtk-gift__input-wrap">
+              <input
+                class="mtk-gift__input"
+                id="mtk-gift-zip"
+                type="text"
+                name="zip"
+                placeholder=" "
+                required
+                autocomplete="postal-code"
+                aria-required="true"
+                aria-describedby="mtk-gift-zip-error"
+                maxlength="10"
+                inputmode="numeric"
+                pattern="^[0-9]{5}(-[0-9]{4})?$"
+              />
+              <label class="mtk-gift__label" for="mtk-gift-zip">
+                ZIP<span class="mtk-gift__required" aria-hidden="true">*</span>
+              </label>
+              <span class="mtk-gift__field-icon" aria-hidden="true">
+                <span class="material-icons">pin</span>
+              </span>
+            </div>
+            <span
+              class="mtk-gift__field-error"
+              id="mtk-gift-zip-error"
+              role="alert"
+              aria-live="polite"
+            >
+              <span class="material-icons" aria-hidden="true">error_outline</span>
+              Enter a valid ZIP.
+            </span>
+          </div>
+
+        </div><!-- /.mtk-gift__row city/state/zip -->
+
+        <hr class="mtk-gift__divider" aria-hidden="true" />
+
+        <!-- Actions -->
+        <div class="mtk-gift__actions">
+          <button
+            class="mtk-gift__btn btn-link"
+            type="button"
+            data-action="cancel"
+            aria-label="Cancel and close form"
+          >
+            <span class="material-icons" aria-hidden="true">close</span>
+            Cancel
+          </button>
+          <button
+            class="mtk-gift__btn mtk-gift__btn--submit"
+            type="submit"
+            data-action="submit"
+            aria-label="Submit form and send my kit"
+          >
+            <span class="material-icons" aria-hidden="true">send</span>
+            Send My Kit
+          </button>
+        </div>
+
+        <!-- Snackbar feedback -->
+        <div
+          class="mtk-gift__snackbar"
+          id="mtk-gift-snackbar"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <span class="material-icons" aria-hidden="true"></span>
+          <span class="mtk-gift__snackbar-text"></span>
+        </div>
+
+      </form>
+    </div><!-- /.mtk-gift__body -->
+
+  </div><!-- /.mtk-gift__card -->
+</mtk-gift>
