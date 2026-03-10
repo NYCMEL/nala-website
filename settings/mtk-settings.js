@@ -213,8 +213,12 @@ if (typeof MtkSettings === 'undefined') {
         }
 
         sendResetLink() {
+<<<<<<< HEAD
             const emailEl = this.elements && this.elements.email ? this.elements.email : null;
             const email = String(emailEl ? emailEl.value : '').trim().toLowerCase();
+=======
+            const email = String(this.elements.email?.value || '').trim().toLowerCase();
+>>>>>>> a27a8cd (Josh 2026-03-08 (Codex): route settings reset password to forgot_password email flow)
             if (!email) {
                 this.showMessage('error', 'No account email found for password reset.');
                 return;
@@ -225,6 +229,7 @@ if (typeof MtkSettings === 'undefined') {
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email })
+<<<<<<< HEAD
             }).then((res) => {
                 return res.json().catch(() => ({})).then((json) => {
                     if (!res.ok) {
@@ -232,6 +237,14 @@ if (typeof MtkSettings === 'undefined') {
                     }
                     return json;
                 });
+=======
+            }).then(async (res) => {
+                const json = await res.json().catch(() => ({}));
+                if (!res.ok) {
+                    throw new Error((json && (json.error || json.message)) || 'Could not send reset link.');
+                }
+                return json;
+>>>>>>> a27a8cd (Josh 2026-03-08 (Codex): route settings reset password to forgot_password email flow)
             }).then(() => {
                 this.showMessage('success', 'Password reset email sent. Please check your inbox.');
                 wc.publish('4-mtk-settings', {

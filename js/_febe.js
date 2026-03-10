@@ -435,6 +435,3 @@ class _febe {
 
 /* auto-init */
 window._febe = new _febe();
-
-
-
