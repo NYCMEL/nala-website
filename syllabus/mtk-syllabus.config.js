@@ -1053,6 +1053,29 @@ window.app.syllabus = [
                         ]
                     }
                 ]
+            },
+            {
+                "module_id": "M12",
+                "title": "Certification and Course Completion",
+                "access": false,
+                "lessons": [
+                    {
+                        "lesson_no": "certification",
+                        "title": "Receive your Certification",
+                        "access": false,
+                        "badge": {
+                            "text": "Locked",
+                            "color": "gray"
+                        },
+                        "resources": [
+                            {
+                                "description": "Receive your Certification",
+                                "url": "https://vimeo.com/827173787",
+                                "type": "video"
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     }
