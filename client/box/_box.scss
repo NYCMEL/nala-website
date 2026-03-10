@@ -1,19 +1,16 @@
-$primary: #2e7d32;
-$text: #212121;
-$muted: #616161;
-$bg: #ffffff;
+@import "../../css/nala.scss";
 
 .md-list-wrapper {
   max-width: 480px;
-  padding: 24px;
-  background: $bg;
+  padding: $spacing-xl;
+  background: $color-white;
 }
 
 .md-title {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 16px;
-  color: $text;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+  margin-bottom: $font-size-lg;
+  color: $color-text-primary;
 }
 
 .md-list {
@@ -27,12 +24,10 @@ $bg: #ffffff;
     gap: 12px;
     padding: 10px 0;
     border-bottom: 1px solid #eee;
-    font-size: 15px;
-    color: $muted;
+    font-size: $font-size-md;
+    color: $color-text-muted;
 
-    &:last-child {
-      border-bottom: none;
-    }
+    &:last-child { border-bottom: none; }
   }
 }
 
@@ -40,12 +35,12 @@ $bg: #ffffff;
   flex-shrink: 0;
   width: 22px;
   height: 22px;
-  border-radius: 50%;
-  background: rgba($primary, 0.12);
+  border-radius: $radius-circle;
+  background: rgba($color-success-dark, 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: $primary;
-  font-size: 14px;
-  font-weight: 700;
+  color: $color-success-dark;
+  font-size: $font-size-base;
+  font-weight: $font-weight-bold;
 }

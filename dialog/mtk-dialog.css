@@ -1,3 +1,100 @@
+@keyframes mtk-spin {
+  to {
+    transform: rotate(360deg); } }
+
+@keyframes mtk-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98); }
+  to {
+    opacity: 1;
+    transform: none; } }
+
+@keyframes mtk-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px); }
+  to {
+    opacity: 1;
+    transform: none; } }
+
+@keyframes mtk-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.5); }
+  to {
+    opacity: 1;
+    transform: scale(1); } }
+
+@keyframes mtk-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px); }
+  to {
+    opacity: 1;
+    transform: translateY(0); } }
+
+@keyframes mtk-ready-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px); }
+  to {
+    opacity: 1;
+    transform: translateY(0); } }
+
+@keyframes mtk-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px); }
+  to {
+    opacity: 1;
+    transform: translateY(0); } }
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box; }
+
+body {
+  font-family: "Roboto", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #212121;
+  background-color: #fafafa;
+  margin: 0;
+  padding: 0;
+  margin-top: 80px;
+  font-family: fm; }
+
+a {
+  color: #1976d2;
+  text-decoration: none;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+
+a:hover {
+  text-decoration: underline; }
+
+.material-icons {
+  font-family: "Material Icons";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  user-select: none; }
+
+.nav-link.active {
+  color: gold !important; }
+
 mtk-dialog.mtk-dialog {
   display: contents; }
 
@@ -16,17 +113,19 @@ mtk-dialog.mtk-dialog {
   visibility: hidden;
   transition: opacity 0.25s ease, visibility 0.25s ease;
   padding: 1rem; }
-  .mtk-dialog__backdrop.is-open {
-    opacity: 1;
-    visibility: visible; }
-    .mtk-dialog__backdrop.is-open .mtk-dialog__container {
-      transform: translateY(0) scale(1);
-      opacity: 1; }
+
+.mtk-dialog__backdrop.is-open {
+  opacity: 1;
+  visibility: visible; }
+
+.mtk-dialog__backdrop.is-open .mtk-dialog__container {
+  transform: translateY(0) scale(1);
+  opacity: 1; }
 
 .mtk-dialog__container {
   position: relative;
   z-index: 1050;
-  background: #fff;
+  background: #ffffff;
   border-radius: 8px;
   box-shadow: 0 11px 15px -7px rgba(0, 0, 0, 0.2), 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12);
   width: 100%;
@@ -36,9 +135,10 @@ mtk-dialog.mtk-dialog {
   opacity: 0;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
   outline: none; }
-  .mtk-dialog__container:focus-visible {
-    outline: 3px solid #1976D2;
-    outline-offset: 2px; }
+
+.mtk-dialog__container:focus-visible {
+  outline: 3px solid #1976d2;
+  outline-offset: 2px; }
 
 .mtk-dialog__header {
   display: flex;
@@ -55,9 +155,10 @@ mtk-dialog.mtk-dialog {
   border-radius: 50%;
   background-color: var(--mtk-icon-bg, #FEF3C7);
   flex-shrink: 0; }
-  .mtk-dialog__icon .material-icons {
-    font-size: 22px;
-    color: var(--mtk-icon-color, #F59E0B); }
+
+.mtk-dialog__icon .material-icons {
+  font-size: 22px;
+  color: var(--mtk-icon-color, #F59E0B); }
 
 .mtk-dialog__title {
   flex: 1;
@@ -81,14 +182,17 @@ mtk-dialog.mtk-dialog {
   transition: background-color 0.15s ease;
   flex-shrink: 0;
   padding: 0; }
-  .mtk-dialog__close-btn:hover {
-    background-color: rgba(73, 69, 79, 0.08); }
-  .mtk-dialog__close-btn:focus-visible {
-    outline: 3px solid #1976D2;
-    outline-offset: 2px;
-    background-color: rgba(73, 69, 79, 0.12); }
-  .mtk-dialog__close-btn .material-icons {
-    font-size: 20px; }
+
+.mtk-dialog__close-btn:hover {
+  background-color: rgba(73, 69, 79, 0.08); }
+
+.mtk-dialog__close-btn:focus-visible {
+  outline: 3px solid #1976d2;
+  outline-offset: 2px;
+  background-color: rgba(73, 69, 79, 0.12); }
+
+.mtk-dialog__close-btn .material-icons {
+  font-size: 20px; }
 
 .mtk-dialog__body {
   padding: 0.25rem 1.5rem 1.25rem; }
@@ -106,73 +210,89 @@ mtk-dialog.mtk-dialog {
   gap: 0.5rem;
   padding: 0.75rem 1.5rem 1.5rem;
   flex-wrap: wrap; }
-  .mtk-dialog__footer .btn {
-    font-size: 0.875rem;
-    font-weight: 500;
-    letter-spacing: 0.00625em;
-    border-radius: 100px;
-    padding: 0.5rem 1.25rem;
-    height: 40px;
-    transition: box-shadow 0.2s ease, background-color 0.15s ease;
-    text-transform: none;
-    cursor: pointer;
-    border: none; }
-    .mtk-dialog__footer .btn:focus-visible {
-      outline: 3px solid #1976D2;
-      outline-offset: 2px; }
-  .mtk-dialog__footer .btn-primary {
-    background-color: #1976D2;
-    color: #fff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
-    .mtk-dialog__footer .btn-primary:hover {
-      background-color: #1565C0;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.24); }
-    .mtk-dialog__footer .btn-primary:active {
-      background-color: #0D47A1; }
-  .mtk-dialog__footer .btn-danger {
-    background-color: #D32F2F;
-    color: #fff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
-    .mtk-dialog__footer .btn-danger:hover {
-      background-color: #B71C1C;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.24); }
-  .mtk-dialog__footer .btn-success {
-    background-color: #388E3C;
-    color: #fff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
-    .mtk-dialog__footer .btn-success:hover {
-      background-color: #2E7D32;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.24); }
-  .mtk-dialog__footer .btn-secondary {
-    background-color: #E0E0E0;
-    color: #1C1B1F; }
-    .mtk-dialog__footer .btn-secondary:hover {
-      background-color: #BDBDBD; }
-  .mtk-dialog__footer .btn-warning {
-    background-color: #F57C00;
-    color: #fff; }
-    .mtk-dialog__footer .btn-warning:hover {
-      background-color: #E65100; }
-  .mtk-dialog__footer .btn-link {
-    background: transparent;
-    color: #1976D2;
-    box-shadow: none; }
-    .mtk-dialog__footer .btn-link:hover {
-      background-color: rgba(25, 118, 210, 0.08); }
-    .mtk-dialog__footer .btn-link:active {
-      background-color: rgba(25, 118, 210, 0.16); }
+
+.mtk-dialog__footer .btn {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.00625em;
+  border-radius: 9999px;
+  padding: 0.5rem 1.25rem;
+  height: 40px;
+  transition: box-shadow 200ms ease, background-color 0.15s ease;
+  text-transform: none;
+  cursor: pointer;
+  border: none; }
+
+.mtk-dialog__footer .btn:focus-visible {
+  outline: 3px solid #1976d2;
+  outline-offset: 2px; }
+
+.mtk-dialog__footer .btn-primary {
+  background-color: #1976d2;
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
+
+.mtk-dialog__footer .btn-primary:hover {
+  background-color: #1565c0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.24); }
+
+.mtk-dialog__footer .btn-primary:active {
+  background-color: #0d47a1; }
+
+.mtk-dialog__footer .btn-danger {
+  background-color: #d32f2f;
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
+
+.mtk-dialog__footer .btn-danger:hover {
+  background-color: #b71c1c;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.24); }
+
+.mtk-dialog__footer .btn-success {
+  background-color: #388e3c;
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
+
+.mtk-dialog__footer .btn-success:hover {
+  background-color: #2e7d32;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.24); }
+
+.mtk-dialog__footer .btn-secondary {
+  background-color: #e0e0e0;
+  color: #1C1B1F; }
+
+.mtk-dialog__footer .btn-secondary:hover {
+  background-color: #BDBDBD; }
+
+.mtk-dialog__footer .btn-warning {
+  background-color: #f57c00;
+  color: #ffffff; }
+
+.mtk-dialog__footer .btn-warning:hover {
+  background-color: #e65100; }
+
+.mtk-dialog__footer .btn-link {
+  background: transparent;
+  color: #1976d2;
+  box-shadow: none; }
+
+.mtk-dialog__footer .btn-link:hover {
+  background-color: rgba(25, 118, 210, 0.08); }
+
+.mtk-dialog__footer .btn-link:active {
+  background-color: rgba(25, 118, 210, 0.16); }
 
 .mtk-dialog__divider {
   height: 1px;
-  background-color: #E7E0EC;
+  background-color: #e7e0ec;
   margin: 0 1.5rem; }
 
 @media (max-width: 480px) {
   .mtk-dialog__footer {
     flex-direction: column-reverse;
     align-items: stretch; }
-    .mtk-dialog__footer .btn {
-      width: 100%;
-      justify-content: center; }
+  .mtk-dialog__footer .btn {
+    width: 100%;
+    justify-content: center; }
   .mtk-dialog__container {
     border-radius: 16px; } }

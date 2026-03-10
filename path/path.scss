@@ -1,66 +1,42 @@
+@import "../css/nala.scss";
+
 .mtk-path {
   padding: 4rem 0;
-  background-color: #f5f7fb;
+  background-color: $color-bg-page;
 
-  h2 {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-  }
+  h2 { font-weight: $font-weight-semibold; margin-bottom: 0.5rem; }
 
-  p.lead {
-    color: #6b7280;
-    margin-bottom: 3rem;
-  }
+  p.lead { color: $color-text-secondary-alt; margin-bottom: 3rem; }
 
   .mtk-card {
-    background-color: #ffffff;
+    background-color: $color-white;
     padding: 2.5rem;
     height: 100%;
     display: flex;
     flex-direction: column;
-    transition: transform 200ms ease, box-shadow 200ms ease;
-    border:1px #cecece solid;
+    transition: transform $duration-short ease, box-shadow $duration-short ease;
+    border: 1px $color-border-light solid;
+
+    &:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06); }
   }
 
-  .mtk-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
-  }
-
-  .mtk-popular {
-    outline: 2px solid #2563eb;
-  }
+  .mtk-popular { outline: 2px solid $color-blue-path; }
 
   .mtk-badge {
     align-self: center;
     margin-top: -1.25rem;
     margin-bottom: 1.5rem;
-    background-color: #2563eb;
-    color: #ffffff;
+    background-color: $color-blue-path;
+    color: $color-white;
     padding: 0.25rem 0.75rem;
     font-size: 0.75rem;
-    font-weight: 500;
+    font-weight: $font-weight-medium;
   }
 
-  .price {
-    font-size: 3rem;
-    font-weight: 700;
-    line-height: 1;
-  }
+  .price  { font-size: $font-size-stat; font-weight: $font-weight-bold; line-height: 1; }
+  .period { font-size: 1rem; color: $color-text-secondary-alt; margin-left: 0.25rem; display: block; }
 
-  .period {
-    font-size: 1rem;
-    color: #6b7280;
-    margin-left: 0.25rem;
-    display:block;
-  }
-
-  ul {
-    padding-left: 0;
-    list-style: none;
-    margin-top: 2rem;
-    flex-grow: 1;
-  }
+  ul { padding-left: 0; list-style: none; margin-top: 2rem; flex-grow: 1; }
 
   li {
     display: flex;
@@ -68,27 +44,19 @@
     gap: 0.5rem;
     margin-bottom: 0.75rem;
     color: #111827;
-  }
 
-  li .check {
-    color: #16a34a;
-    font-weight: 600;
-    line-height: 1.2;
-    flex-shrink: 0;
+    .check { color: $color-green-check; font-weight: $font-weight-semibold; line-height: 1.2; flex-shrink: 0; }
   }
 
   .btn-path {
-    background-color: #2563eb;
-    color: #ffffff;
+    background-color: $color-blue-path;
+    color: $color-white;
     padding: 0.75rem;
     text-align: center;
     cursor: pointer;
     user-select: none;
     transition: background-color 150ms ease, transform 150ms ease;
-  }
 
-  .btn-path:hover {
-    background-color: #1e40af;
-    transform: translateY(-1px);
+    &:hover { background-color: $color-blue-path-dark; transform: translateY(-1px); }
   }
 }

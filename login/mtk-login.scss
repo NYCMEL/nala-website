@@ -1,93 +1,90 @@
+@import "../css/nala.scss";
+
 .mtk-login {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 30px auto;
   padding: 30px;
-  border-radius: 12px;
-  background-color: #ffffff;
-  font-family: "Roboto", sans-serif;
+  border-radius: $radius-md;
+  background-color: $color-white;
+  font-family: $font-primary;
 
   .mtk-login-content {
-      padding: 25px;
-      width: 500px;
+    padding: 25px;
+    width: 500px;
   }
-  
+
   h2 {
     text-align: center;
-    margin-bottom: 24px;
-    font-weight: 500;
+    margin-bottom: $spacing-xl;
+    font-weight: $font-weight-medium;
   }
 
   form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: $spacing-xl;
 
     .form-group {
       position: relative;
 
       label {
         display: block;
-        font-size: 14px;
-        margin-bottom: 4px;
+        font-size: $font-size-base;
+        margin-bottom: $spacing-xs;
       }
 
       input {
         width: 100%;
         padding: 14px 12px;
-        font-size: 16px;
-        border-radius: 8px;
+        font-size: $font-size-lg;
+        border-radius: $radius-sm;
         border: 1px solid #ccc;
         outline: none;
-        transition: border-color 0.2s;
-      }
+        transition: border-color $duration-short;
 
-      input:focus {
-        border-color: #1976d2;
-        box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+        &:focus {
+          border-color: $color-primary;
+          box-shadow: 0 0 0 2px rgba($color-primary, 0.2);
+        }
       }
 
       .error {
-        font-size: 12px;
-        color: #d32f2f;
-        margin-top: 4px;
+        font-size: $font-size-xs;
+        color: $color-error-dark;
+        margin-top: $spacing-xs;
       }
     }
 
     button {
       padding: 14px;
-      font-size: 16px;
-      font-weight: 500;
-      color: #fff;
-      background-color: #1976d2;
+      font-size: $font-size-lg;
+      font-weight: $font-weight-medium;
+      color: $color-white;
+      background-color: $color-primary;
       border: none;
-      border-radius: 8px;
+      border-radius: $radius-sm;
       cursor: pointer;
-      transition: background-color 0.2s;
-    }
+      transition: background-color $duration-short;
 
-    button:hover,
-    button:focus {
-      background-color: #1565c0;
-      outline: none;
+      &:hover, &:focus {
+        background-color: $color-primary-dark;
+        outline: none;
+      }
     }
 
     .links {
       display: flex;
       justify-content: space-between;
-      font-size: 14px;
+      font-size: $font-size-base;
 
       a {
-        color: #1976d2;
+        color: $color-primary;
         text-decoration: none;
         cursor: pointer;
-      }
 
-      a:hover,
-      a:focus {
-        text-decoration: underline;
-        outline: none;
+        &:hover, &:focus { text-decoration: underline; outline: none; }
       }
     }
   }

@@ -1,29 +1,6 @@
-html, body {
-    height: 100%;
-    margin: 0;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* ensures footer is pushed to bottom */
-    margin: 0;
-    font-family: fm;
-    padding-top: 80px;
-}
-
 #page-content {
     flex: 1 0 auto; /* main page content expands to fill remaining space */
 }
-
-/* FONT CLASSES */
-.fl  {font-family:  fl;}
-.fb  {font-family:  fb;}
-.fr  {font-family:  fr;}
-.fm  {font-family:  fm;}
-.fri {font-family: fri;}
-.fmi {font-family: fmi;}
-.fbi {font-family: fbi;}
 
 .course-card {
     border: 1px #cecece solid;
@@ -88,7 +65,7 @@ body {
 }
 
 h1 {
-    font-family: fb!important;
+    font-family: fb;
     border: none;
 }
 

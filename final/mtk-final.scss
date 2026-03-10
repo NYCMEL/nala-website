@@ -1,81 +1,63 @@
-// ════════════════════════════════════════════════════════════════════
-//  mtk-final.scss
-//  All styles are scoped to .mtk-final — no globals, no IDs
-//  Material Design 3 design language
-// ════════════════════════════════════════════════════════════════════
+@import "../css/nala.scss";
 
 // ── MD3 Token Map (scoped to root element) ────────────────────────
 .mtk-final {
-
-  // Surface & background
   --_bg:                  #f0f4f8;
-  --_surface:             #ffffff;
-  --_surface-dim:         #f8f9fa;
-  --_surface-container:   #eef2f7;
+  --_surface:             #{$color-white};
+  --_surface-dim:         #{$color-surface-dim};
+  --_surface-container:   #{$color-surface-container};
   --_outline:             #c8d0da;
   --_outline-variant:     #e2e8f0;
 
-  // Primary
-  --_primary:             #1565c0;
-  --_primary-hover:       #1976d2;
+  --_primary:             #{$color-primary-dark};
+  --_primary-hover:       #{$color-primary};
   --_primary-container:   #dbeafe;
-  --_on-primary:          #ffffff;
+  --_on-primary:          #{$color-white};
   --_on-primary-cont:     #0d3780;
 
-  // Success
-  --_success:             #1b7d37;
+  --_success:             #{$color-success-final};
   --_success-container:   #d6f5e0;
-  --_on-success:          #ffffff;
+  --_on-success:          #{$color-white};
   --_on-success-cont:     #0a4a1f;
 
-  // Error
-  --_error:               #b3261e;
+  --_error:               #{$color-error-final};
   --_error-container:     #fdecea;
   --_on-error-cont:       #7c1612;
 
-  // Text
-  --_on-surface:          #1a2433;
+  --_on-surface:          #{$color-text-primary-on};
   --_on-surface-var:      #4a5568;
   --_on-surface-dim:      #7a8899;
 
-  // Elevation shadows (MD3 tonal elevation)
-  --_elev-1: 0 1px 2px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.06);
-  --_elev-2: 0 2px 6px rgba(0,0,0,.10), 0 1px 2px rgba(0,0,0,.06);
-  --_elev-3: 0 4px 14px rgba(0,0,0,.12), 0 2px 4px rgba(0,0,0,.07);
+  --_elev-1: #{$shadow-elev1};
+  --_elev-2: #{$shadow-elev2};
+  --_elev-3: #{$shadow-elev3};
 
-  // Radii
-  --_r-xs:   4px;
-  --_r-sm:   8px;
-  --_r-md:   12px;
-  --_r-lg:   16px;
+  --_r-xs:   #{$radius-xs};
+  --_r-sm:   #{$radius-sm};
+  --_r-md:   #{$radius-md};
+  --_r-lg:   #{$radius-lg};
   --_r-xl:   24px;
-  --_r-full: 9999px;
+  --_r-full: #{$radius-pill};
 
-  // Motion
-  --_ease:      cubic-bezier(0.2, 0, 0, 1);
-  --_dur-fast:  120ms;
-  --_dur-med:   200ms;
-  --_dur-slow:  340ms;
+  --_ease:      #{$ease-standard};
+  --_dur-fast:  #{$duration-fast};
+  --_dur-med:   #{$duration-short};
+  --_dur-slow:  #{$duration-long};
 }
 
-// ════════════════════════════════════════════════════════════════════
-//  ROOT
-// ════════════════════════════════════════════════════════════════════
 .mtk-final {
   display: block;
   color: var(--_on-surface);
   background: var(--_bg);
   min-height: 100vh;
-  padding: 32px 16px;
+  padding: $spacing-2xl $font-size-lg;
   box-sizing: border-box;
 
   *, *::before, *::after { box-sizing: inherit; }
 
-
-  // ── Card shell ───────────────────────────────────────────────────
   &__card {
     background: var(--_surface);
-    border-radius: 4px;
+    border-radius: $radius-xs;
     box-shadow: var(--_elev-2);
     max-width: 560px;
     margin: 0 auto;
@@ -83,18 +65,15 @@
     animation: mtk-card-in 420ms var(--_ease) both;
   }
 
-
-  // ── Success banner ───────────────────────────────────────────────
   &__banner {
     background: var(--_success-container);
     padding: 28px 32px 24px;
     display: flex;
     align-items: flex-start;
-    gap: 16px;
+    gap: $font-size-lg;
     position: relative;
     overflow: hidden;
 
-    // Decorative arc
     &::after {
       content: '';
       position: absolute;
@@ -102,7 +81,7 @@
       bottom: -40px;
       width: 140px;
       height: 140px;
-      border-radius: 50%;
+      border-radius: $radius-circle;
       background: rgba(27, 125, 55, 0.08);
       pointer-events: none;
     }
@@ -112,12 +91,10 @@
     flex-shrink: 0;
     width: 52px;
     height: 52px;
-    border-radius: 50%;
+    border-radius: $radius-circle;
     background: var(--_success);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(27,125,55,.35);
+    @include flex-center;
+    box-shadow: 0 2px 8px rgba(27, 125, 55, 0.35);
     animation: mtk-pop 500ms var(--_ease) 200ms both;
   }
 
@@ -125,22 +102,14 @@
     font-size: 28px;
     color: var(--_on-success);
     display: block;
-    // Material Icons ligature rendering
-    font-family: 'Material Icons';
-    font-weight: normal;
-    font-style: normal;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    font-feature-settings: 'liga';
-    user-select: none;
+    @include material-icon(28px);
   }
 
   &__banner-body { flex: 1; min-width: 0; }
 
   &__banner-title {
     font-size: 19px;
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
     line-height: 1.3;
     color: var(--_on-success-cont);
     margin: 0 0 6px;
@@ -148,24 +117,17 @@
   }
 
   &__banner-sub {
-    font-size: 14px;
+    font-size: $font-size-base;
     line-height: 1.55;
     color: var(--_on-surface-var);
     margin: 0;
     animation: mtk-slide-up 380ms var(--_ease) 200ms both;
   }
 
+  &__body { padding: 28px 32px 32px; }
 
-  // ── Form body ────────────────────────────────────────────────────
-  &__body {
-    padding: 28px 32px 32px;
-  }
-
-
-  // ── Current email pill ───────────────────────────────────────────
   &__current-email-row {
-    display: flex;
-    align-items: center;
+    @include flex-vcenter;
     gap: 10px;
     margin-bottom: 22px;
     animation: mtk-slide-up 340ms var(--_ease) 280ms both;
@@ -173,8 +135,8 @@
 
   &__current-email-label {
     font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .08em;
+    font-weight: $font-weight-semibold;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--_on-surface-dim);
     flex-shrink: 0;
@@ -186,40 +148,31 @@
     gap: 7px;
     background: var(--_surface-container);
     border: 1.5px solid var(--_outline);
-    border-radius: 4px;
+    border-radius: $radius-xs;
     padding: 6px 14px 6px 10px;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
     color: var(--_on-surface);
     min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @include text-truncate;
 
-    .material-icons {
-      font-size: 16px;
-      color: var(--_primary);
-      flex-shrink: 0;
-    }
+    .material-icons { font-size: $font-size-lg; color: var(--_primary); flex-shrink: 0; }
   }
 
-
-  // ── Radio option cards ───────────────────────────────────────────
   &__options {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-bottom: 8px;
+    margin-bottom: $spacing-sm;
     animation: mtk-slide-up 340ms var(--_ease) 330ms both;
   }
 
   &__option {
-    display: flex;
-    align-items: center;
+    @include flex-vcenter;
     gap: 14px;
-    padding: 16px 18px;
+    padding: $font-size-lg 18px;
     border: 2px solid var(--_outline);
-    border-radius: 4px;
+    border-radius: $radius-xs;
     cursor: pointer;
     background: var(--_surface);
     transition:
@@ -234,28 +187,23 @@
       background: rgba(21, 101, 192, 0.03);
     }
 
-    &:focus-within {
-      outline: 3px solid rgba(21, 101, 192, 0.28);
-      outline-offset: 1px;
-    }
+    &:focus-within { outline: 3px solid rgba(21, 101, 192, 0.28); outline-offset: 1px; }
 
     &--selected {
       border-color: var(--_primary);
       background: var(--_primary-container);
       box-shadow: var(--_elev-1);
-
       .mtk-final__option-icon { color: var(--_primary); }
     }
   }
 
-  // MD3 radio
   &__radio {
     appearance: none;
     -webkit-appearance: none;
     width: 20px;
     height: 20px;
     border: 2px solid var(--_on-surface-dim);
-    border-radius: 50%;
+    border-radius: $radius-circle;
     flex-shrink: 0;
     cursor: pointer;
     transition: border-color var(--_dur-fast) var(--_ease);
@@ -266,40 +214,19 @@
       content: '';
       position: absolute;
       inset: 3px;
-      border-radius: 50%;
+      border-radius: $radius-circle;
       background: var(--_primary);
       transform: scale(0);
       transition: transform var(--_dur-med) var(--_ease);
     }
 
-    &:checked {
-      border-color: var(--_primary);
-      &::after { transform: scale(1); }
-    }
-
-    &:focus-visible {
-      outline: 3px solid rgba(21,101,192,.35);
-      outline-offset: 3px;
-    }
+    &:checked { border-color: var(--_primary); &::after { transform: scale(1); } }
+    &:focus-visible { outline: 3px solid rgba(21, 101, 192, 0.35); outline-offset: 3px; }
   }
 
-  &__option-text { flex: 1; min-width: 0; }
-
-  &__option-title {
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--_on-surface);
-    display: block;
-    pointer-events: none;
-  }
-
-  &__option-desc {
-    font-size: 13px;
-    color: var(--_on-surface-var);
-    display: block;
-    margin-top: 1px;
-    pointer-events: none;
-  }
+  &__option-text  { flex: 1; min-width: 0; }
+  &__option-title { font-size: $font-size-md; font-weight: $font-weight-medium; color: var(--_on-surface); display: block; pointer-events: none; }
+  &__option-desc  { font-size: $font-size-sm; color: var(--_on-surface-var); display: block; margin-top: 1px; pointer-events: none; }
 
   &__option-icon {
     font-size: 22px;
@@ -307,19 +234,9 @@
     transition: color var(--_dur-fast) var(--_ease);
     flex-shrink: 0;
     display: block;
-    // Material Icons
-    font-family: 'Material Icons';
-    font-weight: normal;
-    font-style: normal;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    font-feature-settings: 'liga';
-    user-select: none;
+    @include material-icon(22px);
   }
 
-
-  // ── New email collapsible panel ───────────────────────────────────
   &__new-email-panel {
     overflow: hidden;
     max-height: 0;
@@ -331,44 +248,31 @@
     margin-top: 0;
     pointer-events: none;
 
-    &--open {
-      max-height: 340px;
-      opacity: 1;
-      margin-top: 20px;
-      pointer-events: auto;
-    }
+    &--open { max-height: 340px; opacity: 1; margin-top: $spacing-xl; pointer-events: auto; }
   }
 
-
-  // ── MD3 Outlined text field ───────────────────────────────────────
   &__field {
     position: relative;
     display: flex;
     flex-direction: column;
 
-    & + & { margin-top: 20px; }
+    & + & { margin-top: $spacing-xl; }
 
-    &-inner {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
+    &-inner { position: relative; display: flex; align-items: center; }
 
     &-input {
       appearance: none;
       width: 100%;
-      padding: 16px 44px 16px 16px;
-      font-family: inherit;
-      font-size: 15px;
+      padding: $font-size-lg 44px $font-size-lg $font-size-lg;
+      font-family: $font-primary;
+      font-size: $font-size-md;
       color: var(--_on-surface);
       background: var(--_surface);
       border: 1.5px solid var(--_outline);
       border-radius: var(--_r-sm);
       outline: none;
-      transition:
-        border-color var(--_dur-fast) var(--_ease),
-        box-shadow   var(--_dur-fast) var(--_ease);
-      line-height: 1.5;
+      transition: border-color var(--_dur-fast) var(--_ease), box-shadow var(--_dur-fast) var(--_ease);
+      line-height: $line-height-base;
 
       &::placeholder { color: var(--_on-surface-dim); }
 
@@ -379,13 +283,12 @@
       }
     }
 
-    // Floating label
     &-label {
       position: absolute;
       left: 14px;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 15px;
+      font-size: $font-size-md;
       color: var(--_on-surface-var);
       background: var(--_surface);
       padding: 0 3px;
@@ -399,17 +302,10 @@
       line-height: 1;
       white-space: nowrap;
 
-      &--float {
-        top: 0;
-        transform: translateY(-50%) scale(0.78);
-        font-size: 15px;
-        transform-origin: left center;
-      }
-
+      &--float  { top: 0; transform: translateY(-50%) scale(0.78); font-size: $font-size-md; transform-origin: left center; }
       &--focused { color: var(--_primary); }
     }
 
-    // Icon toggle (show/hide password)
     &-action {
       position: absolute;
       right: 10px;
@@ -420,52 +316,33 @@
       cursor: pointer;
       color: var(--_on-surface-dim);
       padding: 6px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition:
-        color      var(--_dur-fast) var(--_ease),
-        background var(--_dur-fast) var(--_ease);
+      border-radius: $radius-circle;
+      @include flex-center;
+      transition: color var(--_dur-fast) var(--_ease), background var(--_dur-fast) var(--_ease);
       z-index: 2;
 
-      &:hover {
-        color: var(--_on-surface);
-        background: rgba(0,0,0,.06);
-      }
+      &:hover { color: var(--_on-surface); background: rgba(0, 0, 0, 0.06); }
+      &:focus-visible { outline: 3px solid rgba(21, 101, 192, 0.35); outline-offset: 2px; }
 
-      &:focus-visible {
-        outline: 3px solid rgba(21,101,192,.35);
-        outline-offset: 2px;
-      }
-
-      .material-icons { font-size: 20px; pointer-events: none; }
+      .material-icons { font-size: $font-size-2xl; pointer-events: none; }
     }
 
-    // Helper / error text
     &-hint {
-      font-size: 12px;
+      font-size: $font-size-xs;
       margin-top: 5px;
-      padding: 0 4px;
+      padding: 0 $radius-xs;
       color: var(--_on-surface-dim);
       line-height: 1.4;
       min-height: 16px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-
-      .material-icons { font-size: 13px; flex-shrink: 0; }
+      @include flex-vcenter;
+      gap: $radius-xs;
+      .material-icons { font-size: $font-size-sm; flex-shrink: 0; }
     }
 
-    // States
     &--error {
-      .mtk-final__field-input {
-        border-color: var(--_error);
-        border-width: 2px;
-        box-shadow: 0 0 0 3px rgba(179,38,30,.13);
-      }
-      .mtk-final__field-label { color: var(--_error); }
-      .mtk-final__field-hint  { color: var(--_error); }
+      .mtk-final__field-input  { border-color: var(--_error); border-width: 2px; box-shadow: 0 0 0 3px rgba(179, 38, 30, 0.13); }
+      .mtk-final__field-label  { color: var(--_error); }
+      .mtk-final__field-hint   { color: var(--_error); }
     }
 
     &--success {
@@ -474,43 +351,26 @@
     }
   }
 
-
-  // ── Match badge ───────────────────────────────────────────────────
   &__match-badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 4px 12px;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    padding: $radius-xs 12px;
     border-radius: var(--_r-full);
     margin-top: 10px;
     opacity: 0;
     transform: translateY(4px);
-    transition:
-      opacity   var(--_dur-med) var(--_ease),
-      transform var(--_dur-med) var(--_ease);
+    transition: opacity var(--_dur-med) var(--_ease), transform var(--_dur-med) var(--_ease);
     pointer-events: none;
 
-    .material-icons { font-size: 14px; }
+    .material-icons { font-size: $font-size-base; }
 
-    &--match {
-      background: var(--_success-container);
-      color: var(--_on-success-cont);
-      opacity: 1;
-      transform: none;
-    }
-
-    &--mismatch {
-      background: var(--_error-container);
-      color: var(--_on-error-cont);
-      opacity: 1;
-      transform: none;
-    }
+    &--match   { background: var(--_success-container); color: var(--_on-success-cont); opacity: 1; transform: none; }
+    &--mismatch { background: var(--_error-container);   color: var(--_on-error-cont);   opacity: 1; transform: none; }
   }
 
-
-  // ── Divider ───────────────────────────────────────────────────────
   &__divider {
     height: 1px;
     background: var(--_outline-variant);
@@ -518,24 +378,20 @@
     margin: 26px 0;
   }
 
-
-  // ── Submit button (MD3 filled) ────────────────────────────────────
   &__submit {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include flex-center;
     gap: 9px;
     width: 100%;
-    padding: 0 32px;
+    padding: 0 $spacing-2xl;
     height: 52px;
-    font-family: inherit;
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: .02em;
+    font-family: $font-primary;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    letter-spacing: 0.02em;
     color: var(--_on-primary);
     background: var(--_primary);
     border: none;
-    border-radius: 4px;
+    border-radius: $radius-xs;
     cursor: pointer;
     overflow: hidden;
     position: relative;
@@ -546,141 +402,71 @@
       transform   var(--_dur-fast) var(--_ease),
       opacity     var(--_dur-fast) var(--_ease);
 
-    // MD3 state layer
     &::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: #fff;
+      background: $color-white;
       opacity: 0;
       transition: opacity var(--_dur-fast) var(--_ease);
     }
 
-    &:hover {
-      box-shadow: var(--_elev-2);
-      &::before { opacity: .08; }
-    }
-
-    &:active {
-      transform: scale(.98);
-      box-shadow: var(--_elev-1);
-      &::before { opacity: .12; }
-    }
-
-    &:focus-visible {
-      outline: 3px solid rgba(21,101,192,.4);
-      outline-offset: 3px;
-    }
+    &:hover       { box-shadow: var(--_elev-2); &::before { opacity: 0.08; } }
+    &:active      { transform: scale(0.98); box-shadow: var(--_elev-1); &::before { opacity: 0.12; } }
+    &:focus-visible { outline: 3px solid rgba(21, 101, 192, 0.4); outline-offset: 3px; }
 
     &:disabled {
-      background: rgba(26,36,51,.12);
-      color: rgba(26,36,51,.38);
+      background: rgba(26, 36, 51, 0.12);
+      color: rgba(26, 36, 51, 0.38);
       box-shadow: none;
       cursor: not-allowed;
       transform: none;
       &::before { display: none; }
     }
 
-    // Elements above the state layer
-    .material-icons,
-    &-label,
-    &-spinner {
-      position: relative;
-      z-index: 1;
-    }
-
-    .material-icons { font-size: 20px; }
+    .material-icons, &-label, &-spinner { position: relative; z-index: 1; }
+    .material-icons { font-size: $font-size-2xl; }
 
     &-spinner {
       display: none;
       width: 20px;
       height: 20px;
-      border: 2.5px solid rgba(255,255,255,.35);
-      border-top-color: #fff;
-      border-radius: 50%;
+      border: 2.5px solid rgba(255, 255, 255, 0.35);
+      border-top-color: $color-white;
+      border-radius: $radius-circle;
       animation: mtk-spin 600ms linear infinite;
       flex-shrink: 0;
     }
 
     &--loading {
       pointer-events: none;
-      opacity: .8;
-      .material-icons    { display: none; }
-      .mtk-final__submit-spinner { display: block; }
+      opacity: 0.8;
+      .material-icons              { display: none; }
+      .mtk-final__submit-spinner   { display: block; }
     }
   }
 
-
-  // ── Success toast ─────────────────────────────────────────────────
   &__toast {
-    display: flex;
-    align-items: center;
+    @include flex-vcenter;
     gap: 12px;
-    background: #1b2a3b;
+    background: $color-dark-surface;
     color: #e8f0fe;
     border-radius: var(--_r-md);
     padding: 14px 18px;
-    font-size: 14px;
+    font-size: $font-size-base;
     line-height: 1.45;
-    margin-top: 20px;
+    margin-top: $spacing-xl;
     box-shadow: var(--_elev-3);
     opacity: 0;
-    transform: translateY(10px) scale(.97);
-    transition:
-      opacity   var(--_dur-med) var(--_ease),
-      transform var(--_dur-med) var(--_ease);
+    transform: translateY(10px) scale(0.97);
+    transition: opacity var(--_dur-med) var(--_ease), transform var(--_dur-med) var(--_ease);
     pointer-events: none;
-    // hidden by default
     visibility: hidden;
 
-    .material-icons {
-      font-size: 22px;
-      color: #81c995;
-      flex-shrink: 0;
-    }
+    .material-icons { font-size: 22px; color: #81c995; flex-shrink: 0; }
 
-    &--show {
-      opacity: 1;
-      transform: none;
-      pointer-events: auto;
-      visibility: visible;
-    }
+    &--show { opacity: 1; transform: none; pointer-events: auto; visibility: visible; }
   }
 
-
-  // ── Screenreader only ─────────────────────────────────────────────
-  &__sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0,0,0,0);
-    white-space: nowrap;
-    border: 0;
-  }
-}
-
-
-// ════════════════════════════════════════════════════════════════════
-//  Keyframes (must live outside .mtk-final for browser compat)
-// ════════════════════════════════════════════════════════════════════
-@keyframes mtk-spin {
-  to { transform: rotate(360deg); }
-}
-
-@keyframes mtk-card-in {
-  from { opacity: 0; transform: translateY(18px) scale(.98); }
-  to   { opacity: 1; transform: none; }
-}
-
-@keyframes mtk-slide-up {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: none; }
-}
-
-@keyframes mtk-pop {
-  from { opacity: 0; transform: scale(.5); }
-  to   { opacity: 1; transform: scale(1); }
+  &__sr-only { @include sr-only; }
 }
