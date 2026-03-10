@@ -1,0 +1,1012 @@
+{
+    "parts":  [
+                  {
+                      "title":  "Introduction to Locksmithing",
+                      "access":  true,
+                      "modules":  [
+                                      {
+                                          "module_id":  "M1",
+                                          "title":  "Foundations of Locksmithing",
+                                          "access":  true,
+                                          "lessons":  [
+                                                          {
+                                                              "lesson_no":  0,
+                                                              "title":  "Introduction to your instructor and the course",
+                                                              "access":  true,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Introduction to your instructor and the course",
+                                                                                    "url":  "https://player.vimeo.com/video/827172729?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  true
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  1,
+                                                              "title":  "The tools needed in your toolbag",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 1 - The tools needed in your toolbag",
+                                                                                    "url":  "https://player.vimeo.com/video/827172768?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  2,
+                                                              "title":  "The Different grades a lock is classified in",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 2 - The Different grades a lock is classified in",
+                                                                                    "url":  "https://player.vimeo.com/video/827172783?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  3,
+                                                              "title":  "Understanding the deadbolt and how to install",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 3 - Understanding the deadbolt and how to install",
+                                                                                    "url":  "https://player.vimeo.com/video/827172798?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Deadbolt",
+                                                                                    "url":  "../../media/L3-Deadbolt1.jpg"
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  4,
+                                                              "title": "Understanding the doorknob and how to install",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 4 - Understanding the doorknob and how to install",
+                                                                                    "url":  "https://player.vimeo.com/video/827922029?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  5,
+                                                              "title":  "A cursory of the different residential and commercial doors",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 5 - A cursory of the different residential and commercial doors",
+                                                                                    "url":  "https://player.vimeo.com/video/827172818?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Commercial Glass Aluminum Door 1",
+                                                                                    "url":  "../../media/L5-CommercialGlassaluminumdoor1.jpeg"
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Commercial Glass Aluminum Door 2",
+                                                                                    "url":  "../../media/L5-CommercialGlassaluminumdoor2.jpeg"
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Commercial Glass Aluminum Door 3",
+                                                                                    "url":  "../../media/L5-CommercialGlassaluminumdoor3.jpeg"
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Commercial Aluminum Door 1",
+                                                                                    "url":  "../../media/L5-Commercialaluminumdoor1.jpeg"
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Commercial Aluminum Door 2",
+                                                                                    "url":  "../../media/L5-Commercialaluminumdoor2.jpeg"
+                                                                                }
+                                                                            ]
+                                                          }
+                                                      ],
+                                          "quiz":  {
+                                                       "lesson_no":  6,
+                                                       "title":  "Module Quiz: Foundations of Locksmithing",
+                                                       "module_id":  "M1",
+                                                       "access":  false,
+                                                       "rules":  {
+                                                                     "questions":  20,
+                                                                     "choices":  4,
+                                                                     "pass_percent":  80
+                                                                 },
+                                                       "type":  "quiz",
+                                                       "description":  "Module Quiz: Foundations of Locksmithing"
+                                                   },
+                                          "processed":  1
+                                      }
+                                  ]
+                  },
+                  {
+                      "title":  "Residential Locksmithing",
+                      "access":  false,
+                      "modules":  [
+                                      {
+                                          "module_id":  "M2",
+                                          "title":  "Residential Lock Cylinders",
+                                          "access":  false,
+                                          "lessons":  [
+                                                          {
+                                                              "lesson_no":  7,
+                                                              "title":  "Introduction to the Kik Cylinder",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 7 - Introduction to the Kik Cylinder",
+                                                                                    "url":  "https://player.vimeo.com/video/827172887?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "KIK Cylinder 1",
+                                                                                    "url":  "../../media/L7-Kik-Cylinder1.jpg"
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "KIK Cylinder 2",
+                                                                                    "url":  "../../media/L7-Kik-Cylinder2.jpg"
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "KIK Cylinder 3",
+                                                                                    "url":  "../../media/L7-Kik-Cylinder3.jpg"
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  8,
+                                                              "title":  "Introduction to the mortise cylinder",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 8 - Introduction to the mortise cylinder",
+                                                                                    "url":  "https://player.vimeo.com/video/827172904?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Rim Cylinder 1",
+                                                                                    "url":  "../../media/L8-Rim-Cylinder1.jpg"
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Rim Cylinder 2",
+                                                                                    "url":  "../../media/L8-Rim-Cylinder2.jpg"
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  9,
+                                                              "title":  "The difference between a Rim Cylinder and Mortise cylinder",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 9 - The difference between a Rim Cylinder and Mortise cylinder",
+                                                                                    "url":  "https://player.vimeo.com/video/827172944?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Mortise Cylinder 1",
+                                                                                    "url":  "../../media/L9-Mortise-cylinder1.jpg"
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Mortise Cylinder 2",
+                                                                                    "url":  "../../media/L9-Mortise-cylinder2.jpg"
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  10,
+                                                              "title":  "Introduction to the profile cylinder",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 10 - Introduction to the profile cylinder",
+                                                                                    "url":  "https://player.vimeo.com/video/827172976?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  11,
+                                                              "title":  "Introduction to the mailbox lock",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 11 - Introduction to the mailbox lock",
+                                                                                    "url":  "https://player.vimeo.com/video/827172997?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Mailbox Lock 1",
+                                                                                    "url":  "../../media/L11-Mailbox-Lock1.jpg"
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Mailbox Lock 2",
+                                                                                    "url":  "../../media/L11-Mailbox-Lock2.jpg"
+                                                                                }
+                                                                            ]
+                                                          }
+                                                      ],
+                                          "quiz":  {
+                                                       "lesson_no":  12,
+                                                       "title":  "Module Quiz: Residential Lock Cylinders",
+                                                       "module_id":  "M2",
+                                                       "access":  false,
+                                                       "rules":  {
+                                                                     "questions":  20,
+                                                                     "choices":  4,
+                                                                     "pass_percent":  80
+                                                                 },
+                                                       "type":  "quiz",
+                                                       "description":  "Module Quiz: Residential Lock Cylinders"
+                                                   },
+                                          "processed":  1
+                                      },
+                                      {
+                                          "module_id":  "M3",
+                                          "title":  "Keys and Key Machines",
+                                          "access":  false,
+                                          "lessons":  [
+                                                          {
+                                                              "lesson_no":  13,
+                                                              "title":  "Introduction to the kwikset smart key technology",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 13 - Introduction to the kwikset smart key technology",
+                                                                                    "url":  "https://player.vimeo.com/video/827173033?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Key Machines",
+                                                                                    "url":  "../../media/L13-Key-Machines1.jpg"
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  14,
+                                                              "title":  "The most common everyday keys",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 14 - The most common everyday keys",
+                                                                                    "url":  "https://player.vimeo.com/video/827173066?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  15,
+                                                              "title":  "How to duplicate a key",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 15 - How to duplicate a key",
+                                                                                    "url":  "https://player.vimeo.com/video/827173102?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          }
+                                                      ],
+                                          "quiz":  {
+                                                       "lesson_no":  16,
+                                                       "title":  "Module Quiz: Keys and Key Machines",
+                                                       "module_id":  "M3",
+                                                       "access":  false,
+                                                       "rules":  {
+                                                                     "questions":  20,
+                                                                     "choices":  4,
+                                                                     "pass_percent":  80
+                                                                 },
+                                                       "type":  "quiz",
+                                                       "description":  "Module Quiz: Keys and Key Machines"
+                                                   },
+                                          "processed":  1
+                                      },
+                                      {
+                                          "module_id":  "M4",
+                                          "title":  "Lock Picking Techniques",
+                                          "access":  false,
+                                          "lessons":  [
+                                                          {
+                                                              "lesson_no":  17,
+                                                              "title":  "Completing a fresh installation",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 17 - Completing a fresh installation",
+                                                                                    "url":  "https://player.vimeo.com/video/827173149?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  18,
+                                                              "title":  "Introduction to the Adams Rite lock",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 18 - Introduction to the Adams Rite lock",
+                                                                                    "url":  "https://player.vimeo.com/video/827173180?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Rekeying Tools",
+                                                                                    "url":  "../../media/L18-Rekeying-Tools1.jpg"
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  19,
+                                                              "title":  "Introduction to High Security Locks",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 19 - Introduction to High Security Locks",
+                                                                                    "url":  "https://player.vimeo.com/video/827173205?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Rekey Cylinder",
+                                                                                    "url":  "../../media/L19-Rekey-cylinder1.jpg"
+                                                                                }
+                                                                            ]
+                                                          }
+                                                      ],
+                                          "quiz":  {
+                                                       "lesson_no":  20,
+                                                       "title":  "Module Quiz: Lock Picking Techniques",
+                                                       "module_id":  "M4",
+                                                       "access":  false,
+                                                       "rules":  {
+                                                                     "questions":  20,
+                                                                     "choices":  4,
+                                                                     "pass_percent":  80
+                                                                 },
+                                                       "type":  "quiz",
+                                                       "description":  "Module Quiz: Lock Picking Techniques"
+                                                   },
+                                          "processed":  1
+                                      }
+                                  ]
+                  },
+                  {
+                      "title":  "Rekeying \u0026 Master Keys",
+                      "access":  false,
+                      "modules":  [
+                                      {
+                                          "module_id":  "M5",
+                                          "title":  "Rekeying Fundamentals",
+                                          "access":  false,
+                                          "lessons":  [
+                                                          {
+                                                              "lesson_no":  21,
+                                                              "title":  "Introduction to your Rekey Kit",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 21 - Introduction to your Rekey Kit",
+                                                                                    "url":  "https://player.vimeo.com/video/827173256?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  22,
+                                                              "title":  "How to Rekey a Deadbolt",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 22 - How to Rekey a Deadbolt",
+                                                                                    "url":  "https://player.vimeo.com/video/827173273?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Rekey Mortise",
+                                                                                    "url":  "../../media/L22-Rekey-Mortise1.jpg"
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  23,
+                                                              "title":  "How to Prep a doorknob to rekey the cylinder",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 23 - How to Prep a doorknob to rekey the cylinder",
+                                                                                    "url":  "https://player.vimeo.com/video/827173286?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Prepping Doorknob For Rekeying 1",
+                                                                                    "url":  "../../media/L23-Prepping-Doorknob-for-Rekeying1.webp"
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Prepping Doorknob For Rekeying 2",
+                                                                                    "url":  "../../media/L23-Prepping-Doorknob-for-Rekeying2.webp"
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Rekey Padlock 1",
+                                                                                    "url":  "../../media/L23-Rekey-Padlock1.jpg"
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Rekey Padlock 1",
+                                                                                    "url":  "../../media/L23-Rekey-Padlock1.webp"
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Rekey Padlock 2",
+                                                                                    "url":  "../../media/L23-Rekey-Padlock2.jpg"
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Rekey Padlock 2",
+                                                                                    "url":  "../../media/L23-Rekey-Padlock2.webp"
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  24,
+                                                              "title":  "Introduction to master keying",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 24 - Introduction to master keying",
+                                                                                    "url":  "https://player.vimeo.com/video/827173303?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                },
+                                                                                {
+                                                                                    "type":  "photo",
+                                                                                    "access":  false,
+                                                                                    "processed":  false,
+                                                                                    "description":  "Master Keying",
+                                                                                    "url":  "../../media/L24-Master-keying1.jpg"
+                                                                                }
+                                                                            ]
+                                                          }
+                                                      ],
+                                          "quiz":  {
+                                                       "lesson_no":  25,
+                                                       "title":  "Module Quiz: Rekeying Fundamentals",
+                                                       "module_id":  "M5",
+                                                       "access":  false,
+                                                       "rules":  {
+                                                                     "questions":  20,
+                                                                     "choices":  4,
+                                                                     "pass_percent":  80
+                                                                 },
+                                                       "type":  "quiz",
+                                                       "description":  "Module Quiz: Rekeying Fundamentals"
+                                                   },
+                                          "processed":  1
+                                      },
+                                      {
+                                          "module_id":  "M6",
+                                          "title":  "Advanced Rekeying",
+                                          "access":  false,
+                                          "lessons":  [
+                                                          {
+                                                              "lesson_no":  26,
+                                                              "title":  "Hold and Vary system master keying",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 26 - Hold and Vary system master keying",
+                                                                                    "url":  "https://player.vimeo.com/video/827173341?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  27,
+                                                              "title":  "Introduction to Lock Picking",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 27 - Introduction to Lock Picking",
+                                                                                    "url":  "https://player.vimeo.com/video/827173374?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  28,
+                                                              "title":  "Shimming a cylinder to remove the plug",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 28 - Shimming a cylinder to remove the plug",
+                                                                                    "url":  "https://player.vimeo.com/video/827173384?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          }
+                                                      ],
+                                          "quiz":  {
+                                                       "lesson_no":  29,
+                                                       "title":  "Module Quiz: Advanced Rekeying",
+                                                       "module_id":  "M6",
+                                                       "access":  false,
+                                                       "rules":  {
+                                                                     "questions":  20,
+                                                                     "choices":  4,
+                                                                     "pass_percent":  80
+                                                                 },
+                                                       "type":  "quiz",
+                                                       "description":  "Module Quiz: Advanced Rekeying"
+                                                   },
+                                          "processed":  1
+                                      },
+                                      {
+                                          "module_id":  "M7",
+                                          "title":  "Master Key Systems",
+                                          "access":  false,
+                                          "lessons":  [
+                                                          {
+                                                              "lesson_no":  30,
+                                                              "title":  "Key Impression",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 30 - Key Impression",
+                                                                                    "url":  "https://player.vimeo.com/video/827173429?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  31,
+                                                              "title":  "What to do before and after a lockout service",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 31 - What to do before and after a lockout service",
+                                                                                    "url":  "https://player.vimeo.com/video/827173466?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  32,
+                                                              "title":  "How to drill a deadbolt",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 32 - How to drill a deadbolt",
+                                                                                    "url":  "https://player.vimeo.com/video/827173487?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          }
+                                                      ],
+                                          "quiz":  {
+                                                       "lesson_no":  33,
+                                                       "title":  "Module Quiz: Master Key Systems",
+                                                       "module_id":  "M7",
+                                                       "access":  false,
+                                                       "rules":  {
+                                                                     "questions":  20,
+                                                                     "choices":  4,
+                                                                     "pass_percent":  80
+                                                                 },
+                                                       "type":  "quiz",
+                                                       "description":  "Module Quiz: Master Key Systems"
+                                                   },
+                                          "processed":  1
+                                      }
+                                  ]
+                  },
+                  {
+                      "title":  "Automotive Locksmithing",
+                      "access":  false,
+                      "modules":  [
+                                      {
+                                          "module_id":  "M8",
+                                          "title":  "Automotive Locks and Entry",
+                                          "access":  false,
+                                          "lessons":  [
+                                                          {
+                                                              "lesson_no":  34,
+                                                              "title":  "What to expect at a storage lockout",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 34 - What to expect at a storage lockout",
+                                                                                    "url":  "https://player.vimeo.com/video/827173544?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  35,
+                                                              "title":  "How to drill a small cheap safe",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 35 - How to drill a small cheap safe",
+                                                                                    "url":  "https://player.vimeo.com/video/827173584?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  36,
+                                                              "title":  "How to unlock a car",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 36 - How to unlock a car",
+                                                                                    "url":  "https://player.vimeo.com/video/827173602?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          }
+                                                      ],
+                                          "quiz":  {
+                                                       "lesson_no":  37,
+                                                       "title":  "Module Quiz: Automotive Locks and Entry",
+                                                       "module_id":  "M8",
+                                                       "access":  false,
+                                                       "rules":  {
+                                                                     "questions":  20,
+                                                                     "choices":  4,
+                                                                     "pass_percent":  80
+                                                                 },
+                                                       "type":  "quiz",
+                                                       "description":  "Module Quiz: Automotive Locks and Entry"
+                                                   },
+                                          "processed":  1
+                                      },
+                                      {
+                                          "module_id":  "M9",
+                                          "title":  "Automotive Electronics",
+                                          "access":  false,
+                                          "lessons":  [
+                                                          {
+                                                              "lesson_no":  38,
+                                                              "title":  "Introduction to Car Keys",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 38 - Introduction to Car Keys",
+                                                                                    "url":  "https://player.vimeo.com/video/827173651?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          }
+                                                      ],
+                                          "quiz":  {
+                                                       "lesson_no":  39,
+                                                       "title":  "Module Quiz: Automotive Electronics",
+                                                       "module_id":  "M9",
+                                                       "access":  false,
+                                                       "rules":  {
+                                                                     "questions":  20,
+                                                                     "choices":  4,
+                                                                     "pass_percent":  80
+                                                                 },
+                                                       "type":  "quiz",
+                                                       "description":  "Module Quiz: Automotive Electronics"
+                                                   },
+                                          "processed":  1
+                                      }
+                                  ]
+                  },
+                  {
+                      "title":  "Commercial Locksmithing",
+                      "access":  false,
+                      "modules":  [
+                                      {
+                                          "module_id":  "M10",
+                                          "title":  "Commercial Door Hardware",
+                                          "access":  false,
+                                          "lessons":  [
+                                                          {
+                                                              "lesson_no":  40,
+                                                              "title":  "How to locate the Code on a Toyota",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 40 - How to locate the Code on a Toyota",
+                                                                                    "url":  "https://player.vimeo.com/video/827173679?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  41,
+                                                              "title":  "How to locate the code on a Honda",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 41 - How to locate the code on a Honda",
+                                                                                    "url":  "https://player.vimeo.com/video/827173711?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  42,
+                                                              "title":  "Decoding Toyota wafers",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 42 - Decoding Toyota wafers",
+                                                                                    "url":  "https://player.vimeo.com/video/827173742?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  43,
+                                                              "title":  "How to Program a Nissan 20 Pincode using the Auto Propad",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 43 - How to Program a Nissan 20 Pincode using the Auto Propad",
+                                                                                    "url":  "https://player.vimeo.com/video/827173770?title=0\u0026byline=0\u0026portrait=0\u0026badge=0\u0026autopause=0\u0026player_id=0\u0026app_id=58479",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          }
+                                                      ],
+                                          "quiz":  {
+                                                       "lesson_no":  44,
+                                                       "title":  "Module Quiz: Commercial Door Hardware",
+                                                       "module_id":  "M10",
+                                                       "access":  false,
+                                                       "rules":  {
+                                                                     "questions":  20,
+                                                                     "choices":  4,
+                                                                     "pass_percent":  80
+                                                                 },
+                                                       "type":  "quiz",
+                                                       "description":  "Module Quiz: Commercial Door Hardware"
+                                                   },
+                                          "processed":  1
+                                      }
+                                  ]
+                  },
+                  {
+                      "title":  "The Business of Locksmithing and Certification",
+                      "access":  false,
+                      "modules":  [
+                                      {
+                                          "module_id":  "M11",
+                                          "title":  "The Business of Locksmithing",
+                                          "access":  false,
+                                          "lessons":  [
+                                                          {
+                                                              "lesson_no":  45,
+                                                              "title":  "Locksmith Licensing",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 45 - Locksmith Licensing",
+                                                                                    "url":  "https://player.vimeo.com/video/827173408",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  46,
+                                                              "title":  "Insurance and Liability",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 46 - Insurance and Liability",
+                                                                                    "url":  "https://player.vimeo.com/video/827173425",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  47,
+                                                              "title":  "Pricing and Estimates",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 47 - Pricing and Estimates",
+                                                                                    "url":  "https://player.vimeo.com/video/827173442",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  48,
+                                                              "title":  "Customer Relations",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 48 - Customer Relations",
+                                                                                    "url":  "https://player.vimeo.com/video/827173460",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  49,
+                                                              "title":  "How to Begin Advertising as a Locksmith",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 49 - How to Begin Advertising as a Locksmith",
+                                                                                    "url":  "https://player.vimeo.com/video/827173770",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          }
+                                                      ],
+                                          "quiz":  {
+                                                       "lesson_no":  50,
+                                                       "title":  "Module Quiz: The Business of Locksmithing",
+                                                       "module_id":  "M11",
+                                                       "access":  false,
+                                                       "rules":  {
+                                                                     "questions":  20,
+                                                                     "choices":  4,
+                                                                     "pass_percent":  80
+                                                                 },
+                                                       "type":  "quiz",
+                                                       "description":  "Module Quiz: The Business of Locksmithing"
+                                                   },
+                                          "processed":  1
+                                      },
+                                      {
+                                          "module_id":  "M12",
+                                          "title":  "Certification and Course Completion",
+                                          "access":  false,
+                                          "lessons":  [
+                                                          {
+                                                              "lesson_no":  51,
+                                                              "title":  "Receive your Certification",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Receive your Certification",
+                                                                                    "url":  "https://player.vimeo.com/video/827173787",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          }
+                                                      ],
+                                          "quiz":  {
+                                                       "lesson_no":  52,
+                                                       "title":  "Final Quiz: Certification and Course Completion",
+                                                       "module_id":  "M12",
+                                                       "access":  false,
+                                                       "rules":  {
+                                                                     "questions":  20,
+                                                                     "choices":  4,
+                                                                     "pass_percent":  80
+                                                                 },
+                                                       "type":  "quiz",
+                                                       "description":  "Final Quiz: Certification and Course Completion"
+                                                   },
+                                          "processed":  1
+                                      }
+                                  ]
+                  }
+              ]
+}
+
+
+
+
+
