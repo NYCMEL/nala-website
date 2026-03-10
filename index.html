@@ -110,13 +110,15 @@
 	     const footer = document.getElementById("page-footer");
 	     if (!footer) return;
 
+	     let rafId = null;
+
 	     function adjustFooter() {
 		 const docHeight = document.documentElement.scrollHeight;
 		 const viewportHeight = window.innerHeight;
 		 const footerHeight = footer.offsetHeight || 0;
 		 document.documentElement.style.setProperty('--page-footer-height', footerHeight + 'px');
 
-		 if (docHeight <= viewportHeight) {
+		 if (docHeight <= (viewportHeight + 1)) {
 		     footer.style.position = "fixed";
 		     footer.style.bottom = "0";
 		     footer.style.left = "0";
@@ -133,12 +135,27 @@
 		 }
 	     }
 
-	     // Run after layout is truly ready
-	     window.addEventListener("load", adjustFooter);
-	     window.addEventListener("resize", adjustFooter);
+	     function scheduleAdjust() {
+		 if (rafId !== null) {
+		     cancelAnimationFrame(rafId);
+		 }
+		 rafId = requestAnimationFrame(function() {
+		     rafId = null;
+		     adjustFooter();
+		 });
+	     }
 
-	     // Extra safety: re-run after fonts/images
-	     setTimeout(adjustFooter, 50);
+	     // React to dynamic page rendering (quiz/curriculum content loads after page switch)
+	     window.addEventListener("load", scheduleAdjust);
+	     window.addEventListener("resize", scheduleAdjust);
+	     window.addEventListener("orientationchange", scheduleAdjust);
+
+	     const observer = new MutationObserver(scheduleAdjust);
+	     observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+
+	     setTimeout(scheduleAdjust, 50);
+	     setTimeout(scheduleAdjust, 300);
+	     setTimeout(scheduleAdjust, 800);
 	 }
 	</script>
 
