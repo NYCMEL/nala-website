@@ -127,13 +127,14 @@ mtk-gift,
   // ── Material Outlined Text Field ────────────
   .mtk-gift__input-wrap {
     position: relative;
+    height: 56px;
+    overflow: visible;
   }
 
   .mtk-gift__input,
   .mtk-gift__select {
     width: 100%;
     height: 56px;
-    padding: $spacing-lg $spacing-lg $spacing-sm 48px;
     font-family: $font-primary;
     font-size: $font-size-lg;
     color: $color-text-primary;
@@ -174,7 +175,13 @@ mtk-gift,
     }
   }
 
+  .mtk-gift__input {
+    padding: $spacing-lg $spacing-lg $spacing-sm 48px;
+  }
+
   .mtk-gift__select {
+    padding: 0 36px 0 48px;
+    height: 56px;
     cursor: pointer;
 
     &.has-value + .mtk-gift__label {
@@ -198,7 +205,7 @@ mtk-gift,
     font-size: $font-size-lg;
     color: $color-text-muted;
     pointer-events: none;
-    z-index: 0;
+    z-index: 2;
     transition: $transition-fast;
     background: $color-white;
     padding: 0 $spacing-xs;
