@@ -116,7 +116,7 @@ if (typeof MtkSettings === 'undefined') {
 	}
 
 	setup() {
-            if (this.config.labels && this.config.labels.title) {
+            if (this.config.labels?.title) {
 		this.elements.title.textContent = this.config.labels.title;
             }
 
@@ -144,8 +144,8 @@ if (typeof MtkSettings === 'undefined') {
 	}
 
 	attachEventListeners() {
-            this.elements.updateBtn.addEventListener('click', () => this.sendResetLink());
-            this.elements.saveBtn.addEventListener('click', () => this.sendResetLink());
+            this.elements.updateBtn.addEventListener('click', () => this.enterEditMode());
+            this.elements.saveBtn.addEventListener('click', () => this.handleSaveClick());
             this.elements.cancelBtn.addEventListener('click', () => this.exitEditMode());
 	}
 
@@ -191,78 +191,35 @@ if (typeof MtkSettings === 'undefined') {
 	}
 
 	handleSaveClick() {
-            this.sendResetLink();
-	}
+            const current = this.elements.currentPassword.value;
+            const newPass = this.elements.newPassword.value;
+            const confirm = this.elements.confirmPassword.value;
 
-        showMessage(type, message) {
-            if (typeof MTKMsgs !== 'undefined' && MTKMsgs.show) {
-                MTKMsgs.show({
-                    type: type,
-                    icon: type === 'success' ? 'success' : 'error',
-                    message: message,
-                    closable: true,
-                    timer: 10
-                });
-                return;
-            }
-            if (type === 'error') {
-                alert(message);
-            } else {
-                console.log(message);
-            }
-        }
-
-        sendResetLink() {
-<<<<<<< HEAD
-            const emailEl = this.elements && this.elements.email ? this.elements.email : null;
-            const email = String(emailEl ? emailEl.value : '').trim().toLowerCase();
-=======
-            const email = String(this.elements.email?.value || '').trim().toLowerCase();
->>>>>>> a27a8cd (Josh 2026-03-08 (Codex): route settings reset password to forgot_password email flow)
-            if (!email) {
-                this.showMessage('error', 'No account email found for password reset.');
-                return;
+            if (current !== this.config.user.currentPassword) {
+		alert('Current password incorrect');
+		return;
             }
 
-            fetch(wc.apiURL + '/api/forgot_password.php', {
-                method: 'POST',
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email })
-<<<<<<< HEAD
-            }).then((res) => {
-                return res.json().catch(() => ({})).then((json) => {
-                    if (!res.ok) {
-                        throw new Error((json && (json.error || json.message)) || 'Could not send reset link.');
-                    }
-                    return json;
-                });
-=======
-            }).then(async (res) => {
-                const json = await res.json().catch(() => ({}));
-                if (!res.ok) {
-                    throw new Error((json && (json.error || json.message)) || 'Could not send reset link.');
-                }
-                return json;
->>>>>>> a27a8cd (Josh 2026-03-08 (Codex): route settings reset password to forgot_password email flow)
-            }).then(() => {
-                this.showMessage('success', 'Password reset email sent. Please check your inbox.');
-                wc.publish('4-mtk-settings', {
-                    action: 'password_reset_link_sent',
-                    success: true,
-                    email: email,
-                    timestamp: new Date().toISOString()
-                });
-                this.exitEditMode();
-            }).catch((err) => {
-                this.showMessage('error', err.message || 'Could not send reset link.');
-                wc.publish('4-mtk-settings', {
-                    action: 'password_reset_link_sent',
-                    success: false,
-                    email: email,
-                    timestamp: new Date().toISOString()
-                });
+            const validation = this.validatePassword(newPass);
+            if (!validation.valid) {
+		alert(validation.message);
+		return;
+            }
+
+            if (newPass !== confirm) {
+		alert('Passwords do not match');
+		return;
+            }
+
+            this.config.user.currentPassword = newPass;
+
+            wc.publish('4-mtk-settings', {
+		action: 'password_updated',
+		success: true,
+		timestamp: new Date().toISOString()
             });
+
+            this.exitEditMode();
 	}
 
 	subscribeToEvents() {
