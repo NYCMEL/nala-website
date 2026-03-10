@@ -3,40 +3,20 @@
 // ─────────────────────────────────────────────
 // mtk-gift — Material Design Gift Form
 // Scoped entirely to mtk-gift / .mtk-gift
+// All tokens sourced from nala.scss
 // ─────────────────────────────────────────────
 
 mtk-gift,
 .mtk-gift {
-  // ── Tokens ──────────────────────────────────
-  --mtk-gift-font:            'Roboto', sans-serif;
-  --mtk-gift-primary:         #1a73e8;
-  --mtk-gift-primary-dark:    #1557b0;
-  --mtk-gift-primary-light:   #e8f0fe;
-  --mtk-gift-error:           #d93025;
-  --mtk-gift-surface:         #ffffff;
-  --mtk-gift-bg:              #f8f9ff;
-  --mtk-gift-on-surface:      #202124;
-  --mtk-gift-on-surface-med:  #5f6368;
-  --mtk-gift-on-surface-low:  #9aa0a6;
-  --mtk-gift-outline:         #dadce0;
-  --mtk-gift-outline-focus:   #1a73e8;
-  --mtk-gift-ripple:          rgba(26, 115, 232, 0.12);
-  --mtk-gift-shadow-1:        0 1px 3px rgba(60,64,67,.30), 0 4px 8px rgba(60,64,67,.15);
-  --mtk-gift-shadow-2:        0 1px 2px rgba(60,64,67,.30), 0 2px 6px rgba(60,64,67,.15);
-  --mtk-gift-radius:          $radius-xs;
-  --mtk-gift-radius-sm:       $radius-xs;
-  --mtk-gift-radius-field:    $radius-xs;
-  --mtk-gift-transition:      all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-
   display: block;
-  font-family: var(--mtk-gift-font);
-  color: var(--mtk-gift-on-surface);
+  font-family: $font-primary;
+  color: $color-text-primary;
 
   // ── Card ────────────────────────────────────
   .mtk-gift__card {
-    background: var(--mtk-gift-surface);
-    border-radius: var(--mtk-gift-radius);
-    box-shadow: var(--mtk-gift-shadow-1);
+    background: $color-white;
+    border-radius: $radius-xs;
+    box-shadow: $shadow-md;
     overflow: hidden;
     max-width: 560px;
     width: 100%;
@@ -45,11 +25,11 @@ mtk-gift,
 
   // ── Header ──────────────────────────────────
   .mtk-gift__header {
-    background: var(--mtk-gift-primary);
-    padding: 24px 24px 20px;
+    background: $color-primary;
+    padding: $spacing-xl $spacing-xl $spacing-lg;
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: $spacing-md;
     position: relative;
     overflow: hidden;
 
@@ -57,24 +37,22 @@ mtk-gift,
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%);
+      background: linear-gradient(135deg, $color-overlay-white-08 0%, transparent 60%);
       pointer-events: none;
     }
   }
 
   .mtk-gift__header-icon {
-    background: rgba(255, 255, 255, 0.18);
-    border-radius: 50%;
+    background: $color-overlay-white-16;
+    border-radius: $radius-circle;
     width: 48px;
     height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include flex-center;
     flex-shrink: 0;
 
     .material-icons {
-      color: #fff;
-      font-size: 26px;
+      color: $color-white;
+      font-size: $font-size-3xl;
     }
   }
 
@@ -83,39 +61,38 @@ mtk-gift,
   }
 
   .mtk-gift__title {
-    font-size: 1.25rem;
-    font-weight: 500;
-    color: #ffffff;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-medium;
+    color: $color-white;
     margin: 0 0 2px;
-    line-height: 1.3;
+    line-height: $line-height-tight;
     letter-spacing: 0.01em;
   }
 
   .mtk-gift__subtitle {
-    font-size: 0.8125rem;
-    color: rgba(255, 255, 255, 0.82);
+    font-size: $font-size-sm;
+    color: $color-footer-text;
     margin: 0;
-    line-height: 1.4;
+    line-height: $line-height-base;
   }
 
   // ── Body ────────────────────────────────────
   .mtk-gift__body {
-    padding: 24px;
+    padding: $spacing-xl;
   }
 
   .mtk-gift__address-label {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--mtk-gift-on-surface-med);
-    margin-bottom: 18px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    line-height: 1.4;
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
+    color: $color-text-muted;
+    margin-bottom: $spacing-lg;
+    @include flex-vcenter;
+    gap: $spacing-xs;
+    line-height: $line-height-base;
 
     .material-icons {
-      font-size: 18px;
-      color: var(--mtk-gift-primary);
+      font-size: $font-size-lg;
+      color: $color-primary;
     }
   }
 
@@ -123,11 +100,11 @@ mtk-gift,
   .mtk-gift__row {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: $spacing-lg;
     margin-bottom: 0;
 
     & + .mtk-gift__row {
-      margin-top: 16px;
+      margin-top: $spacing-lg;
     }
   }
 
@@ -137,12 +114,12 @@ mtk-gift,
     flex: 1 1 100%;
 
     &--half {
-      flex: 1 1 calc(50% - 8px);
+      flex: 1 1 calc(50% - #{$spacing-sm});
       min-width: 120px;
     }
 
     &--quarter {
-      flex: 1 1 calc(25% - 12px);
+      flex: 1 1 calc(25% - #{$spacing-md});
       min-width: 90px;
     }
   }
@@ -156,41 +133,43 @@ mtk-gift,
   .mtk-gift__select {
     width: 100%;
     height: 56px;
-    padding: 16px 16px 8px 48px;
-    font-family: var(--mtk-gift-font);
-    font-size: 1rem;
-    color: var(--mtk-gift-on-surface);
-    background: var(--mtk-gift-surface);
-    border: 1px solid var(--mtk-gift-outline);
-    border-radius: var(--mtk-gift-radius-field);
+    padding: $spacing-lg $spacing-lg $spacing-sm 48px;
+    font-family: $font-primary;
+    font-size: $font-size-lg;
+    color: $color-text-primary;
+    background: $color-white;
+    border: 1px solid $color-border;
+    border-radius: $radius-xs;
     outline: none;
-    transition: var(--mtk-gift-transition);
+    transition: $transition-fast;
     appearance: none;
     -webkit-appearance: none;
     box-sizing: border-box;
+    position: relative;
+    z-index: $z-base;
 
     &:hover {
-      border-color: var(--mtk-gift-on-surface);
+      border-color: $color-text-primary;
     }
 
     &:focus {
-      border-color: var(--mtk-gift-outline-focus);
+      border-color: $color-primary;
       border-width: 2px;
     }
 
     &:focus + .mtk-gift__label,
     &:not(:placeholder-shown) + .mtk-gift__label {
       top: 6px;
-      font-size: 0.75rem;
-      color: var(--mtk-gift-primary);
+      font-size: $font-size-xs;
+      color: $color-primary;
       letter-spacing: 0.025em;
     }
 
     &.is-invalid {
-      border-color: var(--mtk-gift-error);
+      border-color: $color-error-dark;
 
       & + .mtk-gift__label {
-        color: var(--mtk-gift-error);
+        color: $color-error-dark;
       }
     }
   }
@@ -198,16 +177,15 @@ mtk-gift,
   .mtk-gift__select {
     cursor: pointer;
 
-    // Show label as floated when value selected (not the placeholder empty value)
     &.has-value + .mtk-gift__label {
       top: 6px;
-      font-size: 0.75rem;
-      color: var(--mtk-gift-primary);
+      font-size: $font-size-xs;
+      color: $color-primary;
       letter-spacing: 0.025em;
     }
 
     option[value=""] {
-      color: var(--mtk-gift-on-surface-low);
+      color: $color-text-secondary;
     }
   }
 
@@ -217,12 +195,13 @@ mtk-gift,
     left: 48px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 1rem;
-    color: var(--mtk-gift-on-surface-med);
+    font-size: $font-size-lg;
+    color: $color-text-muted;
     pointer-events: none;
-    transition: var(--mtk-gift-transition);
-    background: var(--mtk-gift-surface);
-    padding: 0 4px;
+    z-index: 0;
+    transition: $transition-fast;
+    background: $color-white;
+    padding: 0 $spacing-xs;
     line-height: 1;
     white-space: nowrap;
   }
@@ -233,53 +212,50 @@ mtk-gift,
     left: 14px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--mtk-gift-on-surface-low);
+    color: $color-text-secondary;
     pointer-events: none;
-    transition: var(--mtk-gift-transition);
+    z-index: 0;
+    transition: $transition-fast;
     display: flex;
 
     .material-icons {
-      font-size: 20px;
-    }
-
-    .mtk-gift__input:focus ~ &,
-    .mtk-gift__select:focus ~ & {
-      color: var(--mtk-gift-primary);
+      font-size: $font-size-2xl;
     }
   }
 
   // Select arrow
   .mtk-gift__select-arrow {
     position: absolute;
-    right: 12px;
+    right: $spacing-md;
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
-    color: var(--mtk-gift-on-surface-med);
+    z-index: 0;
+    color: $color-text-muted;
 
     .material-icons {
-      font-size: 20px;
+      font-size: $font-size-2xl;
     }
   }
 
   // Required indicator
   .mtk-gift__required {
-    color: var(--mtk-gift-error);
+    color: $color-error-dark;
     margin-left: 2px;
   }
 
   // Validation error text
   .mtk-gift__field-error {
     display: none;
-    font-size: 0.75rem;
-    color: var(--mtk-gift-error);
-    margin-top: 4px;
-    padding-left: 4px;
+    font-size: $font-size-xs;
+    color: $color-error-dark;
+    margin-top: $spacing-xs;
+    padding-left: $spacing-xs;
     align-items: center;
-    gap: 4px;
+    gap: $spacing-xs;
 
     .material-icons {
-      font-size: 14px;
+      font-size: $font-size-base;
     }
 
     &.is-visible {
@@ -290,116 +266,64 @@ mtk-gift,
   // ── Divider ─────────────────────────────────
   .mtk-gift__divider {
     border: none;
-    border-top: 1px solid var(--mtk-gift-outline);
-    margin: 24px 0 20px;
+    border-top: 1px solid $color-divider;
+    margin: $spacing-xl 0 $spacing-lg;
   }
 
   // ── Action Buttons ──────────────────────────
   .mtk-gift__actions {
     display: flex;
-    gap: 12px;
+    gap: $spacing-md;
     align-items: center;
   }
 
   .mtk-gift__btn {
+    @extend %btn-base;
     flex: 1;
-    height: 40px;
-    padding: 0 16px;
-    font-family: var(--mtk-gift-font);
-    font-size: 0.875rem;
-    font-weight: 500;
-    letter-spacing: 0.0625em;
-    text-transform: uppercase;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    outline: none;
-    position: relative;
-    overflow: hidden;
-    transition: var(--mtk-gift-transition);
     min-width: 0;
 
-    // Ripple pseudo-element
-    &::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: currentColor;
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    &:hover::after  { opacity: 0.08; }
-    &:active::after { opacity: 0.16; }
-
-    &:focus-visible {
-      outline: 3px solid var(--mtk-gift-primary);
-      outline-offset: 2px;
-    }
-
-    .material-icons {
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    // Submit — filled
     &--submit {
-      background: var(--mtk-gift-primary);
-      color: #ffffff;
-      box-shadow: var(--mtk-gift-shadow-2);
-
-      &:hover {
-        background: var(--mtk-gift-primary-dark);
-        box-shadow: var(--mtk-gift-shadow-1);
-      }
-
-      &:active {
-        box-shadow: none;
-      }
+      @extend %btn-primary;
+      flex: 1;
     }
-
   }
 
   // Cancel — btn-link style
   .mtk-gift__btn.btn-link {
+    flex: 1;
     background: transparent;
-    color: var(--mtk-gift-primary);
+    color: $color-primary;
     border: none;
     box-shadow: none;
     text-decoration: underline;
     text-decoration-color: transparent;
     text-underline-offset: 3px;
-    padding: 0 12px;
+    padding: 0 $spacing-md;
+    border-radius: $radius-xs;
+    transition: $transition-fast;
 
     &:hover {
-      background: var(--mtk-gift-primary-light);
-      text-decoration-color: var(--mtk-gift-primary);
+      background: rgba($color-primary, 0.08);
+      text-decoration-color: $color-primary;
     }
 
-    &:focus-visible {
-      outline: 3px solid var(--mtk-gift-primary);
-      outline-offset: 2px;
-    }
+    @include focus-ring($color-primary);
   }
 
-  // ── Toast / Snackbar ─────────────────────────
+  // ── Snackbar ─────────────────────────────────
   .mtk-gift__snackbar {
     display: none;
     align-items: center;
-    gap: 10px;
-    margin-top: 16px;
-    padding: 12px 16px;
-    border-radius: var(--mtk-gift-radius-sm);
-    font-size: 0.875rem;
-    font-weight: 500;
-    line-height: 1.4;
+    gap: $spacing-sm;
+    margin-top: $spacing-lg;
+    padding: $spacing-md $spacing-lg;
+    border-radius: $radius-xs;
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
+    line-height: $line-height-base;
 
     .material-icons {
-      font-size: 20px;
+      font-size: $font-size-xl;
       flex-shrink: 0;
     }
 
@@ -408,49 +332,46 @@ mtk-gift,
     }
 
     &--success {
-      background: #e6f4ea;
-      color: #137333;
-      border: 1px solid #b7dfbf;
-
-      .material-icons { color: #137333; }
+      background: lighten($color-success, 48%);
+      color: $color-success-darker;
+      border: 1px solid lighten($color-success, 30%);
+      .material-icons { color: $color-success-darker; }
     }
 
     &--error {
-      background: #fce8e6;
-      color: var(--mtk-gift-error);
-      border: 1px solid #f5c6c3;
-
-      .material-icons { color: var(--mtk-gift-error); }
+      background: lighten($color-error, 38%);
+      color: $color-error-dark;
+      border: 1px solid lighten($color-error, 22%);
+      .material-icons { color: $color-error-dark; }
     }
 
     &--info {
-      background: var(--mtk-gift-primary-light);
-      color: var(--mtk-gift-primary-dark);
-      border: 1px solid #b0ccf5;
-
-      .material-icons { color: var(--mtk-gift-primary); }
+      background: lighten($color-primary, 48%);
+      color: $color-primary-dark;
+      border: 1px solid lighten($color-primary, 32%);
+      .material-icons { color: $color-primary; }
     }
   }
 
   // ── Focus ring (ADA) ────────────────────────
   *:focus-visible {
-    outline: 3px solid var(--mtk-gift-primary);
+    outline: 3px solid rgba($color-primary, 0.35);
     outline-offset: 2px;
   }
 
   // ── Responsive tweaks ────────────────────────
-  @media (max-width: 480px) {
+  @media (max-width: $bp-xs) {
     .mtk-gift__field--quarter,
     .mtk-gift__field--half {
       flex: 1 1 100%;
     }
 
     .mtk-gift__header {
-      padding: 18px 16px 14px;
+      padding: $spacing-lg $spacing-lg $spacing-md;
     }
 
     .mtk-gift__body {
-      padding: 16px;
+      padding: $spacing-lg;
     }
   }
 }
