@@ -113,14 +113,20 @@
 	     function adjustFooter() {
 		 const docHeight = document.documentElement.scrollHeight;
 		 const viewportHeight = window.innerHeight;
+		 const footerHeight = footer.offsetHeight || 0;
 
 		 if (docHeight <= viewportHeight) {
 		     footer.style.position = "fixed";
 		     footer.style.bottom = "0";
 		     footer.style.left = "0";
 		     footer.style.width = "100%";
+		     document.body.style.paddingBottom = footerHeight + "px";
 		 } else {
 		     footer.style.position = "static";
+		     footer.style.bottom = "";
+		     footer.style.left = "";
+		     footer.style.width = "";
+		     document.body.style.paddingBottom = "0";
 		 }
 	     }
 
