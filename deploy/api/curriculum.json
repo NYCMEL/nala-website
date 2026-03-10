@@ -887,13 +887,13 @@
                                           "access":  false,
                                           "lessons":  [
                                                           {
-                                                              "lesson_no":  45,
-                                                              "title":  "Locksmith Licensing",
+                                                              "lesson_no": 44,
+                                                              "title": "How and where to begin advertising as a Locksmith",
                                                               "access":  false,
                                                               "resources":  [
                                                                                 {
-                                                                                    "description":  "Lesson 45 - Locksmith Licensing",
-                                                                                    "url":  "https://player.vimeo.com/video/827173408",
+                                                                                    "description": "Lesson 44 - How and where to begin advertising as a Locksmith",
+                                                                                    "url":  "https://player.vimeo.com/video/827173770",
                                                                                     "type":  "video",
                                                                                     "access":  false
                                                                                 }
@@ -1005,8 +1005,4 @@
                   }
               ]
 }
-
-
-
-
 
