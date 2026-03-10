@@ -60,7 +60,7 @@ const MTKGiftConfig = {
           required: true,
           autocomplete: "address-level1",
           icon: "map",
-          gridCol: "col-12 col-md-3",
+          gridCol: "col-12 col-md-6",
           options: [
             { value: "", label: "State" },
             { value: "AL", label: "AL" },
