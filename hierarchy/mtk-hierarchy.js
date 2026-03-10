@@ -615,7 +615,6 @@ class MTKHierarchy {
             this.openLessons.add(lessonKey);
             this.displayLessonResources(moduleId, lessonId);
             this.enableLessonResources(moduleId, lessonId);
-            this.enableNextLessonOrQuiz(moduleId, lessonId);
         }
 
         const toggle = lessonHeader.querySelector('.mtk-lesson__toggle');
@@ -681,7 +680,7 @@ class MTKHierarchy {
     /**
      * Find lesson_no for a resource id.
      */
-    findLessonNoForResource(resourceId) {
+    findLessonContextForResource(resourceId) {
         if (!this.config || !Array.isArray(this.config)) return null;
         for (const course of this.config) {
             if (!course.modules) continue;
@@ -690,7 +689,11 @@ class MTKHierarchy {
                 for (const lesson of module.lessons) {
                     if (!lesson.resources) continue;
                     if (lesson.resources.some(r => r.id === resourceId)) {
-                        return Number.isFinite(Number(lesson.lesson_no)) ? Number(lesson.lesson_no) : null;
+                        return {
+                            moduleId: module.id,
+                            lessonId: lesson.id,
+                            lessonNo: Number.isFinite(Number(lesson.lesson_no)) ? Number(lesson.lesson_no) : null
+                        };
                     }
                 }
             }
@@ -701,7 +704,7 @@ class MTKHierarchy {
     /**
      * Advance progress only when the lesson video is fully watched (Vimeo ended).
      */
-    attachVideoCompletionTracking(lessonNo) {
+    attachVideoCompletionTracking(lessonNo, moduleId, lessonId) {
         if (!Number.isFinite(Number(lessonNo))) return;
         if (typeof wc === 'undefined' || typeof wc.lessonComplete !== 'function') return;
         if (!wc.session || !wc.session.user) return;
@@ -719,13 +722,16 @@ class MTKHierarchy {
             player.on('ended', () => {
                 const current = Number(wc.session.user.current_lesson);
                 if (!Number.isFinite(current)) return;
-                wc.lessonComplete(Number(lessonNo), current, function(err, result) {
+                wc.lessonComplete(Number(lessonNo), current, (err, result) => {
                     if (err) {
                         wc.warn('MTKHierarchy: lessonComplete failed on video end', err);
                         return;
                     }
                     if (result && Number.isFinite(Number(result.current_lesson))) {
                         wc.session.user.current_lesson = Number(result.current_lesson);
+                    }
+                    if (result && result.advanced === true && moduleId && lessonId) {
+                        this.enableNextLessonOrQuiz(moduleId, lessonId);
                     }
                     wc.log('MTKHierarchy: video-ended progress sync', {
                         lesson_no: Number(lessonNo),
@@ -1154,7 +1160,7 @@ class MTKHierarchy {
             this.elements.rhs.innerHTML = contentHTML;
 
             if (firstVideo && Number.isFinite(Number(lesson.lesson_no))) {
-                this.attachVideoCompletionTracking(Number(lesson.lesson_no));
+                this.attachVideoCompletionTracking(Number(lesson.lesson_no), moduleId, lessonId);
             }
 
             return;
@@ -1219,9 +1225,9 @@ class MTKHierarchy {
 
         this.elements.rhs.innerHTML = contentHTML;
 
-        const lessonNo = this.findLessonNoForResource(resource.id);
-        if (firstVideo && Number.isFinite(Number(lessonNo))) {
-            this.attachVideoCompletionTracking(Number(lessonNo));
+        const lessonContext = this.findLessonContextForResource(resource.id);
+        if (firstVideo && lessonContext && Number.isFinite(Number(lessonContext.lessonNo))) {
+            this.attachVideoCompletionTracking(Number(lessonContext.lessonNo), lessonContext.moduleId, lessonContext.lessonId);
         }
     }
 
@@ -1573,4 +1579,6 @@ function subscribeToEvents() {
 }
 
 })(); // end IIFE — prevents MTKHierarchy class from polluting global scope
+
+
 
