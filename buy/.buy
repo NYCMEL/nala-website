@@ -38,9 +38,11 @@ Output! Create exactly these files:
 - mtk-buy.scss
 - mtk-buy.html
 - mtk-buy.js
-- A minimal index.html file
 
 Behavior:
 - MUST WAIT for element to be available inside DOM, since i will be using <wc-include> for dynamic inclusion
 - all published (wc.publish) messages should be logged using wc.log to console before being published
 
+create a popup window with the following:
+title: You have reached the end of Free Trial. You may continue the course by purchasing one of our courses.
+with a button "Purchase Course"
