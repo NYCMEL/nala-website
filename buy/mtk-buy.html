@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mtk-buy Component</title>
+
+  <!-- Material Icons (Google CDN) -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
+  <!-- Roboto font -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap" />
+
+  <!-- Compiled component styles (compile mtk-buy.scss → mtk-buy.css) -->
+  <link rel="stylesheet" href="mtk-buy.css" />
+
+  <style>
+    /* Demo page chrome only — NOT part of the component */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #F5F7FA;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Roboto', sans-serif;
+    }
+    .demo-trigger {
+      padding: 14px 32px;
+      background: #1565C0;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Demo trigger (not part of component) -->
+  <button class="demo-trigger" id="openBuy">Open Buy Popup</button>
+
+  <!-- =========================================================
+       mtk-buy component
+       Loaded dynamically via <wc-include> in production.
+       The JS waits for the element to exist in the DOM.
+  ========================================================= -->
+  <mtk-buy class="mtk-buy">
+
+    <!--  Backdrop + Dialog  -->
+    <div class="mtk-buy__backdrop"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="mtk-buy-title"
+         aria-describedby="mtk-buy-desc"
+         tabindex="-1">
+
+      <div class="mtk-buy__dialog" tabindex="0">
+
+        <!-- Header -->
+        <header class="mtk-buy__header">
+          <span class="mtk-buy__header-icon material-icons" aria-hidden="true">school</span>
+
+          <div class="mtk-buy__header-text">
+            <h2 class="mtk-buy__title" id="mtk-buy-title">
+              <!-- populated from config -->
+            </h2>
+          </div>
+
+          <button class="mtk-buy__close"
+                  aria-label="Close dialog"
+                  data-mtk-action="close">
+            <span class="material-icons" aria-hidden="true">close</span>
+          </button>
+        </header>
+
+        <!-- Body -->
+        <section class="mtk-buy__body">
+          <p class="mtk-buy__subtitle" id="mtk-buy-desc">
+            <!-- populated from config -->
+          </p>
+        </section>
+
+        <!-- Decorative stripe -->
+        <div class="mtk-buy__stripe" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <!-- Actions -->
+        <footer class="mtk-buy__actions">
+          <button class="mtk-buy__btn mtk-buy__btn--text"
+                  data-mtk-action="close"
+                  aria-label="Dismiss dialog">
+            Maybe Later
+          </button>
+
+          <button class="mtk-buy__btn mtk-buy__btn--filled"
+                  data-mtk-action="purchase"
+                  aria-label="Purchase Course to continue learning">
+            <span class="material-icons" aria-hidden="true">shopping_cart</span>
+            <!-- label populated from config -->
+          </button>
+        </footer>
+
+      </div><!-- /.mtk-buy__dialog -->
+    </div><!-- /.mtk-buy__backdrop -->
+
+  </mtk-buy>
+
+  <!-- Component scripts -->
+  <script type="module" src="mtk-buy.js"></script>
+
+  <!-- Demo wire-up (not part of component) -->
+  <script type="module">
+    document.getElementById('openBuy').addEventListener('click', () => {
+      // Simulate an external open trigger via the event bus
+      if (window.wc) wc.publish('mtk-buy:open', { source: 'demo-button' });
+    });
+  </script>
+
+</body>
+</html>

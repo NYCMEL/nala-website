@@ -1,0 +1,316 @@
+// =============================================================================
+// mtk-buy.scss
+// Scoped entirely to .mtk-buy — no global styles, no IDs
+// Material Design 3 aesthetic
+// =============================================================================
+
+// --- Material Design tokens (local to this component) ---
+$mtk-primary:        #1565C0;
+$mtk-primary-dark:   #0D47A1;
+$mtk-primary-light:  #E3F2FD;
+$mtk-accent:         #FF6F00;
+$mtk-accent-hover:   #E65100;
+$mtk-surface:        #FFFFFF;
+$mtk-bg-scrim:       rgba(0, 0, 0, 0.54);
+$mtk-text-primary:   #212121;
+$mtk-text-secondary: #757575;
+$mtk-radius:         16px;
+$mtk-radius-sm:      8px;
+$mtk-elevation:      0 24px 48px rgba(0, 0, 0, 0.22),
+                     0 8px  16px rgba(0, 0, 0, 0.12);
+
+$mtk-font:           'Roboto', 'Segoe UI', sans-serif;
+$mtk-icon-font:      'Material Icons';
+
+$mtk-dur-in:         320ms;
+$mtk-dur-out:        220ms;
+$mtk-ease:           cubic-bezier(0.4, 0, 0.2, 1);
+
+// =============================================================================
+// Host element
+// =============================================================================
+mtk-buy.mtk-buy {
+  display: block;
+}
+
+// =============================================================================
+// Component root
+// =============================================================================
+.mtk-buy {
+  font-family: $mtk-font;
+
+  // ---------------------------------------------------------------------------
+  // Backdrop / Scrim
+  // ---------------------------------------------------------------------------
+  &__backdrop {
+    position:         fixed;
+    inset:            0;
+    z-index:          1200;
+    background:       $mtk-bg-scrim;
+    display:          flex;
+    align-items:      center;
+    justify-content:  center;
+    padding:          16px;
+    opacity:          0;
+    visibility:       hidden;
+    transition:
+      opacity   $mtk-dur-out $mtk-ease,
+      visibility $mtk-dur-out $mtk-ease;
+
+    &.is-open {
+      opacity:    1;
+      visibility: visible;
+      transition-duration: $mtk-dur-in;
+
+      .mtk-buy__dialog {
+        opacity:   1;
+        transform: translateY(0) scale(1);
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Dialog surface
+  // ---------------------------------------------------------------------------
+  &__dialog {
+    position:         relative;
+    background:       $mtk-surface;
+    border-radius:    $mtk-radius;
+    box-shadow:       $mtk-elevation;
+    width:            100%;
+    max-width:        480px;
+    outline:          none;
+    opacity:          0;
+    transform:        translateY(24px) scale(0.97);
+    transition:
+      opacity   $mtk-dur-in  $mtk-ease,
+      transform $mtk-dur-in  $mtk-ease;
+    overflow:         hidden;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Header band
+  // ---------------------------------------------------------------------------
+  &__header {
+    background:     $mtk-primary;
+    padding:        28px 24px 24px;
+    display:        flex;
+    align-items:    flex-start;
+    gap:            16px;
+    position:       relative;
+  }
+
+  &__header-icon {
+    font-family:              $mtk-icon-font;
+    font-weight:              normal;
+    font-style:               normal;
+    font-size:                36px;
+    line-height:              1;
+    letter-spacing:           normal;
+    text-transform:           none;
+    display:                  inline-block;
+    white-space:              nowrap;
+    word-wrap:                normal;
+    direction:                ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing:   antialiased;
+    color:                    rgba(255, 255, 255, 0.92);
+    flex-shrink:              0;
+    margin-top:               2px;
+  }
+
+  &__header-text {
+    flex:           1;
+    min-width:      0;
+  }
+
+  &__title {
+    font-size:      1.2rem;
+    font-weight:    600;
+    line-height:    1.4;
+    color:          #FFFFFF;
+    margin:         0 0 4px;
+    letter-spacing: 0.01em;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Body
+  // ---------------------------------------------------------------------------
+  &__body {
+    padding: 24px 24px 8px;
+  }
+
+  &__subtitle {
+    font-size:      0.9375rem;
+    line-height:    1.6;
+    color:          $mtk-text-secondary;
+    margin:         0;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Illustration / decorative stripe
+  // ---------------------------------------------------------------------------
+  &__stripe {
+    display:          flex;
+    align-items:      center;
+    justify-content:  center;
+    gap:              8px;
+    padding:          16px 24px;
+
+    span {
+      display:          inline-block;
+      width:            8px;
+      height:           8px;
+      border-radius:    50%;
+      background:       $mtk-primary-light;
+
+      &:nth-child(2) { background: lighten($mtk-primary, 20%); }
+      &:nth-child(3) { background: $mtk-primary; }
+      &:nth-child(4) { background: lighten($mtk-primary, 20%); }
+      &:nth-child(5) { background: $mtk-primary-light; }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Actions footer
+  // ---------------------------------------------------------------------------
+  &__actions {
+    padding:          8px 16px 20px;
+    display:          flex;
+    justify-content:  flex-end;
+    gap:              8px;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Buttons — Material Design ripple style
+  // ---------------------------------------------------------------------------
+  &__btn {
+    position:         relative;
+    overflow:         hidden;
+    display:          inline-flex;
+    align-items:      center;
+    gap:              8px;
+    border:           none;
+    border-radius:    $mtk-radius-sm;
+    font-family:      $mtk-font;
+    font-size:        0.875rem;
+    font-weight:      500;
+    letter-spacing:   0.08em;
+    text-transform:   uppercase;
+    cursor:           pointer;
+    padding:          10px 20px;
+    transition:
+      background  200ms $mtk-ease,
+      box-shadow  200ms $mtk-ease,
+      transform   120ms $mtk-ease;
+    user-select:      none;
+    -webkit-tap-highlight-color: transparent;
+
+    // Focus ring — ADA
+    &:focus-visible {
+      outline:        3px solid $mtk-accent;
+      outline-offset: 2px;
+    }
+
+    &:active {
+      transform: scale(0.97);
+    }
+
+    // Ripple element injected by JS
+    .mtk-buy__ripple {
+      position:         absolute;
+      border-radius:    50%;
+      background:       rgba(255, 255, 255, 0.35);
+      transform:        scale(0);
+      animation:        mtk-ripple 550ms $mtk-ease forwards;
+      pointer-events:   none;
+    }
+
+    // Material icon inside button
+    .material-icons {
+      font-size: 18px;
+    }
+  }
+
+  // Text / ghost button
+  &__btn--text {
+    background:   transparent;
+    color:        $mtk-primary;
+
+    .mtk-buy__ripple {
+      background: rgba($mtk-primary, 0.12);
+    }
+
+    &:hover {
+      background: rgba($mtk-primary, 0.08);
+    }
+  }
+
+  // Filled / CTA button
+  &__btn--filled {
+    background:   $mtk-accent;
+    color:        #FFFFFF;
+    box-shadow:   0 2px 6px rgba($mtk-accent, 0.4);
+
+    &:hover {
+      background:   $mtk-accent-hover;
+      box-shadow:   0 4px 12px rgba($mtk-accent, 0.5);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Close button (top-right X)
+  // ---------------------------------------------------------------------------
+  &__close {
+    position:   absolute;
+    top:        10px;
+    right:      10px;
+    width:      36px;
+    height:     36px;
+    border:     none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    color:      #FFFFFF;
+    display:    flex;
+    align-items: center;
+    justify-content: center;
+    cursor:     pointer;
+    transition: background 180ms $mtk-ease;
+    padding:    0;
+    line-height: 1;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    &:focus-visible {
+      outline:        3px solid $mtk-accent;
+      outline-offset: 2px;
+    }
+
+    .material-icons {
+      font-size: 20px;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Status / log bar (dev helper, hidden by default)
+  // ---------------------------------------------------------------------------
+  &__log {
+    display:     none;
+    font-size:   0.75rem;
+    color:       $mtk-text-secondary;
+    padding:     0 24px 16px;
+    font-family: monospace;
+  }
+}
+
+// =============================================================================
+// Ripple keyframe (component-local name)
+// =============================================================================
+@keyframes mtk-ripple {
+  to {
+    transform: scale(4);
+    opacity:   0;
+  }
+}
