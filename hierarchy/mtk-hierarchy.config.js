@@ -1072,8 +1072,8 @@ window.app = {
 			    "resources": [
 				{
 				    "description": "Receive your Certification",
-				    "url": "https://vimeo.com/827173787",
-				    "type": "video"
+				    "url": "final",
+				    "type": "page"
 				}
 			    ]
 			}
@@ -1083,5 +1083,4 @@ window.app = {
         }
     ]
 }
-
 

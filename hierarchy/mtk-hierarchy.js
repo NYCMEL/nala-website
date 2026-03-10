@@ -426,7 +426,7 @@ class MTKHierarchy {
         const disabledClass = !resource.access ? 'mtk-resource--disabled' : '';
         const activeClass = this.activeResource === resource.id ? 'mtk-resource--active' : '';
 
-        const icon = resource.type === 'video' ? 'play_circle_outline' : 'image';
+        const icon = resource.type === 'video' ? 'play_circle_outline' : resource.type === 'page' ? 'workspace_premium' : 'image';
         const statusIcon = resource.processed ? '<span class="mtk-resource__status"><span class="material-icons">visibility</span></span>' : '';
 
         return `
@@ -903,7 +903,7 @@ class MTKHierarchy {
         }
     }
 
-    /**
+        /**
      * Handle resource click
      */
     handleResourceClick(event, resourceElement) {
@@ -946,6 +946,21 @@ class MTKHierarchy {
             }
         }
 
+        if (resource.type === 'page' && resource.url === 'final') {
+            if (typeof wc !== 'undefined') {
+                wc.pages.show('final');
+            }
+
+            wc.publish('mtk-hierarchy:resource-clicked', {
+                moduleId,
+                lessonId,
+                resourceId,
+                resource,
+                timestamp: new Date().toISOString()
+            });
+            return;
+        }
+
         this.displayResource(resource);
 
         wc.publish('mtk-hierarchy:resource-clicked', {
@@ -956,8 +971,7 @@ class MTKHierarchy {
             timestamp: new Date().toISOString()
         });
     }
-
-    /**
+/**
      * Handle quiz start button click
      */
     handleQuizStart(moduleId, quizUrl) {
@@ -1638,6 +1652,5 @@ function subscribeToEvents() {
 }
 
 })(); // end IIFE — prevents MTKHierarchy class from polluting global scope
-
 
 

@@ -927,8 +927,8 @@
                                                               "resources":  [
                                                                                 {
                                                                                     "description":  "Receive your Certification",
-                                                                                    "url":  "https://player.vimeo.com/video/827173787",
-                                                                                    "type":  "video",
+                                                                                    "url":  "final",
+                                                                                    "type":  "page",
                                                                                     "access":  false
                                                                                 }
                                                                             ]
