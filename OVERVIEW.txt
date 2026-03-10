@@ -1,0 +1,84 @@
+NALA Project Overview
+---------------------
+
+NALA Website is a single-page application (SPA) for a locksmith training platform. It uses vanilla JavaScript web components — no build tools, no npm, no framework. Static files are served directly.
+
+Development
+-----------
+
+Local dev server:
+
+    node /nodemodules/serve/build/main.js
+     Serves at http://localhost:3000
+    
+
+No build step required. SCSS is pre-compiled; edit css/app.css directly or recompile SCSS externally.
+
+Test environment: https://nala-test.com Production: https://nalanetwork.com API base: https://nala-test.com/api/
+
+Deploy: Git push to main branch; frontend is in repodeploy/. Backend PHP (api/) and media assets (media/) are synced manually via SFTP.
+
+Architecture
+------------
+
+ Component System
+
+Each UI module is a vanilla JS custom element. Every component lives in its own directory with exactly three files:
+
+1.  mtk-component.config.js — JSON data loaded into window.app["mtk-component"]
+2.  mtk-component.html or index.inc.html — HTML template
+3.  mtk-component.js — Class extending HTMLElement, registered via customElements.define()
+
+Components use <wc-include href="path/index.inc.html"> for lazy template injection (jQuery AJAX), then connectedCallback() fires to read config and wire up events.
+
+ Event Bus (PubSub)
+
+All cross-component communication goes through wc.publish() / wc.subscribe() (implemented in js/wc.js). Components never call each other directly.
+
+ Front-End/Back-End Router (js/febe.js)
+
+febe.js is the central hub that subscribes to all significant PubSub topics (30+) and handles navigation (wc.pages.show()) and API calls. When a component fires an event, febe handles routing the result — not the component itself.
+
+ Page System (pages/mtk-pages.js)
+
+Pages are defined in pages/mtk-pages.config.js with a cache flag:
+
+   cache: true — HTML loaded once and reused
+   cache: false — Reloaded on every visit (dashboard, hierarchy, quiz)
+
+ Session Flow
+
+On load, wc.getSession() checks authentication:
+
+   Logged in → wc.pages.show('dashboard'), show header-private
+   Logged out → show home/login, show header-public
+
+Inactivity timeout: 2 minutes idle triggers a 40-second countdown then logout.
+
+ Global Objects
+
+   window.wc (js/wc.js) — PubSub, wc.getSession(), wc.apiURL, wc.debug, wc.emsgs, wc.setDashboardProgress(), wc.setCurrentLesson()
+   window.app (js/app.js) — app.baseUrl, app.quizSize, app.emsgs, component configs
+
+ CSS Conventions
+
+Font weight utility classes: .fl (thin), .fm (regular), .fb (medium), .fr (light) Component styles are scoped to the component's root class (e.g., .mtk-login { ... }).
+
+External CSS: Bootstrap 5.3.3, Material Components Web, Font Awesome 6.4.0 (all via CDN).
+
+Adding a New Component
+----------------------
+
+Per .component guidelines:
+
+1.  Create directory component-name/ with three files (config, html, js)
+2.  Extend HTMLElement, implement connectedCallback() → init() → render() → addEvents()
+3.  Read config from window.app["mtk-component-name"]
+4.  Publish events via wc.publish(topic, data) — do not navigate or call APIs directly
+5.  Add event handler in febe.js if the event requires navigation or an API call
+6.  Register new page in pages/mtk-pages.config.js if needed
+
+Registration Flow
+-----------------
+
+No password is collected at registration. After form submission, a password-setup email is sent with a token link to /set-password/index.html?token=.... SMTP is required: NALASMTPHOST, NALASMTPPORT, NALASMTPUSER, NALASMTPPASS (configured in config.php or environment variables on the server).

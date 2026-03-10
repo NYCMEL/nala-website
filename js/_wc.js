@@ -34,15 +34,10 @@ wc.inactivity = {
 // FOR WINDOZE
 if(typeof(console) === 'undefined') {console = {}}
 
-/////////////////////////////////////////////////////////////////////////////////
-//// LOGGING ON/OFF
-/////////////////////////////////////////////////////////////////////////////////
-wc.debug = location.hostname !== wc.apiURL; // SET IN app.js FILE
-
-if (wc.debug) {
-    window.wcENV = "dev"; /* SHOW ALL LOGS */
-} else {
-    window.wcENV = "prod"; /* REMOVE ALL CONSOLE LOGS - except errors & warnings */
+if (window.wcENV == "prod") {
+    wc.log   = console.log   = function () {};
+    wc.info  = console.info  = function () {};
+    wc.group = console.group = function () {};
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -86,12 +81,6 @@ wc.warn = function(...data) {
 /////////////////////////////////////////////////////////////////////////////////
 wc.error = function(...data) {
     return console.error(...data);
-}
-
-if (window.wcENV == "prod") {
-    console.log = function () {};
-    console.info = function () {};
-    console.debug = function () {};
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -1537,3 +1526,80 @@ wc.submitQuiz = function (quizSessionId, moduleId, answersMap, callback) {
     });
 };
 
+/************************************************************
+ * fix footer to bottom
+ ************************************************************/
+wc.fixFooter = function() {
+    const footer = document.getElementById("page-footer");
+    if (!footer) return;
+
+    function adjustFooter() {
+	const docHeight = document.documentElement.scrollHeight;
+	const viewportHeight = window.innerHeight;
+
+	if (docHeight <= viewportHeight) {
+	    footer.style.position = "fixed";
+	    footer.style.bottom = "0";
+	    footer.style.left = "0";
+	    footer.style.width = "100%";
+	} else {
+	    footer.style.position = "static";
+	}
+    }
+
+    // Run after layout is truly ready
+    window.addEventListener("load", adjustFooter);
+    window.addEventListener("resize", adjustFooter);
+
+    // Extra safety: re-run after fonts/images
+    setTimeout(adjustFooter, 50);
+}
+
+/************************************************************
+ * fix footer to bottom
+ ************************************************************/
+/************************************************************
+ * fix footer to bottom
+ ************************************************************/
+wc.fixFooter = function() {
+    const footer = document.getElementById("page-footer");
+    if (!footer) return;
+
+    wc._adjustFooter = function() {
+        const docHeight = document.documentElement.scrollHeight;
+        const viewportHeight = window.innerHeight;
+
+        if (docHeight <= viewportHeight) {
+            footer.style.position = "fixed";
+            footer.style.bottom = "0";
+            footer.style.left = "0";
+            footer.style.width = "100%";
+        } else {
+            footer.style.position = "static";
+        }
+    };
+
+    window.addEventListener("load", wc._adjustFooter);
+    window.addEventListener("resize", wc._adjustFooter);
+
+    setTimeout(wc._adjustFooter, 50);
+};
+
+
+/************************************************************
+ * remove fixed footer behavior
+ ************************************************************/
+wc.unfixFooter = function() {
+    const footer = document.getElementById("page-footer");
+    if (!footer) return;
+
+    if (wc._adjustFooter) {
+        window.removeEventListener("load", wc._adjustFooter);
+        window.removeEventListener("resize", wc._adjustFooter);
+    }
+
+    footer.style.removeProperty("position");
+    footer.style.removeProperty("bottom");
+    footer.style.removeProperty("left");
+    footer.style.removeProperty("width");
+};

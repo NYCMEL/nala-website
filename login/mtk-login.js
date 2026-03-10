@@ -125,5 +125,4 @@ if (!customElements.get("mtk-login")) {
 
     // Register the element
     customElements.define("mtk-login", MTKLogin);
-
 }

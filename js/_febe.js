@@ -153,19 +153,11 @@ class _febe {
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
     handleRegister() {
-	wc.pages.show("register");
-
 	wc.timeout(function(){
-	    // Force a reload if register page exists but is blank.
-	    const page = document.querySelector('[mtk-pages-id="register"]');
-	    if (page && page.innerHTML.trim() === "") {
-		wc.pages.refresh("register");
-	    } else {
-		wc.pages.show("register");
-	    }
-
+	    wc.pages.show("register");
+	    
 	    $('[mtk-pages-id="register"]').css("display","block");
-	}, 500, 1);
+	}, 300, 1);
     }
     handleForgotPassword() {
 	const emailInput = document.querySelector("#mtk-email");
@@ -206,7 +198,7 @@ class _febe {
 		MTKMsgs.show({
 		    type: "success",
 		    icon: "success",
-		    message: "If this email exists, a reset link has been sent.",
+		    message: "If this email exists, a reset link will be emailed to you.",
 		    closable: true,
 		    timer: 10
 		});

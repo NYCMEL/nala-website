@@ -1,109 +1,107 @@
+@import "../css/nala.scss";
+
 .mtk-footer {
   flex-shrink: 0;
-  background-color: #1e1e1e;
-  color: rgba(255, 255, 255, 0.87);
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12); }
+  background-color: $color-dark-bg;
+  color: $color-footer-text;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,0.2), 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12);
 
-.mtk-footer h3 {
-  font-size: 14px;
-  color: gold; }
+  h3 {
+    font-size: $font-size-base;
+    color: $color-gold;
+  }
 
-.mtk-footer .container {
-  padding-top: 20px; }
+  .container { padding-top: $spacing-xl; }
+}
 
 .mtk-footer__brand {
-  margin-bottom: 32px; }
-
-@media (min-width: 768px) {
-  .mtk-footer__brand {
-    margin-bottom: 0; } }
+  margin-bottom: $spacing-2xl;
+  @media (min-width: $bp-md) { margin-bottom: 0; }
+  @media (max-width: ($bp-md - 1)) { text-align: center; }
+}
 
 .mtk-footer__logo {
   max-width: 120px;
   height: auto;
-  margin-bottom: 16px;
+  margin-bottom: $font-size-lg;
   display: block;
-  transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+  transition: opacity $duration-short $ease-standard;
 
-.mtk-footer__logo:hover {
-  opacity: 0.87; }
+  &:hover { opacity: 0.87; }
+
+  @media (max-width: ($bp-md - 1)) { margin-left: auto; margin-right: auto; }
+}
 
 .mtk-footer__description {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 12px;
-  line-height: 1.6;
+  color: $color-footer-muted;
+  font-size: $font-size-xs;
+  line-height: $line-height-loose;
   margin: 0;
-  max-width: 280px; }
+  max-width: 280px;
+
+  @media (max-width: ($bp-md - 1)) { margin-left: auto; margin-right: auto; }
+}
 
 .mtk-footer__contact {
-  margin-bottom: 32px; }
-
-@media (min-width: 768px) {
-  .mtk-footer__contact {
-    margin-bottom: 0; } }
-
-@media (max-width: 767px) {
-  .mtk-footer__contact {
-    display: none; } }
+  margin-bottom: $spacing-2xl;
+  @media (min-width: $bp-md)       { margin-bottom: 0; }
+  @media (max-width: ($bp-md - 1)) { display: none; }
+}
 
 .mtk-footer__section-title {
-  color: rgba(255, 255, 255, 0.87);
-  font-size: 16px;
-  font-weight: 500;
+  color: $color-footer-text;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
   letter-spacing: 0.15px;
-  margin-bottom: 16px;
-  text-transform: uppercase; }
+  margin-bottom: $font-size-lg;
+  text-transform: uppercase;
+}
 
 .mtk-footer__contact-list {
   list-style: none;
   padding: 0;
   margin: 0;
-  font-size: 12px !important; }
+  font-size: $font-size-xs !important;
+}
 
 .mtk-footer__contact-item {
   margin-bottom: 12px;
   display: flex;
-  align-items: flex-start; }
+  align-items: flex-start;
 
-.mtk-footer__contact-item:last-child {
-  margin-bottom: 0; }
+  &:last-child { margin-bottom: 0; }
+}
 
 .mtk-footer__contact-icon {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 12px;
+  color: $color-footer-muted;
+  font-size: $font-size-xs;
   width: 10px;
   margin-right: 12px;
   flex-shrink: 0;
-  margin-top: 2px; }
+  margin-top: 2px;
+}
 
 .mtk-footer__contact-text {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 12px;
-  line-height: 1.6;
-  margin: 0; }
+  color: $color-footer-muted;
+  font-size: $font-size-xs;
+  line-height: $line-height-loose;
+  margin: 0;
+}
 
 .mtk-footer__contact-link {
-  color: rgba(255, 255, 255, 0.6);
+  color: $color-footer-muted;
   text-decoration: none;
-  transition: color 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+  transition: color $duration-short $ease-standard;
 
-.mtk-footer__contact-link:hover {
-  color: #ffffff; }
-
-.mtk-footer__contact-link:focus-visible {
-  outline: 2px solid #ffffff;
-  outline-offset: 2px; }
+  &:hover       { color: $color-white; }
+  &:focus-visible { outline: 2px solid $color-white; outline-offset: 2px; }
+}
 
 .mtk-footer__social {
-  margin-bottom: 32px; }
-
-@media (min-width: 768px) {
-  .mtk-footer__social {
-    margin-bottom: 0; } }
-
-@media (max-width: 767px) {
-  .mtk-footer__social {
-    display: none; } }
+  margin-bottom: $spacing-2xl;
+  @media (min-width: $bp-md)       { margin-bottom: 0; }
+  @media (max-width: ($bp-md - 1)) { display: none; }
+}
 
 .mtk-footer__social-list {
   display: flex;
@@ -111,62 +109,42 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  flex-wrap: wrap; }
+  flex-wrap: wrap;
+}
 
-.mtk-footer__social-item {
-  margin: 0; }
+.mtk-footer__social-item { margin: 0; }
 
 .mtk-footer__social-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center;
   width: 48px;
   height: 48px;
-  background-color: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.87);
+  background-color: $color-overlay-white-08;
+  color: $color-footer-text;
   text-decoration: none;
-  transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1), transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color $duration-short $ease-standard, transform $duration-short $ease-standard;
   position: relative;
-  overflow: hidden; }
+  overflow: hidden;
 
-.mtk-footer__social-link:hover {
-  background-color: rgba(255, 255, 255, 0.16);
-  transform: translateY(-2px); }
+  &:hover       { background-color: $color-overlay-white-16; transform: translateY(-2px); }
+  &:focus-visible { outline: 2px solid $color-white; outline-offset: 2px; }
+  &:active      { transform: translateY(0); }
+}
 
-.mtk-footer__social-link:focus-visible {
-  outline: 2px solid #ffffff;
-  outline-offset: 2px; }
-
-.mtk-footer__social-link:active {
-  transform: translateY(0); }
-
-.mtk-footer__social-icon {
-  font-size: 20px;
-  z-index: 1; }
+.mtk-footer__social-icon { font-size: $font-size-2xl; z-index: 1; }
 
 .mtk-footer__divider {
   height: 1px;
-  background-color: rgba(255, 255, 255, 0.12);
-  margin: 32px 0 24px;
-  border: none; }
+  background-color: $color-footer-divider;
+  margin: $spacing-2xl 0 $spacing-xl;
+  border: none;
+}
 
 .mtk-footer__copyright {
   display: none;
   text-align: center;
-  color: rgba(255, 255, 255, 0.38);
-  font-size: 13px;
+  color: $color-footer-dim;
+  font-size: $font-size-sm;
   margin: 0;
   margin-top: -50px;
-  padding: 10px; }
-
-@media (max-width: 767px) {
-  .mtk-footer__brand {
-    text-align: center; }
-
-  .mtk-footer__logo {
-    margin-left: auto;
-    margin-right: auto; }
-
-  .mtk-footer__description {
-    margin-left: auto;
-    margin-right: auto; } }
+  padding: 10px;
+}

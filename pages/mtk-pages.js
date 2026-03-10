@@ -92,9 +92,20 @@ class Pages extends HTMLElement {
     show(page) {
         wc.group("mtk-pages.show:", page);
 
-	// FIX FOOTER TO BOTTOM
-	checkFooter()
+	switch(page) 
+	{
+	    case "login": // fix footer to bottom of page
+	    case "register":
+	    case "settings":
+	    case "dashboard":
+	    wc.fixFooter();
+	    break;
 
+	    default:
+	    wc.unfixFooter();
+	    break;
+	} 
+	
 	try {
 	    headerSelect("mtk-header-" + page);
 

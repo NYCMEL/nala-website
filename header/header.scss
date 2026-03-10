@@ -1,4 +1,5 @@
+@import "../css/nala.scss";
+
 .nav-link.active {
-    color: gold!important;
-    /* border-bottom: 2px gold solid; */
+  color: $color-gold !important;
 }

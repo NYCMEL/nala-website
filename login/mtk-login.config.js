@@ -19,18 +19,19 @@ window.app['mtk-login'] = {
 	forgotPassword: "Forgot Password?",
 	register: "Don't have an account? Register"
     },
+    forgotPassword: {
+	title: "Reset Your Password",
+	emailLabel: "Please provide email used to login with NALA",
+	emailPlaceholder: "Enter your email",
+	helpText: "After submitting your email, we will send you a link to update/reset your password",
+	submitLabel: "Submit",
+	cancelLabel: "Cancel"
+    },
     events: {
 	submit: "mtk-login-submit",
 	forgotPassword: "mtk-login-forgot",
+	forgotPasswordSubmit: "mtk-login-forgot-submit",
 	register: "mtk-login-register",
 	focusChange: "mtk-login-focus"
     }
 };
-
-// FILL VALUES WHEN TESTING
-if (wc.testing) {
-    wc.timeout(function(){
-	$("#mtk-email").attr("value", "mel@google.com");
-	$("#mtk-password").attr("value", "test");
-    }, 200, 1);
-}
