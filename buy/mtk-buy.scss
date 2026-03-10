@@ -73,8 +73,8 @@ mtk-buy.mtk-buy {
   &__dialog {
     position:      relative;
     background:    $color-white;                        // nala → #ffffff
-    border-radius: $radius-lg;                          // nala → 16px
-    box-shadow:    $shadow-lg;                          // nala → 0 10px 20px … / 0 6px 6px …
+    border-radius: $radius-sm;                          // nala → 16px
+    box-shadow:    $shadow-sm;                          // nala → 0 10px 20px … / 0 6px 6px …
     width:         100%;
     max-width:     $_buy-dialog-max-width;              // local → $bp-xs (480px)
     outline:       none;
