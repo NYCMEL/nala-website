@@ -104,14 +104,16 @@ body {
   color: #212121;
   background-color: #fafafa;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  margin-top: 80px; }
 
 a {
   color: #1976d2;
   text-decoration: none;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
-  a:hover {
-    text-decoration: underline; }
+
+a:hover {
+  text-decoration: underline; }
 
 .material-icons {
   font-family: "Material Icons";
@@ -154,39 +156,47 @@ h1 {
 h1.title {
   position: relative;
   padding-bottom: 0.5rem; }
-  h1.title::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    width: 30%;
-    height: 3px;
-    background-color: gold;
-    transform: translateX(-50%); }
+
+h1.title::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 30%;
+  height: 3px;
+  background-color: gold;
+  transform: translateX(-50%); }
 
 .mtk-certification {
   background: #ffffff !important;
   border-radius: 8px; }
-  .mtk-certification .mtk-title {
-    font-weight: 700;
-    color: #212121; }
-  .mtk-certification .mtk-subtitle {
-    color: #5f6368; }
-  .mtk-certification .mtk-icon {
-    font-size: 32px;
-    color: #1976d2;
-    margin-bottom: 12px; }
-  .mtk-certification .mtk-card-title {
-    font-weight: 600;
-    margin-bottom: 8px; }
-  .mtk-certification .mtk-card-desc {
-    color: #5f6368;
-    font-size: 0.95rem; }
-  .mtk-certification .mtk-list {
-    margin-top: 16px;
-    padding-left: 0;
-    list-style: none; }
-    .mtk-certification .mtk-list li::before {
-      content: "✓";
-      color: #1976d2;
-      margin-right: 8px; }
+
+.mtk-certification .mtk-title {
+  font-weight: 700;
+  color: #212121; }
+
+.mtk-certification .mtk-subtitle {
+  color: #5f6368; }
+
+.mtk-certification .mtk-icon {
+  font-size: 32px;
+  color: #1976d2;
+  margin-bottom: 12px; }
+
+.mtk-certification .mtk-card-title {
+  font-weight: 600;
+  margin-bottom: 8px; }
+
+.mtk-certification .mtk-card-desc {
+  color: #5f6368;
+  font-size: 0.95rem; }
+
+.mtk-certification .mtk-list {
+  margin-top: 16px;
+  padding-left: 0;
+  list-style: none; }
+
+.mtk-certification .mtk-list li::before {
+  content: "✓";
+  color: #1976d2;
+  margin-right: 8px; }
