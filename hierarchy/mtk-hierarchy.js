@@ -1485,6 +1485,61 @@ class MTKHierarchy {
 
 // ─── Initialization ───────────────────────────────────────────────────────────
 
+function buildLocalLessonMap(parts) {
+    const map = new Map();
+    if (!Array.isArray(parts)) return map;
+
+    parts.forEach(part => {
+        (part.modules || []).forEach(module => {
+            (module.lessons || []).forEach(lesson => {
+                const lessonNo = Number(lesson.lesson_no);
+                if (!Number.isFinite(lessonNo)) return;
+
+                const videoDescriptions = (lesson.resources || [])
+                    .filter(r => r && r.type === 'video')
+                    .map(r => (r.description || '').trim())
+                    .filter(Boolean);
+
+                map.set(lessonNo, {
+                    title: (lesson.title || '').trim(),
+                    videoDescriptions
+                });
+            });
+        });
+    });
+
+    return map;
+}
+
+function overlayTitlesFromLocalConfig(sessionParts, localParts) {
+    if (!Array.isArray(sessionParts) || !Array.isArray(localParts)) return sessionParts;
+
+    const lessonMap = buildLocalLessonMap(localParts);
+    if (!lessonMap.size) return sessionParts;
+
+    sessionParts.forEach(part => {
+        (part.modules || []).forEach(module => {
+            (module.lessons || []).forEach(lesson => {
+                const lessonNo = Number(lesson.lesson_no);
+                if (!Number.isFinite(lessonNo)) return;
+
+                const local = lessonMap.get(lessonNo);
+                if (!local) return;
+
+                if (local.title) lesson.title = local.title;
+
+                const remoteVideoResources = (lesson.resources || []).filter(r => r && r.type === 'video');
+                remoteVideoResources.forEach((res, idx) => {
+                    const localDescription = local.videoDescriptions[idx];
+                    if (localDescription) res.description = localDescription;
+                });
+            });
+        });
+    });
+
+    return sessionParts;
+}
+
 if (wc.testing) {
     // LOCAL MODE - Use window.app.hierarchy
     if (typeof window.app !== 'undefined' && window.app.hierarchy) {
@@ -1506,8 +1561,12 @@ if (wc.testing) {
     // REMOTE MODE
     wc.log("MTKHierarchy: Remote mode - fetching curriculum from API");
 
+    const localHierarchy = (window.app && Array.isArray(window.app.hierarchy)) ? window.app.hierarchy : null;
+    const remoteHierarchy = Array.isArray(wc.session.hierarchy.parts) ? wc.session.hierarchy.parts : [];
+    const mergedHierarchy = overlayTitlesFromLocalConfig(remoteHierarchy, localHierarchy);
+
     window.app = window.app || {};
-    window.app.hierarchy = wc.session.hierarchy.parts;
+    window.app.hierarchy = mergedHierarchy;
 
     wc.log("MTKHierarchy: Curriculum loaded");
     wc.log("testing:", wc.testing, window.app.hierarchy);
