@@ -619,6 +619,19 @@
                                                                                     "access":  false
                                                                                 }
                                                                             ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  29,
+                                                              "title":  "Introduction to Key Extraction",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 29 - Introduction to Key Extraction",
+                                                                                    "url":  "https://player.vimeo.com/video/827173408",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
                                                           }
                                                       ],
                                           "quiz":  {
@@ -893,7 +906,20 @@
                                                               "resources":  [
                                                                                 {
                                                                                     "description": "Lesson 44 - How and where to begin advertising as a Locksmith",
-                                                                                    "url":  "https://player.vimeo.com/video/827173770",
+                                                                                    "url":  "https://player.vimeo.com/video/827173787",
+                                                                                    "type":  "video",
+                                                                                    "access":  false
+                                                                                }
+                                                                            ]
+                                                          },
+                                                          {
+                                                              "lesson_no":  45,
+                                                              "title":  "Locksmith Licensing",
+                                                              "access":  false,
+                                                              "resources":  [
+                                                                                {
+                                                                                    "description":  "Lesson 45 - Locksmith Licensing",
+                                                                                    "url":  "https://player.vimeo.com/video/827173408",
                                                                                     "type":  "video",
                                                                                     "access":  false
                                                                                 }

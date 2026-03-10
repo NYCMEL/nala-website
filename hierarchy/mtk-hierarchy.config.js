@@ -687,6 +687,22 @@ window.app = {
 				    "type": "photo"
 				}
 			    ]
+			},
+			{
+			    "lesson_no": 29,
+			    "title": "Introduction to Key Extraction",
+			    "access": false,
+			    "badge": {
+				"text": "Unlocked",
+				"color": "green"
+			    },
+			    "resources": [
+				{
+				    "description": "Lesson 29 - Introduction to Key Extraction",
+				    "url": "https://vimeo.com/827173408",
+				    "type": "video"
+				}
+			    ]
 			}
 		    ],
 		    "quiz": {
@@ -1033,7 +1049,23 @@ window.app = {
 			    "resources": [
 				{
 				    "description": "Lesson 44 - How and where to begin advertising as a Locksmith",
-				    "url": "https://vimeo.com/827173770",
+				    "url": "https://vimeo.com/827173787",
+				    "type": "video"
+				}
+			    ]
+			},
+			{
+			    "lesson_no": 45,
+			    "title": "Locksmith Licensing",
+			    "access": false,
+			    "badge": {
+				"text": "Unlocked",
+				"color": "green"
+			    },
+			    "resources": [
+				{
+				    "description": "Lesson 45 - Locksmith Licensing",
+				    "url": "https://vimeo.com/827173408",
 				    "type": "video"
 				}
 			    ]
