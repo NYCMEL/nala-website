@@ -22,6 +22,9 @@ wc.emsg = function (id) {
 };
 // let msg = wc.emsg(1000);
 
+wc.msg = wc.msg || {};
+wc.msg.lessonLocked = 'Please finish the current lesson video before moving on to the next lesson.';
+
 /************************************************************
  * CONFIG INACTIVITY TIMER
    SEE wc.login FOR USAGE
@@ -1536,4 +1539,5 @@ wc.submitQuiz = function (quizSessionId, moduleId, answersMap, callback) {
         }
     });
 };
+
 

@@ -575,6 +575,17 @@ class MTKHierarchy {
             if (typeof wc !== 'undefined') {
                 wc.warn("MTKHierarchy: Lesson is disabled (access=false)");
             }
+            if (typeof MTKMsgs !== 'undefined') {
+                MTKMsgs.show({
+                    type: 'info',
+                    icon: 'info',
+                    message: (typeof wc !== 'undefined' && wc.msg && wc.msg.lessonLocked)
+                        ? wc.msg.lessonLocked
+                        : 'Please finish the current lesson video before moving on to the next lesson.',
+                    closable: true,
+                    timer: 0
+                });
+            }
             return;
         }
 
@@ -910,6 +921,17 @@ class MTKHierarchy {
         if (resourceElement.classList.contains('mtk-resource--disabled')) {
             if (typeof wc !== 'undefined') {
                 wc.warn("MTKHierarchy: Resource is disabled (access=false)");
+            }
+            if (typeof MTKMsgs !== 'undefined') {
+                MTKMsgs.show({
+                    type: 'info',
+                    icon: 'info',
+                    message: (typeof wc !== 'undefined' && wc.msg && wc.msg.lessonLocked)
+                        ? wc.msg.lessonLocked
+                        : 'Please finish the current lesson video before moving on to the next lesson.',
+                    closable: true,
+                    timer: 0
+                });
             }
             return;
         }
