@@ -1191,6 +1191,13 @@ class MTKHierarchy {
             wc.log("MTKHierarchy: Displaying resource", resource);
         }
 
+        if (resource && resource.type === 'page' && resource.url === 'final') {
+            if (typeof wc !== 'undefined' && wc.pages) {
+                wc.pages.show('final');
+            }
+            return;
+        }
+
         const allResources = this.getAllResourcesForCurrentLesson(resource);
         const videos = allResources.filter(r => r.type === 'video' && r.access);
         const photos = allResources.filter(r => r.type === 'photo' && r.access);
@@ -1652,5 +1659,6 @@ function subscribeToEvents() {
 }
 
 })(); // end IIFE — prevents MTKHierarchy class from polluting global scope
+
 
 
