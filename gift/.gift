@@ -1,0 +1,49 @@
+FORGET ALL PREVIOUS CONTEXT for mtk-gift and remember this as mtk-gift forever
+
+Create a reusable UI gift named mtk-gift using:
+- HTML
+- SCSS
+- Vanilla JavaScript
+- Bootstrap 5 (layout only)
+- Modern Material Design, Material Design icons and styles
+- Always create a JS class for mtk-gift and initialize it inside the JS file itself
+
+Rules:
+- The gift is wrapped in a display:block element <mtk-gift class="mtk-gift">.
+- The root element uses .mtk-gift.
+- All styles must be scoped to .mtk-gift.
+- No global styles or IDs.
+- publish click events using wc.publish
+- subscribe to all 4-mtk-gift everns using wc.subscribe
+- create a onMessage function to be passed to wc.subscribe function
+
+Data:
+- The gift is JSON driven.
+  - any and all data must come from mtk-gift.config.js file
+
+Restrictions:
+- No frameworks.
+- No Bootstrap.
+- No external libraries.
+- Vanilla Javascript
+
+Accessibility:
+- Use semantic HTML.
+- Keyboard accessible.
+- Visible focus states.
+- ADA compliant
+
+Output! Create exactly these files:
+- mtk-gift.config.js (JSON FILE)
+- mtk-gift.scss (use: @import "../css/nala.scss";
+- mtk-gift.html
+- mtk-gift.js
+- A minimal index.html file
+
+Behavior:
+- MUST WAIT for element to be available inside DOM, since i will be using <wc-include> for dynamic inclusion
+- all published (wc.publish) messages should be logged using wc.log to console before being published
+
+make a short material design form with tile "Your Free Lockout Kit"
+create a USA based address with label: "where do you want us to send your free Lockout Kit?"
+Add a Submit and cancel button each %50 width and side-by-side

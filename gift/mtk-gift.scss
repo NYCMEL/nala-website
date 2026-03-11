@@ -1,0 +1,384 @@
+@import "../css/nala.scss";
+
+// ─────────────────────────────────────────────
+// mtk-gift — Material Design Gift Form
+// Scoped entirely to mtk-gift / .mtk-gift
+// All tokens sourced from nala.scss
+// ─────────────────────────────────────────────
+
+mtk-gift,
+.mtk-gift {
+  display: block;
+  font-family: $font-primary;
+  color: $color-text-primary;
+
+  // ── Card ────────────────────────────────────
+  .mtk-gift__card {
+    background: $color-white;
+    border-radius: $radius-xs;
+    box-shadow: $shadow-md;
+    overflow: hidden;
+    max-width: 560px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  // ── Header ──────────────────────────────────
+  .mtk-gift__header {
+    background: $color-primary;
+    padding: $spacing-xl $spacing-xl $spacing-lg;
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, $color-overlay-white-08 0%, transparent 60%);
+      pointer-events: none;
+    }
+  }
+
+  .mtk-gift__header-icon {
+    background: $color-overlay-white-16;
+    border-radius: $radius-circle;
+    width: 48px;
+    height: 48px;
+    @include flex-center;
+    flex-shrink: 0;
+
+    .material-icons {
+      color: $color-white;
+      font-size: $font-size-3xl;
+    }
+  }
+
+  .mtk-gift__header-text {
+    flex: 1;
+  }
+
+  .mtk-gift__title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-medium;
+    color: $color-white;
+    margin: 0 0 2px;
+    line-height: $line-height-tight;
+    letter-spacing: 0.01em;
+  }
+
+  .mtk-gift__subtitle {
+    font-size: $font-size-sm;
+    color: $color-footer-text;
+    margin: 0;
+    line-height: $line-height-base;
+  }
+
+  // ── Body ────────────────────────────────────
+  .mtk-gift__body {
+    padding: $spacing-xl;
+  }
+
+  .mtk-gift__address-label {
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
+    color: $color-text-muted;
+    margin-bottom: $spacing-lg;
+    @include flex-vcenter;
+    gap: $spacing-xs;
+    line-height: $line-height-base;
+
+    .material-icons {
+      font-size: $font-size-lg;
+      color: $color-primary;
+    }
+  }
+
+  // ── Grid Row ────────────────────────────────
+  .mtk-gift__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-lg;
+    margin-bottom: 0;
+
+    & + .mtk-gift__row {
+      margin-top: $spacing-lg;
+    }
+  }
+
+  // ── Field Wrapper ───────────────────────────
+  .mtk-gift__field {
+    position: relative;
+    flex: 1 1 100%;
+
+    &--half {
+      flex: 1 1 calc(50% - #{$spacing-sm});
+      min-width: 120px;
+    }
+
+    &--quarter {
+      flex: 1 1 calc(25% - #{$spacing-md});
+      min-width: 90px;
+    }
+  }
+
+  // ── Material Outlined Text Field ────────────
+  .mtk-gift__input-wrap {
+    position: relative;
+    height: 56px;
+    overflow: visible;
+  }
+
+  .mtk-gift__input,
+  .mtk-gift__select {
+    width: 100%;
+    height: 56px;
+    font-family: $font-primary;
+    font-size: $font-size-lg;
+    color: $color-text-primary;
+    background: $color-white;
+    border: 1px solid $color-border;
+    border-radius: $radius-xs;
+    outline: none;
+    transition: $transition-fast;
+    appearance: none;
+    -webkit-appearance: none;
+    box-sizing: border-box;
+    position: relative;
+    z-index: $z-base;
+
+    &:hover {
+      border-color: $color-text-primary;
+    }
+
+    &:focus {
+      border-color: $color-primary;
+      border-width: 2px;
+    }
+
+    &:focus + .mtk-gift__label,
+    &:not(:placeholder-shown) + .mtk-gift__label {
+      top: 6px;
+      font-size: $font-size-xs;
+      color: $color-primary;
+      letter-spacing: 0.025em;
+    }
+
+    &.is-invalid {
+      border-color: $color-error-dark;
+
+      & + .mtk-gift__label {
+        color: $color-error-dark;
+      }
+    }
+  }
+
+  .mtk-gift__input {
+    padding: $spacing-lg $spacing-lg $spacing-sm 48px;
+  }
+
+  .mtk-gift__select {
+    padding: 0 36px 0 48px;
+    height: 56px;
+    cursor: pointer;
+
+    &.has-value + .mtk-gift__label {
+      top: 6px;
+      font-size: $font-size-xs;
+      color: $color-primary;
+      letter-spacing: 0.025em;
+    }
+
+    option[value=""] {
+      color: $color-text-secondary;
+    }
+  }
+
+  // Floating label
+  .mtk-gift__label {
+    position: absolute;
+    left: 48px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: $font-size-lg;
+    color: $color-text-muted;
+    pointer-events: none;
+    z-index: 2;
+    transition: $transition-fast;
+    background: $color-white;
+    padding: 0 $spacing-xs;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  // Leading icon inside field
+  .mtk-gift__field-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $color-text-secondary;
+    pointer-events: none;
+    z-index: 0;
+    transition: $transition-fast;
+    display: flex;
+
+    .material-icons {
+      font-size: $font-size-2xl;
+    }
+  }
+
+  // Select arrow
+  .mtk-gift__select-arrow {
+    position: absolute;
+    right: $spacing-md;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 0;
+    color: $color-text-muted;
+
+    .material-icons {
+      font-size: $font-size-2xl;
+    }
+  }
+
+  // Required indicator
+  .mtk-gift__required {
+    color: $color-error-dark;
+    margin-left: 2px;
+  }
+
+  // Validation error text
+  .mtk-gift__field-error {
+    display: none;
+    font-size: $font-size-xs;
+    color: $color-error-dark;
+    margin-top: $spacing-xs;
+    padding-left: $spacing-xs;
+    align-items: center;
+    gap: $spacing-xs;
+
+    .material-icons {
+      font-size: $font-size-base;
+    }
+
+    &.is-visible {
+      display: flex;
+    }
+  }
+
+  // ── Divider ─────────────────────────────────
+  .mtk-gift__divider {
+    border: none;
+    border-top: 1px solid $color-divider;
+    margin: $spacing-xl 0 $spacing-lg;
+  }
+
+  // ── Action Buttons ──────────────────────────
+  .mtk-gift__actions {
+    display: flex;
+    gap: $spacing-md;
+    align-items: center;
+  }
+
+  .mtk-gift__btn {
+    @extend %btn-base;
+    flex: 1;
+    min-width: 0;
+
+    &--submit {
+      @extend %btn-primary;
+      flex: 1;
+    }
+  }
+
+  // Cancel — btn-link style
+  .mtk-gift__btn.btn-link {
+    flex: 1;
+    background: transparent;
+    color: $color-primary;
+    border: none;
+    box-shadow: none;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 3px;
+    padding: 0 $spacing-md;
+    border-radius: $radius-xs;
+    transition: $transition-fast;
+
+    &:hover {
+      background: rgba($color-primary, 0.08);
+      text-decoration-color: $color-primary;
+    }
+
+    @include focus-ring($color-primary);
+  }
+
+  // ── Snackbar ─────────────────────────────────
+  .mtk-gift__snackbar {
+    display: none;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-top: $spacing-lg;
+    padding: $spacing-md $spacing-lg;
+    border-radius: $radius-xs;
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
+    line-height: $line-height-base;
+
+    .material-icons {
+      font-size: $font-size-xl;
+      flex-shrink: 0;
+    }
+
+    &.is-visible {
+      display: flex;
+    }
+
+    &--success {
+      background: lighten($color-success, 48%);
+      color: $color-success-darker;
+      border: 1px solid lighten($color-success, 30%);
+      .material-icons { color: $color-success-darker; }
+    }
+
+    &--error {
+      background: lighten($color-error, 38%);
+      color: $color-error-dark;
+      border: 1px solid lighten($color-error, 22%);
+      .material-icons { color: $color-error-dark; }
+    }
+
+    &--info {
+      background: lighten($color-primary, 48%);
+      color: $color-primary-dark;
+      border: 1px solid lighten($color-primary, 32%);
+      .material-icons { color: $color-primary; }
+    }
+  }
+
+  // ── Focus ring (ADA) ────────────────────────
+  *:focus-visible {
+    outline: 3px solid rgba($color-primary, 0.35);
+    outline-offset: 2px;
+  }
+
+  // ── Responsive tweaks ────────────────────────
+  @media (max-width: $bp-xs) {
+    .mtk-gift__field--quarter,
+    .mtk-gift__field--half {
+      flex: 1 1 100%;
+    }
+
+    .mtk-gift__header {
+      padding: $spacing-lg $spacing-lg $spacing-md;
+    }
+
+    .mtk-gift__body {
+      padding: $spacing-lg;
+    }
+  }
+}
