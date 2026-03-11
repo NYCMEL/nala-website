@@ -1,106 +1,68 @@
-// MTK Syllabus - Material Design + Bootstrap 5
-// SCSS Source File - DO NOT COMPILE
+@import "../css/nala.scss";
 
-// Material Design Variables
-$bg-white: #ffffff;
-$bg-light: #fafafa;
-$text-primary: #1a1a1a;
-$text-secondary: rgba(0, 0, 0, 0.60);
-$text-disabled: rgba(0, 0, 0, 0.38);
-
-// Timing functions
-$motion-easing-standard: cubic-bezier(0.4, 0.0, 0.2, 1);
-$motion-duration-short: 200ms;
-
-// MTK Syllabus Component
 .mtk-syllabus {
-  background-color: $bg-white;
+  background-color: $color-white;
   padding: 0;
-  
-  // Section (Course Level)
+
   &__section {
-    margin-bottom: 48px;
-    
-    &:last-child {
-      margin-bottom: 0;
-    }
+    margin-bottom: $spacing-3xl;
+    &:last-child { margin-bottom: 0; }
   }
-  
+
   &__section-title {
-    font-size: 28px;
-    font-weight: 400;
-    color: $text-primary;
-    margin: 0 0 24px 0;
+    font-size: $font-size-4xl;
+    font-weight: $font-weight-normal;
+    color: $color-text-primary-alt;
+    margin: 0 0 $spacing-xl 0;
     line-height: 1.3;
     letter-spacing: -0.5px;
   }
-  
-  // Lessons List
-  &__lessons {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 0 0;
-  }
-  
+
+  &__lessons { list-style: none; padding: 0; margin: 0; }
+
   &__lesson {
     margin-bottom: 0;
     position: relative;
-    padding-left: 24px;
-    
+    padding-left: $spacing-xl;
+
     &::before {
       content: '•';
       position: absolute;
       left: 0;
-      color: $text-primary;
-      font-size: 20px;
+      color: $color-text-primary-alt;
+      font-size: $font-size-2xl;
       line-height: 1.6;
     }
   }
-  
+
   &__lesson-link {
     display: inline-block;
-    padding: 4px 0;
+    padding: $spacing-xs 0;
     text-decoration: none;
-    color: $text-primary;
+    color: $color-text-primary-alt;
     cursor: pointer;
-    transition: color $motion-duration-short $motion-easing-standard;
-    
-    &:hover {
-      color: $text-secondary;
-    }
+    transition: color $duration-short $ease-standard;
+
+    &:hover { color: $color-text-60; }
   }
-  
+
   &__lesson-title {
-    font-size: 18px;
-    font-weight: 400;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-normal;
     margin: 0;
-    line-height: 1.6;
+    line-height: $line-height-loose;
     letter-spacing: -0.2px;
   }
-  
-  // Responsive adjustments
-  @media (max-width: 767px) {
-    &__section {
-      margin-bottom: 36px;
-    }
-    
-    &__section-title {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-    
-    &__lesson {
-      padding-left: 20px;
-    }
-    
-    &__lesson-title {
-      font-size: 16px;
-    }
+
+  @media (max-width: ($bp-md - 1)) {
+    &__section       { margin-bottom: 36px; }
+    &__section-title { font-size: $font-size-3xl; margin-bottom: $spacing-xl; }
+    &__lesson        { padding-left: $spacing-xl; }
+    &__lesson-title  { font-size: $font-size-lg; }
   }
 }
 
-// Global body styles
 body {
-  background-color: $bg-light;
-  color: $text-primary;
+  background-color: $color-bg-lighter;
+  color: $color-text-primary-alt;
 }

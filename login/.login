@@ -50,3 +50,11 @@ do not navigate away from this screen
 wc.publish on submit and click on links
 on submit, fully validate fields before wc.publish call and DO NOT navigate anywhere
 MAX-width should 500px and and be placed at the center of screen with a margin of 30px 
+
+when "Forgot Password" is clicked, replace content of this screen with:
+- input field with label "Please provide email used to login with NALA"
+- add this text below the input field:
+  "After submitting your email, we will send you a link to update/reset your password"
+
+- a submit button. wc.publish the message and include the email provided
+- a cancel button. this should replace the screen with original login screen
