@@ -97,14 +97,21 @@ class Pages extends HTMLElement {
     show(page) {
         wc.group("mtk-pages.show:", page);
 
-	// FIX FOOTER TO BOTTOM
-	checkFooter()
+	switch(page) 
+	{
+	    case "login":
+	    case "register":
+	    case "dashboard":
+		wc.fixFooter();
+		break;
+
+	    default:
+		wc.unfixFooter();
+		break;
+	}
 
 	try {
 	    headerSelect("mtk-header-" + page);
-
-	    // FIX FOOTER TO BOTTOM ON SMALL PAGES
-	    //checkFooter();
 	} catch(e) {
 	    //wc.error(e.name + ' > ' + e.message);
 	}
@@ -256,3 +263,4 @@ window.customElements.define('mtk-pages', Pages);
 wc.timeout(function(){
     wc.pages = document.getElementById('mtk-pages');
 }, 300, 1);
+
