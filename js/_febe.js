@@ -168,7 +168,6 @@ class _febe {
     //////////////////////////////////////////////////////////////////
     handleRegister() {
         const maxAttempts = 15;
-        let hasRefreshed = false;
 
         const tryShowRegister = (attempt = 0) => {
             const pagesRef = wc.pages || document.getElementById("mtk-pages");
@@ -182,10 +181,7 @@ class _febe {
 
             wc.pages = pagesRef;
 
-            if (!hasRefreshed && typeof wc.pages.refresh === "function") {
-                hasRefreshed = true;
-                wc.pages.refresh("register");
-            } else {
+            if (attempt === 0) {
                 wc.pages.show("register");
             }
 
@@ -200,7 +196,6 @@ class _febe {
             if (page) {
                 page.style.display = "block";
             }
-
 
             if (typeof wc.unfixFooter === "function") {
                 wc.unfixFooter();
