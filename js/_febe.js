@@ -201,6 +201,10 @@ class _febe {
                 page.style.display = "block";
             }
 
+
+            if (typeof wc.unfixFooter === "function") {
+                wc.unfixFooter();
+            }
             window.scrollTo({ top: 0, behavior: "auto" });
         };
 

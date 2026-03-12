@@ -100,8 +100,7 @@ class Pages extends HTMLElement {
 	switch(page) 
 	{
 	    case "login":
-	    case "register":
-	    case "dashboard":
+        case "dashboard":
 		wc.fixFooter();
 		break;
 
@@ -263,4 +262,3 @@ window.customElements.define('mtk-pages', Pages);
 wc.timeout(function(){
     wc.pages = document.getElementById('mtk-pages');
 }, 300, 1);
-
