@@ -108,3 +108,52 @@ h1.title::after {
     height: 3px;
     background-color: gold;
     transform: translateX(-50%); }
+
+
+:root {
+  --nala-gold: #c9a64a;
+  --nala-gold-dark: #8c6a16;
+  --nala-gold-light: #f2de9c;
+  --nala-ink: #131313;
+  --nala-ink-soft: #262626;
+  --nala-paper: #fffdf8;
+  --nala-paper-soft: #f6f1e5;
+  --nala-border: #d8c799;
+  --nala-shadow-sm: 0 6px 14px rgba(0, 0, 0, 0.08);
+  --nala-shadow-md: 0 12px 30px rgba(0, 0, 0, 0.12);
+  --nala-shadow-lg: 0 18px 42px rgba(0, 0, 0, 0.16);
+}
+
+body {
+  color: var(--nala-ink);
+  background: radial-gradient(circle at top, rgba(242, 222, 156, 0.16) 0%, rgba(255, 253, 248, 0.98) 24%, rgba(246, 241, 229, 0.96) 100%);
+}
+.course-card {
+  border: 1px solid var(--nala-border);
+  border-radius: 18px;
+  background: rgba(255, 253, 248, 0.96);
+  box-shadow: var(--nala-shadow-sm);
+}
+
+h1 {
+  font-weight: 700;
+  color: var(--nala-ink);
+  letter-spacing: -0.02em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+h1.title::after {
+  background: linear-gradient(90deg, var(--nala-gold-dark) 0%, var(--nala-gold) 100%);
+}
+
+a {
+  color: var(--nala-gold-dark);
+  text-decoration: none;
+  transition: color 200ms ease, opacity 200ms ease;
+}
+
+a:hover {
+  color: var(--nala-gold);
+  text-decoration: none;
+}
+
