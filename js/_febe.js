@@ -164,39 +164,44 @@ class _febe {
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
     handleRegister() {
-	const tryShowRegister = (attempt = 0) => {
-	    const maxAttempts = 12;
-	    const pagesRef = wc.pages || document.getElementById("mtk-pages");
+        const tryShowRegister = (attempt = 0) => {
+            const maxAttempts = 12;
+            const pagesRef = wc.pages || document.getElementById("mtk-pages");
 
-	    if (!pagesRef || typeof pagesRef.show !== "function") {
-		if (attempt < maxAttempts) {
-		    wc.timeout(() => tryShowRegister(attempt + 1), 120, 1);
-		}
-		return;
-	    }
+            if (!pagesRef || typeof pagesRef.refresh !== "function") {
+                if (attempt < maxAttempts) {
+                    wc.timeout(() => tryShowRegister(attempt + 1), 120, 1);
+                }
+                return;
+            }
 
-	    wc.pages = pagesRef;
-	    wc.pages.show("register");
+            wc.pages = pagesRef;
 
-	    const page = document.querySelector('[mtk-pages-id="register"]');
-	    const pageHasContent = page && page.innerHTML.trim() !== "";
+            const page = document.querySelector('[mtk-pages-id="register"]');
+            const form = document.querySelector("#mtk-register");
+            const pageHasContent = page && page.innerHTML.trim() !== "";
+            const shouldRefresh = !pageHasContent || !form || attempt === 0;
 
-	    if (!pageHasContent) {
-		wc.pages.refresh("register");
-	    }
+            if (shouldRefresh) {
+                wc.pages.refresh("register");
+            } else {
+                wc.pages.show("register");
+            }
 
-	    const refreshedPage = document.querySelector('[mtk-pages-id="register"]');
-	    const refreshedHasContent = refreshedPage && refreshedPage.innerHTML.trim() !== "";
+            const refreshedPage = document.querySelector('[mtk-pages-id="register"]');
+            const refreshedForm = document.querySelector("#mtk-register");
+            const refreshedHasContent = refreshedPage && refreshedPage.innerHTML.trim() !== "";
 
-	    if (!refreshedHasContent && attempt < maxAttempts) {
-		wc.timeout(() => tryShowRegister(attempt + 1), 150, 1);
-		return;
-	    }
+            if ((!refreshedHasContent || !refreshedForm) && attempt < maxAttempts) {
+                wc.timeout(() => tryShowRegister(attempt + 1), 150, 1);
+                return;
+            }
 
-	    $('[mtk-pages-id="register"]').css("display", "block");
-	};
+            $("[mtk-pages-id=\"register\"]").css("display", "block");
+            window.scrollTo({ top: 0, behavior: "auto" });
+        };
 
-	tryShowRegister(0);
+        tryShowRegister(0);
     }
     handleForgotPassword() {
 	const emailInput = document.querySelector("#mtk-email");
