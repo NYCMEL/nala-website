@@ -135,7 +135,7 @@ class Pages extends HTMLElement {
         allPages.forEach(el => el.style.display = "none");
 
         // GET TARGET PAGE ELEMENT
-        const target = this.querySelector(`.${page}`);
+        const target = this.querySelector(`[mtk-pages-id="${page}"]`);
 
         if (!target) {
             wc.warn("mtk-pages: DOM element not found for page:", page);
@@ -176,7 +176,7 @@ class Pages extends HTMLElement {
     refresh(page) {
         wc.group("mtk-pages.refresh:", page);
 
-        const target = this.querySelector(`.${page}`);
+        const target = this.querySelector(`[mtk-pages-id="${page}"]`);
         if (target) target.innerHTML = "";
 
         this.show(page);
@@ -262,3 +262,4 @@ window.customElements.define('mtk-pages', Pages);
 wc.timeout(function(){
     wc.pages = document.getElementById('mtk-pages');
 }, 300, 1);
+
