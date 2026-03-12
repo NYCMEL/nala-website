@@ -246,3 +246,70 @@ h1.title::after {
 .mtk-path .btn-path:hover {
   background-color: #1e40af;
   transform: translateY(-1px); }
+
+/* Matte NALA pricing overrides */
+.mtk-path {
+  padding: 4rem 0;
+  background: linear-gradient(180deg, #f7f4ed 0%, #fffdfa 50%, #f4eee2 100%) !important;
+}
+
+.mtk-path h2,
+.mtk-path .price,
+.mtk-path li,
+.mtk-path .mtk-card h3 {
+  color: var(--nala-ink) !important;
+}
+
+.mtk-path p.lead,
+.mtk-path .period,
+.mtk-path .mtk-card p {
+  color: #6b6254 !important;
+}
+
+.mtk-path .mtk-card {
+  background: rgba(255, 253, 249, 0.98) !important;
+  border: 1px solid var(--nala-border) !important;
+  border-radius: 22px !important;
+  box-shadow: var(--nala-shadow-sm) !important;
+  overflow: hidden;
+}
+
+.mtk-path .mtk-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--nala-shadow-md) !important;
+}
+
+.mtk-path .mtk-popular {
+  outline: 2px solid var(--nala-gold-dark) !important;
+  box-shadow: var(--nala-shadow-md) !important;
+}
+
+.mtk-path .mtk-badge {
+  background: linear-gradient(180deg, var(--nala-gold-dark) 0%, #9f7b2a 100%) !important;
+  color: #fffdf8 !important;
+  border-radius: 999px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em;
+  box-shadow: 0 10px 18px rgba(125, 98, 32, 0.22);
+}
+
+.mtk-path li .check {
+  color: #2f7a45 !important;
+  font-weight: 700;
+}
+
+.mtk-path .btn-path {
+  background: linear-gradient(180deg, var(--nala-gold-dark) 0%, #9c7828 100%) !important;
+  color: #fffdf8 !important;
+  border: 1px solid rgba(125, 98, 32, 0.45);
+  border-radius: 16px !important;
+  box-shadow: var(--nala-shadow-sm);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.mtk-path .btn-path:hover {
+  background: linear-gradient(180deg, var(--nala-gold) 0%, #cfaa4d 100%) !important;
+  color: #171717 !important;
+  transform: translateY(-2px);
+}
