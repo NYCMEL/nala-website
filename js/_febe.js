@@ -163,12 +163,17 @@ class _febe {
     //////////////////////////////////////////////////////////////////
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////
+    ///// HANDLERS
+    //////////////////////////////////////////////////////////////////
     handleRegister() {
+        const maxAttempts = 15;
+        let hasRefreshed = false;
+
         const tryShowRegister = (attempt = 0) => {
-            const maxAttempts = 12;
             const pagesRef = wc.pages || document.getElementById("mtk-pages");
 
-            if (!pagesRef || typeof pagesRef.refresh !== "function") {
+            if (!pagesRef || typeof pagesRef.show !== "function") {
                 if (attempt < maxAttempts) {
                     wc.timeout(() => tryShowRegister(attempt + 1), 120, 1);
                 }
@@ -177,27 +182,25 @@ class _febe {
 
             wc.pages = pagesRef;
 
-            const page = document.querySelector('[mtk-pages-id="register"]');
-            const form = document.querySelector("#mtk-register");
-            const pageHasContent = page && page.innerHTML.trim() !== "";
-            const shouldRefresh = !pageHasContent || !form || attempt === 0;
-
-            if (shouldRefresh) {
+            if (!hasRefreshed && typeof wc.pages.refresh === "function") {
+                hasRefreshed = true;
                 wc.pages.refresh("register");
             } else {
                 wc.pages.show("register");
             }
 
-            const refreshedPage = document.querySelector('[mtk-pages-id="register"]');
-            const refreshedForm = document.querySelector("#mtk-register");
-            const refreshedHasContent = refreshedPage && refreshedPage.innerHTML.trim() !== "";
+            const page = document.querySelector('[mtk-pages-id="register"]');
+            const form = page ? page.querySelector("#mtk-register") : null;
 
-            if ((!refreshedHasContent || !refreshedForm) && attempt < maxAttempts) {
-                wc.timeout(() => tryShowRegister(attempt + 1), 150, 1);
+            if (!form && attempt < maxAttempts) {
+                wc.timeout(() => tryShowRegister(attempt + 1), 200, 1);
                 return;
             }
 
-            $("[mtk-pages-id=\"register\"]").css("display", "block");
+            if (page) {
+                page.style.display = "block";
+            }
+
             window.scrollTo({ top: 0, behavior: "auto" });
         };
 
