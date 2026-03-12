@@ -157,3 +157,87 @@ a:hover {
   text-decoration: none;
 }
 
+
+/* Matte NALA theme overrides */
+:root {
+  --nala-gold: #b8953b;
+  --nala-gold-dark: #7d6220;
+  --nala-gold-light: #e4d2a2;
+  --nala-ink: #171717;
+  --nala-ink-soft: #2a2a2a;
+  --nala-paper: #fffdf9;
+  --nala-paper-soft: #f6f1e6;
+  --nala-border: #d4c294;
+  --nala-shadow-sm: 0 6px 16px rgba(0, 0, 0, 0.08);
+  --nala-shadow-md: 0 14px 34px rgba(0, 0, 0, 0.12);
+  --nala-shadow-lg: 0 20px 42px rgba(0, 0, 0, 0.14);
+}
+
+body {
+  color: var(--nala-ink);
+  background: linear-gradient(180deg, #f7f4ed 0%, #fffdfa 24%, #f5efe2 100%);
+}
+
+.course-card {
+  border: 1px solid var(--nala-border);
+  border-radius: 18px;
+  background: rgba(255, 253, 249, 0.98);
+  box-shadow: var(--nala-shadow-sm);
+}
+
+h1 {
+  color: var(--nala-ink);
+  text-shadow: none;
+}
+
+h1.title::after {
+  background: var(--nala-gold);
+}
+
+.btn.btn-primary,
+button.btn-primary,
+.wc-md-btn-primary,
+.submit-btn,
+.mtk-login form button,
+.mtk-settings__btn--primary,
+.mtk-dashboard .btn-primary {
+  background: var(--nala-gold-dark) !important;
+  border-color: var(--nala-gold-dark) !important;
+  color: #fffdf8 !important;
+  box-shadow: var(--nala-shadow-sm);
+}
+
+.btn.btn-primary:hover,
+button.btn-primary:hover,
+.wc-md-btn-primary:hover,
+.submit-btn:hover,
+.mtk-login form button:hover,
+.mtk-settings__btn--primary:hover,
+.mtk-dashboard .btn-primary:hover {
+  background: var(--nala-gold) !important;
+  border-color: var(--nala-gold) !important;
+  color: #171717 !important;
+}
+
+.btn.btn-primary:focus-visible,
+button.btn-primary:focus-visible,
+.wc-md-btn-primary:focus-visible,
+.submit-btn:focus-visible,
+.mtk-login form button:focus-visible,
+.mtk-settings__btn--primary:focus-visible,
+.mtk-dashboard .btn-primary:focus-visible {
+  outline: 3px solid rgba(184, 149, 59, 0.28);
+  outline-offset: 2px;
+}
+
+a,
+.mtk-login form .links a,
+.helper a {
+  color: var(--nala-gold-dark);
+}
+
+a:hover,
+.mtk-login form .links a:hover,
+.helper a:hover {
+  color: var(--nala-gold);
+}

@@ -342,3 +342,25 @@ h1.title::after {
   animation-delay: 0.1s;
   animation-fill-mode: both; }
 
+
+/* Matte dashboard card overrides */
+.mtk-dashboard__header,
+.mtk-dashboard__subscriptions {
+  background: rgba(255, 253, 249, 0.98);
+  border: 1px solid var(--nala-border);
+  box-shadow: var(--nala-shadow-md);
+}
+
+.mtk-dashboard__subscription-card {
+  background: #fffdfa;
+  border: 1px solid var(--nala-border);
+  box-shadow: var(--nala-shadow-sm);
+}
+
+.mtk-dashboard__card-icon {
+  background: var(--nala-gold-dark);
+}
+
+.mtk-dashboard__progress-fill {
+  background: var(--nala-gold);
+}

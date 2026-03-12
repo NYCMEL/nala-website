@@ -226,3 +226,36 @@ h1.title::after {
 #MTK-hero .animate-fade-up.active {
   opacity: 1;
   transform: translateY(0); }
+
+/* Matte hero overrides */
+#MTK-hero {
+  background: linear-gradient(180deg, #f3efe4 0%, #fffdfa 100%) !important;
+}
+
+#MTK-hero .MTK-hero-lhs .MTK-hero-card {
+  background: rgba(255, 253, 249, 0.98);
+  border: 1px solid var(--nala-border);
+  box-shadow: var(--nala-shadow-md);
+  border-radius: 20px;
+}
+
+#MTK-hero .MTK-hero-lhs .MTK-hero-card .MTK-hero-title {
+  color: var(--nala-ink);
+  text-shadow: none;
+}
+
+#MTK-hero .MTK-hero-lhs .MTK-hero-card .MTK-hero-description {
+  color: #4f4f4f;
+}
+
+#MTK-hero .btn.btn-primary {
+  background: var(--nala-gold-dark) !important;
+  border-color: var(--nala-gold-dark) !important;
+  color: #fffdf8 !important;
+}
+
+#MTK-hero .btn.btn-primary:hover {
+  background: var(--nala-gold) !important;
+  border-color: var(--nala-gold) !important;
+  color: #171717 !important;
+}
