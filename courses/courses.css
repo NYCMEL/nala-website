@@ -265,3 +265,21 @@ h1.title::after {
 .mtk-courses .course-features li::before {
   color: var(--nala-gold-dark) !important;
 }
+
+/* Remove remaining off-white/blue course surfaces */
+.mtk-courses,
+.mtk-courses .container,
+.mtk-courses .row {
+  background: #ffffff !important;
+}
+
+.mtk-courses .course-card {
+  background: #fcfcfc !important;
+  border: 2px solid rgba(17, 17, 17, 0.18) !important;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08) !important;
+}
+
+.mtk-courses .course-level {
+  background: var(--nala-gold-dark) !important;
+  color: #ffffff !important;
+}

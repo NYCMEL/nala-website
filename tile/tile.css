@@ -253,3 +253,21 @@ h1.title::after {
 .mtk-tile .mtk-tile-front > .mtk-tile-title {
   padding-top: 48px;
 }
+
+/* Remove remaining blue feature tiles */
+.mtk-tile-front,
+.mtk-tile-back,
+.tile,
+.tile-card,
+.feature-tile {
+  background: #fcfcfc !important;
+  color: #111111 !important;
+  border: 2px solid rgba(17, 17, 17, 0.18) !important;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08) !important;
+}
+
+.mtk-tile-front::before,
+.tile::before,
+.feature-tile::before {
+  background: var(--nala-gold-dark) !important;
+}

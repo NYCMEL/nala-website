@@ -358,6 +358,62 @@ h1.title::after {
   box-shadow: var(--nala-shadow-md) !important;
 }
 
+.mtk-path,
+#path,
+.path,
+.path-page,
+.pricing-section,
+.pricing-wrap {
+  background: #ffffff !important;
+}
+
+.mtk-path .mtk-card,
+.mtk-path .mtk-card.mtk-popular {
+  background: #ffffff !important;
+  border: 2px solid rgba(17, 17, 17, 0.16) !important;
+  box-shadow: var(--nala-shadow-md) !important;
+}
+
+.mtk-path .mtk-card:hover {
+  box-shadow: var(--nala-shadow-lg) !important;
+  border-color: rgba(17, 17, 17, 0.28) !important;
+}
+
+.mtk-path .mtk-popular {
+  outline: none !important;
+  border: 2px solid var(--nala-gold-dark) !important;
+}
+
+.mtk-path .mtk-badge,
+.mtk-path .mtk-popular .mtk-badge {
+  background: var(--nala-gold-dark) !important;
+  color: #ffffff !important;
+  box-shadow: var(--nala-shadow-sm) !important;
+}
+
+.mtk-path .btn-path,
+.mtk-path .btn.btn-path,
+.mtk-path .btn.btn-lg.btn-path,
+.mtk-path .btn.btn-primary,
+.mtk-path .btn.btn-outline-primary,
+.mtk-path .btn.btn-outline-secondary {
+  background: var(--nala-gold-dark) !important;
+  border: 2px solid rgba(17, 17, 17, 0.18) !important;
+  color: #ffffff !important;
+  box-shadow: var(--nala-shadow-sm) !important;
+}
+
+.mtk-path .btn-path:hover,
+.mtk-path .btn.btn-path:hover,
+.mtk-path .btn.btn-lg.btn-path:hover,
+.mtk-path .btn.btn-primary:hover,
+.mtk-path .btn.btn-outline-primary:hover,
+.mtk-path .btn.btn-outline-secondary:hover {
+  background: var(--nala-gold) !important;
+  color: var(--nala-ink) !important;
+  box-shadow: var(--nala-shadow-md) !important;
+}
+
 .mtk-path .mtk-card:hover {
   box-shadow: var(--nala-shadow-lg) !important;
 }
@@ -396,4 +452,25 @@ h1.title::after {
   background: #c49d40 !important;
   border-color: #5d4510 !important;
   color: #121212 !important;
+}
+
+/* Pure white pricing background */
+.mtk-path,
+#path,
+.path,
+.path-page,
+.pricing-section,
+.pricing-wrap,
+.why-choose,
+.included-program {
+  background: #ffffff !important;
+}
+
+.mtk-path .mtk-card,
+.mtk-path .pricing-card,
+.mtk-path .trial-card,
+.mtk-path .premium-card {
+  background: #fcfcfc !important;
+  border: 2px solid rgba(17, 17, 17, 0.18) !important;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.08) !important;
 }

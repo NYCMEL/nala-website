@@ -270,3 +270,12 @@ h1.title::after {
   border: 1.5px solid rgba(18, 18, 18, 0.14);
   box-shadow: var(--nala-shadow-lg);
 }
+
+/* Pure white hero area */
+#MTK-hero,
+#MTK-hero .container,
+#MTK-hero .row,
+#MTK-hero .col-md-6,
+#MTK-hero .col-lg-6 {
+  background: #ffffff !important;
+}

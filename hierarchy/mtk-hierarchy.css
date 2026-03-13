@@ -660,3 +660,60 @@ h1.title::after {
   background: #171717;
   color: #fffdf8;
 }
+
+/* Final white curriculum palette */
+body,
+#page-content,
+.mtk-hierarchy,
+.mtk-hierarchy .mtk-hierarchy__container {
+  background: #ffffff !important;
+}
+
+.mtk-hierarchy .mtk-hierarchy-lhs,
+.mtk-hierarchy .mtk-hierarchy-rhs {
+  background: #ffffff !important;
+  border: 2px solid rgba(17, 17, 17, 0.12) !important;
+  box-shadow: var(--nala-shadow-md) !important;
+}
+
+.mtk-hierarchy .mtk-module,
+.mtk-hierarchy .mtk-module__body,
+.mtk-hierarchy .mtk-resource,
+.mtk-hierarchy .mtk-images-gallery,
+.mtk-hierarchy .mtk-image-item,
+.mtk-hierarchy .mtk-video-player-wrap,
+.mtk-hierarchy .mtk-video-player {
+  background: #ffffff !important;
+}
+
+.mtk-hierarchy .mtk-module {
+  border: 1.5px solid rgba(17, 17, 17, 0.12) !important;
+  box-shadow: var(--nala-shadow-sm) !important;
+}
+
+.mtk-hierarchy .mtk-module__body {
+  border-top: 1px solid rgba(17, 17, 17, 0.08) !important;
+}
+
+/* Strong curriculum surface separation */
+.mtk-hierarchy,
+.mtk-hierarchy .mtk-hierarchy__container,
+.mtk-hierarchy .mtk-hierarchy-lhs,
+.mtk-hierarchy .mtk-hierarchy-rhs {
+  background: #ffffff !important;
+}
+
+.mtk-hierarchy .mtk-hierarchy-lhs,
+.mtk-hierarchy .mtk-hierarchy-rhs,
+.mtk-hierarchy .mtk-module,
+.mtk-hierarchy .mtk-resource,
+.mtk-hierarchy .mtk-images-gallery,
+.mtk-hierarchy .mtk-video-player-wrap {
+  border-color: rgba(17, 17, 17, 0.18) !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08) !important;
+}
+
+.mtk-hierarchy .mtk-module,
+.mtk-hierarchy .mtk-resource {
+  background: #fcfcfc !important;
+}
