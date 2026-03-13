@@ -221,8 +221,10 @@ h1.title::after {
 
 #header .nav-link.active,
 .navbar.fixed-top .nav-link.active {
-  color: var(--nala-gold-light) !important;
-  text-shadow: 0 2px 10px rgba(179, 138, 46, 0.22) !important;
+  color: #ffffff !important;
+  background: rgba(184, 149, 59, 0.22) !important;
+  border-radius: 999px !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35) !important;
 }
 
 /* Hard stop for dim nested nav text/icons */
@@ -239,7 +241,7 @@ h1.title::after {
 #header .nav-link.active *,
 .navbar.fixed-top .nav-link.active,
 .navbar.fixed-top .nav-link.active * {
-  color: var(--nala-gold-light) !important;
+  color: #ffffff !important;
   fill: currentColor !important;
   opacity: 1 !important;
 }
@@ -290,8 +292,8 @@ h1.title::after {
 #mtk-header-settings.active *,
 #mtk-header-logout.active,
 #mtk-header-logout.active * {
-  color: var(--nala-gold-light) !important;
-  text-shadow: 0 2px 10px rgba(179, 138, 46, 0.24) !important;
+  color: #ffffff !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35) !important;
 }
 
 #mtk-header-home:hover,

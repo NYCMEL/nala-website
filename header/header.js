@@ -2,9 +2,9 @@ function applyHeaderVisualState(activeId) {
     const links = document.querySelectorAll("#header .nav-link");
     links.forEach(link => {
         const isActive = !!activeId && link.id === activeId;
-        const color = isActive ? "#d8b45a" : "rgba(255, 255, 255, 0.96)";
+        const color = "#ffffff";
         const shadow = isActive
-            ? "0 2px 10px rgba(179, 138, 46, 0.24)"
+            ? "0 2px 10px rgba(0, 0, 0, 0.35)"
             : "0 1px 0 rgba(0, 0, 0, 0.35)";
 
         link.style.setProperty("color", color, "important");
@@ -12,6 +12,9 @@ function applyHeaderVisualState(activeId) {
         link.style.setProperty("text-shadow", shadow, "important");
         link.style.setProperty("-webkit-text-fill-color", color, "important");
         link.style.setProperty("filter", "none", "important");
+        link.style.setProperty("background", isActive ? "rgba(184, 149, 59, 0.22)" : "transparent", "important");
+        link.style.setProperty("border-radius", "999px", "important");
+        link.style.setProperty("padding", isActive ? "8px 12px" : "", "important");
 
         link.querySelectorAll("*").forEach(node => {
             node.style.setProperty("color", color, "important");

@@ -420,7 +420,7 @@ body,
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08) !important;
 }
 
-.mtk-dashboard__subscription-card * {
+.mtk-dashboard__subscription-card > :not(.mtk-dashboard__card-icon) {
   background: transparent;
 }
 
@@ -482,6 +482,8 @@ body,
   border: 2px solid rgba(17, 17, 17, 0.18) !important;
   box-shadow: 0 14px 28px rgba(138, 105, 32, 0.22) !important;
   color: #ffffff !important;
+  position: relative !important;
+  overflow: hidden !important;
 }
 
 .mtk-dashboard__card-icon svg {
@@ -491,10 +493,21 @@ body,
   color: #ffffff !important;
   fill: #ffffff !important;
   opacity: 1 !important;
+  position: relative !important;
+  z-index: 1 !important;
 }
 
 .mtk-dashboard__card-icon path {
   fill: currentColor !important;
+}
+
+.mtk-dashboard__card-icon::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: 50% !important;
+  background: linear-gradient(135deg, #8a6920 0%, #b38a2e 100%) !important;
+  z-index: 0 !important;
 }
 
 .mtk-dashboard__card-title,
