@@ -12,6 +12,16 @@ class Pages extends HTMLElement {
             this.id = "mtk-pages";
         }
 
+        // Bind popstate so browser Back / Forward buttons trigger show()
+        this._onPopState = (e) => {
+            if (e.state && e.state.mtkPage) {
+                this._isPopping = true;
+                this.show(e.state.mtkPage);
+                this._isPopping = false;
+            }
+        };
+        window.addEventListener("popstate", this._onPopState);
+
         this._waitForData();
 
         wc.groupEnd();
@@ -19,6 +29,7 @@ class Pages extends HTMLElement {
 
     disconnectedCallback() {
         wc.group("mtk-pages.disconnectedCallback");
+        window.removeEventListener("popstate", this._onPopState);
         wc.groupEnd();
     };
 
@@ -73,7 +84,17 @@ class Pages extends HTMLElement {
 
         // SHOW DEFAULT PAGE FROM ATTRIBUTE OR FIRST IN LIST
         const defaultPage = this.getAttribute("page") || data[0].page;
-        this.show(defaultPage);
+
+        // On first load, seed history.state so popstate always has mtkPage.
+        // replaceState (not pushState) so pressing Back from page 1 exits the
+        // app cleanly rather than looping back to itself.
+        const restoredPage = (history.state && history.state.mtkPage) || defaultPage;
+        history.replaceState({ mtkPage: restoredPage }, "", this._pageUrl(restoredPage));
+
+        // Show without pushing a new entry — replaceState above already owns this slot
+        this._isPopping = true;
+        this.show(restoredPage);
+        this._isPopping = false;
 
         // DEV TOOLBAR
         if (this.getAttribute("env") === "dev") {
@@ -83,6 +104,23 @@ class Pages extends HTMLElement {
         this.style.visibility = "visible";
 
         wc.groupEnd();
+    };
+
+    /**
+     * Build the URL fragment stored in history for a given page.
+     * Uses hash by default — no server-side routing required.
+     * Override by setting window.app.historyMode = "hash" | "query" | "path"
+     * @private
+     */
+    _pageUrl(page) {
+        const mode = (window.app && window.app.historyMode) || "hash";
+        if (mode === "path")  return "/" + page;
+        if (mode === "query") {
+            const u = new URL(window.location.href);
+            u.searchParams.set("page", page);
+            return u.pathname + u.search;
+        }
+        return "#" + page; // default: hash
     };
 
     /**
@@ -155,6 +193,18 @@ class Pages extends HTMLElement {
         // SCROLL TO TOP
         window.scrollTo(0, 0);
 
+        // PUSH HISTORY ENTRY
+        // Skipped when show() is called from popstate (_isPopping = true) or
+        // from _process() initial load, so the browser stack never gets
+        // duplicate or ghost entries.
+        if (!this._isPopping) {
+            history.pushState({ mtkPage: page }, obj.label || page, this._pageUrl(page));
+            wc.log("mtk-pages: pushState →", page);
+        }
+
+        // Track current page
+        this.current = page;
+
         // PUBLISH EVENT
         wc.publish("mtk-pages", {
             time:   new Date().getTime(),
@@ -170,6 +220,7 @@ class Pages extends HTMLElement {
 
     /**
      * Refresh a page - clears content and reloads it.
+     * Does NOT push a new history entry (same page, just reloaded).
      * @param {string} page - The page ID to refresh
      */
     refresh(page) {
@@ -178,7 +229,10 @@ class Pages extends HTMLElement {
         const target = this.querySelector(`.${page}`);
         if (target) target.innerHTML = "";
 
+        // Refresh is not a navigation — suppress pushState
+        this._isPopping = true;
         this.show(page);
+        this._isPopping = false;
 
         wc.groupEnd();
         return page;
@@ -220,6 +274,20 @@ class Pages extends HTMLElement {
         this.show(values.page);
 
         wc.groupEnd();
+    };
+
+    /**
+     * Programmatic back — mirrors browser Back button.
+     */
+    back() {
+        history.back();
+    };
+
+    /**
+     * Programmatic forward — mirrors browser Forward button.
+     */
+    forward() {
+        history.forward();
     };
 
     /**
