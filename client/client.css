@@ -694,3 +694,77 @@ body,
   fill: #ffffff !important;
   opacity: 1 !important;
 }
+
+/* Final public-page contrast overrides */
+body,
+#page-content,
+.client-container,
+.client-main,
+.client-content,
+#MTK-hero,
+.program-stats,
+.why-program,
+.stats-section,
+.paths-section,
+.pricing-section,
+.courses-section {
+  background: #ffffff !important;
+}
+
+.program-stats .stat-number,
+.stats-section .stat-number,
+.client-content .stat-number {
+  color: #8a6920 !important;
+}
+
+.top-pro-badges .pro-badge .badge-icon,
+.program-stats .stat-icon,
+.stats-section .stat-icon {
+  background: linear-gradient(135deg, #8a6920 0%, #b38a2e 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16) !important;
+  border: 2px solid rgba(17, 17, 17, 0.14) !important;
+}
+
+.top-pro-badges .pro-badge .badge-icon *,
+.program-stats .stat-icon *,
+.stats-section .stat-icon * {
+  color: #ffffff !important;
+  fill: currentColor !important;
+  opacity: 1 !important;
+}
+
+.btn-primary,
+.client-container .btn-primary,
+.client-main .btn-primary,
+.client-content .btn-primary,
+.stats-section .btn-primary,
+.program-stats .btn-primary,
+#MTK-hero .btn-primary {
+  background: linear-gradient(135deg, #8a6920 0%, #b38a2e 100%) !important;
+  border: 1px solid rgba(17, 17, 17, 0.12) !important;
+  color: #ffffff !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16) !important;
+}
+
+.btn-primary:hover,
+.client-container .btn-primary:hover,
+.client-main .btn-primary:hover,
+.client-content .btn-primary:hover,
+.stats-section .btn-primary:hover,
+.program-stats .btn-primary:hover,
+#MTK-hero .btn-primary:hover {
+  background: linear-gradient(135deg, #9a7827 0%, #c29a34 100%) !important;
+  color: #ffffff !important;
+}
+
+.card,
+.client-content .card,
+.program-card,
+.career-switcher,
+.path-card,
+.pricing-card {
+  background: #ffffff !important;
+  border: 1.5px solid rgba(17, 17, 17, 0.18) !important;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.08) !important;
+}

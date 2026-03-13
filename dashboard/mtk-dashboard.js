@@ -215,6 +215,23 @@
 	    const icon = document.createElement('div');
 	    icon.className = 'mtk-dashboard__card-icon';
 	    icon.innerHTML = this.resolveSubscriptionIcon(option.icon);
+	    icon.style.background = 'linear-gradient(135deg, #8a6920 0%, #b38a2e 100%)';
+	    icon.style.border = '2px solid rgba(17, 17, 17, 0.18)';
+	    icon.style.boxShadow = '0 10px 24px rgba(0, 0, 0, 0.16)';
+	    icon.style.color = '#ffffff';
+
+	    const svg = icon.querySelector('svg');
+	    if (svg) {
+		svg.style.width = '26px';
+		svg.style.height = '26px';
+		svg.style.display = 'block';
+		svg.style.color = '#ffffff';
+		svg.style.fill = '#ffffff';
+		svg.querySelectorAll('path').forEach(path => {
+		    path.style.fill = '#ffffff';
+		    path.setAttribute('fill', '#ffffff');
+		});
+	    }
 	    
 	    const title = document.createElement('h3');
 	    title.className = 'mtk-dashboard__card-title';
