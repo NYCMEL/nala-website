@@ -202,3 +202,25 @@ h1.title::after {
 #header .nav-link.active {
   color: var(--nala-gold) !important;
 }
+
+/* Final header contrast fixes */
+#header .nav-link,
+#header .nav-link:visited,
+.navbar.fixed-top .nav-link,
+.navbar.fixed-top .nav-link:visited {
+  color: rgba(255, 255, 255, 0.92) !important;
+  opacity: 1 !important;
+}
+
+#header .nav-link:hover,
+#header .nav-link:focus,
+.navbar.fixed-top .nav-link:hover,
+.navbar.fixed-top .nav-link:focus {
+  color: var(--nala-gold-light) !important;
+}
+
+#header .nav-link.active,
+.navbar.fixed-top .nav-link.active {
+  color: var(--nala-gold-light) !important;
+  text-shadow: 0 2px 10px rgba(179, 138, 46, 0.22) !important;
+}

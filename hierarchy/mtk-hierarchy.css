@@ -717,3 +717,44 @@ body,
 .mtk-hierarchy .mtk-resource {
   background: #fcfcfc !important;
 }
+
+/* Final curriculum text contrast fixes */
+.mtk-hierarchy .mtk-module__header,
+.mtk-hierarchy .mtk-module__header:visited,
+.mtk-hierarchy .mtk-module__title,
+.mtk-hierarchy .mtk-module__title span,
+.mtk-hierarchy .mtk-module__header .material-icons,
+.mtk-hierarchy .mtk-module__toggle .material-icons {
+  color: #111111 !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+}
+
+.mtk-hierarchy .mtk-module__header {
+  background: #fcfcfc !important;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.10) !important;
+}
+
+.mtk-hierarchy .mtk-module__header:hover,
+.mtk-hierarchy .mtk-module__header:focus {
+  background: rgba(179, 138, 46, 0.08) !important;
+  color: #111111 !important;
+}
+
+.mtk-hierarchy .mtk-resource,
+.mtk-hierarchy .mtk-resource__title,
+.mtk-hierarchy .mtk-resource__icon,
+.mtk-hierarchy .mtk-resource .material-icons,
+.mtk-hierarchy .mtk-lesson__title,
+.mtk-hierarchy .mtk-lesson__header,
+.mtk-hierarchy .mtk-lesson__header .material-icons,
+.mtk-hierarchy .mtk-lesson__toggle .material-icons {
+  color: #111111 !important;
+  opacity: 1 !important;
+}
+
+.mtk-hierarchy .mtk-module:not(.mtk-module--active) .mtk-module__title,
+.mtk-hierarchy .mtk-module:not(.mtk-module--active) .mtk-module__header,
+.mtk-hierarchy .mtk-module:not(.mtk-module--active) .mtk-module__header .material-icons {
+  color: #111111 !important;
+}
