@@ -641,13 +641,20 @@ h1.title::after {
 
 /* Matte NALA quiz overrides */
 body {
-  background: linear-gradient(180deg, #f7f4ed 0%, #fffdfa 42%, #f4eee2 100%) !important;
+  background: #f7f4ed !important;
 }
 
 #page-content,
 .mtk-quiz-page,
-.mtk-quiz-wrap {
-  background: transparent !important;
+.mtk-quiz-wrap,
+.mtk-pages-item[mtk-pages-id="quiz"],
+.mtk-pages-item[mtk-pages-id="quiz"] > .container,
+.mtk-pages-item[mtk-pages-id="quiz"] .row,
+.mtk-pages-item[mtk-pages-id="quiz"] .col-md-12,
+.mtk-quiz .container,
+.mtk-quiz .row,
+.mtk-quiz .col-md-12 {
+  background: #f7f4ed !important;
 }
 
 .mtk-quiz {
@@ -734,3 +741,47 @@ body {
   color: #171717 !important;
   border-color: var(--nala-gold-dark) !important;
 }
+
+.mtk-quiz .btn.btn-outline-primary,
+.mtk-quiz .btn.btn-outline-secondary,
+.mtk-quiz .btn.btn-primary,
+.mtk-quiz .btn.btn-link {
+  border-radius: 14px !important;
+  box-shadow: var(--nala-shadow-sm) !important;
+}
+
+.mtk-quiz .btn.btn-outline-primary,
+.mtk-quiz .btn.btn-outline-secondary {
+  background: rgba(255, 253, 249, 0.95) !important;
+  color: var(--nala-gold-dark) !important;
+  border: 1px solid rgba(125, 98, 32, 0.32) !important;
+}
+
+.mtk-quiz .btn.btn-outline-primary:hover,
+.mtk-quiz .btn.btn-outline-secondary:hover {
+  background: rgba(184, 149, 59, 0.1) !important;
+  color: #171717 !important;
+  border-color: var(--nala-gold-dark) !important;
+}
+
+.mtk-quiz .btn.btn-primary {
+  background: linear-gradient(180deg, var(--nala-gold-dark) 0%, #9c7828 100%) !important;
+  border-color: rgba(125, 98, 32, 0.45) !important;
+  color: #fffdf8 !important;
+}
+
+.mtk-quiz .btn.btn-primary:hover {
+  background: linear-gradient(180deg, var(--nala-gold) 0%, #cfaa4d 100%) !important;
+  border-color: var(--nala-gold) !important;
+  color: #171717 !important;
+}
+
+.mtk-quiz .btn.btn-link {
+  color: var(--nala-gold-dark) !important;
+}
+
+.mtk-quiz .btn.btn-link:hover {
+  color: var(--nala-gold) !important;
+  background: rgba(184, 149, 59, 0.08) !important;
+}
+

@@ -313,3 +313,36 @@ h1.title::after {
   color: #171717 !important;
   transform: translateY(-2px);
 }
+
+
+.mtk-path .btn.btn-path,
+.mtk-path .btn.btn-lg.btn-path,
+.mtk-path .btn.btn-primary,
+.mtk-path .btn.btn-outline-primary,
+.mtk-path .btn.btn-outline-secondary {
+  background: linear-gradient(180deg, var(--nala-gold-dark) 0%, #9c7828 100%) !important;
+  border-color: rgba(125, 98, 32, 0.45) !important;
+  color: #fffdf8 !important;
+  box-shadow: var(--nala-shadow-sm) !important;
+}
+
+.mtk-path .btn.btn-path:hover,
+.mtk-path .btn.btn-lg.btn-path:hover,
+.mtk-path .btn.btn-primary:hover,
+.mtk-path .btn.btn-outline-primary:hover,
+.mtk-path .btn.btn-outline-secondary:hover {
+  background: linear-gradient(180deg, var(--nala-gold) 0%, #cfaa4d 100%) !important;
+  border-color: var(--nala-gold) !important;
+  color: #171717 !important;
+}
+
+.mtk-path .mtk-popular,
+.mtk-path .mtk-card.mtk-popular {
+  outline: 2px solid var(--nala-gold-dark) !important;
+}
+
+.mtk-path .mtk-badge,
+.mtk-path .mtk-popular .mtk-badge {
+  background: linear-gradient(180deg, var(--nala-gold-dark) 0%, #9f7b2a 100%) !important;
+  color: #fffdf8 !important;
+}
