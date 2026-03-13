@@ -7,19 +7,27 @@ function applyHeaderVisualState(activeId) {
             ? "0 2px 10px rgba(179, 138, 46, 0.24)"
             : "0 1px 0 rgba(0, 0, 0, 0.35)";
 
-        link.style.color = color;
-        link.style.opacity = "1";
-        link.style.textShadow = shadow;
-        link.style.webkitTextFillColor = color;
+        link.style.setProperty("color", color, "important");
+        link.style.setProperty("opacity", "1", "important");
+        link.style.setProperty("text-shadow", shadow, "important");
+        link.style.setProperty("-webkit-text-fill-color", color, "important");
+        link.style.setProperty("filter", "none", "important");
 
         link.querySelectorAll("*").forEach(node => {
-            node.style.color = color;
-            node.style.fill = color;
-            node.style.opacity = "1";
-            node.style.textShadow = shadow;
-            node.style.webkitTextFillColor = color;
+            node.style.setProperty("color", color, "important");
+            node.style.setProperty("fill", color, "important");
+            node.style.setProperty("stroke", color, "important");
+            node.style.setProperty("opacity", "1", "important");
+            node.style.setProperty("text-shadow", shadow, "important");
+            node.style.setProperty("-webkit-text-fill-color", color, "important");
+            node.style.setProperty("filter", "none", "important");
         });
     });
+}
+
+function initHeaderVisualState() {
+    const activeLink = document.querySelector("#header .nav-link.active");
+    applyHeaderVisualState(activeLink ? activeLink.id : "");
 }
 
 // PUBLISH ALL CLICKS
@@ -46,10 +54,10 @@ function headerSelect(id) {
     applyHeaderVisualState(id);
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    const activeLink = document.querySelector("#header .nav-link.active");
-    applyHeaderVisualState(activeLink ? activeLink.id : "");
-});
+document.addEventListener("DOMContentLoaded", initHeaderVisualState);
+initHeaderVisualState();
+setTimeout(initHeaderVisualState, 0);
+setTimeout(initHeaderVisualState, 120);
 
 // toggleNavbar()
 // Safe to call at any time — waits for Bootstrap to be ready before toggling
@@ -72,7 +80,6 @@ function toggleNavbar() {
         var attempts = 0;
         var interval = setInterval(function () {
             if (window.bootstrap) {
-		alert("AAAAAA");
                 clearInterval(interval);
                 doToggle();
             } else if (++attempts >= 30) {
