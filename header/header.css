@@ -255,3 +255,58 @@ h1.title::after {
   color: #f0d487 !important;
   fill: currentColor !important;
 }
+
+/* Explicit per-link header contrast */
+#mtk-header-home,
+#mtk-header-home *,
+#mtk-header-register,
+#mtk-header-register *,
+#mtk-header-login,
+#mtk-header-login *,
+#mtk-header-dashboard,
+#mtk-header-dashboard *,
+#mtk-header-hierarchy,
+#mtk-header-hierarchy *,
+#mtk-header-settings,
+#mtk-header-settings *,
+#mtk-header-logout,
+#mtk-header-logout * {
+  color: rgba(255, 255, 255, 0.96) !important;
+  opacity: 1 !important;
+  fill: currentColor !important;
+}
+
+#mtk-header-home.active,
+#mtk-header-home.active *,
+#mtk-header-register.active,
+#mtk-header-register.active *,
+#mtk-header-login.active,
+#mtk-header-login.active *,
+#mtk-header-dashboard.active,
+#mtk-header-dashboard.active *,
+#mtk-header-hierarchy.active,
+#mtk-header-hierarchy.active *,
+#mtk-header-settings.active,
+#mtk-header-settings.active *,
+#mtk-header-logout.active,
+#mtk-header-logout.active * {
+  color: var(--nala-gold-light) !important;
+  text-shadow: 0 2px 10px rgba(179, 138, 46, 0.24) !important;
+}
+
+#mtk-header-home:hover,
+#mtk-header-home:hover *,
+#mtk-header-register:hover,
+#mtk-header-register:hover *,
+#mtk-header-login:hover,
+#mtk-header-login:hover *,
+#mtk-header-dashboard:hover,
+#mtk-header-dashboard:hover *,
+#mtk-header-hierarchy:hover,
+#mtk-header-hierarchy:hover *,
+#mtk-header-settings:hover,
+#mtk-header-settings:hover *,
+#mtk-header-logout:hover,
+#mtk-header-logout:hover * {
+  color: #f0d487 !important;
+}

@@ -214,7 +214,7 @@
 	    
 	    const icon = document.createElement('div');
 	    icon.className = 'mtk-dashboard__card-icon';
-	    icon.innerHTML = `<span class="material-icons" aria-hidden="true">${option.icon}</span>`;
+	    icon.innerHTML = this.resolveSubscriptionIcon(option.icon);
 	    
 	    const title = document.createElement('h3');
 	    title.className = 'mtk-dashboard__card-title';
@@ -245,6 +245,25 @@
 	    });
 	    
 	    return card;
+	}
+
+	resolveSubscriptionIcon(iconName) {
+	    const icons = {
+		school: `
+		    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+			<path d="M12 3 2 8l10 5 8-4v6h2V8L12 3Zm-6 8.4V15c0 1.7 3.1 3 6 3s6-1.3 6-3v-3.6l-6 3-6-3Z"></path>
+		    </svg>`,
+		people: `
+		    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+			<path d="M16 11c1.7 0 3-1.6 3-3.5S17.7 4 16 4s-3 1.6-3 3.5S14.3 11 16 11Zm-8 0c1.7 0 3-1.6 3-3.5S9.7 4 8 4 5 5.6 5 7.5 6.3 11 8 11Zm0 2c-2.7 0-8 1.3-8 4v3h10v-3c0-1.1.4-2.1 1.2-2.9C10.2 13.4 8.8 13 8 13Zm8 0c-.3 0-.7 0-1.1.1 1.3.9 2.1 2.1 2.1 3.9v3H24v-3c0-2.7-5.3-4-8-4Z"></path>
+		    </svg>`,
+		work: `
+		    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+			<path d="M9 6V4c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2v2h5c1.1 0 2 .9 2 2v3H2V8c0-1.1.9-2 2-2h5Zm2 0h2V4h-2v2Zm11 7v7c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2v-7h20Z"></path>
+		    </svg>`
+	    };
+
+	    return icons[iconName] || icons.work;
 	}
 	
 	/**

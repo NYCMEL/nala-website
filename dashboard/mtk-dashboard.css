@@ -282,6 +282,7 @@ h1.title::after {
   justify-content: center;
   margin-bottom: 16px; }
 
+.mtk-dashboard__card-icon i,
 .mtk-dashboard__card-icon .material-icons {
   font-size: 28px;
   color: #ffffff; }
@@ -305,7 +306,8 @@ h1.title::after {
   color: var(--nala-gold-dark);
   margin: 0; }
 
-.mtk-dashboard .material-icons {
+.mtk-dashboard .material-icons,
+.mtk-dashboard .fa {
   font-family: "Material Icons";
   font-weight: normal;
   font-style: normal;
@@ -322,6 +324,10 @@ h1.title::after {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   user-select: none; }
+
+.mtk-dashboard .fa {
+  font-family: FontAwesome !important;
+}
 
 @media (max-width: 768px) {
   .mtk-dashboard {
@@ -424,10 +430,20 @@ body,
   border: 2px solid rgba(17, 17, 17, 0.16) !important;
   color: #ffffff !important;
   box-shadow: 0 12px 24px rgba(138, 105, 32, 0.24) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 56px !important;
+  height: 56px !important;
+  min-width: 56px !important;
+  min-height: 56px !important;
+  border-radius: 50% !important;
+  background-color: var(--nala-gold-dark) !important;
 }
 
 .mtk-dashboard__card-icon *,
 .mtk-dashboard__card-icon .material-icons,
+.mtk-dashboard__card-icon .fa,
 .mtk-dashboard__card-icon i,
 .mtk-dashboard__card-icon svg,
 .mtk-dashboard__card-icon path {
@@ -435,4 +451,59 @@ body,
   fill: #ffffff !important;
   stroke: none !important;
   opacity: 1 !important;
+}
+
+.mtk-dashboard__card-icon .fa {
+  font-family: FontAwesome !important;
+  font-size: 26px !important;
+  line-height: 1 !important;
+  background: transparent !important;
+}
+
+/* Final dashboard contrast/icon corrections */
+.mtk-dashboard,
+.mtk-dashboard body,
+.mtk-dashboard__header,
+.mtk-dashboard__subscriptions,
+.mtk-dashboard__subscription-grid,
+.mtk-dashboard__subscription-card {
+  background-color: #ffffff !important;
+}
+
+.mtk-dashboard__header,
+.mtk-dashboard__subscriptions,
+.mtk-dashboard__subscription-card {
+  border: 2px solid rgba(17, 17, 17, 0.16) !important;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.10) !important;
+}
+
+.mtk-dashboard__card-icon {
+  background: var(--nala-gold-dark) !important;
+  border: 2px solid rgba(17, 17, 17, 0.18) !important;
+  box-shadow: 0 14px 28px rgba(138, 105, 32, 0.22) !important;
+  color: #ffffff !important;
+}
+
+.mtk-dashboard__card-icon svg {
+  width: 26px !important;
+  height: 26px !important;
+  display: block !important;
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.mtk-dashboard__card-icon path {
+  fill: currentColor !important;
+}
+
+.mtk-dashboard__card-title,
+.mtk-dashboard__card-description,
+.mtk-dashboard__card-price,
+.mtk-dashboard__subscriptions-title,
+.mtk-dashboard__progress-label,
+.mtk-dashboard__course-title,
+.mtk-dashboard__progress-percentage,
+.mtk-dashboard__user-name {
+  color: #111111 !important;
 }

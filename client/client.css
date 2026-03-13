@@ -630,3 +630,67 @@ body,
 .client-tabs .tab:hover {
   color: #111111 !important;
 }
+
+/* Final public-page contrast corrections */
+#MTK-hero,
+#MTK-hero .container,
+#MTK-hero .row,
+#MTK-hero .col-md-6,
+#MTK-hero .col-lg-6,
+.program-stats,
+.stats-section,
+.why-program,
+.why-choose,
+.included-program,
+.client-content .content-section,
+.client-container,
+.client-main {
+  background: #ffffff !important;
+}
+
+#MTK-hero .btn,
+#MTK-hero .btn-primary,
+.client-content .btn-primary,
+.program-stats .btn-primary,
+.stats-section .btn-primary {
+  background: var(--nala-gold-dark) !important;
+  color: #ffffff !important;
+  border: 2px solid #4f3a0e !important;
+  box-shadow: 0 12px 24px rgba(138, 105, 32, 0.20) !important;
+  opacity: 1 !important;
+}
+
+#MTK-hero .btn:hover,
+#MTK-hero .btn-primary:hover,
+.client-content .btn-primary:hover,
+.program-stats .btn-primary:hover,
+.stats-section .btn-primary:hover {
+  background: var(--nala-gold) !important;
+  color: #111111 !important;
+}
+
+.stat-number,
+.stats-section .stat-number,
+.program-stats .stat-number,
+.client-name-highlight {
+  color: var(--nala-gold-dark) !important;
+}
+
+.top-pro-badges .pro-badge .badge-icon,
+.guarantee-card .guarantee-icon,
+.stats-section .stat-icon,
+.program-stats .stat-icon {
+  background: var(--nala-gold-dark) !important;
+  color: #ffffff !important;
+  border: 2px solid rgba(17, 17, 17, 0.18) !important;
+  box-shadow: 0 14px 28px rgba(138, 105, 32, 0.20) !important;
+}
+
+.top-pro-badges .pro-badge .badge-icon *,
+.guarantee-card .guarantee-icon *,
+.stats-section .stat-icon *,
+.program-stats .stat-icon * {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  opacity: 1 !important;
+}

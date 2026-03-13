@@ -169,3 +169,67 @@ html, body, #page-content, .main-content, .site-main {
 section, .section, .container, .container-fluid {
   background-color: transparent;
 }
+
+/* Final global contrast enforcement */
+#header .nav-link,
+#header .nav-link *,
+#header .btn,
+#header .btn *,
+.navbar.fixed-top .nav-link,
+.navbar.fixed-top .nav-link *,
+.navbar.fixed-top .btn,
+.navbar.fixed-top .btn *,
+#mtk-header-home,
+#mtk-header-home *,
+#mtk-header-register,
+#mtk-header-register *,
+#mtk-header-login,
+#mtk-header-login *,
+#mtk-header-dashboard,
+#mtk-header-dashboard *,
+#mtk-header-hierarchy,
+#mtk-header-hierarchy *,
+#mtk-header-settings,
+#mtk-header-settings *,
+#mtk-header-logout,
+#mtk-header-logout * {
+  color: rgba(255, 255, 255, 0.97) !important;
+  fill: currentColor !important;
+  opacity: 1 !important;
+}
+
+#header .nav-link.active,
+#header .nav-link.active *,
+.navbar.fixed-top .nav-link.active,
+.navbar.fixed-top .nav-link.active *,
+#mtk-header-home.active,
+#mtk-header-home.active *,
+#mtk-header-register.active,
+#mtk-header-register.active *,
+#mtk-header-login.active,
+#mtk-header-login.active *,
+#mtk-header-dashboard.active,
+#mtk-header-dashboard.active *,
+#mtk-header-hierarchy.active,
+#mtk-header-hierarchy.active *,
+#mtk-header-settings.active,
+#mtk-header-settings.active *,
+#mtk-header-logout.active,
+#mtk-header-logout.active * {
+  color: var(--nala-gold-light) !important;
+  fill: currentColor !important;
+  opacity: 1 !important;
+}
+
+#header .nav-link:hover,
+#header .nav-link:hover *,
+#header .nav-link:focus,
+#header .nav-link:focus *,
+.navbar.fixed-top .nav-link:hover,
+.navbar.fixed-top .nav-link:hover *,
+.navbar.fixed-top .nav-link:focus,
+.navbar.fixed-top .nav-link:focus * {
+  color: #f0d487 !important;
+  fill: currentColor !important;
+  opacity: 1 !important;
+}
