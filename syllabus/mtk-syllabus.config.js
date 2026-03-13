@@ -44,7 +44,7 @@ window.app.syllabus = [
                     },
                     {
                         "lesson_no": 2,
-                        "title": "The Different grades a lock is classified in",
+                        "title": "The different grades a lock is classified in",
                         "access": true,
                         "badge": {
                             "text": "Free Preview",
@@ -102,7 +102,7 @@ window.app.syllabus = [
                     },
                     {
                         "lesson_no": 5,
-                        "title": "A cursory of the different residential and commercial doors",
+                        "title": "An overview of residential and commercial doors",
                         "access": true,
                         "badge": {
                             "text": "Locked",
@@ -173,7 +173,7 @@ window.app.syllabus = [
                 "lessons": [
                     {
                         "lesson_no": 7,
-                        "title": "Introduction to the Kik Cylinder",
+                        "title": "Introduction to the KIK cylinder",
                         "access": true,
                         "badge": {
                             "text": "Locked",
@@ -245,7 +245,7 @@ window.app.syllabus = [
                     },
                     {
                         "lesson_no": 9,
-                        "title": "The difference between a Rim Cylinder and Mortise cylinder",
+                        "title": "The difference between rim and mortise cylinders",
                         "access": true,
                         "badge": {
                             "text": "Locked",
@@ -337,7 +337,7 @@ window.app.syllabus = [
                 "lessons": [
                     {
                         "lesson_no": 13,
-                        "title": "Introduction to the kwikset smart key technology",
+                        "title": "Introduction to Kwikset SmartKey technology",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -476,7 +476,7 @@ window.app.syllabus = [
                     },
                     {
                         "lesson_no": 19,
-                        "title": "Introduction to High Security Locks",
+                        "title": "Introduction to high-security locks",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -527,7 +527,7 @@ window.app.syllabus = [
                 "lessons": [
                     {
                         "lesson_no": 21,
-                        "title": "Introduction to your Rekey Kit",
+                        "title": "Introduction to your rekey kit",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -543,7 +543,7 @@ window.app.syllabus = [
                     },
                     {
                         "lesson_no": 22,
-                        "title": "How to Rekey a Deadbolt",
+                        "title": "How to rekey a deadbolt",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -564,7 +564,7 @@ window.app.syllabus = [
                     },
                     {
                         "lesson_no": 23,
-                        "title": "How to Prep a doorknob to rekey the cylinder",
+                        "title": "How to prep a doorknob to rekey the cylinder",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -630,7 +630,7 @@ window.app.syllabus = [
                 "lessons": [
                     {
                         "lesson_no": 26,
-                        "title": "Hold and Vary system master keying",
+                        "title": "Hold-and-vary system master keying",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -646,7 +646,7 @@ window.app.syllabus = [
                     },
                     {
                         "lesson_no": 27,
-                        "title": "Introduction to Lock Picking",
+                        "title": "Introduction to lock picking",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -688,7 +688,7 @@ window.app.syllabus = [
                     },
                     {
                         "lesson_no": 29,
-                        "title": "Introduction to Key Extraction",
+                        "title": "Introduction to key extraction",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -728,7 +728,7 @@ window.app.syllabus = [
                 "lessons": [
                     {
                         "lesson_no": 30,
-                        "title": "Key Impression",
+                        "title": "Key impression",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -898,7 +898,7 @@ window.app.syllabus = [
                 "lessons": [
                     {
                         "lesson_no": 38,
-                        "title": "Introduction to Car Keys",
+                        "title": "Introduction to car keys",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -944,7 +944,7 @@ window.app.syllabus = [
                 "lessons": [
                     {
                         "lesson_no": 40,
-                        "title": "How to locate the Code on a Toyota",
+                        "title": "How to locate the code on a Toyota",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -992,7 +992,7 @@ window.app.syllabus = [
                     },
                     {
                         "lesson_no": 43,
-                        "title": "How to Program a Nissan 20 Pincode using the Auto Propad",
+                        "title": "How to program a Nissan 20 pincode using the Auto Propad",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -1038,7 +1038,7 @@ window.app.syllabus = [
                 "lessons": [
                     {
                         "lesson_no": 44,
-                        "title": "How and where to begin advertising as a Locksmith",
+                        "title": "How and where to begin advertising as a locksmith",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -1061,7 +1061,7 @@ window.app.syllabus = [
                 "lessons": [
                     {
                         "lesson_no": "certification",
-                        "title": "Receive your Certification",
+                        "title": "Receive your certification",
                         "access": false,
                         "badge": {
                             "text": "Locked",
