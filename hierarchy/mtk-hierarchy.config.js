@@ -431,7 +431,7 @@ window.app = {
 		},
 		{
 		    "module_id": "M4",
-		    "title": "Lock Picking Techniques",
+		    "title": "Commercial Hardware and High-Security Locks",
 		    "access": false,
 		    "lessons": [
 			{
@@ -500,7 +500,7 @@ window.app = {
 		    ],
 		    "quiz": {
 			"lesson_no": 20,
-			"title": "Module Quiz: Lock Picking Techniques",
+			"title": "Module Quiz: Commercial Hardware and High-Security Locks",
 			"module_id": "M4",
 			"access": false,
 			"badge": {
@@ -513,7 +513,7 @@ window.app = {
 			    "pass_percent": 80
 			},
 			"type": "quiz",
-			"description": "Module Quiz: Lock Picking Techniques"
+			"description": "Module Quiz: Commercial Hardware and High-Security Locks"
 		    }
 		}
             ]
@@ -725,7 +725,7 @@ window.app = {
 		},
 		{
 		    "module_id": "M7",
-		    "title": "Master Key Systems",
+		    "title": "Impressioning and Lockout Service",
 		    "access": false,
 		    "lessons": [
 			{
@@ -784,7 +784,7 @@ window.app = {
 		    ],
 		    "quiz": {
 			"lesson_no": 33,
-			"title": "Module Quiz: Master Key Systems",
+			"title": "Module Quiz: Impressioning and Lockout Service",
 			"module_id": "M7",
 			"access": false,
 			"badge": {
@@ -797,7 +797,7 @@ window.app = {
 			    "pass_percent": 80
 			},
 			"type": "quiz",
-			"description": "Module Quiz: Master Key Systems"
+			"description": "Module Quiz: Impressioning and Lockout Service"
 		    }
 		}
             ]
@@ -808,7 +808,7 @@ window.app = {
             "modules": [
 		{
 		    "module_id": "M8",
-		    "title": "Automotive Locks and Entry",
+		    "title": "Lockout, Safe, and Auto Entry",
 		    "access": false,
 		    "lessons": [
 			{
@@ -877,7 +877,7 @@ window.app = {
 		    ],
 		    "quiz": {
 			"lesson_no": 37,
-			"title": "Module Quiz: Automotive Locks and Entry",
+			"title": "Module Quiz: Lockout, Safe, and Auto Entry",
 			"module_id": "M8",
 			"access": false,
 			"badge": {
@@ -890,7 +890,7 @@ window.app = {
 			    "pass_percent": 80
 			},
 			"type": "quiz",
-			"description": "Module Quiz: Automotive Locks and Entry"
+			"description": "Module Quiz: Lockout, Safe, and Auto Entry"
 		    }
 		},
 		{
@@ -941,7 +941,7 @@ window.app = {
             "modules": [
 		{
 		    "module_id": "M10",
-		    "title": "Commercial Door Hardware",
+		    "title": "Automotive Codes, Wafers, and Programming",
 		    "access": false,
 		    "lessons": [
 			{
@@ -1011,7 +1011,7 @@ window.app = {
 		    ],
 		    "quiz": {
 			"lesson_no": 44,
-			"title": "Module Quiz: Commercial Door Hardware",
+			"title": "Module Quiz: Automotive Codes, Wafers, and Programming",
 			"module_id": "M10",
 			"access": false,
 			"badge": {
@@ -1024,7 +1024,7 @@ window.app = {
 			    "pass_percent": 80
 			},
 			"type": "quiz",
-			"description": "Module Quiz: Commercial Door Hardware"
+			"description": "Module Quiz: Automotive Codes, Wafers, and Programming"
 		    }
 		}
             ]
