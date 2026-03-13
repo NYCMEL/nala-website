@@ -417,3 +417,22 @@ body,
 .mtk-dashboard__subscription-card * {
   background: transparent;
 }
+
+/* Explicit dashboard icon visibility */
+.mtk-dashboard__card-icon {
+  background: var(--nala-gold-dark) !important;
+  border: 2px solid rgba(17, 17, 17, 0.16) !important;
+  color: #ffffff !important;
+  box-shadow: 0 12px 24px rgba(138, 105, 32, 0.24) !important;
+}
+
+.mtk-dashboard__card-icon *,
+.mtk-dashboard__card-icon .material-icons,
+.mtk-dashboard__card-icon i,
+.mtk-dashboard__card-icon svg,
+.mtk-dashboard__card-icon path {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  stroke: none !important;
+  opacity: 1 !important;
+}

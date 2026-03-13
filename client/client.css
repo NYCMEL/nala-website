@@ -532,3 +532,101 @@ body {
     flex-direction: column; }
   .client-sidebar {
     order: -1; } }
+
+/* NALA public page accessibility palette */
+body,
+#page-content,
+.client-container,
+.client-layout,
+.client-main,
+.client-content,
+.client-content .content-section,
+.client-header,
+.client-tabs,
+.client-stats,
+.top-pro-badges,
+.stats-section,
+.program-stats,
+.why-program,
+.why-choose,
+.included-program {
+  background: #ffffff !important;
+}
+
+.client-container,
+.client-content .content-section,
+.card,
+.guarantee-card,
+.feature-tile,
+.tile,
+.tile-card {
+  background: #ffffff !important;
+  border: 2px solid rgba(17, 17, 17, 0.14) !important;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.10) !important;
+}
+
+.stat-item.stat-badge .material-icons,
+.client-tabs .tab.active,
+.client-tabs .tab.active *,
+.client-content .content-section a,
+.contact-card .link-details,
+.guarantee-card .guarantee-icon .material-icons,
+.guarantee-card .link-learn-more,
+.client-name-highlight,
+.stat-number,
+.stats-section .stat-number,
+.program-stats .stat-number {
+  color: var(--nala-gold-dark) !important;
+}
+
+.top-pro-badges .pro-badge .badge-icon,
+.guarantee-card .guarantee-icon,
+.stats-section .stat-icon,
+.program-stats .stat-icon {
+  background: var(--nala-gold-dark) !important;
+  color: #ffffff !important;
+  border: 2px solid rgba(17, 17, 17, 0.12) !important;
+  box-shadow: 0 12px 24px rgba(138, 105, 32, 0.20) !important;
+}
+
+.top-pro-badges .pro-badge .badge-icon *,
+.guarantee-card .guarantee-icon *,
+.stats-section .stat-icon *,
+.program-stats .stat-icon * {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.btn-primary,
+.client-container .btn-primary,
+.client-main .btn-primary,
+.client-content .btn-primary,
+.stats-section .btn-primary,
+.program-stats .btn-primary,
+#MTK-hero .btn,
+#MTK-hero .btn-primary {
+  background: var(--nala-gold-dark) !important;
+  color: #ffffff !important;
+  border: 2px solid #4f3a0e !important;
+  box-shadow: 0 12px 24px rgba(138, 105, 32, 0.20) !important;
+}
+
+.btn-primary:hover,
+.client-container .btn-primary:hover,
+.client-main .btn-primary:hover,
+.client-content .btn-primary:hover,
+#MTK-hero .btn:hover,
+#MTK-hero .btn-primary:hover {
+  background: var(--nala-gold) !important;
+  color: #111111 !important;
+  border-color: var(--nala-gold-dark) !important;
+}
+
+.client-tabs .tab {
+  color: #444444 !important;
+}
+
+.client-tabs .tab:hover {
+  color: #111111 !important;
+}
