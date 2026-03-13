@@ -117,3 +117,9 @@ OPEN TASKS / QA FOLLOW-UP
   review all lesson titles for grammar and capitalization and make them consistent across the course.
 - Verify quiz questions:
   replace any placeholder quiz questions in the database with the correct final questions from the original course content.
+- Make the website bilingual:
+  add a Spanish version of the website so core navigation, pages, and curriculum can be used in both English and Spanish.
+- Fix lesson set/module titles:
+  review module titles and ensure they correctly match the lessons they contain (for example, automotive code lessons should not appear under "Commercial Door Hardware").
+- Fix quiz visibility:
+  investigate and correct quiz items that are currently not visible or readable in the curriculum.
