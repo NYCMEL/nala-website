@@ -115,3 +115,5 @@ OPEN TASKS / QA FOLLOW-UP
   compare each lesson image/photo against the original website and confirm the correct image is attached to the correct lesson.
 - Normalize lesson title style:
   review all lesson titles for grammar and capitalization and make them consistent across the course.
+- Verify quiz questions:
+  replace any placeholder quiz questions in the database with the correct final questions from the original course content.

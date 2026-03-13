@@ -391,29 +391,22 @@ class MTKHierarchy {
     renderLesson(lesson, moduleId) {
         const disabledClass = !lesson.access ? 'mtk-lesson--disabled' : '';
         const lessonKey = `${moduleId}-${lesson.id}`;
-        const isOpen = this.openLessons.has(lessonKey);
-        const openClass = isOpen ? 'mtk-lesson__toggle--open' : '';
-        const bodyOpenClass = isOpen ? 'mtk-lesson__body--open' : '';
-
-        const resourcesHTML = lesson.resources ? lesson.resources.map(resource =>
-            this.renderResource(resource, moduleId, lesson.id)
-        ).join('') : '';
+        const isActive = this.openLessons.has(lessonKey);
+        const activeClass = isActive ? 'mtk-lesson--active' : '';
+        const primaryResource = this.findPrimaryLessonResource(moduleId, lesson.id);
+        const icon = primaryResource && primaryResource.type === 'page'
+            ? 'workspace_premium'
+            : 'play_circle_outline';
 
         return `
-      <div class="mtk-lesson ${disabledClass}" data-lesson-id="${lesson.id}" data-module-id="${moduleId}">
+      <div class="mtk-lesson ${disabledClass} ${activeClass}" data-lesson-id="${lesson.id}" data-module-id="${moduleId}">
         <div class="mtk-lesson__header"
              role="button"
              tabindex="0"
-             aria-expanded="${isOpen}"
+             aria-expanded="${isActive}"
              aria-label="Lesson: ${this.escapeHtml(lesson.title)}">
-          <span class="material-icons">folder_open</span>
+          <span class="material-icons">${icon}</span>
           <span class="mtk-lesson__title">${this.escapeHtml(lesson.title)}</span>
-          <span class="mtk-lesson__toggle ${openClass}">
-            <span class="material-icons">expand_more</span>
-          </span>
-        </div>
-        <div class="mtk-lesson__body ${bodyOpenClass}">
-          ${resourcesHTML}
         </div>
       </div>
     `;
@@ -592,59 +585,29 @@ class MTKHierarchy {
         const moduleId = lessonElement.dataset.moduleId;
         const lessonId = lessonElement.dataset.lessonId;
         const lessonKey = `${moduleId}-${lessonId}`;
+        const primaryResource = this.findPrimaryLessonResource(moduleId, lessonId);
 
         if (typeof wc !== 'undefined') {
             wc.log("MTKHierarchy: Lesson clicked", lessonKey);
         }
 
-        // Capture open state BEFORE we clear
-        const isOpen = this.openLessons.has(lessonKey);
-
-        // Close all open lesson DOM elements (except the clicked one)
-        const allLessonEls = this.elements.lhs.querySelectorAll('.mtk-lesson');
-        allLessonEls.forEach(el => {
-            const elLessonId = el.dataset.lessonId;
-            const elModuleId = el.dataset.moduleId;
-            const elKey = `${elModuleId}-${elLessonId}`;
-
-            if (elKey === lessonKey) return;
-
-            const elToggle = el.querySelector('.mtk-lesson__toggle');
-            const elBody   = el.querySelector('.mtk-lesson__body');
-            const elHeader = el.querySelector('.mtk-lesson__header');
-
-            if (elToggle) elToggle.classList.remove('mtk-lesson__toggle--open');
-            if (elBody)   elBody.classList.remove('mtk-lesson__body--open');
-            if (elHeader) elHeader.setAttribute('aria-expanded', 'false');
-        });
-
-        // Clear all open lesson state
         this.openLessons.clear();
+        this.openLessons.add(lessonKey);
+        this.enableLessonResources(moduleId, lessonId);
+        this.render();
 
-        // Toggle the clicked lesson
-        if (!isOpen) {
-            this.openLessons.add(lessonKey);
-            this.displayLessonResources(moduleId, lessonId);
-            this.enableLessonResources(moduleId, lessonId);
-        }
-
-        const toggle = lessonHeader.querySelector('.mtk-lesson__toggle');
-        const body   = lessonElement.querySelector('.mtk-lesson__body');
-
-        if (isOpen) {
-            toggle.classList.remove('mtk-lesson__toggle--open');
-            body.classList.remove('mtk-lesson__body--open');
-            lessonHeader.setAttribute('aria-expanded', 'false');
+        if (primaryResource && primaryResource.type === 'page' && primaryResource.url === 'final') {
+            if (typeof wc !== 'undefined' && wc.pages) {
+                wc.pages.show('final');
+            }
         } else {
-            toggle.classList.add('mtk-lesson__toggle--open');
-            body.classList.add('mtk-lesson__body--open');
-            lessonHeader.setAttribute('aria-expanded', 'true');
+            this.displayLessonResources(moduleId, lessonId);
         }
 
         wc.publish('mtk-hierarchy:lesson-toggled', {
             moduleId,
             lessonId,
-            isOpen: !isOpen,
+            isOpen: true,
             timestamp: new Date().toISOString()
         });
     }
@@ -1127,6 +1090,35 @@ class MTKHierarchy {
             if (!lesson) continue;
 
             return lesson.resources.find(r => r.id === resourceId);
+        }
+
+        return null;
+    }
+
+    /**
+     * Find the primary resource for a lesson.
+     * Prefer a final page resource, then the first accessible video, then photo,
+     * then the first available resource as a fallback.
+     */
+    findPrimaryLessonResource(moduleId, lessonId) {
+        if (!this.config || !Array.isArray(this.config)) return null;
+
+        for (const course of this.config) {
+            if (!course.modules) continue;
+
+            const module = course.modules.find(m => m.id === moduleId);
+            if (!module) continue;
+
+            const lesson = module.lessons.find(l => l.id === lessonId);
+            if (!lesson || !Array.isArray(lesson.resources) || lesson.resources.length === 0) {
+                return null;
+            }
+
+            return lesson.resources.find(r => r.access && r.type === 'page' && r.url === 'final')
+                || lesson.resources.find(r => r.access && r.type === 'video')
+                || lesson.resources.find(r => r.access && r.type === 'photo')
+                || lesson.resources.find(r => r.access)
+                || lesson.resources[0];
         }
 
         return null;

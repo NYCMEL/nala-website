@@ -351,6 +351,10 @@ h1.title::after {
   outline: 2px solid var(--mtk-primary);
   outline-offset: -2px; }
 
+.mtk-hierarchy .mtk-lesson.mtk-lesson--active .mtk-lesson__header {
+  background-color: rgba(201, 166, 74, 0.18);
+  border-left: 4px solid var(--mtk-primary); }
+
 .mtk-hierarchy .mtk-lesson__header .material-icons {
   margin-right: 0.75rem;
   font-size: 20px;
