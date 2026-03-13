@@ -785,3 +785,39 @@ body {
   background: rgba(184, 149, 59, 0.08) !important;
 }
 
+/* Final quiz palette overrides */
+body,
+.mtk-quiz-page,
+.mtk-quiz-wrap,
+.mtk-pages-item[mtk-pages-id="quiz"],
+.mtk-pages-item[mtk-pages-id="quiz"] > .container,
+.mtk-pages-item[mtk-pages-id="quiz"] .row,
+.mtk-pages-item[mtk-pages-id="quiz"] .col-md-12,
+.mtk-quiz .container,
+.mtk-quiz .row,
+.mtk-quiz .col-md-12 {
+  background: #ffffff !important;
+}
+
+.mtk-quiz .mtk-quiz__container,
+.mtk-quiz .mtk-quiz__body,
+.mtk-quiz .mtk-quiz__footer,
+.mtk-quiz .mtk-quiz__question {
+  background: #ffffff !important;
+}
+
+.mtk-quiz .mtk-quiz__container {
+  border: 1.5px solid rgba(18, 18, 18, 0.14);
+  box-shadow: var(--nala-shadow-lg);
+}
+
+.mtk-quiz .mtk-quiz__option {
+  border: 1.5px solid rgba(18, 18, 18, 0.12) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.mtk-quiz .mtk-quiz__option:hover,
+.mtk-quiz .mtk-quiz__option:focus-within {
+  box-shadow: var(--nala-shadow-sm);
+}
+

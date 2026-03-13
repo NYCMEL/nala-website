@@ -259,3 +259,14 @@ h1.title::after {
   border-color: var(--nala-gold) !important;
   color: #171717 !important;
 }
+
+/* Final hero palette overrides */
+#MTK-hero {
+  background: #ffffff !important;
+}
+
+#MTK-hero .MTK-hero-lhs .MTK-hero-card {
+  background: #ffffff !important;
+  border: 1.5px solid rgba(18, 18, 18, 0.14);
+  box-shadow: var(--nala-shadow-lg);
+}

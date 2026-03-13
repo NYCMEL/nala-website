@@ -346,3 +346,54 @@ h1.title::after {
   background: linear-gradient(180deg, var(--nala-gold-dark) 0%, #9f7b2a 100%) !important;
   color: #fffdf8 !important;
 }
+
+/* Final pricing palette overrides */
+.mtk-path {
+  background: #ffffff !important;
+}
+
+.mtk-path .mtk-card {
+  background: #ffffff !important;
+  border: 2px solid rgba(18, 18, 18, 0.16) !important;
+  box-shadow: var(--nala-shadow-md) !important;
+}
+
+.mtk-path .mtk-card:hover {
+  box-shadow: var(--nala-shadow-lg) !important;
+}
+
+.mtk-path .mtk-popular,
+.mtk-path .mtk-card.mtk-popular {
+  outline: 2px solid var(--nala-gold-dark) !important;
+  border-color: rgba(18, 18, 18, 0.22) !important;
+}
+
+.mtk-path .mtk-badge,
+.mtk-path .mtk-popular .mtk-badge {
+  background: var(--nala-gold-dark) !important;
+  color: #ffffff !important;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.16) !important;
+}
+
+.mtk-path .btn-path,
+.mtk-path .btn.btn-path,
+.mtk-path .btn.btn-lg.btn-path,
+.mtk-path .btn.btn-primary,
+.mtk-path .btn.btn-outline-primary,
+.mtk-path .btn.btn-outline-secondary {
+  background: var(--nala-gold-dark) !important;
+  border: 1.5px solid #4f3a0e !important;
+  color: #ffffff !important;
+  box-shadow: var(--nala-shadow-sm) !important;
+}
+
+.mtk-path .btn-path:hover,
+.mtk-path .btn.btn-path:hover,
+.mtk-path .btn.btn-lg.btn-path:hover,
+.mtk-path .btn.btn-primary:hover,
+.mtk-path .btn.btn-outline-primary:hover,
+.mtk-path .btn.btn-outline-secondary:hover {
+  background: #c49d40 !important;
+  border-color: #5d4510 !important;
+  color: #121212 !important;
+}

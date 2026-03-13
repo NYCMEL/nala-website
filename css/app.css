@@ -241,3 +241,69 @@ a:hover,
 .helper a:hover {
   color: var(--nala-gold);
 }
+
+/* Final accessibility palette overrides */
+:root {
+  --nala-gold: #b08a2e;
+  --nala-gold-dark: #8a6820;
+  --nala-gold-light: #e2d1a4;
+  --nala-ink: #121212;
+  --nala-ink-soft: #2a2a2a;
+  --nala-paper: #ffffff;
+  --nala-paper-soft: #ffffff;
+  --nala-border: #1f1f1f;
+  --nala-shadow-sm: 0 10px 22px rgba(0, 0, 0, 0.1);
+  --nala-shadow-md: 0 18px 40px rgba(0, 0, 0, 0.14);
+  --nala-shadow-lg: 0 24px 56px rgba(0, 0, 0, 0.18);
+}
+
+body {
+  background: #ffffff !important;
+  color: var(--nala-ink) !important;
+}
+
+a {
+  color: var(--nala-gold-dark);
+}
+
+a:hover {
+  color: #6f5317;
+}
+
+.course-card,
+.card,
+.panel,
+.modal-content {
+  background: #ffffff;
+  border: 1.5px solid rgba(18, 18, 18, 0.14);
+  box-shadow: var(--nala-shadow-sm);
+}
+
+h1.title::after {
+  background: var(--nala-gold-dark);
+}
+
+.btn.btn-primary,
+button.btn-primary,
+.wc-md-btn-primary,
+.submit-btn,
+.mtk-login form button,
+.mtk-settings__btn--primary,
+.mtk-dashboard .btn-primary {
+  background: var(--nala-gold-dark) !important;
+  border: 1.5px solid #4f3a0e !important;
+  color: #ffffff !important;
+  box-shadow: var(--nala-shadow-sm);
+}
+
+.btn.btn-primary:hover,
+button.btn-primary:hover,
+.wc-md-btn-primary:hover,
+.submit-btn:hover,
+.mtk-login form button:hover,
+.mtk-settings__btn--primary:hover,
+.mtk-dashboard .btn-primary:hover {
+  background: #c49d40 !important;
+  border-color: #5d4510 !important;
+  color: #121212 !important;
+}
