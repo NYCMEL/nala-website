@@ -22,6 +22,9 @@ wc.emsg = function (id) {
 };
 // let msg = wc.emsg(1000);
 
+wc.msg = wc.msg || {};
+wc.msg.lessonLocked = 'Please finish the current lesson video before moving on to the next lesson.';
+
 /************************************************************
  * CONFIG INACTIVITY TIMER
    SEE wc.login FOR USAGE
@@ -1524,6 +1527,55 @@ wc.submitQuiz = function (quizSessionId, moduleId, answersMap, callback) {
             callback(err, null);
         }
     });
+};
+/************************************************************
+ * FIX / UNFIX FOOTER ON SHORT PAGES
+ ************************************************************/
+wc.fixFooter = function() {
+    const footer = document.getElementById("page-footer");
+    if (!footer) return;
+
+    wc._adjustFooter = function() {
+        const docHeight = document.documentElement.scrollHeight;
+        const viewportHeight = window.innerHeight;
+
+        if (docHeight <= viewportHeight) {
+            footer.style.position = "fixed";
+            footer.style.bottom = "0";
+            footer.style.left = "0";
+            footer.style.width = "100%";
+        } else {
+            footer.style.position = "static";
+            footer.style.removeProperty("bottom");
+            footer.style.removeProperty("left");
+            footer.style.removeProperty("width");
+        }
+    };
+
+    window.removeEventListener("load", wc._adjustFooter);
+    window.removeEventListener("resize", wc._adjustFooter);
+    window.addEventListener("load", wc._adjustFooter);
+    window.addEventListener("resize", wc._adjustFooter);
+
+    setTimeout(wc._adjustFooter, 50);
+};
+
+/************************************************************
+ * REMOVE FIXED FOOTER BEHAVIOR
+ ************************************************************/
+wc.unfixFooter = function() {
+    const footer = document.getElementById("page-footer");
+    if (!footer) return;
+
+    if (wc._adjustFooter) {
+        window.removeEventListener("load", wc._adjustFooter);
+        window.removeEventListener("resize", wc._adjustFooter);
+    }
+
+    footer.style.removeProperty("position");
+    footer.style.removeProperty("bottom");
+    footer.style.removeProperty("left");
+    footer.style.removeProperty("width");
 };
 
 /************************************************************

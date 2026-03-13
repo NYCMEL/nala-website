@@ -19,6 +19,8 @@ class MTKHierarchy {
         this.activeQuiz = null;
         this.openModules = new Set();
         this.openLessons = new Set();
+        this._vimeoApiLoading = false;
+        this._vimeoApiCallbacks = [];
 
         // Add IDs to items that don't have them
         this.ensureIds();
@@ -424,7 +426,7 @@ class MTKHierarchy {
         const disabledClass = !resource.access ? 'mtk-resource--disabled' : '';
         const activeClass = this.activeResource === resource.id ? 'mtk-resource--active' : '';
 
-        const icon = resource.type === 'video' ? 'play_circle_outline' : 'image';
+        const icon = resource.type === 'video' ? 'play_circle_outline' : resource.type === 'page' ? 'workspace_premium' : 'image';
         const statusIcon = resource.processed ? '<span class="mtk-resource__status"><span class="material-icons">visibility</span></span>' : '';
 
         return `
@@ -573,6 +575,17 @@ class MTKHierarchy {
             if (typeof wc !== 'undefined') {
                 wc.warn("MTKHierarchy: Lesson is disabled (access=false)");
             }
+            if (typeof MTKMsgs !== 'undefined') {
+                MTKMsgs.show({
+                    type: 'info',
+                    icon: 'info',
+                    message: (typeof wc !== 'undefined' && wc.msg && wc.msg.lessonLocked)
+                        ? wc.msg.lessonLocked
+                        : 'Please finish the current lesson video before moving on to the next lesson.',
+                    closable: true,
+                    timer: 0
+                });
+            }
             return;
         }
 
@@ -613,7 +626,6 @@ class MTKHierarchy {
             this.openLessons.add(lessonKey);
             this.displayLessonResources(moduleId, lessonId);
             this.enableLessonResources(moduleId, lessonId);
-            this.enableNextLessonOrQuiz(moduleId, lessonId);
         }
 
         const toggle = lessonHeader.querySelector('.mtk-lesson__toggle');
@@ -634,6 +646,111 @@ class MTKHierarchy {
             lessonId,
             isOpen: !isOpen,
             timestamp: new Date().toISOString()
+        });
+    }
+
+    /**
+     * Load Vimeo player API once and invoke callback when ready.
+     */
+    ensureVimeoApi(callback) {
+        if (typeof window !== 'undefined' && window.Vimeo && window.Vimeo.Player) {
+            callback();
+            return;
+        }
+
+        this._vimeoApiCallbacks.push(callback);
+        if (this._vimeoApiLoading) return;
+        this._vimeoApiLoading = true;
+
+        const existing = document.querySelector('script[data-vimeo-player-api="1"]');
+        if (existing) return;
+
+        const script = document.createElement('script');
+        script.src = 'https://player.vimeo.com/api/player.js';
+        script.async = true;
+        script.setAttribute('data-vimeo-player-api', '1');
+
+        script.onload = () => {
+            this._vimeoApiLoading = false;
+            const callbacks = this._vimeoApiCallbacks.slice();
+            this._vimeoApiCallbacks = [];
+            callbacks.forEach(fn => {
+                try { fn(); } catch (e) { wc.warn('MTKHierarchy: Vimeo callback error', e); }
+            });
+        };
+
+        script.onerror = () => {
+            this._vimeoApiLoading = false;
+            this._vimeoApiCallbacks = [];
+            wc.warn('MTKHierarchy: failed to load Vimeo API');
+        };
+
+        document.head.appendChild(script);
+    }
+
+    /**
+     * Find lesson_no for a resource id.
+     */
+    findLessonContextForResource(resourceId) {
+        if (!this.config || !Array.isArray(this.config)) return null;
+        for (const course of this.config) {
+            if (!course.modules) continue;
+            for (const module of course.modules) {
+                if (!module.lessons) continue;
+                for (const lesson of module.lessons) {
+                    if (!lesson.resources) continue;
+                    if (lesson.resources.some(r => r.id === resourceId)) {
+                        return {
+                            moduleId: module.id,
+                            lessonId: lesson.id,
+                            lessonNo: Number.isFinite(Number(lesson.lesson_no)) ? Number(lesson.lesson_no) : null
+                        };
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Advance progress only when the lesson video is fully watched (Vimeo ended).
+     */
+    attachVideoCompletionTracking(lessonNo, moduleId, lessonId) {
+        if (!Number.isFinite(Number(lessonNo))) return;
+        if (typeof wc === 'undefined' || typeof wc.lessonComplete !== 'function') return;
+        if (!wc.session || !wc.session.user) return;
+
+        const iframe = this.elements && this.elements.rhs
+            ? this.elements.rhs.querySelector('.mtk-video-container iframe')
+            : null;
+        if (!iframe) return;
+        if (iframe.dataset.progressBound === '1') return;
+        iframe.dataset.progressBound = '1';
+
+        this.ensureVimeoApi(() => {
+            if (!(window.Vimeo && window.Vimeo.Player)) return;
+            const player = new window.Vimeo.Player(iframe);
+            player.on('ended', () => {
+                const current = Number(wc.session.user.current_lesson);
+                if (!Number.isFinite(current)) return;
+                wc.lessonComplete(Number(lessonNo), current, (err, result) => {
+                    if (err) {
+                        wc.warn('MTKHierarchy: lessonComplete failed on video end', err);
+                        return;
+                    }
+                    if (result && Number.isFinite(Number(result.current_lesson))) {
+                        wc.session.user.current_lesson = Number(result.current_lesson);
+                    }
+                    if (result && result.advanced === true && moduleId && lessonId) {
+                        this.enableNextLessonOrQuiz(moduleId, lessonId);
+                    }
+                    wc.log('MTKHierarchy: video-ended progress sync', {
+                        lesson_no: Number(lessonNo),
+                        previous_current: current,
+                        response: result
+                    });
+                });
+            });
         });
     }
 
@@ -797,13 +914,24 @@ class MTKHierarchy {
         }
     }
 
-    /**
+        /**
      * Handle resource click
      */
     handleResourceClick(event, resourceElement) {
         if (resourceElement.classList.contains('mtk-resource--disabled')) {
             if (typeof wc !== 'undefined') {
                 wc.warn("MTKHierarchy: Resource is disabled (access=false)");
+            }
+            if (typeof MTKMsgs !== 'undefined') {
+                MTKMsgs.show({
+                    type: 'info',
+                    icon: 'info',
+                    message: (typeof wc !== 'undefined' && wc.msg && wc.msg.lessonLocked)
+                        ? wc.msg.lessonLocked
+                        : 'Please finish the current lesson video before moving on to the next lesson.',
+                    closable: true,
+                    timer: 0
+                });
             }
             return;
         }
@@ -840,6 +968,21 @@ class MTKHierarchy {
             }
         }
 
+        if (resource.type === 'page' && resource.url === 'final') {
+            if (typeof wc !== 'undefined') {
+                wc.pages.show('final');
+            }
+
+            wc.publish('mtk-hierarchy:resource-clicked', {
+                moduleId,
+                lessonId,
+                resourceId,
+                resource,
+                timestamp: new Date().toISOString()
+            });
+            return;
+        }
+
         this.displayResource(resource);
 
         wc.publish('mtk-hierarchy:resource-clicked', {
@@ -850,8 +993,7 @@ class MTKHierarchy {
             timestamp: new Date().toISOString()
         });
     }
-
-    /**
+/**
      * Handle quiz start button click
      */
     handleQuizStart(moduleId, quizUrl) {
@@ -1015,8 +1157,9 @@ class MTKHierarchy {
             let contentHTML = '<div class="mtk-hierarchy-rhs__content">';
             contentHTML += `<h2>${this.escapeHtml(lesson.title)}</h2>`;
 
+            let firstVideo = null;
             if (videos.length > 0) {
-                const firstVideo = videos[0];
+                firstVideo = videos[0];
                 contentHTML += `<p style="color: var(--mtk-text-secondary); margin-bottom: 1rem;">${this.escapeHtml(firstVideo.description)}</p>`;
                 contentHTML += `
           <div class="mtk-video-container">
@@ -1052,6 +1195,10 @@ class MTKHierarchy {
 
             this.elements.rhs.innerHTML = contentHTML;
 
+            if (firstVideo && Number.isFinite(Number(lesson.lesson_no))) {
+                this.attachVideoCompletionTracking(Number(lesson.lesson_no), moduleId, lessonId);
+            }
+
             return;
         }
     }
@@ -1066,6 +1213,13 @@ class MTKHierarchy {
             wc.log("MTKHierarchy: Displaying resource", resource);
         }
 
+        if (resource && resource.type === 'page' && resource.url === 'final') {
+            if (typeof wc !== 'undefined' && wc.pages) {
+                wc.pages.show('final');
+            }
+            return;
+        }
+
         const allResources = this.getAllResourcesForCurrentLesson(resource);
         const videos = allResources.filter(r => r.type === 'video' && r.access);
         const photos = allResources.filter(r => r.type === 'photo' && r.access);
@@ -1077,8 +1231,9 @@ class MTKHierarchy {
         let contentHTML = '<div class="mtk-hierarchy-rhs__content">';
         contentHTML += `<h2>${this.escapeHtml(resource.description)}</h2>`;
 
+        let firstVideo = null;
         if (videos.length > 0) {
-            const firstVideo = videos[0];
+            firstVideo = videos[0];
             contentHTML += `
         <div class="mtk-video-container">
           <iframe src="${this.sanitizeUrl(firstVideo.url)}"
@@ -1112,6 +1267,11 @@ class MTKHierarchy {
         contentHTML += '</div>';
 
         this.elements.rhs.innerHTML = contentHTML;
+
+        const lessonContext = this.findLessonContextForResource(resource.id);
+        if (firstVideo && lessonContext && Number.isFinite(Number(lessonContext.lessonNo))) {
+            this.attachVideoCompletionTracking(Number(lessonContext.lessonNo), lessonContext.moduleId, lessonContext.lessonId);
+        }
     }
 
     /**
@@ -1368,6 +1528,61 @@ class MTKHierarchy {
 
 // ─── Initialization ───────────────────────────────────────────────────────────
 
+function buildLocalLessonMap(parts) {
+    const map = new Map();
+    if (!Array.isArray(parts)) return map;
+
+    parts.forEach(part => {
+        (part.modules || []).forEach(module => {
+            (module.lessons || []).forEach(lesson => {
+                const lessonNo = Number(lesson.lesson_no);
+                if (!Number.isFinite(lessonNo)) return;
+
+                const videoDescriptions = (lesson.resources || [])
+                    .filter(r => r && r.type === 'video')
+                    .map(r => (r.description || '').trim())
+                    .filter(Boolean);
+
+                map.set(lessonNo, {
+                    title: (lesson.title || '').trim(),
+                    videoDescriptions
+                });
+            });
+        });
+    });
+
+    return map;
+}
+
+function overlayTitlesFromLocalConfig(sessionParts, localParts) {
+    if (!Array.isArray(sessionParts) || !Array.isArray(localParts)) return sessionParts;
+
+    const lessonMap = buildLocalLessonMap(localParts);
+    if (!lessonMap.size) return sessionParts;
+
+    sessionParts.forEach(part => {
+        (part.modules || []).forEach(module => {
+            (module.lessons || []).forEach(lesson => {
+                const lessonNo = Number(lesson.lesson_no);
+                if (!Number.isFinite(lessonNo)) return;
+
+                const local = lessonMap.get(lessonNo);
+                if (!local) return;
+
+                if (local.title) lesson.title = local.title;
+
+                const remoteVideoResources = (lesson.resources || []).filter(r => r && r.type === 'video');
+                remoteVideoResources.forEach((res, idx) => {
+                    const localDescription = local.videoDescriptions[idx];
+                    if (localDescription) res.description = localDescription;
+                });
+            });
+        });
+    });
+
+    return sessionParts;
+}
+
 if (wc.testing) {
     // LOCAL MODE - Use window.app.hierarchy
     if (typeof window.app !== 'undefined' && window.app.hierarchy) {
@@ -1389,8 +1604,12 @@ if (wc.testing) {
     // REMOTE MODE
     wc.log("MTKHierarchy: Remote mode - fetching curriculum from API");
 
+    const localHierarchy = (window.app && Array.isArray(window.app.hierarchy)) ? window.app.hierarchy : null;
+    const remoteHierarchy = Array.isArray(wc.session.hierarchy.parts) ? wc.session.hierarchy.parts : [];
+    const mergedHierarchy = overlayTitlesFromLocalConfig(remoteHierarchy, localHierarchy);
+
     window.app = window.app || {};
-    window.app.hierarchy = wc.session.hierarchy.parts;
+    window.app.hierarchy = mergedHierarchy;
 
     wc.log("MTKHierarchy: Curriculum loaded");
     wc.log("testing:", wc.testing, window.app.hierarchy);
@@ -1462,4 +1681,6 @@ function subscribeToEvents() {
 }
 
 })(); // end IIFE — prevents MTKHierarchy class from polluting global scope
+
+
 

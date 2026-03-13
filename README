@@ -106,3 +106,12 @@ Notes about manual sync (non-git folders)
 - If `media` files change locally, upload them manually to:
   `~/www/nala-test.com/public_html/media/`
 - Do not assume `git pull` updates `api`/`media`.
+
+OPEN TASKS / QA FOLLOW-UP
+------------------------------------
+- Simplify curriculum resource display:
+  if a lesson already contains the main video and images, do not show redundant nested video/image entries that require extra clicks.
+- Verify lesson images:
+  compare each lesson image/photo against the original website and confirm the correct image is attached to the correct lesson.
+- Normalize lesson title style:
+  review all lesson titles for grammar and capitalization and make them consistent across the course.

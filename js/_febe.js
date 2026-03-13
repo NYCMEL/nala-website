@@ -81,7 +81,18 @@ class _febe {
 	const handler = this.handlers[msg];
 
 	if (handler) {
-	    handler(data);
+	    const pagesRef = wc.pages || document.getElementById("mtk-pages");
+	    if (pagesRef && typeof pagesRef.show === "function") {
+		wc.pages = pagesRef;
+	    }
+
+	    if (!wc.pages || typeof wc.pages.show !== "function") {
+		wc.warn("_febe: wc.pages not ready, retrying", msg);
+		wc.timeout(() => this.onMessage(msg, data), 150, 1);
+		return;
+	    }
+
+	    handler.call(this, data);
 	} else {
 	    wc.error("_febe: DO NOT HAVE:" + msg);
 	    alert("_febe: DO NOT HAVE:" + msg);
@@ -152,12 +163,47 @@ class _febe {
     //////////////////////////////////////////////////////////////////
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////
+    ///// HANDLERS
+    //////////////////////////////////////////////////////////////////
     handleRegister() {
-	wc.timeout(function(){
-	    wc.pages.show("register");
-	    
-	    $('[mtk-pages-id="register"]').css("display","block");
-	}, 300, 1);
+        const maxAttempts = 15;
+
+        const tryShowRegister = (attempt = 0) => {
+            const pagesRef = wc.pages || document.getElementById("mtk-pages");
+
+            if (!pagesRef || typeof pagesRef.show !== "function") {
+                if (attempt < maxAttempts) {
+                    wc.timeout(() => tryShowRegister(attempt + 1), 120, 1);
+                }
+                return;
+            }
+
+            wc.pages = pagesRef;
+
+            if (attempt === 0) {
+                wc.pages.show("register");
+            }
+
+            const page = document.querySelector('[mtk-pages-id="register"]');
+            const form = page ? page.querySelector("#mtk-register") : null;
+
+            if (!form && attempt < maxAttempts) {
+                wc.timeout(() => tryShowRegister(attempt + 1), 200, 1);
+                return;
+            }
+
+            if (page) {
+                page.style.display = "block";
+            }
+
+            if (typeof wc.unfixFooter === "function") {
+                wc.unfixFooter();
+            }
+            window.scrollTo({ top: 0, behavior: "auto" });
+        };
+
+        tryShowRegister(0);
     }
     handleForgotPassword() {
 	const emailInput = document.querySelector("#mtk-email");
@@ -198,7 +244,7 @@ class _febe {
 		MTKMsgs.show({
 		    type: "success",
 		    icon: "success",
-		    message: "If this email exists, a reset link will be emailed to you.",
+		    message: "If this email exists, a reset link has been sent.",
 		    closable: true,
 		    timer: 10
 		});
@@ -312,6 +358,8 @@ class _febe {
 	    wc.log("_febe.handleQuizSubmitted > Server response:", response);
 
 	    if (response.passed) {
+		const isFinalModule = String(data.module_id || "") === "M12";
+
 		mtkDialog.open({
 		    id      : 'success',
 		    title   : 'You passed the Quiz',
@@ -337,6 +385,11 @@ class _febe {
 		// ENABLE NEXT MODULE
 		window.MTKHierarchy.enableNextModule();
 
+		// Final module pass should route to certificate email prompt.
+		if (isFinalModule) {
+		    wc.timeout(() => wc.pages.show("final"), 250, 1);
+		}
+
 		wc.log("Congratulations! You passed.");
 	    } else {
 		mtkDialog.open({
@@ -355,7 +408,6 @@ class _febe {
 	    }
 	});
     }
-
     //////////////////////////////////////////////////////////////////
     ///// RESOURCE HANDLERS
     //////////////////////////////////////////////////////////////////
@@ -390,5 +442,3 @@ class _febe {
 
 /* auto-init */
 window._febe = new _febe();
-
-

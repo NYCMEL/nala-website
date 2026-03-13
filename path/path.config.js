@@ -30,7 +30,8 @@
                     "Full program access (all 5 parts)",
                     "Full access included",
                     "Certificate of completion",
-                    "Learn at your own pace"
+                    "Learn at your own pace",
+                    "Free lockout kit gift included"
                 ],
                 cta: "Get Started",
                 popular: true
