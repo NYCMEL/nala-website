@@ -326,8 +326,7 @@ h1.title::after {
   user-select: none; }
 
 .mtk-dashboard .fa {
-  font-family: FontAwesome !important;
-}
+  font-family: FontAwesome !important; }
 
 @media (max-width: 768px) {
   .mtk-dashboard {
@@ -348,81 +347,67 @@ h1.title::after {
   animation-delay: 0.1s;
   animation-fill-mode: both; }
 
-
 /* Matte dashboard card overrides */
 .mtk-dashboard__header,
 .mtk-dashboard__subscriptions {
   background: rgba(255, 253, 249, 0.98);
   border: 1px solid var(--nala-border);
-  box-shadow: var(--nala-shadow-md);
-}
+  box-shadow: var(--nala-shadow-md); }
 
 .mtk-dashboard__subscription-card {
   background: #fffdfa;
   border: 1px solid var(--nala-border);
-  box-shadow: var(--nala-shadow-sm);
-}
+  box-shadow: var(--nala-shadow-sm); }
 
 .mtk-dashboard__card-icon {
-  background: var(--nala-gold-dark);
-}
+  background: var(--nala-gold-dark); }
 
 .mtk-dashboard__progress-fill {
-  background: var(--nala-gold);
-}
+  background: var(--nala-gold); }
 
 /* Final accessible white dashboard palette */
 body,
 #page-content,
 .mtk-dashboard {
-  background: #ffffff !important;
-}
+  background: #ffffff !important; }
 
 .mtk-dashboard__header,
 .mtk-dashboard__subscriptions {
   background: #ffffff !important;
   border: 2px solid rgba(17, 17, 17, 0.12) !important;
-  box-shadow: var(--nala-shadow-md) !important;
-}
+  box-shadow: var(--nala-shadow-md) !important; }
 
 .mtk-dashboard__subscription-card {
   background: #ffffff !important;
   border: 2px solid rgba(17, 17, 17, 0.12) !important;
-  box-shadow: var(--nala-shadow-sm) !important;
-}
+  box-shadow: var(--nala-shadow-sm) !important; }
 
 .mtk-dashboard__subscription-card:hover {
   border-color: rgba(17, 17, 17, 0.24) !important;
-  box-shadow: var(--nala-shadow-lg) !important;
-}
+  box-shadow: var(--nala-shadow-lg) !important; }
 
 .mtk-dashboard__card-icon {
   background: var(--nala-gold-dark) !important;
-  box-shadow: 0 10px 20px rgba(138, 105, 32, 0.22);
-}
+  box-shadow: 0 10px 20px rgba(138, 105, 32, 0.22); }
 
 .mtk-dashboard__course-title,
 .mtk-dashboard__card-description {
-  color: #4f4f4f !important;
-}
+  color: #4f4f4f !important; }
 
 /* Strong dashboard surface separation */
 .mtk-dashboard__header,
 .mtk-dashboard__subscriptions {
   background: #ffffff !important;
   border: 2px solid rgba(17, 17, 17, 0.18) !important;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.10) !important;
-}
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.1) !important; }
 
 .mtk-dashboard__subscription-card {
   background: #fcfcfc !important;
-  border: 2px solid rgba(17, 17, 17, 0.20) !important;
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08) !important;
-}
+  border: 2px solid rgba(17, 17, 17, 0.2) !important;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08) !important; }
 
 .mtk-dashboard__subscription-card > :not(.mtk-dashboard__card-icon) {
-  background: transparent;
-}
+  background: transparent; }
 
 /* Explicit dashboard icon visibility */
 .mtk-dashboard__card-icon {
@@ -438,8 +423,7 @@ body,
   min-width: 56px !important;
   min-height: 56px !important;
   border-radius: 50% !important;
-  background-color: var(--nala-gold-dark) !important;
-}
+  background-color: var(--nala-gold-dark) !important; }
 
 .mtk-dashboard__card-icon *,
 .mtk-dashboard__card-icon .material-icons,
@@ -450,15 +434,13 @@ body,
   color: #ffffff !important;
   fill: #ffffff !important;
   stroke: none !important;
-  opacity: 1 !important;
-}
+  opacity: 1 !important; }
 
 .mtk-dashboard__card-icon .fa {
   font-family: FontAwesome !important;
   font-size: 26px !important;
   line-height: 1 !important;
-  background: transparent !important;
-}
+  background: transparent !important; }
 
 /* Final dashboard contrast/icon corrections */
 .mtk-dashboard,
@@ -467,15 +449,13 @@ body,
 .mtk-dashboard__subscriptions,
 .mtk-dashboard__subscription-grid,
 .mtk-dashboard__subscription-card {
-  background-color: #ffffff !important;
-}
+  background-color: #ffffff !important; }
 
 .mtk-dashboard__header,
 .mtk-dashboard__subscriptions,
 .mtk-dashboard__subscription-card {
   border: 2px solid rgba(17, 17, 17, 0.16) !important;
-  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.10) !important;
-}
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.1) !important; }
 
 .mtk-dashboard__card-icon {
   background: var(--nala-gold-dark) !important;
@@ -483,8 +463,7 @@ body,
   box-shadow: 0 14px 28px rgba(138, 105, 32, 0.22) !important;
   color: #ffffff !important;
   position: relative !important;
-  overflow: hidden !important;
-}
+  overflow: hidden !important; }
 
 .mtk-dashboard__card-icon svg {
   width: 26px !important;
@@ -494,12 +473,10 @@ body,
   fill: #ffffff !important;
   opacity: 1 !important;
   position: relative !important;
-  z-index: 1 !important;
-}
+  z-index: 1 !important; }
 
 .mtk-dashboard__card-icon path {
-  fill: currentColor !important;
-}
+  fill: currentColor !important; }
 
 .mtk-dashboard__card-icon::before {
   content: "" !important;
@@ -507,8 +484,7 @@ body,
   inset: 0 !important;
   border-radius: 50% !important;
   background: linear-gradient(135deg, #8a6920 0%, #b38a2e 100%) !important;
-  z-index: 0 !important;
-}
+  z-index: 0 !important; }
 
 .mtk-dashboard__card-title,
 .mtk-dashboard__card-description,
@@ -518,5 +494,4 @@ body,
 .mtk-dashboard__course-title,
 .mtk-dashboard__progress-percentage,
 .mtk-dashboard__user-name {
-  color: #111111 !important;
-}
+  color: #111111 !important; }

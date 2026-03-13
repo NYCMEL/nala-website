@@ -550,8 +550,7 @@ body,
 .why-program,
 .why-choose,
 .included-program {
-  background: #ffffff !important;
-}
+  background: #ffffff !important; }
 
 .client-container,
 .client-content .content-section,
@@ -562,8 +561,7 @@ body,
 .tile-card {
   background: #ffffff !important;
   border: 2px solid rgba(17, 17, 17, 0.14) !important;
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.10) !important;
-}
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1) !important; }
 
 .stat-item.stat-badge .material-icons,
 .client-tabs .tab.active,
@@ -576,8 +574,7 @@ body,
 .stat-number,
 .stats-section .stat-number,
 .program-stats .stat-number {
-  color: var(--nala-gold-dark) !important;
-}
+  color: var(--nala-gold-dark) !important; }
 
 .top-pro-badges .pro-badge .badge-icon,
 .guarantee-card .guarantee-icon,
@@ -586,8 +583,7 @@ body,
   background: var(--nala-gold-dark) !important;
   color: #ffffff !important;
   border: 2px solid rgba(17, 17, 17, 0.12) !important;
-  box-shadow: 0 12px 24px rgba(138, 105, 32, 0.20) !important;
-}
+  box-shadow: 0 12px 24px rgba(138, 105, 32, 0.2) !important; }
 
 .top-pro-badges .pro-badge .badge-icon *,
 .guarantee-card .guarantee-icon *,
@@ -595,8 +591,7 @@ body,
 .program-stats .stat-icon * {
   color: #ffffff !important;
   fill: #ffffff !important;
-  opacity: 1 !important;
-}
+  opacity: 1 !important; }
 
 .btn-primary,
 .client-container .btn-primary,
@@ -609,8 +604,7 @@ body,
   background: var(--nala-gold-dark) !important;
   color: #ffffff !important;
   border: 2px solid #4f3a0e !important;
-  box-shadow: 0 12px 24px rgba(138, 105, 32, 0.20) !important;
-}
+  box-shadow: 0 12px 24px rgba(138, 105, 32, 0.2) !important; }
 
 .btn-primary:hover,
 .client-container .btn-primary:hover,
@@ -620,16 +614,13 @@ body,
 #MTK-hero .btn-primary:hover {
   background: var(--nala-gold) !important;
   color: #111111 !important;
-  border-color: var(--nala-gold-dark) !important;
-}
+  border-color: var(--nala-gold-dark) !important; }
 
 .client-tabs .tab {
-  color: #444444 !important;
-}
+  color: #444444 !important; }
 
 .client-tabs .tab:hover {
-  color: #111111 !important;
-}
+  color: #111111 !important; }
 
 /* Final public-page contrast corrections */
 #MTK-hero,
@@ -645,8 +636,7 @@ body,
 .client-content .content-section,
 .client-container,
 .client-main {
-  background: #ffffff !important;
-}
+  background: #ffffff !important; }
 
 #MTK-hero .btn,
 #MTK-hero .btn-primary,
@@ -656,9 +646,8 @@ body,
   background: var(--nala-gold-dark) !important;
   color: #ffffff !important;
   border: 2px solid #4f3a0e !important;
-  box-shadow: 0 12px 24px rgba(138, 105, 32, 0.20) !important;
-  opacity: 1 !important;
-}
+  box-shadow: 0 12px 24px rgba(138, 105, 32, 0.2) !important;
+  opacity: 1 !important; }
 
 #MTK-hero .btn:hover,
 #MTK-hero .btn-primary:hover,
@@ -666,15 +655,13 @@ body,
 .program-stats .btn-primary:hover,
 .stats-section .btn-primary:hover {
   background: var(--nala-gold) !important;
-  color: #111111 !important;
-}
+  color: #111111 !important; }
 
 .stat-number,
 .stats-section .stat-number,
 .program-stats .stat-number,
 .client-name-highlight {
-  color: var(--nala-gold-dark) !important;
-}
+  color: var(--nala-gold-dark) !important; }
 
 .top-pro-badges .pro-badge .badge-icon,
 .guarantee-card .guarantee-icon,
@@ -683,8 +670,7 @@ body,
   background: var(--nala-gold-dark) !important;
   color: #ffffff !important;
   border: 2px solid rgba(17, 17, 17, 0.18) !important;
-  box-shadow: 0 14px 28px rgba(138, 105, 32, 0.20) !important;
-}
+  box-shadow: 0 14px 28px rgba(138, 105, 32, 0.2) !important; }
 
 .top-pro-badges .pro-badge .badge-icon *,
 .guarantee-card .guarantee-icon *,
@@ -692,8 +678,7 @@ body,
 .program-stats .stat-icon * {
   color: #ffffff !important;
   fill: #ffffff !important;
-  opacity: 1 !important;
-}
+  opacity: 1 !important; }
 
 /* Final public-page contrast overrides */
 body,
@@ -708,14 +693,12 @@ body,
 .paths-section,
 .pricing-section,
 .courses-section {
-  background: #ffffff !important;
-}
+  background: #ffffff !important; }
 
 .program-stats .stat-number,
 .stats-section .stat-number,
 .client-content .stat-number {
-  color: #8a6920 !important;
-}
+  color: #8a6920 !important; }
 
 .top-pro-badges .pro-badge .badge-icon,
 .program-stats .stat-icon,
@@ -723,16 +706,14 @@ body,
   background: linear-gradient(135deg, #8a6920 0%, #b38a2e 100%) !important;
   color: #ffffff !important;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16) !important;
-  border: 2px solid rgba(17, 17, 17, 0.14) !important;
-}
+  border: 2px solid rgba(17, 17, 17, 0.14) !important; }
 
 .top-pro-badges .pro-badge .badge-icon *,
 .program-stats .stat-icon *,
 .stats-section .stat-icon * {
   color: #ffffff !important;
   fill: currentColor !important;
-  opacity: 1 !important;
-}
+  opacity: 1 !important; }
 
 .btn-primary,
 .client-container .btn-primary,
@@ -744,8 +725,7 @@ body,
   background: linear-gradient(135deg, #8a6920 0%, #b38a2e 100%) !important;
   border: 1px solid rgba(17, 17, 17, 0.12) !important;
   color: #ffffff !important;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16) !important;
-}
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16) !important; }
 
 .btn-primary:hover,
 .client-container .btn-primary:hover,
@@ -755,8 +735,7 @@ body,
 .program-stats .btn-primary:hover,
 #MTK-hero .btn-primary:hover {
   background: linear-gradient(135deg, #9a7827 0%, #c29a34 100%) !important;
-  color: #ffffff !important;
-}
+  color: #ffffff !important; }
 
 .card,
 .client-content .card,
@@ -766,5 +745,4 @@ body,
 .pricing-card {
   background: #ffffff !important;
   border: 1.5px solid rgba(17, 17, 17, 0.18) !important;
-  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.08) !important;
-}
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.08) !important; }
