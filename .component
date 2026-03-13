@@ -45,12 +45,3 @@ Behavior:
 - MUST WAIT for element to be available inside DOM, since i will be using <wc-include> for dynamic inclusion
 - all published (wc.publish) messages should be logged using wc.log to console before being published
 
-#######################################################
-# example:
-#  
-#  about my mtk-component
-#   - it has a group of 3 buttons
-#     - primary
-#     - warning
-#     - danger
-#######################################################
