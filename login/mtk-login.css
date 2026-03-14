@@ -244,28 +244,3 @@ h1.title::after {
 .mtk-login form .links a:hover, .mtk-login form .links a:focus {
   text-decoration: underline;
   outline: none; }
-
-/* Matte login overrides */
-.mtk-login {
-  background: rgba(255, 253, 249, 0.98);
-  border: 1px solid var(--nala-border);
-  box-shadow: var(--nala-shadow-md);
-}
-
-.mtk-login form .form-group input:focus {
-  border-color: var(--nala-gold-dark);
-  box-shadow: 0 0 0 2px rgba(184, 149, 59, 0.18);
-}
-
-.mtk-login form button {
-  background-color: var(--nala-gold-dark);
-}
-
-.mtk-login form button:hover, .mtk-login form button:focus {
-  background-color: var(--nala-gold);
-  color: #171717;
-}
-
-.mtk-login form .links a {
-  color: var(--nala-gold-dark);
-}

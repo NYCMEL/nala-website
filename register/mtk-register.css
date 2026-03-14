@@ -233,31 +233,3 @@ h1.title::after {
 
 .helper.error {
   color: #d32f2f; }
-
-/* Matte register overrides */
-.md-form {
-  background: rgba(255, 253, 249, 0.98);
-  border: 1px solid var(--nala-border);
-  box-shadow: var(--nala-shadow-md);
-  border-radius: 20px;
-}
-
-.md-field input:focus {
-  border-bottom-color: var(--nala-gold-dark);
-}
-
-.md-field input:focus + label,
-.md-field input:not(:placeholder-shown) + label {
-  color: var(--nala-gold-dark);
-}
-
-.submit-btn {
-  background: var(--nala-gold-dark);
-  border-radius: 10px;
-  box-shadow: var(--nala-shadow-sm);
-}
-
-.submit-btn:hover {
-  background: var(--nala-gold);
-  color: #171717;
-}
