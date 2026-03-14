@@ -113,6 +113,8 @@ OPEN TASKS / QA FOLLOW-UP
   if a lesson already contains the main video and images, do not show redundant nested video/image entries that require extra clicks.
 - Verify lesson images:
   compare each lesson image/photo against the original website and confirm the correct image is attached to the correct lesson.
+- Improve lesson photo presentation:
+  make lesson photo formatting, layout, captions, and labels look polished and consistent across the curriculum.
 - Normalize lesson title style:
   review all lesson titles for grammar and capitalization and make them consistent across the course.
 - Verify quiz questions:
