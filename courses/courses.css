@@ -240,38 +240,3 @@ h1.title::after {
 .mtk-courses .view-all {
   margin-top: 3rem;
   text-align: center; }
-
-/* Final course palette overrides */
-.mtk-courses {
-  background: #ffffff !important; }
-
-.mtk-courses .course-card {
-  background: #ffffff !important;
-  border: 1.5px solid rgba(18, 18, 18, 0.14) !important;
-  box-shadow: var(--nala-shadow-md); }
-
-.mtk-courses .course-card:hover {
-  box-shadow: var(--nala-shadow-lg); }
-
-.mtk-courses .course-level {
-  background: #171717 !important;
-  color: #ffffff !important;
-  border: 1px solid var(--nala-gold-dark); }
-
-.mtk-courses .course-features li::before {
-  color: var(--nala-gold-dark) !important; }
-
-/* Remove remaining off-white/blue course surfaces */
-.mtk-courses,
-.mtk-courses .container,
-.mtk-courses .row {
-  background: #ffffff !important; }
-
-.mtk-courses .course-card {
-  background: #fcfcfc !important;
-  border: 2px solid rgba(17, 17, 17, 0.18) !important;
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08) !important; }
-
-.mtk-courses .course-level {
-  background: var(--nala-gold-dark) !important;
-  color: #ffffff !important; }
