@@ -1165,18 +1165,7 @@ class MTKHierarchy {
             }
 
             if (photos.length > 0) {
-                contentHTML += '<div class="mtk-images-gallery">';
-                photos.forEach(photo => {
-                    contentHTML += `
-            <div class="mtk-image-item">
-              <img src="${this.sanitizeUrl(photo.url)}"
-                   alt="${this.escapeHtml(photo.description)}"
-                   loading="lazy">
-              <div class="mtk-image-item__caption">${this.escapeHtml(photo.description)}</div>
-            </div>
-          `;
-                });
-                contentHTML += '</div>';
+                contentHTML += this.buildPhotoGallery(photos, lesson.title);
             }
 
             if (videos.length === 0 && photos.length === 0) {
@@ -1238,18 +1227,7 @@ class MTKHierarchy {
         }
 
         if (photos.length > 0) {
-            contentHTML += '<div class="mtk-images-gallery">';
-            photos.forEach(photo => {
-                contentHTML += `
-          <div class="mtk-image-item">
-            <img src="${this.sanitizeUrl(photo.url)}"
-                 alt="${this.escapeHtml(photo.description)}"
-                 loading="lazy">
-            <div class="mtk-image-item__caption">${this.escapeHtml(photo.description)}</div>
-          </div>
-        `;
-            });
-            contentHTML += '</div>';
+            contentHTML += this.buildPhotoGallery(photos, resource.description);
         }
 
         if (videos.length === 0 && photos.length === 0) {
@@ -1264,6 +1242,61 @@ class MTKHierarchy {
         if (firstVideo && lessonContext && Number.isFinite(Number(lessonContext.lessonNo))) {
             this.attachVideoCompletionTracking(Number(lessonContext.lessonNo), lessonContext.moduleId, lessonContext.lessonId);
         }
+    }
+
+    buildPhotoGallery(photos, contextTitle = '') {
+        if (!Array.isArray(photos) || photos.length === 0) return '';
+
+        let galleryHTML = `
+      <section class="mtk-images-section" aria-label="Reference photos">
+        <div class="mtk-images-section__header">
+          <h3 class="mtk-images-section__title">Reference Photos</h3>
+          <span class="mtk-images-section__count">${photos.length}</span>
+        </div>
+        <div class="mtk-images-gallery">
+    `;
+
+        photos.forEach((photo, index) => {
+            const caption = this.normalizePhotoCaption(photo.description, index);
+            const altText = this.buildPhotoAltText(caption, contextTitle, index);
+
+            galleryHTML += `
+          <figure class="mtk-image-item">
+            <div class="mtk-image-item__media">
+              <img src="${this.sanitizeUrl(photo.url)}"
+                   alt="${this.escapeHtml(altText)}"
+                   loading="lazy">
+            </div>
+            <figcaption class="mtk-image-item__caption">
+              <span class="mtk-image-item__label">Photo ${index + 1}</span>
+              <span class="mtk-image-item__text">${this.escapeHtml(caption)}</span>
+            </figcaption>
+          </figure>
+        `;
+        });
+
+        galleryHTML += `
+        </div>
+      </section>
+    `;
+
+        return galleryHTML;
+    }
+
+    normalizePhotoCaption(description, index) {
+        const raw = String(description || '').trim();
+        if (!raw || /^photo$/i.test(raw)) {
+            return `Reference photo ${index + 1}`;
+        }
+        return raw;
+    }
+
+    buildPhotoAltText(caption, contextTitle, index) {
+        const cleanContext = String(contextTitle || '').trim();
+        if (cleanContext) {
+            return `${cleanContext} - ${caption}`;
+        }
+        return `Lesson reference photo ${index + 1}: ${caption}`;
     }
 
     /**
