@@ -367,3 +367,10 @@ mtk-dialog.mtk-dialog {
     justify-content: center; }
   .mtk-dialog__container {
     border-radius: 16px; } }
+    flex-direction: column-reverse;
+    align-items: stretch; }
+    .mtk-dialog__footer .btn {
+      width: 100%;
+      justify-content: center; }
+  .mtk-dialog__container {
+    border-radius: 16px; } }

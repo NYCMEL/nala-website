@@ -246,3 +246,9 @@ h1.title::after {
     width: 34px;
     height: 34px;
     font-size: 20px; } }
+ .mtk-carousel {
+    border-radius: 0; }
+    .mtk-carousel .mtk-carousel-btn {
+      width: 34px;
+      height: 34px;
+      font-size: 20px; } }

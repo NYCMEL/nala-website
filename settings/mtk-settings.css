@@ -457,3 +457,21 @@ h1.title::after {
   .mtk-settings__actions .mtk-settings__btn {
     width: 100%;
     justify-content: center; } }
+bkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    user-select: none; }
+
+@media (max-width: 768px) {
+  .mtk-settings {
+    max-width: 100%; }
+    .mtk-settings__content {
+      padding: 16px; }
+    .mtk-settings__header {
+      padding: 16px; }
+      .mtk-settings__header h2 {
+        font-size: 20px; }
+    .mtk-settings__actions {
+      flex-direction: column; }
+      .mtk-settings__actions .mtk-settings__btn {
+        width: 100%;
+        justify-content: center; } }

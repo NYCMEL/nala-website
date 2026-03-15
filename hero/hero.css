@@ -226,3 +226,8 @@ h1.title::after {
 #MTK-hero .animate-fade-up.active {
   opacity: 1;
   transform: translateY(0); }
+: translateY(40px);
+    transition: all 600ms ease-out; }
+    #MTK-hero .animate-fade-up.active {
+      opacity: 1;
+      transform: translateY(0); }

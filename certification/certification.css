@@ -200,3 +200,6 @@ h1.title::after {
   content: "✓";
   color: #1976d2;
   margin-right: 8px; }
+  content: "✓";
+      color: #1976d2;
+      margin-right: 8px; }
