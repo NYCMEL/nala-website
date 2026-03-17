@@ -1603,3 +1603,33 @@ wc.unfixFooter = function() {
     footer.style.removeProperty("left");
     footer.style.removeProperty("width");
 };
+
+/************************************************************
+ * STARTING LANGUAGE TRANSLATION
+ ************************************************************/
+async function loadLangsCSV(language, csvfile) {
+    const response = await fetch(csvfile);
+    const text = await response.text();
+
+    const lines = text.trim().split("\n");
+    const headers = lines[0].split(",");
+    const langIndex = headers.indexOf(language);
+
+    const translations = {};
+
+    for (let i = 1; i < lines.length; i++) {
+	const cols = lines[i].split(",");
+	translations[cols[0]] = cols[langIndex];
+    }
+
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+	const key = el.dataset.i18n;
+	el.textContent = translations[key];
+    });
+}
+
+function setLanguage(lang, "nala.lang.csv") {
+    loadLangsCSV(lang);
+}
+
+setLanguage("en");
