@@ -12,10 +12,10 @@ window.app.carousel = {
 <div class="p-4">
     <article class="carousel-card">
 	<h2 align="center">
-	    Career Switcher
+	    <span data-i18n='career-switcher'>Career Switcher</span>
 	</h2>
 
-	<p>
+	<p data-i18n='carousel-p1'>
 Someone leaving an office or retail job uses the program to learn residential and
 commercial locksmithing fundamentals. By following the structured lessons and
 practicing alongside the videos, they build confidence handling basic service calls
