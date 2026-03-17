@@ -1628,8 +1628,8 @@ async function loadLangsCSV(language, csvfile) {
     });
 }
 
-function setLanguage(lang, "nala.lang.csv") {
-    loadLangsCSV(lang);
-}
+// function setLanguage(lang, "nala.lang.csv") {
+//     loadLangsCSV(lang);
+// }
 
-setLanguage("en");
+// setLanguage("en");
