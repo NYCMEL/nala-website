@@ -1,15 +1,17 @@
+key,en,es,ch,he
+
 ########################################
 #### HOME HERO
 ########################################
-hero-title,Master the art of professional locksmithing,Domina el arte de la cerrajería profesional,掌握专业锁匠技艺,
+hero-title, Master the art of professional locksmithing, Domina el arte de la cerrajería profesional, 掌握专业锁匠技艺, 
 
-hero-description,Join thousands of students learning modern security technology with bilingual courses hands-on training and industry-recognized certifications.,Únete a miles de estudiantes que aprenden tecnología de seguridad moderna con cursos bilingües formación práctica y certificaciones reconocidas por la industria. ,加入数千名学生的行列，通过双语课程、实践培训和行业认可的认证，学习现代安全技术,
+hero-description, Join thousands of students learning modern security technology with bilingual courses hands-on training and industry-recognized certifications., Únete a miles de estudiantes que aprenden tecnología de seguridad moderna con cursos bilingües formación práctica y certificaciones reconocidas por la industria. , 加入数千名学生的行列，通过双语课程、实践培训和行业认可的认证，学习现代安全技术, 
 
-get-started,Get Started,Comience,开始使用,
+get-started, Get Started, Comience, 开始使用, 
 
 ########################################
 #### HEADER PUBLIC
 ########################################
-header-home,Home,Hogar,家,
-header-register,Register,Registro,登记,
-header-login,Login,Acceso,登录,
+header-home, Home, Hogar, 家, 
+header-register, Register, Registro, 登记, 
+header-login, Login, Acceso, 登录, 
