@@ -31,10 +31,10 @@ and entry-level jobs.
 <div class="p-4">
     <article class="carousel-card">
 	<h2 align="center">
-	Handyman Expanding Services
+	<span data-i18n='carousel-p2'>Handyman Expanding Services</span>
         </h2>
 
-    <p>
+    <p data-i18n='carousel-p3'>
 A general handyman uses the program to add locksmithing as a paid service.
 Residential rekeying, deadbolt installation, and keypad locks become add-on
 services that increase the value of each job.
