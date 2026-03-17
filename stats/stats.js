@@ -19,7 +19,7 @@
                      data-suffix="${stat.suffix || ""}">
                     0
                 </div>
-                <div class="_stats-label">${stat.label}</div>
+                <div class="_stats-label"><span data-i18n='${stat.label}'>${stat.label}</div>
             `;
             return col;
         }
