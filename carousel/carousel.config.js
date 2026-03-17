@@ -67,10 +67,10 @@ the training as a foundation for further hands-on experience.
 <div class="p-4">
 <article class="carousel-card">
 	<h2 align="center">
-	    Business Builder
+	    <span data-i18n='carousel-p6'>Business Builder</span>
         </h2>
 
-    <p>
+    <p data-i18n='carousel-p7'>
 Someone with technical skills but no business background follows the business
 modules to understand pricing, licensing considerations, customer communication,
 and marketing fundamentals before launching a locksmith service.
