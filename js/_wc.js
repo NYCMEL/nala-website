@@ -1626,6 +1626,8 @@ wc.loadLangsCSV = async function(language, csvfile) {
 
     document.querySelectorAll("[data-i18n]").forEach(el => {
 	const key = el.dataset.i18n;
+	console.log(">>>>>>", key);
+
 	el.textContent = translations[key];
     });
 }
