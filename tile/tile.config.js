@@ -5,33 +5,33 @@ window.app.tiles = [
         id: "tile-1",
         flip: true,
         front: {
-	    title: "Training<BR>Built for Real Service Calls",
+	    title: "<span data-i18n='tile-1'>Training<BR>Built for Real Service Calls</span>",
 	    body: "",
 	    bgColor: "#74b9ff"
         },
         back: {
 	    title: "...",
-	    body: "<p>Lessons are structured around real locksmith tasks such as rekeying, lock installation, hardware replacement, and troubleshooting, helping learners understand how concepts apply in the field.</p>",
+	    body: "<p  data-i18n='tile-2'>Lessons are structured around real locksmith tasks such as rekeying, lock installation, hardware replacement, and troubleshooting, helping learners understand how concepts apply in the field.</p>",
 	    bgColor: "#0984e3"
         }
     }, {
         id: "tile-2",
         flip: true,
         front: {
-	    title: "Step-by-Step<BR>Video with Clear Instructions",
+	    title: "<span data-i18n='tile-3'>Step-by-Step<BR>Video with Clear Instructions</span>",
 	    body: "",
 	    bgColor: "#74b9ff"
         },
         back: {
 	    title: "...",
-	    body: "<p>Each topic is broken down into focused lessons with visual demonstrations, allowing students to pause, review, and revisit techniques as often as needed.</p>",
+	    body: "<p data-i18n='tile-4'>Each topic is broken down into focused lessons with visual demonstrations, allowing students to pause, review, and revisit techniques as often as needed.</p>",
 	    bgColor: "#0984e3"
         }
     }, {
         id: "tile-3",
         flip: true,
         front: {
-	    title: "Residential, Commercial & Automotive Coverage",
+	    title: "<span data-i18n='tile-3'>Residential, Commercial & Automotive Coverage</span>",
 	    body: "",
 	    bgColor: "#74b9ff"
         },
