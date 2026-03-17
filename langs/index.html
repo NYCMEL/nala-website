@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="UTF-8">
+	<title>CSV Language Demo</title>
+
+	<script>
+	 async function loadCSV(language) {
+	     const response = await fetch("lang.csv");
+	     const text = await response.text();
+
+	     const lines = text.trim().split("\n");
+	     const headers = lines[0].split(",");
+	     const langIndex = headers.indexOf(language);
+
+	     const translations = {};
+
+	     for (let i = 1; i < lines.length; i++) {
+		 const cols = lines[i].split(",");
+		 translations[cols[0]] = cols[langIndex];
+	     }
+
+	     document.querySelectorAll("[data-i18n]").forEach(el => {
+		 const key = el.dataset.i18n;
+		 el.textContent = translations[key];
+	     });
+	 }
+
+	 function setLanguage(lang) {
+	     loadCSV(lang);
+	 }
+
+	 setLanguage("en");
+	</script>
+    </head>
+
+    <body>
+	<h1 data-i18n="title"></h1>
+	<p data-i18n="subtitle"></p>
+	
+	<button onclick="setLanguage('en')">English</button>
+	<button onclick="setLanguage('es')">Español</button>
+	<button onclick="setLanguage('ch')">Chinese</button>
+	<button onclick="setLanguage('he')">Hebrew</button>
+    </body>
+</html>
