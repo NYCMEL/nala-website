@@ -1614,7 +1614,7 @@ wc.unfixFooter = function() {
     setLanguage('en','nala.lang.csv');
 
 ************************************************************/
-async function loadLangsCSV(language, csvfile) {
+wc.loadLangsCSV = async function(language, csvfile) {
     const response = await fetch(csvfile);
     const text = await response.text();
 
