@@ -85,10 +85,10 @@ and marketing fundamentals before launching a locksmith service.
 <div class="p-4">
 <article class="carousel-card">
 	<h2 align="center">
-	    Supplemental Trade Skill
+	    <span data-i18n='carousel-p8'>Supplemental Trade Skill</span>
         </h2>
 
-    <p>
+    <p data-i18n='carousel-p9'>
 An electrician or security technician uses the program to better understand locks,
 doors, and access control hardware, allowing them to coordinate more effectively
 on job sites and offer broader solutions.
