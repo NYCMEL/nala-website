@@ -1,3 +1,5 @@
+alert("ES");
+
 window.app = window.app || {};
 
 window.app.tiles = [

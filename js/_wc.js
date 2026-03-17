@@ -1671,9 +1671,6 @@ wc.loadScript = function (src) {
  ************************************************************/
 class MtkScript extends HTMLElement {
     connectedCallback() {
-	// Determine language: element attribute overrides global
-	const lang = this.getAttribute("wcLAN") || window.wc?.lang || "en";
-	
 	// Determine script URL
 	let src = this.getAttribute("src");
 	if (!src) {
@@ -1681,17 +1678,17 @@ class MtkScript extends HTMLElement {
 	    return;
 	}
 
-	// Optionally replace ".js" with ".{lang}.js" if you follow that convention
-	if (!src.includes(`.${lang}.js`) && !src.endsWith(`.${lang}.js`)) {
+	// Optionally replace ".js" with ".{wcLAN}.js" if you follow that convention
+	if (!src.includes(`.${wcLAN}.js`) && !src.endsWith(`.${wcLAN}.js`)) {
 	    const parts = src.split(".js");
-	    src = `${parts[0]}.${lang}.js`;
+	    src = `${parts[0]}.${wcLAN}.js`;
 	}
 
 	// Dynamically load the script
 	const script = document.createElement("script");
 	script.src = src;
 	script.async = false; // preserve execution order
-	document.head.appendChild(script);
+	document.body.appendChild(script);
 
 	console.log(script.src);
     }
