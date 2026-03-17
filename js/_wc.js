@@ -1639,7 +1639,7 @@ wc.fixFooter = function() {
 
 
 /************************************************************
- * remove fixed footer behavior
+ * REMOVE FIXED FOOTER BEHAVIOR
  ************************************************************/
 wc.unfixFooter = function() {
     const footer = document.getElementById("page-footer");
@@ -1655,3 +1655,13 @@ wc.unfixFooter = function() {
     footer.style.removeProperty("left");
     footer.style.removeProperty("width");
 };
+
+/************************************************************
+ * LOAD A SCRIPT
+ ************************************************************/
+wc.loadScript = function (src) {
+    const s = document.createElement("script");
+    s.src = src;
+    s.defer = true;
+    document.body.appendChild(s);
+}
