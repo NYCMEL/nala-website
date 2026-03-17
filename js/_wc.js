@@ -1606,7 +1606,14 @@ wc.unfixFooter = function() {
 
 /************************************************************
  * STARTING LANGUAGE TRANSLATION
- ************************************************************/
+
+   function setLanguage(lang, csvfile) {
+        loadLangsCSV(lang, csvfile);
+    }
+
+    setLanguage('en','nala.lang.csv');
+
+************************************************************/
 async function loadLangsCSV(language, csvfile) {
     const response = await fetch(csvfile);
     const text = await response.text();
@@ -1627,9 +1634,3 @@ async function loadLangsCSV(language, csvfile) {
 	el.textContent = translations[key];
     });
 }
-
-// function setLanguage(lang, "nala.lang.csv") {
-//     loadLangsCSV(lang);
-// }
-
-// setLanguage("en");
