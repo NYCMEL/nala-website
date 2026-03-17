@@ -49,10 +49,10 @@ services that increase the value of each job.
 <div class="p-4">
 <article class="carousel-card">
 	<h2 align="center">
-	    Automotive Focus
+	    <span data-i18n='carousel-p4'>Automotive Focus</span>
         </h2>
 
-    <p>
+    <p" data-i18n='carousel-p5'>
 A learner with an interest in cars focuses on the automotive sections of the program
 to understand vehicle entry methods, key types, and modern locking systems, using
 the training as a foundation for further hands-on experience.
