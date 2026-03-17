@@ -9,10 +9,10 @@
 	<h1 data-i18n="title"></h1>
 	<p data-i18n="subtitle"></p>
 	
-	<button onclick="setLanguage('en')">English</button>
-	<button onclick="setLanguage('es')">Español</button>
-	<button onclick="setLanguage('ch')">Chinese</button>
-	<button onclick="setLanguage('he')">Hebrew</button>
+	<button onclick="setLanguage('en','nala.lang.csv')">English</button>
+	<button onclick="setLanguage('es','nala.lang.csv')">Español</button>
+	<button onclick="setLanguage('ch','nala.lang.csv')">Chinese</button>
+	<button onclick="setLanguage('he','nala.lang.csv')">Hebrew</button>
 
 	<script src="../js/_wc.js"></script>
 
@@ -21,7 +21,7 @@
 	     loadLangsCSV(lang, csvfile);
 	 }
 
-	 setLanguage("en","nala.lang.csv");
+	 setLanguage('en','nala.lang.csv');
 	</script>
     </body>
 </html>
