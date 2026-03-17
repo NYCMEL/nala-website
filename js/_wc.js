@@ -1607,12 +1607,7 @@ wc.unfixFooter = function() {
 /************************************************************
  * STARTING LANGUAGE TRANSLATION
 
-   function setLanguage(lang, csvfile) {
-        wc.loadLangsCSV(lang, csvfile);
-    }
-
-    setLanguage('en','nala.lang.csv');
-
+   wc.loadLangsCSV('en','nala.lang.csv');
 ************************************************************/
 wc.loadLangsCSV = async function(language, csvfile) {
     const response = await fetch(csvfile);
