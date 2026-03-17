@@ -1609,23 +1609,57 @@ wc.unfixFooter = function() {
 
    wc.loadLangsCSV('en','nala.lang.csv');
 ************************************************************/
+function parseCSVLine(line) {
+    const result = [];
+    let current = '';
+    let inQuotes = false;
+
+    for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+
+        if (char === '"') {
+            // handle escaped quotes ""
+            if (inQuotes && line[i + 1] === '"') {
+                current += '"';
+                i++;
+            } else {
+                inQuotes = !inQuotes;
+            }
+        } else if (char === ',' && !inQuotes) {
+            result.push(current);
+            current = '';
+        } else {
+            current += char;
+        }
+    }
+
+    result.push(current);
+    return result;
+}
+
 wc.loadLangsCSV = async function(language, csvfile) {
     const response = await fetch(csvfile);
     const text = await response.text();
 
     const lines = text.trim().split("\n");
-    const headers = lines[0].split(",");
+
+    const headers = parseCSVLine(lines[0]);
     const langIndex = headers.indexOf(language);
 
     const translations = {};
 
     for (let i = 1; i < lines.length; i++) {
-	const cols = lines[i].split(",");
-	translations[cols[0]] = cols[langIndex];
+        const cols = parseCSVLine(lines[i]);
+
+        if (!cols[0]) continue; // skip empty lines
+
+        translations[cols[0]] = cols[langIndex];
     }
 
     document.querySelectorAll("[data-i18n]").forEach(el => {
-	const key = el.dataset.i18n;
-	el.textContent = translations[key];
+        const key = el.dataset.i18n;
+        if (translations[key] !== undefined) {
+            el.textContent = translations[key];
+        }
     });
-}
+};
