@@ -14,14 +14,14 @@
 	<button onclick="setLanguage('ch')">Chinese</button>
 	<button onclick="setLanguage('he')">Hebrew</button>
 
-	<script src="js/_wc.js"></script>
+	<script src="../js/_wc.js"></script>
 
 	<script>
-	 function setLanguage(lang, "nala.lang.csv") {
-	     loadLangsCSV(lang);
+	 function setLanguage(lang, csvfile) {
+	     loadLangsCSV(lang, csvfile);
 	 }
 
-	 setLanguage("en");
+	 setLanguage("en","nala.lang.csv");
 	</script>
     </body>
 </html>
