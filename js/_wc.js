@@ -1608,7 +1608,7 @@ wc.unfixFooter = function() {
  * STARTING LANGUAGE TRANSLATION
 
    function setLanguage(lang, csvfile) {
-        loadLangsCSV(lang, csvfile);
+        wc.loadLangsCSV(lang, csvfile);
     }
 
     setLanguage('en','nala.lang.csv');
