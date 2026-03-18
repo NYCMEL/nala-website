@@ -1,86 +1,49 @@
-// mtk-msgs configuration
+function _t(key, fb) { return (window.i18n ? i18n.t(key) : null) || fb; }
+
 const mtkMsgsConfig = {
-  messages: {
-    info: {
-      type: 'info',
-      icon: 'info',
-      message: 'This is an informational message',
-      buttons: [
-        { label: 'Learn More', action: 'learnMore' }
-      ],
-      closable: true, // show X button
-      timer: null, // no auto-close
-      block: false, // don't block screen
-      block2: false // don't keep blocking after hide
-    },
-    warning: {
-      type: 'warning',
-      icon: 'warning',
-      message: 'Warning: Please review your settings',
-      buttons: [
-        { label: 'Review', action: 'review' },
-        { label: 'Dismiss', action: 'dismiss' }
-      ],
-      closable: true, // show X button
-      timer: null, // no auto-close
-      block: false, // don't block screen
-      block2: false // don't keep blocking after hide
-    },
-    error: {
-      type: 'error',
-      icon: 'error',
-      message: 'Error: Something went wrong',
-      buttons: [
-        { label: 'Retry', action: 'retry' }
-      ],
-      closable: true, // show X button
-      timer: null, // no auto-close
-      block: true, // block screen (default for errors)
-      block2: false // unlock when message hides
-    },
-    success: {
-      type: 'success',
-      icon: 'check_circle',
-      message: 'Success: Operation completed',
-      buttons: [],
-      closable: false, // no X button
-      timer: 10, // auto-close after 10 seconds
-      block: false, // don't block screen
-      block2: false // don't keep blocking after hide
-    },
-    autoInfo: {
-      type: 'info',
-      icon: 'info',
-      message: 'This message will close automatically',
-      buttons: [],
-      closable: false, // no X button
-      timer: 5, // auto-close after 5 seconds
-      block: false, // don't block screen
-      block2: false // don't keep blocking after hide
-    },
-    blockExample: {
-      type: 'warning',
-      icon: 'warning',
-      message: 'Screen is blocked while this message shows',
-      buttons: [
-        { label: 'Dismiss', action: 'dismiss' }
-      ],
-      closable: true,
-      timer: null,
-      block: true, // block screen
-      block2: false // unlock when dismissed
-    },
-    block2Example: {
-      type: 'error',
-      icon: 'error',
-      message: 'Processing... Screen stays blocked after close',
-      buttons: [
-        { label: 'Close Message', action: 'close' }
-      ],
-      closable: true,
-      timer: null,
-      block: false, // block2 overrides this
-      block2: true // keep blocking after message hides (overrides block)
+    messages: {
+        info: {
+            type: 'info', icon: 'info',
+            message: _t('msg.info', 'This is an informational message'),
+            buttons: [{ label: _t('msg.btn.learn', 'Learn More'), action: 'learnMore' }],
+            closable: true, timer: null, block: false, block2: false
+        },
+        warning: {
+            type: 'warning', icon: 'warning',
+            message: _t('msg.warning', 'Warning: Please review your settings'),
+            buttons: [
+                { label: _t('msg.btn.review',  'Review'),  action: 'review'  },
+                { label: _t('msg.btn.dismiss', 'Dismiss'), action: 'dismiss' }
+            ],
+            closable: true, timer: null, block: false, block2: false
+        },
+        error: {
+            type: 'error', icon: 'error',
+            message: _t('msg.error', 'Error: Something went wrong'),
+            buttons: [{ label: _t('msg.btn.retry', 'Retry'), action: 'retry' }],
+            closable: true, timer: null, block: true, block2: false
+        },
+        success: {
+            type: 'success', icon: 'check_circle',
+            message: _t('msg.success', 'Success: Operation completed'),
+            buttons: [], closable: false, timer: 10, block: false, block2: false
+        },
+        autoInfo: {
+            type: 'info', icon: 'info',
+            message: _t('msg.autoInfo', 'This message will close automatically'),
+            buttons: [], closable: false, timer: 5, block: false, block2: false
+        },
+        blockExample: {
+            type: 'warning', icon: 'warning',
+            message: _t('msg.block', 'Screen is blocked while this message shows'),
+            buttons: [{ label: _t('msg.btn.dismiss', 'Dismiss'), action: 'dismiss' }],
+            closable: true, timer: null, block: true, block2: false
+        },
+        block2Example: {
+            type: 'error', icon: 'error',
+            message: _t('msg.block2', 'Processing... Screen stays blocked after close'),
+            buttons: [{ label: _t('msg.btn.close', 'Close Message'), action: 'close' }],
+            closable: true, timer: null, block: false, block2: true
+        }
     }
-  }
 };

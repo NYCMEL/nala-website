@@ -11,27 +11,36 @@
 			    <div class="mtk-quiz__header-left">
 				<h1 class="mtk-quiz__title">
 				    <span class="material-icons mtk-quiz__icon">quiz</span>
-				    <span id="quizTitle">Quiz</span>
+				    <span id="quizTitle" data-i18n="quiz.title">Quiz</span>
 				</h1>
 				<div class="mtk-quiz__meta">
 				    <div class="mtk-quiz__meta-item">
 					<span class="material-icons mtk-quiz__meta-icon">assignment</span>
-					<span>Module: <strong id="moduleId">--</strong></span>
+					<span>
+					    <span data-i18n="quiz.module">Module:</span>
+					    <strong id="moduleId">--</strong>
+					</span>
 				    </div>
 				    <div class="mtk-quiz__meta-item">
 					<span class="material-icons mtk-quiz__meta-icon">help_outline</span>
-					<span><strong id="questionCount">0</strong> Questions</span>
+					<span>
+					    <strong id="questionCount">0</strong>
+					    <span data-i18n="quiz.questions">Questions</span>
+					</span>
 				    </div>
 				    <div class="mtk-quiz__meta-item">
 					<span class="material-icons mtk-quiz__meta-icon">tag</span>
-					<span>Session: <strong id="sessionId">--</strong></span>
+					<span>
+					    <span data-i18n="quiz.session">Session:</span>
+					    <strong id="sessionId">--</strong>
+					</span>
 				    </div>
 				</div>
 			    </div>
 			    <div class="mtk-quiz__header-right">
 				<div class="mtk-quiz__progress">
 				    <div class="mtk-quiz__progress-text">
-					<span>Progress</span>
+					<span data-i18n="quiz.progress">Progress</span>
 					<span id="progressText">0 / 0</span>
 				    </div>
 				    <div class="mtk-quiz__progress-bar">
@@ -52,22 +61,22 @@
 			    <div class="mtk-quiz__actions">
 				<button type="button" id="cancelBtn" class="btn btn-link mtk-quiz__button mtk-quiz__button--link">
 				    <span class="material-icons mtk-quiz__button-icon">close</span>
-				    <span>Cancel</span>
+				    <span data-i18n="quiz.cancel">Cancel</span>
 				</button>
-				
+
 				<div class="mtk-quiz__actions-spacer"></div>
-				
+
 				<button type="button" id="clearBtn" class="btn btn-outline-secondary btn-lg">
 				    <span class="material-icons mtk-quiz__button-icon">clear_all</span>
-				    <span>Clear All</span>
+				    <span data-i18n="quiz.clearAll">Clear All</span>
 				</button>
 				<button type="button" id="testBtn" class="btn btn-outline-primary btn-lg">
 				    <span class="material-icons mtk-quiz__button-icon">science</span>
-				    <span>Test (Select First)</span>
+				    <span data-i18n="quiz.testFirst">Test (Select First)</span>
 				</button>
 				<button type="submit" id="submitBtn" class="btn btn-primary btn-lg">
 				    <span class="material-icons mtk-quiz__button-icon">send</span>
-				    <span>Submit Quiz</span>
+				    <span data-i18n="quiz.submit">Submit Quiz</span>
 				</button>
 			    </div>
 			</footer>

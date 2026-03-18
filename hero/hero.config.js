@@ -2,11 +2,18 @@ window.app = window.app || {};
 
 window.app.hero = [
     {
-	title: "Master the art of professional locksmithing",
-	description: "Join thousands of students learning modern security technology with bilingual courses, hands-on training, and industry-recognized certifications.",
+	title:       'hero.title',       // i18n key
+	description: 'hero.description', // i18n key
 	image: "./img/hero.png",
-
-	lhsCol: "5", // Bootstrap col-md-6
-	rhsCol: "7"  // Bootstrap col-md-6
+	lhsCol: "5",
+	rhsCol: "7"
     }
 ];
+
+// Apply translations if i18n is already loaded
+if (window.i18n) {
+    window.app.hero.forEach(function(h) {
+        h.title       = i18n.t('hero.title');
+        h.description = i18n.t('hero.description');
+    });
+}

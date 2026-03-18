@@ -1,35 +1,47 @@
 <!-- REGISTER -->
 <div>
     <link href="register/mtk-register.css" rel="stylesheet">
-    
+
     <form id="mtk-register" class="md-form shadow" novalidate>
-	<h2 class="form-title fb">NALA Registration Form</h2>
+	<h2 class="form-title fb" data-i18n="register.title">NALA Registration Form</h2>
 
 	<div class="md-field">
 	    <input type="text" id="name" required />
-	    <label for="name">Name <span class="required">*</span></label>
-	    <span class="helper">First Name, Middle Initial, Last Name</span>
+	    <label for="name">
+		<span data-i18n="register.name.label">Name</span>
+		<span class="required" data-i18n="register.required">*</span>
+	    </label>
+	    <span class="helper" data-i18n="register.name.helper">First Name, Middle Initial, Last Name</span>
 	</div>
 
 	<div class="md-field">
 	    <input type="email" id="email" required />
-	    <label for="email">Your Email <span class="required">*</span></label>
-	    <span class="helper">example@example.com</span>
+	    <label for="email">
+		<span data-i18n="register.email.label">Your Email</span>
+		<span class="required" data-i18n="register.required">*</span>
+	    </label>
+	    <span class="helper" data-i18n="register.email.helper">example@example.com</span>
 	</div>
 
 	<div class="md-field">
 	    <input type="email" id="email2" required />
-	    <label for="email2">Repeat Email <span class="required">*</span></label>
+	    <label for="email2">
+		<span data-i18n="register.email2.label">Repeat Email</span>
+		<span class="required" data-i18n="register.required">*</span>
+	    </label>
 	    <span class="helper" data-error-email></span>
 	</div>
 
 	<div class="md-field">
 	    <input type="tel" id="phone" required />
-	    <label for="phone">Contact Phone Number <span class="required">*</span></label>
-	    <span class="helper">Phone Number</span>
+	    <label for="phone">
+		<span data-i18n="register.phone.label">Contact Phone Number</span>
+		<span class="required" data-i18n="register.required">*</span>
+	    </label>
+	    <span class="helper" data-i18n="register.phone.helper">Phone Number</span>
 	</div>
 
-	<button type="submit" class="submit-btn">Register</button>
+	<button type="submit" class="submit-btn" data-i18n="register.submit">Register</button>
     </form>
 
     <script src="register/mtk-register.config.js"></script>
