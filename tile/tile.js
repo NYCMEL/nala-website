@@ -1,11 +1,8 @@
 (function () {
 
-    if (!window.app || !Array.isArray(window.app.tiles)) return;
-
     function renderTile(tile) {
         const mountId = "MTK-" + tile.id;
         const mount = document.getElementById(mountId);
-
         if (!mount) return false;
 
         const tileEl = document.createElement("div");
@@ -21,7 +18,6 @@
             <div class="mtk-tile-title">${tile.front.title}</div>
             <div class="mtk-tile-body">${tile.front.body}</div>
         `;
-
         inner.appendChild(front);
 
         if (tile.flip && tile.back) {
@@ -34,17 +30,9 @@
             `;
             inner.appendChild(back);
 
-            tileEl.addEventListener("mouseenter", () => {
-                tileEl.classList.add("is-flipped");
-            });
-
-            tileEl.addEventListener("mouseleave", () => {
-                tileEl.classList.remove("is-flipped");
-            });
-
-            tileEl.addEventListener("click", () => {
-                tileEl.classList.toggle("is-flipped");
-            });
+            tileEl.addEventListener("mouseenter", () => tileEl.classList.add("is-flipped"));
+            tileEl.addEventListener("mouseleave", () => tileEl.classList.remove("is-flipped"));
+            tileEl.addEventListener("click", () => tileEl.classList.toggle("is-flipped"));
         }
 
         tileEl.appendChild(inner);
@@ -53,13 +41,18 @@
         return true;
     }
 
-    // Wait for each MTK-{id} independently
-    window.app.tiles.forEach(tile => {
-        const waitForMount = setInterval(() => {
-            if (renderTile(tile)) {
-                clearInterval(waitForMount);
-            }
-        }, 50);
-    });
+    // Poll for window.app.tiles
+    const waitForTiles = setInterval(() => {
+        if (window.app && Array.isArray(window.app.tiles)) {
+            clearInterval(waitForTiles);
+
+            // Render each tile
+            window.app.tiles.forEach(tile => {
+                const waitForMount = setInterval(() => {
+                    if (renderTile(tile)) clearInterval(waitForMount);
+                }, 50);
+            });
+        }
+    }, 50);
 
 })();
