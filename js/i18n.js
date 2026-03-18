@@ -875,10 +875,20 @@
     try { localStorage.setItem('nala_lang', lang); } catch (e) {}
 
     document.documentElement.setAttribute('lang', lang);
+
+    // 1. Translate the top-level document
     applyDOM();
+
+    // 2. Translate every already-injected <wc-include> fragment.
+    //    wc-include injects HTML inside itself, so each element IS the fragment root.
+    document.querySelectorAll('wc-include').forEach(function (el) {
+      applyDOM(el);
+    });
+
+    // 3. Re-patch all window.app.* config objects
     applyAllConfigs();
 
-    // Fire a custom event so components can react
+    // 4. Fire event so components can re-render (tiles, courses, carousel, etc.)
     document.dispatchEvent(new CustomEvent('i18n:changed', { detail: { lang: lang } }));
   }
 
@@ -902,6 +912,77 @@
     applyDOM();
     applyAllConfigs();
   }
+
+  // ── wc-include integration ─────────────────────────────────────
+  //
+  // <wc-include> fetches HTML asynchronously via AJAX and injects it
+  // AFTER the initial applyDOM() has already run.  Every time a
+  // fragment lands in the DOM we must re-translate it.
+  //
+  // The custom element fires  include:loaded  (bubbles: true) on itself
+  // immediately after  $(self).html(data).  We listen at document level
+  // so we never miss an event regardless of where the element lives.
+  //
+  document.addEventListener('include:loaded', function (e) {
+    // e.target is the <wc-include> element that just received content
+    var fragment = e.target;
+    if (!fragment) return;
+
+    // --- Pass 1: immediate ---
+    // Translate data-i18n nodes that are already in the injected HTML.
+    applyDOM(fragment);
+
+    // --- Pass 2: deferred (50 ms) ---
+    // Inline <script> tags inside the fragment execute synchronously as
+    // jQuery inserts each node, but config objects (window.app.carousel,
+    // window.app.tiles, etc.) may set their values AFTER include:loaded
+    // fires.  A short defer lets those scripts finish before we patch them.
+    setTimeout(function () {
+      applyDOM(fragment);      // re-translate any nodes added by the scripts
+      applyAllConfigs();       // patch every window.app.* config object
+    }, 50);
+  });
+
+  // ── MutationObserver safety net ────────────────────────────────
+  // Some wc-include fragments nest further wc-includes or add nodes
+  // dynamically (e.g. tiles rendered by tile.js, course cards by
+  // courses.js).  We watch for new [data-i18n] nodes being added
+  // anywhere and translate them on the fly.
+  (function watchDynamicNodes() {
+    if (typeof MutationObserver === 'undefined') return;
+    var obs = new MutationObserver(function (mutations) {
+      mutations.forEach(function (m) {
+        m.addedNodes.forEach(function (node) {
+          if (node.nodeType !== 1) return;          // elements only
+          // Translate the node itself and all its descendants
+          if (node.hasAttribute && (
+              node.hasAttribute('data-i18n') ||
+              node.hasAttribute('data-i18n-placeholder') ||
+              node.hasAttribute('data-i18n-aria') ||
+              node.hasAttribute('data-i18n-title')
+          )) {
+            applyDOM(node.parentElement || node);
+          } else if (node.querySelector) {
+            var hasSubs = node.querySelector(
+              '[data-i18n],[data-i18n-placeholder],[data-i18n-aria],[data-i18n-title]'
+            );
+            if (hasSubs) applyDOM(node);
+          }
+        });
+      });
+    });
+    // Start observing once the body exists
+    var startObs = function () {
+      if (document.body) {
+        obs.observe(document.body, { childList: true, subtree: true });
+      } else {
+        document.addEventListener('DOMContentLoaded', function () {
+          obs.observe(document.body, { childList: true, subtree: true });
+        });
+      }
+    };
+    startObs();
+  })();
 
   // ── Public API ─────────────────────────────────────────────────
   global.i18n = {

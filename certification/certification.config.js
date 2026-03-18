@@ -54,5 +54,33 @@ function buildCertification() {
 window.app.certification = buildCertification();
 
 document.addEventListener('i18n:changed', function() {
+    // 1. Rebuild data
     window.app.certification = buildCertification();
+
+    // 2. Re-render matching certification.js structure
+    var titleEl    = document.querySelector('.mtk-title');
+    var subtitleEl = document.querySelector('.mtk-subtitle');
+    var grid       = document.querySelector('.mtk-grid');
+    if (!grid) return;
+
+    var data = window.app.certification;
+
+    if (titleEl)    titleEl.textContent    = data.title;
+    if (subtitleEl) subtitleEl.textContent = data.subtitle;
+
+    grid.innerHTML = '';
+
+    data.certifications.forEach(function(cert) {
+        var col = document.createElement('div');
+        col.className = 'col-12 col-md-6';
+        col.innerHTML = '<div class="mtk-card h-100">'
+            + '<div class="mtk-icon">'        + cert.icon        + '</div>'
+            + '<h5 class="mtk-card-title">'   + cert.title       + '</h5>'
+            + '<p class="mtk-card-desc">'     + cert.description + '</p>'
+            + '<ul class="mtk-list">'
+            +   cert.items.map(function(i) { return '<li>' + i + '</li>'; }).join('')
+            + '</ul>'
+            + '</div>';
+        grid.appendChild(col);
+    });
 });

@@ -41,16 +41,39 @@ window.mtkDashboardConfig = {
 document.addEventListener('i18n:changed', function() {
     var cfg = window.mtkDashboardConfig;
     if (!cfg) return;
-    cfg.progress.label                      = i18n.t('dashboard.progress.label');
-    cfg.progress.courseTitle                = i18n.t('dashboard.course.title');
-    cfg.subscriptions.title                 = i18n.t('dashboard.subs.title');
-    cfg.subscriptions.options[0].title      = i18n.t('dashboard.sub1.title');
-    cfg.subscriptions.options[0].description= i18n.t('dashboard.sub1.description');
-    cfg.subscriptions.options[0].price      = i18n.t('dashboard.sub1.price');
-    cfg.subscriptions.options[1].title      = i18n.t('dashboard.sub2.title');
-    cfg.subscriptions.options[1].description= i18n.t('dashboard.sub2.description');
-    cfg.subscriptions.options[1].price      = i18n.t('dashboard.sub2.price');
-    cfg.subscriptions.options[2].title      = i18n.t('dashboard.sub3.title');
-    cfg.subscriptions.options[2].description= i18n.t('dashboard.sub3.description');
-    cfg.subscriptions.options[2].price      = i18n.t('dashboard.sub3.price');
+
+    // 1. Update config
+    cfg.progress.label                       = i18n.t('dashboard.progress.label');
+    cfg.progress.courseTitle                 = i18n.t('dashboard.course.title');
+    cfg.subscriptions.title                  = i18n.t('dashboard.subs.title');
+    cfg.subscriptions.options[0].title       = i18n.t('dashboard.sub1.title');
+    cfg.subscriptions.options[0].description = i18n.t('dashboard.sub1.description');
+    cfg.subscriptions.options[0].price       = i18n.t('dashboard.sub1.price');
+    cfg.subscriptions.options[1].title       = i18n.t('dashboard.sub2.title');
+    cfg.subscriptions.options[1].description = i18n.t('dashboard.sub2.description');
+    cfg.subscriptions.options[1].price       = i18n.t('dashboard.sub2.price');
+    cfg.subscriptions.options[2].title       = i18n.t('dashboard.sub3.title');
+    cfg.subscriptions.options[2].description = i18n.t('dashboard.sub3.description');
+    cfg.subscriptions.options[2].price       = i18n.t('dashboard.sub3.price');
+
+    // 2. Re-render DOM — mirrors MTKDashboard render methods in mtk-dashboard.js
+    var progressLabel = document.getElementById('progressLabel');
+    var courseTitleEl = document.getElementById('courseTitle');
+    var subsTitle     = document.getElementById('subscriptionsTitle');
+    if (progressLabel) progressLabel.textContent = cfg.progress.label;
+    if (courseTitleEl) courseTitleEl.textContent = cfg.progress.courseTitle;
+    if (subsTitle)     subsTitle.textContent      = cfg.subscriptions.title;
+
+    // Update subscription cards already in the DOM
+    var cards = document.querySelectorAll('.mtk-dashboard__subscription-card');
+    cfg.subscriptions.options.forEach(function(opt, i) {
+        var card = cards[i];
+        if (!card) return;
+        var titleEl = card.querySelector('.mtk-dashboard__card-title');
+        var descEl  = card.querySelector('.mtk-dashboard__card-description');
+        var priceEl = card.querySelector('.mtk-dashboard__card-price');
+        if (titleEl) titleEl.textContent = opt.title;
+        if (descEl)  descEl.textContent  = opt.description;
+        if (priceEl) priceEl.textContent = opt.price;
+    });
 });

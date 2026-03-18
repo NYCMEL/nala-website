@@ -62,6 +62,91 @@
     window.app.path = buildPath();
 
     document.addEventListener('i18n:changed', function() {
+        // 1. Rebuild data
         window.app.path = buildPath();
+
+        // 2. Re-render matching path.js structure
+        var root = document.getElementById('MTK-path');
+        if (!root) return;
+        var container = root.querySelector('.container');
+        if (!container) return;
+
+        container.innerHTML = '';
+        var data = window.app.path;
+
+        // Header
+        var header = document.createElement('div');
+        header.className = 'text-center';
+        var title = document.createElement('h1');
+        title.className = 'title';
+        title.textContent = data.heading;
+        var subtitle = document.createElement('p');
+        subtitle.className = 'lead';
+        subtitle.textContent = data.subheading;
+        header.appendChild(title);
+        header.appendChild(subtitle);
+        container.appendChild(header);
+
+        // Plans
+        var row = document.createElement('div');
+        row.className = 'row g-4 justify-content-center';
+
+        data.plans.forEach(function(plan) {
+            var col  = document.createElement('div');
+            col.className = 'col-12 col-md-6';
+            var card = document.createElement('div');
+            card.className = 'mtk-card' + (plan.popular ? ' mtk-popular' : '');
+
+            if (plan.popular) {
+                var badge = document.createElement('div');
+                badge.className = 'mtk-badge';
+                badge.textContent = i18n.t('path.popular') || 'Most Popular';
+                card.appendChild(badge);
+            }
+
+            var h4 = document.createElement('h4');
+            h4.textContent = plan.title;
+            card.appendChild(h4);
+
+            var priceWrap = document.createElement('div');
+            var priceEl   = document.createElement('span');
+            priceEl.className = 'price';
+            priceEl.textContent = plan.price;
+            var periodEl  = document.createElement('span');
+            periodEl.className = 'period';
+            periodEl.textContent = plan.period || '';
+            priceWrap.appendChild(priceEl);
+            priceWrap.appendChild(periodEl);
+            card.appendChild(priceWrap);
+
+            var desc = document.createElement('p');
+            desc.textContent = plan.description;
+            card.appendChild(desc);
+
+            var ul = document.createElement('ul');
+            (plan.features || []).forEach(function(f) {
+                var li    = document.createElement('li');
+                var check = document.createElement('span');
+                check.className = 'check';
+                check.textContent = '✓';
+                var text  = document.createElement('span');
+                text.textContent = f;
+                li.appendChild(check);
+                li.appendChild(text);
+                ul.appendChild(li);
+            });
+            card.appendChild(ul);
+
+            var btn = document.createElement('div');
+            btn.className = 'btn btn-lg btn-path';
+            btn.textContent = plan.cta;
+            btn.addEventListener('click', function() { wc.publish('mtk-path:click'); });
+            card.appendChild(btn);
+
+            col.appendChild(card);
+            row.appendChild(col);
+        });
+
+        container.appendChild(row);
     });
 })();

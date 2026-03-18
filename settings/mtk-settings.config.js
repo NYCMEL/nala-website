@@ -32,6 +32,8 @@ var mtkSettingsConfig = {
 
 document.addEventListener('i18n:changed', function() {
     var l = mtkSettingsConfig.labels;
+
+    // 1. Update config
     l.title           = i18n.t('settings.title');
     l.userName        = i18n.t('settings.userName');
     l.userEmail       = i18n.t('settings.userEmail');
@@ -41,6 +43,33 @@ document.addEventListener('i18n:changed', function() {
     l.updateButton    = i18n.t('settings.updateButton');
     l.saveButton      = i18n.t('settings.saveButton');
     l.cancelButton    = i18n.t('settings.cancelButton');
+
+    // 2. Re-render DOM — mirrors MtkSettings.setup() in mtk-settings.js
+    var titleEl   = document.getElementById('mtk-settings-title');
+    var saveBtn   = document.getElementById('mtk-settings-save-btn');
+    var cancelBtn = document.getElementById('mtk-settings-cancel-btn');
+    var updateBtn = document.getElementById('mtk-settings-update-btn');
+    if (titleEl)   titleEl.textContent   = l.title;
+    if (saveBtn)   saveBtn.textContent   = l.saveButton;
+    if (cancelBtn) cancelBtn.textContent = l.cancelButton;
+    if (updateBtn) updateBtn.textContent = l.updateButton;
+
+    // Labels inside the settings form (mtk-settings.html uses <label> elements)
+    var root = document.querySelector('mtk-settings.mtk-settings');
+    if (!root) return;
+    var labelMap = {
+        '#mtk-settings-fullname':         l.userName,
+        '#mtk-settings-email':            l.userEmail,
+        '#mtk-settings-current-password': l.currentPassword,
+        '#mtk-settings-new-password':     l.newPassword,
+        '#mtk-settings-confirm-password': l.confirmPassword
+    };
+    Object.keys(labelMap).forEach(function(sel) {
+        var inp = root.querySelector(sel);
+        if (!inp) return;
+        var label = root.querySelector('label[for="' + inp.id + '"]');
+        if (label) label.textContent = labelMap[sel];
+    });
 });
 
 } // end duplicate load guard

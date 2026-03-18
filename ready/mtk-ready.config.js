@@ -14,7 +14,17 @@ window.app.ready = {
 document.addEventListener('i18n:changed', function() {
     var r = window.app.ready;
     if (!r) return;
-    r.title           = i18n.t('ready.title');
-    r.description     = i18n.t('ready.description');
-    r.button.label    = i18n.t('ready.cta');
+
+    // 1. Update config
+    r.title        = i18n.t('ready.title');
+    r.description  = i18n.t('ready.description');
+    r.button.label = i18n.t('ready.cta');
+
+    // 2. Re-render DOM — matches mtk-ready.js render() method
+    var titleEl    = document.querySelector('.mtk-ready-title');
+    var descEl     = document.querySelector('.mtk-ready-desc');
+    var btnLabelEl = document.querySelector('.mtk-ready-btn-label');
+    if (titleEl)    titleEl.innerHTML    = r.title;
+    if (descEl)     descEl.innerHTML     = r.description;
+    if (btnLabelEl) btnLabelEl.innerHTML = r.button.label;
 });

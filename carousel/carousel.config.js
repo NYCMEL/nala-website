@@ -45,3 +45,74 @@ window.app.carousel = {
         }
     ]
 };
+
+// When language changes, rebuild slides with new language and re-render
+document.addEventListener('i18n:changed', function() {
+    // Rebuild the slides array in the new language
+    window.app.carousel.slides = [
+        {
+            id: "slide-1",
+            html: '<div class="p-4"><article class="carousel-card">'
+                + '<h2 align="center">' + _t('carousel.slide1.title', 'Career Switcher') + '</h2>'
+                + '<p>' + _t('carousel.slide1.body', '') + '</p>'
+                + '</article></div>'
+        },
+        {
+            id: "slide-2",
+            html: '<div class="p-4"><article class="carousel-card">'
+                + '<h2 align="center">' + _t('carousel.slide2.title', 'Handyman Expanding Services') + '</h2>'
+                + '<p>' + _t('carousel.slide2.body', '') + '</p>'
+                + '</article></div>'
+        },
+        {
+            id: "slide-3",
+            html: '<div class="p-4"><article class="carousel-card">'
+                + '<h2 align="center">' + _t('carousel.slide3.title', 'Automotive Focus') + '</h2>'
+                + '<p>' + _t('carousel.slide3.body', '') + '</p>'
+                + '</article></div>'
+        },
+        {
+            id: "slide-4",
+            html: '<div class="p-4"><article class="carousel-card">'
+                + '<h2 align="center">' + _t('carousel.slide4.title', 'Business Builder') + '</h2>'
+                + '<p>' + _t('carousel.slide4.body', '') + '</p>'
+                + '</article></div>'
+        },
+        {
+            id: "slide-5",
+            html: '<div class="p-4"><article class="carousel-card">'
+                + '<h2 align="center">' + _t('carousel.slide5.title', 'Supplemental Trade Skill') + '</h2>'
+                + '<p>' + _t('carousel.slide5.body', '') + '</p>'
+                + '</article></div>'
+        }
+    ];
+
+    // Re-render: rebuild the carousel track with the new slide HTML
+    var track = document.querySelector('#mtk-carousel-root .mtk-carousel-track');
+    var dots  = document.querySelector('#mtk-carousel-root .mtk-carousel-dots');
+    if (!track || !dots) return;
+
+    track.innerHTML = '';
+    dots.innerHTML  = '';
+
+    window.app.carousel.slides.forEach(function(slide, i) {
+        var slideEl = document.createElement('div');
+        slideEl.className = 'mtk-carousel-slide';
+        slideEl.innerHTML = slide.html;
+        track.appendChild(slideEl);
+
+        var dot = document.createElement('button');
+        dot.className = 'mtk-carousel-dot';
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', function() {
+            track.style.transform = 'translateX(-' + i * 100 + '%)';
+            [].forEach.call(dots.children, function(d, j) {
+                d.classList.toggle('active', j === i);
+            });
+        });
+        dots.appendChild(dot);
+    });
+
+    // Reset to first slide
+    track.style.transform = 'translateX(0)';
+});

@@ -69,5 +69,52 @@ function buildCourses() {
 window.app.courses = buildCourses();
 
 document.addEventListener('i18n:changed', function() {
+    // 1. Rebuild data
     window.app.courses = buildCourses();
+
+    // 2. Re-render the courses section matching courses.js structure
+    var root = document.querySelector('#MTK-courses');
+    if (!root) return;
+    var container = root.querySelector('.container');
+    if (!container) return;
+
+    container.innerHTML = '';
+    var data = window.app.courses;
+
+    var header = document.createElement('div');
+    header.className = 'text-center';
+    header.innerHTML = '<h2>' + data.title + '</h2>'
+                     + '<p class="mtk-description">' + data.description + '</p>';
+    container.appendChild(header);
+
+    var row = document.createElement('div');
+    row.className = 'row g-4';
+
+    data.items.forEach(function(item) {
+        var col = document.createElement('div');
+        col.className = 'col-12 col-md-4';
+        var features = item.features.map(function(f) { return '<li>' + f + '</li>'; }).join('');
+        col.innerHTML = '<div class="course-card">'
+            + '<span class="course-level">'       + item.level       + '</span>'
+            + '<div class="course-title">'         + item.title       + '</div>'
+            + '<div class="course-description">'   + item.description + '</div>'
+            + '<ul class="course-features">'       + features         + '</ul>'
+            + '<div class="course-cta">'
+            +   '<button class="btn btn-primary btn-ripple w-100" data-event="' + item.cta.event + '">'
+            +     item.cta.label
+            +   '</button>'
+            + '</div>'
+            + '</div>';
+        row.appendChild(col);
+    });
+
+    container.appendChild(row);
+    container.appendChild(document.createElement('div'));
+
+    container.addEventListener('click', function(e) {
+        var target = e.target.closest('[data-event]');
+        if (!target) return;
+        e.preventDefault();
+        wc.publish('mtk-courses:click');
+    });
 });

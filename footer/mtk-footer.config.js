@@ -31,8 +31,24 @@ window.app.footer = {
 document.addEventListener('i18n:changed', function() {
     var f = window.app.footer;
     if (!f) return;
-    f.brand.description   = i18n.t('footer.brand.desc');
-    f.contact.title       = i18n.t('footer.contact.title');
-    f.social.title        = i18n.t('footer.social.title');
-    f.copyright.text      = i18n.t('footer.copyright');
+
+    // 1. Update config
+    f.brand.description = i18n.t('footer.brand.desc');
+    f.contact.title     = i18n.t('footer.contact.title');
+    f.social.title      = i18n.t('footer.social.title');
+    f.copyright.text    = i18n.t('footer.copyright');
+
+    // 2. Re-render DOM — mtk-footer.js writes into #mtk-footer
+    var footerEl = document.getElementById('mtk-footer');
+    if (!footerEl) return;
+
+    var contactTitle   = footerEl.querySelector('.footer-contact-title');
+    var socialTitle    = footerEl.querySelector('.footer-social-title');
+    var brandDesc      = footerEl.querySelector('.footer-brand-desc');
+    var copyrightEl    = footerEl.querySelector('.footer-copyright');
+
+    if (contactTitle) contactTitle.textContent = f.contact.title;
+    if (socialTitle)  socialTitle.textContent  = f.social.title;
+    if (brandDesc)    brandDesc.innerHTML       = f.brand.description;
+    if (copyrightEl)  copyrightEl.textContent   = f.copyright.text;
 });
