@@ -1,4 +1,6 @@
-<button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
+<button id="scrollTopBtn"
+    data-i18n-aria="top.scrollBtn"
+    aria-label="Scroll to top">↑</button>
 
 <style>
  #scrollTopBtn {
@@ -46,11 +48,14 @@
      });
 
      btn.addEventListener("click", () => {
-	 window.scrollTo({
-	     top: 0,
-	     behavior: "smooth"
-	 });
+	 window.scrollTo({ top: 0, behavior: "smooth" });
+     });
+
+     // Re-apply aria-label when language changes
+     document.addEventListener('i18n:changed', () => {
+	 if (window.i18n) {
+	     btn.setAttribute('aria-label', i18n.t('top.scrollBtn'));
+	 }
      });
  })();
 </script>
-
