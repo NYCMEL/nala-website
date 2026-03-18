@@ -81,5 +81,3 @@ window.app.tiles = [
         }
     }
 ]
-
-
