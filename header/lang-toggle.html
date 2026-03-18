@@ -1,0 +1,55 @@
+<!--
+  lang-toggle.html
+  Drop this snippet inside your header or navbar.
+  Switches between EN and ES instantly using i18n.setLang().
+-->
+<div class="lang-toggle d-flex align-items-center gap-1 ms-2" id="lang-toggle-widget">
+    <button
+	class="btn btn-sm lang-btn"
+	id="lang-btn-en"
+	onclick="i18n.setLang('en')"
+	title="English"
+	aria-label="Switch to English">
+	🇺🇸 EN
+    </button>
+    <span class="text-secondary" style="font-size:11px;">|</span>
+    <button
+	class="btn btn-sm lang-btn"
+	id="lang-btn-es"
+	onclick="i18n.setLang('es')"
+	title="Español"
+	aria-label="Cambiar a Español">
+	🇲🇽 ES
+    </button>
+</div>
+
+<style>
+ .lang-toggle .lang-btn {
+     font-size: 12px;
+     padding: 2px 8px;
+     border: 1px solid rgba(255,255,255,0.3);
+     color: rgba(255,255,255,0.8);
+     background: transparent;
+     border-radius: 4px;
+     cursor: pointer;
+     transition: all 0.15s;
+ }
+ .lang-toggle .lang-btn:hover { background: rgba(255,255,255,0.15); color: white; }
+ .lang-toggle .lang-btn.active { background: rgba(255,255,255,0.25); color: white; font-weight: 700; border-color: white; }
+</style>
+
+<script>
+ // Highlight the active language button
+ (function syncLangButtons() {
+     function update() {
+	 var lang = window.i18n ? i18n.getLang() : 'en';
+	 document.getElementById('lang-btn-en').classList.toggle('active', lang === 'en');
+	 document.getElementById('lang-btn-es').classList.toggle('active', lang === 'es');
+     }
+     document.addEventListener('i18n:changed', update);
+     // run once on load
+     if (document.readyState === 'loading') {
+	 document.addEventListener('DOMContentLoaded', update);
+     } else { update(); }
+ })();
+</script>
