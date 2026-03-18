@@ -1,5 +1,3 @@
-alert("EN");
-
 window.app = window.app || {};
 
 window.app.tiles = [
