@@ -1,9 +1,5 @@
 (function () {
-    // if class is not available
-
-    if (!window.MtkQuiz) {
-	// mtk-quiz.js
-	class MtkQuiz {
+    const QuizCtor = window.MtkQuizComponent || class MtkQuiz {
 	    constructor(element, config) {
 		this.element = element;
 		this.config = config;
@@ -677,7 +673,7 @@
 		// Handle incoming messages here if needed
 		// This allows the component to react to external events
 	    }
-	}
+	};
 
 	/**
 	 * Wait for mtk-quiz element to be ready in the DOM
@@ -764,13 +760,14 @@
 		await new Promise(resolve => setTimeout(resolve, 100));
 		
 		// Initialize the quiz component
-		const quiz = new MtkQuiz(element, config);
+		const quiz = new QuizCtor(element, config);
 		
 		// Store instance on element
 		element.mtkQuizInstance = quiz;
 		
-		// Expose to window namespace
+		// Expose the live instance separately from the reusable class.
 		window.MtkQuiz = quiz;
+		window.MtkQuizInstance = quiz;
 		
 		wc.log('✅ MTK Quiz initialized successfully');
 		
@@ -839,5 +836,6 @@
 		initMtkQuiz(quiz);
 	    });
 	}
-    }
+
+    window.MtkQuizComponent = QuizCtor;
 })();
