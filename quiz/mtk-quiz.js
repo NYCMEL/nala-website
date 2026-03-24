@@ -226,15 +226,30 @@
 		}
 	    }
 
+	    collectAnswersFromDom() {
+		const answers = {};
+		const checkedInputs = this.element.querySelectorAll('.mtk-quiz__option-input:checked');
+
+		checkedInputs.forEach((input) => {
+		    const questionId = input.getAttribute('data-question-id');
+		    if (!questionId) return;
+		    answers[String(questionId)] = input.value;
+		});
+
+		this.answers = answers;
+		return answers;
+	    }
+
 	    handleSubmit(e) {
 		wc.log('🔴 SUBMIT BUTTON CLICKED!');
 		e.preventDefault();
 		
 		wc.log('🔴 Event prevented, continuing...');
 
-		// Check if all questions are answered
+		const answersMap = this.collectAnswersFromDom();
+
 		const totalQuestions = this.config.questions.length;
-		const answeredCount = Object.keys(this.answers).length;
+		const answeredCount = Object.keys(answersMap).length;
 		
 		wc.log('🔴 TOTAL QUESTIONS:', totalQuestions);
 		wc.log('🔴 ANSWERED COUNT:', answeredCount);
@@ -276,11 +291,6 @@
 		}
 
 		wc.log('🔴 VALIDATION PASSED - ALL QUESTIONS ANSWERED');
-
-		const answersMap = {};
-		Object.keys(this.answers).forEach((questionId) => {
-		    answersMap[String(questionId)] = this.answers[questionId];
-		});
 
 		const submissionData = {
 		    quiz_session_id: this.config.quiz_session_id,
@@ -410,7 +420,7 @@
 		// Publish test event
 		if (window.wc && window.wc.publish) {
 		    const testData = {
-			selectedCount: Object.keys(this.answers).length,
+			selectedCount: Object.keys(this.collectAnswersFromDom()).length,
 			totalQuestions: this.config.questions.length,
 			timestamp: new Date().toISOString()
 		    };
@@ -470,7 +480,7 @@
 
 	    updateProgress() {
 		const totalQuestions = this.config.questions.length;
-		const answeredCount = Object.keys(this.answers).length;
+		const answeredCount = Object.keys(this.collectAnswersFromDom()).length;
 		const percentage = (answeredCount / totalQuestions) * 100;
 
 		if (this.elements.progressFill) {

@@ -52,6 +52,12 @@
         alert(message);
     }
 
+    function hideMsg() {
+        if (window.MTKMsgs && typeof MTKMsgs.hide === "function") {
+            MTKMsgs.hide();
+        }
+    }
+
     function getUser() {
         return (window.wc && wc.session && wc.session.user) ? wc.session.user : null;
     }
@@ -174,6 +180,8 @@
     }
 
     function applyLoggedOutView() {
+        hideMsg();
+
         if (window.wc) {
             wc.session = null;
             wc.user = null;
@@ -196,6 +204,8 @@
     }
 
     function applyLoggedInView() {
+        hideMsg();
+
         if (window.jQuery) {
             jQuery(".app-header").hide();
             jQuery("#header-public").hide();
@@ -265,6 +275,8 @@
     }
 
     function goToPage(page) {
+        hideMsg();
+
         if (wc.pages && typeof wc.pages.show === "function") {
             wc.pages.show(page);
         }
