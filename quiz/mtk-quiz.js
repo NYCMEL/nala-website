@@ -44,6 +44,27 @@
 		this.elements.messageContainer = this.element.querySelector('#messageContainer');
 	    }
 
+	    clearGlobalMessageBanner() {
+		if (window.MTKMsgs) {
+		    if (typeof window.MTKMsgs.hide === 'function') {
+			window.MTKMsgs.hide();
+		    }
+		    if (typeof window.MTKMsgs.unblock === 'function') {
+			window.MTKMsgs.unblock();
+		    }
+		}
+
+		document.querySelectorAll('.mtk-msgs').forEach((node) => {
+		    node.classList.remove('visible', 'locked', 'mtk-msgs--info', 'mtk-msgs--warning', 'mtk-msgs--error', 'mtk-msgs--success');
+		});
+
+		document.querySelectorAll('.mtk-msgs__overlay').forEach((node) => {
+		    node.classList.remove('visible');
+		});
+
+		document.body.style.overflow = '';
+	    }
+
 	    populateHeader() {
 		const titleEl = this.element.querySelector('#quizTitle');
 		const moduleEl = this.element.querySelector('#moduleId');
@@ -153,13 +174,9 @@
 		    wc.log('🟢 Submit button found, attaching click listener');
 		    this.elements.submitBtn.addEventListener('click', (e) => {
 			wc.log('🟢 Submit button CLICKED');
-			// Check if button is inside a form
-			const form = this.elements.submitBtn.closest('form');
-			if (!form) {
-			    wc.log('🟡 Button not in form, calling handleSubmit directly');
-			    e.preventDefault();
-			    this.handleSubmit(e);
-			}
+			e.preventDefault();
+			e.stopPropagation();
+			this.handleSubmit(e);
 		    });
 		} else {
 		    wc.log('🔴 Submit button NOT found!');
@@ -208,6 +225,7 @@
 		const value = input.value;
 
 		this.answers[questionId] = value;
+		this.clearGlobalMessageBanner();
 		this.updateProgress();
 
 		// Publish option change event
@@ -228,12 +246,10 @@
 
 	    collectAnswersFromDom() {
 		const answers = {};
-		const checkedInputs = this.element.querySelectorAll('.mtk-quiz__option-input:checked');
-
-		checkedInputs.forEach((input) => {
-		    const questionId = input.getAttribute('data-question-id');
-		    if (!questionId) return;
-		    answers[String(questionId)] = input.value;
+		this.config.questions.forEach((question) => {
+		    const checkedInput = this.element.querySelector(`input[name="question_${question.id}"]:checked`);
+		    if (!checkedInput) return;
+		    answers[String(question.id)] = checkedInput.value;
 		});
 
 		this.answers = answers;
@@ -243,6 +259,7 @@
 	    handleSubmit(e) {
 		wc.log('🔴 SUBMIT BUTTON CLICKED!');
 		e.preventDefault();
+		e.stopPropagation();
 		
 		wc.log('🔴 Event prevented, continuing...');
 
@@ -258,11 +275,12 @@
 		wc.log('=== SUBMIT DEBUG ===');
 		wc.log('Total Questions:', totalQuestions);
 		wc.log('Answered Count:', answeredCount);
-		wc.log('Answers Object:', this.answers);
+		wc.log('Answers Object:', answersMap);
 		wc.log('==================');
 
 		if (answeredCount < totalQuestions) {
 		    wc.log('🔴 VALIDATION FAILED - NOT ALL ANSWERED');
+		    this.clearGlobalMessageBanner();
 		    
 		    // Publish validation error event
 		    if (window.wc && window.wc.publish) {
@@ -273,16 +291,14 @@
 			    timestamp: new Date().toISOString()
 			};
 			
-			if (window.wc.log) {
-			    MTKMsgs.show({
-				type: 'error',
-				icon: 'error',
-				message: errorData.message,
-				buttons: [{label: "Go to Unanswered question", action: "NextEmptyQuestion"}],
-				closable: false,
-				timer: 0
-			    });
-			}
+			MTKMsgs.show({
+			    type: 'error',
+			    icon: 'error',
+			    message: errorData.message,
+			    buttons: [{label: "Go to Unanswered question", action: "NextEmptyQuestion"}],
+			    closable: false,
+			    timer: 0
+			});
 			
 			window.wc.publish('4-mtk-quiz-validation-error', errorData);
 		    }
@@ -358,6 +374,7 @@
 	    handleClear() {
 		// Clear all selections
 		this.answers = {};
+		this.clearGlobalMessageBanner();
 		const radioButtons = this.element.querySelectorAll('.mtk-quiz__option-input');
 		radioButtons.forEach(radio => {
 		    radio.checked = false;
@@ -395,10 +412,12 @@
 	    }
 
 	    handleCancel() {
+		this.clearGlobalMessageBanner();
 		wc.pages.show('hierarchy');
 	    }
 
 	    handleTest() {
+		this.clearGlobalMessageBanner();
 		// Select first option for each question
 		this.config.questions.forEach(question => {
 		    const firstInput = this.element.querySelector(`input[data-question-id="${question.id}"][value="a"]`);
@@ -512,12 +531,13 @@
 		wc.log('🔍 Looking for first unanswered question...');
 		
 		const questions = this.element.querySelectorAll('.mtk-quiz__question');
+		const answers = this.collectAnswersFromDom();
 		
 		for (let question of questions) {
 		    const questionId = question.getAttribute('data-question-id');
 		    
 		    // Check if this question is answered
-		    if (!this.answers[questionId]) {
+		    if (!answers[questionId]) {
 			wc.log(`📍 Found unanswered question: ${questionId}`);
 			
 			// Get header heights for offset
@@ -637,6 +657,10 @@
 		if (!window.wc || !window.wc.subscribe) return;
 
 		// Subscribe to all 4-mtk-quiz events
+		window.wc.subscribe('mtk-msgs:button-click', (event, data) => {
+		    if (!data || data.action !== 'NextEmptyQuestion') return;
+		    this.scrollToFirstUnanswered();
+		});
 		window.wc.subscribe('4-mtk-quiz-option-changed', this.onMessage.bind(this));
 		window.wc.subscribe('4-mtk-quiz-submitted', this.onMessage.bind(this));
 		window.wc.subscribe('4-mtk-quiz-cleared', this.onMessage.bind(this));
@@ -662,9 +686,10 @@
 	    return new Promise((resolve) => {
 		// Check if element already exists
 		const checkElement = () => {
-		    const element = document.querySelector('mtk-quiz.mtk-quiz') || 
-			  document.querySelector('mtk-quiz') ||
-			  document.querySelector('[class*="mtk-quiz"]');
+		    const elements = Array.from(document.querySelectorAll('mtk-quiz.mtk-quiz, mtk-quiz, [class*="mtk-quiz"]'));
+		    const element = elements.find((candidate) => candidate && candidate.offsetParent !== null) ||
+			  elements[elements.length - 1] ||
+			  null;
 		    
 		    if (element) {
 			wc.log('✅ mtk-quiz element found in DOM');
@@ -782,10 +807,10 @@
 	    }
 	    
 	    // Backup initialization on window load
-	    window.addEventListener('load', async () => {
-		const element = document.querySelector('mtk-quiz.mtk-quiz') || 
-		      document.querySelector('mtk-quiz') ||
-		      document.querySelector('[class*="mtk-quiz"]');
+		window.addEventListener('load', async () => {
+		const elements = Array.from(document.querySelectorAll('mtk-quiz.mtk-quiz, mtk-quiz, [class*="mtk-quiz"]'));
+		const element = elements.find((candidate) => candidate && candidate.offsetParent !== null) ||
+		      elements[elements.length - 1];
 		
 		if (element && !element.mtkQuizInstance) {
 		    wc.log('🔄 MTK Quiz: Backup initialization on window load');

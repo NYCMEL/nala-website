@@ -56,6 +56,16 @@
         if (window.MTKMsgs && typeof MTKMsgs.hide === "function") {
             MTKMsgs.hide();
         }
+        if (window.MTKMsgs && typeof MTKMsgs.unblock === "function") {
+            MTKMsgs.unblock();
+        }
+        document.querySelectorAll(".mtk-msgs").forEach((node) => {
+            node.classList.remove("visible", "locked", "mtk-msgs--info", "mtk-msgs--warning", "mtk-msgs--error", "mtk-msgs--success");
+        });
+        document.querySelectorAll(".mtk-msgs__overlay").forEach((node) => {
+            node.classList.remove("visible");
+        });
+        document.body.style.overflow = "";
     }
 
     function getUser() {
