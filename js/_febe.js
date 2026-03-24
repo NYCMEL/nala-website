@@ -173,18 +173,36 @@
         }
     }
 
-    function handleManualLogout() {
-        apiPost("/api/logout.php", {})
-            .then(() => {
-                if (window.wc) {
-                    wc.session = null;
-                }
+    function applyLoggedOutView() {
+        if (window.wc) {
+            wc.session = null;
+            wc.user = null;
+            wc.currentUser = null;
+        }
 
-                if (wc.pages && typeof wc.pages.show === "function") {
-                    wc.pages.show("login");
-                } else {
-                    window.location.href = getBaseUrl() + "index.html";
-                }
+        if (window.jQuery) {
+            jQuery(".app-header").hide();
+            jQuery("#header-private").hide();
+            jQuery("#header-public").show();
+        }
+
+        syncPurchaseButtons();
+
+        if (wc.pages && typeof wc.pages.show === "function") {
+            wc.pages.show("login");
+        } else {
+            window.location.href = getBaseUrl() + "index.html";
+        }
+    }
+
+    function handleManualLogout() {
+        const logoutAction = (window.wc && typeof wc.logout === "function")
+            ? wc.logout({ redirect: false })
+            : apiPost("/api/logout.php", {});
+
+        Promise.resolve(logoutAction)
+            .then(() => {
+                applyLoggedOutView();
             })
             .catch((err) => {
                 showMsg("error", err.message || "Logout failed.", {
