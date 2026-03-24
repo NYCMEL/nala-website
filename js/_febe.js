@@ -195,6 +195,20 @@
         }
     }
 
+    function applyLoggedInView() {
+        if (window.jQuery) {
+            jQuery(".app-header").hide();
+            jQuery("#header-public").hide();
+            jQuery("#header-private").show();
+        }
+
+        syncPurchaseButtons();
+
+        if (wc.pages && typeof wc.pages.show === "function") {
+            wc.pages.show("dashboard");
+        }
+    }
+
     function handleManualLogout() {
         const logoutAction = (window.wc && typeof wc.logout === "function")
             ? wc.logout({ redirect: false })
@@ -293,6 +307,8 @@
             .then((json) => {
                 if (window.wc) {
                     wc.session = json.session || json;
+                    wc.user = wc.session && wc.session.user ? wc.session.user : null;
+                    wc.currentUser = wc.user;
                 }
 
                 showMsg("success", "Logged in successfully.", {
@@ -300,7 +316,7 @@
                     timer: 5
                 });
 
-                goToPage("dashboard");
+                applyLoggedInView();
             })
             .catch((err) => {
                 showMsg("error", err.message || "Wrong credentials", {
