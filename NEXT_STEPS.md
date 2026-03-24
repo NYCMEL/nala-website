@@ -144,17 +144,18 @@ Show:
 
 ## Phase 3: Platform Completion
 
-### 10. Zapier Integration
+### 10. Custom API Integration Cleanup
 
 Needed for:
 
-- Certificate sending
+- Certificate delivery consistency
 - Lockout kit automation
 
 Ensure:
 
-- Webhook fires correctly
-- Payload is correct
+- Legacy Zapier references are removed
+- Gift and fulfillment flows point to the correct custom API endpoints
+- Payloads match backend expectations
 
 ### 11. Email Verification System
 
@@ -227,7 +228,7 @@ Then:
 
 9. Dashboard UI
 10. Link audit
-11. Zapier final wiring
+11. Custom API cleanup
 
 ## Big Picture
 

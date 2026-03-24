@@ -192,7 +192,9 @@
         }, data)
       };
 
-      const webhookUrl = this.config.zapier && this.config.zapier.enabled ? String(this.config.zapier.webhookUrl || '').trim() : '';
+      const deliveryEndpoint = this.config.deliveryApi && this.config.deliveryApi.enabled
+        ? String(this.config.deliveryApi.endpoint || '').trim()
+        : '';
 
       const finishSuccess = () => {
         this._publish(this.config.events.submit, payload);
@@ -200,12 +202,12 @@
         this._resetForm();
       };
 
-      if (!webhookUrl) {
+      if (!deliveryEndpoint) {
         finishSuccess();
         return;
       }
 
-      fetch(webhookUrl, {
+      fetch(deliveryEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -216,11 +218,11 @@
       }).then(async (res) => {
         if (!res.ok) {
           const text = await res.text().catch(() => '');
-          throw new Error(text || 'Zapier gift webhook failed.');
+          throw new Error(text || 'Gift delivery request failed.');
         }
         finishSuccess();
       }).catch((err) => {
-        console.error('[MTKGift] webhook failed', err);
+        console.error('[MTKGift] delivery request failed', err);
         this._showSnackbar('error', err.message || 'Could not submit gift request.', 'error_outline');
       });
     }

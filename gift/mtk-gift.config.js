@@ -161,8 +161,8 @@ const MTKGiftConfig = {
       open: "mtk-gift:open",
       close: "mtk-gift:close"
     },
-    zapier: {
-      webhookUrl: "",
+    deliveryApi: {
+      endpoint: "",
       enabled: false
     }
   }

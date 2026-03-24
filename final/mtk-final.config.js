@@ -32,10 +32,5 @@ window.MTK_FINAL_CONFIG = {
         change: 'mtk-final:change',
         submit: 'mtk-final:submit',
         error:  'mtk-final:error'
-    },
-
-    zapier: {
-        webhookUrl: 'https://hooks.zapier.com/hooks/catch/24223806/u10pb8v/',
-        enabled: false
     }
 };
