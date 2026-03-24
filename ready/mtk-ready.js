@@ -24,11 +24,22 @@ if (typeof MtkReady === 'undefined') {
             const btn = this.el.querySelector('.mtk-ready-btn');
             if (!btn) return;
             btn.addEventListener('click', () => {
-                wc.publish('mtk-ready:click', {
+                const payload = {
                     component: 'mtk-ready',
                     id: 'primary',
                     action: this.config.button?.action || null
-                });
+                };
+
+                if (typeof window.nalaShowRegister === 'function') {
+                    window.nalaShowRegister();
+                } else if (window.wc && wc.pages && typeof wc.pages.show === 'function') {
+                    wc.pages.show('register');
+                } else {
+                    wc.publish('mtk-ready:click', payload);
+                    return;
+                }
+
+                wc.publish('mtk-ready:click', payload);
             });
         }
     }

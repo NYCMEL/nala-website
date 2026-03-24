@@ -8,7 +8,7 @@
 		    <h1 class="MTK-hero-title"></h1>
 		    <p class="MTK-hero-description"></p>
 
-		    <button type="button" class="btn btn-primary mtk-ripple btn-lg mt-5" onclick="wc.publish('mtk-ready:click'); return false;">Get Started</button>
+		    <button type="button" class="btn btn-primary mtk-ripple btn-lg mt-5" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } else { wc.publish('mtk-ready:click'); } return false;">Get Started</button>
 		</div>
 
 	    </div>

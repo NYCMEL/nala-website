@@ -53,12 +53,18 @@ if (!customElements.get("mtk-login")) {
             });
             this.forgotLink.addEventListener("click", e => {
                 e.preventDefault();
+                if (window.wc && wc.febe && typeof wc.febe.goToPage === "function") {
+                    wc.febe.goToPage("login");
+                }
                 wc.publish(this.config.events?.forgotPassword || "mtk-login-forgot", {
                     source: "mtk-login"
                 });
             });
             this.registerLink.addEventListener("click", e => {
                 e.preventDefault();
+                if (window.wc && wc.pages && typeof wc.pages.show === "function") {
+                    wc.pages.show("register");
+                }
                 wc.publish(this.config.events?.register || "mtk-login-register", {
                     source: "mtk-login"
                 });
@@ -109,10 +115,17 @@ if (!customElements.get("mtk-login")) {
                 valid = false;
             }
             if (valid) {
-                wc.publish(this.config.events?.submit || "mtk-login-submit", {
+                const payload = {
                     email: this.emailEl.value.trim(),
                     password: this.passwordEl.value.trim()
-                });
+                };
+
+                if (window.wc && wc.febe && typeof wc.febe.handleLoginSubmit === "function") {
+                    wc.febe.handleLoginSubmit(payload);
+                    return;
+                }
+
+                wc.publish(this.config.events?.submit || "mtk-login-submit", payload);
             }
         }
         validateEmail(email) {
