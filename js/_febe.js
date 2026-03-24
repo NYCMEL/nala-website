@@ -238,6 +238,15 @@
         }
     }
 
+    function goToRegisterPage() {
+        if (typeof window.nalaShowRegister === "function") {
+            window.nalaShowRegister();
+            return;
+        }
+
+        goToPage("register");
+    }
+
     function handleRegisterSubmit(payload) {
         apiPost("/api/register.php", payload)
             .then((json) => {
@@ -287,6 +296,17 @@
 
     function bindClicks() {
         document.addEventListener("click", function (e) {
+            const getStartedBtn = e.target.closest("button");
+            if (
+                getStartedBtn &&
+                /get started/i.test((getStartedBtn.textContent || "").trim()) &&
+                !getStartedBtn.closest("mtk-login, .mtk-login, #header, .mtk-dialog, .mtk-msgs")
+            ) {
+                e.preventDefault();
+                goToRegisterPage();
+                return;
+            }
+
             const purchaseBtn = e.target.closest("[data-purchase-plan]");
             if (purchaseBtn) {
                 e.preventDefault();
@@ -314,7 +334,28 @@
                 e.preventDefault();
                 handleManualLogout();
             }
-        });
+        }, true);
+
+        document.addEventListener("submit", function (e) {
+            const loginForm = e.target.closest("mtk-login form, .mtk-login form");
+            if (!loginForm) return;
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            const emailField = loginForm.querySelector("#mtk-email");
+            const passwordField = loginForm.querySelector("#mtk-password");
+            const payload = {
+                email: emailField ? emailField.value.trim() : "",
+                password: passwordField ? passwordField.value.trim() : ""
+            };
+
+            if (!payload.email || !payload.password) {
+                return;
+            }
+
+            handleLoginSubmit(payload);
+        }, true);
     }
 
     function bindEvents() {
