@@ -285,6 +285,20 @@
                 return;
             }
 
+            const homeActionBtn = e.target.closest("[data-home-action]");
+            if (homeActionBtn) {
+                e.preventDefault();
+                const action = homeActionBtn.getAttribute("data-home-action");
+
+                if (action === "business") {
+                    handlePurchasePlan("business");
+                    return;
+                }
+
+                goToPage("register");
+                return;
+            }
+
             const logoutBtn = e.target.closest("[data-action='logout'], .btn-logout, #btn-logout");
             if (logoutBtn) {
                 e.preventDefault();
@@ -296,12 +310,16 @@
     function bindEvents() {
         if (!window.wc || typeof wc.subscribe !== "function") return;
 
-        wc.subscribe("mtk-register-submit", function (msg) {
-            handleRegisterSubmit(msg.payload || msg);
+        wc.subscribe("mtk-register-submit", function (_msg, data) {
+            handleRegisterSubmit(data || {});
         });
 
-        wc.subscribe("mtk-login-submit", function (msg) {
-            handleLoginSubmit(msg.payload || msg);
+        wc.subscribe("mtk-login-submit", function (_msg, data) {
+            handleLoginSubmit(data || {});
+        });
+
+        wc.subscribe("mtk-login-success", function (_msg, data) {
+            handleLoginSubmit(data || {});
         });
 
         wc.subscribe("mtk-header-home", function () {
@@ -314,6 +332,45 @@
 
         wc.subscribe("mtk-header-login", function () {
             goToPage("login");
+        });
+
+        wc.subscribe("mtk-login-register", function () {
+            goToPage("register");
+        });
+
+        wc.subscribe("mtk-login-forgot", function () {
+            showMsg("info", "Password reset is not available from this screen yet. Please contact support for help resetting your password.", {
+                icon: "info",
+                closable: true,
+                timer: 8
+            });
+        });
+
+        wc.subscribe("mtk-login-forgot-password", function () {
+            showMsg("info", "Password reset is not available from this screen yet. Please contact support for help resetting your password.", {
+                icon: "info",
+                closable: true,
+                timer: 8
+            });
+        });
+
+        wc.subscribe("mtk-ready:click", function () {
+            goToPage("register");
+        });
+
+        wc.subscribe("mtk-courses:click", function () {
+            goToPage("register");
+        });
+
+        wc.subscribe("mtk-path:click", function (_msg, data) {
+            const payload = data || {};
+
+            if (payload.plan === "premium" || payload.plan === "business") {
+                handlePurchasePlan(payload.plan);
+                return;
+            }
+
+            goToPage("register");
         });
 
         wc.subscribe("mtk-header-dashboard", function () {
@@ -340,8 +397,8 @@
             handleManualLogout();
         });
 
-        wc.subscribe("mtk-dashboard:subscription-clicked", function (msg) {
-            const payload = msg.payload || {};
+        wc.subscribe("mtk-dashboard:subscription-clicked", function (_msg, data) {
+            const payload = data || {};
             if (payload.subscriptionId === "premium-course") {
                 handlePurchasePlan("premium");
             } else if (payload.subscriptionId === "business-in-a-box") {

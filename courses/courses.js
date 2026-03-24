@@ -76,7 +76,9 @@
                     e.preventDefault();
 
 		    let msg = "mtk-courses:click"; wc.log(msg);
-		    wc.publish(msg);
+		    wc.publish(msg, {
+                        event: target.getAttribute("data-event") || ""
+                    });
                 });
             } catch (err) {
                 console.error("MTK-courses render error", err);

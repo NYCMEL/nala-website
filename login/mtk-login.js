@@ -53,11 +53,15 @@ if (!customElements.get("mtk-login")) {
             });
             this.forgotLink.addEventListener("click", e => {
                 e.preventDefault();
-                wc.publish("mtk-login-forgot-password", { source: "mtk-login" });
+                wc.publish(this.config.events?.forgotPassword || "mtk-login-forgot", {
+                    source: "mtk-login"
+                });
             });
             this.registerLink.addEventListener("click", e => {
                 e.preventDefault();
-                wc.publish("mtk-login-register", { source: "mtk-login" });
+                wc.publish(this.config.events?.register || "mtk-login-register", {
+                    source: "mtk-login"
+                });
             });
         }
         subscribeEvents() {
@@ -105,7 +109,7 @@ if (!customElements.get("mtk-login")) {
                 valid = false;
             }
             if (valid) {
-                wc.publish("mtk-login-success", {
+                wc.publish(this.config.events?.submit || "mtk-login-submit", {
                     email: this.emailEl.value.trim(),
                     password: this.passwordEl.value.trim()
                 });
