@@ -6,6 +6,11 @@ wc.working   = location.origin != 'http://localhost:3000';
 wc.working = false; // temporary
 wc.apiURL    = "https://nala-test.com" || "https://nalanetwork.com";
 wc.testing   = false;  /* = true SHOULD USE ALL LOCAL CONFIG FILES and others */
+wc.baseUrl   = (window.app && window.app.baseUrl) || (function () {
+    const path = window.location.pathname || "/";
+    const basePath = path.replace(/[^/]*$/, "");
+    return basePath && basePath.endsWith("/") ? basePath : (basePath || "/") + "/";
+})();
 
 // Message storage
 wc.emsgs = [
@@ -1086,7 +1091,7 @@ wc.logout = async function (options = {}) {
 
     const opts = Object.assign({
         redirect: false,
-        redirectUrl: '/repo_deploy/index.html?logout=' + Date.now()
+        redirectUrl: (wc.baseUrl || '/') + 'index.html?logout=' + Date.now()
     }, options || {});
 
     try {

@@ -4,7 +4,15 @@
 	<meta charset="UTF-8">
 	<title>NALA - Learn Professional Locksmithing!</title>
 
-	<base href="/repo_deploy/">
+	<script>
+	 (function () {
+	     var path = window.location.pathname || "/";
+	     var basePath = path.replace(/[^/]*$/, "");
+	     if (!basePath) basePath = "/";
+	     if (basePath.charAt(basePath.length - 1) !== "/") basePath += "/";
+	     document.write('<base href="' + basePath + '">');
+	 })();
+	</script>
 
 	<link rel="icon" href="img/cropped-favicon-32x32.png" sizes="32x32">
 	<link rel="icon" href="img/cropped-favicon-192x192.png" sizes="192x192">

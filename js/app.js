@@ -3,7 +3,11 @@
 /////////////////////////////////////////////////////////////////////////////////
 window.app = window.app || {};
 
-app.baseUrl  = "/repo_deploy/";
+app.baseUrl  = (function () {
+    const path = window.location.pathname || "/";
+    const basePath = path.replace(/[^/]*$/, "");
+    return basePath && basePath.endsWith("/") ? basePath : (basePath || "/") + "/";
+})();
 app.quizSize = 20; 
 
 // Message storage

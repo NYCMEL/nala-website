@@ -4,6 +4,16 @@
     window.wc = window.wc || {};
     wc.febe = wc.febe || {};
 
+    function getBaseUrl() {
+        if (window.app && typeof app.baseUrl === "string" && app.baseUrl) {
+            return app.baseUrl;
+        }
+
+        const path = window.location.pathname || "/";
+        const basePath = path.replace(/[^/]*$/, "");
+        return basePath && basePath.endsWith("/") ? basePath : (basePath || "/") + "/";
+    }
+
     function apiPost(url, data) {
         return fetch(url, {
             method: "POST",
@@ -142,11 +152,11 @@
                         if (wc.pages && typeof wc.pages.show === "function") {
                             wc.pages.show("login");
                         } else {
-                            window.location.href = "/repo_deploy/index.html";
+                            window.location.href = getBaseUrl() + "index.html";
                         }
                     })
                     .catch(() => {
-                        window.location.href = "/repo_deploy/index.html";
+                        window.location.href = getBaseUrl() + "index.html";
                     });
             }, 1500);
         }
@@ -173,7 +183,7 @@
                 if (wc.pages && typeof wc.pages.show === "function") {
                     wc.pages.show("login");
                 } else {
-                    window.location.href = "/repo_deploy/index.html";
+                    window.location.href = getBaseUrl() + "index.html";
                 }
             })
             .catch((err) => {
