@@ -66,6 +66,15 @@
 	</div>
 
 	<script>
+
+	 function nalaShowRegister() {
+	     window.__nalaRequestedPublicPage = "register";
+	     const pagesRef = wc.pages || document.getElementById("mtk-pages");
+	     if (pagesRef && typeof pagesRef.show === "function") {
+	         wc.pages = pagesRef;
+	         wc.pages.show("register", { replaceHistory: true });
+	     }
+	 }
 	 // INITIAL PAGE
 	 wc.getSession(function (loggedIn, session, err) {
 	     if (err) return;
@@ -87,7 +96,11 @@
 		 }
 	     } else {
 		 wc.log('IS NOT LOGGED IN');
-		 wc.pages.show('home');
+		 if (window.__nalaRequestedPublicPage === 'register') {
+		     nalaShowRegister();
+		 } else {
+		     wc.pages.show('home');
+		 }
 		 
 		 // SHOW PUBLIC HEADER
 		 $(".app-header").hide(function() {

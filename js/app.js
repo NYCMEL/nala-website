@@ -8,10 +8,10 @@ app.quizSize = 20;
 
 // Message storage
 app.emsgs = [
-    { id: 1000, text: "Wrong 'Email' or 'Password' combination" },
+    { id: 1000, text: "Wrong credentials" },
     { id: 1001, text: "Create user failed" },
     { id: 1002, text: "No questions found for module" },
-    { id: 1003, text: "Registeration Failed!" },
+    { id: 1003, text: "Registration Failed!" },
 ];
 
 app.emsg = function (id) {

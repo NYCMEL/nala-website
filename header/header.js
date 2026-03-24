@@ -33,62 +33,102 @@ function initHeaderVisualState() {
     applyHeaderVisualState(activeLink ? activeLink.id : "");
 }
 
-// PUBLISH ALL CLICKS
-$(".nav-link, .navbar-brand, .btn").on("click", function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    e.stopImmediatePropagation();
-    
-    let eid = this.id;
+function closeHeaderMenu() {
+    const collapseEl = document.getElementById("navbarSupportedContent");
+    if (!collapseEl) return;
 
-    headerSelect(eid);
+    collapseEl.classList.remove("show");
 
-    let msg = eid; wc.log(msg);
-    wc.publish(msg);
-});
+    if (window.bootstrap && window.bootstrap.Collapse) {
+        const instance = window.bootstrap.Collapse.getOrCreateInstance(collapseEl, { toggle: false });
+        instance.hide();
+    }
+}
 
 function headerSelect(id) {
-    $(".nav-link, .navbar-brand, .btn").removeClass("active");
+    document.querySelectorAll("#header .nav-link, #header .navbar-brand").forEach(el => {
+        el.classList.remove("active");
+    });
 
-    // FOLD HAMBURGER MENU
-    $(".navbar-collapse.show").removeClass("show");
+    closeHeaderMenu();
 
-    $("#" + id).addClass("active");
+    const activeEl = document.getElementById(id);
+    if (activeEl) activeEl.classList.add("active");
     applyHeaderVisualState(id);
 }
 
-document.addEventListener("DOMContentLoaded", initHeaderVisualState);
-initHeaderVisualState();
-setTimeout(initHeaderVisualState, 0);
-setTimeout(initHeaderVisualState, 120);
+function bindHeaderEvents(root = document) {
+    root.querySelectorAll("#header .nav-link, #header .navbar-brand").forEach(el => {
+        if (el.dataset.headerBound === "1") return;
+        el.dataset.headerBound = "1";
 
-// toggleNavbar()
-// Safe to call at any time — waits for Bootstrap to be ready before toggling
+        el.addEventListener("click", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const eid = this.id;
+            if (!eid) return;
+
+            headerSelect(eid);
+            wc.log(eid);
+            wc.publish(eid);
+        });
+    });
+
+    root.querySelectorAll("#header .navbar-toggler").forEach(btn => {
+        if (btn.dataset.headerBound === "1") return;
+        btn.dataset.headerBound = "1";
+
+        btn.addEventListener("click", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleNavbar();
+        });
+    });
+}
+
 function toggleNavbar() {
-    var collapseEl = document.getElementById("navbarSupportedContent");
+    const collapseEl = document.getElementById("navbarSupportedContent");
     if (!collapseEl) return;
 
     function doToggle() {
-        var bsCollapse = window.bootstrap.Collapse.getInstance(collapseEl);
-        if (!bsCollapse) {
-            bsCollapse = new window.bootstrap.Collapse(collapseEl, { toggle: false });
-        }
-        collapseEl.classList.contains("show") ? bsCollapse.hide() : bsCollapse.show();
+        const bsCollapse = window.bootstrap.Collapse.getOrCreateInstance(collapseEl, { toggle: false });
+        if (collapseEl.classList.contains("show")) bsCollapse.hide();
+        else bsCollapse.show();
     }
 
-    if (window.bootstrap) {
+    if (window.bootstrap && window.bootstrap.Collapse) {
         doToggle();
-    } else {
-        // Poll until Bootstrap is available (max 3s)
-        var attempts = 0;
-        var interval = setInterval(function () {
-            if (window.bootstrap) {
-                clearInterval(interval);
-                doToggle();
-            } else if (++attempts >= 30) {
-                clearInterval(interval);
-                console.warn("toggleNavbar: bootstrap never loaded");
-            }
-        }, 100);
+        return;
     }
+
+    let attempts = 0;
+    const interval = setInterval(function () {
+        if (window.bootstrap && window.bootstrap.Collapse) {
+            clearInterval(interval);
+            doToggle();
+        } else if (++attempts >= 30) {
+            clearInterval(interval);
+            console.warn("toggleNavbar: bootstrap never loaded");
+        }
+    }, 100);
 }
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function() {
+        bindHeaderEvents(document);
+        initHeaderVisualState();
+    });
+} else {
+    bindHeaderEvents(document);
+    initHeaderVisualState();
+}
+
+setTimeout(function() {
+    bindHeaderEvents(document);
+    initHeaderVisualState();
+}, 0);
+setTimeout(function() {
+    bindHeaderEvents(document);
+    initHeaderVisualState();
+}, 150);

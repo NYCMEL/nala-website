@@ -3,16 +3,17 @@ window.wcAPP = window.wcAPP || "NOT-SET";
 window.wcURL = window.wcURL || "";
 
 wc.working   = location.origin != 'http://localhost:3000';
+wc.working = false; // temporary
 wc.apiURL    = "https://nala-test.com" || "https://nalanetwork.com";
 wc.testing   = false;  /* = true SHOULD USE ALL LOCAL CONFIG FILES and others */
 
 // Message storage
 wc.emsgs = [
-    { id: 1000, text: "Wrong 'Email' or 'Password' combination" },
+    { id: 1000, text: "Wrong credentials" },
     { id: 1001, text: "Create user failed" },
     { id: 1002, text: "No questions found for module" },
-    { id: 1003, text: "Registeration Failed!" },
-    { id: 1004, text: 'You have Successfully completed this set of tests' },
+    { id: 1003, text: "Registration Failed!" },
+    { id: 1004, text: 'You have successfully completed this set of tests' },
 ];
 
 wc.emsg = function (id) {
@@ -24,6 +25,7 @@ wc.emsg = function (id) {
 
 wc.msg = wc.msg || {};
 wc.msg.lessonLocked = 'Please finish the current lesson video before moving on to the next lesson.';
+wc.testingDisableVideoGate = true; // testing only
 
 /************************************************************
  * CONFIG INACTIVITY TIMER
@@ -1060,13 +1062,13 @@ wc.login = async function (email, passwd) {
 /////////////////////////////////////////////////////////////////////////////////
 //// LOGOUT
 /////////////////////////////////////////////////////////////////////////////////
-wc.logout = async function () {
+wc.logout = async function (options = {}) {
     wc.log('logout');
 
-    wc.session = wc.user = null;
-
-    // REMOVE USER NAME
-    wc.deleteCookie("user");
+    const opts = Object.assign({
+        redirect: false,
+        redirectUrl: '/repo_deploy/index.html?logout=' + Date.now()
+    }, options || {});
 
     try {
         const res = await fetch(wc.apiURL + '/api/logout.php', {
@@ -1079,17 +1081,20 @@ wc.logout = async function () {
         if (!res.ok) {
             throw new Error(data.error || 'Logout failed');
         }
-
-        // reset
-        wc.currentUser = null;
-
-        wc.log('logged out', data);
-        return true;
     } catch (err) {
         wc.error('doLogout failed:', err);
-        throw err;
-    } finally {
     }
+
+    wc.session = null;
+    wc.user = null;
+    wc.currentUser = null;
+    wc.deleteCookie('user');
+
+    if (opts.redirect) {
+        window.location.href = opts.redirectUrl;
+    }
+
+    return true;
 };
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -1440,9 +1445,11 @@ wc.lessonComplete = function (clickedLessonNo, currentLessonNo, callback) {
         return;
     }
 
-    // Only advance if they clicked the latest lesson
-    if (ln !== cur) {
-        if (typeof callback === "function") callback(null, { ok: true, advanced: false, updated: false, reason: "client_guard_not_latest", current_lesson: cur });
+    // TESTING RULE:
+    // Allow advancing when the user clicks the current lesson OR any previous lesson.
+    // This makes it possible to keep progressing while re-opening earlier lessons.
+    if (ln > cur) {
+        if (typeof callback === "function") callback(null, { ok: true, advanced: false, updated: false, reason: "client_guard_future_lesson", current_lesson: cur });
         return;
     }
 

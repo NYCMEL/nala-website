@@ -1,482 +1,240 @@
 /**
  * mtk-final.js
  * Certificate email selection component.
- * Waits for <mtk-final> to appear in the DOM (supports <wc-include>).
- * Reads all data from MTK_FINAL_CONFIG (mtk-final.config.js).
- * Publishes events via wc.publish / subscribes via wc.subscribe.
+ * Manual send only.
  */
 
 (function () {
-  'use strict';
+'use strict';
 
-  // ── Guard: config must be loaded ─────────────────────────────────
-  if (typeof MTK_FINAL_CONFIG === 'undefined') {
-    console.error('[mtk-final] MTK_FINAL_CONFIG not found. Load mtk-final.config.js first.');
-    return;
-  }
+const CONFIG = {
+    apiEndpoint: '/api/issueCertificate.php?v=2'
+};
 
-  const CFG = MTK_FINAL_CONFIG;
+class MtkFinal {
 
-  // ════════════════════════════════════════════════════════════════
-  //  MtkFinal Class
-  // ════════════════════════════════════════════════════════════════
-  class MtkFinal {
-
-    /**
-     * @param {HTMLElement} root  — the <mtk-final> element
-     */
-    constructor(root) {
-      this.root   = root;
-      this.S      = CFG.strings;
-      this.E      = CFG.events;
-      this.choice = 'keep';          // 'keep' | 'new'
-
-      this._hydrate();
-      this._bindEvents();
-      this._subscribeAll();
-      this._publish(this.E.ready, { component: 'mtk-final', status: 'initialised' });
+    constructor(root){
+        this.root = root;
+        this.choice = 'keep';
+        this.noticeEl = null;
+        this.init();
     }
 
-
-    // ── 1. Hydrate: fill all data-mtk bindings ──────────────────────
-    _hydrate() {
-      const S = this.S;
-      const U = CFG.user;
-
-      const bindings = {
-        successHeading:    S.successHeading,
-        successSubheading: S.successSubheading,
-        currentEmailLabel: S.currentEmailLabel,
-        currentEmail:      U.currentEmail,
-        optionKeep:        S.optionKeep,
-        optionNew:         S.optionNew,
-        newEmailLabel:     S.newEmailLabel,
-        newEmailHint:      S.newEmailHint,
-        confirmEmailLabel: S.confirmEmailLabel,
-        confirmEmailHint:  S.confirmEmailHint,
-        submitLabel:       S.submitLabel,
-        successToast:      S.successToast,
-      };
-
-      // Text bindings
-      this.root.querySelectorAll('[data-mtk]').forEach(el => {
-        const key = el.dataset.mtk;
-        if (key in bindings) el.textContent = bindings[key];
-      });
-
-      // The "keep" option description shows current email
-      this.root.querySelectorAll('[data-mtk-desc]').forEach(el => {
-        const key = el.dataset.mtkDesc;
-        if (key === 'currentEmail') el.textContent = U.currentEmail;
-      });
+    init(){
+        this.setCurrentEmail();
+        this.bindEvents();
     }
 
-
-    // ── 2. Bind all DOM events ──────────────────────────────────────
-    _bindEvents() {
-      // Radio change → toggle new email panel
-      this.root.querySelectorAll('.mtk-final__radio').forEach(radio => {
-        radio.addEventListener('change', e => this._onRadioChange(e));
-        // Keyboard: Space / Enter also fires 'change', but ensure Enter is handled
-        radio.addEventListener('keydown', e => {
-          if (e.key === 'Enter') { radio.checked = true; radio.dispatchEvent(new Event('change', { bubbles: true })); }
-        });
-      });
-
-      // Clicking anywhere on an option card selects its radio
-      this.root.querySelectorAll('.mtk-final__option').forEach(card => {
-        card.addEventListener('click', e => {
-          const radio = card.querySelector('.mtk-final__radio');
-          if (radio && !radio.checked) {
-            radio.checked = true;
-            radio.dispatchEvent(new Event('change', { bubbles: true }));
-          }
-        });
-      });
-
-      // Live validation on email fields
-      const inp1 = this._q('#mtk-input-email1');
-      const inp2 = this._q('#mtk-input-email2');
-
-      if (inp1) {
-        inp1.addEventListener('input',  () => this._validateField(inp1));
-        inp1.addEventListener('blur',   () => this._validateField(inp1, true));
-        inp1.addEventListener('focus',  () => this._floatLabel(inp1, true));
-        inp1.addEventListener('blur',   () => this._floatLabel(inp1, false));
-        inp1.addEventListener('input',  () => this._checkMatch());
-      }
-      if (inp2) {
-        inp2.addEventListener('input',  () => this._validateField(inp2));
-        inp2.addEventListener('blur',   () => this._validateField(inp2, true));
-        inp2.addEventListener('focus',  () => this._floatLabel(inp2, true));
-        inp2.addEventListener('blur',   () => this._floatLabel(inp2, false));
-        inp2.addEventListener('input',  () => this._checkMatch());
-      }
-
-      // Toggle show/hide email text
-      this.root.querySelectorAll('[data-mtk-toggle]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const id   = btn.dataset.mtkToggle;
-          const inp  = this._q(`#mtk-input-${id}`);
-          const icon = btn.querySelector('.material-icons');
-          if (!inp) return;
-          const show = inp.type === 'email';
-          inp.type   = show ? 'text' : 'email';
-          if (icon) icon.textContent = show ? 'visibility_off' : 'visibility';
-          btn.setAttribute('aria-label', show ? 'Hide email' : 'Show email');
-        });
-      });
-
-      // Form submit
-      const form = this._q('.mtk-final__form');
-      if (form) form.addEventListener('submit', e => this._onSubmit(e));
-    }
-
-
-    // ── 3. Subscribe to all 4 component events ─────────────────────
-    _subscribeAll() {
-      Object.values(this.E).forEach(eventName => {
-        this._subscribe(eventName, this._onMessage.bind(this));
-      });
-    }
-
-    /**
-     * onMessage — central handler for all subscribed events.
-     * Passed as the callback to wc.subscribe.
-     */
-    _onMessage(eventName, data) {
-      console.log(`[mtk-final] onMessage received → ${eventName}`, data);
-    }
-
-
-    // ── 4. Radio change handler ─────────────────────────────────────
-    _onRadioChange(e) {
-      const value = e.target.value;           // 'keep' | 'new'
-      this.choice = value;
-
-      // Update option card selected state
-      this.root.querySelectorAll('.mtk-final__option').forEach(card => {
-        const isSelected = card.dataset.mtkOption === value;
-        card.classList.toggle('mtk-final__option--selected', isSelected);
-      });
-
-      // Show / hide new email panel
-      const panel = this._q('#mtk-new-email-panel');
-      const isNew = value === 'new';
-      if (panel) {
-        panel.classList.toggle('mtk-final__new-email-panel--open', isNew);
-        panel.setAttribute('aria-hidden', String(!isNew));
-      }
-
-      // Toggle tabindex on panel inputs
-      ['#mtk-input-email1', '#mtk-input-email2'].forEach(sel => {
-        const inp = this._q(sel);
-        if (inp) inp.setAttribute('tabindex', isNew ? '0' : '-1');
-      });
-      this.root.querySelectorAll('[data-mtk-toggle]').forEach(btn => {
-        btn.setAttribute('tabindex', isNew ? '0' : '-1');
-      });
-
-      // Clear panel on hide
-      if (!isNew) {
-        this._clearNewEmailPanel();
-      }
-
-      this._publish(this.E.change, { choice: value });
-    }
-
-
-    // ── 5. Submit handler ───────────────────────────────────────────
-    _onSubmit(e) {
-      e.preventDefault();
-
-      const valid = this._validate();
-      if (!valid) return;
-
-      const btn = this._q('.mtk-final__submit');
-      btn?.classList.add('mtk-final__submit--loading');
-
-      const payload = {
-        choice:   this.choice,
-        email:    this.choice === 'keep'
-          ? CFG.user.currentEmail
-          : this._q('#mtk-input-email1')?.value.trim(),
-      };
-
-      // Simulate async (replace with real API call)
-      setTimeout(() => {
-        btn?.classList.remove('mtk-final__submit--loading');
-        this._showToast();
-        this._publish(this.E.submit, payload);
-      }, 1200);
-    }
-
-
-    // ── 6. Validation ───────────────────────────────────────────────
-    _validate() {
-      if (this.choice === 'keep') return true;
-
-      const inp1   = this._q('#mtk-input-email1');
-      const inp2   = this._q('#mtk-input-email2');
-      let allValid = true;
-
-      [inp1, inp2].forEach(inp => {
-        if (!this._validateField(inp, true)) allValid = false;
-      });
-
-      if (allValid && inp1.value.trim() !== inp2.value.trim()) {
-        this._setFieldError(this._q('#mtk-field-email2'), this.S.mismatchError);
-        inp2.setAttribute('aria-invalid', 'true');
-        allValid = false;
-      }
-
-      if (!allValid) {
-        this._publish(this.E.error, {
-          reason: 'validation',
-          choice: this.choice,
-        });
-      }
-
-      return allValid;
-    }
-
-    /**
-     * Validate a single input field.
-     * @param {HTMLInputElement} inp
-     * @param {boolean} showError — true when called on blur or submit
-     * @returns {boolean}
-     */
-    _validateField(inp, showError = false) {
-      const fieldId = inp.id === 'mtk-input-email1' ? 'mtk-field-email1' : 'mtk-field-email2';
-      const field   = this._q(`#${fieldId}`);
-      const val     = inp.value.trim();
-
-      if (!val) {
-        if (showError) this._setFieldError(field, this.S.requiredError);
-        else           this._clearFieldState(field);
-        inp.setAttribute('aria-invalid', showError ? 'true' : 'false');
-        return false;
-      }
-
-      if (!this._isValidEmail(val)) {
-        if (showError) this._setFieldError(field, this.S.invalidEmailError);
-        inp.setAttribute('aria-invalid', 'true');
-        return false;
-      }
-
-      // Valid
-      this._setFieldSuccess(field);
-      inp.setAttribute('aria-invalid', 'false');
-      return true;
-    }
-
-    _isValidEmail(v) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-    }
-
-    _setFieldError(field, msg) {
-      if (!field) return;
-      field.classList.add('mtk-final__field--error');
-      field.classList.remove('mtk-final__field--success');
-      const hint = field.querySelector('.mtk-final__field-hint');
-      if (hint) {
-        hint.textContent = msg;
-        hint.classList.add('mtk-final__field-hint--error');
-      }
-    }
-
-    _setFieldSuccess(field) {
-      if (!field) return;
-      field.classList.remove('mtk-final__field--error');
-      field.classList.add('mtk-final__field--success');
-      const hint    = field.querySelector('.mtk-final__field-hint');
-      const hintKey = field.id === 'mtk-field-email1' ? 'newEmailHint' : 'confirmEmailHint';
-      if (hint) {
-        hint.textContent = this.S[hintKey];
-        hint.classList.remove('mtk-final__field-hint--error');
-      }
-    }
-
-    _clearFieldState(field) {
-      if (!field) return;
-      field.classList.remove('mtk-final__field--error', 'mtk-final__field--success');
-      const hint    = field.querySelector('.mtk-final__field-hint');
-      const hintKey = field.id === 'mtk-field-email1' ? 'newEmailHint' : 'confirmEmailHint';
-      if (hint) {
-        hint.textContent = this.S[hintKey];
-        hint.classList.remove('mtk-final__field-hint--error');
-      }
-    }
-
-
-    // ── 7. Real-time match check ────────────────────────────────────
-    _checkMatch() {
-      const inp1  = this._q('#mtk-input-email1');
-      const inp2  = this._q('#mtk-input-email2');
-      const badge = this._q('#mtk-match-badge');
-      if (!inp1 || !inp2 || !badge) return;
-
-      const v1 = inp1.value.trim();
-      const v2 = inp2.value.trim();
-
-      badge.classList.remove('mtk-final__match-badge--match', 'mtk-final__match-badge--mismatch');
-      badge.textContent = '';
-
-      if (!v1 || !v2) return;
-
-      if (v1 === v2 && this._isValidEmail(v1)) {
-        badge.classList.add('mtk-final__match-badge--match');
-        badge.innerHTML = `<span class="material-icons" aria-hidden="true">check_circle</span>${this.S.matchConfirmed}`;
-      } else if (v2.length > 0) {
-        badge.classList.add('mtk-final__match-badge--mismatch');
-        badge.innerHTML = `<span class="material-icons" aria-hidden="true">error_outline</span>${this.S.mismatchError}`;
-      }
-    }
-
-
-    // ── 8. Floating label helper ────────────────────────────────────
-    _floatLabel(inp, isFocused) {
-      const label = inp.parentElement?.querySelector('.mtk-final__field-label');
-      if (!label) return;
-      const hasValue = inp.value.length > 0;
-      label.classList.toggle('mtk-final__field-label--float',   isFocused || hasValue);
-      label.classList.toggle('mtk-final__field-label--focused', isFocused);
-    }
-
-
-    // ── 9. Clear new-email panel ────────────────────────────────────
-    _clearNewEmailPanel() {
-      ['#mtk-input-email1', '#mtk-input-email2'].forEach(sel => {
-        const inp = this._q(sel);
-        if (!inp) return;
-        inp.value = '';
-        inp.setAttribute('aria-invalid', 'false');
-        this._floatLabel(inp, false);
-      });
-      ['#mtk-field-email1', '#mtk-field-email2'].forEach(sel => {
-        this._clearFieldState(this._q(sel));
-      });
-      const badge = this._q('#mtk-match-badge');
-      if (badge) {
-        badge.textContent = '';
-        badge.className = 'mtk-final__match-badge';
-      }
-    }
-
-
-    // ── 10. Toast ───────────────────────────────────────────────────
-    _showToast() {
-      const toast = this._q('#mtk-toast');
-      if (!toast) return;
-      toast.classList.add('mtk-final__toast--show');
-      // Auto-dismiss after 5 s
-      setTimeout(() => toast.classList.remove('mtk-final__toast--show'), 5000);
-    }
-
-
-    // ── Utilities ───────────────────────────────────────────────────
-
-    /** Scoped querySelector */
-    _q(selector) {
-      return this.root.querySelector(selector);
-    }
-
-    /**
-     * Publish an event via wc.publish (if available).
-     * Always logs with wc.log before publishing.
-     */
-    _publish(eventName, data = {}) {
-      const payload = { event: eventName, ...data, timestamp: Date.now() };
-
-      if (typeof wc !== 'undefined' && typeof wc.log === 'function') {
-        wc.log(`[mtk-final] publishing → ${eventName}`, payload);
-      } else {
-        console.log(`[mtk-final] publishing → ${eventName}`, payload);
-      }
-
-      if (typeof wc !== 'undefined' && typeof wc.publish === 'function') {
-        wc.publish(eventName, payload);
-      }
-    }
-
-    /**
-     * Subscribe to an event via wc.subscribe (if available).
-     * Falls back to a DOM CustomEvent listener on the root element.
-     */
-    _subscribe(eventName, callback) {
-      if (typeof wc !== 'undefined' && typeof wc.subscribe === 'function') {
-        wc.subscribe(eventName, callback);
-      } else {
-        // Fallback: listen on the root element
-        this.root.addEventListener(eventName, e => callback(eventName, e.detail));
-      }
-    }
-
-  }
-  // /class MtkFinal
-
-
-  // ════════════════════════════════════════════════════════════════
-  //  DOM-ready initialisation
-  //
-  //  <wc-include> injects HTML asynchronously AFTER the script runs,
-  //  so we MUST NOT assume the element exists yet.
-  //
-  //  Strategy:
-  //    1. If <mtk-final> is already in the DOM — init immediately.
-  //    2. Otherwise attach a MutationObserver to document.body that
-  //       fires the instant <wc-include> appends the element, then
-  //       disconnects itself so it never leaks.
-  // ════════════════════════════════════════════════════════════════
-
-  function tryInit() {
-    const el = document.querySelector('mtk-final.mtk-final');
-    if (!el || el._mtkFinalInstance) return false;
-    el._mtkFinalInstance = new MtkFinal(el);
-    return true;
-  }
-
-  function waitForElement() {
-    // Already present — nothing to wait for
-    if (tryInit()) return;
-
-    const observer = new MutationObserver(function (mutations, obs) {
-      for (const mutation of mutations) {
-        for (const node of mutation.addedNodes) {
-          if (node.nodeType !== 1) continue; // elements only
-
-          // The added node itself might be <mtk-final>
-          if (node.matches && node.matches('mtk-final.mtk-final')) {
-            if (!node._mtkFinalInstance) {
-              node._mtkFinalInstance = new MtkFinal(node);
+    setCurrentEmail(){
+        if (
+            window.wc &&
+            wc.session &&
+            wc.session.user &&
+            wc.session.user.email
+        ) {
+            const email = wc.session.user.email;
+            const el = this.root.querySelector('[data-mtk-desc="currentEmail"]');
+            if (el) {
+                el.textContent = email;
             }
-            obs.disconnect();
-            return;
-          }
-
-          // Or <mtk-final> could be a descendant of what was added
-          // (e.g. wc-include wraps content in a container first)
-          const found = node.querySelector && node.querySelector('mtk-final.mtk-final');
-          if (found && !found._mtkFinalInstance) {
-            found._mtkFinalInstance = new MtkFinal(found);
-            obs.disconnect();
-            return;
-          }
         }
-      }
-    });
+    }
 
-    observer.observe(document.body, {
-      childList: true,   // watch direct children being added
-      subtree:   true,   // and all descendants
-    });
-  }
+    bindEvents(){
+        const radios = this.root.querySelectorAll('.mtk-final__radio');
+        radios.forEach(radio => {
+            radio.addEventListener('change', e => this.onRadioChange(e));
+        });
 
-  // Kick off after the DOM is parsed (body exists for MutationObserver)
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', waitForElement);
-  } else {
-    waitForElement();
-  }
+        const form = this.root.querySelector('.mtk-final__form');
+        if (form) {
+            form.addEventListener('submit', e => this.onSubmit(e));
+        }
+    }
+
+    onRadioChange(e){
+        const value = e.target.value;
+        this.choice = value;
+
+        const panel = this.root.querySelector('#mtk-new-email-panel');
+        if (!panel) return;
+
+        if (value === 'new') {
+            panel.classList.add('mtk-final__new-email-panel--open');
+        } else {
+            panel.classList.remove('mtk-final__new-email-panel--open');
+        }
+    }
+
+    async onSubmit(e){
+        e.preventDefault();
+        await this.issueCertificateFromSelection();
+    }
+
+    getEmail(){
+        if (this.choice === 'keep') {
+            if (
+                window.wc &&
+                wc.session &&
+                wc.session.user &&
+                wc.session.user.email
+            ) {
+                return wc.session.user.email;
+            }
+            return '';
+        }
+
+        const emailInput = this.root.querySelector('#mtk-input-email1');
+        return emailInput ? emailInput.value.trim() : '';
+    }
+
+    getUserName(){
+        if (window.wc && wc.session && wc.session.user) {
+            if (wc.session.user.name) {
+                return wc.session.user.name;
+            }
+            if (wc.session.user.full_name) {
+                return wc.session.user.full_name;
+            }
+        }
+        return '';
+    }
+
+    async issueCertificate(email, name){
+        const res = await fetch(CONFIG.apiEndpoint, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                name: name
+            })
+        });
+
+        const raw = await res.text();
+
+        let data = {};
+        try {
+            data = raw ? JSON.parse(raw) : {};
+        } catch (err) {
+            throw new Error('Backend did not return valid JSON. Response was: ' + raw);
+        }
+
+        if (!res.ok || data.error) {
+            throw new Error(
+                data.details ||
+                data.error ||
+                data.message ||
+                'Certificate request failed'
+            );
+        }
+
+        return data;
+    }
+
+    async issueCertificateFromSelection(){
+        const btn = this.root.querySelector('.mtk-final__submit');
+        if (btn) btn.classList.add('mtk-final__submit--loading');
+
+        try {
+            const email = this.getEmail();
+            const name = this.getUserName();
+
+            if (!email) {
+                throw new Error('Missing certificate email');
+            }
+
+            const result = await this.issueCertificate(email, name);
+
+            if (result.alreadyIssued) {
+                this.showPersistentNotice(
+                    `A certificate has already been sent to ${email}. Please check your inbox and spam folder.`
+                );
+            } else {
+                this.showPersistentNotice(
+                    `Your certificate was sent to ${email}. If you do not receive it within a few minutes, please check your spam folder.`
+                );
+            }
+
+            return result;
+        } catch (err) {
+            alert(err.message || 'Could not send certificate');
+            throw err;
+        } finally {
+            if (btn) btn.classList.remove('mtk-final__submit--loading');
+        }
+    }
+
+    showPersistentNotice(message){
+        if (!this.noticeEl) {
+            const box = document.createElement('div');
+            box.className = 'mtk-final__persistent-notice';
+            box.style.marginTop = '16px';
+            box.style.padding = '14px 16px';
+            box.style.background = '#e8f4ff';
+            box.style.border = '1px solid #9ac7f7';
+            box.style.borderRadius = '10px';
+            box.style.color = '#123';
+            box.style.position = 'relative';
+            box.style.lineHeight = '1.5';
+            box.style.fontSize = '14px';
+
+            const text = document.createElement('div');
+            text.className = 'mtk-final__persistent-notice-text';
+            text.style.paddingRight = '32px';
+
+            const close = document.createElement('button');
+            close.type = 'button';
+            close.setAttribute('aria-label', 'Close message');
+            close.innerHTML = '&times;';
+            close.style.position = 'absolute';
+            close.style.top = '8px';
+            close.style.right = '10px';
+            close.style.border = '0';
+            close.style.background = 'transparent';
+            close.style.fontSize = '24px';
+            close.style.lineHeight = '1';
+            close.style.cursor = 'pointer';
+            close.style.color = '#345';
+
+            close.addEventListener('click', () => {
+                box.remove();
+                this.noticeEl = null;
+            });
+
+            box.appendChild(text);
+            box.appendChild(close);
+
+            const anchor =
+                this.root.querySelector('.mtk-final__form') ||
+                this.root.querySelector('#mtk-toast')?.parentNode ||
+                this.root;
+
+            anchor.appendChild(box);
+            this.noticeEl = box;
+        }
+
+        const textEl = this.noticeEl.querySelector('.mtk-final__persistent-notice-text');
+        if (textEl) {
+            textEl.textContent = message;
+        }
+    }
+
+}
+
+function init(){
+    const el = document.querySelector('mtk-final.mtk-final');
+    if (!el) return;
+    if (el._mtkFinalInstance) return;
+    el._mtkFinalInstance = new MtkFinal(el);
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}
 
 })();

@@ -24,7 +24,7 @@ class MTKHierarchy {
 
         // Add IDs to items that don't have them
         this.ensureIds();
-        this.enforceRegisteredAccessCaps();
+        // this.enforceRegisteredAccessCaps();
 
         // Bind methods
         this.onMessage = this.onMessage.bind(this);
@@ -53,42 +53,12 @@ class MTKHierarchy {
      * Hard-cap registered users to intro + first 3 lessons (lesson_no 0..3)
      * regardless of overly-permissive payloads.
      */
+    /**
+     * Optional safety cap for truly free users only.
+     * Disabled for now because it can override legitimate DB/API progress.
+     */
     enforceRegisteredAccessCaps() {
-        if (!this.isRegisteredRole()) return;
-        if (!this.config || !Array.isArray(this.config)) return;
-
-        this.config.forEach(course => {
-            if (!course.modules) return;
-
-            course.modules.forEach(module => {
-                let moduleHasAccess = false;
-
-                if (Array.isArray(module.lessons)) {
-                    module.lessons.forEach(lesson => {
-                        const lessonNo = Number(lesson.lesson_no);
-                        const allowed = Number.isFinite(lessonNo) && lessonNo <= 3;
-
-                        lesson.access = allowed;
-                        if (allowed) moduleHasAccess = true;
-
-                        if (Array.isArray(lesson.resources)) {
-                            lesson.resources.forEach(resource => {
-                                resource.access = allowed;
-                            });
-                        }
-                    });
-                }
-
-                module.access = moduleHasAccess;
-                if (module.quiz) {
-                    module.quiz.access = false;
-                }
-            });
-        });
-
-        if (typeof wc !== 'undefined') {
-            wc.log('MTKHierarchy: enforced registered access cap (lesson_no <= 3)');
-        }
+        return;
     }
 
     /**
@@ -576,7 +546,7 @@ class MTKHierarchy {
                         ? wc.msg.lessonLocked
                         : 'Please finish the current lesson video before moving on to the next lesson.',
                     closable: true,
-                    timer: 0
+                    timer: 4
                 });
             }
             return;
@@ -682,6 +652,27 @@ class MTKHierarchy {
         if (!Number.isFinite(Number(lessonNo))) return;
         if (typeof wc === 'undefined' || typeof wc.lessonComplete !== 'function') return;
         if (!wc.session || !wc.session.user) return;
+
+        if (wc.testingDisableVideoGate === true) {
+            const current = Number(wc.session.user.current_lesson);
+            if (!Number.isFinite(current)) return;
+            wc.lessonComplete(Number(lessonNo), current, (err, result) => {
+                if (err) {
+                    wc.warn('MTKHierarchy: test-mode lessonComplete failed', err);
+                    return;
+                }
+                if (result && Number.isFinite(Number(result.current_lesson))) {
+                    wc.session.user.current_lesson = Number(result.current_lesson);
+                }
+                if (moduleId && lessonId) this.enableNextLessonOrQuiz(moduleId, lessonId);
+                if (typeof wc.getSession === 'function') {
+                    wc.getSession(() => {
+                        if (wc.pages && typeof wc.pages.refresh === 'function') wc.pages.refresh('dashboard');
+                    });
+                }
+            });
+            return;
+        }
 
         const iframe = this.elements && this.elements.rhs
             ? this.elements.rhs.querySelector('.mtk-video-container iframe')
@@ -893,7 +884,7 @@ class MTKHierarchy {
                         ? wc.msg.lessonLocked
                         : 'Please finish the current lesson video before moving on to the next lesson.',
                     closable: true,
-                    timer: 0
+                    timer: 4
                 });
             }
             return;

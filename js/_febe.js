@@ -1,444 +1,374 @@
-class _febe {
-    constructor() {
-	// list of topics
-	this.topics = [
-	    "mtk-ready:click",
-	    "mtk-courses:click",
-	    "mtk-path:click",
-	    "header-logo",
-	    "mtk-header-dashboard",
-	    "mtk-header-login",
-	    "mtk-header-logout",
-	    "mtk-header-home",
-	    "mtk-header-hierarchy",
-	    "mtk-header-register",
-	    "mtk-header-settings",
-	    "mtk-dashboard:continue",
-	    "mtk-login-forgot-password",
-	    "mtk-login-register",
-	    "mtk-login-focus",
-	    "mtk-login-success",
-	    "MTK-parts.click",
-	    "mtk-hierarchy:resource:click",
-	    "mtk-register-submit",
-	    "mtk-hierarchy:lesson-toggled",
-	    "mtk-hierarchy:quiz-clicked",
-	    "mtk-dashboard:subscription-clicked",
-	    "mtk-msgs:button-click",
-	    "header-logo-public",
-	    "header-logo-private",
-	    "4-mtk-quiz-submitted",
-	    "mtk-dialog:action",
-	];
+(function () {
+    "use strict";
 
-	// create handlers mapping
-	this.handlers = this.createHandlers();
+    window.wc = window.wc || {};
+    wc.febe = wc.febe || {};
 
-	this.subscribe();
-    }
-
-    subscribe() {
-	this.topics.forEach(topic => {
-	    //wc.log("_febe: subscribed to", topic);
-	    PubSub.subscribe(topic, this.onMessage.bind(this));
-	});
-    }
-
-    createHandlers() {
-	return {
-	    "mtk-path:click": this.handleRegister,
-	    "mtk-ready:click": this.handleRegister,
-	    "mtk-courses:click": this.handleRegister,
-	    "mtk-login-forgot-password": this.handleForgotPassword,
-	    "mtk-login-register": this.handleRegister,
-	    "mtk-hierarchy:lesson-toggled": this.handleLessonToggled,
-	    "mtk-register-submit": this.handleRegisterSubmit,
-	    "mtk-header-home": this.handleHome,
-	    "mtk-login-success": this.handleLoginSuccess.bind(this),
-	    "mtk-dashboard:continue": this.handleCourse,
-	    "mtk-header-hierarchy": this.handleCourse,
-	    "mtk-hierarchy:resource:click": this.handleResource.bind(this),
-	    "MTK-parts.click": this.handlePartsClick,
-	    "mtk-header-logo": this.handleDashboard,
-	    "mtk-header-dashboard": this.handleHeaderDashboard,
-	    "mtk-header-settings": this.handleSettings,
-	    "mtk-header-login": this.handleLogin,
-	    "mtk-header-logout": this.handleLogout,
-	    "mtk-header-register": this.handleRegister,
-	    "mtk-hierarchy:quiz-clicked": this.handleQuiz,
-	    "mtk-dashboard:subscription-clicked": this.handleDashboardClicks,
-	    "mtk-msgs:button-click": this.handleMsgButtonClick,
-	    "header-logo-public": this.handleHeaderLogoPublicClick,
-	    "header-logo-private": this.handleHeaderLogoPrivateClick,
-	    "4-mtk-quiz-submitted": this.handleQuizSubmitted,
-	    "mtk-dialog:action": this.handleDialogActions,
-	};
-    }
-
-    onMessage(msg, data) {
-	wc.log("_febe: onMessage", msg, data);
-
-	const handler = this.handlers[msg];
-
-	if (handler) {
-	    const pagesRef = wc.pages || document.getElementById("mtk-pages");
-	    if (pagesRef && typeof pagesRef.show === "function") {
-		wc.pages = pagesRef;
-	    }
-
-	    if (!wc.pages || typeof wc.pages.show !== "function") {
-		wc.warn("_febe: wc.pages not ready, retrying", msg);
-		wc.timeout(() => this.onMessage(msg, data), 150, 1);
-		return;
-	    }
-
-	    handler.call(this, data);
-	} else {
-	    wc.error("_febe: DO NOT HAVE:" + msg);
-	    alert("_febe: DO NOT HAVE:" + msg);
-	}
-    }
-
-    //////////////////////////////////////////////////////////////////
-    ///// HANDLERS
-    //////////////////////////////////////////////////////////////////
-    handleHeaderDashboard() {
-	wc.pages.show("dashboard");
-    }
-
-    //////////////////////////////////////////////////////////////////
-    ///// HANDLERS
-    //////////////////////////////////////////////////////////////////
-    handleDialogActions() {
-	wc.pages.show("hierarchy");
-
-	mtkDialog.close();
-    }
-
-    //////////////////////////////////////////////////////////////////
-    ///// HANDLERS
-    //////////////////////////////////////////////////////////////////
-    handleHeaderLogoPublicClick() {
-	wc.pages.show("home");
-    }
-
-    //////////////////////////////////////////////////////////////////
-    ///// HANDLERS
-    //////////////////////////////////////////////////////////////////
-    handleHeaderLogoPrivateClick() {
-	wc.pages.show("dashboard");
-    }
-
-    //////////////////////////////////////////////////////////////////
-    ///// HANDLERS
-    //////////////////////////////////////////////////////////////////
-    handleMsgButtonClick(data) {
-	wc.log("_febe: handleMsgButtonClick: ", JSON.stringify(data));
-
-	switch(data.action) 
-	{
-	    case "NextEmptyQuestion":
-	    window.MtkQuiz.scrollToFirstUnanswered();
-
-	    // CLOSE THE MSG
-	    $(".mtk-msgs__close").click();
-	    break;
-	}
-    }
-
-    //////////////////////////////////////////////////////////////////
-    ///// HANDLERS
-    //////////////////////////////////////////////////////////////////
-    handleDashboardClicks() {
-	alert("_febe: handleDashboardClicks");
-    }
-
-    //////////////////////////////////////////////////////////////////
-    ///// HANDLERS
-    //////////////////////////////////////////////////////////////////
-    handleQuiz() {
-	wc.pages.show("quiz");
-    }
-
-    //////////////////////////////////////////////////////////////////
-    ///// HANDLERS
-    //////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////
-    ///// HANDLERS
-    //////////////////////////////////////////////////////////////////
-    handleRegister() {
-        const maxAttempts = 15;
-
-        const tryShowRegister = (attempt = 0) => {
-            const pagesRef = wc.pages || document.getElementById("mtk-pages");
-
-            if (!pagesRef || typeof pagesRef.show !== "function") {
-                if (attempt < maxAttempts) {
-                    wc.timeout(() => tryShowRegister(attempt + 1), 120, 1);
-                }
-                return;
+    function apiPost(url, data) {
+        return fetch(url, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data || {})
+        }).then(async (res) => {
+            const json = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                const err = new Error(json.error || json.message || "server_error");
+                err.payload = json;
+                err.status = res.status;
+                throw err;
             }
-
-            wc.pages = pagesRef;
-
-            if (attempt === 0) {
-                wc.pages.show("register");
-            }
-
-            const page = document.querySelector('[mtk-pages-id="register"]');
-            const form = page ? page.querySelector("#mtk-register") : null;
-
-            if (!form && attempt < maxAttempts) {
-                wc.timeout(() => tryShowRegister(attempt + 1), 200, 1);
-                return;
-            }
-
-            if (page) {
-                page.style.display = "block";
-            }
-
-            if (typeof wc.unfixFooter === "function") {
-                wc.unfixFooter();
-            }
-            window.scrollTo({ top: 0, behavior: "auto" });
-        };
-
-        tryShowRegister(0);
-    }
-    handleForgotPassword() {
-	const emailInput = document.querySelector("#mtk-email");
-	const email = emailInput ? String(emailInput.value || "").trim() : "";
-
-	if (!email) {
-	    MTKMsgs.show({
-		type: "error",
-		icon: "error",
-		message: "Enter your email first, then click Forgot Password.",
-		closable: true,
-		timer: 8
-	    });
-	    return;
-	}
-
-	(() => {
-	    fetch(wc.apiURL + "/api/forgot_password.php", {
-		method: "POST",
-		credentials: "include",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ email })
-	    }).then(res => {
-		return res.json().then(json => {
-		    if (!res.ok) {
-			MTKMsgs.show({
-			    type: "error",
-			    icon: "error",
-			    message: (json && (json.error || json.message)) ? (json.error || json.message) : "Could not process password reset.",
-			    closable: true,
-			    timer: 10
-			});
-			throw new Error(json.error || "forgot_password failed");
-		    }
-		    return json;
-		});
-	    }).then(() => {
-		MTKMsgs.show({
-		    type: "success",
-		    icon: "success",
-		    message: "If this email exists, a reset link has been sent.",
-		    closable: true,
-		    timer: 10
-		});
-	    }).catch(console.error);
-	})();
-    }
-    handleLessonToggled() {
-	// NO-OP
-    }
-
-    handleRegisterSubmit(data) {
-	// data ={name: 'Mel Heravi', email: 'mel.heravi@gmail.com', email2: 'mel.heravi@gmail.com', phone: '6463031234'}
-
-	(() => {
-	    fetch(wc.apiURL + "/api/register.php", {
-		method: "POST",
-		credentials: "include",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({
-		    name: data.name,
-		    email: data.email,
-		    phone: data.phone
-		})
-	    }).then(res => {
-		return res.json().then(json => {
-		    if (!res.ok) {
-			MTKMsgs.show({
-			    type: 'error',
-			    icon: 'error',
-			    message: (json && (json.error || json.message)) ? (json.error || json.message) : wc.emsg(1003),
-			    closable: true,
-			    timer: 10
-			});
-
-			throw new Error(json.error || "Create user failed");
-		    }
-		    return json;
-		});
-	    }).then(json => {
-        MTKMsgs.show({
-            type: "success",
-            icon: "success",
-            message: "Registration submitted. Check your email to set your password.",
-            closable: true,
-            timer: 12
+            return json;
         });
-	    }).catch(console.error);
-	})();
     }
 
-    handleHome() {
-	wc.pages.show("home");
+    function showMsg(type, message, options) {
+        options = options || {};
+
+        if (window.MTKMsgs && typeof MTKMsgs.show === "function") {
+            MTKMsgs.show({
+                type: type || "info",
+                icon: options.icon || type || "info",
+                message: message || "",
+                closable: options.closable !== false,
+                timer: options.timer,
+                persistent: !!options.persistent
+            });
+            return;
+        }
+
+        alert(message);
     }
 
-    handleLoginSuccess(data) {
-	wc.login(data.email, data.password).then(success => {
-	    if (success) {
-		wc.log("Logged in!");
-		
-		// SHOW PRIVATE HEADER
-		$(".app-header").hide(() => $("#header-private").show(() => wc.pages.show("dashboard")));
-	    }
-	}).catch(err => {
-	    wc.error(err);
-	    alert(err);
-	});
+    function getUser() {
+        return (window.wc && wc.session && wc.session.user) ? wc.session.user : null;
     }
 
-    handleCourse() {
-	wc.pages.show("hierarchy");
+    function isLoggedIn() {
+        return !!getUser();
     }
 
-    handleResource(data) {
-	this.resource(data);
+    function hasPremium(user) {
+        return !!(user && Number(user.has_premium) === 1);
     }
 
-    handlePartsClick() {
-	wc.pages.show("lessons");
-	wc.timeout(() => lessonClicked(cIndex, cTitle), 500, 1);
+    function hasBusiness(user) {
+        return !!(user && Number(user.has_business_in_a_box) === 1);
     }
 
-    handleDashboard() {
-	wc.pages.show("dashboard");
+    function getAllowedPlans(user) {
+        if (!user) return [];
+
+        if (!hasPremium(user) && !hasBusiness(user)) {
+            return ["premium", "business"];
+        }
+
+        if (hasPremium(user) && !hasBusiness(user)) {
+            return ["business"];
+        }
+
+        return [];
     }
 
-    handleSettings() {
-	wc.pages.show("settings");
+    function canPurchasePlan(plan) {
+        const user = getUser();
+        if (!user) return false;
+        return getAllowedPlans(user).includes(plan);
     }
 
-    handleLogin() {
-	wc.pages.show("login");
+    function createCheckoutSession(plan) {
+        return apiPost("/api/create_checkout_session.php", { plan: plan });
     }
 
-    handleLogout() {
-	wc.logout();
-	
-	// SHOW PUBLIC HEADER
-	$(".app-header").hide(() => $("#header-public").show(() => wc.pages.show("home")));
+    function handlePurchasePlan(plan) {
+        if (!isLoggedIn()) {
+            showMsg("warning", "Please log in before purchasing.", { icon: "warning", timer: 7 });
+            if (wc.pages && typeof wc.pages.show === "function") {
+                wc.pages.show("login");
+            }
+            return;
+        }
+
+        if (!canPurchasePlan(plan)) {
+            showMsg("warning", "That purchase option is not available for your current account.", {
+                icon: "warning",
+                timer: 8
+            });
+            return;
+        }
+
+        createCheckoutSession(plan)
+            .then((res) => {
+                if (!res.url) {
+                    throw new Error("Stripe checkout URL was not returned.");
+                }
+                window.location.href = res.url;
+            })
+            .catch((err) => {
+                showMsg("error", err.message || "Unable to start checkout.", {
+                    icon: "error",
+                    timer: 10
+                });
+            });
     }
 
-    //////////////////////////////////////////////////////////////////
-    ///// HANDLERS
-    //////////////////////////////////////////////////////////////////
-    handleQuizSubmitted(data) {
-	wc.submitQuiz(data.quiz_session_id, data.module_id, data.answers, function (err, response) {
-	    if (err) {
-		alert("_febe.handleQuizSubmitted > Error submitting quiz.");
-		return;
-	    }
-	    
-	    wc.log("_febe.handleQuizSubmitted > Server response:", response);
+    function showCheckoutStatusMessage() {
+        const params = new URLSearchParams(window.location.search);
+        const checkout = params.get("checkout");
 
-	    if (response.passed) {
-		const isFinalModule = String(data.module_id || "") === "M12";
+        if (checkout === "success") {
+            showMsg(
+                "success",
+                "Payment received. Receipt sent. Login email sent. Gift order created. Tracking will be emailed.",
+                {
+                    icon: "success",
+                    closable: true,
+                    persistent: true
+                }
+            );
 
-		mtkDialog.open({
-		    id      : 'success',
-		    title   : 'You passed the Quiz',
-		    message : 'You have Successfully completed this set of tests',
-		    icon    : 'check_circle',
-		    iconColor: 'green',
-		    maxWidth: '700px',
-		    closeOnBackdrop: false,
-		    closeOnEscape  : false,
-		    buttons: [
-			{ label: 'Save & Continue',  action: 'TBD', classes: 'btn btn-primary' }
-		    ]
-		});
-		
-		MTKMsgs.show({
-		    type: 'success',
-		    icon: 'success',
-		    message: wc.emsg(1004),
-		    closable: false,
-		    timer: 5
-		});
+            const newUrl = window.location.pathname + window.location.hash;
+            window.history.replaceState({}, document.title, newUrl);
 
-		// ENABLE NEXT MODULE
-		window.MTKHierarchy.enableNextModule();
+            setTimeout(() => {
+                apiPost("/api/logout.php", {})
+                    .then(() => {
+                        if (window.wc) {
+                            wc.session = null;
+                        }
 
-		// Final module pass should route to certificate email prompt.
-		if (isFinalModule) {
-		    wc.timeout(() => wc.pages.show("final"), 250, 1);
-		}
+                        if (wc.pages && typeof wc.pages.show === "function") {
+                            wc.pages.show("login");
+                        } else {
+                            window.location.href = "/repo_deploy/index.html";
+                        }
+                    })
+                    .catch(() => {
+                        window.location.href = "/repo_deploy/index.html";
+                    });
+            }, 1500);
+        }
 
-		wc.log("Congratulations! You passed.");
-	    } else {
-		mtkDialog.open({
-		    id      : 'failed',
-		    title   : 'You did not pass the Quiz',
-		    message : 'We recommand that you re-take the test for better result',
-		    icon    : 'warning',
-		    iconColor: 'red',
-		    maxWidth: '700px',
-		    closeOnBackdrop: false,
-		    closeOnEscape  : false,
-		    buttons: [
-			{ label: 'Re-take the test',  action: 'cancel', classes: 'btn btn-warning' }
-		    ]
-		});
-	    }
-	});
+        if (checkout === "cancel") {
+            showMsg("info", "Checkout was canceled.", {
+                icon: "info",
+                closable: true,
+                timer: 7
+            });
+
+            const newUrl = window.location.pathname + window.location.hash;
+            window.history.replaceState({}, document.title, newUrl);
+        }
     }
-    //////////////////////////////////////////////////////////////////
-    ///// RESOURCE HANDLERS
-    //////////////////////////////////////////////////////////////////
-    resource(data) {
-	if (!data) {
-	    wc.warn("_febe.resource: no data received");
-	    return;
-	}
 
-	wc.log("_febe.resource:", data.description, data.url);
+    function handleManualLogout() {
+        apiPost("/api/logout.php", {})
+            .then(() => {
+                if (window.wc) {
+                    wc.session = null;
+                }
 
-	const typeHandlers = {
-	    video: () => {
-		$(".mtk-hierarchy-rhs-video, .mtk-hierarchy-rhs-image, .mtk-hierarchy-rhs-intro").hide();
-		$(".mtk-hierarchy-rhs-video").fadeIn();
-		wc.timeout(() => {
-		    wc.log("_febe:", data.url, data.description);
-		    window.MTKVideoInstance.load(data.url, data.description);
-		}, 200, 1);
-	    },
-	    image: () => wc.log("_febe:", data.type, data.url)
-	};
-
-	const action = typeHandlers[data.type];
-	if (action) {
-	    action();
-	} else {
-	    wc.error("NO SUCH TYPE:", data.type);
-	}
+                if (wc.pages && typeof wc.pages.show === "function") {
+                    wc.pages.show("login");
+                } else {
+                    window.location.href = "/repo_deploy/index.html";
+                }
+            })
+            .catch((err) => {
+                showMsg("error", err.message || "Logout failed.", {
+                    icon: "error",
+                    timer: 8
+                });
+            });
     }
-}
 
-/* auto-init */
-window._febe = new _febe();
+    function syncPurchaseButtons() {
+        const user = getUser();
+        const premiumButtons = document.querySelectorAll('[data-purchase-plan="premium"]');
+        const businessButtons = document.querySelectorAll('[data-purchase-plan="business"]');
+
+        premiumButtons.forEach((btn) => {
+            if (!user) {
+                btn.disabled = false;
+                btn.style.display = "";
+                return;
+            }
+
+            if (canPurchasePlan("premium")) {
+                btn.disabled = false;
+                btn.style.display = "";
+            } else {
+                btn.disabled = true;
+                btn.style.display = "none";
+            }
+        });
+
+        businessButtons.forEach((btn) => {
+            if (!user) {
+                btn.disabled = false;
+                btn.style.display = "";
+                return;
+            }
+
+            if (canPurchasePlan("business")) {
+                btn.disabled = false;
+                btn.style.display = "";
+            } else {
+                btn.disabled = true;
+                btn.style.display = "none";
+            }
+        });
+    }
+
+    function goToPage(page) {
+        if (wc.pages && typeof wc.pages.show === "function") {
+            wc.pages.show(page);
+        }
+    }
+
+    function handleRegisterSubmit(payload) {
+        apiPost("/api/register.php", payload)
+            .then((json) => {
+                showMsg(
+                    "success",
+                    (json && (json.message || json.msg)) ? (json.message || json.msg) : "Registration submitted. Check your email to set your password.",
+                    {
+                        icon: "success",
+                        closable: true,
+                        timer: 12
+                    }
+                );
+            })
+            .catch((err) => {
+                showMsg("error", err.message || "server_error", {
+                    icon: "error",
+                    closable: true,
+                    timer: 10
+                });
+                console.error(err);
+            });
+    }
+
+    function handleLoginSubmit(payload) {
+        apiPost("/api/login.php", payload)
+            .then((json) => {
+                if (window.wc) {
+                    wc.session = json.session || json;
+                }
+
+                showMsg("success", "Logged in successfully.", {
+                    icon: "success",
+                    timer: 5
+                });
+
+                goToPage("dashboard");
+            })
+            .catch((err) => {
+                showMsg("error", err.message || "Wrong credentials", {
+                    icon: "error",
+                    closable: true,
+                    timer: 10
+                });
+                console.error(err);
+            });
+    }
+
+    function bindClicks() {
+        document.addEventListener("click", function (e) {
+            const purchaseBtn = e.target.closest("[data-purchase-plan]");
+            if (purchaseBtn) {
+                e.preventDefault();
+                const plan = purchaseBtn.getAttribute("data-purchase-plan");
+                handlePurchasePlan(plan);
+                return;
+            }
+
+            const logoutBtn = e.target.closest("[data-action='logout'], .btn-logout, #btn-logout");
+            if (logoutBtn) {
+                e.preventDefault();
+                handleManualLogout();
+            }
+        });
+    }
+
+    function bindEvents() {
+        if (!window.wc || typeof wc.subscribe !== "function") return;
+
+        wc.subscribe("mtk-register-submit", function (msg) {
+            handleRegisterSubmit(msg.payload || msg);
+        });
+
+        wc.subscribe("mtk-login-submit", function (msg) {
+            handleLoginSubmit(msg.payload || msg);
+        });
+
+        wc.subscribe("mtk-header-home", function () {
+            goToPage("home");
+        });
+
+        wc.subscribe("mtk-header-register", function () {
+            goToPage("register");
+        });
+
+        wc.subscribe("mtk-header-login", function () {
+            goToPage("login");
+        });
+
+        wc.subscribe("mtk-header-dashboard", function () {
+            goToPage("dashboard");
+        });
+
+        wc.subscribe("mtk-header-hierarchy", function () {
+            goToPage("hierarchy");
+        });
+
+        wc.subscribe("mtk-header-quiz", function () {
+            goToPage("quiz");
+        });
+
+        wc.subscribe("mtk-header-final", function () {
+            goToPage("final");
+        });
+
+        wc.subscribe("mtk-header-settings", function () {
+            goToPage("settings");
+        });
+
+        wc.subscribe("mtk-header-logout", function () {
+            handleManualLogout();
+        });
+
+        wc.subscribe("mtk-dashboard:subscription-clicked", function (msg) {
+            const payload = msg.payload || {};
+            if (payload.subscriptionId === "premium-course") {
+                handlePurchasePlan("premium");
+            } else if (payload.subscriptionId === "business-in-a-box") {
+                handlePurchasePlan("business");
+            }
+        });
+    }
+
+    function init() {
+        bindClicks();
+        bindEvents();
+        showCheckoutStatusMessage();
+        syncPurchaseButtons();
+    }
+
+    wc.febe.apiPost = apiPost;
+    wc.febe.handlePurchasePlan = handlePurchasePlan;
+    wc.febe.handleManualLogout = handleManualLogout;
+    wc.febe.handleRegisterSubmit = handleRegisterSubmit;
+    wc.febe.handleLoginSubmit = handleLoginSubmit;
+    wc.febe.showCheckoutStatusMessage = showCheckoutStatusMessage;
+    wc.febe.syncPurchaseButtons = syncPurchaseButtons;
+    wc.febe.goToPage = goToPage;
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+    } else {
+        init();
+    }
+})();
