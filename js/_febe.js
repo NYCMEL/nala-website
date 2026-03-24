@@ -239,8 +239,12 @@
     }
 
     function goToRegisterPage() {
-        const baseUrl = getBaseUrl();
-        window.location.href = baseUrl + "register/index.html";
+        if (typeof window.nalaShowRegister === "function") {
+            window.nalaShowRegister();
+            return;
+        }
+
+        goToPage("register");
     }
 
     function handleRegisterSubmit(payload) {
@@ -267,24 +271,6 @@
     }
 
     function handleLoginSubmit(payload) {
-        if (window.wc && typeof wc.login === "function") {
-            wc.login(payload.email, payload.password)
-                .then((loggedIn) => {
-                    if (loggedIn) {
-                        window.location.href = getBaseUrl() + "index.html";
-                    }
-                })
-                .catch((err) => {
-                    showMsg("error", err && err.message ? err.message : "Wrong credentials", {
-                        icon: "error",
-                        closable: true,
-                        timer: 10
-                    });
-                    console.error(err);
-                });
-            return;
-        }
-
         apiPost("/api/login.php", payload)
             .then((json) => {
                 if (window.wc) {

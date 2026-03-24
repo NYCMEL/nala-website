@@ -73,9 +73,12 @@
 	<script>
 
 	 function nalaShowRegister() {
-	     var basePath = (window.app && app.baseUrl) ? app.baseUrl : ((window.location.pathname || "/").replace(/[^/]*$/, "") || "/");
-	     if (basePath.charAt(basePath.length - 1) !== "/") basePath += "/";
-	     window.location.href = basePath + "register/index.html";
+	     window.__nalaRequestedPublicPage = "register";
+	     const pagesRef = wc.pages || document.getElementById("mtk-pages");
+	     if (pagesRef && typeof pagesRef.show === "function") {
+	         wc.pages = pagesRef;
+	         wc.pages.show("register", { replaceHistory: true });
+	     }
 	 }
 	 // INITIAL PAGE
 	 wc.getSession(function (loggedIn, session, err) {
