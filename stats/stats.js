@@ -8,6 +8,7 @@
         if (!window.app || !app.stats) return false;
 
         wc.log("_stats init:", app.stats);
+        row.innerHTML = "";
 
         function createStat(stat) {
             const col = document.createElement("div");
@@ -51,7 +52,6 @@
             });
         }
 
-        // Render stats **with 0** only
         app.stats.forEach(stat => row.appendChild(createStat(stat)));
 
         // Observe when stats wrapper is visible

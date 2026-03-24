@@ -277,50 +277,72 @@
 
 		wc.log('🔴 VALIDATION PASSED - ALL QUESTIONS ANSWERED');
 
-		// Create submission data
+		const answersMap = {};
+		Object.keys(this.answers).forEach((questionId) => {
+		    answersMap[String(questionId)] = this.answers[questionId];
+		});
+
 		const submissionData = {
 		    quiz_session_id: this.config.quiz_session_id,
 		    module_id: this.config.module_id,
-		    answers: this.config.questions.map(q => ({
-			question_id: q.id,
-			question: q.question,
-			selected_answer: this.answers[q.id],
-			selected_text: q[`choice_${this.answers[q.id]}`]
-		    })),
+		    answers: answersMap,
 		    submitted_at: new Date().toISOString(),
 		    total_questions: totalQuestions
 		};
 
-		// Publish quiz submission
-		if (window.wc && window.wc.publish) {
-		    if (window.wc.log) {
-			window.wc.log('quiz', submissionData);
-		    }
-		    window.wc.publish('quiz', submissionData);
-		    
-		    if (window.wc.log) {
-			window.wc.log('4-mtk-quiz-submitted', submissionData);
-		    }
-		    window.wc.publish('4-mtk-quiz-submitted', submissionData);
+		if (!window.wc || typeof window.wc.submitQuiz !== 'function') {
+		    this.showMessage('error', 'Quiz submission is not available right now.');
+		    return;
 		}
 
-		this.showMessage('success', 'Quiz submitted successfully!');
-
-		// Disable form after submission
-		this.disableForm();
-		
-		// Publish form disabled event
-		if (window.wc && window.wc.publish) {
-		    const disabledData = {
-			timestamp: new Date().toISOString()
-		    };
-		    
-		    if (window.wc.log) {
-			window.wc.log('4-mtk-quiz-form-disabled', disabledData);
-		    }
-		    
-		    window.wc.publish('4-mtk-quiz-form-disabled', disabledData);
+		if (this.elements.submitBtn) {
+		    this.elements.submitBtn.disabled = true;
 		}
+
+		window.wc.submitQuiz(
+		    this.config.quiz_session_id,
+		    this.config.module_id,
+		    answersMap,
+		    (err, result) => {
+			if (this.elements.submitBtn) {
+			    this.elements.submitBtn.disabled = false;
+			}
+
+			if (err) {
+			    wc.error('❌ Quiz submission failed:', err);
+			    this.showMessage('error', err.message || 'Quiz submission failed.');
+			    return;
+			}
+
+			const successMessage = (result && result.message)
+			    ? result.message
+			    : 'Quiz submitted successfully!';
+
+			if (window.wc && window.wc.publish) {
+			    if (window.wc.log) {
+				window.wc.log('quiz', submissionData);
+				window.wc.log('4-mtk-quiz-submitted', { request: submissionData, response: result || {} });
+			    }
+			    window.wc.publish('quiz', submissionData);
+			    window.wc.publish('4-mtk-quiz-submitted', { request: submissionData, response: result || {} });
+			}
+
+			this.showMessage('success', successMessage);
+			this.disableForm();
+			
+			if (window.wc && window.wc.publish) {
+			    const disabledData = {
+				timestamp: new Date().toISOString()
+			    };
+			    
+			    if (window.wc.log) {
+				window.wc.log('4-mtk-quiz-form-disabled', disabledData);
+			    }
+			    
+			    window.wc.publish('4-mtk-quiz-form-disabled', disabledData);
+			}
+		    }
+		);
 	    }
 
 	    handleClear() {

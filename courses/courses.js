@@ -23,6 +23,7 @@
             try {
                 var container = root.querySelector(".container");
                 if (!container) return;
+                container.innerHTML = "";
 
                 var header = document.createElement("div");
                 header.className = "text-center";
@@ -69,7 +70,7 @@
 
                 container.appendChild(footer);
 
-                container.addEventListener("click", function (e) {
+                container.onclick = function (e) {
                     var target = e.target.closest("[data-event]");
                     if (!target) return;
 
@@ -79,7 +80,7 @@
 		    wc.publish(msg, {
                         event: target.getAttribute("data-event") || ""
                     });
-                });
+                };
             } catch (err) {
                 console.error("MTK-courses render error", err);
             }
