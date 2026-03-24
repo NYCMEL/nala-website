@@ -332,13 +332,36 @@
 
 			if (err) {
 			    wc.error('❌ Quiz submission failed:', err);
+			    this.clearGlobalMessageBanner();
+			    MTKMsgs.show({
+				type: 'error',
+				icon: 'error',
+				message: err.message || 'Quiz submission failed.',
+				closable: true,
+				timer: 10
+			    });
 			    this.showMessage('error', err.message || 'Quiz submission failed.');
 			    return;
 			}
 
-			const successMessage = (result && result.message)
+			const scorePercent = result && typeof result.score_percent !== 'undefined'
+			    ? result.score_percent
+			    : null;
+			const passPercent = result && typeof result.pass_percent !== 'undefined'
+			    ? result.pass_percent
+			    : null;
+			const passed = !!(result && result.passed);
+			const advanced = !!(result && result.advanced);
+
+			let successMessage = (result && result.message)
 			    ? result.message
 			    : 'Quiz submitted successfully!';
+
+			if (scorePercent !== null && passPercent !== null) {
+			    successMessage = passed
+				? `Quiz submitted. Score: ${scorePercent}%. You passed${advanced ? ' and unlocked the next lesson.' : '.'}`
+				: `Quiz submitted. Score: ${scorePercent}%. Passing score is ${passPercent}%.`;
+			}
 
 			if (window.wc && window.wc.publish) {
 			    if (window.wc.log) {
@@ -349,8 +372,17 @@
 			    window.wc.publish('4-mtk-quiz-submitted', { request: submissionData, response: result || {} });
 			}
 
+			this.clearGlobalMessageBanner();
+			MTKMsgs.show({
+			    type: passed ? 'success' : 'info',
+			    icon: passed ? 'check_circle' : 'info',
+			    message: successMessage,
+			    closable: true,
+			    timer: 12
+			});
 			this.showMessage('success', successMessage);
 			this.disableForm();
+			window.scrollTo({ top: 0, behavior: 'smooth' });
 			
 			if (window.wc && window.wc.publish) {
 			    const disabledData = {
