@@ -4,6 +4,7 @@
 		this.element = element;
 		this.config = config;
 		this.answers = {};
+		this.isSubmitting = false;
 		
 		this.elements = {
 		    form: null,
@@ -17,6 +18,27 @@
 		};
 
 		this.init();
+	    }
+
+	    static destroyExistingInstance() {
+		const element = document.querySelector('mtk-quiz.mtk-quiz, mtk-quiz');
+		if (!element || !element.mtkQuizInstance) return;
+		const existingInstance = element.mtkQuizInstance;
+
+		try {
+		    if (typeof existingInstance.destroy === 'function') {
+			existingInstance.destroy();
+		    }
+		} catch (error) {
+		    if (window.wc && window.wc.warn) {
+			window.wc.warn('MTK Quiz: failed to destroy existing instance cleanly', error);
+		    }
+		}
+
+		delete element.mtkQuizInstance;
+		if (window.MtkQuizInstance === existingInstance) {
+		    window.MtkQuizInstance = null;
+		}
 	    }
 
 	    init() {
@@ -59,6 +81,18 @@
 		});
 
 		document.body.style.overflow = '';
+	    }
+
+	    showGlobalMessage(config) {
+		const messageConfig = config || {};
+		if (window.MTKMsgs && typeof window.MTKMsgs.show === 'function') {
+		    window.MTKMsgs.show(messageConfig);
+		    return;
+		}
+
+		const fallbackType = messageConfig.type || 'info';
+		const fallbackMessage = messageConfig.message || 'Something happened.';
+		this.showMessage(fallbackType, fallbackMessage);
 	    }
 
 	    populateHeader() {
@@ -253,150 +287,238 @@
 	    }
 
 	    handleSubmit(e) {
-		wc.log('🔴 SUBMIT BUTTON CLICKED!');
-		e.preventDefault();
-		e.stopPropagation();
-		
-		wc.log('🔴 Event prevented, continuing...');
+		try {
+		    if (this.isSubmitting) return;
 
-		const answersMap = this.collectAnswersFromDom();
-
-		const totalQuestions = this.config.questions.length;
-		const answeredCount = Object.keys(answersMap).length;
-		
-		wc.log('🔴 TOTAL QUESTIONS:', totalQuestions);
-		wc.log('🔴 ANSWERED COUNT:', answeredCount);
-		
-		// Debug logging
-		wc.log('=== SUBMIT DEBUG ===');
-		wc.log('Total Questions:', totalQuestions);
-		wc.log('Answered Count:', answeredCount);
-		wc.log('Answers Object:', answersMap);
-		wc.log('==================');
-
-		if (answeredCount < totalQuestions) {
-		    wc.log('🔴 VALIDATION FAILED - NOT ALL ANSWERED');
-		    this.clearGlobalMessageBanner();
+		    wc.log('🔴 SUBMIT BUTTON CLICKED!');
+		    e.preventDefault();
+		    e.stopPropagation();
 		    
-		    // Publish validation error event
-		    if (window.wc && window.wc.publish) {
-			const errorData = {
-			    answered: answeredCount,
-			    total: totalQuestions,
-			    message: `Please answer all questions. ${answeredCount}/${totalQuestions} answered.`,
-			    timestamp: new Date().toISOString()
-			};
-			
-			MTKMsgs.show({
-			    type: 'error',
-			    icon: 'error',
-			    message: errorData.message,
-			    buttons: [{label: "Go to Unanswered question", action: "NextEmptyQuestion"}],
-			    closable: false,
-			    timer: 0
-			});
-			
-			window.wc.publish('4-mtk-quiz-validation-error', errorData);
-		    }
+		    wc.log('🔴 Event prevented, continuing...');
+
+		    const answersMap = this.collectAnswersFromDom();
+
+		    const totalQuestions = this.config.questions.length;
+		    const answeredCount = Object.keys(answersMap).length;
 		    
-		    return;
-		}
+		    wc.log('🔴 TOTAL QUESTIONS:', totalQuestions);
+		    wc.log('🔴 ANSWERED COUNT:', answeredCount);
+		    
+		    // Debug logging
+		    wc.log('=== SUBMIT DEBUG ===');
+		    wc.log('Total Questions:', totalQuestions);
+		    wc.log('Answered Count:', answeredCount);
+		    wc.log('Answers Object:', answersMap);
+		    wc.log('==================');
 
-		wc.log('🔴 VALIDATION PASSED - ALL QUESTIONS ANSWERED');
-
-		const submissionData = {
-		    quiz_session_id: this.config.quiz_session_id,
-		    module_id: this.config.module_id,
-		    answers: answersMap,
-		    submitted_at: new Date().toISOString(),
-		    total_questions: totalQuestions
-		};
-
-		if (!window.wc || typeof window.wc.submitQuiz !== 'function') {
-		    this.showMessage('error', 'Quiz submission is not available right now.');
-		    return;
-		}
-
-		if (this.elements.submitBtn) {
-		    this.elements.submitBtn.disabled = true;
-		}
-
-		window.wc.submitQuiz(
-		    this.config.quiz_session_id,
-		    this.config.module_id,
-		    answersMap,
-		    (err, result) => {
-			if (this.elements.submitBtn) {
-			    this.elements.submitBtn.disabled = false;
-			}
-
-			if (err) {
-			    wc.error('❌ Quiz submission failed:', err);
-			    this.clearGlobalMessageBanner();
-			    MTKMsgs.show({
-				type: 'error',
-				icon: 'error',
-				message: err.message || 'Quiz submission failed.',
-				closable: true,
-				timer: 10
-			    });
-			    this.showMessage('error', err.message || 'Quiz submission failed.');
-			    return;
-			}
-
-			const scorePercent = result && typeof result.score_percent !== 'undefined'
-			    ? result.score_percent
-			    : null;
-			const passPercent = result && typeof result.pass_percent !== 'undefined'
-			    ? result.pass_percent
-			    : null;
-			const passed = !!(result && result.passed);
-			const advanced = !!(result && result.advanced);
-
-			let successMessage = (result && result.message)
-			    ? result.message
-			    : 'Quiz submitted successfully!';
-
-			if (scorePercent !== null && passPercent !== null) {
-			    successMessage = passed
-				? `Quiz submitted. Score: ${scorePercent}%. You passed${advanced ? ' and unlocked the next lesson.' : '.'}`
-				: `Quiz submitted. Score: ${scorePercent}%. Passing score is ${passPercent}%.`;
-			}
-
-			if (window.wc && window.wc.publish) {
-			    if (window.wc.log) {
-				window.wc.log('quiz', submissionData);
-				window.wc.log('4-mtk-quiz-submitted', { request: submissionData, response: result || {} });
-			    }
-			    window.wc.publish('quiz', submissionData);
-			    window.wc.publish('4-mtk-quiz-submitted', { request: submissionData, response: result || {} });
-			}
-
+		    if (answeredCount < totalQuestions) {
+			wc.log('🔴 VALIDATION FAILED - NOT ALL ANSWERED');
 			this.clearGlobalMessageBanner();
-			MTKMsgs.show({
-			    type: passed ? 'success' : 'info',
-			    icon: passed ? 'check_circle' : 'info',
-			    message: successMessage,
-			    closable: true,
-			    timer: 12
-			});
-			this.showMessage('success', successMessage);
-			this.disableForm();
-			window.scrollTo({ top: 0, behavior: 'smooth' });
 			
+			// Publish validation error event
 			if (window.wc && window.wc.publish) {
-			    const disabledData = {
+			    const errorData = {
+				answered: answeredCount,
+				total: totalQuestions,
+				message: `Please answer all questions. ${answeredCount}/${totalQuestions} answered.`,
 				timestamp: new Date().toISOString()
 			    };
 			    
-			    if (window.wc.log) {
-				window.wc.log('4-mtk-quiz-form-disabled', disabledData);
+			    this.showGlobalMessage({
+				type: 'error',
+				icon: 'error',
+				message: errorData.message,
+				buttons: [{label: "Go to Unanswered question", action: "NextEmptyQuestion"}],
+				closable: false,
+				timer: 0
+			    });
+			    
+			    window.wc.publish('4-mtk-quiz-validation-error', errorData);
+			}
+			
+			return;
+		    }
+
+		    wc.log('🔴 VALIDATION PASSED - ALL QUESTIONS ANSWERED');
+
+		    const submissionData = {
+			quiz_session_id: this.config.quiz_session_id,
+			module_id: this.config.module_id,
+			answers: answersMap,
+			submitted_at: new Date().toISOString(),
+			total_questions: totalQuestions
+		    };
+
+		    if (!window.wc || typeof window.wc.submitQuiz !== 'function') {
+			this.showMessage('error', 'Quiz submission is not available right now.');
+			return;
+		    }
+
+		    this.isSubmitting = true;
+
+		    if (this.elements.submitBtn) {
+			this.elements.submitBtn.disabled = true;
+		    }
+
+		    this.showMessage('info', 'Submitting your quiz...');
+
+		    window.wc.submitQuiz(
+			this.config.quiz_session_id,
+			this.config.module_id,
+			answersMap,
+			(err, result) => {
+			    this.isSubmitting = false;
+
+			    if (this.elements.submitBtn) {
+				this.elements.submitBtn.disabled = false;
+			    }
+
+			    if (err) {
+				wc.error('❌ Quiz submission failed:', err);
+				this.clearGlobalMessageBanner();
+				this.showGlobalMessage({
+				    type: 'error',
+				    icon: 'error',
+				    message: err.message || 'Quiz submission failed.',
+				    closable: true,
+				    timer: 10
+				});
+				this.showMessage('error', err.message || 'Quiz submission failed.');
+				return;
+			    }
+
+			    const scorePercent = result && typeof result.score_percent !== 'undefined'
+				? result.score_percent
+				: null;
+			    const passPercent = result && typeof result.pass_percent !== 'undefined'
+				? result.pass_percent
+				: null;
+			    const passed = !!(result && result.passed);
+			    const advanced = !!(result && result.advanced);
+
+			    let successMessage = (result && result.message)
+				? result.message
+				: 'Quiz submitted successfully!';
+
+			    if (scorePercent !== null && passPercent !== null) {
+				successMessage = passed
+				    ? `Quiz submitted. Score: ${scorePercent}%. You passed${advanced ? ' and unlocked the next lesson.' : '.'}`
+				    : `Quiz submitted. Score: ${scorePercent}%. Passing score is ${passPercent}%.`;
+			    }
+
+			    if (window.wc && window.wc.publish) {
+				if (window.wc.log) {
+				    window.wc.log('quiz', submissionData);
+				    window.wc.log('4-mtk-quiz-submitted', { request: submissionData, response: result || {} });
+				}
+				window.wc.publish('quiz', submissionData);
+				window.wc.publish('4-mtk-quiz-submitted', { request: submissionData, response: result || {} });
+			    }
+
+			    this.clearGlobalMessageBanner();
+			    this.showGlobalMessage({
+				type: passed ? 'success' : 'info',
+				icon: passed ? 'check_circle' : 'info',
+				message: successMessage,
+				closable: true,
+				timer: 12
+			    });
+			    this.showMessage(passed ? 'success' : 'info', successMessage);
+			    if (passed) {
+				this.disableForm();
+			    } else {
+				this.enableForm();
+			    }
+			    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+			    const afterSessionSync = () => {
+				if (passed) {
+				    if (this.hasAccessibleFinalPage()) {
+					wc.pages.show('final');
+					return;
+				    }
+
+				    if (wc.pages && typeof wc.pages.refresh === 'function') {
+					wc.pages.refresh('hierarchy', { showPage: true });
+				    } else if (wc.pages && typeof wc.pages.show === 'function') {
+					wc.pages.show('hierarchy');
+				    }
+				}
+			    };
+
+			    if (result && Number.isFinite(Number(result.updated_current_lesson)) && window.wc && wc.session && wc.session.user) {
+				wc.session.user.current_lesson = Number(result.updated_current_lesson);
+			    }
+
+			    if (window.wc && typeof wc.getSession === 'function') {
+				wc.getSession(() => {
+				    if (wc.pages && typeof wc.pages.refresh === 'function') {
+					wc.pages.refresh('dashboard');
+					wc.pages.refresh('hierarchy');
+				    }
+				    afterSessionSync();
+				}).catch((sessionError) => {
+				    wc.warn('MTK Quiz: session refresh failed after submit', sessionError);
+				    afterSessionSync();
+				});
+			    } else {
+				afterSessionSync();
 			    }
 			    
-			    window.wc.publish('4-mtk-quiz-form-disabled', disabledData);
+			    if (passed && window.wc && window.wc.publish) {
+				const disabledData = {
+				    timestamp: new Date().toISOString()
+				};
+				
+				if (window.wc.log) {
+				    window.wc.log('4-mtk-quiz-form-disabled', disabledData);
+				}
+				
+				window.wc.publish('4-mtk-quiz-form-disabled', disabledData);
+			    }
+			}
+		    );
+		} catch (error) {
+		    this.isSubmitting = false;
+		    if (this.elements.submitBtn) {
+			this.elements.submitBtn.disabled = false;
+		    }
+		    wc.error('❌ Quiz submit handler crashed:', error);
+		    this.clearGlobalMessageBanner();
+		    this.showGlobalMessage({
+			type: 'error',
+			icon: 'error',
+			message: error && error.message ? error.message : 'Quiz submission crashed before reaching the server.',
+			closable: true,
+			timer: 12
+		    });
+		    this.showMessage('error', error && error.message ? error.message : 'Quiz submission crashed before reaching the server.');
+		}
+	    }
+
+	    hasAccessibleFinalPage() {
+		const parts = window.wc && wc.session && wc.session.hierarchy && Array.isArray(wc.session.hierarchy.parts)
+		    ? wc.session.hierarchy.parts
+		    : [];
+
+		for (const part of parts) {
+		    if (!part || !Array.isArray(part.modules)) continue;
+		    for (const module of part.modules) {
+			if (!module || !Array.isArray(module.lessons)) continue;
+			for (const lesson of module.lessons) {
+			    if (!lesson || !lesson.access || !Array.isArray(lesson.resources)) continue;
+			    const finalResource = lesson.resources.find((resource) => (
+				resource &&
+				resource.access !== false &&
+				resource.type === 'page' &&
+				resource.url === 'final'
+			    ));
+			    if (finalResource) return true;
 			}
 		    }
-		);
+		}
+
+		return false;
 	    }
 
 	    handleClear() {
@@ -606,7 +728,9 @@
 
 		const icon = document.createElement('span');
 		icon.className = 'mtk-quiz__message-icon';
-		icon.textContent = type === 'error' ? 'error' : 'check_circle';
+		icon.textContent = type === 'error'
+		    ? 'error'
+		    : (type === 'info' ? 'info' : 'check_circle');
 
 		const textSpan = document.createElement('span');
 		textSpan.textContent = text;
@@ -679,6 +803,12 @@
 		    
 		    window.wc.publish('4-mtk-quiz-form-state-changed', stateData);
 		}
+	    }
+
+	    destroy() {
+		this.isSubmitting = false;
+		this.clearMessage();
+		this.clearGlobalMessageBanner();
 	    }
 
 	    subscribeToEvents() {
@@ -766,6 +896,8 @@
 	    wc.log('🚀 Starting MTK Quiz initialization...');
 	    
 	    try {
+		QuizCtor.destroyExistingInstance();
+
 		// Wait for element
 		const element = await waitForMtkQuizElement();
 		
@@ -862,6 +994,7 @@
 		let quiz = data.quiz;
 
 		quiz.module_id = wc.quizModule;
+		quiz.count = quiz.count || (Array.isArray(quiz.questions) ? quiz.questions.length : 0);
 
 		wc.log("mtk-quiz.js: > data:", JSON.stringify(quiz));
 

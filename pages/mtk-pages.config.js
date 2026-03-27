@@ -51,7 +51,7 @@ window.app.pages = [
         "url":   "<wc-include href='settings/index.inc.html' />"
     },
     {
-        "cache": "true",
+        "cache": "false",
         "page":  "quiz",
         "label": "Quiz",
         "url":   "<wc-include href='quiz/index.inc.html' />"

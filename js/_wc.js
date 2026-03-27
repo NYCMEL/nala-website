@@ -1529,22 +1529,53 @@ wc.setDasbboardProgress = function(percentage) {
  * answersMap format: { "29":"a", "37":"c", ... }
  ************************************************************/
 wc.submitQuiz = function (quizSessionId, moduleId, answersMap, callback) {
-    const payload = {
-        quiz_session_id: quizSessionId,
-        module_id: moduleId,
-        answers: answersMap || {}
-    };
+    const payload = new URLSearchParams();
+    const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
+    let timeoutId = null;
+
+    payload.set("quiz_session_id", String(quizSessionId));
+    payload.set("module_id", String(moduleId));
+
+    Object.entries(answersMap || {}).forEach(([questionId, answer]) => {
+        payload.set(`answers[${questionId}]`, String(answer));
+    });
+
+    if (controller) {
+        timeoutId = setTimeout(() => {
+            controller.abort();
+        }, 15000);
+    }
 
     fetch(wc.apiURL + "/api/submitQuiz.php", {
         method: "POST",
         credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-    }).then(res => {
-        if (!res.ok) {
-            throw new Error("Failed to submit quiz");
+        headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" },
+        body: payload.toString(),
+        signal: controller ? controller.signal : undefined
+    }).then(async (res) => {
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+            timeoutId = null;
         }
-        return res.json();
+
+        const text = await res.text();
+        let data = null;
+
+        try {
+            data = text ? JSON.parse(text) : {};
+        } catch (e) {
+            throw new Error("submitQuiz returned non-JSON. First 300 chars: " + text.slice(0, 300));
+        }
+
+        if (!res.ok || (data && data.ok === false)) {
+            const msg = (data && (data.error || data.message)) ? (data.error || data.message) : ("HTTP " + res.status);
+            const err = new Error(msg || "Failed to submit quiz");
+            err.status = res.status;
+            err.data = data;
+            throw err;
+        }
+
+        return data;
     }).then(data => {
         wc.log("submitQuiz data:", data);
 
@@ -1552,6 +1583,15 @@ wc.submitQuiz = function (quizSessionId, moduleId, answersMap, callback) {
             callback(null, data);
         }
     }).catch(err => {
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+            timeoutId = null;
+        }
+
+        if (err && err.name === "AbortError") {
+            err = new Error("Quiz submission timed out after 15 seconds.");
+        }
+
         wc.error("submitQuiz error:", err);
 
         if (typeof callback === "function") {
