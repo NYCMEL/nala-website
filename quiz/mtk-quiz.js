@@ -433,11 +433,6 @@
 
 			    const afterSessionSync = () => {
 				if (passed) {
-				    if (this.hasAccessibleFinalPage()) {
-					wc.pages.show('final');
-					return;
-				    }
-
 				    if (wc.pages && typeof wc.pages.refresh === 'function') {
 					wc.pages.refresh('hierarchy', { showPage: true });
 				    } else if (wc.pages && typeof wc.pages.show === 'function') {
@@ -494,31 +489,6 @@
 		    });
 		    this.showMessage('error', error && error.message ? error.message : 'Quiz submission crashed before reaching the server.');
 		}
-	    }
-
-	    hasAccessibleFinalPage() {
-		const parts = window.wc && wc.session && wc.session.hierarchy && Array.isArray(wc.session.hierarchy.parts)
-		    ? wc.session.hierarchy.parts
-		    : [];
-
-		for (const part of parts) {
-		    if (!part || !Array.isArray(part.modules)) continue;
-		    for (const module of part.modules) {
-			if (!module || !Array.isArray(module.lessons)) continue;
-			for (const lesson of module.lessons) {
-			    if (!lesson || !lesson.access || !Array.isArray(lesson.resources)) continue;
-			    const finalResource = lesson.resources.find((resource) => (
-				resource &&
-				resource.access !== false &&
-				resource.type === 'page' &&
-				resource.url === 'final'
-			    ));
-			    if (finalResource) return true;
-			}
-		    }
-		}
-
-		return false;
 	    }
 
 	    handleClear() {
