@@ -11,13 +11,41 @@ const CONFIG = {
     apiEndpoint: '/api/issueCertificate.php?v=2'
 };
 
+const DEFAULT_FINAL_CONFIG = {
+    strings: {
+        successHeading: 'Congratulations!',
+        successSubheading: 'You have successfully completed the course.',
+        currentEmailLabel: 'Your current email address',
+        currentEmail: '',
+        optionKeep: 'Send certificate to my current email',
+        optionNew: 'Send certificate to a different email',
+        newEmailLabel: 'New email address',
+        newEmailHint: 'Enter a valid email address',
+        confirmEmailLabel: 'Confirm new email address',
+        confirmEmailHint: 'Re-enter your new email address',
+        submitLabel: 'Send My Certificate',
+        successToast: 'Certificate sent! Check your inbox.',
+        requiredError: 'This field is required.',
+        invalidEmailError: 'Please enter a valid email address.',
+        mismatchError: 'Email addresses do not match.',
+        matchConfirmed: 'Emails match!'
+    }
+};
+
 class MtkFinal {
 
     constructor(root){
         this.root = root;
         this.choice = 'keep';
         this.noticeEl = null;
-        this.config = window.MTK_FINAL_CONFIG || {};
+        this.config = {
+            ...DEFAULT_FINAL_CONFIG,
+            ...(window.MTK_FINAL_CONFIG || {}),
+            strings: {
+                ...DEFAULT_FINAL_CONFIG.strings,
+                ...((window.MTK_FINAL_CONFIG && window.MTK_FINAL_CONFIG.strings) || {})
+            }
+        };
         this.init();
     }
 
