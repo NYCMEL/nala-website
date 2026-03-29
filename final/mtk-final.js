@@ -67,17 +67,27 @@ class MtkFinal {
     }
 
     setCurrentEmail(){
+        const sessionEmail = (
+            window.wc &&
+            wc.session &&
+            wc.session.user &&
+            wc.session.user.email
+        ) ? wc.session.user.email : '';
+
+        if (!sessionEmail) return;
+
+        this.root.querySelectorAll('[data-mtk-desc="currentEmail"], [data-mtk="currentEmail"]').forEach((el) => {
+            el.textContent = sessionEmail;
+        });
+
         if (
             window.wc &&
             wc.session &&
             wc.session.user &&
             wc.session.user.email
         ) {
-            const email = wc.session.user.email;
-            const el = this.root.querySelector('[data-mtk-desc="currentEmail"]');
-            if (el) {
-                el.textContent = email;
-            }
+            this.config.user = this.config.user || {};
+            this.config.user.currentEmail = sessionEmail;
         }
     }
 
