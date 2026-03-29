@@ -17,12 +17,25 @@ class MtkFinal {
         this.root = root;
         this.choice = 'keep';
         this.noticeEl = null;
+        this.config = window.MTK_FINAL_CONFIG || {};
         this.init();
     }
 
     init(){
+        this.populateStrings();
         this.setCurrentEmail();
         this.bindEvents();
+    }
+
+    populateStrings(){
+        const strings = this.config && this.config.strings ? this.config.strings : {};
+        if (!strings) return;
+
+        this.root.querySelectorAll('[data-mtk]').forEach((el) => {
+            const key = el.getAttribute('data-mtk');
+            if (!key || typeof strings[key] === 'undefined') return;
+            el.textContent = strings[key];
+        });
     }
 
     setCurrentEmail(){
