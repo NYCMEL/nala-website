@@ -184,6 +184,7 @@ class MTKHierarchy {
      */
     cacheElements() {
         this.elements = {
+            result: this.element.querySelector('#mtkHierarchyResult'),
             lhs: this.element.querySelector('.mtk-hierarchy-lhs'),
             rhs: this.element.querySelector('.mtk-hierarchy-rhs')
         };
@@ -252,6 +253,7 @@ class MTKHierarchy {
         }
 
         this.renderCourses();
+        this.renderPendingQuizResult();
 
         if (typeof wc !== 'undefined') {
             wc.groupEnd();
@@ -278,6 +280,43 @@ class MTKHierarchy {
 
         if (typeof wc !== 'undefined') {
             wc.log("MTKHierarchy: Courses rendered", this.config.length);
+        }
+    }
+
+    renderPendingQuizResult() {
+        const el = this.elements.result;
+        if (!el) return;
+
+        if (!(typeof window !== 'undefined' && typeof wc !== 'undefined' && wc.pendingGlobalMessage)) {
+            el.hidden = true;
+            el.innerHTML = '';
+            return;
+        }
+
+        const messageConfig = wc.pendingGlobalMessage || {};
+        const type = messageConfig.type === 'success' ? 'success' : 'info';
+        const icon = messageConfig.icon || (type === 'success' ? 'check_circle' : 'info');
+        const message = messageConfig.message || '';
+
+        el.className = `mtk-hierarchy__result mtk-hierarchy__result--${type}`;
+        el.innerHTML = `
+          <div class="mtk-hierarchy__result-body">
+            <span class="material-icons mtk-hierarchy__result-icon">${this.escapeHtml(icon)}</span>
+            <div class="mtk-hierarchy__result-text">${this.escapeHtml(message)}</div>
+          </div>
+          <button type="button" class="mtk-hierarchy__result-close" aria-label="Close result message">
+            <span class="material-icons">close</span>
+          </button>
+        `;
+        el.hidden = false;
+
+        const closeBtn = el.querySelector('.mtk-hierarchy__result-close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                wc.pendingGlobalMessage = null;
+                el.hidden = true;
+                el.innerHTML = '';
+            }, { once: true });
         }
     }
 

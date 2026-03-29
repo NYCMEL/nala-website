@@ -197,6 +197,52 @@ h1.title::after {
   max-height: 100%;
   overflow: hidden; }
 
+.mtk-hierarchy .mtk-hierarchy__result {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 16px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  border-left: 4px solid var(--mtk-primary);
+  background: rgba(25, 118, 210, 0.1);
+  color: var(--mtk-text-primary);
+  box-shadow: var(--mtk-shadow-1); }
+
+.mtk-hierarchy .mtk-hierarchy__result--success {
+  border-left-color: var(--mtk-success);
+  background: rgba(76, 175, 80, 0.12); }
+
+.mtk-hierarchy .mtk-hierarchy__result--info {
+  border-left-color: var(--mtk-primary);
+  background: rgba(25, 118, 210, 0.1); }
+
+.mtk-hierarchy .mtk-hierarchy__result-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0; }
+
+.mtk-hierarchy .mtk-hierarchy__result-icon {
+  color: inherit;
+  flex-shrink: 0; }
+
+.mtk-hierarchy .mtk-hierarchy__result-text {
+  font-size: 15px;
+  line-height: 1.5; }
+
+.mtk-hierarchy .mtk-hierarchy__result-close {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; }
+
 .mtk-hierarchy .mtk-hierarchy__row {
   height: 100%;
   display: flex;
