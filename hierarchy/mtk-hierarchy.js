@@ -167,6 +167,7 @@ class MTKHierarchy {
         this.subscribeToEvents();
         this.render();
         this.attachEventListeners();
+        this.showPendingGlobalMessage();
 
         this.initialized = true;
 
@@ -252,6 +253,7 @@ class MTKHierarchy {
         }
 
         this.renderCourses();
+        this.showPendingGlobalMessage();
 
         if (typeof wc !== 'undefined') {
             wc.groupEnd();
@@ -260,6 +262,19 @@ class MTKHierarchy {
         wc.publish('mtk-hierarchy:rendered', {
             timestamp: new Date().toISOString()
         });
+    }
+
+    showPendingGlobalMessage() {
+        if (typeof window === 'undefined' || typeof wc === 'undefined') return;
+        if (!wc.pendingGlobalMessage) return;
+        if (!(window.MTKMsgs && typeof window.MTKMsgs.show === 'function')) return;
+
+        const messageConfig = wc.pendingGlobalMessage;
+        wc.pendingGlobalMessage = null;
+
+        setTimeout(() => {
+            window.MTKMsgs.show(messageConfig);
+        }, 80);
     }
 
     /**

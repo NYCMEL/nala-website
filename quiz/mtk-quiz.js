@@ -96,10 +96,8 @@
 	    }
 
 	    showGlobalMessageAfterNavigation(config) {
-		const messageConfig = config || {};
-		setTimeout(() => {
-		    this.showGlobalMessage(messageConfig);
-		}, 120);
+		window.wc = window.wc || {};
+		wc.pendingGlobalMessage = config || null;
 	    }
 
 	    populateHeader() {
