@@ -95,6 +95,13 @@
 		this.showMessage(fallbackType, fallbackMessage);
 	    }
 
+	    showGlobalMessageAfterNavigation(config) {
+		const messageConfig = config || {};
+		setTimeout(() => {
+		    this.showGlobalMessage(messageConfig);
+		}, 120);
+	    }
+
 	    populateHeader() {
 		const titleEl = this.element.querySelector('#quizTitle');
 		const moduleEl = this.element.querySelector('#moduleId');
@@ -415,14 +422,15 @@
 				window.wc.publish('4-mtk-quiz-submitted', { request: submissionData, response: result || {} });
 			    }
 
-			    this.clearGlobalMessageBanner();
-			    this.showGlobalMessage({
+			    const resultMessageConfig = {
 				type: passed ? 'success' : 'info',
 				icon: passed ? 'check_circle' : 'info',
 				message: successMessage,
 				closable: true,
 				timer: 12
-			    });
+			    };
+			    this.clearGlobalMessageBanner();
+			    this.showGlobalMessage(resultMessageConfig);
 			    this.showMessage(passed ? 'success' : 'info', successMessage);
 			    if (passed) {
 				this.disableForm();
@@ -438,6 +446,8 @@
 				    } else if (wc.pages && typeof wc.pages.show === 'function') {
 					wc.pages.show('hierarchy');
 				    }
+
+				    this.showGlobalMessageAfterNavigation(resultMessageConfig);
 				}
 			    };
 
