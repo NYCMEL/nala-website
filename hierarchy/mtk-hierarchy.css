@@ -192,10 +192,10 @@ h1.title::after {
   box-sizing: border-box; }
 
 .mtk-hierarchy .mtk-hierarchy__container {
-  height: calc(100vh - 120px);
-  min-height: 600px;
-  max-height: 100%;
-  overflow: hidden; }
+  height: calc(100vh - 120px - var(--page-footer-height, 0px));
+  min-height: 420px;
+  max-height: none;
+  overflow: visible; }
 
 .mtk-hierarchy .mtk-hierarchy__result {
   display: flex;

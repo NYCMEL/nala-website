@@ -26,10 +26,10 @@
   * { box-sizing: border-box; }
 
   .mtk-hierarchy__container {
-    height: calc(100vh - 120px);
-    min-height: 600px;
-    max-height: 100%;
-    overflow: hidden;
+    height: calc(100vh - 120px - var(--page-footer-height, 0px));
+    min-height: 420px;
+    max-height: none;
+    overflow: visible;
   }
 
   .mtk-hierarchy__row { height: 100%; display: flex; flex-wrap: nowrap; margin: 0; }
