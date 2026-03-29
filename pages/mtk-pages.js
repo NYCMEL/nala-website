@@ -265,6 +265,7 @@ class Pages extends HTMLElement {
         this._updateHistory(page, opts);
 
         window.scrollTo(0, 0);
+        this._showPendingGlobalMessage(page);
 
         wc.publish("mtk-pages", {
             time: new Date().getTime(),
@@ -276,6 +277,21 @@ class Pages extends HTMLElement {
         wc.log("mtk-pages: showing page:", page);
         wc.groupEnd();
         return page;
+    }
+
+    _showPendingGlobalMessage(page) {
+        if (page !== "hierarchy") return;
+        if (typeof window === "undefined" || typeof wc === "undefined") return;
+        if (!wc.pendingGlobalMessage) return;
+
+        const messageConfig = wc.pendingGlobalMessage;
+        wc.pendingGlobalMessage = null;
+
+        setTimeout(() => {
+            if (window.MTKMsgs && typeof window.MTKMsgs.show === "function") {
+                window.MTKMsgs.show(messageConfig);
+            }
+        }, 150);
     }
 
     refresh(page, opts = {}) {

@@ -96,12 +96,8 @@
 	    }
 
 	    showGlobalMessageAfterNavigation(config) {
-		const messageConfig = config || {};
-		setTimeout(() => {
-		    if (window.wc && wc.pages && wc.pages.currentPage === 'hierarchy') {
-			this.showGlobalMessage(messageConfig);
-		    }
-		}, 500);
+		window.wc = window.wc || {};
+		wc.pendingGlobalMessage = config || null;
 	    }
 
 	    populateHeader() {
