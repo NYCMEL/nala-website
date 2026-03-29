@@ -96,8 +96,12 @@
 	    }
 
 	    showGlobalMessageAfterNavigation(config) {
-		window.wc = window.wc || {};
-		wc.pendingGlobalMessage = config || null;
+		const messageConfig = config || {};
+		setTimeout(() => {
+		    if (window.wc && wc.pages && wc.pages.currentPage === 'hierarchy') {
+			this.showGlobalMessage(messageConfig);
+		    }
+		}, 500);
 	    }
 
 	    populateHeader() {
@@ -425,7 +429,7 @@
 				icon: passed ? 'check_circle' : 'info',
 				message: successMessage,
 				closable: true,
-				timer: 12
+				timer: 0
 			    };
 			    this.clearGlobalMessageBanner();
 			    this.showGlobalMessage(resultMessageConfig);
@@ -439,10 +443,10 @@
 
 			    const afterSessionSync = () => {
 				if (passed) {
-				    if (wc.pages && typeof wc.pages.refresh === 'function') {
-					wc.pages.refresh('hierarchy', { showPage: true });
-				    } else if (wc.pages && typeof wc.pages.show === 'function') {
+				    if (wc.pages && typeof wc.pages.show === 'function') {
 					wc.pages.show('hierarchy');
+				    } else if (wc.pages && typeof wc.pages.refresh === 'function') {
+					wc.pages.refresh('hierarchy', { showPage: true });
 				    }
 
 				    this.showGlobalMessageAfterNavigation(resultMessageConfig);
