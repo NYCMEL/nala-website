@@ -170,15 +170,43 @@ class MtkFinal {
 
         if (details && typeof details === 'object') {
             const certifierResponse = details.certifier_response || {};
+            const certifierErrors = Array.isArray(certifierResponse.errors) ? certifierResponse.errors : [];
+            const firstCertifierError = certifierErrors.length ? certifierErrors[0] : null;
             const nestedMessage =
                 certifierResponse.message ||
                 certifierResponse.error ||
+                (firstCertifierError && (
+                    firstCertifierError.message ||
+                    firstCertifierError.error ||
+                    firstCertifierError.detail ||
+                    firstCertifierError.title
+                )) ||
                 details.error ||
                 details.message ||
                 details.raw_body;
 
             if (typeof nestedMessage === 'string' && nestedMessage.trim()) {
                 return nestedMessage;
+            }
+
+            if (firstCertifierError && typeof firstCertifierError === 'object') {
+                const summarized = Object.values(firstCertifierError).find((value) => typeof value === 'string' && value.trim());
+                if (summarized) {
+                    return summarized;
+                }
+            }
+
+            if (Array.isArray(certifierResponse.details) && certifierResponse.details.length) {
+                const firstDetail = certifierResponse.details[0];
+                if (typeof firstDetail === 'string' && firstDetail.trim()) {
+                    return firstDetail;
+                }
+                if (firstDetail && typeof firstDetail === 'object') {
+                    const summarized = Object.values(firstDetail).find((value) => typeof value === 'string' && value.trim());
+                    if (summarized) {
+                        return summarized;
+                    }
+                }
             }
 
             if (typeof details.http_code === 'number') {
