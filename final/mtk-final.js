@@ -119,7 +119,14 @@ class MtkFinal {
 
     async onSubmit(e){
         e.preventDefault();
-        await this.issueCertificateFromSelection();
+        try {
+            await this.issueCertificateFromSelection();
+        } catch (err) {
+            // issueCertificateFromSelection already shows the user-facing error
+            if (window.console && typeof console.warn === 'function') {
+                console.warn('Certificate send failed', err);
+            }
+        }
     }
 
     getEmail(){
@@ -151,6 +158,42 @@ class MtkFinal {
         return '';
     }
 
+    extractErrorMessage(data){
+        if (!data || typeof data !== 'object') {
+            return 'Certificate request failed';
+        }
+
+        const details = data.details;
+        if (typeof details === 'string' && details.trim()) {
+            return details;
+        }
+
+        if (details && typeof details === 'object') {
+            const certifierResponse = details.certifier_response || {};
+            const nestedMessage =
+                certifierResponse.message ||
+                certifierResponse.error ||
+                details.error ||
+                details.message ||
+                details.raw_body;
+
+            if (typeof nestedMessage === 'string' && nestedMessage.trim()) {
+                return nestedMessage;
+            }
+
+            if (typeof details.http_code === 'number') {
+                return `Certificate request failed (HTTP ${details.http_code})`;
+            }
+        }
+
+        const topLevelMessage = data.error || data.message;
+        if (typeof topLevelMessage === 'string' && topLevelMessage.trim()) {
+            return topLevelMessage;
+        }
+
+        return 'Certificate request failed';
+    }
+
     async issueCertificate(email, name){
         const res = await fetch(CONFIG.apiEndpoint, {
             method: 'POST',
@@ -174,12 +217,7 @@ class MtkFinal {
         }
 
         if (!res.ok || data.error) {
-            throw new Error(
-                data.details ||
-                data.error ||
-                data.message ||
-                'Certificate request failed'
-            );
+            throw new Error(this.extractErrorMessage(data));
         }
 
         return data;
@@ -212,7 +250,7 @@ class MtkFinal {
             return result;
         } catch (err) {
             alert(err.message || 'Could not send certificate');
-            throw err;
+            return null;
         } finally {
             if (btn) btn.classList.remove('mtk-final__submit--loading');
         }
