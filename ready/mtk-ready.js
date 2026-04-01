@@ -10,41 +10,25 @@ if (typeof MtkReady === 'undefined') {
             }
             this.render();
             this.bindEvents();
-
-            // Re-render when language changes
-            document.addEventListener('i18n:changed', () => {
-                this.config = window.app && window.app.ready;
-                if (this.config) this.render();
-            });
         }
         render() {
-            const titleEl    = this.el.querySelector('.mtk-ready-title');
-            const descEl     = this.el.querySelector('.mtk-ready-desc');
+            const titleEl = this.el.querySelector('.mtk-ready-title');
+            const descEl = this.el.querySelector('.mtk-ready-desc');
             const btnLabelEl = this.el.querySelector('.mtk-ready-btn-label');
-            if (titleEl)    titleEl.innerHTML    = this.config.title       || '';
-            if (descEl)     descEl.innerHTML     = this.config.description || '';
-            if (btnLabelEl) btnLabelEl.innerHTML = this.config.button?.label || 'Get Started';
+            if (titleEl) titleEl.innerHTML = this.config.title || '';
+            if (descEl) descEl.innerHTML = this.config.description || '';
+            if (btnLabelEl) btnLabelEl.innerHTML =
+                this.config.button?.label || 'Get Started';
         }
         bindEvents() {
             const btn = this.el.querySelector('.mtk-ready-btn');
             if (!btn) return;
             btn.addEventListener('click', () => {
-                const payload = {
+                wc.publish('mtk-ready:click', {
                     component: 'mtk-ready',
-                    id:        'primary',
-                    action:    this.config.button?.action || null
-                };
-
-                if (typeof window.nalaShowRegister === 'function') {
-                    window.nalaShowRegister();
-                } else if (window.wc && wc.pages && typeof wc.pages.show === 'function') {
-                    wc.pages.show('register');
-                } else {
-                    wc.publish('mtk-ready:click', payload);
-                    return;
-                }
-
-                wc.publish('mtk-ready:click', payload);
+                    id: 'primary',
+                    action: this.config.button?.action || null
+                });
             });
         }
     }
@@ -61,7 +45,9 @@ if (typeof MtkReady === 'undefined') {
         if (initialized) return;
         initialized = true;
         new window.MtkReady(el);
-        wc.publish && wc.publish('mtk-ready:ready', { component: 'mtk-ready' });
+        wc.publish && wc.publish('mtk-ready:ready', {
+            component: 'mtk-ready'
+        });
     };
 
     const existing = document.querySelector('.mtk-ready');
@@ -78,5 +64,8 @@ if (typeof MtkReady === 'undefined') {
         }
     });
 
-    observer.observe(document.documentElement, { childList: true, subtree: true });
+    observer.observe(document.documentElement, {
+        childList: true,
+        subtree: true
+    });
 })();
