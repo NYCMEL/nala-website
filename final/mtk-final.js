@@ -243,6 +243,19 @@ class MtkFinal {
             return 'Certificate request failed';
         }
 
+        const friendlyRateLimitMessage = 'Certifier is rate-limiting requests right now. Please wait a few minutes and try again.';
+
+        const parseMaybeJsonString = (value) => {
+            if (typeof value !== 'string') return null;
+            const trimmed = value.trim();
+            if (!trimmed || (trimmed[0] !== '{' && trimmed[0] !== '[')) return null;
+            try {
+                return JSON.parse(trimmed);
+            } catch (err) {
+                return null;
+            }
+        };
+
         const details = data.details;
         if (typeof details === 'string' && details.trim()) {
             return details;
@@ -250,10 +263,23 @@ class MtkFinal {
 
         if (details && typeof details === 'object') {
             const certifierResponse = details.certifier_response || {};
+            const nestedTopLevel = parseMaybeJsonString(data.error || data.message);
+            const nestedTopLevelError = nestedTopLevel && nestedTopLevel.error ? nestedTopLevel.error : {};
+            const certifierError = certifierResponse.error || nestedTopLevelError || {};
             const certifierErrors = Array.isArray(certifierResponse.errors) ? certifierResponse.errors : [];
             const firstCertifierError = certifierErrors.length ? certifierErrors[0] : null;
+
+            if (
+                certifierError.code === 'rate_limited' ||
+                details.http_code === 429 ||
+                certifierResponse.code === 'rate_limited'
+            ) {
+                return friendlyRateLimitMessage;
+            }
+
             const nestedMessage =
                 certifierResponse.message ||
+                certifierError.message ||
                 certifierResponse.error ||
                 (firstCertifierError && (
                     firstCertifierError.message ||
@@ -295,6 +321,10 @@ class MtkFinal {
         }
 
         const topLevelMessage = data.error || data.message;
+        const nestedTopLevel = parseMaybeJsonString(topLevelMessage);
+        if (nestedTopLevel && nestedTopLevel.error && nestedTopLevel.error.code === 'rate_limited') {
+            return friendlyRateLimitMessage;
+        }
         if (typeof topLevelMessage === 'string' && topLevelMessage.trim()) {
             return topLevelMessage;
         }
