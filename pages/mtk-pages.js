@@ -273,6 +273,39 @@ class Pages extends HTMLElement {
             label: obj.label || page
         });
 
+        // ── i18n: apply translations after page is injected ──────────────
+        // mtk-pages injects <wc-include> via innerHTML which fires include:loaded
+        // asynchronously. We apply multiple deferred passes to ensure all
+        // wc-include fragments (and their nested JS-rendered content) are
+        // fully translated regardless of connection speed.
+        if (window.i18n) {
+            var _i18nTarget = target;
+            var _i18nRebuildEvents = [
+                'carousel:rebuild', 'tiles:rebuild', 'courses:rebuild',
+                'path:rebuild', 'certification:rebuild', 'gift:rebuild', 'final:rebuild'
+            ];
+            function _i18nApply() {
+                window.i18n.applyDOM(_i18nTarget);
+                window.i18n.applyDOM(document);
+                window.i18n.applyAllConfigs();
+                _i18nRebuildEvents.forEach(function(ev) {
+                    document.dispatchEvent(new CustomEvent(ev));
+                });
+            }
+            // Pass 1: after wc-include connectedCallback fires (≈ 1 tick)
+            setTimeout(_i18nApply, 50);
+            // Pass 2: after component polling loops render content
+            setTimeout(_i18nApply, 300);
+            // Pass 3: safety net for slow polling / network
+            setTimeout(_i18nApply, 800);
+            // Pass 4: final sweep
+            setTimeout(function() {
+                window.i18n.applyDOM(document);
+                window.i18n.applyAllConfigs();
+            }, 2000);
+        }
+        // ─────────────────────────────────────────────────────────────────
+
         wc.log("mtk-pages: showing page:", page);
         wc.groupEnd();
         return page;

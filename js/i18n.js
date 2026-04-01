@@ -758,29 +758,6 @@
     var app = global.window && window.app;
     if (!app) return;
 
-    // Hero
-    if (app.hero) {
-      app.hero.forEach(function (h) {
-        h.title       = t('hero.title');
-        h.description = t('hero.description');
-      });
-    }
-
-    // Stats
-    if (app.stats) {
-      var statMap = { students: 'stats.students', placement: 'stats.placement', experience: 'stats.experience' };
-      app.stats.forEach(function (s) {
-        if (statMap[s.id]) s.label = t(statMap[s.id]);
-      });
-    }
-
-    // Ready
-    if (app.ready) {
-      app.ready.title             = t('ready.title');
-      app.ready.description       = t('ready.description');
-      if (app.ready.button) app.ready.button.label = t('ready.cta');
-    }
-
     // Login
     var login = app['mtk-login'];
     if (login) {
@@ -863,6 +840,63 @@
       fin.strings.invalidEmailError = t('final.invalidEmailError');
       fin.strings.mismatchError     = t('final.mismatchError');
       fin.strings.matchConfirmed    = t('final.matchConfirmed');
+    }
+
+    // ── Rebuild JS-rendered component data objects ─────────────────
+    // carousel, tiles, courses, path, certification each have a
+    // _buildXxx() factory that regenerates all translated strings.
+    // Calling them here ensures applyAllConfigs() is a one-stop patch.
+
+    // Carousel slides
+    if (typeof _buildCarouselSlides === 'function' && app.carousel) {
+      app.carousel.slides = _buildCarouselSlides();
+    }
+
+    // Tiles
+    if (typeof _buildTiles === 'function') {
+      app.tiles = _buildTiles();
+    }
+
+    // Courses
+    if (typeof _buildCourses === 'function') {
+      app.courses = _buildCourses();
+    }
+
+    // Path / Pricing plans
+    if (typeof _buildPath === 'function') {
+      app.path = _buildPath();
+    }
+
+    // Certification cards
+    if (typeof _buildCertification === 'function') {
+      app.certification = _buildCertification();
+    }
+
+    // Stats labels
+    if (app.stats) {
+      var statLabelMap = {
+        students:   'stats.students',
+        placement:  'stats.placement',
+        experience: 'stats.experience'
+      };
+      app.stats.forEach(function (s) {
+        if (statLabelMap[s.id]) s.label = t(statLabelMap[s.id]);
+      });
+    }
+
+    // Hero
+    if (app.hero) {
+      app.hero.forEach(function (h) {
+        h.title       = t('hero.title');
+        h.description = t('hero.description');
+      });
+    }
+
+    // Ready
+    if (app.ready) {
+      app.ready.title             = t('ready.title');
+      app.ready.description       = t('ready.description');
+      if (app.ready.button) app.ready.button.label = t('ready.cta');
     }
   }
 
