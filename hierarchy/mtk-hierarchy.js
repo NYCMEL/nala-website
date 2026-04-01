@@ -43,10 +43,13 @@ class MTKHierarchy {
      * Return true if the current logged-in role is registered (unpaid).
      */
     isRegisteredRole() {
-        const role = (typeof wc !== 'undefined' && wc.session && wc.session.user && wc.session.user.role)
-            ? String(wc.session.user.role).toLowerCase()
-            : '';
-        return role === 'registered';
+        const user = (typeof wc !== 'undefined' && wc.session && wc.session.user)
+            ? wc.session.user
+            : null;
+        const role = user && user.role ? String(user.role).toLowerCase() : '';
+        const hasPremium = !!(user && Number(user.has_premium) === 1);
+        const hasBusiness = !!(user && Number(user.has_business_in_a_box) === 1);
+        return role === 'registered' && !hasPremium && !hasBusiness;
     }
 
     /**
@@ -751,10 +754,7 @@ class MTKHierarchy {
      * Enable next lesson or quiz link when current lesson is clicked
      */
     enableNextLessonOrQuiz(moduleId, lessonId) {
-        const role = (wc && wc.session && wc.session.user && wc.session.user.role)
-            ? String(wc.session.user.role).toLowerCase()
-            : '';
-        if (role === 'registered') {
+        if (this.isRegisteredRole()) {
             if (typeof wc !== 'undefined') {
                 wc.log("MTKHierarchy: registered role - skipping client-side unlock of next lesson/quiz");
             }
@@ -851,10 +851,7 @@ class MTKHierarchy {
      * Enable all resources in a lesson when it's expanded
      */
     enableLessonResources(moduleId, lessonId) {
-        const role = (wc && wc.session && wc.session.user && wc.session.user.role)
-            ? String(wc.session.user.role).toLowerCase()
-            : '';
-        if (role === 'registered') {
+        if (this.isRegisteredRole()) {
             if (typeof wc !== 'undefined') {
                 wc.log("MTKHierarchy: registered role - keeping resource access from API payload");
             }
@@ -1036,10 +1033,7 @@ class MTKHierarchy {
      *   window.MTKHierarchy.enableNextModule();
      */
     enableNextModule() {
-        const role = (wc && wc.session && wc.session.user && wc.session.user.role)
-            ? String(wc.session.user.role).toLowerCase()
-            : '';
-        if (role === 'registered') {
+        if (this.isRegisteredRole()) {
             if (typeof wc !== 'undefined') {
                 wc.log("MTKHierarchy: registered role - skipping client-side module unlock");
             }
