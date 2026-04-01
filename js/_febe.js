@@ -3,6 +3,12 @@
 
     window.wc = window.wc || {};
     wc.febe = wc.febe || {};
+    if (wc.febe.__initialized) {
+        return;
+    }
+    wc.febe.__initialized = true;
+
+    let registerRequestInFlight = false;
 
     function getBaseUrl() {
         if (window.app && typeof app.baseUrl === "string" && app.baseUrl) {
@@ -583,6 +589,12 @@
     }
 
     function handleRegisterSubmit(payload) {
+        if (registerRequestInFlight) {
+            return;
+        }
+
+        registerRequestInFlight = true;
+
         apiPost("/api/register.php", payload)
             .then((json) => {
                 showMsg(
@@ -602,6 +614,9 @@
                     timer: 10
                 });
                 console.error(err);
+            })
+            .finally(() => {
+                registerRequestInFlight = false;
             });
     }
 
