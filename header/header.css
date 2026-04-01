@@ -181,3 +181,63 @@ h1.title::after {
 .navbar-nav .nav-link.active:hover,
 .nav-link:hover {
   text-decoration: none; }
+
+/* ── Language Toggle ───────────────────────────────────────────── */
+.nala-lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+}
+.nala-lang-toggle:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.6);
+  border-radius: 20px;
+}
+.nala-lang-toggle .nala-lang-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.12);
+  border: 1.5px solid rgba(255,255,255,0.25);
+  border-radius: 20px;
+  padding: 2px;
+  height: 30px;
+  width: 72px;
+  overflow: hidden;
+  transition: border-color 0.25s;
+}
+.nala-lang-toggle:hover .nala-lang-inner {
+  border-color: rgba(255,255,255,0.55);
+}
+.nala-lang-toggle .nala-lang-option {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.5);
+  padding: 2px 0;
+  transition: color 0.25s;
+  line-height: 1;
+  user-select: none;
+}
+.nala-lang-toggle .nala-lang-option.nala-lang-active {
+  color: #fff;
+}
+.nala-lang-toggle .nala-lang-slider {
+  position: absolute;
+  z-index: 1;
+  left: 2px;
+  top: 2px;
+  bottom: 2px;
+  width: calc(50% - 2px);
+  background: gold;
+  border-radius: 16px;
+  transition: transform 0.25s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+}
