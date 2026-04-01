@@ -53,6 +53,7 @@ class MtkFinal {
         this.populateStrings();
         this.setCurrentEmail();
         this.bindEvents();
+        this.syncFieldStates();
     }
 
     populateStrings(){
@@ -97,10 +98,71 @@ class MtkFinal {
             radio.addEventListener('change', e => this.onRadioChange(e));
         });
 
+        const options = this.root.querySelectorAll('.mtk-final__option');
+        options.forEach((option) => {
+            option.addEventListener('click', () => {
+                const radio = option.querySelector('.mtk-final__radio');
+                if (!radio) return;
+                radio.checked = true;
+                this.onRadioChange({ target: radio });
+            });
+        });
+
+        const fields = this.root.querySelectorAll('.mtk-final__field');
+        fields.forEach((field) => {
+            const input = field.querySelector('.mtk-final__field-input');
+            const toggle = field.querySelector('.mtk-final__field-action');
+            if (!input) return;
+
+            const sync = () => this.updateFieldState(field, input);
+
+            input.addEventListener('focus', sync);
+            input.addEventListener('blur', sync);
+            input.addEventListener('input', sync);
+            input.addEventListener('change', sync);
+
+            if (toggle) {
+                toggle.addEventListener('click', () => {
+                    input.type = input.type === 'password' ? 'text' : 'password';
+                    const icon = toggle.querySelector('.material-icons');
+                    if (icon) {
+                        icon.textContent = input.type === 'password' ? 'visibility' : 'visibility_off';
+                    }
+                    input.focus();
+                    sync();
+                });
+            }
+        });
+
         const form = this.root.querySelector('.mtk-final__form');
         if (form) {
             form.addEventListener('submit', e => this.onSubmit(e));
         }
+    }
+
+    syncFieldStates(){
+        const selected = this.root.querySelector(`.mtk-final__radio[value="${this.choice}"]`);
+        if (selected) {
+            this.onRadioChange({ target: selected });
+        }
+
+        const fields = this.root.querySelectorAll('.mtk-final__field');
+        fields.forEach((field) => {
+            const input = field.querySelector('.mtk-final__field-input');
+            if (!input) return;
+            this.updateFieldState(field, input);
+        });
+    }
+
+    updateFieldState(field, input){
+        const label = field.querySelector('.mtk-final__field-label');
+        if (!label) return;
+
+        const hasValue = !!String(input.value || '').trim();
+        const isFocused = document.activeElement === input;
+
+        label.classList.toggle('mtk-final__field-label--float', hasValue || isFocused);
+        label.classList.toggle('mtk-final__field-label--focused', isFocused);
     }
 
     onRadioChange(e){
@@ -109,11 +171,29 @@ class MtkFinal {
 
         const panel = this.root.querySelector('#mtk-new-email-panel');
         if (!panel) return;
+        const options = this.root.querySelectorAll('.mtk-final__option');
+        options.forEach((option) => {
+            const radio = option.querySelector('.mtk-final__radio');
+            option.classList.toggle('mtk-final__option--selected', !!(radio && radio.value === value));
+        });
+
+        const inputs = panel.querySelectorAll('.mtk-final__field-input');
+        const actions = panel.querySelectorAll('.mtk-final__field-action');
 
         if (value === 'new') {
             panel.classList.add('mtk-final__new-email-panel--open');
+            panel.setAttribute('aria-hidden', 'false');
+            inputs.forEach((input) => input.removeAttribute('tabindex'));
+            actions.forEach((action) => action.removeAttribute('tabindex'));
+            setTimeout(() => {
+                const firstInput = panel.querySelector('#mtk-input-email1');
+                if (firstInput) firstInput.focus();
+            }, 50);
         } else {
             panel.classList.remove('mtk-final__new-email-panel--open');
+            panel.setAttribute('aria-hidden', 'true');
+            inputs.forEach((input) => input.setAttribute('tabindex', '-1'));
+            actions.forEach((action) => action.setAttribute('tabindex', '-1'));
         }
     }
 
