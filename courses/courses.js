@@ -6,7 +6,7 @@
                 clearInterval(interval);
                 callback(el);
             }
-        }, 500);
+        }, 50);
     }
 
     function waitForData(callback) {
@@ -18,71 +18,76 @@
         }, 50);
     }
 
-    ready("#MTK-courses", function (root) {
-        waitForData(function (data) {
-            try {
-                var container = root.querySelector(".container");
-                if (!container) return;
-                container.innerHTML = "";
+    function renderCourses(container, data) {
+        try {
+            container.innerHTML = "";
 
-                var header = document.createElement("div");
-                header.className = "text-center";
+            var header = document.createElement("div");
+            header.className = "text-center";
+            header.innerHTML =
+                "<h2>" + data.title + "</h2>" +
+                "<p class='mtk-description'>" + data.description + "</p>";
+            container.appendChild(header);
 
-                header.innerHTML =
-                    "<h2>" + data.title + "</h2>" +
-                    "<p class='mtk-description'>" + data.description + "</p>";
+            var row = document.createElement("div");
+            row.className = "row g-4";
 
-                container.appendChild(header);
+            data.items.forEach(function (item) {
+                var col = document.createElement("div");
+                col.className = "col-12 col-md-4";
 
-                var row = document.createElement("div");
-                row.className = "row g-4";
+                var features = item.features.map(function (f) {
+                    return "<li>" + f + "</li>";
+                }).join("");
 
-                data.items.forEach(function (item) {
-                    var col = document.createElement("div");
-                    col.className = "col-12 col-md-4";
+                col.innerHTML =
+                    "<div class='course-card'>" +
+                        "<span class='course-level'>" + item.level + "</span>" +
+                        "<div class='course-title'>" + item.title + "</div>" +
+                        "<div class='course-description'>" + item.description + "</div>" +
+                        "<ul class='course-features'>" + features + "</ul>" +
+                        "<div class='course-cta'>" +
+                            "<button class='btn btn-primary btn-ripple w-100' data-event='" + item.cta.event + "'>" +
+                                item.cta.label +
+                            "</button>" +
+                        "</div>" +
+                    "</div>";
 
-                    var features = item.features.map(function (f) {
-                        return "<li>" + f + "</li>";
-                    }).join("");
+                row.appendChild(col);
+            });
 
-                    col.innerHTML =
-                        "<div class='course-card'>" +
-                            "<span class='course-level'>" + item.level + "</span>" +
-                            "<div class='course-title'>" + item.title + "</div>" +
-                            "<div class='course-description'>" + item.description + "</div>" +
-                            "<ul class='course-features'>" + features + "</ul>" +
-                            "<div class='course-cta'>" +
-                                "<button class='btn btn-primary btn-ripple w-100' data-event='" + item.cta.event + "'>" +
-                                    item.cta.label +
-                                "</button>" +
-                            "</div>" +
-                        "</div>";
+            container.appendChild(row);
 
-                    row.appendChild(col);
+            var footer = document.createElement("div");
+            footer.className = "view-all";
+            container.appendChild(footer);
+
+            container.onclick = function (e) {
+                var target = e.target.closest("[data-event]");
+                if (!target) return;
+                e.preventDefault();
+                var msg = "mtk-courses:click"; wc.log(msg);
+                wc.publish(msg, {
+                    event: target.getAttribute("data-event") || ""
                 });
+            };
+        } catch (err) {
+            console.error("MTK-courses render error", err);
+        }
+    }
 
-                container.appendChild(row);
+    ready("#MTK-courses", function (root) {
+        var container = root.querySelector(".container");
+        if (!container) return;
 
-                var footer = document.createElement("div");
-                footer.className = "view-all";
+        waitForData(function (data) {
+            renderCourses(container, data);
+        });
 
-                // footer.innerHTML = "<button class='btn btn-outline-primary' data-event='" + data.cta.event + "'>" + data.cta.label + "</button>";
-
-                container.appendChild(footer);
-
-                container.onclick = function (e) {
-                    var target = e.target.closest("[data-event]");
-                    if (!target) return;
-
-                    e.preventDefault();
-
-		    let msg = "mtk-courses:click"; wc.log(msg);
-		    wc.publish(msg, {
-                        event: target.getAttribute("data-event") || ""
-                    });
-                };
-            } catch (err) {
-                console.error("MTK-courses render error", err);
+        // Re-render when language changes (courses:rebuild fired by courses.config.js)
+        document.addEventListener('courses:rebuild', function () {
+            if (window.app && window.app.courses) {
+                renderCourses(container, window.app.courses);
             }
         });
     });

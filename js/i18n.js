@@ -883,7 +883,6 @@
     applyDOM();
 
     // 2. Translate every already-injected <wc-include> fragment.
-    //    wc-include injects HTML inside itself, so each element IS the fragment root.
     document.querySelectorAll('wc-include').forEach(function (el) {
       applyDOM(el);
     });
@@ -891,8 +890,21 @@
     // 3. Re-patch all window.app.* config objects
     applyAllConfigs();
 
-    // 4. Fire event so components can re-render (tiles, courses, carousel, etc.)
+    // 4. Fire i18n:changed so config listeners rebuild their data objects
     document.dispatchEvent(new CustomEvent('i18n:changed', { detail: { lang: lang } }));
+
+    // 5. After config listeners have rebuilt data, fire component rebuild events
+    //    so JS-rendered content (slides, tiles, cards, plans) fully redraws.
+    setTimeout(function () {
+      applyDOM();
+      var rebuildEvents = [
+        'carousel:rebuild', 'tiles:rebuild', 'courses:rebuild',
+        'path:rebuild', 'certification:rebuild', 'gift:rebuild', 'final:rebuild'
+      ];
+      rebuildEvents.forEach(function (evtName) {
+        document.dispatchEvent(new CustomEvent(evtName));
+      });
+    }, 50);
   }
 
   /**
@@ -932,18 +944,53 @@
     if (!fragment) return;
 
     // --- Pass 1: immediate ---
-    // Translate data-i18n nodes that are already in the injected HTML.
+    // Translate data-i18n nodes already present in the injected HTML.
     applyDOM(fragment);
 
-    // --- Pass 2: deferred (50 ms) ---
-    // Inline <script> tags inside the fragment execute synchronously as
-    // jQuery inserts each node, but config objects (window.app.carousel,
-    // window.app.tiles, etc.) may set their values AFTER include:loaded
-    // fires.  A short defer lets those scripts finish before we patch them.
+    // --- Pass 2: deferred (150 ms) ---
+    // Component scripts (carousel.js, tile.js, courses.js, path.js, etc.)
+    // use polling loops / waitFor that resolve asynchronously AFTER
+    // include:loaded fires.  We wait long enough for those renders to
+    // finish, then rebuild configs + fire component rebuild events.
     setTimeout(function () {
-      applyDOM(fragment);      // re-translate any nodes added by the scripts
-      applyAllConfigs();       // patch every window.app.* config object
-    }, 50);
+      // 1. Rebuild all config objects with current language strings
+      applyAllConfigs();
+
+      // 2. Re-translate data-i18n nodes (static HTML + any injected by scripts)
+      applyDOM(fragment);
+      applyDOM(document);
+
+      // 3. Fire per-component rebuild events so JS-rendered content redraws
+      var rebuildEvents = [
+        'carousel:rebuild', 'tiles:rebuild', 'courses:rebuild',
+        'path:rebuild', 'certification:rebuild', 'gift:rebuild', 'final:rebuild'
+      ];
+      rebuildEvents.forEach(function (evtName) {
+        document.dispatchEvent(new CustomEvent(evtName));
+      });
+    }, 150);
+
+    // --- Pass 3: safety net (600 ms) ---
+    // A second sweep catches components whose polling loops (e.g. waitFor 500ms
+    // in courses.js) haven't resolved yet at 150 ms.
+    setTimeout(function () {
+      applyAllConfigs();
+      applyDOM(document);
+      var rebuildEvents = [
+        'carousel:rebuild', 'tiles:rebuild', 'courses:rebuild',
+        'path:rebuild', 'certification:rebuild', 'gift:rebuild', 'final:rebuild'
+      ];
+      rebuildEvents.forEach(function (evtName) {
+        document.dispatchEvent(new CustomEvent(evtName));
+      });
+    }, 600);
+
+    // --- Pass 4: final safety net (1500 ms) ---
+    // Handles any components on slow connections or that use long poll intervals.
+    setTimeout(function () {
+      applyAllConfigs();
+      applyDOM(document);
+    }, 1500);
   });
 
   // ── MutationObserver safety net ────────────────────────────────
