@@ -226,6 +226,34 @@ class MtkFinal {
         return emailInput ? emailInput.value.trim() : '';
     }
 
+    getConfirmEmail(){
+        const emailInput = this.root.querySelector('#mtk-input-email2');
+        return emailInput ? emailInput.value.trim() : '';
+    }
+
+    validateNewEmailSelection(){
+        if (this.choice !== 'new') {
+            return;
+        }
+
+        const strings = this.config && this.config.strings ? this.config.strings : {};
+        const email = this.getEmail();
+        const confirmEmail = this.getConfirmEmail();
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!email || !confirmEmail) {
+            throw new Error(strings.requiredError || 'This field is required.');
+        }
+
+        if (!emailPattern.test(email) || !emailPattern.test(confirmEmail)) {
+            throw new Error(strings.invalidEmailError || 'Please enter a valid email address.');
+        }
+
+        if (email.toLowerCase() !== confirmEmail.toLowerCase()) {
+            throw new Error(strings.mismatchError || 'Email addresses do not match.');
+        }
+    }
+
     getUserName(){
         if (window.wc && wc.session && wc.session.user) {
             if (wc.session.user.name) {
@@ -372,6 +400,8 @@ class MtkFinal {
         try {
             const email = this.getEmail();
             const name = this.getUserName();
+
+            this.validateNewEmailSelection();
 
             if (!email) {
                 throw new Error('Missing certificate email');
