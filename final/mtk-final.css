@@ -566,7 +566,7 @@ h1.title::after {
   font-size: 12px;
   font-weight: 600;
   padding: 4px 12px;
-  border-radius: 9999px;
+  border-radius: 0px;
   margin-top: 10px;
   opacity: 0;
   transform: translateY(4px);

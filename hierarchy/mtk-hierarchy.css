@@ -199,52 +199,6 @@ h1.title::after {
   display: flex;
   flex-direction: column; }
 
-.mtk-hierarchy .mtk-hierarchy__result {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  margin: 0 0 16px;
-  padding: 16px 18px;
-  border-radius: 12px;
-  border-left: 4px solid var(--mtk-primary);
-  background: rgba(25, 118, 210, 0.1);
-  color: var(--mtk-text-primary);
-  box-shadow: var(--mtk-shadow-1); }
-
-.mtk-hierarchy .mtk-hierarchy__result--success {
-  border-left-color: var(--mtk-success);
-  background: rgba(76, 175, 80, 0.12); }
-
-.mtk-hierarchy .mtk-hierarchy__result--info {
-  border-left-color: var(--mtk-primary);
-  background: rgba(25, 118, 210, 0.1); }
-
-.mtk-hierarchy .mtk-hierarchy__result-body {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  min-width: 0; }
-
-.mtk-hierarchy .mtk-hierarchy__result-icon {
-  color: inherit;
-  flex-shrink: 0; }
-
-.mtk-hierarchy .mtk-hierarchy__result-text {
-  font-size: 15px;
-  line-height: 1.5; }
-
-.mtk-hierarchy .mtk-hierarchy__result-close {
-  border: 0;
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
-  padding: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0; }
-
 .mtk-hierarchy .mtk-hierarchy__row {
   flex: 1 1 auto;
   min-height: 0;
@@ -612,94 +566,34 @@ h1.title::after {
   height: 100%;
   border: none; }
 
-.mtk-hierarchy .mtk-images-section {
-  margin-top: 1.75rem; }
-
-.mtk-hierarchy .mtk-images-section__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem; }
-
-.mtk-hierarchy .mtk-images-section__title {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: var(--mtk-text-primary); }
-
-.mtk-hierarchy .mtk-images-section__count {
-  min-width: 2rem;
-  height: 2rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 0.65rem;
-  border-radius: 999px;
-  background: #f2e2ad;
-  color: #332200;
-  font-size: 0.75rem;
-  font-weight: 700;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08); }
-
 .mtk-hierarchy .mtk-images-gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1rem;
-  margin-top: 0; }
+  margin-top: 1.5rem; }
 
 .mtk-hierarchy .mtk-image-item {
   position: relative;
-  margin: 0;
-  border-radius: 14px;
+  border-radius: 4px;
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  box-shadow: 0 16px 32px rgba(17, 17, 17, 0.08);
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-  background: #fff; }
+  box-shadow: var(--mtk-shadow-1);
+  transition: var(--mtk-transition);
+  background-color: var(--mtk-surface); }
 
 .mtk-hierarchy .mtk-image-item:hover {
-  transform: translateY(-3px);
-  border-color: rgba(0, 0, 0, 0.22);
-  box-shadow: 0 20px 40px rgba(17, 17, 17, 0.12); }
-
-.mtk-hierarchy .mtk-image-item__media {
-  position: relative;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  background: #f8f8f8; }
+  box-shadow: var(--mtk-shadow-2);
+  transform: translateY(-2px); }
 
 .mtk-hierarchy .mtk-image-item img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
   display: block; }
 
-.mtk-hierarchy .mtk-image-item__caption {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  padding: 0.9rem 1rem 1rem;
-  background: #fff; }
-
-.mtk-hierarchy .mtk-image-item__label {
-  display: inline-flex;
-  width: fit-content;
-  align-items: center;
-  padding: 0.2rem 0.55rem;
-  border-radius: 999px;
-  background: #111;
-  color: #fff;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase; }
-
-.mtk-hierarchy .mtk-image-item__text {
-  font-size: 0.875rem;
-  line-height: 1.5;
-  color: var(--mtk-text-secondary); }
+.mtk-hierarchy .mtk-image-item .mtk-image-item__caption {
+  padding: 0.75rem;
+  font-size: 0.813rem;
+  color: var(--mtk-text-secondary);
+  background-color: var(--mtk-surface); }
 
 .mtk-hierarchy.mtk-hierarchy--loading {
   opacity: 0.6;
@@ -713,8 +607,5 @@ h1.title::after {
     height: auto;
     min-height: 400px;
     margin-bottom: 1rem; }
-  .mtk-hierarchy .mtk-images-section__header {
-    align-items: flex-start;
-    flex-direction: column; }
   .mtk-hierarchy .mtk-images-gallery {
     grid-template-columns: 1fr; } }

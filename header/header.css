@@ -166,5 +166,18 @@ h1.title::after {
   background-color: gold;
   transform: translateX(-50%); }
 
+.navbar-nav .nav-link,
+.navbar-nav .nav-link.active,
+.nav-link {
+  border-bottom: 2px transparent solid !important; }
+
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link.active.active,
 .nav-link.active {
-  color: gold !important; }
+  border-radius: 0 !important;
+  border-bottom: 2px gold solid !important; }
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active:hover,
+.nav-link:hover {
+  text-decoration: none; }
