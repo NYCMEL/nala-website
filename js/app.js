@@ -121,6 +121,8 @@ document.addEventListener("click", function (e) {
 })();
 
 // localhot. CHANGE BROWSER TITLE
-if (document.location.protocol == "http:") {
-    document.title = "NALA - Local";
+if (0) {
+    if (document.location.protocol == "http:") {
+	document.title = "NALA - Local";
+    }
 }
