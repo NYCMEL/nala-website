@@ -490,7 +490,7 @@ h1.title::after {
   white-space: nowrap; }
 
 .mtk-final__field-label--float {
-  top: 0;
+  top: 8px;
   transform: translateY(-50%) scale(0.78);
   font-size: 15px;
   transform-origin: left center; }
