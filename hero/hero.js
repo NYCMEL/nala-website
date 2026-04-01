@@ -38,12 +38,19 @@
         const lhsTitle = document.querySelector("#MTK-hero .MTK-hero-title");
         const lhsDesc  = document.querySelector("#MTK-hero .MTK-hero-description");
         const rhsImg   = document.querySelector("#MTK-hero .MTK-hero-img");
-        const ctaBtn   = document.querySelector("#MTK-hero .btn.btn-primary");
+        // Match button by both classes to be precise
+        const ctaBtn   = document.querySelector("#MTK-hero .btn.btn-primary") ||
+                         document.querySelector("#MTK-hero button");
 
         if (lhsTitle) lhsTitle.textContent = heroData.title;
         if (lhsDesc)  lhsDesc.textContent  = heroData.description;
         if (rhsImg)   rhsImg.src           = heroData.image;
-        // CTA button text is handled by data-i18n="hero.cta" — don't overwrite
+        // Use config.cta (already i18n-resolved at config load time),
+        // with i18n.t() as live fallback for language switches
+        if (ctaBtn) {
+            ctaBtn.textContent = heroData.cta ||
+                (window.i18n ? window.i18n.t('hero.cta') : 'Get Started');
+        }
     }
 
     function renderHero(container, heroData) {
@@ -58,7 +65,7 @@
                 <div class="MTK-hero-card" style="background:transparent">
                     <h1 class="MTK-hero-title animate-fade-up">${heroData.title}</h1>
                     <p class="MTK-hero-description animate-fade-up">${heroData.description}</p>
-                    <button class="btn btn-primary" data-i18n="hero.cta">${window.i18n ? window.i18n.t('hero.cta') : 'Get Started'}</button>
+                    <button class="btn btn-primary" data-i18n="hero.cta">${heroData.cta || (window.i18n ? window.i18n.t('hero.cta') : 'Get Started')}</button>
                 </div>
             </div>
             <div class="MTK-hero-rhs col-md-${heroData.rhsCol} text-center">

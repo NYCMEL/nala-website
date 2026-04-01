@@ -889,7 +889,12 @@
       app.hero.forEach(function (h) {
         h.title       = t('hero.title');
         h.description = t('hero.description');
+        h.cta         = t('hero.cta');
       });
+      // Re-apply hero data to DOM immediately after patching config
+      var heroBtn = document.querySelector('#MTK-hero .btn.btn-primary') ||
+                    document.querySelector('#MTK-hero button');
+      if (heroBtn) heroBtn.textContent = t('hero.cta');
     }
 
     // Ready
