@@ -1,5 +1,16 @@
 @import "../css/nala.scss";
 
-.nav-link.active {
-  color: $color-gold !important;
+.navbar-nav .nav-link,
+.navbar-nav .nav-link.active,
+.nav-link {
+    border-bottom: 2px transparent solid!important;
+
+    &.active {
+	border-radius: 0!important;
+	border-bottom: 2px $color-gold solid!important;
+    }
+
+    &:hover {
+	text-decoration: none;
+    }
 }
