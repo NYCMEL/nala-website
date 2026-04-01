@@ -302,7 +302,7 @@ class MtkFinal {
         return 'Certificate request failed';
     }
 
-    async issueCertificate(email, name){
+    async issueCertificate(email, name, options = {}){
         const res = await fetch(CONFIG.apiEndpoint, {
             method: 'POST',
             credentials: 'include',
@@ -311,7 +311,8 @@ class MtkFinal {
             },
             body: JSON.stringify({
                 email: email,
-                name: name
+                name: name,
+                forceResend: !!options.forceResend
             })
         });
 
@@ -325,7 +326,10 @@ class MtkFinal {
         }
 
         if (!res.ok || data.error) {
-            throw new Error(this.extractErrorMessage(data));
+            const err = new Error(this.extractErrorMessage(data));
+            err.certificateData = data;
+            err.httpStatus = res.status;
+            throw err;
         }
 
         return data;
@@ -343,9 +347,28 @@ class MtkFinal {
                 throw new Error('Missing certificate email');
             }
 
-            const result = await this.issueCertificate(email, name);
+            let result;
 
-            if (result.alreadyIssued) {
+            try {
+                result = await this.issueCertificate(email, name);
+            } catch (err) {
+                const data = err && err.certificateData ? err.certificateData : null;
+                if (data && data.canResend) {
+                    const confirmed = window.confirm(`A certificate has already been issued to ${email}. Do you want to resend it?`);
+                    if (!confirmed) {
+                        return null;
+                    }
+                    result = await this.issueCertificate(email, name, { forceResend: true });
+                } else {
+                    throw err;
+                }
+            }
+
+            if (result.resent) {
+                this.showPersistentNotice(
+                    `Your certificate was re-sent to ${email}. If you do not receive it within a few minutes, please check your spam folder.`
+                );
+            } else if (result.alreadyIssued) {
                 this.showPersistentNotice(
                     `A certificate has already been sent to ${email}. Please check your inbox and spam folder.`
                 );
