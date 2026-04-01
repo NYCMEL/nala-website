@@ -21,12 +21,28 @@ if (typeof MtkSettings === 'undefined') {
             this.init();
 	}
 
+	// i18n helper — safe at any point in lifecycle
+	_t(key) {
+            return window.i18n ? window.i18n.t(key) : key;
+	}
+
 	async init() {
             await this.waitForElement();
             this.loadConfig();
             this.cacheElements();
             this.setup();
             this.subscribeToEvents();
+
+            // Re-apply labels when language changes
+            document.addEventListener('i18n:changed', () => {
+		if (this.elements && this.elements.title) {
+                    const cfg = this.config && this.config.labels;
+                    if (cfg && cfg.title) {
+			// config was already patched by mtk-settings.config.js i18n:changed listener
+			this.elements.title.textContent = this._t('settings.title');
+                    }
+		}
+            });
 
             wc.log('mtk-settings component initialized', { config: this.config });
 	}
@@ -73,7 +89,7 @@ if (typeof MtkSettings === 'undefined') {
 			currentPassword: ''
                     },
                     labels: {
-			title: 'Profile Settings'
+			title: this._t('settings.title')
                     },
                     validation: {
 			passwordMinLength: 8,
@@ -90,28 +106,28 @@ if (typeof MtkSettings === 'undefined') {
 
             this.elements = {
 		root,
-		title: root.querySelector('#mtk-settings-title'),
-		fullName: root.querySelector('#mtk-settings-fullname'),
-		email: root.querySelector('#mtk-settings-email'),
-		currentPassword: root.querySelector('#mtk-settings-current-password'),
-		toggleCurrentPassword: root.querySelector('#mtk-settings-toggle-current-password'),
-		updateBtn: root.querySelector('#mtk-settings-update-btn'),
-		newPasswordGroup: root.querySelector('#mtk-settings-new-password-group'),
-		newPassword: root.querySelector('#mtk-settings-new-password'),
-		toggleNewPassword: root.querySelector('#mtk-settings-toggle-new-password'),
-		newPasswordError: root.querySelector('#mtk-settings-new-password-error'),
-		newPasswordErrorText: root.querySelector('#mtk-settings-new-password-error-text'),
-		confirmPasswordGroup: root.querySelector('#mtk-settings-confirm-password-group'),
-		confirmPassword: root.querySelector('#mtk-settings-confirm-password'),
-		toggleConfirmPassword: root.querySelector('#mtk-settings-toggle-confirm-password'),
-		confirmPasswordError: root.querySelector('#mtk-settings-confirm-password-error'),
+		title:                    root.querySelector('#mtk-settings-title'),
+		fullName:                 root.querySelector('#mtk-settings-fullname'),
+		email:                    root.querySelector('#mtk-settings-email'),
+		currentPassword:          root.querySelector('#mtk-settings-current-password'),
+		toggleCurrentPassword:    root.querySelector('#mtk-settings-toggle-current-password'),
+		updateBtn:                root.querySelector('#mtk-settings-update-btn'),
+		newPasswordGroup:         root.querySelector('#mtk-settings-new-password-group'),
+		newPassword:              root.querySelector('#mtk-settings-new-password'),
+		toggleNewPassword:        root.querySelector('#mtk-settings-toggle-new-password'),
+		newPasswordError:         root.querySelector('#mtk-settings-new-password-error'),
+		newPasswordErrorText:     root.querySelector('#mtk-settings-new-password-error-text'),
+		confirmPasswordGroup:     root.querySelector('#mtk-settings-confirm-password-group'),
+		confirmPassword:          root.querySelector('#mtk-settings-confirm-password'),
+		toggleConfirmPassword:    root.querySelector('#mtk-settings-toggle-confirm-password'),
+		confirmPasswordError:     root.querySelector('#mtk-settings-confirm-password-error'),
 		confirmPasswordErrorText: root.querySelector('#mtk-settings-confirm-password-error-text'),
-		passwordStrength: root.querySelector('#mtk-settings-password-strength'),
-		passwordStrengthText: root.querySelector('#mtk-settings-password-strength-text'),
-		passwordStrengthFill: root.querySelector('#mtk-settings-password-strength-fill'),
-		saveActions: root.querySelector('#mtk-settings-save-actions'),
-		saveBtn: root.querySelector('#mtk-settings-save-btn'),
-		cancelBtn: root.querySelector('#mtk-settings-cancel-btn')
+		passwordStrength:         root.querySelector('#mtk-settings-password-strength'),
+		passwordStrengthText:     root.querySelector('#mtk-settings-password-strength-text'),
+		passwordStrengthFill:     root.querySelector('#mtk-settings-password-strength-fill'),
+		saveActions:              root.querySelector('#mtk-settings-save-actions'),
+		saveBtn:                  root.querySelector('#mtk-settings-save-btn'),
+		cancelBtn:                root.querySelector('#mtk-settings-cancel-btn')
             };
 	}
 
@@ -121,7 +137,7 @@ if (typeof MtkSettings === 'undefined') {
             }
 
             this.elements.fullName.value = this.formatFullName();
-            this.elements.email.value = this.config.user.email || '';
+            this.elements.email.value    = this.config.user.email || '';
 
             if (this.config.user.currentPassword) {
 		this.elements.currentPassword.value =
@@ -145,14 +161,14 @@ if (typeof MtkSettings === 'undefined') {
 
 	attachEventListeners() {
             this.elements.updateBtn.addEventListener('click', () => this.sendResetLink());
-            this.elements.saveBtn.addEventListener('click', () => this.sendResetLink());
+            this.elements.saveBtn.addEventListener('click',   () => this.sendResetLink());
             this.elements.cancelBtn.addEventListener('click', () => this.exitEditMode());
 	}
 
 	enterEditMode() {
             this.state.editMode = true;
             this.elements.currentPassword.disabled = false;
-            this.elements.currentPassword.value = '';
+            this.elements.currentPassword.value    = '';
             this.elements.newPasswordGroup.classList.remove('mtk-settings__hidden');
             this.elements.confirmPasswordGroup.classList.remove('mtk-settings__hidden');
             this.elements.updateBtn.classList.add('mtk-settings__hidden');
@@ -162,30 +178,34 @@ if (typeof MtkSettings === 'undefined') {
 	exitEditMode() {
             this.state.editMode = false;
             this.elements.currentPassword.disabled = true;
-            this.elements.currentPassword.value =
+            this.elements.currentPassword.value    =
 		this.maskPassword(this.config.user.currentPassword);
             this.elements.newPasswordGroup.classList.add('mtk-settings__hidden');
             this.elements.confirmPasswordGroup.classList.add('mtk-settings__hidden');
-            this.elements.newPassword.value = '';
+            this.elements.newPassword.value    = '';
             this.elements.confirmPassword.value = '';
             this.elements.updateBtn.classList.remove('mtk-settings__hidden');
             this.elements.saveActions.classList.add('mtk-settings__hidden');
 	}
 
 	validatePassword(password) {
-            const v = this.config.validation;
+            const v  = this.config.validation;
+            const _t = this._t.bind(this);
 
             if (password.length < v.passwordMinLength)
-		return { valid: false, message: `Minimum ${v.passwordMinLength} characters` };
+		return {
+                    valid: false,
+                    message: _t('settings.error.minLength').replace('{n}', v.passwordMinLength)
+		};
 
             if (v.passwordRequireUppercase && !/[A-Z]/.test(password))
-		return { valid: false, message: 'Must contain uppercase letter' };
+		return { valid: false, message: _t('settings.error.uppercase') };
 
             if (v.passwordRequireLowercase && !/[a-z]/.test(password))
-		return { valid: false, message: 'Must contain lowercase letter' };
+		return { valid: false, message: _t('settings.error.lowercase') };
 
             if (v.passwordRequireNumber && !/[0-9]/.test(password))
-		return { valid: false, message: 'Must contain number' };
+		return { valid: false, message: _t('settings.error.number') };
 
             return { valid: true };
 	}
@@ -197,11 +217,11 @@ if (typeof MtkSettings === 'undefined') {
         showMessage(type, message) {
             if (typeof MTKMsgs !== 'undefined' && MTKMsgs.show) {
                 MTKMsgs.show({
-                    type: type,
-                    icon: type === 'success' ? 'success' : 'error',
-                    message: message,
+                    type:     type,
+                    icon:     type === 'success' ? 'success' : 'error',
+                    message:  message,
                     closable: true,
-                    timer: 10
+                    timer:    10
                 });
                 return;
             }
@@ -213,39 +233,41 @@ if (typeof MtkSettings === 'undefined') {
         }
 
         sendResetLink() {
+            const _t      = this._t.bind(this);
             const emailEl = this.elements && this.elements.email ? this.elements.email : null;
-            const email = String(emailEl ? emailEl.value : '').trim().toLowerCase();
+            const email   = String(emailEl ? emailEl.value : '').trim().toLowerCase();
+
             if (!email) {
-                this.showMessage('error', 'No account email found for password reset.');
+                this.showMessage('error', _t('settings.error.noEmail'));
                 return;
             }
 
             fetch(wc.apiURL + '/api/forgot_password.php', {
-                method: 'POST',
+                method:      'POST',
                 credentials: 'include',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email })
+                headers:     { 'Content-Type': 'application/json' },
+                body:        JSON.stringify({ email: email })
             }).then(async (res) => {
                 const json = await res.json().catch(() => ({}));
                 if (!res.ok) {
-                    throw new Error((json && (json.error || json.message)) || 'Could not send reset link.');
+                    throw new Error((json && (json.error || json.message)) || _t('settings.error.resetFail'));
                 }
                 return json;
             }).then(() => {
-                this.showMessage('success', 'Password reset email sent. Please check your inbox.');
+                this.showMessage('success', _t('settings.success.reset'));
                 wc.publish('4-mtk-settings', {
-                    action: 'password_reset_link_sent',
-                    success: true,
-                    email: email,
+                    action:    'password_reset_link_sent',
+                    success:   true,
+                    email:     email,
                     timestamp: new Date().toISOString()
                 });
                 this.exitEditMode();
             }).catch((err) => {
-                this.showMessage('error', err.message || 'Could not send reset link.');
+                this.showMessage('error', err.message || _t('settings.error.resetFail'));
                 wc.publish('4-mtk-settings', {
-                    action: 'password_reset_link_sent',
-                    success: false,
-                    email: email,
+                    action:    'password_reset_link_sent',
+                    success:   false,
+                    email:     email,
                     timestamp: new Date().toISOString()
                 });
             });
@@ -277,8 +299,8 @@ if (typeof MtkSettings === 'undefined') {
             new MtkSettings(); // uses window.mtkSettingsConfig
 	} else {
 	    mtkSettingsConfig.user.firstName = wc.session.user.name;
-	    mtkSettingsConfig.user.email = wc.session.user.email;
-	    
+	    mtkSettingsConfig.user.email     = wc.session.user.email;
+
             // must provide config in production
             new MtkSettings(mtkSettingsConfig);
 	}
