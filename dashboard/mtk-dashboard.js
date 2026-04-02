@@ -1,4 +1,10 @@
 (function () {
+    function _t(key, fallback) {
+        if (!window.i18n || typeof window.i18n.t !== 'function') return fallback;
+        const value = window.i18n.t(key);
+        return value === key ? fallback : value;
+    }
+
     class MTKDashboard {
         constructor(config) {
             this.config = config || {};
@@ -341,8 +347,8 @@
 
     window.myConfig = JSON.parse(JSON.stringify(window.mtkDashboardConfig || {
         user: { fullName: 'User' },
-        progress: { label: 'Your progress to date:', percentage: 0, courseTitle: 'NALA - Locksmith Course' },
-        subscriptions: { title: 'Choose your next step:', options: [] }
+        progress: { label: _t('dashboard.progress.label', 'Your progress to date:'), percentage: 0, courseTitle: _t('dashboard.course.title', 'NALA - Locksmith Course') },
+        subscriptions: { title: _t('dashboard.chooseNext', 'Choose your next step:'), options: [] }
     }));
 
     function getDashboardPurchaseOptions() {
@@ -352,22 +358,22 @@
 
         if (hasBusiness) {
             return {
-                title: 'Your active products',
+                title: _t('dashboard.activeProducts', 'Your active products'),
                 options: [
                     {
                         id: 'active-premium',
                         icon: 'school',
-                        title: 'Premium',
-                        description: 'Your Premium locksmith training access is active.',
-                        price: 'Active',
+                        title: _t('dashboard.option.premium.title', 'Premium'),
+                        description: _t('dashboard.option.premium.active', 'Your Premium locksmith training access is active.'),
+                        price: _t('dashboard.price.active', 'Active'),
                         clickable: false
                     },
                     {
                         id: 'active-business-in-a-box',
                         icon: 'work',
-                        title: 'Business in a Box',
-                        description: 'Your Business in a Box package is active.',
-                        price: 'Active',
+                        title: _t('dashboard.option.business.title', 'Business in a Box'),
+                        description: _t('dashboard.option.business.active', 'Your Business in a Box package is active.'),
+                        price: _t('dashboard.price.active', 'Active'),
                         clickable: false
                     }
                 ]
@@ -376,21 +382,21 @@
 
         if (hasPremium) {
             return {
-                title: 'Your active products',
+                title: _t('dashboard.activeProducts', 'Your active products'),
                 options: [
                     {
                         id: 'active-premium',
                         icon: 'school',
-                        title: 'Premium',
-                        description: 'Your Premium locksmith training access is active.',
-                        price: 'Active',
+                        title: _t('dashboard.option.premium.title', 'Premium'),
+                        description: _t('dashboard.option.premium.active', 'Your Premium locksmith training access is active.'),
+                        price: _t('dashboard.price.active', 'Active'),
                         clickable: false
                     },
                     {
                         id: 'business-in-a-box',
                         icon: 'work',
-                        title: 'Business in a Box',
-                        description: 'Add the full business package to your Premium access.',
+                        title: _t('dashboard.option.business.title', 'Business in a Box'),
+                        description: _t('dashboard.option.business.addOn', 'Add the full business package to your Premium access.'),
                         price: '$3,999',
                         clickable: true
                     }
@@ -399,21 +405,21 @@
         }
 
         return {
-            title: 'Choose your next step:',
+            title: _t('dashboard.chooseNext', 'Choose your next step:'),
             options: [
                 {
                     id: 'premium-course',
                     icon: 'school',
-                    title: 'Premium',
-                    description: 'Full premium locksmith course access.',
+                    title: _t('dashboard.option.premium.title', 'Premium'),
+                    description: _t('dashboard.option.premium.description', 'Full premium locksmith course access.'),
                     price: '$997',
                     clickable: true
                 },
                 {
                     id: 'business-in-a-box',
                     icon: 'work',
-                    title: 'Business in a Box',
-                    description: 'Includes Premium plus the full business package.',
+                    title: _t('dashboard.option.business.title', 'Business in a Box'),
+                    description: _t('dashboard.option.business.description', 'Includes Premium plus the full business package.'),
                     price: '$3,999',
                     clickable: true
                 }

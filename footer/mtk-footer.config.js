@@ -18,7 +18,7 @@ window.app.footer = {
     contact: {
 	title: _footerT('footer.contact.title', 'Contact Information'),
 	phone: "+1 (646) 303-1234",
-	email: "info@nala-association.org",
+	email: "support@nalanetwork.com",
 	address: "1510 Park Ave, New York, NY 10010"
     },
     social: {
