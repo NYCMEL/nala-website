@@ -616,11 +616,45 @@ class MTKHierarchy {
             this.displayLessonResources(moduleId, lessonId);
         }
 
+        this.advanceLessonOnClick(moduleId, lessonId);
+
         wc.publish('mtk-hierarchy:lesson-toggled', {
             moduleId,
             lessonId,
             isOpen: true,
             timestamp: new Date().toISOString()
+        });
+    }
+
+    /**
+     * Preserve the site's historical click-to-advance behaviour while still
+     * delegating progression rules to wc.lessonComplete / the backend.
+     */
+    advanceLessonOnClick(moduleId, lessonId) {
+        if (typeof wc === 'undefined' || typeof wc.lessonComplete !== 'function') return;
+        if (!wc.session || !wc.session.user) return;
+
+        const lesson = findLessonInHierarchy(moduleId, lessonId);
+        const lessonNo = lesson && Number.isFinite(Number(lesson.lesson_no))
+            ? Number(lesson.lesson_no)
+            : null;
+        const current = Number(wc.session.user.current_lesson);
+
+        if (!Number.isFinite(lessonNo) || !Number.isFinite(current)) return;
+
+        wc.lessonComplete(lessonNo, current, (err, result) => {
+            if (err) {
+                wc.warn('MTKHierarchy: click-to-advance lessonComplete failed', err);
+                return;
+            }
+
+            if (result && Number.isFinite(Number(result.current_lesson))) {
+                wc.session.user.current_lesson = Number(result.current_lesson);
+            }
+
+            if (result && result.advanced === true) {
+                this.enableNextLessonOrQuiz(moduleId, lessonId);
+            }
         });
     }
 
