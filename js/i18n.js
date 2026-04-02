@@ -674,10 +674,15 @@
     // ── QUIZ ──────────────────────────────────────────────────────
     'quiz.title':     { en: 'Quiz',     es: 'Examen' },
     'quiz.module':    { en: 'Module:',  es: 'Módulo:' },
-    'quiz.questions': { en: 'Questions', es: 'Preguntas' },
-    'quiz.session':   { en: 'Session:', es: 'Sesión:' },
-    'quiz.progress':  { en: 'Progress', es: 'Progreso' },
-    'quiz.cancel':    { en: 'Cancel',   es: 'Cancelar' },
+      'quiz.questions': { en: 'Questions', es: 'Preguntas' },
+      'quiz.session':   { en: 'Session:', es: 'Sesión:' },
+      'quiz.progress':  { en: 'Progress', es: 'Progreso' },
+      'hierarchy.upgradePrompt': {
+        en: 'This lesson is part of the paid course. Upgrade to Premium to continue with the full locksmith training program.',
+        es: 'Esta lección forma parte del curso de pago. Mejora a Premium para continuar con el programa completo de capacitación en cerrajería.'
+      },
+      'hierarchy.upgradeButton': { en: 'View Course Options', es: 'Ver opciones del curso' },
+      'quiz.cancel':    { en: 'Cancel',   es: 'Cancelar' },
     'quiz.clearAll':  { en: 'Clear All', es: 'Borrar Todo' },
     'quiz.testFirst': { en: 'Test (Select First)', es: 'Probar (Seleccionar Primero)' },
     'quiz.submit':    { en: 'Submit Quiz', es: 'Enviar Examen' },

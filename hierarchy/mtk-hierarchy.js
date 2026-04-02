@@ -34,6 +34,7 @@ class MTKHierarchy {
         this.handleQuizClick = this.handleQuizClick.bind(this);
         this.handleQuizStart = this.handleQuizStart.bind(this);
         this.enableNextModule = this.enableNextModule.bind(this);
+        this.goToPurchaseSection = this.goToPurchaseSection.bind(this);
 
         // Wait for DOM to be ready
         this.waitForElement();
@@ -205,6 +206,11 @@ class MTKHierarchy {
         this.subscribe('mtk-hierarchy:load-resource', this.onMessage);
         this.subscribe('mtk-hierarchy:expand-all', this.onMessage);
         this.subscribe('mtk-hierarchy:collapse-all', this.onMessage);
+        this.subscribe('mtk-msgs:button-click', (message, data) => {
+            if (data && data.action === 'go-to-purchase-course') {
+                this.goToPurchaseSection();
+            }
+        });
 
         if (typeof wc !== 'undefined') {
             wc.log("MTKHierarchy: Subscribed to events");
@@ -575,27 +581,17 @@ class MTKHierarchy {
      */
     handleLessonClick(event, lessonHeader) {
         const lessonElement = lessonHeader.closest('.mtk-lesson');
+        const moduleId = lessonElement.dataset.moduleId;
+        const lessonId = lessonElement.dataset.lessonId;
 
         if (lessonElement.classList.contains('mtk-lesson--disabled')) {
             if (typeof wc !== 'undefined') {
                 wc.warn("MTKHierarchy: Lesson is disabled (access=false)");
             }
-            if (typeof MTKMsgs !== 'undefined') {
-                MTKMsgs.show({
-                    type: 'info',
-                    icon: 'info',
-                    message: (typeof wc !== 'undefined' && wc.msg && wc.msg.lessonLocked)
-                        ? wc.msg.lessonLocked
-                        : 'Please finish the current lesson video before moving on to the next lesson.',
-                    closable: true,
-                    timer: 4
-                });
-            }
+            this.showLockedContentPrompt(moduleId, lessonId);
             return;
         }
 
-        const moduleId = lessonElement.dataset.moduleId;
-        const lessonId = lessonElement.dataset.lessonId;
         const lessonKey = `${moduleId}-${lessonId}`;
         const primaryResource = this.findPrimaryLessonResource(moduleId, lessonId);
 
@@ -942,27 +938,17 @@ class MTKHierarchy {
      * Handle resource click
      */
     handleResourceClick(event, resourceElement) {
+        const resourceId = resourceElement.dataset.resourceId;
+        const lessonId = resourceElement.dataset.lessonId;
+        const moduleId = resourceElement.dataset.moduleId;
+
         if (resourceElement.classList.contains('mtk-resource--disabled')) {
             if (typeof wc !== 'undefined') {
                 wc.warn("MTKHierarchy: Resource is disabled (access=false)");
             }
-            if (typeof MTKMsgs !== 'undefined') {
-                MTKMsgs.show({
-                    type: 'info',
-                    icon: 'info',
-                    message: (typeof wc !== 'undefined' && wc.msg && wc.msg.lessonLocked)
-                        ? wc.msg.lessonLocked
-                        : 'Please finish the current lesson video before moving on to the next lesson.',
-                    closable: true,
-                    timer: 4
-                });
-            }
+            this.showLockedContentPrompt(moduleId, lessonId);
             return;
         }
-
-        const resourceId = resourceElement.dataset.resourceId;
-        const lessonId = resourceElement.dataset.lessonId;
-        const moduleId = resourceElement.dataset.moduleId;
 
         if (typeof wc !== 'undefined') {
             wc.log("MTKHierarchy: Resource clicked", resourceId);
@@ -1575,6 +1561,76 @@ class MTKHierarchy {
             return url;
         }
         return url;
+    }
+
+    t(key, fallback) {
+        if (typeof window !== 'undefined' && window.i18n && typeof window.i18n.t === 'function') {
+            const value = window.i18n.t(key);
+            return value === key ? fallback : value;
+        }
+        return fallback;
+    }
+
+    showLockedContentPrompt(moduleId, lessonId) {
+        const lesson = findLessonInHierarchy(moduleId, lessonId);
+        const lessonNo = lesson && Number.isFinite(Number(lesson.lesson_no))
+            ? Number(lesson.lesson_no)
+            : null;
+        const isRegisteredLockedLesson = this.isRegisteredRole() && Number.isFinite(lessonNo) && lessonNo >= 4;
+
+        if (typeof MTKMsgs === 'undefined') return;
+
+        if (isRegisteredLockedLesson) {
+            MTKMsgs.show({
+                type: 'info',
+                icon: 'lock',
+                message: this.t(
+                    'hierarchy.upgradePrompt',
+                    'This lesson is part of the paid course. Upgrade to Premium to continue with the full locksmith training program.'
+                ),
+                buttons: [
+                    {
+                        label: this.t('hierarchy.upgradeButton', 'View Course Options'),
+                        action: 'go-to-purchase-course'
+                    }
+                ],
+                closable: true
+            });
+            return;
+        }
+
+        MTKMsgs.show({
+            type: 'info',
+            icon: 'info',
+            message: (typeof wc !== 'undefined' && wc.msg && wc.msg.lessonLocked)
+                ? wc.msg.lessonLocked
+                : 'Please finish the current lesson video before moving on to the next lesson.',
+            closable: true,
+            timer: 4
+        });
+    }
+
+    goToPurchaseSection() {
+        if (typeof wc !== 'undefined' && wc.pages && typeof wc.pages.show === 'function') {
+            wc.pages.show('home');
+        }
+
+        const scrollToPath = () => {
+            const pathSection = document.getElementById('MTK-path');
+            if (!pathSection) return false;
+            pathSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            return true;
+        };
+
+        if (scrollToPath()) return;
+
+        let attempts = 0;
+        const timer = setInterval(() => {
+            attempts += 1;
+            if (scrollToPath() || attempts >= 20) {
+                clearInterval(timer);
+            }
+        }, 150);
     }
 
     /**
