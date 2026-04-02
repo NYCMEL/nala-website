@@ -1638,6 +1638,10 @@ if (wc.testing) {
         wc.log("MTKHierarchy: Local mode - using window.app.hierarchy");
         wc.log("testing:", wc.testing, window.app.hierarchy);
 
+        if (window.i18n && typeof window.i18n.localizeHierarchyVideos === 'function') {
+            window.i18n.localizeHierarchyVideos(window.app.hierarchy);
+        }
+
         const hierarchy = new MTKHierarchy(window.app.hierarchy);
         window.MTKHierarchy = hierarchy;
 
@@ -1656,6 +1660,10 @@ if (wc.testing) {
     const localHierarchy = (window.app && Array.isArray(window.app.hierarchy)) ? window.app.hierarchy : null;
     const remoteHierarchy = Array.isArray(wc.session.hierarchy.parts) ? wc.session.hierarchy.parts : [];
     const mergedHierarchy = overlayTitlesFromLocalConfig(remoteHierarchy, localHierarchy);
+
+    if (window.i18n && typeof window.i18n.localizeHierarchyVideos === 'function') {
+        window.i18n.localizeHierarchyVideos(mergedHierarchy);
+    }
 
     window.app = window.app || {};
     window.app.hierarchy = mergedHierarchy;

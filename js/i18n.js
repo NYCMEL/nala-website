@@ -25,6 +25,137 @@
 (function (global) {
   'use strict';
 
+  var SPANISH_VIDEO_IDS = {
+    0: '827172758',
+    1: '827172775',
+    2: '827172790',
+    3: '827172802',
+    4: '827172812',
+    5: '827172826',
+    6: '827172882',
+    7: '827172895',
+    8: '827172911',
+    9: '827172966',
+    10: '827172987',
+    11: '827173006',
+    12: '827173025',
+    13: '827173046',
+    14: '827173093',
+    15: '827173112',
+    16: '827173134',
+    17: '827173161',
+    18: '827173190',
+    19: '827173215',
+    20: '827173240',
+    21: '827173263',
+    22: '827173280',
+    23: '827173291',
+    24: '827173312',
+    25: '827173333',
+    26: '827173360',
+    27: '827173380',
+    28: '827173397',
+    29: '827173420',
+    30: '827173446',
+    31: '827173477',
+    32: '827173495',
+    33: '827173521',
+    34: '827173573',
+    35: '827173592',
+    36: '827173614',
+    37: '827173639',
+    38: '827173656',
+    39: '827173675',
+    40: '827173693',
+    41: '827173726',
+    42: '827173759',
+    43: '827173776',
+    44: '827173793'
+  };
+
+  var SPANISH_HIERARCHY = {
+    parts: {
+      'Introduction to Locksmithing': 'Introducción a la cerrajería',
+      'Residential Locksmithing': 'Cerrajería residencial',
+      'Rekeying & Master Keys': 'Rekeyado y llaves maestras',
+      'Automotive Locksmithing': 'Cerrajería automotriz',
+      'Commercial Locksmithing': 'Cerrajería comercial',
+      'The Business of Locksmithing and Certification': 'El negocio de la cerrajería y la certificación'
+    },
+    modules: {
+      'Foundations of Locksmithing': 'Fundamentos de la cerrajería',
+      'Residential Lock Cylinders': 'Cilindros de cerraduras residenciales',
+      'Keys and Key Machines': 'Llaves y máquinas duplicadoras',
+      'Commercial Hardware and High-Security Locks': 'Herrajes comerciales y cerraduras de alta seguridad',
+      'Rekeying Fundamentals': 'Fundamentos del rekeyado',
+      'Advanced Rekeying': 'Rekeyado avanzado',
+      'Impressioning and Lockout Service': 'Impresionado de llaves y servicio de aperturas',
+      'Lockout, Safe, and Auto Entry': 'Aperturas, cajas fuertes y acceso vehicular',
+      'Automotive Electronics': 'Electrónica automotriz',
+      'Automotive Codes, Wafers, and Programming': 'Códigos, wafers y programación automotriz',
+      'The Business of Locksmithing': 'El negocio de la cerrajería',
+      'Certification and Course Completion': 'Certificación y finalización del curso'
+    },
+    lessons: {
+      0:  { title: 'Introducción a tu instructor y al curso', description: 'Introducción a tu instructor y al curso' },
+      1:  { title: 'Las herramientas que necesitas en tu kit', description: 'Lección 1 - Las herramientas que necesitas en tu kit' },
+      2:  { title: 'Los diferentes grados en que se clasifica una cerradura', description: 'Lección 2 - Los diferentes grados en que se clasifica una cerradura' },
+      3:  { title: 'Cómo funciona el cerrojo y cómo instalarlo', description: 'Lección 3 - Cómo funciona el cerrojo y cómo instalarlo' },
+      4:  { title: 'Cómo funciona la perilla y cómo instalarla', description: 'Lección 4 - Cómo funciona la perilla y cómo instalarla' },
+      5:  { title: 'Panorama general de las puertas residenciales y comerciales', description: 'Lección 5 - Panorama general de las puertas residenciales y comerciales' },
+      6:  { title: 'Cómo funcionan los cilindros de pines', description: 'Lección 6 - Cómo funcionan los cilindros de pines' },
+      7:  { title: 'Introducción al cilindro KIK', description: 'Lección 7 - Introducción al cilindro KIK' },
+      8:  { title: 'Introducción al cilindro de mortaja', description: 'Lección 8 - Introducción al cilindro de mortaja' },
+      9:  { title: 'La diferencia entre los cilindros de sobreponer y de mortaja', description: 'Lección 9 - La diferencia entre los cilindros de sobreponer y de mortaja' },
+      10: { title: 'Introducción al cilindro de perfil', description: 'Lección 10 - Introducción al cilindro de perfil' },
+      11: { title: 'Introducción a la cerradura de buzón', description: 'Lección 11 - Introducción a la cerradura de buzón' },
+      12: { title: 'Cómo instalar un cerrojo con teclado', description: 'Lección 12 - Cómo instalar un cerrojo con teclado' },
+      13: { title: 'Introducción a la tecnología SmartKey de Kwikset', description: 'Lección 13 - Introducción a la tecnología SmartKey de Kwikset' },
+      14: { title: 'Las llaves de uso diario más comunes', description: 'Lección 14 - Las llaves de uso diario más comunes' },
+      15: { title: 'Cómo duplicar una llave', description: 'Lección 15 - Cómo duplicar una llave' },
+      16: { title: 'Introducción a las máquinas de corte por código - HPC BLITZ', description: 'Lección 16 - Introducción a las máquinas de corte por código - HPC BLITZ' },
+      17: { title: 'Cómo completar una instalación nueva', description: 'Lección 17 - Cómo completar una instalación nueva' },
+      18: { title: 'Introducción a la cerradura Adams Rite', description: 'Lección 18 - Introducción a la cerradura Adams Rite' },
+      19: { title: 'Introducción a las cerraduras de alta seguridad', description: 'Lección 19 - Introducción a las cerraduras de alta seguridad' },
+      20: { title: 'Introducción a las barras antipánico y los dispositivos de salida', description: 'Lección 20 - Introducción a las barras antipánico y los dispositivos de salida' },
+      21: { title: 'Introducción a tu kit de rekeyado', description: 'Lección 21 - Introducción a tu kit de rekeyado' },
+      22: { title: 'Cómo rekeyar un cerrojo', description: 'Lección 22 - Cómo rekeyar un cerrojo' },
+      23: { title: 'Cómo preparar una perilla para rekeyar el cilindro', description: 'Lección 23 - Cómo preparar una perilla para rekeyar el cilindro' },
+      24: { title: 'Introducción al sistema de llaves maestras', description: 'Lección 24 - Introducción al sistema de llaves maestras' },
+      25: { title: 'Sistema de progresión para llaves maestras', description: 'Lección 25 - Sistema de progresión para llaves maestras' },
+      26: { title: 'Sistema hold-and-vary de llaves maestras', description: 'Lección 26 - Sistema hold-and-vary de llaves maestras' },
+      27: { title: 'Introducción al ganzuado', description: 'Lección 27 - Introducción al ganzuado' },
+      28: { title: 'Uso de una lámina para retirar el plug del cilindro', description: 'Lección 28 - Uso de una lámina para retirar el plug del cilindro' },
+      29: { title: 'Introducción a la extracción de llaves', description: 'Lección 29 - Introducción a la extracción de llaves' },
+      30: { title: 'Impresionado de llaves', description: 'Lección 30 - Impresionado de llaves' },
+      31: { title: 'Qué hacer antes y después de un servicio de apertura', description: 'Lección 31 - Qué hacer antes y después de un servicio de apertura' },
+      32: { title: 'Cómo perforar un cerrojo', description: 'Lección 32 - Cómo perforar un cerrojo' },
+      33: { title: 'Un excelente método para abrir una perilla', description: 'Lección 33 - Un excelente método para abrir una perilla' },
+      34: { title: 'Qué esperar en una apertura de unidad de almacenamiento', description: 'Lección 34 - Qué esperar en una apertura de unidad de almacenamiento' },
+      35: { title: 'Cómo perforar una caja fuerte pequeña y económica', description: 'Lección 35 - Cómo perforar una caja fuerte pequeña y económica' },
+      36: { title: 'Cómo abrir un automóvil', description: 'Lección 36 - Cómo abrir un automóvil' },
+      37: { title: 'Cómo abrir la cajuela de un Toyota', description: 'Lección 37 - Cómo abrir la cajuela de un Toyota' },
+      38: { title: 'Introducción a las llaves automotrices', description: 'Lección 38 - Introducción a las llaves automotrices' },
+      39: { title: 'Introducción a la herramienta LISHI', description: 'Lección 39 - Introducción a la herramienta LISHI' },
+      40: { title: 'Cómo localizar el código en un Toyota', description: 'Lección 40 - Cómo localizar el código en un Toyota' },
+      41: { title: 'Cómo localizar el código en un Honda', description: 'Lección 41 - Cómo localizar el código en un Honda' },
+      42: { title: 'Decodificación de wafers Toyota', description: 'Lección 42 - Decodificación de wafers Toyota' },
+      43: { title: 'Cómo programar un código PIN 20 de Nissan con el Auto Propad', description: 'Lección 43 - Cómo programar un código PIN 20 de Nissan con el Auto Propad' },
+      44: { title: 'Cómo y dónde empezar a anunciarte como cerrajero', description: 'Lección 44 - Cómo y dónde empezar a anunciarte como cerrajero' },
+      101: { title: 'Examen del módulo: Fundamentos de la cerrajería', description: 'Examen del módulo: Fundamentos de la cerrajería' },
+      102: { title: 'Examen del módulo: Cilindros de cerraduras residenciales', description: 'Examen del módulo: Cilindros de cerraduras residenciales' },
+      103: { title: 'Examen del módulo: Llaves y máquinas duplicadoras', description: 'Examen del módulo: Llaves y máquinas duplicadoras' },
+      104: { title: 'Examen del módulo: Herrajes comerciales y cerraduras de alta seguridad', description: 'Examen del módulo: Herrajes comerciales y cerraduras de alta seguridad' },
+      105: { title: 'Examen del módulo: Fundamentos del rekeyado', description: 'Examen del módulo: Fundamentos del rekeyado' },
+      106: { title: 'Examen del módulo: Rekeyado avanzado', description: 'Examen del módulo: Rekeyado avanzado' },
+      107: { title: 'Examen del módulo: Impresionado de llaves y servicio de aperturas', description: 'Examen del módulo: Impresionado de llaves y servicio de aperturas' },
+      108: { title: 'Examen del módulo: Aperturas, cajas fuertes y acceso vehicular', description: 'Examen del módulo: Aperturas, cajas fuertes y acceso vehicular' },
+      109: { title: 'Examen del módulo: Electrónica automotriz', description: 'Examen del módulo: Electrónica automotriz' },
+      110: { title: 'Examen del módulo: Códigos, wafers y programación automotriz', description: 'Examen del módulo: Códigos, wafers y programación automotriz' },
+      certification: { title: 'Recibe tu certificación', description: 'Recibe tu certificación' }
+    }
+  };
+
   // ── Dictionary ─────────────────────────────────────────────────
   var DICT = {
 
@@ -69,7 +200,7 @@
     // ── HERO ──────────────────────────────────────────────────────
     'hero.title': {
       en: 'Master the art of professional locksmithing',
-      es: 'Domina el arte del cerrajero profesional'
+      es: 'Domina el arte de la cerrajería profesional'
     },
     'hero.description': {
       en: 'Join thousands of students learning modern security technology with bilingual courses, hands-on training, and industry-recognized certifications.',
@@ -123,11 +254,11 @@
     },
     'carousel.slide2.title': {
       en: 'Handyman Expanding Services',
-      es: 'Mantenimiento Expandiendo Servicios'
+      es: 'Técnico de mantenimiento que amplía sus servicios'
     },
     'carousel.slide2.body': {
       en: 'A general handyman uses the program to add locksmithing as a paid service. Residential rekeying, deadbolt installation, and keypad locks become add-on services that increase the value of each job.',
-      es: 'Un handyman general utiliza el programa para agregar la cerrajería como servicio remunerado. El reclave residencial, la instalación de cerrojos y las cerraduras con teclado se convierten en servicios adicionales que aumentan el valor de cada trabajo.'
+      es: 'Un técnico de mantenimiento utiliza el programa para sumar la cerrajería como servicio adicional. El reclave residencial, la instalación de cerrojos y las cerraduras con teclado se convierten en servicios complementarios que aumentan el valor de cada trabajo.'
     },
     'carousel.slide3.title': {
       en: 'Automotive Focus',
@@ -139,7 +270,7 @@
     },
     'carousel.slide4.title': {
       en: 'Business Builder',
-      es: 'Constructor de Negocios'
+      es: 'Emprendedor'
     },
     'carousel.slide4.body': {
       en: 'Someone with technical skills but no business background follows the business modules to understand pricing, licensing considerations, customer communication, and marketing fundamentals before launching a locksmith service.',
@@ -187,7 +318,7 @@
     // ── TILE / WHY CHOOSE ─────────────────────────────────────────
     'tile.heading': {
       en: 'Why Choose Our Program',
-      es: 'Por Qué Elegir Nuestro Program'
+      es: 'Por qué elegir nuestro programa'
     },
     'tile.subheading': {
       en: 'Online . Self-Paced . Exams included',
@@ -195,7 +326,7 @@
     },
     'tile.1.front': {
       en: 'Training Built for Real Service Calls',
-      es: 'Entrenamiento para Servicios Reales'
+      es: 'Capacitación para servicios reales'
     },
     'tile.1.back': {
       en: 'Lessons are structured around real locksmith tasks such as rekeying, lock installation, hardware replacement, and troubleshooting, helping learners understand how concepts apply in the field.',
@@ -227,7 +358,7 @@
     },
     'tile.5.front': {
       en: 'Self-Paced Structured Curriculum',
-      es: 'Currículo Estructurado a Tu Propio Ritmo'
+      es: 'Plan de estudios estructurado y a tu ritmo'
     },
     'tile.5.back': {
       en: 'Students progress through a clearly organized curriculum at their own pace, making it possible to balance learning with work or other commitments.',
@@ -235,7 +366,7 @@
     },
     'tile.6.front': {
       en: 'Business & Professional Foundations Included',
-      es: 'Fundamentos de Negocios y Profesionalismo Incluidos'
+      es: 'Incluye bases de negocio y profesionalismo'
     },
     'tile.6.back': {
       en: 'In addition to technical skills, the program introduces business concepts such as licensing considerations, pricing, customer relations, and service presentation.',
@@ -315,7 +446,7 @@
     },
     'path.subheading': {
       en: 'Pick the option that fits your goals—start free, upgrade anytime, or launch with Business-in-a-Box.',
-      es: 'Selecciona la opción que mejor se adapte a tus metas — comienza gratis, mejora en cualquier momento, o lanza con Negocio-en-una-Caja.'
+      es: 'Selecciona la opción que mejor se adapte a tus metas: comienza gratis, mejora en cualquier momento o despega con Negocio en una caja.'
     },
     'path.trial.title':       { en: 'Trial',              es: 'Prueba Gratuita' },
     'path.trial.description': {
@@ -340,7 +471,7 @@
     'path.premium.f3': { en: 'Certificate of completion',          es: 'Certificado de finalización' },
     'path.premium.f4': { en: 'Learn at your own pace',             es: 'Aprende a tu propio ritmo' },
     'path.premium.f5': { en: 'Free lockout kit gift included',     es: 'Kit de lockout de regalo incluido' },
-    'path.business.title':       { en: 'Business-in-a-Box',       es: 'Negocio en una Caja' },
+    'path.business.title':       { en: 'Business-in-a-Box',       es: 'Negocio en una caja' },
     'path.business.period': {
       en: 'One-time payment · financing up to 24 months available via Klarna',
       es: 'Pago único · financiamiento hasta 24 meses disponible a través de Klarna'
@@ -350,7 +481,7 @@
       es: 'Todo lo incluido en Premium, más herramientas para lanzar tu negocio de cerrajería.'
     },
     'path.business.f1': { en: 'Everything included in Premium',       es: 'Todo incluido en Premium' },
-    'path.business.f2': { en: 'Pre-built locksmith website',           es: 'Sitio web de cerrajería pre-construido' },
+    'path.business.f2': { en: 'Pre-built locksmith website',           es: 'Sitio web de cerrajería listo para usar' },
     'path.business.f3': { en: 'Business card and branding templates',  es: 'Plantillas de tarjetas de presentación y marca' },
     'path.business.f4': { en: 'Service pricing starter framework',     es: 'Marco inicial de precios de servicios' },
     'path.business.f5': { en: 'Marketing launch checklist',            es: 'Lista de verificación de lanzamiento de marketing' },
@@ -437,8 +568,8 @@
     },
 
     // ── LOGIN ─────────────────────────────────────────────────────
-    'login.title':               { en: 'Welcome Back',            es: 'Bienvenido de Nuevo' },
-    'login.email.label':         { en: 'Email',                   es: 'Correo Electrónico' },
+    'login.title':               { en: 'Welcome Back',            es: 'Bienvenido de nuevo' },
+    'login.email.label':         { en: 'Email',                   es: 'Correo electrónico' },
     'login.email.placeholder':   { en: 'Enter your email',        es: 'Ingresa tu correo' },
     'login.password.label':      { en: 'Password',                es: 'Contraseña' },
     'login.password.placeholder':{ en: 'Enter your password',     es: 'Ingresa tu contraseña' },
@@ -460,7 +591,7 @@
     // ── REGISTER ──────────────────────────────────────────────────
     'register.title':          { en: 'NALA Registration Form',         es: 'Formulario de Registro NALA' },
     'register.name.label':     { en: 'Name',                           es: 'Nombre' },
-    'register.name.helper':    { en: 'First Name, Middle Initial, Last Name', es: 'Nombre, Inicial del Apellido Paterno, Apellido' },
+    'register.name.helper':    { en: 'First Name, Middle Initial, Last Name', es: 'Nombre, inicial del segundo nombre y apellido' },
     'register.email.label':    { en: 'Your Email',                     es: 'Tu Correo' },
     'register.email.helper':   { en: 'example@example.com',            es: 'ejemplo@ejemplo.com' },
     'register.email2.label':   { en: 'Repeat Email',                   es: 'Repetir Correo' },
@@ -477,30 +608,30 @@
     'register.error.phone.invalid': { en: 'Enter a valid US phone number', es: 'Ingresa un número de teléfono de EE.UU. válido' },
 
     // ── DASHBOARD ─────────────────────────────────────────────────
-    'dashboard.continue':        { en: 'Continue with Program',         es: 'Continuar con el Programa' },
+    'dashboard.continue':        { en: 'Continue with Program',         es: 'Continuar con el programa' },
     'dashboard.progress.label':  { en: 'Your progress to date:',       es: 'Tu progreso hasta la fecha:' },
     'dashboard.course.title':    { en: 'NALA - Locksmith Course',       es: 'NALA - Curso de Cerrajería' },
     'dashboard.subs.title':      { en: 'You can also subscribe to our premium features:', es: 'También puedes suscribirte a nuestras funciones premium:' },
     'dashboard.sub1.title':      { en: 'Premium Courses',               es: 'Cursos Premium' },
     'dashboard.sub1.description':{ en: 'Access advanced courses and certifications', es: 'Accede a cursos avanzados y certificaciones' },
     'dashboard.sub1.price':      { en: '$29.99/month',                  es: '$29.99/mes' },
-    'dashboard.sub2.title':      { en: '1-on-1 Mentorship',             es: 'Mentoría Personalizada' },
+    'dashboard.sub2.title':      { en: '1-on-1 Mentorship',             es: 'Mentoría personalizada' },
     'dashboard.sub2.description':{ en: 'Get personalized guidance from experts', es: 'Obtén orientación personalizada de expertos' },
     'dashboard.sub2.price':      { en: '$99.99/month',                  es: '$99.99/mes' },
-    'dashboard.sub3.title':      { en: 'Career Services',               es: 'Servicios de Carrera' },
+    'dashboard.sub3.title':      { en: 'Career Services',               es: 'Servicios profesionales' },
     'dashboard.sub3.description':{ en: 'Resume review, interview prep, and job matching', es: 'Revisión de currículum, preparación para entrevistas y búsqueda de empleo' },
     'dashboard.sub3.price':      { en: '$49.99/month',                  es: '$49.99/mes' },
 
     // ── SETTINGS ──────────────────────────────────────────────────
-    'settings.title':            { en: 'Profile Settings',              es: 'Configuración de Perfil' },
-    'settings.privacyTitle':     { en: 'Privacy Settings',              es: 'Configuración de Privacidad' },
-    'settings.userName':         { en: 'Full Name',                     es: 'Nombre Completo' },
-    'settings.userEmail':        { en: 'Email Address',                 es: 'Correo Electrónico' },
-    'settings.currentPassword':  { en: 'Current Password',              es: 'Contraseña Actual' },
-    'settings.newPassword':      { en: 'New Password',                  es: 'Nueva Contraseña' },
-    'settings.confirmPassword':  { en: 'Confirm New Password',          es: 'Confirmar Nueva Contraseña' },
+    'settings.title':            { en: 'Profile Settings',              es: 'Configuración del perfil' },
+    'settings.privacyTitle':     { en: 'Privacy Settings',              es: 'Configuración de privacidad' },
+    'settings.userName':         { en: 'Full Name',                     es: 'Nombre completo' },
+    'settings.userEmail':        { en: 'Email Address',                 es: 'Correo electrónico' },
+    'settings.currentPassword':  { en: 'Current Password',              es: 'Contraseña actual' },
+    'settings.newPassword':      { en: 'New Password',                  es: 'Nueva contraseña' },
+    'settings.confirmPassword':  { en: 'Confirm New Password',          es: 'Confirmar nueva contraseña' },
     'settings.updateButton':     { en: 'Update',                        es: 'Actualizar' },
-    'settings.saveButton':       { en: 'Save Changes',                  es: 'Guardar Cambios' },
+    'settings.saveButton':       { en: 'Save Changes',                  es: 'Guardar cambios' },
     'settings.cancelButton':     { en: 'Cancel',                        es: 'Cancelar' },
 
     // Settings validation strings (from mtk-settings.js)
@@ -551,10 +682,10 @@
     'dialog.confirm': { en: 'Confirm', es: 'Confirmar' },
 
     // ── GIFT / LOCKOUT KIT ────────────────────────────────────────
-    'gift.title':          { en: 'Your Free Lockout Kit',          es: 'Tu Kit de Lockout Gratuito' },
+    'gift.title':          { en: 'Your Free Lockout Kit',          es: 'Tu kit gratuito de apertura' },
     'gift.subtitle':       { en: "We'll ship it right to your door — completely free.", es: 'Lo enviamos directo a tu puerta — completamente gratis.' },
-    'gift.addressLabel':   { en: 'Where do you want us to send your free Lockout Kit?', es: '¿A dónde quieres que enviemos tu Kit de Lockout gratuito?' },
-    'gift.field.fullName': { en: 'Full Name',                      es: 'Nombre Completo' },
+    'gift.addressLabel':   { en: 'Where do you want us to send your free Lockout Kit?', es: '¿A dónde quieres que enviemos tu kit gratuito de apertura?' },
+    'gift.field.fullName': { en: 'Full Name',                      es: 'Nombre completo' },
     'gift.field.address1': { en: 'Street Address',                 es: 'Dirección' },
     'gift.field.address2': { en: 'Apt, Suite, Unit (optional)',    es: 'Apto, Suite, Unidad (opcional)' },
     'gift.field.city':     { en: 'City',                           es: 'Ciudad' },
@@ -562,7 +693,7 @@
     'gift.field.zip':      { en: 'ZIP Code',                       es: 'Código Postal' },
     'gift.submit':         { en: 'Send My Kit',                    es: 'Enviar Mi Kit' },
     'gift.cancel':         { en: 'Cancel',                         es: 'Cancelar' },
-    'gift.success':        { en: 'Your free Lockout Kit is on the way! 🎁', es: '¡Tu Kit de Lockout gratuito está en camino! 🎁' },
+    'gift.success':        { en: 'Your free Lockout Kit is on the way! 🎁', es: '¡Tu kit gratuito de apertura ya va en camino! 🎁' },
     'gift.error':          { en: 'Please fill in all required fields.', es: 'Por favor completa todos los campos requeridos.' },
     'gift.cancelled':      { en: 'Request cancelled.',             es: 'Solicitud cancelada.' },
 
@@ -581,7 +712,7 @@
     'msg.btn.close': { en: 'Close Message', es: 'Cerrar Mensaje' },
 
     // ── CURRICULUM PAGE ───────────────────────────────────────────
-    'curriculum.welcome':   { en: 'Welcome to NALA Locksmith Training', es: 'Bienvenido al Entrenamiento de Cerrajería NALA' },
+    'curriculum.welcome':   { en: 'Welcome to NALA Locksmith Training', es: 'Bienvenido a la capacitación de cerrajería de NALA' },
     'curriculum.overview':  {
       en: 'Our comprehensive locksmith program combines online education, hands-on workshops, national certification, and business launch preparation. Designed for beginners and professionals, this program ensures you gain both practical skills and professional knowledge.',
       es: 'Nuestro programa completo de cerrajería combina educación en línea, talleres prácticos, certificación nacional y preparación para el lanzamiento de negocios. Diseñado para principiantes y profesionales, este programa garantiza que adquieras tanto habilidades prácticas como conocimiento profesional.'
@@ -643,7 +774,7 @@
     'curriculum.contact.addr':   { en: 'Address: 123 Security Blvd, Suite 100, Anytown, USA', es: 'Dirección: 123 Security Blvd, Suite 100, Anytown, USA' },
 
     // ── TOP / SCROLL BUTTON ────────────────────────────────────────
-    'top.scrollBtn': { en: 'Scroll to top', es: 'Volver al inicio' }
+    'top.scrollBtn': { en: 'Scroll to top', es: 'Volver arriba' }
 
   }; // end DICT
 
@@ -651,6 +782,64 @@
   // ── Engine ─────────────────────────────────────────────────────
 
   var _lang = 'en';
+
+  function buildVimeoEmbed(id) {
+    return 'https://player.vimeo.com/video/' + id + '?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479';
+  }
+
+  function localizeHierarchyVideos(parts) {
+    if (!Array.isArray(parts)) return parts;
+
+    parts.forEach(function (part) {
+      if (_lang === 'es') {
+        var spanishPartTitle = SPANISH_HIERARCHY.parts[part.title];
+        if (spanishPartTitle) part.title = spanishPartTitle;
+      }
+
+      (part.modules || []).forEach(function (module) {
+        if (_lang === 'es') {
+          var spanishModuleTitle = SPANISH_HIERARCHY.modules[module.title];
+          if (spanishModuleTitle) module.title = spanishModuleTitle;
+        }
+
+        (module.lessons || []).forEach(function (lesson) {
+          var lessonKey = lesson.lesson_no;
+          var lessonNo = Number(lesson.lesson_no);
+          var spanishLesson = SPANISH_HIERARCHY.lessons[lessonKey];
+          var spanishId = SPANISH_VIDEO_IDS[lessonNo];
+
+          if (_lang === 'es' && spanishLesson) {
+            if (spanishLesson.title) lesson.title = spanishLesson.title;
+            if (lesson.badge && lesson.badge.text === 'Unlocked') {
+              lesson.badge.text = 'Desbloqueado';
+            }
+          }
+
+          if (!Array.isArray(lesson.resources)) return;
+
+          lesson.resources.forEach(function (resource) {
+            if (_lang === 'es') {
+              if (resource.type === 'video') {
+                if (spanishLesson && spanishLesson.description) {
+                  resource.description = spanishLesson.description;
+                }
+                if (spanishId) {
+                  resource.url = buildVimeoEmbed(spanishId);
+                }
+                return;
+              }
+
+              if (resource.type === 'photo' && resource.description === 'Photo') {
+                resource.description = 'Foto';
+              }
+            }
+          });
+        });
+      });
+    });
+
+    return parts;
+  }
 
   /**
    * Detect the preferred language from all sources.
@@ -918,6 +1107,18 @@
 
     document.documentElement.setAttribute('lang', lang);
 
+    if (global.window && global.window.app && Array.isArray(global.window.app.hierarchy)) {
+      localizeHierarchyVideos(global.window.app.hierarchy);
+    }
+    if (global.window && global.window.wc && global.window.wc.session && global.window.wc.session.hierarchy && Array.isArray(global.window.wc.session.hierarchy.parts)) {
+      localizeHierarchyVideos(global.window.wc.session.hierarchy.parts);
+    }
+
+    if (global.window && global.window.location) {
+      global.window.location.reload();
+      return;
+    }
+
     // 1. Translate the top-level document
     applyDOM();
 
@@ -1081,6 +1282,7 @@
     applyDOM     : applyDOM,
     applyConfig  : applyConfig,
     applyAllConfigs: applyAllConfigs,
+    localizeHierarchyVideos: localizeHierarchyVideos,
     dict         : DICT       // expose for extension / inspection
   };
 
