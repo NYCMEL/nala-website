@@ -5,6 +5,12 @@
         return value === key ? fallback : value;
     }
 
+    function getDisplayPrice(key, fallback) {
+        const pricing = window.nalaPricing || {};
+        const entry = pricing[key] || {};
+        return entry.display || fallback;
+    }
+
     class MTKDashboard {
         constructor(config) {
             this.config = config || {};
@@ -397,7 +403,7 @@
                         icon: 'work',
                         title: _t('dashboard.option.business.title', 'Business in a Box'),
                         description: _t('dashboard.option.business.addOn', 'Add the full business package to your Premium access.'),
-                        price: '$1,999',
+                        price: getDisplayPrice('business_addon', '$1,999'),
                         clickable: true
                     }
                 ]
@@ -412,7 +418,7 @@
                     icon: 'school',
                     title: _t('dashboard.option.premium.title', 'Premium'),
                     description: _t('dashboard.option.premium.description', 'Full premium locksmith course access.'),
-                    price: '$1,999',
+                    price: getDisplayPrice('premium', '$1,999'),
                     clickable: true
                 },
                 {
@@ -420,7 +426,7 @@
                     icon: 'work',
                     title: _t('dashboard.option.business.title', 'Business in a Box'),
                     description: _t('dashboard.option.business.description', 'Premium plus the Business in a Box add-on.'),
-                    price: '$3,998',
+                    price: getDisplayPrice('business_full', '$3,998'),
                     clickable: true
                 }
             ]
@@ -468,4 +474,11 @@
     } else {
         initializeDashboard(buildDashboardConfig());
     }
+
+    document.addEventListener('nala-pricing:updated', () => {
+        if (window.__mtkDashboardInstance && typeof window.__mtkDashboardInstance.updateSubscriptions === 'function') {
+            const subscriptions = getDashboardPurchaseOptions();
+            window.__mtkDashboardInstance.updateSubscriptions(subscriptions);
+        }
+    });
 })();

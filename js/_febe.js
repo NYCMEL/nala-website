@@ -40,6 +40,22 @@
         });
     }
 
+    function apiGet(url) {
+        return fetch(url, {
+            method: "GET",
+            credentials: "include"
+        }).then(async (res) => {
+            const json = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                const err = new Error(json.error || json.message || "server_error");
+                err.payload = json;
+                err.status = res.status;
+                throw err;
+            }
+            return json;
+        });
+    }
+
     function showMsg(type, message, options) {
         options = options || {};
 
@@ -385,6 +401,21 @@
 
     function createCheckoutSession(payload) {
         return apiPost("/api/create_checkout_session.php", payload);
+    }
+
+    function fetchPricing() {
+        return apiGet("/api/pricing.php")
+            .then((json) => {
+                window.nalaPricing = json && json.prices ? json.prices : {};
+                document.dispatchEvent(new CustomEvent("nala-pricing:updated", {
+                    detail: window.nalaPricing
+                }));
+                return window.nalaPricing;
+            })
+            .catch((err) => {
+                console.warn("Failed to load pricing", err);
+                return null;
+            });
     }
 
     async function handlePurchasePlan(plan) {
@@ -815,6 +846,7 @@
         bindEvents();
         showCheckoutStatusMessage();
         syncPurchaseButtons();
+        fetchPricing();
     }
 
     wc.febe.apiPost = apiPost;
@@ -825,6 +857,7 @@
     wc.febe.showCheckoutStatusMessage = showCheckoutStatusMessage;
     wc.febe.syncPurchaseButtons = syncPurchaseButtons;
     wc.febe.goToPage = goToPage;
+    wc.febe.fetchPricing = fetchPricing;
 
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", init);
