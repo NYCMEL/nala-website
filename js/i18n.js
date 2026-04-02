@@ -321,7 +321,7 @@
       es: 'Por qué elegir nuestro programa'
     },
     'tile.subheading': {
-      en: 'Online . Self-Paced . Exams included',
+      en: 'Online . Self-Paced . Exams Included',
       es: 'En línea · A tu propio ritmo · Exámenes incluidos'
     },
     'tile.1.front': {
@@ -485,6 +485,7 @@
     'path.business.f3': { en: 'Business card and branding templates',  es: 'Plantillas de tarjetas de presentación y marca' },
     'path.business.f4': { en: 'Service pricing starter framework',     es: 'Marco inicial de precios de servicios' },
     'path.business.f5': { en: 'Marketing launch checklist',            es: 'Lista de verificación de lanzamiento de marketing' },
+    'path.badgePopular': { en: 'Most Popular', es: 'Más popular' },
     'path.cta': { en: 'Get Started', es: 'Comenzar' },
 
     // ── CERTIFICATION ─────────────────────────────────────────────
@@ -552,14 +553,14 @@
     },
     'ready.cta': {
       en: 'Get Started Today',
-      es: 'Empieza Hoy'
+      es: 'Empieza hoy'
     },
 
     // ── FOOTER ───────────────────────────────────────────────────
     'footer.contact.title': { en: 'Contact Information',  es: 'Información de Contacto' },
     'footer.social.title':  { en: 'Social Media',         es: 'Redes Sociales' },
     'footer.brand.desc': {
-      en: 'NALA empowers locksmith professionals through education, certification, and industry leadership. 2026 All Rights Reserved',
+      en: 'NALA empowers locksmith professionals through education, certification, and industry leadership. 2026 All rights reserved.',
       es: 'NALA empodera a los profesionales cerrajeros a través de educación, certificación y liderazgo en la industria. 2026 Todos los derechos reservados'
     },
     'footer.copyright': {

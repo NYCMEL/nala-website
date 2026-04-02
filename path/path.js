@@ -91,7 +91,9 @@
         if (plan.popular) {
             var badge = document.createElement("div");
             badge.className = "mtk-badge";
-            badge.textContent = "Most Popular";
+            badge.textContent = (window.i18n && typeof window.i18n.t === "function")
+                ? window.i18n.t("path.badgePopular")
+                : "Most Popular";
             card.appendChild(badge);
         }
 
