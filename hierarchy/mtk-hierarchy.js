@@ -1612,22 +1612,22 @@ class MTKHierarchy {
 
     goToPurchaseSection() {
         if (typeof wc !== 'undefined' && wc.pages && typeof wc.pages.show === 'function') {
-            wc.pages.show('home');
+            wc.pages.show('dashboard');
         }
 
-        const scrollToPath = () => {
-            const pathSection = document.getElementById('MTK-path');
-            if (!pathSection) return false;
-            pathSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const scrollToPurchaseCards = () => {
+            const purchaseSection = document.querySelector('.mtk-dashboard__subscriptions');
+            if (!purchaseSection) return false;
+            purchaseSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             return true;
         };
 
-        if (scrollToPath()) return;
+        if (scrollToPurchaseCards()) return;
 
         let attempts = 0;
         const timer = setInterval(() => {
             attempts += 1;
-            if (scrollToPath() || attempts >= 20) {
+            if (scrollToPurchaseCards() || attempts >= 20) {
                 clearInterval(timer);
             }
         }, 150);
