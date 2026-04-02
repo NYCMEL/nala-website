@@ -477,8 +477,8 @@
       es: 'Pago único · financiamiento hasta 24 meses disponible a través de Klarna'
     },
     'path.business.description': {
-      en: 'Everything in Premium, plus tools to help you launch your locksmith business.',
-      es: 'Todo lo incluido en Premium, más herramientas para lanzar tu negocio de cerrajería.'
+      en: 'Premium plus the Business in a Box add-on to help you launch your locksmith business.',
+      es: 'Premium más el complemento Negocio en una Caja para ayudarte a lanzar tu negocio de cerrajería.'
     },
     'path.business.f1': { en: 'Everything included in Premium',       es: 'Todo incluido en Premium' },
     'path.business.f2': { en: 'Pre-built locksmith website',           es: 'Sitio web de cerrajería listo para usar' },
@@ -619,9 +619,9 @@
     'dashboard.option.premium.description': { en: 'Full premium locksmith course access.', es: 'Acceso completo al curso premium de cerrajería.' },
     'dashboard.option.premium.active': { en: 'Your Premium locksmith training access is active.', es: 'Tu acceso a la capacitación premium de cerrajería está activo.' },
     'dashboard.option.business.title': { en: 'Business in a Box',       es: 'Negocio en una Caja' },
-    'dashboard.option.business.description': { en: 'Includes Premium plus the full business package.', es: 'Incluye Premium más el paquete completo del negocio.' },
+    'dashboard.option.business.description': { en: 'Premium plus the Business in a Box add-on.', es: 'Premium más el complemento Negocio en una Caja.' },
     'dashboard.option.business.active': { en: 'Your Business in a Box package is active.', es: 'Tu paquete Negocio en una Caja está activo.' },
-    'dashboard.option.business.addOn': { en: 'Add the full business package to your Premium access.', es: 'Agrega el paquete completo del negocio a tu acceso Premium.' },
+    'dashboard.option.business.addOn': { en: 'Add Business in a Box to your Premium access.', es: 'Agrega Negocio en una Caja a tu acceso Premium.' },
     'dashboard.subs.title':      { en: 'You can also subscribe to our premium features:', es: 'También puedes suscribirte a nuestras funciones premium:' },
     'dashboard.sub1.title':      { en: 'Premium Courses',               es: 'Cursos Premium' },
     'dashboard.sub1.description':{ en: 'Access advanced courses and certifications', es: 'Accede a cursos avanzados y certificaciones' },

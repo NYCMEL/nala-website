@@ -397,7 +397,7 @@
                         icon: 'work',
                         title: _t('dashboard.option.business.title', 'Business in a Box'),
                         description: _t('dashboard.option.business.addOn', 'Add the full business package to your Premium access.'),
-                        price: '$3,999',
+                        price: '$1,999',
                         clickable: true
                     }
                 ]
@@ -412,15 +412,15 @@
                     icon: 'school',
                     title: _t('dashboard.option.premium.title', 'Premium'),
                     description: _t('dashboard.option.premium.description', 'Full premium locksmith course access.'),
-                    price: '$997',
+                    price: '$1,999',
                     clickable: true
                 },
                 {
                     id: 'business-in-a-box',
                     icon: 'work',
                     title: _t('dashboard.option.business.title', 'Business in a Box'),
-                    description: _t('dashboard.option.business.description', 'Includes Premium plus the full business package.'),
-                    price: '$3,999',
+                    description: _t('dashboard.option.business.description', 'Premium plus the Business in a Box add-on.'),
+                    price: '$3,998',
                     clickable: true
                 }
             ]

@@ -41,7 +41,7 @@
                 {
                     id:          "business",
                     title:       t('path.business.title'),
-                    price:       "$3,999",
+                    price:       "$3,998",
                     period:      t('path.business.period'),
                     description: t('path.business.description'),
                     features: [
