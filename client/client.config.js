@@ -1,4 +1,4 @@
-window.clientConfig = {
+client({
     breadcrumb: [
 	{ text: "Home",        link: "#" },
 	{ text: "Locksmiths", link: "#" },
@@ -30,9 +30,7 @@ window.clientConfig = {
 	text:          "Work is guaranteed or your money back. We stand behind every job — residential, commercial, and automotive.",
 	learnMoreLink: "Learn more about our guarantee",
     },
-
     tabs: [],
-
     about: {
 	description:
 	    "Your neighborhood locksmith, serving the New York metro area for over 17 years. " +
@@ -62,4 +60,4 @@ window.clientConfig = {
 	             "Mel the Locksmith has maintained Top Pro status for 3 consecutive years.",
 	years:       [2022, 2023, 2024],
     },
-};
+});

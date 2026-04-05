@@ -23,6 +23,15 @@ function waitForElement(selector, root = document, timeout = 8000) {
     })
 }
 
+// Public API: client(config)
+// Called from client.config.js — waits for .client-container to exist before instantiating
+window.client = function(config) {
+    waitForElement('.client-container').then(function() {
+        wc.log('[client] DOM ready, instantiating ClientProfile');
+        new ClientProfile(config);
+    });
+};
+
 class ClientProfile {
     constructor(data) {
 	this.data = data
@@ -296,10 +305,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 	console.log("[_client] Client DOM ready")
 
-	// Accept config from window.clientConfig (preferred) or fall back to legacy clientData
-	const config = window.clientConfig || window.clientData || {}
-	wc.log("[_client] Using config:", config)
-	const profile = new ClientProfile(config)
+	// Instantiated externally via client(config) from client.config.js
+	// No auto-instantiation here
 
 	PubSub.subscribe("global.click", (msg, data) => {
 	    console.log("[_client] Global click:", msg, data)
