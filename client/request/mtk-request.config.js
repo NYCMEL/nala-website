@@ -1,5 +1,6 @@
 window.mtkRequestConfig = {
   title: "Request Assistance",
+  submitText: "Submit Request",
   fields: {
     name: { label: "Full Name", required: true },
     email: { label: "Email", required: true },

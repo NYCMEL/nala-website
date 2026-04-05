@@ -7,6 +7,10 @@ class MtkRequest {
     this.waitForElement().then(() => {
       this.el = document.querySelector('.mtk-request');
       this.config = window.mtkRequestConfig;
+
+      this.modalEl = this.el.querySelector('.modal');
+      this.bsModal = new bootstrap.Modal(this.modalEl);
+
       this.render();
       this.bindEvents();
       this.subscribe();
@@ -26,7 +30,8 @@ class MtkRequest {
   render() {
     const c = this.config;
 
-    this.el.querySelector('h4').innerText = c.title;
+    this.el.querySelector('.modal-title').innerText = c.title;
+    this.el.querySelector('.submit-btn').innerText = c.submitText;
 
     const labels = this.el.querySelectorAll('label');
     labels[0].innerText = c.fields.name.label;
@@ -53,8 +58,22 @@ class MtkRequest {
   }
 
   bindEvents() {
+    const openBtn = this.el.querySelector('.open-dialog');
+    const closeBtn = this.el.querySelector('.close-dialog');
     const contactType = this.el.querySelector('.contact-type');
     const phoneTimes = this.el.querySelector('.phone-times');
+
+    openBtn.addEventListener('click', () => {
+      wc.log('mtk-request:open');
+      wc.publish('mtk-request:open');
+      this.bsModal.show();
+    });
+
+    closeBtn.addEventListener('click', () => {
+      wc.log('mtk-request:close');
+      wc.publish('mtk-request:close');
+      this.bsModal.hide();
+    });
 
     contactType.addEventListener('change', () => {
       if (contactType.value === 'phone') {
@@ -82,6 +101,8 @@ class MtkRequest {
 
       wc.log('mtk-request:submit', data);
       wc.publish('mtk-request:submit', data);
+
+      this.bsModal.hide();
     });
   }
 
