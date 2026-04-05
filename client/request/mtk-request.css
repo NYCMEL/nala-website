@@ -118,3 +118,9 @@
 @media (max-width: 768px) {
   .mtk-request .modal-dialog {
     max-width: 95%; } }
+
+.mtk-request .md-field input::placeholder,
+.mtk-request .md-field textarea::placeholder {
+  font-size: 12px;
+  font-style: italic;
+  color: #bbb; }

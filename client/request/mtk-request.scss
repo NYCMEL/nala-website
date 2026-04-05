@@ -143,3 +143,13 @@
       }
   }
 }
+
+// ── Placeholder styling ────────────────────────────────────
+.mtk-request .md-field {
+  input::placeholder,
+  textarea::placeholder {
+    font-size: 12px;
+    font-style: italic;
+    color: #bbb;
+  }
+}
