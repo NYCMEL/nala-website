@@ -200,10 +200,11 @@ class ClientProfile {
 	    }
 	})
 
-	// Request estimate button
+	// Request estimate button — opens mtk-request modal
 	document.getElementById("btnEstimate").addEventListener("click", (e) => {
 	    this.publishClickEvent(e, "button.estimate.clicked")
-	    alert("Request estimate form would open here")
+	    // Trigger the request dialog via wc pub/sub
+	    wc.publish("mtk-request:open")
 	})
 
 	document.querySelectorAll("a").forEach((link) => {

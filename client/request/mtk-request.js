@@ -145,6 +145,7 @@ class MtkRequest {
   subscribe() {
     const events = [
       'mtk-request:init',
+      'mtk-request:open',
       'mtk-request:submit',
       'mtk-request:contact-change',
       'mtk-request:update'
@@ -157,6 +158,9 @@ class MtkRequest {
 
   onMessage(event, message) {
     wc.log('mtk-request:received', { event, message });
+    if (event === 'mtk-request:open') {
+      this.bsModal.show();
+    }
   }
 }
 
