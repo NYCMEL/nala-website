@@ -27,7 +27,6 @@
     padding: 10px 0 6px;
     background: transparent;
     outline: none;
-    font-size: 16px;
   }
 
   .md-field label {
@@ -36,7 +35,7 @@
     left: 0;
     font-size: 14px;
     color: #777;
-    transition: all 0.2s ease;
+    transition: 0.2s;
     pointer-events: none;
   }
 
@@ -49,48 +48,37 @@
     color: #0d6efd;
   }
 
-  .md-field input:focus,
-  .md-field textarea:focus,
-  .md-field select:focus {
-    border-bottom: 2px solid #0d6efd;
-  }
-
-  .phone-times {
-    display: none;
-  }
-
-  .phone-times.active {
-    display: block;
-  }
-
-  /* RADIO */
+  /* ✅ HORIZONTAL RADIO */
 
   .contact-group {
-    margin-bottom: 20px;
+    margin: 20px 0;
   }
 
   .group-label {
-    display: block;
     font-size: 13px;
     color: #777;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
 
   .radio-group {
     display: flex;
-    gap: 20px;
+    flex-direction: row;        /* 🔥 horizontal */
+    flex-wrap: wrap;            /* wrap on smaller screens */
+    gap: 24px;
+    align-items: center;
   }
 
   .radio-item {
     display: flex;
     align-items: center;
     cursor: pointer;
-    position: relative;
+    gap: 8px;
+    font-size: 14px;
+    white-space: nowrap;
   }
 
   .radio-item input {
-    position: absolute;
-    opacity: 0;
+    display: none;
   }
 
   .radio-custom {
@@ -98,8 +86,8 @@
     height: 18px;
     border: 2px solid #777;
     border-radius: 50%;
-    margin-right: 8px;
     position: relative;
+    flex-shrink: 0;
   }
 
   .radio-item input:checked + .radio-custom {
@@ -117,7 +105,17 @@
     left: 2px;
   }
 
-  /* ✅ BUTTON FIX */
+  /* Phone times */
+
+  .phone-times {
+    display: none;
+  }
+
+  .phone-times.active {
+    display: block;
+  }
+
+  /* Button */
 
   .submit-wrap {
     text-align: right;
@@ -126,9 +124,8 @@
 
   .submit-btn {
     padding: 10px 24px;
-    border-radius: 24px; /* Material pill */
-    font-weight: 500;
-    width: auto; /* 🔥 key fix */
+    border-radius: 24px;
+    width: auto;
   }
 
   :focus {
