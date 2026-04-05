@@ -1,8 +1,6 @@
-const clientData = {
-    nalaUID: "U12345", /* this is the person recieving requests etc. */
-    
+window.clientConfig = {
     breadcrumb: [
-	{ text: "Home",       link: "#" },
+	{ text: "Home",        link: "#" },
 	{ text: "Locksmiths", link: "#" },
 	{ text: "New York",   link: "#" },
     ],
@@ -62,6 +60,6 @@ const clientData = {
 	title:       "Top Pro status",
 	description: "Top Pros are among the highest-rated, most popular professionals on the platform. " +
 	             "Mel the Locksmith has maintained Top Pro status for 3 consecutive years.",
-	years:       [2020, 2021, 2025, 2026],
+	years:       [2022, 2023, 2024],
     },
 };

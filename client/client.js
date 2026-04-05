@@ -296,7 +296,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 	console.log("[_client] Client DOM ready")
 
-	const profile = new ClientProfile(clientData)
+	// Accept config from window.clientConfig (preferred) or fall back to legacy clientData
+	const config = window.clientConfig || window.clientData || {}
+	wc.log("[_client] Using config:", config)
+	const profile = new ClientProfile(config)
 
 	PubSub.subscribe("global.click", (msg, data) => {
 	    console.log("[_client] Global click:", msg, data)
