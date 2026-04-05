@@ -125,17 +125,38 @@ class MtkRequest {
     this.el.querySelector('form').addEventListener('submit', (e) => {
       e.preventDefault();
 
+      const phoneInput   = this.el.querySelector('.phone');
+      const contactType  = this.el.querySelector('input[name="contactType"]:checked')?.value || '';
+
+      // If "Contact me by phone" is selected, phone cannot be blank
+      if (contactType === 'phone' && !phoneInput.value.trim()) {
+        wc.log('[mtk-request] Validation failed — phone required when contact by phone selected');
+        phoneInput.parentElement.classList.add('active');
+        phoneInput.focus();
+        phoneInput.style.borderBottomColor = '#dc3545';
+        phoneInput.parentElement.querySelector('label').style.color = '#dc3545';
+        // Reset red styling on input
+        phoneInput.addEventListener('input', function onFix() {
+          phoneInput.style.borderBottomColor = '';
+          phoneInput.parentElement.querySelector('label').style.color = '';
+          phoneInput.removeEventListener('input', onFix);
+        });
+        return;
+      }
+
       const data = {
-        name:        this.el.querySelector('.name').value,
-        email:       this.el.querySelector('.email').value,
-        phone:       this.el.querySelector('.phone').value,
-        address:     this.el.querySelector('.address').value,
-        help:        this.el.querySelector('.help').value,
-        contactType: this.el.querySelector('input[name="contactType"]:checked').value,
-        callTime:    this.el.querySelector('.call-time').value
+        name:        (this.el.querySelector('.name').value        || '').trim(),
+        email:       (this.el.querySelector('.email').value       || '').trim(),
+        phone:       (phoneInput.value                            || '').trim(),
+        address:     (this.el.querySelector('.address').value     || '').trim(),
+        help:        (this.el.querySelector('.help').value        || '').trim(),
+        contactType: contactType,
+        callTime:    (this.el.querySelector('.call-time').value   || '').trim(),
+        submittedAt: new Date().toISOString(),
+        source:      'mtk-request'
       };
 
-      wc.log('mtk-request:submit', data);
+      wc.log('[mtk-request] Submit →', data);
       wc.publish('mtk-request:submit', data);
 
       this.bsModal.hide();

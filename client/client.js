@@ -203,7 +203,7 @@ class ClientProfile {
 	// Request estimate button — opens mtk-request modal
 	document.getElementById("btnEstimate").addEventListener("click", (e) => {
 	    this.publishClickEvent(e, "button.estimate.clicked")
-	    // Trigger the request dialog via wc pub/sub
+	    wc.log("btnEstimate clicked — opening mtk-request dialog")
 	    wc.publish("mtk-request:open")
 	})
 
@@ -304,6 +304,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 	PubSub.subscribe("button.estimate.clicked", (msg, data) => {
 	    console.log("[_client] Estimate clicked:", data)
+	})
+
+	wc.subscribe("mtk-request:submit", (msg, data) => {
+	    console.log("[_client] Request submitted:", data)
+	    wc.log("mtk-request:submit received", data)
 	})
 
 	PubSub.subscribe("button.share.clicked", (msg, data) => {
