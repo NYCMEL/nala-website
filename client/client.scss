@@ -9,11 +9,13 @@ body {
   color: $color-text-primary;
   background-color: $color-bg-light;
   line-height: $line-height-loose;
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 .client-container {
   max-width: $bp-xl;
-  margin: 0 auto;
+  margin: 25px auto;
   padding: $spacing-xl;
   background-color: $color-white;
   min-height: 100vh;
