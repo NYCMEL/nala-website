@@ -1,5 +1,3 @@
-if (typeof MtkRequest === 'undefined') {
-
 class MtkRequest {
   constructor() {
     this.init();
@@ -223,6 +221,6 @@ class MtkRequest {
   }
 }
 
-new MtkRequest();
-
-} // end guard
+if (!window._mtkRequestInstance) {
+    window._mtkRequestInstance = new MtkRequest();
+}
