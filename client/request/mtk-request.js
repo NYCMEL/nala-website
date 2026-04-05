@@ -128,19 +128,32 @@ class MtkRequest {
       const phoneInput   = this.el.querySelector('.phone');
       const contactType  = this.el.querySelector('input[name="contactType"]:checked')?.value || '';
 
+      const emailInput = this.el.querySelector('.email');
+
+      // Helper: highlight a field red and clear on fix
+      const flagField = (input) => {
+        input.parentElement.classList.add('active');
+        input.focus();
+        input.style.borderBottomColor = '#dc3545';
+        input.parentElement.querySelector('label').style.color = '#dc3545';
+        input.addEventListener('input', function onFix() {
+          input.style.borderBottomColor = '';
+          input.parentElement.querySelector('label').style.color = '';
+          input.removeEventListener('input', onFix);
+        });
+      };
+
       // If "Contact me by phone" is selected, phone cannot be blank
       if (contactType === 'phone' && !phoneInput.value.trim()) {
         wc.log('[mtk-request] Validation failed — phone required when contact by phone selected');
-        phoneInput.parentElement.classList.add('active');
-        phoneInput.focus();
-        phoneInput.style.borderBottomColor = '#dc3545';
-        phoneInput.parentElement.querySelector('label').style.color = '#dc3545';
-        // Reset red styling on input
-        phoneInput.addEventListener('input', function onFix() {
-          phoneInput.style.borderBottomColor = '';
-          phoneInput.parentElement.querySelector('label').style.color = '';
-          phoneInput.removeEventListener('input', onFix);
-        });
+        flagField(phoneInput);
+        return;
+      }
+
+      // If "Contact me by email" is selected, email cannot be blank
+      if (contactType === 'email' && !emailInput.value.trim()) {
+        wc.log('[mtk-request] Validation failed — email required when contact by email selected');
+        flagField(emailInput);
         return;
       }
 
