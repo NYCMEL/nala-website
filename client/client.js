@@ -39,7 +39,6 @@ class ClientProfile {
     }
 
     init() {
-	this.renderBreadcrumb()
 	this.renderHeader()
 	this.renderStats()
 	this.renderTabs()
@@ -49,14 +48,6 @@ class ClientProfile {
 	this.initGlobalClickListener()
     }
 
-    renderBreadcrumb() {
-	const breadcrumb = document.getElementById("breadcrumb")
-	const items = this.data.breadcrumb
-	      .map((item, index) => {
-		  const isLast = index === this.data.breadcrumb.length - 1
-		  return `
-        <a href="${item.link}">${item.text}</a>
-        ${!isLast ? '<span class="breadcrumb-separator">›</span>' : ""}
       `
 	      })
 	      .join("")
