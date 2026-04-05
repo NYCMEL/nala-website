@@ -24,8 +24,8 @@ function waitForElement(selector, root = document, timeout = 8000) {
 }
 
 // Public API: client(config)
-// Called from client.config.js — waits for .client-container to exist before instantiating
-window.client = function(config) {
+// Assigned to both window and var so jQuery globalEval context can find it
+var client = window.client = function(config) {
     waitForElement('.client-container').then(function() {
         wc.log('[client] DOM ready, instantiating ClientProfile');
         new ClientProfile(config);
@@ -46,12 +46,6 @@ class ClientProfile {
 	this.renderSidebar()
 	this.attachEventListeners()
 	this.initGlobalClickListener()
-    }
-
-      `
-	      })
-	      .join("")
-	breadcrumb.innerHTML = items
     }
 
     renderHeader() {

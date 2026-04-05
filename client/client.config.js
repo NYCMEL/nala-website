@@ -1,9 +1,4 @@
 client({
-    breadcrumb: [
-	{ text: "Home",        link: "#" },
-	{ text: "Locksmiths", link: "#" },
-	{ text: "New York",   link: "#" },
-    ],
     business: {
 	name:        "Mel the Locksmith",
 	logo:        "img/mel.co.png",
