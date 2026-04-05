@@ -1,6 +1,6 @@
 const clientData = {
     breadcrumb: [
-	{ text: "Home",        link: "#" },
+	{ text: "Home",       link: "#" },
 	{ text: "Locksmiths", link: "#" },
 	{ text: "New York",   link: "#" },
     ],
