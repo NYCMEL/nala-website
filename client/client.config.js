@@ -1,4 +1,6 @@
 const clientData = {
+    nalaUID: "U12345", /* this is the person recieving requests etc. */
+    
     breadcrumb: [
 	{ text: "Home",       link: "#" },
 	{ text: "Locksmiths", link: "#" },
