@@ -128,9 +128,11 @@ class MtkRequest {
       const phoneInput   = this.el.querySelector('.phone');
       const contactType  = this.el.querySelector('input[name="contactType"]:checked')?.value || '';
 
+      const nameInput  = this.el.querySelector('.name');
       const emailInput = this.el.querySelector('.email');
+      const helpInput  = this.el.querySelector('.help');
 
-      // Helper: highlight a field red and clear on fix
+      // Helper: highlight a field red and clear styling on next input
       const flagField = (input) => {
         input.parentElement.classList.add('active');
         input.focus();
@@ -143,17 +145,38 @@ class MtkRequest {
         });
       };
 
-      // If "Contact me by phone" is selected, phone cannot be blank
+      // 1. Name — always required
+      if (!nameInput.value.trim()) {
+        wc.log('[mtk-request] Validation failed — name is required');
+        flagField(nameInput);
+        return;
+      }
+
+      // 2. Contact method drives which field is required
+      //    "by phone" → phone required; "by email" → email required; neither filled → flag by contact type
       if (contactType === 'phone' && !phoneInput.value.trim()) {
         wc.log('[mtk-request] Validation failed — phone required when contact by phone selected');
         flagField(phoneInput);
         return;
       }
 
-      // If "Contact me by email" is selected, email cannot be blank
       if (contactType === 'email' && !emailInput.value.trim()) {
         wc.log('[mtk-request] Validation failed — email required when contact by email selected');
         flagField(emailInput);
+        return;
+      }
+
+      // 3. Neither contact method selected but both blank — require at least one
+      if (!emailInput.value.trim() && !phoneInput.value.trim()) {
+        wc.log('[mtk-request] Validation failed — email or phone required');
+        flagField(emailInput);
+        return;
+      }
+
+      // 5. Help — required
+      if (!helpInput.value.trim()) {
+        wc.log('[mtk-request] Validation failed — help description is required');
+        flagField(helpInput);
         return;
       }
 

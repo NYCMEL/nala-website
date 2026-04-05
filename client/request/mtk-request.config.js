@@ -3,8 +3,8 @@ window.mtkRequestConfig = {
   submitText: "Submit Request",
   fields: {
     name:    { label: "Full Name",                    placeholder: "e.g. John A. Smith",          required: true  },
-    email:   { label: "Email",                        placeholder: "e.g. john@example.com",       required: true  },
-    phone:   { label: "Phone",                        placeholder: "e.g. (646) 555-1234",         required: false },
+    email:   { label: "Email",                        placeholder: "e.g. john@example.com",       required: false },  // required if phone blank
+    phone:   { label: "Phone",                        placeholder: "e.g. (646) 555-1234",         required: false },  // required if email blank
     address: { label: "Address",                      placeholder: "e.g. 123 Main St, New York",  required: false },
     help:    { label: "What do you need help with?",  placeholder: "e.g. Locked out, need new locks installed, key duplication...", required: true  }
   },
