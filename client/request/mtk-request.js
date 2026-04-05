@@ -152,8 +152,10 @@ class MtkRequest {
         return;
       }
 
-      // 2. Contact method drives which field is required
-      //    "by phone" → phone required; "by email" → email required; neither filled → flag by contact type
+      const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const PHONE_REGEX = /^(?:\+1\s?)?(?:\(\d{3}\)|\d{3})[\s.\-]?\d{3}[\s.\-]?\d{4}$/;
+
+      // 2. Contact method drives which field is required + format validation
       if (contactType === 'phone' && !phoneInput.value.trim()) {
         wc.log('[mtk-request] Validation failed — phone required when contact by phone selected');
         flagField(phoneInput);
@@ -166,10 +168,23 @@ class MtkRequest {
         return;
       }
 
-      // 3. Neither contact method selected but both blank — require at least one
+      // 3. Neither filled — require at least one
       if (!emailInput.value.trim() && !phoneInput.value.trim()) {
         wc.log('[mtk-request] Validation failed — email or phone required');
         flagField(emailInput);
+        return;
+      }
+
+      // 4. Format validation — only validate if the field has a value
+      if (emailInput.value.trim() && !EMAIL_REGEX.test(emailInput.value.trim())) {
+        wc.log('[mtk-request] Validation failed — invalid email format');
+        flagField(emailInput);
+        return;
+      }
+
+      if (phoneInput.value.trim() && !PHONE_REGEX.test(phoneInput.value.trim())) {
+        wc.log('[mtk-request] Validation failed — invalid phone format');
+        flagField(phoneInput);
         return;
       }
 
