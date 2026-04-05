@@ -1,4 +1,6 @@
 client({
+    nalaUID: "U12345", /* USED FOR IDENTIFYING THE CLIENT WHEN SENDING REQUESTS */
+
     business: {
 	name:        "Mel the Locksmith",
 	logo:        "img/mel.co.png",
