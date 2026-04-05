@@ -40,14 +40,23 @@ class MtkRequest {
     labels[3].innerText = c.fields.address.label;
     labels[4].innerText = c.fields.help.label;
 
-    const contactSelect = this.el.querySelector('.contact-type');
-    c.contactOptions.forEach(opt => {
-      const o = document.createElement('option');
-      o.value = opt.value;
-      o.textContent = opt.label;
-      contactSelect.appendChild(o);
+    // RADIO RENDER
+    const radioGroup = this.el.querySelector('.radio-group');
+
+    this.config.contactOptions.forEach((opt, i) => {
+      const wrapper = document.createElement('label');
+      wrapper.className = 'radio-item';
+
+      wrapper.innerHTML = `
+        <input type="radio" name="contactType" value="${opt.value}" ${i === 0 ? 'checked' : ''}>
+        <span class="radio-custom"></span>
+        <span>${opt.label}</span>
+      `;
+
+      radioGroup.appendChild(wrapper);
     });
 
+    // Call times
     const timeSelect = this.el.querySelector('.call-time');
     c.phoneTimes.forEach(t => {
       const o = document.createElement('option');
@@ -60,7 +69,7 @@ class MtkRequest {
   bindEvents() {
     const openBtn = this.el.querySelector('.open-dialog');
     const closeBtn = this.el.querySelector('.close-dialog');
-    const contactType = this.el.querySelector('.contact-type');
+    const radios = this.el.querySelectorAll('input[name="contactType"]');
     const phoneTimes = this.el.querySelector('.phone-times');
 
     openBtn.addEventListener('click', () => {
@@ -75,15 +84,15 @@ class MtkRequest {
       this.bsModal.hide();
     });
 
-    contactType.addEventListener('change', () => {
-      if (contactType.value === 'phone') {
-        phoneTimes.classList.add('active');
-      } else {
-        phoneTimes.classList.remove('active');
-      }
+    radios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        const value = radio.value;
 
-      wc.log('mtk-request:contact-change', contactType.value);
-      wc.publish('mtk-request:contact-change', contactType.value);
+        phoneTimes.classList.toggle('active', value === 'phone');
+
+        wc.log('mtk-request:contact-change', value);
+        wc.publish('mtk-request:contact-change', value);
+      });
     });
 
     // Floating labels
@@ -109,7 +118,7 @@ class MtkRequest {
         phone: this.el.querySelector('.phone').value,
         address: this.el.querySelector('.address').value,
         help: this.el.querySelector('.help').value,
-        contactType: contactType.value,
+        contactType: this.el.querySelector('input[name="contactType"]:checked').value,
         callTime: this.el.querySelector('.call-time').value
       };
 

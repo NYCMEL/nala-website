@@ -1,9 +1,12 @@
+@charset "UTF-8";
 .mtk-request {
   display: block;
-  /* Material Field */ }
+  /* RADIO */
+  /* ✅ BUTTON FIX */ }
 
 .mtk-request .modal-dialog {
-  max-width: 50%; }
+  max-width: 480px;
+  margin: auto; }
 
 @media (max-width: 768px) {
   .mtk-request .modal-dialog {
@@ -51,6 +54,62 @@
 
 .mtk-request .phone-times.active {
   display: block; }
+
+.mtk-request .contact-group {
+  margin-bottom: 20px; }
+
+.mtk-request .group-label {
+  display: block;
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 8px; }
+
+.mtk-request .radio-group {
+  display: flex;
+  gap: 20px; }
+
+.mtk-request .radio-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative; }
+
+.mtk-request .radio-item input {
+  position: absolute;
+  opacity: 0; }
+
+.mtk-request .radio-custom {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #777;
+  border-radius: 50%;
+  margin-right: 8px;
+  position: relative; }
+
+.mtk-request .radio-item input:checked + .radio-custom {
+  border-color: #0d6efd; }
+
+.mtk-request .radio-item input:checked + .radio-custom::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: #0d6efd;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px; }
+
+.mtk-request .submit-wrap {
+  text-align: right;
+  margin-top: 10px; }
+
+.mtk-request .submit-btn {
+  padding: 10px 24px;
+  border-radius: 24px;
+  /* Material pill */
+  font-weight: 500;
+  width: auto;
+  /* 🔥 key fix */ }
 
 .mtk-request :focus {
   outline: 2px solid #0d6efd;
