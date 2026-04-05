@@ -89,7 +89,76 @@
     </div>
 </div>
 
-<div>
-    <wc-include href="client/request/index.inc.html"/>
-</div>
+<!-- REQUEST DIALOG — inlined to avoid nested wc-include timing issues -->
+<link href="client/request/mtk-request.css" rel="stylesheet">
 
+<mtk-request class="mtk-request">
+
+    <!-- Trigger button hidden — opened via wc.publish("mtk-request:open") -->
+    <button type="button" class="btn btn-primary open-dialog" style="display:none" aria-hidden="true">
+	Request Estimate
+    </button>
+
+    <div class="modal fade" tabindex="-1">
+	<div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+
+		<div class="modal-header">
+		    <h5 class="modal-title"></h5>
+		    <button type="button" class="btn-close close-dialog"></button>
+		</div>
+
+		<div class="modal-body">
+		    <form>
+
+			<div class="md-field">
+			    <input type="text" class="name" required />
+			    <label></label>
+			</div>
+
+			<div class="md-field">
+			    <input type="email" class="email" />
+			    <label></label>
+			</div>
+
+			<div class="md-field">
+			    <input type="tel" class="phone" />
+			    <label></label>
+			</div>
+
+			<div class="md-field">
+			    <input type="text" class="address" />
+			    <label></label>
+			</div>
+
+			<div class="md-field">
+			    <textarea class="help" rows="3"></textarea>
+			    <label></label>
+			</div>
+
+			<!-- RADIO GROUP -->
+			<div class="contact-group">
+			    <div class="group-label">Preferred Contact Method</div>
+			    <div class="radio-group"></div>
+			</div>
+
+			<div class="md-field phone-times">
+			    <select class="call-time"></select>
+			    <label>Best Time to Call</label>
+			</div>
+
+			<div class="submit-wrap">
+			    <button type="submit" class="btn btn-primary submit-btn"></button>
+			</div>
+
+		    </form>
+		</div>
+
+	    </div>
+	</div>
+    </div>
+
+</mtk-request>
+
+<script src="client/request/mtk-request.config.js"></script>
+<script src="client/request/mtk-request.js"></script>
