@@ -198,6 +198,9 @@ class ClientProfile {
 	document.getElementById("btnEstimate").addEventListener("click", (e) => {
 	    this.publishClickEvent(e, "button.estimate.clicked")
 	    wc.log("btnEstimate clicked — opening mtk-request dialog")
+	    // Pass nalaUID into the hidden field before opening
+	    const uidField = document.querySelector(".mtk-request .nala-uid")
+	    if (uidField && this.data.nalaUID) uidField.value = this.data.nalaUID
 	    wc.publish("mtk-request:open")
 	})
 

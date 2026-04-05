@@ -198,6 +198,7 @@ class MtkRequest {
       }
 
       const data = {
+        nalaUID:     (this.el.querySelector('.nala-uid')?.value   || '').trim(),
         name:        (this.el.querySelector('.name').value        || '').trim(),
         email:       (this.el.querySelector('.email').value       || '').trim(),
         phone:       (phoneInput.value                            || '').trim(),
