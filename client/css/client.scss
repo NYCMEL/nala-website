@@ -1,4 +1,4 @@
-@import "../css/nala.scss";
+@import "../../css/nala.scss";
 
 #client-image {
   width: 100%;
@@ -325,3 +325,15 @@ body {
   .client-layout    { flex-direction: column; }
   .client-sidebar   { order: -1; }
 }
+
+// ── Stat text styling ────────────────────────────────────
+
+// Review mode (default) — normal colors
+.stat-num   { color: $color-text-primary; font-weight: $font-weight-medium; }
+.stat-suffix,
+.stat-text  { color: $color-text-primary; }
+
+// Edit mode — add .edtable class to body or container to activate
+.edtable-mode .stat-suffix,
+.edtable-mode .stat-text  { color: $color-text-secondary; }
+.edtable-mode .stat-num   { color: $color-text-primary; font-weight: $font-weight-medium; }

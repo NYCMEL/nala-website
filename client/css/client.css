@@ -534,3 +534,19 @@ body {
     flex-direction: column; }
   .client-sidebar {
     order: -1; } }
+
+.stat-num {
+  color: #212121;
+  font-weight: 500; }
+
+.stat-suffix,
+.stat-text {
+  color: #212121; }
+
+.edtable-mode .stat-suffix,
+.edtable-mode .stat-text {
+  color: #757575; }
+
+.edtable-mode .stat-num {
+  color: #212121;
+  font-weight: 500; }

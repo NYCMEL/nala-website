@@ -153,19 +153,24 @@ class ClientProfile {
     }
 
     disableEditable() {
+	document.querySelector('.client-container').classList.remove('edtable-mode')
 	document.querySelectorAll('[data-editable]').forEach(function(el) {
 	    el.removeAttribute('contenteditable')
-	    el.style.outline   = ''
-	    el.style.minHeight = ''
-	    el.style.cursor    = ''
-	    el.title           = ''
+	    el.style.outline    = ''
+	    el.style.minHeight  = ''
+	    el.style.cursor     = ''
+	    el.style.color      = ''
+	    el.style.fontWeight = ''
+	    el.title            = ''
 	})
-	// Re-render social media in review view
+	// Re-render social media + stats in review view
 	this.renderSocialMedia(false)
+	this.renderStats()
     }
 
     enableEditable() {
 	wc.log('[client] edtable mode ON')
+	document.querySelector('.client-container').classList.add('edtable-mode')
 	this.renderSocialMedia(true)
 	document.querySelectorAll('[data-editable]').forEach(function(el) {
 	    el.style.outline = '2px dashed #009fd9'
@@ -199,6 +204,7 @@ class ClientProfile {
 	// Click on logo — always opens file picker (edit mode gates via cursor/outline in enableEditable)
 	const self = this
 	logo.addEventListener('click', function() {
+	    if (!document.querySelector('.client-container').classList.contains('edtable-mode')) return
 	    const picker = document.createElement('input')
 	    picker.type = 'file'
 	    picker.accept = 'image/*'
@@ -256,7 +262,7 @@ class ClientProfile {
       <div class="stat-item stat-${stat.type}">
         <span class="material-icons">${stat.icon}</span>
         ${(stat.type === 'team' && stat.text.match(/^(\d+)(.*)$/))
-          ? '<span><span class="stat-num" data-editable data-stat-index="' + i + '" style="display:inline">' + stat.text.match(/^(\d+)(.*)/)[1] + '</span>' + stat.text.match(/^(\d+)(.*)/)[2] + '</span>'
+          ? '<span><span class="stat-num" data-editable data-stat-index="' + i + '">' + stat.text.match(/^(\d+)(.*)/)[1] + '</span><span class="stat-suffix">' + stat.text.match(/^(\d+)(.*)/)[2] + '</span></span>'
           : '<span class=\"stat-text\">' + stat.text + '</span>'}
       </div>
     `,
