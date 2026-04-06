@@ -82,9 +82,18 @@ class ClientProfile {
 		document.querySelectorAll('[data-editable]').forEach(function(el) {
 		    if (el.id === 'socialMediaLinks') return // handled separately
 		    if (el.id === 'clientLogo') return       // handled separately (base64)
+		    if (el.dataset.statIndex !== undefined) return // handled separately below
 		    const key = el.id || el.className
 		    changes[key] = el.textContent.trim()
 		})
+
+		// Stats — collect updated text by index
+		const updatedStats = []
+		document.querySelectorAll('[data-stat-index]').forEach(function(el) {
+		    const i = parseInt(el.dataset.statIndex)
+		    updatedStats[i] = el.textContent.trim()
+		})
+		if (updatedStats.length) changes.stats = updatedStats
 
 		// Logo (if updated)
 		const logoImg = document.querySelector('#clientLogo img')
@@ -243,10 +252,12 @@ class ClientProfile {
 	const statsContainer = document.getElementById("clientStats")
 	const statsHTML = this.data.stats
 	      .map(
-		  (stat) => `
+		  (stat, i) => `
       <div class="stat-item stat-${stat.type}">
         <span class="material-icons">${stat.icon}</span>
-        <span>${stat.text}</span>
+        ${(stat.type === 'team' && stat.text.match(/^(\d+)(.*)$/))
+          ? '<span><span class="stat-num" data-editable data-stat-index="' + i + '" style="display:inline">' + stat.text.match(/^(\d+)(.*)/)[1] + '</span>' + stat.text.match(/^(\d+)(.*)/)[2] + '</span>'
+          : '<span class=\"stat-text\">' + stat.text + '</span>'}
       </div>
     `,
 	      )
