@@ -31,3 +31,5 @@ table has 3 rows for facehook, instagram and twitter:
 when checkbox on any row is clicked, display social icon inside the "placeholder", with correct link from link,
 when unchecked, remove the icon from placeholder
 
+
+add column labels: "", "Media", "Your Social Link"

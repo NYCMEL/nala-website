@@ -1,6 +1,5 @@
 var config = {
     editable: true,
-
     nalaUID: "U12345", /* USED FOR IDENTIFYING THE CLIENT WHEN SENDING REQUESTS */
 
     business: {
@@ -48,9 +47,9 @@ var config = {
     socialMedia: {
 	title: "Social media",
 	links: [
-	    { platform: "<img src='img/facebook.png'  height=30>", url: "#" },
-	    { platform: "<img src='img/instagram.png' height=30",  url: "#" },
-	    { platform: "<img src='img/twitter.png'   height=30>", url: "#" },
+	    { platform: "facebook",  icon: "img/facebook.png",  url: "" },
+	    { platform: "instagram", icon: "img/instagram.png", url: "" },
+	    { platform: "twitter",   icon: "img/twitter.png",   url: "" },
 	]
     },
     topProStatus: {

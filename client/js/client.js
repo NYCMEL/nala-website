@@ -178,10 +178,7 @@ class ClientProfile {
 
 	// Social media
 	document.getElementById("socialMediaTitle").textContent = this.data.socialMedia.title
-	const socialLinks = document.getElementById("socialMediaLinks")
-	socialLinks.innerHTML = this.data.socialMedia.links
-	    .map((link) => `<a href="${link.url}">${link.platform}</a>&nbsp;`)
-	    .join("")
+	this.renderSocialMedia()
 
 	// Top Pro status
 	document.getElementById("topProTitle").textContent = this.data.topProStatus.title
@@ -200,6 +197,171 @@ class ClientProfile {
     `,
 	    )
 	    .join("")
+    }
+
+    renderSocialMedia() {
+	const links     = this.data.socialMedia.links
+	const container = document.getElementById("socialMediaLinks")
+	const isEdit    = this.data.editable || window.edtable
+
+	if (!isEdit) {
+	    // Normal view — show icons as links
+	    container.innerHTML = links
+		.filter(l => l.url)
+		.map(l => `<a href="${l.url}" target="_blank"><img src="${l.icon}" height="30" alt="${l.platform}"></a>&nbsp;`)
+		.join("")
+	    return
+	}
+
+	// Editable view — MD table + preview placeholder
+	container.innerHTML = `
+	    <table class="social-edit-table" style="width:100%;border-collapse:collapse;margin-bottom:16px">
+		<tbody>
+		    ${links.map((l, i) => `
+		    <tr data-platform="${l.platform}" style="border-bottom:1px solid #e0e0e0">
+			<!-- Col 1: MD Checkbox -->
+			<td style="width:40px;vertical-align:middle;padding:10px 4px 10px 0">
+			    <label class="md-checkbox" style="display:inline-flex;align-items:center;cursor:pointer;margin:0">
+				<input type="checkbox" class="social-check" data-index="${i}"
+				    ${l.url ? 'checked' : ''}
+				    style="display:none">
+				<span class="md-checkbox-box" style="
+				    width:18px;height:18px;border-radius:2px;
+				    border:2px solid ${l.url ? '#009fd9' : '#757575'};
+				    background:${l.url ? '#009fd9' : 'transparent'};
+				    display:inline-flex;align-items:center;justify-content:center;
+				    transition:all 0.15s;flex-shrink:0">
+				    ${l.url ? '<span style="color:#fff;font-size:13px;font-weight:700;line-height:1">✓</span>' : ''}
+				</span>
+			    </label>
+			</td>
+			<!-- Col 2: Icon -->
+			<td style="width:44px;vertical-align:middle;padding:10px 8px">
+			    <img src="${l.icon}" height="26" alt="${l.platform}" style="display:block;opacity:${l.url ? '1' : '0.4'}">
+			</td>
+			<!-- Col 3: MD floating-label text field -->
+			<td style="vertical-align:middle;padding:10px 4px">
+			    <div class="md-field" style="margin-bottom:0;padding-top:16px;position:relative">
+				<input type="text" class="social-url" data-index="${i}"
+				    value="${l.url || ''}"
+				    placeholder=" "
+				    style="width:100%;border:none;border-bottom:${l.url ? '2px solid #009fd9' : '1px solid #ccc'};
+					   outline:none;font-size:13px;color:#212121;
+					   padding:4px 0 4px;background:transparent;transition:border 0.2s">
+				<label style="position:absolute;left:0;top:${l.url ? '0' : '20px'};
+					      font-size:${l.url ? '11px' : '13px'};
+					      color:${l.url ? '#009fd9' : '#9e9e9e'};
+					      pointer-events:none;transition:all 0.2s;font-style:${l.url ? 'normal' : 'italic'}">
+				    https://www.${l.platform}.com/yourpage
+				</label>
+			    </div>
+			</td>
+		    </tr>`).join("")}
+		</tbody>
+	    </table>
+
+	    <!-- MD-style preview section -->
+	    <div style="margin-bottom:4px;font-size:11px;color:#9e9e9e;text-transform:uppercase;
+			 letter-spacing:0.06em">Preview</div>
+	    <div class="social-preview" style="display:flex;gap:10px;min-height:40px;
+		 align-items:center;flex-wrap:wrap;padding:8px 0;
+		 border-bottom:1px solid #e0e0e0">
+	    </div>
+	`
+
+	const self      = this
+	const preview   = container.querySelector(".social-preview")
+
+	// MD floating label + live update
+	container.querySelectorAll(".social-url").forEach(function(input) {
+	    const mdField = input.closest(".md-field")
+	    const label   = mdField && mdField.querySelector("label")
+
+	    function floatLabel(hasVal) {
+		if (!label) return
+		label.style.top       = hasVal ? "0"      : "20px"
+		label.style.fontSize  = hasVal ? "11px"   : "13px"
+		label.style.color     = hasVal ? "#009fd9" : "#9e9e9e"
+		label.style.fontStyle = hasVal ? "normal"  : "italic"
+		input.style.borderBottom = hasVal ? "2px solid #009fd9" : "1px solid #ccc"
+	    }
+
+	    input.addEventListener("focus", function() {
+		if (label) { label.style.top = "0"; label.style.fontSize = "11px"; label.style.color = "#009fd9" }
+		input.style.borderBottom = "2px solid #009fd9"
+	    })
+
+	    input.addEventListener("blur", function() {
+		floatLabel(!!input.value.trim())
+	    })
+
+	    input.addEventListener("input", function() {
+		const val = input.value.trim()
+		// Update config
+		const i = parseInt(input.dataset.index)
+		self.data.socialMedia.links[i].url = val
+		// Update checkbox + icon opacity
+		const row = container.querySelector(`tr[data-platform="${self.data.socialMedia.links[i].platform}"]`)
+		if (row) {
+		    const box = row.querySelector(".md-checkbox-box")
+		    const img = row.querySelector("img")
+		    if (box) {
+			box.style.background   = val ? "#009fd9" : "transparent"
+			box.style.borderColor  = val ? "#009fd9" : "#757575"
+			box.innerHTML          = val ? '<span style="color:#fff;font-size:13px;font-weight:700;line-height:1">✓</span>' : ""
+		    }
+		    if (img) img.style.opacity = val ? "1" : "0.4"
+		    const cb = row.querySelector(".social-check")
+		    if (cb) cb.checked = !!val
+		}
+		self._refreshSocialPreview(container, self.data.socialMedia.links)
+	    })
+	})
+
+	// Checkbox manual toggle also updates MD box styling
+	container.querySelectorAll(".social-check").forEach(function(cb) {
+	    cb.addEventListener("change", function() {
+		const row = cb.closest("tr")
+		const box = row && row.querySelector(".md-checkbox-box")
+		const img = row && row.querySelector("img")
+		if (box) {
+		    box.style.background  = cb.checked ? "#009fd9" : "transparent"
+		    box.style.borderColor = cb.checked ? "#009fd9" : "#757575"
+		    box.innerHTML = cb.checked ? '<span style="color:#fff;font-size:13px;font-weight:700;line-height:1">✓</span>' : ""
+		}
+		if (img) img.style.opacity = cb.checked ? "1" : "0.4"
+		self._refreshSocialPreview(container, self.data.socialMedia.links)
+	    })
+	    // Click on visual checkbox box triggers the hidden input
+	    const box = cb.closest("label") && cb.closest("label").querySelector(".md-checkbox-box")
+	    if (box) box.addEventListener("click", function() { cb.click() })
+	})
+
+	// Init preview from pre-checked rows
+	this._refreshSocialPreview(container, links)
+    }
+
+    _refreshSocialPreview(container, links) {
+	const preview = container.querySelector(".social-preview")
+	if (!preview) return
+	preview.innerHTML = ""
+	container.querySelectorAll(".social-check").forEach(function(cb) {
+	    if (!cb.checked) return
+	    const i    = parseInt(cb.dataset.index)
+	    const link = links[i]
+	    const url  = container.querySelector(`.social-url[data-index="${i}"]`)?.value.trim() || link.url || "#"
+	    const a    = document.createElement("a")
+	    a.href            = url || "#"
+	    a.target          = "_blank"
+	    a.style.display   = "inline-flex"
+	    a.style.alignItems = "center"
+	    a.innerHTML       = `<img src="${link.icon}" height="28" alt="${link.platform}">`
+	    preview.appendChild(a)
+	})
+	if (!preview.children.length) {
+	    preview.innerHTML = `<span style="color:#bbb;font-size:12px;font-style:italic">
+		Checked icons will appear here</span>`
+	}
     }
 
     renderSidebar() {
