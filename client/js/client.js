@@ -46,12 +46,65 @@ class ClientProfile {
 	this.renderSidebar()
 	this.attachEventListeners()
 	this.initGlobalClickListener()
+	if (window.edtable) this.enableEditable()
+    }
+
+    enableEditable() {
+	wc.log('[client] edtable mode ON')
+	document.querySelectorAll('[data-editable]').forEach(function(el) {
+	    el.style.outline = '2px dashed #009fd9'
+
+	    // Logo uses click-to-replace — no contenteditable
+	    if (el.id === 'clientLogo') {
+		el.style.cursor = 'pointer'
+		el.title = 'Click to change photo'
+		return
+	    }
+
+	    el.setAttribute('contenteditable', 'true')
+	    el.style.minHeight = '1em'
+	    el.style.cursor = 'text'
+	    el.addEventListener('blur', function() {
+		wc.log('[client] edtable changed:', el.id || el.className, el.textContent.trim())
+		wc.publish('client:edtable-change', {
+		    id:    el.id || null,
+		    class: el.className || null,
+		    value: el.textContent.trim()
+		})
+	    })
+	})
     }
 
     renderHeader() {
 	// Logo
 	const logo = document.getElementById("clientLogo")
 	logo.innerHTML = `<img src="${this.data.business.logo}" alt="${this.data.business.name}">`
+
+	// Click on logo image opens file picker to update it (only in edtable mode)
+	logo.addEventListener('click', function() {
+	    if (!window.edtable) return
+	    const picker = document.createElement('input')
+	    picker.type = 'file'
+	    picker.accept = 'image/*'
+	    picker.onchange = function() {
+		const file = picker.files[0]
+		if (!file) return
+		const reader = new FileReader()
+		reader.onload = function(e) {
+		    const img = logo.querySelector('img')
+		    if (img) img.src = e.target.result
+		    wc.log('[client] edtable logo updated:', file.name)
+		    wc.publish('client:edtable-change', {
+			id:    'clientLogo',
+			class: 'client-logo',
+			value: e.target.result,
+			file:  file.name
+		    })
+		}
+		reader.readAsDataURL(file)
+	    }
+	    picker.click()
+	})
 
 	// Name
 	document.getElementById("clientName").textContent = this.data.business.name

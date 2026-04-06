@@ -1,4 +1,4 @@
-var config = {
+client({
     nalaUID: "U12345", /* USED FOR IDENTIFYING THE CLIENT WHEN SENDING REQUESTS */
 
     business: {
@@ -23,7 +23,7 @@ var config = {
 	viewDetailsLink: "View project details",
     },
     guarantee: {
-	title:         "Mel the Locksmith Guarantee",
+	title:         "Our Guarantee",
 	text:          "Work is guaranteed or your money back. We stand behind every job — residential, commercial, and automotive.",
 	learnMoreLink: "Learn more about our guarantee",
     },
@@ -57,4 +57,4 @@ var config = {
 	             "Mel the Locksmith has maintained Top Pro status for 3 consecutive years.",
 	years:       [2022, 2023, 2024],
     },
-}
+});
