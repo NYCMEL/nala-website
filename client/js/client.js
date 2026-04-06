@@ -52,20 +52,66 @@ class ClientProfile {
     }
 
     initEditSwitch() {
-	const bar    = document.getElementById('editModeBar')
-	const toggle = document.getElementById('editModeToggle')
-	const slider = bar && bar.querySelector('.edit-switch-slider')
-	const knob   = bar && bar.querySelector('.edit-switch-knob')
+	const bar     = document.getElementById('editModeBar')
+	const toggle  = document.getElementById('editModeToggle')
+	const slider  = bar && bar.querySelector('.edit-switch-slider')
+	const knob    = bar && bar.querySelector('.edit-switch-knob')
+	const saveBtn = document.getElementById('saveChangesBtn')
 	if (!bar || !toggle) return
 
-	// Show the bar
+	// Show the bar — sticky inside container, aligns naturally
 	bar.style.display = 'flex'
 
 	// Start in edit mode if editable:true, else review mode
 	const startEditing = !!(this.data.editable || window.edtable)
 	toggle.checked = startEditing
 	this._applyEditSwitchStyle(slider, knob, startEditing)
-	if (startEditing) this.enableEditable()
+	if (startEditing) {
+	    this.enableEditable()
+	    if (saveBtn) saveBtn.style.display = 'inline-block'
+	}
+
+	// Save Changes — collect all data-editable values and publish
+	if (saveBtn) {
+	    const self = this
+	    saveBtn.addEventListener('click', function() {
+		const changes = {}
+
+		// Text editable fields
+		document.querySelectorAll('[data-editable]').forEach(function(el) {
+		    if (el.id === 'socialMediaLinks') return // handled separately
+		    if (el.id === 'clientLogo') return       // handled separately (base64)
+		    const key = el.id || el.className
+		    changes[key] = el.textContent.trim()
+		})
+
+		// Logo (if updated)
+		const logoImg = document.querySelector('#clientLogo img')
+		if (logoImg && logoImg.src.startsWith('data:')) {
+		    changes.clientLogo = logoImg.src
+		}
+
+		// Social media links
+		const socialLinks = []
+		document.querySelectorAll('.social-url').forEach(function(input) {
+		    const i = parseInt(input.dataset.index)
+		    const link = self.data.socialMedia.links[i]
+		    if (link) socialLinks.push({ platform: link.platform, icon: link.icon, url: input.value.trim() })
+		})
+		if (socialLinks.length) changes.socialMedia = socialLinks
+
+		wc.log('[client] Save Changes →', changes)
+		wc.publish('client:save', changes)
+
+		// Visual feedback
+		saveBtn.textContent = 'Saved ✓'
+		saveBtn.style.background = '#2e7d32'
+		setTimeout(function() {
+		    saveBtn.textContent = 'Save Changes'
+		    saveBtn.style.background = '#1565c0'
+		}, 2000)
+	    })
+	}
 
 	const self = this
 	toggle.addEventListener('change', function() {
@@ -74,9 +120,11 @@ class ClientProfile {
 	    if (isEdit) {
 		wc.log('[client] Switch → Edit mode')
 		self.enableEditable()
+		if (saveBtn) saveBtn.style.display = 'inline-block'
 	    } else {
 		wc.log('[client] Switch → Review mode')
 		self.disableEditable()
+		if (saveBtn) saveBtn.style.display = 'none'
 	    }
 	})
     }
@@ -94,12 +142,13 @@ class ClientProfile {
 	    el.style.cursor    = ''
 	    el.title           = ''
 	})
-	// Re-render social media in normal view
-	this.renderSocialMedia()
+	// Re-render social media in review view
+	this.renderSocialMedia(false)
     }
 
     enableEditable() {
 	wc.log('[client] edtable mode ON')
+	this.renderSocialMedia(true)
 	document.querySelectorAll('[data-editable]').forEach(function(el) {
 	    el.style.outline = '2px dashed #009fd9'
 
@@ -248,19 +297,28 @@ class ClientProfile {
 	    .join("")
     }
 
-    renderSocialMedia() {
+    renderSocialMedia(forceEdit) {
 	const links     = this.data.socialMedia.links
 	const container = document.getElementById("socialMediaLinks")
-	const isEdit    = this.data.editable || window.edtable
+	const isEdit    = forceEdit !== undefined
+	    ? forceEdit
+	    : !!(this.data.editable || window.edtable)
+
+	const titleEl = document.getElementById("socialMediaTitle")
 
 	if (!isEdit) {
-	    // Normal view — show icons as links
-	    container.innerHTML = links
-		.filter(l => l.url)
+	    // Review view — icons only, no table
+	    const visibleLinks = links.filter(l => l.url)
+	    container.innerHTML = visibleLinks
 		.map(l => `<a href="${l.url}" target="_blank"><img src="${l.icon}" height="30" alt="${l.platform}"></a>&nbsp;`)
 		.join("")
+	    // Hide label if no social links to show
+	    if (titleEl) titleEl.style.display = visibleLinks.length ? '' : 'none'
 	    return
 	}
+
+	// Edit view — always show label
+	if (titleEl) titleEl.style.display = 
 
 	// Editable view — MD table + preview placeholder
 	container.innerHTML = `
@@ -300,9 +358,7 @@ class ClientProfile {
 		</tbody>
 	    </table>
 
-	    <!-- MD-style preview section -->
-	    <div style="margin-top:10px;margin-bottom:4px;font-size:11px;color:#9e9e9e;text-transform:uppercase;
-			 letter-spacing:0.06em">Preview</div>
+	    <!-- Preview section -->
 	    <div class="social-preview" style="display:flex;gap:10px;min-height:40px;
 		 align-items:center;flex-wrap:wrap;padding:8px 0;
 		 border-bottom:1px solid #e0e0e0">

@@ -84,12 +84,14 @@ class MtkRequest {
 
     openBtn.addEventListener('click', () => {
       wc.log('mtk-request:open');
+      wc.log('[mtk-request] publish → mtk-request:open');
       wc.publish('mtk-request:open');
       this.bsModal.show();
     });
 
     closeBtn.addEventListener('click', () => {
       wc.log('mtk-request:close');
+      wc.log('[mtk-request] publish → mtk-request:close');
       wc.publish('mtk-request:close');
       this.bsModal.hide();
     });
@@ -99,6 +101,7 @@ class MtkRequest {
         const value = radio.value;
         phoneTimes.classList.toggle('active', value === 'phone');
         wc.log('mtk-request:contact-change', value);
+        wc.log('[mtk-request] publish → mtk-request:contact-change', value);
         wc.publish('mtk-request:contact-change', value);
       });
     });
@@ -211,6 +214,7 @@ class MtkRequest {
       };
 
       wc.log('[mtk-request] Submit →', data);
+      wc.log('[mtk-request] publish → mtk-request:submit', data);
       wc.publish('mtk-request:submit', data);
 
       this.bsModal.hide();
