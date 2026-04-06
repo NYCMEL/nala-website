@@ -26,9 +26,10 @@ function waitForElement(selector, root = document, timeout = 8000) {
 // Public API: client(config)
 // Assigned to both window and var so jQuery globalEval context can find it
 var client = window.client = function(config) {
+    if (window._clientProfileInstance) return  // guard against multiple instantiation
     waitForElement('.client-container').then(function() {
         wc.log('[client] DOM ready, instantiating ClientProfile');
-        new ClientProfile(config);
+        window._clientProfileInstance = new ClientProfile(config);
     });
 };
 
@@ -71,10 +72,10 @@ class ClientProfile {
 	    if (saveBtn) saveBtn.style.display = 'inline-block'
 	}
 
-	// Save Changes — collect all data-editable values and publish
+	// Save Changes — replace handler each time to avoid stacking listeners
 	if (saveBtn) {
 	    const self = this
-	    saveBtn.addEventListener('click', function() {
+	    const saveHandler = function() {
 		const changes = {}
 
 		// Text editable fields
@@ -109,13 +110,17 @@ class ClientProfile {
 		self.disableEditable()
 
 		// Visual feedback
-		saveBtn.textContent = 'Saved ✓'
-		saveBtn.style.background = '#2e7d32'
+		newSaveBtn.textContent = 'Saved ✓'
+		newSaveBtn.style.background = '#2e7d32'
 		setTimeout(function() {
-		    saveBtn.textContent = 'Save Changes'
-		    saveBtn.style.background = '#1565c0'
+		    newSaveBtn.textContent = 'Save Changes'
+		    newSaveBtn.style.background = '#1565c0'
 		}, 2000)
-	    })
+	    }
+	    // Strip all previous click listeners via cloneNode, then attach once
+	    const newSaveBtn = saveBtn.cloneNode(true)
+	    saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn)
+	    newSaveBtn.addEventListener('click', saveHandler)
 	}
 
 	const self = this
@@ -182,9 +187,9 @@ class ClientProfile {
 	const logo = document.getElementById("clientLogo")
 	logo.innerHTML = `<img src="${this.data.business.logo}" alt="${this.data.business.name}">`
 
-	// Click on logo image opens file picker to update it (only in edtable mode)
+	// Click on logo — always opens file picker (edit mode gates via cursor/outline in enableEditable)
+	const self = this
 	logo.addEventListener('click', function() {
-	    if (!this.data.editable && !window.edtable) return
 	    const picker = document.createElement('input')
 	    picker.type = 'file'
 	    picker.accept = 'image/*'
@@ -195,13 +200,14 @@ class ClientProfile {
 		reader.onload = function(e) {
 		    const img = logo.querySelector('img')
 		    if (img) img.src = e.target.result
-		    wc.log('[client] edtable logo updated:', file.name)
-		    wc.publish('client:edtable-change', {
+		    const payload = {
 			id:    'clientLogo',
 			class: 'client-logo',
 			value: e.target.result,
 			file:  file.name
-		    })
+		    }
+		    wc.log('[client] publish → client:logo-change', payload)
+		    wc.publish('client:logo-change', payload)
 		}
 		reader.readAsDataURL(file)
 	    }
