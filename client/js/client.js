@@ -46,7 +46,7 @@ class ClientProfile {
 	this.renderSidebar()
 	this.attachEventListeners()
 	this.initGlobalClickListener()
-	if (window.edtable) this.enableEditable()
+	if (this.data.editable || window.edtable) this.enableEditable()
     }
 
     enableEditable() {
@@ -82,7 +82,7 @@ class ClientProfile {
 
 	// Click on logo image opens file picker to update it (only in edtable mode)
 	logo.addEventListener('click', function() {
-	    if (!window.edtable) return
+	    if (!this.data.editable && !window.edtable) return
 	    const picker = document.createElement('input')
 	    picker.type = 'file'
 	    picker.accept = 'image/*'
@@ -287,7 +287,7 @@ class ClientProfile {
 
 	    wc.publish("global.click", clickData)
 
-	    console.log("[_client] Global Click Event:", clickData)
+	    // console.log("[_client] Global Click Event:", clickData)
 	})
     }
 
@@ -350,7 +350,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 	// No auto-instantiation here
 
 	PubSub.subscribe("global.click", (msg, data) => {
-	    console.log("[_client] Global click:", msg, data)
+	    // console.log("[_client] Global click:", msg, data)
 	})
 
 	PubSub.subscribe("button.estimate.clicked", (msg, data) => {
