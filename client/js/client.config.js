@@ -1,4 +1,6 @@
-client({
+var config = {
+    editable: true,
+
     nalaUID: "U12345", /* USED FOR IDENTIFYING THE CLIENT WHEN SENDING REQUESTS */
 
     business: {
@@ -57,4 +59,6 @@ client({
 	             "Mel the Locksmith has maintained Top Pro status for 3 consecutive years.",
 	years:       [2022, 2023, 2024],
     },
-});
+}
+
+client(config);
