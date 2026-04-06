@@ -103,6 +103,9 @@ class ClientProfile {
 		wc.log('[client] Save Changes →', changes)
 		wc.publish('client:save', changes)
 
+		// Switch to review view + remove social table
+		self.renderSocialMedia(false)
+
 		// Visual feedback
 		saveBtn.textContent = 'Saved ✓'
 		saveBtn.style.background = '#2e7d32'
