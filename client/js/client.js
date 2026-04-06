@@ -215,25 +215,34 @@ class ClientProfile {
 
 	// Editable view — MD table + preview placeholder
 	container.innerHTML = `
+	    <style>
+		.social-edit-table .social-url::placeholder { font-style:italic; color:#bbb; }
+		.social-edit-table .social-url:focus::placeholder { color:#ccc; }
+	    </style>
 	    <table class="social-edit-table" style="width:100%;border-collapse:collapse;margin-bottom:16px">
+		<thead>
+		    <tr>
+			<th style="width:40px;padding:0 4px 8px 0;font-size:11px;font-weight:600;
+				   color:#9e9e9e;text-transform:uppercase;letter-spacing:0.06em;text-align:left"></th>
+			<th style="width:44px;padding:0 8px 8px;font-size:11px;font-weight:600;
+				   color:#9e9e9e;text-transform:uppercase;letter-spacing:0.06em;text-align:left">Media</th>
+			<th style="padding:0 4px 8px;font-size:11px;font-weight:600;
+				   color:#9e9e9e;text-transform:uppercase;letter-spacing:0.06em;text-align:left">Your Social Link</th>
+		    </tr>
+		</thead>
 		<tbody>
 		    ${links.map((l, i) => `
 		    <tr data-platform="${l.platform}" style="border-bottom:1px solid #e0e0e0">
 			<!-- Col 1: MD Checkbox -->
 			<td style="width:40px;vertical-align:middle;padding:10px 4px 10px 0">
-			    <label class="md-checkbox" style="display:inline-flex;align-items:center;cursor:pointer;margin:0">
-				<input type="checkbox" class="social-check" data-index="${i}"
-				    ${l.url ? 'checked' : ''}
-				    style="display:none">
-				<span class="md-checkbox-box" style="
-				    width:18px;height:18px;border-radius:2px;
-				    border:2px solid ${l.url ? '#009fd9' : '#757575'};
-				    background:${l.url ? '#009fd9' : 'transparent'};
-				    display:inline-flex;align-items:center;justify-content:center;
-				    transition:all 0.15s;flex-shrink:0">
-				    ${l.url ? '<span style="color:#fff;font-size:13px;font-weight:700;line-height:1">✓</span>' : ''}
-				</span>
-			    </label>
+			    <span class="social-check md-checkbox-box" data-index="${i}" data-checked="${l.url ? '1' : '0'}"
+				style="width:18px;height:18px;border-radius:2px;cursor:pointer;
+				       border:2px solid ${l.url ? '#009fd9' : '#757575'};
+				       background:${l.url ? '#009fd9' : 'transparent'};
+				       display:inline-flex;align-items:center;justify-content:center;
+				       transition:all 0.15s;flex-shrink:0;user-select:none">
+				${l.url ? '<span style="color:#fff;font-size:13px;font-weight:700;line-height:1">✓</span>' : ''}
+			    </span>
 			</td>
 			<!-- Col 2: Icon -->
 			<td style="width:44px;vertical-align:middle;padding:10px 8px">
@@ -241,19 +250,14 @@ class ClientProfile {
 			</td>
 			<!-- Col 3: MD floating-label text field -->
 			<td style="vertical-align:middle;padding:10px 4px">
-			    <div class="md-field" style="margin-bottom:0;padding-top:16px;position:relative">
+			    <div class="md-field" style="margin-bottom:0;position:relative">
 				<input type="text" class="social-url" data-index="${i}"
 				    value="${l.url || ''}"
-				    placeholder=" "
+				    placeholder="Your social media link"
 				    style="width:100%;border:none;border-bottom:${l.url ? '2px solid #009fd9' : '1px solid #ccc'};
-					   outline:none;font-size:13px;color:#212121;
-					   padding:4px 0 4px;background:transparent;transition:border 0.2s">
-				<label style="position:absolute;left:0;top:${l.url ? '0' : '20px'};
-					      font-size:${l.url ? '11px' : '13px'};
-					      color:${l.url ? '#009fd9' : '#9e9e9e'};
-					      pointer-events:none;transition:all 0.2s;font-style:${l.url ? 'normal' : 'italic'}">
-				    https://www.${l.platform}.com/yourpage
-				</label>
+					   outline:none;font-size:13px;
+					   color:#212121;
+					   padding:4px 0;background:transparent;transition:border 0.2s">
 			    </div>
 			</td>
 		    </tr>`).join("")}
@@ -261,7 +265,7 @@ class ClientProfile {
 	    </table>
 
 	    <!-- MD-style preview section -->
-	    <div style="margin-bottom:4px;font-size:11px;color:#9e9e9e;text-transform:uppercase;
+	    <div style="margin-top:10px;margin-bottom:4px;font-size:11px;color:#9e9e9e;text-transform:uppercase;
 			 letter-spacing:0.06em">Preview</div>
 	    <div class="social-preview" style="display:flex;gap:10px;min-height:40px;
 		 align-items:center;flex-wrap:wrap;padding:8px 0;
@@ -274,25 +278,13 @@ class ClientProfile {
 
 	// MD floating label + live update
 	container.querySelectorAll(".social-url").forEach(function(input) {
-	    const mdField = input.closest(".md-field")
-	    const label   = mdField && mdField.querySelector("label")
-
-	    function floatLabel(hasVal) {
-		if (!label) return
-		label.style.top       = hasVal ? "0"      : "20px"
-		label.style.fontSize  = hasVal ? "11px"   : "13px"
-		label.style.color     = hasVal ? "#009fd9" : "#9e9e9e"
-		label.style.fontStyle = hasVal ? "normal"  : "italic"
-		input.style.borderBottom = hasVal ? "2px solid #009fd9" : "1px solid #ccc"
-	    }
 
 	    input.addEventListener("focus", function() {
-		if (label) { label.style.top = "0"; label.style.fontSize = "11px"; label.style.color = "#009fd9" }
 		input.style.borderBottom = "2px solid #009fd9"
 	    })
 
 	    input.addEventListener("blur", function() {
-		floatLabel(!!input.value.trim())
+		input.style.borderBottom = input.value.trim() ? "2px solid #009fd9" : "1px solid #ccc"
 	    })
 
 	    input.addEventListener("input", function() {
@@ -312,29 +304,32 @@ class ClientProfile {
 		    }
 		    if (img) img.style.opacity = val ? "1" : "0.4"
 		    const cb = row.querySelector(".social-check")
-		    if (cb) cb.checked = !!val
+		    if (cb) {
+			cb.dataset.checked   = val ? "1" : "0"
+			cb.style.background  = val ? "#009fd9" : "transparent"
+			cb.style.borderColor = val ? "#009fd9" : "#757575"
+			cb.innerHTML         = val ? '<span style="color:#fff;font-size:13px;font-weight:700;line-height:1">✓</span>' : ""
+		    }
 		}
 		self._refreshSocialPreview(container, self.data.socialMedia.links)
 	    })
 	})
 
-	// Checkbox manual toggle also updates MD box styling
-	container.querySelectorAll(".social-check").forEach(function(cb) {
-	    cb.addEventListener("change", function() {
-		const row = cb.closest("tr")
-		const box = row && row.querySelector(".md-checkbox-box")
+	// Checkbox click — toggle data-checked on the span itself
+	container.querySelectorAll(".social-check").forEach(function(box) {
+	    box.addEventListener("click", function() {
+		const checked = box.dataset.checked !== "1"
+		box.dataset.checked       = checked ? "1" : "0"
+		box.style.background      = checked ? "#009fd9" : "transparent"
+		box.style.borderColor     = checked ? "#009fd9" : "#757575"
+		box.innerHTML             = checked
+		    ? '<span style="color:#fff;font-size:13px;font-weight:700;line-height:1">✓</span>'
+		    : ""
+		const row = box.closest("tr")
 		const img = row && row.querySelector("img")
-		if (box) {
-		    box.style.background  = cb.checked ? "#009fd9" : "transparent"
-		    box.style.borderColor = cb.checked ? "#009fd9" : "#757575"
-		    box.innerHTML = cb.checked ? '<span style="color:#fff;font-size:13px;font-weight:700;line-height:1">✓</span>' : ""
-		}
-		if (img) img.style.opacity = cb.checked ? "1" : "0.4"
+		if (img) img.style.opacity = checked ? "1" : "0.4"
 		self._refreshSocialPreview(container, self.data.socialMedia.links)
 	    })
-	    // Click on visual checkbox box triggers the hidden input
-	    const box = cb.closest("label") && cb.closest("label").querySelector(".md-checkbox-box")
-	    if (box) box.addEventListener("click", function() { cb.click() })
 	})
 
 	// Init preview from pre-checked rows
@@ -346,7 +341,7 @@ class ClientProfile {
 	if (!preview) return
 	preview.innerHTML = ""
 	container.querySelectorAll(".social-check").forEach(function(cb) {
-	    if (!cb.checked) return
+	    if (cb.dataset.checked !== "1") return
 	    const i    = parseInt(cb.dataset.index)
 	    const link = links[i]
 	    const url  = container.querySelector(`.social-url[data-index="${i}"]`)?.value.trim() || link.url || "#"

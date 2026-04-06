@@ -26,7 +26,7 @@ replace socual icons with a "table" and a "placeholder" div below that
 table has 3 rows for facehook, instagram and twitter: 
 - column 1: checkbox
 - column 2: social icon
-- column 3: client's link (show a sample in light gray and italic)
+- column 3: client's link (show "your social media link" in italic and light gray)
 
 when checkbox on any row is clicked, display social icon inside the "placeholder", with correct link from link,
 when unchecked, remove the icon from placeholder
