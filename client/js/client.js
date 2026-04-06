@@ -46,7 +46,56 @@ class ClientProfile {
 	this.renderSidebar()
 	this.attachEventListeners()
 	this.initGlobalClickListener()
-	if (this.data.editable || window.edtable) this.enableEditable()
+	if (this.data.editable !== undefined || window.edtable !== undefined) {
+	    this.initEditSwitch()
+	}
+    }
+
+    initEditSwitch() {
+	const bar    = document.getElementById('editModeBar')
+	const toggle = document.getElementById('editModeToggle')
+	const slider = bar && bar.querySelector('.edit-switch-slider')
+	const knob   = bar && bar.querySelector('.edit-switch-knob')
+	if (!bar || !toggle) return
+
+	// Show the bar
+	bar.style.display = 'flex'
+
+	// Start in edit mode if editable:true, else review mode
+	const startEditing = !!(this.data.editable || window.edtable)
+	toggle.checked = startEditing
+	this._applyEditSwitchStyle(slider, knob, startEditing)
+	if (startEditing) this.enableEditable()
+
+	const self = this
+	toggle.addEventListener('change', function() {
+	    const isEdit = toggle.checked
+	    self._applyEditSwitchStyle(slider, knob, isEdit)
+	    if (isEdit) {
+		wc.log('[client] Switch → Edit mode')
+		self.enableEditable()
+	    } else {
+		wc.log('[client] Switch → Review mode')
+		self.disableEditable()
+	    }
+	})
+    }
+
+    _applyEditSwitchStyle(slider, knob, isEdit) {
+	if (slider) slider.style.background = isEdit ? '#009fd9' : '#ccc'
+	if (knob)   knob.style.transform    = isEdit ? 'translateX(20px)' : 'translateX(0)'
+    }
+
+    disableEditable() {
+	document.querySelectorAll('[data-editable]').forEach(function(el) {
+	    el.removeAttribute('contenteditable')
+	    el.style.outline   = ''
+	    el.style.minHeight = ''
+	    el.style.cursor    = ''
+	    el.title           = ''
+	})
+	// Re-render social media in normal view
+	this.renderSocialMedia()
     }
 
     enableEditable() {
@@ -222,8 +271,6 @@ class ClientProfile {
 	    <table class="social-edit-table" style="width:100%;border-collapse:collapse;margin-bottom:16px">
 		<thead>
 		    <tr>
-			<th style="width:40px;padding:0 4px 8px 0;font-size:11px;font-weight:600;
-				   color:#9e9e9e;text-transform:uppercase;letter-spacing:0.06em;text-align:left"></th>
 			<th style="width:44px;padding:0 8px 8px;font-size:11px;font-weight:600;
 				   color:#9e9e9e;text-transform:uppercase;letter-spacing:0.06em;text-align:left">Media</th>
 			<th style="padding:0 4px 8px;font-size:11px;font-weight:600;
@@ -233,18 +280,7 @@ class ClientProfile {
 		<tbody>
 		    ${links.map((l, i) => `
 		    <tr data-platform="${l.platform}" style="border-bottom:1px solid #e0e0e0">
-			<!-- Col 1: MD Checkbox -->
-			<td style="width:40px;vertical-align:middle;padding:10px 4px 10px 0">
-			    <span class="social-check md-checkbox-box" data-index="${i}" data-checked="${l.url ? '1' : '0'}"
-				style="width:18px;height:18px;border-radius:2px;cursor:pointer;
-				       border:2px solid ${l.url ? '#009fd9' : '#757575'};
-				       background:${l.url ? '#009fd9' : 'transparent'};
-				       display:inline-flex;align-items:center;justify-content:center;
-				       transition:all 0.15s;flex-shrink:0;user-select:none">
-				${l.url ? '<span style="color:#fff;font-size:13px;font-weight:700;line-height:1">✓</span>' : ''}
-			    </span>
-			</td>
-			<!-- Col 2: Icon -->
+			<!-- Col 1: Icon -->
 			<td style="width:44px;vertical-align:middle;padding:10px 8px">
 			    <img src="${l.icon}" height="26" alt="${l.platform}" style="display:block;opacity:${l.url ? '1' : '0.4'}">
 			</td>
@@ -295,42 +331,14 @@ class ClientProfile {
 		// Update checkbox + icon opacity
 		const row = container.querySelector(`tr[data-platform="${self.data.socialMedia.links[i].platform}"]`)
 		if (row) {
-		    const box = row.querySelector(".md-checkbox-box")
 		    const img = row.querySelector("img")
-		    if (box) {
-			box.style.background   = val ? "#009fd9" : "transparent"
-			box.style.borderColor  = val ? "#009fd9" : "#757575"
-			box.innerHTML          = val ? '<span style="color:#fff;font-size:13px;font-weight:700;line-height:1">✓</span>' : ""
-		    }
 		    if (img) img.style.opacity = val ? "1" : "0.4"
-		    const cb = row.querySelector(".social-check")
-		    if (cb) {
-			cb.dataset.checked   = val ? "1" : "0"
-			cb.style.background  = val ? "#009fd9" : "transparent"
-			cb.style.borderColor = val ? "#009fd9" : "#757575"
-			cb.innerHTML         = val ? '<span style="color:#fff;font-size:13px;font-weight:700;line-height:1">✓</span>' : ""
-		    }
 		}
 		self._refreshSocialPreview(container, self.data.socialMedia.links)
 	    })
 	})
 
-	// Checkbox click — toggle data-checked on the span itself
-	container.querySelectorAll(".social-check").forEach(function(box) {
-	    box.addEventListener("click", function() {
-		const checked = box.dataset.checked !== "1"
-		box.dataset.checked       = checked ? "1" : "0"
-		box.style.background      = checked ? "#009fd9" : "transparent"
-		box.style.borderColor     = checked ? "#009fd9" : "#757575"
-		box.innerHTML             = checked
-		    ? '<span style="color:#fff;font-size:13px;font-weight:700;line-height:1">✓</span>'
-		    : ""
-		const row = box.closest("tr")
-		const img = row && row.querySelector("img")
-		if (img) img.style.opacity = checked ? "1" : "0.4"
-		self._refreshSocialPreview(container, self.data.socialMedia.links)
-	    })
-	})
+
 
 	// Init preview from pre-checked rows
 	this._refreshSocialPreview(container, links)
@@ -340,11 +348,11 @@ class ClientProfile {
 	const preview = container.querySelector(".social-preview")
 	if (!preview) return
 	preview.innerHTML = ""
-	container.querySelectorAll(".social-check").forEach(function(cb) {
-	    if (cb.dataset.checked !== "1") return
-	    const i    = parseInt(cb.dataset.index)
+	container.querySelectorAll(".social-url").forEach(function(input) {
+	    const url = input.value.trim() || links[parseInt(input.dataset.index)].url || ""
+	    if (!url) return
+	    const i    = parseInt(input.dataset.index)
 	    const link = links[i]
-	    const url  = container.querySelector(`.social-url[data-index="${i}"]`)?.value.trim() || link.url || "#"
 	    const a    = document.createElement("a")
 	    a.href            = url || "#"
 	    a.target          = "_blank"
@@ -362,7 +370,6 @@ class ClientProfile {
     renderSidebar() {
 	// Contact info
 	document.getElementById("contactPrice").textContent = this.data.contact.priceText
-	document.getElementById("viewDetailsLink").textContent = this.data.contact.viewDetailsLink
 	document.getElementById("btnEstimate").textContent = this.data.contact.ctaButton
 
 	// Online status
