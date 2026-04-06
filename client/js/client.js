@@ -103,8 +103,10 @@ class ClientProfile {
 		wc.log('[client] Save Changes →', changes)
 		wc.publish('client:save', changes)
 
-		// Switch to review view + remove social table
-		self.renderSocialMedia(false)
+		// Switch to review mode
+		toggle.checked = false
+		self._applyEditSwitchStyle(slider, knob, false)
+		self.disableEditable()
 
 		// Visual feedback
 		saveBtn.textContent = 'Saved ✓'
