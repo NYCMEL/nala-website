@@ -124,7 +124,6 @@ class ClientProfile {
 	    } else {
 		wc.log('[client] Switch → Review mode')
 		self.disableEditable()
-		if (saveBtn) saveBtn.style.display = 'none'
 	    }
 	})
     }
