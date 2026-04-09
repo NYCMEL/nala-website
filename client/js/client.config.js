@@ -61,4 +61,5 @@ var config = {
     },
 }
 
+// MAKE THIS CALL TO START CLIENT
 client(config);
