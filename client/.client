@@ -1,1313 +1,273 @@
-# CLIENT + MTK-REQUEST REBUILD PROMPT
-# All files live in client/ (no subdirectories)
-# Load order in index.html: client.js THEN wc-include(client.html)
-# client.html loads: mtk-request.config.js → mtk-request.js → client.config.js
+Rebuild the client and mtk-request components for the NALA locksmith website.
 
----
 
-## client/index.html
+PROJECT CONTEXT
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Client</title>
-        <base href="/repo_deploy/">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script>
-         wcENV="dev";
-         wcAPP="app";
-         wcURL="";
-        </script>
-        <link href="vendor/css/bootstrap.min.css" rel="stylesheet">
-        <link href="vendor/css/material-icons.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="vendor/css/font-awesome.all.min.css">
-        <link href="css/fonts/fonts.css" rel="stylesheet">
-        <link href="css/nala.css" rel="stylesheet">
-    </head>
-    <body id="wc">
-        <script src="vendor/js/jquery.min.js"></script>
-        <script src="vendor/js/bootstrap.bundle.min.js"></script>
-        <script src="js/_wc.js"></script>
-        <script src="js/app.js"></script>
-        <script src="js/_febe.js" defer></script>
+    GitHub: NYCMEL/nala-website
+    Stack: Bootstrap 5, jQuery 3.7.1, Material Icons, local vendor files
+    wc-include (js/_wc.js): loads HTML fragments async via jQuery Ajax,
+        activates <script> tags via _activateScripts()
+    wc.publish() / wc.subscribe() = pub/sub (PubSub.js)
+    wc.log() = dev console logger
+    RULE: every wc.publish() must be preceded by wc.log() of what is being published
 
-        <!-- CLIENT: client.js MUST load before wc-include so window.client() is defined -->
-        <script src="client/client.js"></script>
-        <div style="border:2px red dashed">
-            <link href="client/client.css" rel="stylesheet">
-            <wc-include href="client/client.html"/>
-        </div>
-    </body>
-</html>
-```
 
----
+DIRECTORY STRUCTURE
 
-## client/client.html
+    client/
+        index.html
+        client.html
+        js/
+            client.js
+            client.config.js
+            mtk-request.js
+            mtk-request.config.js
+        css/
+            client.scss          (@import "../../css/nala.scss")
+            mtk-request.scss
 
-```html
-<div class="client-container">
-    <div class="client-layout">
-        <!-- Main Content -->
-        <main class="client-main">
-            <!-- Header Section -->
-            <header class="client-header">
-                <div class="client-logo" id="clientLogo"></div>
-                <div class="client-info">
-                    <h1 class="client-name" id="clientName"></h1>
-                    <div class="client-rating" id="clientRating"></div>
-                    <div class="client-badges" id="clientBadges"></div>
-                    <button class="btn-share" id="btnShare">
-                        <span class="material-icons">share</span>
-                        Share
-                    </button>
-                </div>
-            </header>
 
-            <!-- Stats Section -->
-            <section class="client-stats" id="clientStats"></section>
+FILE: client/index.html
 
-            <!-- Tabs Navigation -->
-            <nav class="client-tabs" id="clientTabs"></nav>
+    Standalone test page. Loads vendor CSS/JS and wc infra, then:
+        <script src="client/js/client.js">   MUST come BEFORE the wc-include div
+        <wc-include href="client/client.html"/> inside a div
 
-            <!-- Tab Content -->
-            <div class="client-content">
-                <section class="content-section" id="aboutSection">
-                    <h2>About</h2>
-                    <p class="about-text" id="aboutText"></p>
-                </section>
-                <section class="content-section">
-                    <h2 id="businessHoursTitle"></h2>
-                    <p id="businessHoursText"></p>
-                </section>
-                <section class="content-section">
-                    <h2 id="paymentMethodsTitle"></h2>
-                    <p id="paymentMethodsText"></p>
-                </section>
-                <section class="content-section">
-                    <h2 id="socialMediaTitle"></h2>
-                    <div id="socialMediaLinks"></div>
-                </section>
-                <section class="content-section">
-                    <h2 id="topProTitle"></h2>
-                    <p id="topProDescription"></p>
-                    <div class="top-pro-badges" id="topProBadges"></div>
-                </section>
-            </div>
-        </main>
 
-        <!-- Sidebar -->
-        <aside class="client-sidebar">
-            <!-- Contact Card -->
-            <div class="card contact-card">
-                <div class="contact-header">
-                    <span class="material-icons">chat_bubble_outline</span>
-                    <span id="contactPrice"></span>
-                </div>
-                <a href="#" class="link-details" id="viewDetailsLink"></a>
-                <button class="btn-primary btn-estimate" id="btnEstimate"></button>
-                <div class="online-status" id="onlineStatus">
-                    <span class="status-dot"></span>
-                    <span>Online now</span>
-                </div>
-            </div>
+FILE: client/client.html
 
-            <!-- Guarantee Card -->
-            <div class="card guarantee-card">
-                <div class="guarantee-icon">
-                    <span class="material-icons">verified_user</span>
-                </div>
-                <h3 id="guaranteeTitle"></h3>
-                <p id="guaranteeText"></p>
-                <a href="#" class="link-learn-more" id="learnMoreLink"></a>
-            </div>
-        </aside>
-    </div>
-</div>
+    Two sections:
 
-<!-- REQUEST DIALOG — inlined (no nested wc-include) -->
-<link href="client/mtk-request.css" rel="stylesheet">
+    1. Client profile UI
+        No breadcrumb.
+        Sticky header bar (id="editModeBar", display:none by default):
+            position:sticky, top:0, inside .client-container
+            margin: -24px -24px 0 -24px to bleed to container edges
+            light blue gradient background, box-shadow
+            inner div: width:100%, flex, space-between
+            LEFT: NALA (bold, uppercase, large, blue) + chevron_right icon + "Business in the Box" (small, gray)
+            RIGHT: "Review" label (clickable) + toggle switch + "Edit" label (clickable) + "Save Changes" button
+            "Review" and "Edit" labels set toggle.checked and dispatch change event on click
+            "Save Changes" button: hidden until edit mode first activated, stays visible after
+        .client-layout with margin-top:25px
+        Main content: logo, name, rating, badges, share button, stats, tabs,
+            about, business hours, payment methods, social media, top pro status
+        Sidebar: contact card (priceText + "Need a Hand?" button, no "View project details" link),
+            guarantee card (verified_user icon inline with title "Our Guarantee")
 
-<mtk-request class="mtk-request">
+    2. mtk-request modal dialog inlined directly — NOT as nested wc-include
+        jQuery's $.html() does not trigger connectedCallback on custom elements
+        Hidden input: <input type="hidden" class="nala-uid" name="nalaUID" value="">
+        Email input has NO required attribute (only name has required)
 
-    <!-- Trigger button hidden — opened via wc.publish("mtk-request:open") -->
-    <button type="button" class="btn btn-primary open-dialog" style="display:none" aria-hidden="true">
-        Request Estimate
-    </button>
+    Script tags at bottom (run by _activateScripts after injection):
+        client/js/mtk-request.config.js
+        client/js/mtk-request.js
+        client/js/client.config.js
 
-    <div class="modal fade" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
 
-                <div class="modal-header">
-                    <h5 class="modal-title"></h5>
-                    <button type="button" class="btn-close close-dialog"></button>
-                </div>
+FILE: client/js/client.config.js
 
-                <div class="modal-body">
-                    <form>
-
-                        <div class="md-field">
-                            <input type="text" class="name" required />
-                            <label></label>
-                        </div>
-
-                        <div class="md-field">
-                            <input type="email" class="email" />
-                            <label></label>
-                        </div>
-
-                        <div class="md-field">
-                            <input type="tel" class="phone" />
-                            <label></label>
-                        </div>
-
-                        <div class="md-field">
-                            <input type="text" class="address" />
-                            <label></label>
-                        </div>
-
-                        <div class="md-field">
-                            <textarea class="help" rows="3"></textarea>
-                            <label></label>
-                        </div>
-
-                        <!-- RADIO GROUP -->
-                        <div class="contact-group">
-                            <div class="group-label">Preferred Contact Method</div>
-                            <div class="radio-group"></div>
-                        </div>
-
-                        <div class="md-field phone-times">
-                            <select class="call-time"></select>
-                            <label>Best Time to Call</label>
-                        </div>
-
-                        <input type="hidden" class="nala-uid" name="nalaUID" value="" />
-
-                        <div class="submit-wrap">
-                            <button type="submit" class="btn btn-primary submit-btn"></button>
-                        </div>
-
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-</mtk-request>
-
-<!-- Scripts loaded by _activateScripts after HTML injection -->
-<script src="client/mtk-request.config.js"></script>
-<script src="client/mtk-request.js"></script>
-<script src="client/client.config.js"></script>
-```
-
----
-
-## client/client.config.js
-
-```js
-client({
-    nalaUID: "U12345", /* USED FOR IDENTIFYING THE CLIENT WHEN SENDING REQUESTS */
-
-    business: {
-        name:        "Mel the Locksmith",
-        logo:        "img/mel.co.png",
-        rating:      4.6,
-        ratingText:  "Excellent",
-        reviewCount: 612,
-        isTopPro:    true,
-        isOnline:    false,
-    },
-    stats: [
-        { icon: "verified_user", text: "Current Top Pro",      type: "badge"        },
-        { icon: "emoji_events",  text: "Hired 73 times",       type: "achievement"  },
-        { icon: "verified",      text: "Background checked",   type: "verification" },
-        { icon: "groups",        text: "2 employees",          type: "team"         },
-        { icon: "schedule",      text: "5 years in business",  type: "experience"   },
-    ],
-    contact: {
-        priceText:       "Contact me for Estimate",
-        ctaButton:       "Need a Hand?",
-        viewDetailsLink: "View project details",
-    },
-    guarantee: {
-        title:         "Mel the Locksmith Guarantee",
-        text:          "Work is guaranteed or your money back. We stand behind every job — residential, commercial, and automotive.",
-        learnMoreLink: "Learn more about our guarantee",
-    },
-    tabs: [],
-    about: {
-        description:
-            "Your neighborhood locksmith, serving the New York metro area for over 17 years. " +
-            "We specialize in residential, commercial, and automotive locksmith services with fast response times " +
-            "and transparent pricing. Licensed, insured, and background-checked professionals you can trust.",
-        readMoreLink: "",
-    },
-    businessHours: {
-        title: "Business hours",
-        text:  "Mon – Fri: 8:00 AM – 8:00 PM  |  Sat: 9:00 AM – 6:00 PM  |  Sun: Emergency calls only",
-    },
-    paymentMethods: {
-        title:   "Payment methods",
-        methods: "This pro accepts payments via Apple Pay, Cash, Check, Credit card, PayPal, Square cash app, Venmo, and Zelle.",
-    },
-    socialMedia: {
-        title: "Social media",
-        links: [
-            { platform: "<img src='img/facebook.png'  height=30>", url: "#" },
-            { platform: "<img src='img/instagram.png' height=30",  url: "#" },
-            { platform: "<img src='img/twitter.png'   height=30>", url: "#" },
-        ]
-    },
-    topProStatus: {
-        title:       "Top Pro status",
-        description: "Top Pros are among the highest-rated, most popular professionals on the platform. " +
-                     "Mel the Locksmith has maintained Top Pro status for 3 consecutive years.",
-        years:       [2022, 2023, 2024],
-    },
-});
-```
-
----
-
-## client/client.js
-
-```js
-function waitForElement(selector, root = document, timeout = 8000) {
-    return new Promise((resolve, reject) => {
-        const el = root.querySelector(selector)
-        if (el) return resolve(el)
-
-        const observer = new MutationObserver(() => {
-            const el = root.querySelector(selector)
-            if (el) {
-                observer.disconnect()
-                resolve(el)
-            }
-        })
-
-        observer.observe(root, {
-            childList: true,
-            subtree: true,
-        })
-
-        setTimeout(() => {
-            observer.disconnect()
-            reject(new Error("Timeout waiting for: " + selector))
-        }, timeout)
-    })
-}
-
-// Public API: client(config)
-// Declared as var so jQuery globalEval context can find it
-// client.js must load BEFORE wc-include so this is defined when client.config.js runs
-var client = window.client = function(config) {
-    waitForElement('.client-container').then(function() {
-        wc.log('[client] DOM ready, instantiating ClientProfile');
-        new ClientProfile(config);
-    });
-};
-
-class ClientProfile {
-    constructor(data) {
-        this.data = data
-        this.init()
+    var config = {
+        nalaUID: "U12345",    // identifies the client when submitting requests
+        editable: true,       // when defined (true or false), shows the edit header bar
+        business: { name, logo, rating, ratingText, reviewCount, isTopPro, isOnline },
+        stats: [ { icon, text, type } ],
+        contact: { priceText, ctaButton },
+        guarantee: { title: "Our Guarantee", text, learnMoreLink },
+        tabs: [],
+        about: { description, readMoreLink },
+        businessHours: { title, text },
+        paymentMethods: { title, methods },
+        socialMedia: { title, links: [ { platform, icon, url } ] },
+        topProStatus: { title, description, years: [] }
     }
+    client(config);   // call at the very end
 
-    init() {
-        this.renderHeader()
-        this.renderStats()
-        this.renderTabs()
-        this.renderContent()
-        this.renderSidebar()
-        this.attachEventListeners()
-        this.initGlobalClickListener()
-    }
 
-    renderHeader() {
-        const logo = document.getElementById("clientLogo")
-        logo.innerHTML = `<img src="${this.data.business.logo}" alt="${this.data.business.name}">`
+FILE: client/js/client.js
 
-        document.getElementById("clientName").textContent = this.data.business.name
-
-        const rating = document.getElementById("clientRating")
-        const stars = "★".repeat(Math.floor(this.data.business.rating))
-        rating.innerHTML = `
-      <span class="rating-text">${this.data.business.ratingText}</span>
-      <span class="rating-value">${this.data.business.rating}</span>
-      <span class="stars">${stars}</span>
-      <span class="review-count">(${this.data.business.reviewCount})</span>
-    `
-
-        if (this.data.business.isTopPro) {
-            const badges = document.getElementById("clientBadges")
-            badges.innerHTML = `
-        <span class="badge">
-          <span class="material-icons">verified</span>
-          Top Pro
-        </span>
-      `
-        }
-    }
-
-    renderStats() {
-        const statsContainer = document.getElementById("clientStats")
-        const statsHTML = this.data.stats
-              .map(
-                  (stat) => `
-      <div class="stat-item stat-${stat.type}">
-        <span class="material-icons">${stat.icon}</span>
-        <span>${stat.text}</span>
-      </div>
-    `,
-              )
-              .join("")
-        statsContainer.innerHTML = statsHTML
-    }
-
-    renderTabs() {
-        const tabsContainer = document.getElementById("clientTabs")
-        const tabsHTML = this.data.tabs
-              .map(
-                  (tab) => `
-      <button class="tab ${tab.active ? "active" : ""}" data-tab="${tab.id}">
-        ${tab.label}
-      </button>
-    `,
-              )
-              .join("")
-        tabsContainer.innerHTML = tabsHTML
-    }
-
-    renderContent() {
-        const aboutText = document.getElementById("aboutText")
-        aboutText.innerHTML = `
-      ${this.data.about.description}
-      <a href="#">${this.data.about.readMoreLink}</a>
-    `
-
-        document.getElementById("businessHoursTitle").textContent = this.data.businessHours.title
-        document.getElementById("businessHoursText").textContent = this.data.businessHours.text
-
-        document.getElementById("paymentMethodsTitle").textContent = this.data.paymentMethods.title
-        document.getElementById("paymentMethodsText").textContent = this.data.paymentMethods.methods
-
-        document.getElementById("socialMediaTitle").textContent = this.data.socialMedia.title
-        const socialLinks = document.getElementById("socialMediaLinks")
-        socialLinks.innerHTML = this.data.socialMedia.links
-            .map((link) => `<a href="${link.url}">${link.platform}</a>&nbsp;`)
-            .join("")
-
-        document.getElementById("topProTitle").textContent = this.data.topProStatus.title
-        document.getElementById("topProDescription").textContent = this.data.topProStatus.description
-
-        const proBadges = document.getElementById("topProBadges")
-        proBadges.innerHTML = this.data.topProStatus.years
-            .map(
-                (year) => `
-      <div class="pro-badge">
-        <div class="badge-icon">
-          <span class="material-icons">star</span>
-        </div>
-        <span class="badge-year">${year}</span>
-      </div>
-    `,
-            )
-            .join("")
-    }
-
-    renderSidebar() {
-        document.getElementById("contactPrice").textContent = this.data.contact.priceText
-        document.getElementById("viewDetailsLink").textContent = this.data.contact.viewDetailsLink
-        document.getElementById("btnEstimate").textContent = this.data.contact.ctaButton
-
-        if (!this.data.business.isOnline) {
-            document.getElementById("onlineStatus").style.display = "none"
-        }
-
-        document.getElementById("guaranteeTitle").textContent = this.data.guarantee.title
-        document.getElementById("guaranteeText").textContent = this.data.guarantee.text
-        document.getElementById("learnMoreLink").textContent = this.data.guarantee.learnMoreLink
-    }
-
-    attachEventListeners() {
-        const tabs = document.querySelectorAll(".tab")
-        tabs.forEach((tab) => {
-            tab.addEventListener("click", (e) => {
-                tabs.forEach((t) => t.classList.remove("active"))
-                e.target.classList.add("active")
-                this.publishClickEvent(e, "tab.clicked")
+    Top-level (var so jQuery globalEval finds it):
+        var client = window.client = function(config) {
+            if (window._clientProfileInstance) return   // single-instance guard
+            waitForElement('.client-container').then(() => {
+                window._clientProfileInstance = new ClientProfile(config)
             })
-        })
-
-        document.getElementById("btnShare").addEventListener("click", (e) => {
-            this.publishClickEvent(e, "button.share.clicked")
-            if (navigator.share) {
-                navigator.share({
-                    title: this.data.business.name,
-                    text: `Check out ${this.data.business.name} on our platform!`,
-                    url: window.location.href,
-                }).catch((err) => console.error("Share error:", err))
-            } else {
-                alert("Share functionality not supported in this browser")
-            }
-        })
-
-        // Request estimate button — opens mtk-request modal
-        document.getElementById("btnEstimate").addEventListener("click", (e) => {
-            this.publishClickEvent(e, "button.estimate.clicked")
-            wc.log("btnEstimate clicked — opening mtk-request dialog")
-            // Pass nalaUID into the hidden field before opening
-            const uidField = document.querySelector(".mtk-request .nala-uid")
-            if (uidField && this.data.nalaUID) uidField.value = this.data.nalaUID
-            wc.publish("mtk-request:open")
-        })
-
-        document.querySelectorAll("a").forEach((link) => {
-            link.addEventListener("click", (e) => {
-                this.publishClickEvent(e, "link.clicked")
-            })
-        })
-
-        this.addRippleEffect()
-    }
-
-    initGlobalClickListener() {
-        document.addEventListener("click", (e) => {
-            const elementId = e.target.id || e.target.closest("[id]")?.id || "no-id"
-            const elementClass = e.target.className || "no-class"
-            const elementTag = e.target.tagName.toLowerCase()
-            const clickData = {
-                elementId: elementId,
-                elementClass: elementClass,
-                elementTag: elementTag,
-                timestamp: new Date().toISOString(),
-                coordinates: { x: e.clientX, y: e.clientY },
-                target: e.target,
-            }
-            wc.publish("global.click", clickData)
-            console.log("[_client] Global Click Event:", clickData)
-        })
-    }
-
-    publishClickEvent(event, eventName) {
-        if (!this.pubsub) return
-        const elementId = event.target.id || event.target.closest("[id]")?.id || "no-id"
-        const elementClass = event.target.className || "no-class"
-        const clickData = {
-            eventName: eventName,
-            elementId: elementId,
-            elementClass: elementClass,
-            elementTag: event.target.tagName.toLowerCase(),
-            timestamp: new Date().toISOString(),
-            coordinates: { x: event.clientX, y: event.clientY },
-            data: event.target.dataset || {},
         }
-        wc.publish(eventName.replace(":", "."), clickData)
-        console.log(`[_client] ${eventName}:`, clickData)
+
+    ClientProfile class:
+        init() calls: renderHeader, renderStats, renderTabs, renderContent,
+            renderSidebar, attachEventListeners, initGlobalClickListener
+            then: if editable is defined → initEditSwitch()
+
+        renderHeader():
+            Sets logo img, client name, rating stars, Top Pro badge.
+            Logo click: only opens file picker when .edtable-mode class is present.
+                On file selected → FileReader → img.src = base64
+                wc.log then wc.publish('client:logo-change', { id, class, value, file })
+
+        renderStats():
+            Stats with type "team" AND leading number: splits into
+                <span class="stat-num" data-editable data-stat-index="i"> + <span class="stat-suffix">
+            All others: <span class="stat-text"> (static, no data-editable)
+
+        renderContent():
+            Sets all section titles and text from config.
+            Calls renderSocialMedia()
+
+        renderSocialMedia(forceEdit):
+            isEdit = forceEdit if provided, else this.data.editable || window.edtable
+            Review mode: shows icon links filtered to rows with url, hides #socialMediaTitle if none
+            Edit mode: shows MD table (2 cols: icon + url input) + preview section (no "Preview" label)
+                Table has thead: "Media" | "Your Social Link" (small caps gray)
+                URL input: MD style, placeholder "Your social media link" italic gray
+                Typing URL → icon opacity 1, preview updates live
+                URL cleared → icon opacity 0.4, removed from preview
+                Injected CSS for placeholder: font-style italic, color #bbb
+
+        renderSidebar():
+            Sets contactPrice, btnEstimate text (no viewDetailsLink).
+            Hides onlineStatus if !isOnline.
+            Sets guaranteeTitle, guaranteeText, learnMoreLink.
+
+        initEditSwitch():
+            Shows #editModeBar (display:flex)
+            Uses cloneNode(true) on saveBtn to strip all previous listeners before adding new one
+            Start state: toggle.checked = !!(config.editable || window.edtable)
+            Apply switch style: slider blue + knob right when edit, gray + knob left when review
+            Toggle change → enableEditable() or disableEditable(), show/hide saveBtn
+            "Review" / "Edit" label clicks → set toggle.checked + dispatch change event
+            Save Changes click:
+                Collects all [data-editable] textContent (skipping socialMediaLinks, clientLogo, stat-index)
+                Collects stats by data-stat-index
+                Collects social URLs from .social-url inputs
+                Collects logo base64 if src starts with data:
+                wc.log then wc.publish('client:save', changes)
+                Switches to review mode (toggle.checked=false, _applyEditSwitchStyle, disableEditable)
+                Visual feedback: "Saved ✓" green for 2 seconds
+
+        enableEditable():
+            Adds .edtable-mode class to .client-container
+            Calls renderSocialMedia(true)
+            All [data-editable]: outline 2px dashed #009fd9, contenteditable=true, cursor text
+            Logo exception: pointer cursor, title "Click to change photo", no contenteditable
+            On blur: wc.log then wc.publish('client:edtable-change', { id, class, value })
+
+        disableEditable():
+            Removes .edtable-mode class from .client-container
+            Removes contenteditable, outline, cursor, color, fontWeight, title from [data-editable]
+            Calls renderSocialMedia(false)
+            Calls renderStats() to regenerate clean HTML
+
+        attachEventListeners():
+            btnEstimate click → sets .nala-uid hidden field from config.nalaUID
+                wc.log then wc.publish('mtk-request:open')
+            btnShare click → navigator.share or alert
+            Tab clicks → active class
+            Global click listener: commented out console.log
+
+        initGlobalClickListener():
+            document click → wc.publish('global.click', clickData)
+            console.log commented out
+
+
+FILE: client/css/client.scss
+
+    @import "../../css/nala.scss";
+    body: margin-top 25px, margin-bottom 25px
+    .client-container: margin 25px auto
+    .stat-num: color $color-text-primary, font-weight medium (review mode default)
+    .stat-suffix, .stat-text: color $color-text-primary (review mode default)
+    .edtable-mode .stat-suffix, .edtable-mode .stat-text: color $color-text-secondary (lighter in edit)
+    .edtable-mode .stat-num: color $color-text-primary (stays dark in edit)
+
+
+FILE: client/js/mtk-request.config.js
+
+    window.mtkRequestConfig = {
+        title: "Contact Information",
+        submitText: "Submit Request",
+        fields: {
+            name:    { label, placeholder: "e.g. John A. Smith",         required: true  },
+            email:   { label, placeholder: "e.g. john@example.com",      required: false },
+            phone:   { label, placeholder: "e.g. (646) 555-1234",        required: false },
+            address: { label, placeholder: "e.g. 123 Main St, New York", required: false },
+            help:    { label, placeholder: "e.g. Locked out...",          required: true  }
+        },
+        contactOptions: [ {email}, {phone} ],
+        phoneTimes: [ morning, afternoon, evening ]
     }
 
-    addRippleEffect() {
-        const buttons = document.querySelectorAll(".btn-primary, .btn-share, .tab")
-        buttons.forEach((button) => {
-            button.addEventListener("click", function (e) {
-                const ripple = document.createElement("span")
-                const rect = this.getBoundingClientRect()
-                const size = Math.max(rect.width, rect.height)
-                const x = e.clientX - rect.left - size / 2
-                const y = e.clientY - rect.top - size / 2
-                ripple.style.width = ripple.style.height = size + "px"
-                ripple.style.left = x + "px"
-                ripple.style.top = y + "px"
-                ripple.classList.add("ripple")
-                this.appendChild(ripple)
-                setTimeout(() => ripple.remove(), 600)
-            })
-        })
-    }
-}
 
-document.addEventListener("DOMContentLoaded", async () => {
-    console.log("[_client] Waiting for client DOM")
-    try {
-        await waitForElement(".client-container")
-        console.log("[_client] Client DOM ready")
-        // Instantiated by client(config) call in client.config.js
+FILE: client/js/mtk-request.js
 
-        PubSub.subscribe("global.click", (msg, data) => {
-            console.log("[_client] Global click:", msg, data)
-        })
-        PubSub.subscribe("button.estimate.clicked", (msg, data) => {
-            console.log("[_client] Estimate clicked:", data)
-        })
-        wc.subscribe("mtk-request:submit", (msg, data) => {
-            console.log("[_client] Request submitted:", data)
-            wc.log("mtk-request:submit received", data)
-        })
-        PubSub.subscribe("button.share.clicked", (msg, data) => {
-            console.log("[_client] Share clicked:", data)
-        })
-        PubSub.subscribe("tab.clicked", (msg, data) => {
-            console.log("[_client] Tab clicked:", data)
-        })
-        PubSub.subscribe("link.clicked", (msg, data) => {
-            console.log("[_client] Link clicked:", data)
-        })
-    } catch (err) {
-        console.error("[_client] Failed to initialize:", err)
-    }
-})
-```
+    Entire file wrapped in: if (typeof MtkRequest === 'undefined') { ... }
+    Instantiation: if (!window._mtkRequestInstance) { window._mtkRequestInstance = new MtkRequest() }
 
----
+    render():
+        Sets modal title and submit label from config
+        Sets field labels and placeholder attributes from config
+        Float labels: add class 'active' immediately on any field with a non-empty placeholder
+        Builds radio buttons dynamically from contactOptions
+        Builds call-time select from phoneTimes
 
-## client/client.scss
+    Placeholder style: font-size 12px, italic, color #bbb
 
-```scss
-@import "../css/nala.scss";
+    Validation on submit (strict order):
+        1. Name blank                              → flag name
+        2. contactType is phone AND phone blank    → flag phone
+        3. contactType is email AND email blank    → flag email
+        4. Both email AND phone blank              → flag email
+        5. Email filled but invalid format         → flag email
+        6. Phone filled but invalid US format      → flag phone
+        7. Help blank                              → flag help
 
-#client-image {
-  width: 100%;
-}
+    flagField(input): red border + label, focus, clears on next input, wc.log each failure
 
-body {
-  font-family: $font-primary;
-  color: $color-text-primary;
-  background-color: $color-bg-light;
-  line-height: $line-height-loose;
-  margin-top: 25px;
-  margin-bottom: 25px;
-}
+    Payload: { nalaUID, name, email, phone, address, help, contactType, callTime, submittedAt, source }
+    wc.log then wc.publish('mtk-request:submit', data)
+    subscribe() to 'mtk-request:open' → bsModal.show()
 
-.client-container {
-  max-width: $bp-xl;
-  margin: 25px auto;
-  padding: $spacing-xl;
-  background-color: $color-white;
-  min-height: 100vh;
-}
 
-.client-layout {
-  display: flex;
-  gap: $spacing-2xl;
-  flex-wrap: wrap;
-}
+FILE: client/css/mtk-request.scss
 
-.client-main {
-  flex: 1;
-  min-width: 300px;
-}
+    Bootstrap modal wrapper
+    Material Design floating labels (.md-field + .active)
+    Radio group: flex-direction row (horizontal)
+    Phone-times hidden by default, shown via .active class
+    Placeholder: font-size 12px, italic, color #bbb
 
-.client-sidebar {
-  width: 320px;
-  @media (max-width: $bp-lg) { width: 100%; }
-}
 
-.client-header {
-  display: flex;
-  gap: $spacing-xl;
-  margin-bottom: $spacing-2xl;
-  padding-bottom: $spacing-xl;
-  border-bottom: 1px solid $color-border;
-}
+CRITICAL RULES
 
-.client-logo {
-  width: 150px;
-  height: 150px;
-  border-radius: $radius-circle;
-  overflow: hidden;
-  flex-shrink: 0;
-  box-shadow: $shadow-md;
-  border: 1px $color-border-light solid;
+    1.  client.js loads in index.html BEFORE the wc-include — defines window.client before
+        jQuery fetches and evals client.config.js
 
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
+    2.  client.config.js is the LAST script inside client.html — calls client(config)
+        after DOM is injected
 
-.client-info { flex: 1; }
+    3.  mtk-request dialog is INLINED in client.html — never nested wc-include
 
-.client-name {
-  font-size: 32px;
-  font-weight: $font-weight-medium;
-  margin-bottom: 12px;
-  color: $color-text-primary;
-}
+    4.  MtkRequest wrapped in typeof guard — prevents re-declaration on reload
 
-.client-rating {
-  display: flex;
-  align-items: center;
-  gap: $spacing-sm;
-  margin-bottom: 12px;
+    5.  ClientProfile guarded by window._clientProfileInstance — prevents multiple instances
+        and duplicate event listeners (root cause of multiple "Save Changes" invocations)
 
-  .rating-text  { font-size: $font-size-lg; font-weight: $font-weight-medium; color: $color-success; }
-  .rating-value { font-weight: $font-weight-bold; color: $color-text-primary; }
-  .stars        { display: flex; gap: 2px; color: $color-star; }
-  .review-count { color: $color-text-secondary; font-size: $font-size-base; }
-}
+    6.  Save Changes uses cloneNode(true) on the button before attaching listener —
+        strips all previous listeners regardless of how many times initEditSwitch runs
 
-.client-badges {
-  display: flex;
-  align-items: center;
-  gap: $spacing-sm;
-  margin-bottom: $font-size-lg;
+    7.  nalaUID flow: config.nalaUID → btnEstimate click sets .nala-uid hidden field
+        → mtk-request submit reads it → published in payload
 
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 12px;
-    background-color: $color-client-primary;
-    color: $color-white;
-    border-radius: $font-size-lg;
-    font-size: $font-size-base;
-    font-weight: $font-weight-medium;
+    8.  Validation order: contact-type-driven first, then OR check, then format, then help
 
-    .material-icons { font-size: 18px; }
-  }
-}
+    9.  Edit/review state tracked via .edtable-mode class on .client-container —
+        CSS handles visual differences, not inline styles
 
-.btn-share {
-  display: inline-flex;
-  align-items: center;
-  gap: $spacing-sm;
-  padding: 10px $spacing-xl;
-  border: 1px solid $color-border;
-  background-color: $color-white;
-  color: $color-text-primary;
-  border-radius: $radius-sm;
-  font-size: $font-size-base;
-  font-weight: $font-weight-medium;
-  cursor: pointer;
-  transition: $transition-default;
+    10. Logo only clickable in edit mode (.edtable-mode present)
 
-  &:hover { background-color: $color-bg-light; box-shadow: $shadow-sm; }
-  .material-icons { font-size: $font-size-2xl; }
-}
+    11. Every wc.publish() is always preceded by wc.log()
 
-.client-stats {
-  display: flex;
-  flex-direction: column;
-  gap: $font-size-lg;
-  margin-bottom: $spacing-2xl;
-}
+    12. SCSS only — never edit compiled .css directly
 
-.stat-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: $font-size-md;
-
-  .material-icons { font-size: $font-size-3xl; color: $color-text-secondary; }
-  &.stat-badge .material-icons { color: $color-client-primary; }
-}
-
-.client-tabs {
-  display: flex;
-  gap: $spacing-sm;
-  border-bottom: 2px solid $color-border;
-  margin-bottom: $spacing-2xl;
-  overflow-x: auto;
-
-  .tab {
-    padding: 12px $font-size-lg;
-    background: none;
-    border: none;
-    color: $color-text-secondary;
-    font-size: $font-size-md;
-    font-weight: $font-weight-medium;
-    cursor: pointer;
-    border-bottom: 3px solid transparent;
-    transition: $transition-fast;
-    white-space: nowrap;
-
-    &:hover { color: $color-text-primary; }
-    &.active { color: $color-client-primary; border-bottom-color: $color-client-primary; }
-  }
-}
-
-.client-content {
-  .content-section {
-    margin-bottom: $spacing-2xl;
-
-    h2 { font-size: $font-size-2xl; font-weight: $font-weight-medium; margin-bottom: 12px; color: $color-text-primary; }
-    p  { color: $color-text-secondary; line-height: $line-height-loose; }
-    a  {
-      color: $color-client-primary;
-      text-decoration: none;
-      font-weight: $font-weight-medium;
-      &:hover { text-decoration: underline; }
-    }
-  }
-}
-
-.about-text { margin-bottom: $spacing-sm; }
-
-.top-pro-badges {
-  display: flex;
-  gap: $font-size-lg;
-  flex-wrap: wrap;
-  margin-top: $spacing-xl;
-
-  .pro-badge {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: $spacing-sm;
-
-    .badge-icon {
-      width: 64px;
-      height: 64px;
-      border-radius: $radius-circle;
-      background: linear-gradient(135deg, $color-client-primary, #00bcd4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: $color-white;
-      box-shadow: $shadow-md;
-      .material-icons { font-size: 32px; }
-    }
-
-    .badge-year { font-size: $font-size-base; color: $color-text-secondary; font-weight: $font-weight-medium; }
-  }
-}
-
-.card {
-  background: $color-white;
-  border-radius: $radius-sm;
-  padding: $spacing-xl;
-  box-shadow: $shadow-md;
-  margin-bottom: $spacing-xl;
-  transition: $transition-default;
-  &:hover { box-shadow: $shadow-hover; }
-}
-
-.contact-card {
-  .contact-header {
-    display: flex;
-    align-items: center;
-    gap: $spacing-sm;
-    margin-bottom: $spacing-sm;
-    color: $color-text-secondary;
-    font-size: $font-size-base;
-    .material-icons { font-size: $font-size-2xl; }
-  }
-
-  .link-details {
-    display: inline-block;
-    color: $color-client-primary;
-    text-decoration: none;
-    font-size: $font-size-base;
-    margin-bottom: $font-size-lg;
-    &:hover { text-decoration: underline; }
-  }
-
-  .btn-estimate { width: 100%; margin-bottom: $font-size-lg; }
-
-  .online-status {
-    display: flex;
-    align-items: center;
-    gap: $spacing-sm;
-    justify-content: center;
-    font-size: $font-size-base;
-    color: $color-success;
-
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: $radius-circle;
-      background-color: $color-success;
-    }
-  }
-}
-
-.guarantee-card {
-  border: 1px solid $color-border;
-
-  .guarantee-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-    border-radius: $radius-circle;
-    background-color: rgba($color-client-primary, 0.1);
-    margin-bottom: $font-size-lg;
-    .material-icons { font-size: 28px; color: $color-client-primary; }
-  }
-
-  h3 { font-size: 18px; font-weight: $font-weight-medium; margin-bottom: $spacing-sm; color: $color-text-primary; }
-  p  { font-size: $font-size-base; color: $color-text-secondary; margin-bottom: $spacing-sm; line-height: 1.5; }
-
-  .link-learn-more {
-    color: $color-client-primary;
-    text-decoration: none;
-    font-size: $font-size-base;
-    font-weight: $font-weight-medium;
-    &:hover { text-decoration: underline; }
-  }
-}
-
-.btn-primary {
-  padding: 12px $spacing-xl;
-  background-color: $color-client-primary;
-  color: $color-white;
-  border: none;
-  border-radius: $radius-sm;
-  font-size: $font-size-lg;
-  font-weight: $font-weight-medium;
-  cursor: pointer;
-  transition: $transition-default;
-  box-shadow: $shadow-sm;
-
-  &:hover  { background-color: $color-client-hover; box-shadow: $shadow-md; transform: translateY(-1px); }
-  &:active { transform: translateY(0); }
-}
-
-@media (max-width: $bp-md) {
-  .client-header    { flex-direction: column; text-align: center; }
-  .client-logo      { margin: 0 auto; }
-  .client-name      { font-size: $font-size-3xl; }
-  .client-layout    { flex-direction: column; }
-  .client-sidebar   { order: -1; }
-}
-```
-
----
-
-## client/mtk-request.config.js
-
-```js
-window.mtkRequestConfig = {
-  title:      "Contact Information",
-  submitText: "Submit Request",
-  fields: {
-    name:    { label: "Full Name",                    placeholder: "e.g. John A. Smith",          required: true  },
-    email:   { label: "Email",                        placeholder: "e.g. john@example.com",       required: false },  // required if phone blank
-    phone:   { label: "Phone",                        placeholder: "e.g. (646) 555-1234",         required: false },  // required if email blank
-    address: { label: "Address",                      placeholder: "e.g. 123 Main St, New York",  required: false },
-    help:    { label: "What do you need help with?",  placeholder: "e.g. Locked out, need new locks installed, key duplication...", required: true }
-  },
-  contactOptions: [
-    { value: "email", label: "Contact me by email" },
-    { value: "phone", label: "Contact me by phone"  }
-  ],
-  phoneTimes: [
-    "Morning (8am - 12pm)",
-    "Afternoon (12pm - 5pm)",
-    "Evening (5pm - 9pm)"
-  ]
-};
-```
-
----
-
-## client/mtk-request.js
-
-```js
-if (typeof MtkRequest === 'undefined') {
-
-class MtkRequest {
-  constructor() {
-    this.init();
-  }
-
-  init() {
-    this.waitForElement().then(() => {
-      this.el     = document.querySelector('.mtk-request');
-      this.config = window.mtkRequestConfig;
-
-      this.modalEl = this.el.querySelector('.modal');
-      this.bsModal = new bootstrap.Modal(this.modalEl);
-
-      this.render();
-      this.bindEvents();
-      this.subscribe();
-    });
-  }
-
-  waitForElement() {
-    return new Promise(resolve => {
-      const check = () => {
-        if (document.querySelector('.mtk-request')) resolve();
-        else requestAnimationFrame(check);
-      };
-      check();
-    });
-  }
-
-  render() {
-    const c = this.config;
-
-    this.el.querySelector('.modal-title').innerText  = c.title;
-    this.el.querySelector('.submit-btn').innerText   = c.submitText;
-
-    const fieldMap = [
-      { selector: '.name',    key: 'name'    },
-      { selector: '.email',   key: 'email'   },
-      { selector: '.phone',   key: 'phone'   },
-      { selector: '.address', key: 'address' },
-      { selector: '.help',    key: 'help'    },
-    ];
-
-    fieldMap.forEach(({ selector, key }) => {
-      const field = c.fields[key];
-      const input = this.el.querySelector(selector);
-      const label = input && input.parentElement.querySelector('label');
-      if (label) label.innerText = field.label;
-      if (input && field.placeholder) input.setAttribute('placeholder', field.placeholder);
-    });
-
-    // Radio buttons
-    const radioGroup = this.el.querySelector('.radio-group');
-    c.contactOptions.forEach((opt, i) => {
-      const wrapper = document.createElement('label');
-      wrapper.className = 'radio-item';
-      wrapper.innerHTML = `
-        <input type="radio" name="contactType" value="${opt.value}" ${i === 0 ? 'checked' : ''}>
-        <span class="radio-custom"></span>
-        <span>${opt.label}</span>
-      `;
-      radioGroup.appendChild(wrapper);
-    });
-
-    // Call times
-    const timeSelect = this.el.querySelector('.call-time');
-    c.phoneTimes.forEach(t => {
-      const o = document.createElement('option');
-      o.value = t;
-      o.textContent = t;
-      timeSelect.appendChild(o);
-    });
-  }
-
-  bindEvents() {
-    const openBtn    = this.el.querySelector('.open-dialog');
-    const closeBtn   = this.el.querySelector('.close-dialog');
-    const radios     = this.el.querySelectorAll('input[name="contactType"]');
-    const phoneTimes = this.el.querySelector('.phone-times');
-
-    openBtn.addEventListener('click', () => {
-      wc.log('mtk-request:open');
-      wc.publish('mtk-request:open');
-      this.bsModal.show();
-    });
-
-    closeBtn.addEventListener('click', () => {
-      wc.log('mtk-request:close');
-      wc.publish('mtk-request:close');
-      this.bsModal.hide();
-    });
-
-    radios.forEach(radio => {
-      radio.addEventListener('change', () => {
-        const value = radio.value;
-        phoneTimes.classList.toggle('active', value === 'phone');
-        wc.log('mtk-request:contact-change', value);
-        wc.publish('mtk-request:contact-change', value);
-      });
-    });
-
-    // Floating labels — stay floated when placeholder is visible
-    this.el.querySelectorAll('.md-field input, .md-field textarea, .md-field select')
-      .forEach(field => {
-        if (field.getAttribute('placeholder') && field.getAttribute('placeholder').trim()) {
-          field.parentElement.classList.add('active');
-        }
-        field.addEventListener('focus', () => {
-          field.parentElement.classList.add('active');
-        });
-        field.addEventListener('blur', () => {
-          const hasPlaceholder = field.getAttribute('placeholder') && field.getAttribute('placeholder').trim();
-          if (!field.value && !hasPlaceholder) {
-            field.parentElement.classList.remove('active');
-          }
-        });
-      });
-
-    this.el.querySelector('form').addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const phoneInput  = this.el.querySelector('.phone');
-      const contactType = this.el.querySelector('input[name="contactType"]:checked')?.value || '';
-      const nameInput   = this.el.querySelector('.name');
-      const emailInput  = this.el.querySelector('.email');
-      const helpInput   = this.el.querySelector('.help');
-
-      // Helper: flag field red, clear on next input
-      const flagField = (input) => {
-        input.parentElement.classList.add('active');
-        input.focus();
-        input.style.borderBottomColor = '#dc3545';
-        input.parentElement.querySelector('label').style.color = '#dc3545';
-        input.addEventListener('input', function onFix() {
-          input.style.borderBottomColor = '';
-          input.parentElement.querySelector('label').style.color = '';
-          input.removeEventListener('input', onFix);
-        });
-      };
-
-      const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const PHONE_REGEX = /^(?:\+1\s?)?(?:\(\d{3}\)|\d{3})[\s.\-]?\d{3}[\s.\-]?\d{4}$/;
-
-      // 1. Name — always required
-      if (!nameInput.value.trim()) {
-        wc.log('[mtk-request] Validation failed — name is required');
-        flagField(nameInput);
-        return;
-      }
-
-      // 2. Contact method drives which field is required
-      if (contactType === 'phone' && !phoneInput.value.trim()) {
-        wc.log('[mtk-request] Validation failed — phone required when contact by phone selected');
-        flagField(phoneInput);
-        return;
-      }
-
-      if (contactType === 'email' && !emailInput.value.trim()) {
-        wc.log('[mtk-request] Validation failed — email required when contact by email selected');
-        flagField(emailInput);
-        return;
-      }
-
-      // 3. Neither filled — require at least one
-      if (!emailInput.value.trim() && !phoneInput.value.trim()) {
-        wc.log('[mtk-request] Validation failed — email or phone required');
-        flagField(emailInput);
-        return;
-      }
-
-      // 4. Format validation
-      if (emailInput.value.trim() && !EMAIL_REGEX.test(emailInput.value.trim())) {
-        wc.log('[mtk-request] Validation failed — invalid email format');
-        flagField(emailInput);
-        return;
-      }
-
-      if (phoneInput.value.trim() && !PHONE_REGEX.test(phoneInput.value.trim())) {
-        wc.log('[mtk-request] Validation failed — invalid phone format');
-        flagField(phoneInput);
-        return;
-      }
-
-      // 5. Help — required
-      if (!helpInput.value.trim()) {
-        wc.log('[mtk-request] Validation failed — help description is required');
-        flagField(helpInput);
-        return;
-      }
-
-      const data = {
-        nalaUID:     (this.el.querySelector('.nala-uid')?.value   || '').trim(),
-        name:        (nameInput.value                             || '').trim(),
-        email:       (emailInput.value                            || '').trim(),
-        phone:       (phoneInput.value                            || '').trim(),
-        address:     (this.el.querySelector('.address').value     || '').trim(),
-        help:        (helpInput.value                             || '').trim(),
-        contactType: contactType,
-        callTime:    (this.el.querySelector('.call-time').value   || '').trim(),
-        submittedAt: new Date().toISOString(),
-        source:      'mtk-request'
-      };
-
-      wc.log('[mtk-request] Submit →', data);
-      wc.publish('mtk-request:submit', data);
-
-      this.bsModal.hide();
-    });
-  }
-
-  subscribe() {
-    const events = [
-      'mtk-request:init',
-      'mtk-request:open',
-      'mtk-request:submit',
-      'mtk-request:contact-change',
-      'mtk-request:update'
-    ];
-
-    events.forEach(event => {
-      wc.subscribe(event, (msg) => this.onMessage(event, msg));
-    });
-  }
-
-  onMessage(event, message) {
-    wc.log('mtk-request:received', { event, message });
-    if (event === 'mtk-request:open') {
-      this.bsModal.show();
-    }
-  }
-}
-
-if (!window._mtkRequestInstance) {
-    window._mtkRequestInstance = new MtkRequest();
-}
-
-}
-```
-
----
-
-## client/mtk-request.scss
-
-```scss
-.mtk-request {
-
-  display: block;
-
-  .modal-dialog {
-    max-width: 480px;
-    margin: auto;
-  }
-
-  @media (max-width: 768px) {
-    .modal-dialog {
-      max-width: 95%;
-    }
-  }
-
-  .md-field {
-    position: relative;
-    margin-bottom: 20px;
-  }
-
-  .md-field input,
-  .md-field textarea,
-  .md-field select {
-    width: 100%;
-    border: none;
-    border-bottom: 2px solid #ccc;
-    padding: 10px 0 6px;
-    background: transparent;
-    outline: none;
-  }
-
-  .md-field label {
-    position: absolute;
-    top: 10px;
-    left: 0;
-    font-size: 14px;
-    color: #777;
-    transition: 0.2s;
-    pointer-events: none;
-  }
-
-  .md-field.active label,
-  .md-field input:focus + label,
-  .md-field textarea:focus + label,
-  .md-field select:focus + label {
-    top: -10px;
-    font-size: 12px;
-    color: #0d6efd;
-  }
-
-  .contact-group {
-    margin: 20px 0;
-  }
-
-  .group-label {
-    font-size: 13px;
-    color: #777;
-    margin-bottom: 10px;
-  }
-
-  .radio-group {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 24px;
-    align-items: center;
-  }
-
-  .radio-item {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    gap: 8px;
-    font-size: 14px;
-    white-space: nowrap;
-  }
-
-  .radio-item input {
-    display: none;
-  }
-
-  .radio-custom {
-    width: 18px;
-    height: 18px;
-    border: 2px solid #777;
-    border-radius: 50%;
-    position: relative;
-    flex-shrink: 0;
-  }
-
-  .radio-item input:checked + .radio-custom {
-    border-color: #0d6efd;
-  }
-
-  .radio-item input:checked + .radio-custom::after {
-    content: "";
-    width: 10px;
-    height: 10px;
-    background: #0d6efd;
-    border-radius: 50%;
-    position: absolute;
-    top: 2px;
-    left: 2px;
-  }
-
-  .phone-times {
-    display: none;
-  }
-
-  .phone-times.active {
-    display: block;
-  }
-
-  .submit-wrap {
-    text-align: right;
-    margin-top: 10px;
-  }
-
-  .submit-btn {
-    padding: 10px 24px;
-    border-radius: 24px;
-    width: auto;
-  }
-
-  :focus {
-    outline: 2px solid #0d6efd;
-    outline-offset: 2px;
-  }
-}
-
-// Placeholder styling
-.mtk-request .md-field {
-  input::placeholder,
-  textarea::placeholder {
-    font-size: 12px;
-    font-style: italic;
-    color: #bbb;
-  }
-}
-```
-
----
-
-## KEY RULES (do not break these)
-
-1. **client.js loads BEFORE wc-include** in index.html — defines `var client = window.client`
-2. **client.config.js loads INSIDE client.html** (last script) — calls `client({...})`
-3. **mtk-request dialog is inlined in client.html** — no nested wc-include (jQuery doesn't trigger connectedCallback on injected custom elements)
-4. **MtkRequest is guarded** with `if (typeof MtkRequest === 'undefined')` to prevent duplicate class declaration on re-load
-5. **nalaUID flow**: config → btnEstimate click sets hidden `.nala-uid` input → submit reads it → published in payload
-6. **Validation order**: name → contact-type-driven required → OR required → format → help
-7. **SCSS only** — never edit the compiled .css directly
+    13. client/css/client.scss imports: @import "../../css/nala.scss"
