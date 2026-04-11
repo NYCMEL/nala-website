@@ -354,6 +354,7 @@ class MTKHierarchy {
         const isOpen = this.openModules.has(module.id);
         const openClass = isOpen ? 'mtk-module__toggle--open' : '';
         const bodyOpenClass = isOpen ? 'mtk-module__body--open' : '';
+        const moduleTitle = this.escapeHtml(module.title);
 
         const lessonsHTML = module.lessons ? module.lessons.map(lesson =>
             this.renderLesson(lesson, module.id)
@@ -362,14 +363,17 @@ class MTKHierarchy {
         const quizHTML = module.quiz ? this.renderQuiz(module.quiz, module.id) : '';
 
         return `
-      <div class="mtk-module ${disabledClass}" data-module-id="${module.id}">
+      <div class="mtk-module ${disabledClass}"
+           data-module-id="${module.id}"
+           data-module-title="${moduleTitle}"
+           data-testid="module-${module.id}">
         <div class="mtk-module__header"
              role="button"
              tabindex="0"
              aria-expanded="${isOpen}"
-             aria-label="Module: ${this.escapeHtml(module.title)}">
+             aria-label="Module: ${moduleTitle}">
           <span class="material-icons">folder</span>
-          <span class="mtk-module__title">${this.escapeHtml(module.title)}</span>
+          <span class="mtk-module__title">${moduleTitle}</span>
           <span class="mtk-module__toggle ${openClass}">
             <span class="material-icons">expand_more</span>
           </span>
@@ -388,16 +392,21 @@ class MTKHierarchy {
     renderQuiz(quiz, moduleId) {
         const disabledClass = !quiz.access ? 'mtk-quiz--disabled' : '';
         const activeClass = this.activeQuiz === quiz.id ? 'mtk-quiz--active' : '';
+        const quizTitle = this.escapeHtml(quiz.title);
+        const quizLessonNo = Number.isFinite(Number(quiz.lesson_no)) ? Number(quiz.lesson_no) : '';
 
         return `
       <div class="mtk-quiz ${disabledClass} ${activeClass}"
            data-quiz-id="${quiz.id}"
            data-module-id="${moduleId}"
+           data-quiz-title="${quizTitle}"
+           data-lesson-no="${quizLessonNo}"
+           data-testid="quiz-${quiz.id}"
            role="button"
            tabindex="0"
-           aria-label="Quiz: ${this.escapeHtml(quiz.title)}">
+           aria-label="Quiz: ${quizTitle}">
         <span class="mtk-quiz__icon material-icons">quiz</span>
-        <span class="mtk-quiz__title">${this.escapeHtml(quiz.title)}</span>
+        <span class="mtk-quiz__title">${quizTitle}</span>
         <span class="mtk-quiz__badge material-icons">arrow_forward</span>
       </div>
     `;
@@ -411,20 +420,27 @@ class MTKHierarchy {
         const lessonKey = `${moduleId}-${lesson.id}`;
         const isActive = this.openLessons.has(lessonKey);
         const activeClass = isActive ? 'mtk-lesson--active' : '';
+        const lessonTitle = this.escapeHtml(lesson.title);
+        const lessonNo = Number.isFinite(Number(lesson.lesson_no)) ? Number(lesson.lesson_no) : '';
         const primaryResource = this.findPrimaryLessonResource(moduleId, lesson.id);
         const icon = primaryResource && primaryResource.type === 'page'
             ? 'workspace_premium'
             : 'play_circle_outline';
 
         return `
-      <div class="mtk-lesson ${disabledClass} ${activeClass}" data-lesson-id="${lesson.id}" data-module-id="${moduleId}">
+      <div class="mtk-lesson ${disabledClass} ${activeClass}"
+           data-lesson-id="${lesson.id}"
+           data-module-id="${moduleId}"
+           data-lesson-no="${lessonNo}"
+           data-lesson-title="${lessonTitle}"
+           data-testid="lesson-${lessonNo !== '' ? lessonNo : lesson.id}">
         <div class="mtk-lesson__header"
              role="button"
              tabindex="0"
              aria-expanded="${isActive}"
-             aria-label="Lesson: ${this.escapeHtml(lesson.title)}">
+             aria-label="Lesson: ${lessonTitle}">
           <span class="material-icons">${icon}</span>
-          <span class="mtk-lesson__title">${this.escapeHtml(lesson.title)}</span>
+          <span class="mtk-lesson__title">${lessonTitle}</span>
         </div>
       </div>
     `;
@@ -436,6 +452,7 @@ class MTKHierarchy {
     renderResource(resource, moduleId, lessonId) {
         const disabledClass = !resource.access ? 'mtk-resource--disabled' : '';
         const activeClass = this.activeResource === resource.id ? 'mtk-resource--active' : '';
+        const resourceDescription = this.escapeHtml(resource.description);
 
         const icon = resource.type === 'video' ? 'play_circle_outline' : resource.type === 'page' ? 'workspace_premium' : 'image';
         const statusIcon = resource.processed ? '<span class="mtk-resource__status"><span class="material-icons">visibility</span></span>' : '';
@@ -445,11 +462,14 @@ class MTKHierarchy {
            data-resource-id="${resource.id}"
            data-lesson-id="${lessonId}"
            data-module-id="${moduleId}"
+           data-resource-type="${resource.type}"
+           data-resource-description="${resourceDescription}"
+           data-testid="resource-${resource.id}"
            role="button"
            tabindex="0"
-           aria-label="${resource.type}: ${this.escapeHtml(resource.description)}">
+           aria-label="${resource.type}: ${resourceDescription}">
         <span class="mtk-resource__icon material-icons">${icon}</span>
-        <span class="mtk-resource__title">${this.escapeHtml(resource.description)}</span>
+        <span class="mtk-resource__title">${resourceDescription}</span>
         ${statusIcon}
       </div>
     `;
