@@ -9,16 +9,17 @@ body {
   color: $color-text-primary;
   background-color: $color-bg-light;
   line-height: $line-height-loose;
-  margin-top: 25px;
-  margin-bottom: 25px;
+  margin: 0;
+  padding: 0;
 }
 
 .client-container {
-  max-width: $bp-xl;
-  margin: 25px auto;
+  max-width: 1100px;
+  margin: 0 auto;
   padding: $spacing-xl;
   background-color: $color-white;
   min-height: 100vh;
+  box-sizing: border-box;
 }
 
 .breadcrumb {
