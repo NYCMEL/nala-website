@@ -47,9 +47,8 @@ class ClientProfile {
 	this.renderSidebar()
 	this.attachEventListeners()
 	this.initGlobalClickListener()
-	if (this.data.editable !== undefined || window.edtable !== undefined) {
-	    this.initEditSwitch()
-	}
+	// Always show header bar
+	this.initEditSwitch()
     }
 
     initEditSwitch() {
@@ -60,11 +59,15 @@ class ClientProfile {
 	const saveBtn = document.getElementById('saveChangesBtn')
 	if (!bar || !toggle) return
 
-	// Show the bar — sticky inside container, aligns naturally
+	// Always show the bar
 	bar.style.display = 'flex'
 	bar.style.flexDirection = 'column'
 
-	// Start in edit mode if editable:true, else review mode
+	// Only show controls if editable is defined
+	const hasEditable = this.data.editable !== undefined || window.edtable !== undefined
+	const controls = bar.querySelector('.bar-controls')
+	if (controls) controls.style.display = hasEditable ? 'flex' : 'none'
+
 	const startEditing = !!(this.data.editable || window.edtable)
 	toggle.checked = startEditing
 	this._applyEditSwitchStyle(slider, knob, startEditing)
