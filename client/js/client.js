@@ -68,13 +68,9 @@ class ClientProfile {
 	const controls = bar.querySelector('.bar-controls')
 	if (controls) controls.style.display = hasEditable ? 'flex' : 'none'
 
-	const startEditing = !!(this.data.editable || window.edtable)
-	toggle.checked = startEditing
-	this._applyEditSwitchStyle(slider, knob, startEditing)
-	if (startEditing) {
-	    this.enableEditable()
-	    if (saveBtn) saveBtn.style.display = 'inline-block'
-	}
+	// Always start in review mode
+	toggle.checked = false
+	this._applyEditSwitchStyle(slider, knob, false)
 
 	// Save Changes — replace handler each time to avoid stacking listeners
 	if (saveBtn) {
@@ -126,6 +122,7 @@ class ClientProfile {
 		newSaveBtn.textContent = 'Saved ✓'
 		newSaveBtn.style.background = '#2e7d32'
 		setTimeout(function() {
+		    newSaveBtn.style.display = 'none'
 		    newSaveBtn.textContent = 'Save Changes'
 		    newSaveBtn.style.background = '#1565c0'
 		}, 2000)
@@ -143,10 +140,13 @@ class ClientProfile {
 	    if (isEdit) {
 		wc.log('[client] Switch → Edit mode')
 		self.enableEditable()
-		if (saveBtn) saveBtn.style.display = 'inline-block'
+		const btn = document.getElementById('saveChangesBtn')
+		if (btn) btn.style.display = 'inline-block'
 	    } else {
 		wc.log('[client] Switch → Review mode')
 		self.disableEditable()
+		const btn = document.getElementById('saveChangesBtn')
+		if (btn) btn.style.display = 'none'
 	    }
 	})
     }

@@ -29,6 +29,11 @@
             </span>
             <!-- Switch + Save -->
             <div class="bar-controls">
+                <button id="saveChangesBtn" style="display:none"
+                    onmouseover="this.style.background='#0d47a1'"
+                    onmouseout="this.style.background='#1565c0'">
+                    Save Changes
+                </button>
                 <span class="bar-label" style="color:#546e7a"
                     onclick="document.getElementById('editModeToggle').checked=false;document.getElementById('editModeToggle').dispatchEvent(new Event('change'))">Review</span>
                 <label class="edit-switch" style="position:relative;display:inline-block;width:44px;height:24px;cursor:pointer;flex-shrink:0">
@@ -39,11 +44,6 @@
                 </label>
                 <span class="bar-label" style="color:#1565c0"
                     onclick="document.getElementById('editModeToggle').checked=true;document.getElementById('editModeToggle').dispatchEvent(new Event('change'))">Edit</span>
-                <button id="saveChangesBtn" style="display:none"
-                    onmouseover="this.style.background='#0d47a1'"
-                    onmouseout="this.style.background='#1565c0'">
-                    Save Changes
-                </button>
             </div>
         </div>
         <div id="editModeHint" style="display:none;padding:0 24px 6px;margin-top:-8px;font-size:11px;font-style:italic;color:#546e7a">
