@@ -62,6 +62,7 @@ class ClientProfile {
 
 	// Show the bar — sticky inside container, aligns naturally
 	bar.style.display = 'flex'
+	bar.style.flexDirection = 'column'
 
 	// Start in edit mode if editable:true, else review mode
 	const startEditing = !!(this.data.editable || window.edtable)
@@ -154,6 +155,9 @@ class ClientProfile {
 
     disableEditable() {
 	document.querySelector('.client-container').classList.remove('edtable-mode')
+	const hint = document.getElementById('editModeHint')
+	if (hint) hint.style.display = 'none'
+
 	document.querySelectorAll('[data-editable]').forEach(function(el) {
 	    el.removeAttribute('contenteditable')
 	    el.style.outline    = ''
@@ -171,6 +175,9 @@ class ClientProfile {
     enableEditable() {
 	wc.log('[client] edtable mode ON')
 	document.querySelector('.client-container').classList.add('edtable-mode')
+	const hint = document.getElementById('editModeHint')
+	if (hint) hint.style.display = 'block'
+
 	this.renderSocialMedia(true)
 	document.querySelectorAll('[data-editable]').forEach(function(el) {
 	    el.style.outline = '2px dashed #009fd9'

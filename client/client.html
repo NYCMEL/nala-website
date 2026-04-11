@@ -2,7 +2,7 @@
 
     <!-- Sticky header — inside container so it aligns naturally with content -->
     <style>
-        #editModeBar .bar-inner { height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;width:100%;box-sizing:border-box }
+        #editModeBar .bar-inner { min-height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;width:100%;box-sizing:border-box }
         #editModeBar .bar-title { display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden }
         #editModeBar .bar-title .t-nala { font-size:20px;font-weight:700;color:#1565c0;text-transform:uppercase;letter-spacing:0.05em }
         #editModeBar .bar-title .t-sub  { font-size:13px;font-weight:400;color:#90a4ae;display:inline-flex;align-items:center;gap:2px;white-space:nowrap }
@@ -17,6 +17,7 @@
         }
     </style>
     <div id="editModeBar" style="display:none;position:sticky;top:0;z-index:1000;
+        flex-direction:column;
         margin:-24px -24px 0 -24px;
         background:linear-gradient(135deg,#e3f2fd,#bbdefb);
         box-shadow:0 2px 8px rgba(0,0,0,0.15)">
@@ -44,6 +45,9 @@
                     Save Changes
                 </button>
             </div>
+        </div>
+        <div id="editModeHint" style="display:none;padding:0 24px 6px;margin-top:-8px;font-size:11px;font-style:italic;color:#546e7a">
+            Editable fields are marked with blue dashed borders. Please update as necessary.
         </div>
     </div>
     <div class="client-layout" style="margin-top:25px">
