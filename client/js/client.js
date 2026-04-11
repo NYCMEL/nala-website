@@ -87,11 +87,18 @@ class ClientProfile {
 		    changes[key] = el.textContent.trim()
 		})
 
-		// Stats — collect updated text by index
+		// Stats — collect updated number and write back into this.data so renderStats() uses new value
 		const updatedStats = []
 		document.querySelectorAll('[data-stat-index]').forEach(function(el) {
 		    const i = parseInt(el.dataset.statIndex)
-		    updatedStats[i] = el.textContent.trim()
+		    const newNum = el.textContent.trim()
+		    updatedStats[i] = newNum
+		    // Update the data so renderStats() re-renders with the new number
+		    const stat = self.data.stats[i]
+		    if (stat) {
+			const match = stat.text.match(/^(\d+)(.*)$/)
+			if (match) stat.text = newNum + match[2]
+		    }
 		})
 		if (updatedStats.length) changes.stats = updatedStats
 
