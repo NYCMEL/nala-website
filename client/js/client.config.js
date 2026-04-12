@@ -43,7 +43,7 @@ var config = {
     },
     paymentMethods: {
 	title:   "Payment methods",
-	methods: "This pro accepts payments via Apple Pay, Cash, Check, Credit card, PayPal and Zelle.",
+	methods: "I accepts payments via Apple Pay, Cash, Credit card, PayPal and Zelle.",
     },
     socialMedia: {
 	title: "Social media",
