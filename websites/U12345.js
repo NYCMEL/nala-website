@@ -12,10 +12,10 @@ var config = {
     },
     stats: [
 	{ icon: "verified_user", text: "Current Top Pro",      type: "badge"        },
-	{ icon: "emoji_events",  text: "Hired 73 times",       type: "achievement"  },
+	{ icon: "emoji_events",  text: "Hired 13 times",       type: "achievement"  },
 	{ icon: "verified",      text: "Background checked",   type: "verification" },
-	{ icon: "groups",        text: "2 employees",          type: "team"         },
-	{ icon: "schedule",      text: "5 years in business",  type: "experience"   },
+	{ icon: "groups",        text: "3 employees",          type: "team"         },
+	{ icon: "schedule",      text: "2 years in business",  type: "experience"   },
     ],
     contact: {
 	priceText:       "Contact me for Estimate",
@@ -47,7 +47,7 @@ var config = {
 	title: "Connect with me",
 	links: [
 	    { platform: "facebook",  icon: "img/facebook.png",  url: "" },
-	    { platform: "instagram", icon: "img/instagram.png", url: "" },
+	    { platform: "instagram", icon: "img/instagram.png", url: "blah..." },
 	    { platform: "twitter",   icon: "img/twitter.png",   url: "" },
 	]
     },

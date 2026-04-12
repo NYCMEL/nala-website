@@ -52,6 +52,10 @@ class ClientProfile {
     }
 
     initEditSwitch() {
+	// Hide header entirely when loading from ?nalaUID= URL
+	if (new URLSearchParams(window.location.search).get('nalaUID')) {
+	    return
+	}
 	const bar     = document.getElementById('editModeBar')
 	const toggle  = document.getElementById('editModeToggle')
 	const slider  = bar && bar.querySelector('.edit-switch-slider')
