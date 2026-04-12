@@ -8,7 +8,7 @@ var config = {
 	logo:        "img/mel.co.png",
 	rating:      4.1,
 	ratingText:  "Excellent",
-	reviewCount: 62,
+	reviewCount: 52,
 	isTopPro:    true,
 	isOnline:    false,
     },
