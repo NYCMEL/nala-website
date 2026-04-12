@@ -66,14 +66,49 @@ class MtkRequest {
       radioGroup.appendChild(wrapper);
     });
 
-    // Call times
-    const timeSelect = this.el.querySelector('.call-time');
-    c.phoneTimes.forEach(t => {
-      const o = document.createElement('option');
-      o.value       = t;
-      o.textContent = t;
-      timeSelect.appendChild(o);
-    });
+    // Call times — multi-select checkboxes with "Anytime" at top
+    const checksContainer = this.el.querySelector('.call-time-checks');
+    if (checksContainer) {
+
+      // Helper to build a checkbox row
+      const makeRow = (value, label, checked) => {
+        const row = document.createElement('label');
+        row.style.cssText = 'display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;color:#333';
+        row.innerHTML = `
+          <input type="checkbox" class="call-time-check" value="${value}"
+            ${checked ? 'checked' : ''}
+            style="width:16px;height:16px;accent-color:#009fd9;cursor:pointer">
+          ${label}
+        `;
+        return row;
+      };
+
+      // "Anytime" row — unchecked by default (since all times are checked)
+      const anytimeRow = makeRow('Anytime', 'Anytime', false);
+      checksContainer.appendChild(anytimeRow);
+
+      // Time rows — all checked by default
+      c.phoneTimes.forEach(t => {
+        checksContainer.appendChild(makeRow(t, t, true));
+      });
+
+      // Anytime logic — when checked, uncheck all time rows
+      const anytimeCb = anytimeRow.querySelector('input');
+      anytimeCb.addEventListener('change', function() {
+        if (anytimeCb.checked) {
+          checksContainer.querySelectorAll('.call-time-check:not([value="Anytime"])').forEach(cb => {
+            cb.checked = false;
+          });
+        }
+      });
+
+      // When any time row is checked, uncheck Anytime
+      checksContainer.addEventListener('change', function(e) {
+        if (e.target !== anytimeCb && e.target.checked) {
+          anytimeCb.checked = false;
+        }
+      });
+    }
   }
 
   bindEvents() {
@@ -208,7 +243,7 @@ class MtkRequest {
         address:     (this.el.querySelector('.address').value     || '').trim(),
         help:        (this.el.querySelector('.help').value        || '').trim(),
         contactType: contactType,
-        callTime:    (this.el.querySelector('.call-time').value   || '').trim(),
+        callTime:    Array.from(this.el.querySelectorAll('.call-time-check:checked')).map(cb => cb.value).join(', '),
         submittedAt: new Date().toISOString(),
         source:      'mtk-request'
       };
