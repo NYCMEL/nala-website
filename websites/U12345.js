@@ -1,6 +1,4 @@
 var config = {
-    editable: true, /* REMOVE THIS FOR NORMAL SHOWING */
-
     nalaUID: "U12345", /* USED FOR IDENTIFYING THE CLIENT WHEN SENDING REQUESTS */
 
     business: {
