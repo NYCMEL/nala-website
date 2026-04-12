@@ -1,12 +1,273 @@
-I will upload thumbback.png image file
+Rebuild the client and mtk-request components for the NALA locksmith website.
 
-i want to create a modern material design application _client page from thumbback.png image
-i want you to remember this component as _client
-i want to use icons from thumbback.png file
 
-create a json named _client.data.js for all contents
+PROJECT CONTEXT
 
-use PubSub.js to publish all click events and include element ids
+    GitHub: NYCMEL/nala-website
+    Stack: Bootstrap 5, jQuery 3.7.1, Material Icons, local vendor files
+    wc-include (js/_wc.js): loads HTML fragments async via jQuery Ajax,
+        activates <script> tags via _activateScripts()
+    wc.publish() / wc.subscribe() = pub/sub (PubSub.js)
+    wc.log() = dev console logger
+    RULE: every wc.publish() must be preceded by wc.log() of what is being published
 
-make a separate html, css, scss, vanilla js files
 
+DIRECTORY STRUCTURE
+
+    client/
+        index.html
+        client.html
+        js/
+            client.js
+            client.config.js
+            mtk-request.js
+            mtk-request.config.js
+        css/
+            client.scss          (@import "../../css/nala.scss")
+            mtk-request.scss
+
+
+FILE: client/index.html
+
+    Standalone test page. Loads vendor CSS/JS and wc infra, then:
+        <script src="client/js/client.js">   MUST come BEFORE the wc-include div
+        <wc-include href="client/client.html"/> inside a div
+
+
+FILE: client/client.html
+
+    Two sections:
+
+    1. Client profile UI
+        No breadcrumb.
+        Sticky header bar (id="editModeBar", display:none by default):
+            position:sticky, top:0, inside .client-container
+            margin: -24px -24px 0 -24px to bleed to container edges
+            light blue gradient background, box-shadow
+            inner div: width:100%, flex, space-between
+            LEFT: NALA (bold, uppercase, large, blue) + chevron_right icon + "Business in the Box" (small, gray)
+            RIGHT: "Review" label (clickable) + toggle switch + "Edit" label (clickable) + "Save Changes" button
+            "Review" and "Edit" labels set toggle.checked and dispatch change event on click
+            "Save Changes" button: hidden until edit mode first activated, stays visible after
+        .client-layout with margin-top:25px
+        Main content: logo, name, rating, badges, share button, stats, tabs,
+            about, business hours, payment methods, social media, top pro status
+        Sidebar: contact card (priceText + "Need a Hand?" button, no "View project details" link),
+            guarantee card (verified_user icon inline with title "Our Guarantee")
+
+    2. mtk-request modal dialog inlined directly — NOT as nested wc-include
+        jQuery's $.html() does not trigger connectedCallback on custom elements
+        Hidden input: <input type="hidden" class="nala-uid" name="nalaUID" value="">
+        Email input has NO required attribute (only name has required)
+
+    Script tags at bottom (run by _activateScripts after injection):
+        client/js/mtk-request.config.js
+        client/js/mtk-request.js
+        client/js/client.config.js
+
+
+FILE: client/js/client.config.js
+
+    var config = {
+        nalaUID: "U12345",    // identifies the client when submitting requests
+        editable: true,       // when defined (true or false), shows the edit header bar
+        business: { name, logo, rating, ratingText, reviewCount, isTopPro, isOnline },
+        stats: [ { icon, text, type } ],
+        contact: { priceText, ctaButton },
+        guarantee: { title: "Our Guarantee", text, learnMoreLink },
+        tabs: [],
+        about: { description, readMoreLink },
+        businessHours: { title, text },
+        paymentMethods: { title, methods },
+        socialMedia: { title, links: [ { platform, icon, url } ] },
+        topProStatus: { title, description, years: [] }
+    }
+    client(config);   // call at the very end
+
+
+FILE: client/js/client.js
+
+    Top-level (var so jQuery globalEval finds it):
+        var client = window.client = function(config) {
+            if (window._clientProfileInstance) return   // single-instance guard
+            waitForElement('.client-container').then(() => {
+                window._clientProfileInstance = new ClientProfile(config)
+            })
+        }
+
+    ClientProfile class:
+        init() calls: renderHeader, renderStats, renderTabs, renderContent,
+            renderSidebar, attachEventListeners, initGlobalClickListener
+            then: if editable is defined → initEditSwitch()
+
+        renderHeader():
+            Sets logo img, client name, rating stars, Top Pro badge.
+            Logo click: only opens file picker when .edtable-mode class is present.
+                On file selected → FileReader → img.src = base64
+                wc.log then wc.publish('client:logo-change', { id, class, value, file })
+
+        renderStats():
+            Stats with type "team" AND leading number: splits into
+                <span class="stat-num" data-editable data-stat-index="i"> + <span class="stat-suffix">
+            All others: <span class="stat-text"> (static, no data-editable)
+
+        renderContent():
+            Sets all section titles and text from config.
+            Calls renderSocialMedia()
+
+        renderSocialMedia(forceEdit):
+            isEdit = forceEdit if provided, else this.data.editable || window.edtable
+            Review mode: shows icon links filtered to rows with url, hides #socialMediaTitle if none
+            Edit mode: shows MD table (2 cols: icon + url input) + preview section (no "Preview" label)
+                Table has thead: "Media" | "Your Social Link" (small caps gray)
+                URL input: MD style, placeholder "Your social media link" italic gray
+                Typing URL → icon opacity 1, preview updates live
+                URL cleared → icon opacity 0.4, removed from preview
+                Injected CSS for placeholder: font-style italic, color #bbb
+
+        renderSidebar():
+            Sets contactPrice, btnEstimate text (no viewDetailsLink).
+            Hides onlineStatus if !isOnline.
+            Sets guaranteeTitle, guaranteeText, learnMoreLink.
+
+        initEditSwitch():
+            Shows #editModeBar (display:flex)
+            Uses cloneNode(true) on saveBtn to strip all previous listeners before adding new one
+            Start state: toggle.checked = !!(config.editable || window.edtable)
+            Apply switch style: slider blue + knob right when edit, gray + knob left when review
+            Toggle change → enableEditable() or disableEditable(), show/hide saveBtn
+            "Review" / "Edit" label clicks → set toggle.checked + dispatch change event
+            Save Changes click:
+                Collects all [data-editable] textContent (skipping socialMediaLinks, clientLogo, stat-index)
+                Collects stats by data-stat-index
+                Collects social URLs from .social-url inputs
+                Collects logo base64 if src starts with data:
+                wc.log then wc.publish('client:save', changes)
+                Switches to review mode (toggle.checked=false, _applyEditSwitchStyle, disableEditable)
+                Visual feedback: "Saved ✓" green for 2 seconds
+
+        enableEditable():
+            Adds .edtable-mode class to .client-container
+            Calls renderSocialMedia(true)
+            All [data-editable]: outline 2px dashed #009fd9, contenteditable=true, cursor text
+            Logo exception: pointer cursor, title "Click to change photo", no contenteditable
+            On blur: wc.log then wc.publish('client:edtable-change', { id, class, value })
+
+        disableEditable():
+            Removes .edtable-mode class from .client-container
+            Removes contenteditable, outline, cursor, color, fontWeight, title from [data-editable]
+            Calls renderSocialMedia(false)
+            Calls renderStats() to regenerate clean HTML
+
+        attachEventListeners():
+            btnEstimate click → sets .nala-uid hidden field from config.nalaUID
+                wc.log then wc.publish('mtk-request:open')
+            btnShare click → navigator.share or alert
+            Tab clicks → active class
+            Global click listener: commented out console.log
+
+        initGlobalClickListener():
+            document click → wc.publish('global.click', clickData)
+            console.log commented out
+
+
+FILE: client/css/client.scss
+
+    @import "../../css/nala.scss";
+    body: margin-top 25px, margin-bottom 25px
+    .client-container: margin 25px auto
+    .stat-num: color $color-text-primary, font-weight medium (review mode default)
+    .stat-suffix, .stat-text: color $color-text-primary (review mode default)
+    .edtable-mode .stat-suffix, .edtable-mode .stat-text: color $color-text-secondary (lighter in edit)
+    .edtable-mode .stat-num: color $color-text-primary (stays dark in edit)
+
+
+FILE: client/js/mtk-request.config.js
+
+    window.mtkRequestConfig = {
+        title: "Contact Information",
+        submitText: "Submit Request",
+        fields: {
+            name:    { label, placeholder: "e.g. John A. Smith",         required: true  },
+            email:   { label, placeholder: "e.g. john@example.com",      required: false },
+            phone:   { label, placeholder: "e.g. (646) 555-1234",        required: false },
+            address: { label, placeholder: "e.g. 123 Main St, New York", required: false },
+            help:    { label, placeholder: "e.g. Locked out...",          required: true  }
+        },
+        contactOptions: [ {email}, {phone} ],
+        phoneTimes: [ morning, afternoon, evening ]
+    }
+
+
+FILE: client/js/mtk-request.js
+
+    Entire file wrapped in: if (typeof MtkRequest === 'undefined') { ... }
+    Instantiation: if (!window._mtkRequestInstance) { window._mtkRequestInstance = new MtkRequest() }
+
+    render():
+        Sets modal title and submit label from config
+        Sets field labels and placeholder attributes from config
+        Float labels: add class 'active' immediately on any field with a non-empty placeholder
+        Builds radio buttons dynamically from contactOptions
+        Builds call-time select from phoneTimes
+
+    Placeholder style: font-size 12px, italic, color #bbb
+
+    Validation on submit (strict order):
+        1. Name blank                              → flag name
+        2. contactType is phone AND phone blank    → flag phone
+        3. contactType is email AND email blank    → flag email
+        4. Both email AND phone blank              → flag email
+        5. Email filled but invalid format         → flag email
+        6. Phone filled but invalid US format      → flag phone
+        7. Help blank                              → flag help
+
+    flagField(input): red border + label, focus, clears on next input, wc.log each failure
+
+    Payload: { nalaUID, name, email, phone, address, help, contactType, callTime, submittedAt, source }
+    wc.log then wc.publish('mtk-request:submit', data)
+    subscribe() to 'mtk-request:open' → bsModal.show()
+
+
+FILE: client/css/mtk-request.scss
+
+    Bootstrap modal wrapper
+    Material Design floating labels (.md-field + .active)
+    Radio group: flex-direction row (horizontal)
+    Phone-times hidden by default, shown via .active class
+    Placeholder: font-size 12px, italic, color #bbb
+
+
+CRITICAL RULES
+
+    1.  client.js loads in index.html BEFORE the wc-include — defines window.client before
+        jQuery fetches and evals client.config.js
+
+    2.  client.config.js is the LAST script inside client.html — calls client(config)
+        after DOM is injected
+
+    3.  mtk-request dialog is INLINED in client.html — never nested wc-include
+
+    4.  MtkRequest wrapped in typeof guard — prevents re-declaration on reload
+
+    5.  ClientProfile guarded by window._clientProfileInstance — prevents multiple instances
+        and duplicate event listeners (root cause of multiple "Save Changes" invocations)
+
+    6.  Save Changes uses cloneNode(true) on the button before attaching listener —
+        strips all previous listeners regardless of how many times initEditSwitch runs
+
+    7.  nalaUID flow: config.nalaUID → btnEstimate click sets .nala-uid hidden field
+        → mtk-request submit reads it → published in payload
+
+    8.  Validation order: contact-type-driven first, then OR check, then format, then help
+
+    9.  Edit/review state tracked via .edtable-mode class on .client-container —
+        CSS handles visual differences, not inline styles
+
+    10. Logo only clickable in edit mode (.edtable-mode present)
+
+    11. Every wc.publish() is always preceded by wc.log()
+
+    12. SCSS only — never edit compiled .css directly
+
+    13. client/css/client.scss imports: @import "../../css/nala.scss"
