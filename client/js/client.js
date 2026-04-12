@@ -498,19 +498,42 @@ class ClientProfile {
 	})
 
 	// Share button
+	const shareBtn = document.getElementById("btnShare")
+	let _sharing = false
 	document.getElementById("btnShare").addEventListener("click", (e) => {
 	    this.publishClickEvent(e, "button.share.clicked")
+	    if (_sharing) return
 
-	    if (navigator.share) {
-		navigator
-		    .share({
-			title: this.data.business.name,
-			text: `Check out ${this.data.business.name} on our platform!`,
-			url: window.location.href,
+	    const shareData = {
+		title: this.data.business.name,
+		text: `Check out ${this.data.business.name}!`,
+		url: window.location.href,
+	    }
+
+	    if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+		_sharing = true
+		navigator.share(shareData)
+		    .then(() => wc.log('[client] Share succeeded'))
+		    .catch((err) => {
+			wc.log('[client] Share dismissed or failed:', err.message)
+			// Fallback to clipboard if share fails
+			if (navigator.clipboard) {
+			    navigator.clipboard.writeText(window.location.href)
+				.then(() => {
+				    shareBtn.textContent = 'Link Copied!'
+				    setTimeout(() => { shareBtn.innerHTML = '<span class="material-icons">share</span> Share' }, 2000)
+				})
+			}
 		    })
-		    .catch((err) => console.error("Share error:", err))
+		    .finally(() => { _sharing = false })
+	    } else if (navigator.clipboard) {
+		// No share API — copy to clipboard
+		navigator.clipboard.writeText(window.location.href).then(() => {
+		    shareBtn.textContent = 'Link Copied!'
+		    setTimeout(() => { shareBtn.innerHTML = '<span class="material-icons">share</span> Share' }, 2000)
+		})
 	    } else {
-		alert("Share functionality not supported in this browser")
+		prompt('Copy this link:', window.location.href)
 	    }
 	})
 
