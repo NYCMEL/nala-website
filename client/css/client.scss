@@ -153,8 +153,7 @@ body {
   gap: 12px;
   font-size: $font-size-md;
 
-  .material-icons { font-size: $font-size-3xl; color: $color-text-secondary; }
-  &.stat-badge .material-icons { color: $color-client-primary; }
+  .material-icons { font-size: $font-size-3xl; color: $color-client-primary; }
 }
 
 .client-tabs {
