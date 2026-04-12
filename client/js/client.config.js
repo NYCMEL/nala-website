@@ -46,7 +46,7 @@ var config = {
 	methods: "I accepts payments via Apple Pay, Cash, Credit card, PayPal and Zelle.",
     },
     socialMedia: {
-	title: "Social media",
+	title: "Connect with me",
 	links: [
 	    { platform: "facebook",  icon: "img/facebook.png",  url: "" },
 	    { platform: "instagram", icon: "img/instagram.png", url: "" },
