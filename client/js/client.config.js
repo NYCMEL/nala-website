@@ -57,7 +57,7 @@ var config = {
 	title:       "Top Pro status",
 	description: "Top Pros are among the highest-rated, most popular professionals on the platform. " +
 	             "Mel the Locksmith has maintained Top Pro status for 3 consecutive years.",
-	years:       [2022, 2023, 2024],
+	years:       [2024, 2025],
     },
 }
 
