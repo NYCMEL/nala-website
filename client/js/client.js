@@ -323,6 +323,9 @@ class ClientProfile {
 	this.renderSocialMedia()
 
 	// Top Pro status
+	// Only show Top Pro section if isTopPro is true
+	const topProSection = document.getElementById("topProSection")
+	if (topProSection) topProSection.style.display = this.data.business.isTopPro ? "" : "none"
 	document.getElementById("topProTitle").textContent = this.data.topProStatus.title
 	document.getElementById("topProDescription").textContent = this.data.topProStatus.description
 
