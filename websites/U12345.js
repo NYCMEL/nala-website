@@ -6,7 +6,7 @@ var config = {
 	logo:        "img/mel.co.png",
 	rating:      3.5,
 	ratingText:  "Excellent",
-	reviewCount: 52,
+	reviewCount: 8,
 	isTopPro:    true,
 	isOnline:    false,
     },
@@ -55,7 +55,7 @@ var config = {
 	title:       "Top Pro status",
 	description: "Top Pros are among the highest-rated, most popular professionals. " +
 	             "Mel the Locksmith has maintained Top Pro status for two consecutive years.",
-	years:       [2023,2024, 2025],
+	years:       [2025],
     },
 }
 
