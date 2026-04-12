@@ -1,14 +1,17 @@
-var config = {
-    editable: true, /* REMOVE THIS FOR NORMAL SHOWING */
+// Skip default config if loading from /websites/{nalaUID}.js
+if (new URLSearchParams(window.location.search).get('nalaUID')) {
+    console.log('[client] nalaUID in URL — skipping default client.config.js');
+} else {
 
+var config = {
     nalaUID: "U12345", /* USED FOR IDENTIFYING THE CLIENT WHEN SENDING REQUESTS */
 
     business: {
 	name:        "Mel the Locksmith",
 	logo:        "img/mel.co.png",
-	rating:      4.1,
+	rating:      4.6,
 	ratingText:  "Excellent",
-	reviewCount: 52,
+	reviewCount: 612,
 	isTopPro:    true,
 	isOnline:    false,
     },
@@ -32,7 +35,7 @@ var config = {
     tabs: [],
     about: {
 	description:
-	    "Your neighborhood locksmith, serving the New York and New Jersey metro area for over 3 years. " +
+	    "Your neighborhood locksmith, serving the New York metro area for over 17 years. " +
 	    "We specialize in residential, commercial, and automotive locksmith services with fast response times " +
 	    "and transparent pricing. Licensed, insured, and background-checked professionals you can trust.",
 	readMoreLink: "",
@@ -43,10 +46,10 @@ var config = {
     },
     paymentMethods: {
 	title:   "Payment methods",
-	methods: "I accepts payments via Apple Pay, Cash, Credit card, PayPal and Zelle.",
+	methods: "This pro accepts payments via Apple Pay, Cash, Check, Credit card, PayPal, Square cash app, Venmo, and Zelle.",
     },
     socialMedia: {
-	title: "Connect with me",
+	title: "Social media",
 	links: [
 	    { platform: "facebook",  icon: "img/facebook.png",  url: "" },
 	    { platform: "instagram", icon: "img/instagram.png", url: "" },
@@ -55,11 +58,12 @@ var config = {
     },
     topProStatus: {
 	title:       "Top Pro status",
-	description: "Top Pros are among the highest-rated, most popular professionals. " +
-	             "Mel the Locksmith has maintained Top Pro status for two consecutive years.",
-	years:       [2023,2024, 2025],
+	description: "Top Pros are among the highest-rated, most popular professionals on the platform. " +
+	             "Mel the Locksmith has maintained Top Pro status for 3 consecutive years.",
+	years:       [2022, 2023, 2024],
     },
 }
 
-// MAKE THIS CALL TO START CLIENT
 client(config);
+
+} // end nalaUID guard
