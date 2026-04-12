@@ -49,5 +49,21 @@
 	<div>
 	    <wc-include href="client/client.html"/>
 	</div>
+
+	<script>
+	    // After client.js is defined, load /websites/{nalaUID}.js if param present
+	    // Must run AFTER wc-include fires so DOM exists, but client.js already defines window.client
+	    (function() {
+		var uid = new URLSearchParams(window.location.search).get('nalaUID');
+		if (!uid || !/^[a-zA-Z0-9_-]+$/.test(uid)) return;
+		console.log('[client] nalaUID=' + uid + ' — loading /websites/' + uid + '.js');
+		var s = document.createElement('script');
+		s.src = 'websites/' + uid + '.js';
+		s.onerror = function() {
+		    console.warn('[client] /websites/' + uid + '.js not found — no config loaded');
+		};
+		document.body.appendChild(s);
+	    })();
+	</script>
     </body>
 </html>

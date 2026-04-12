@@ -4,7 +4,7 @@ var config = {
     business: {
 	name:        "Mel the Locksmith",
 	logo:        "img/mel.co.png",
-	rating:      4.1,
+	rating:      3.5,
 	ratingText:  "Excellent",
 	reviewCount: 52,
 	isTopPro:    true,
