@@ -1,0 +1,35 @@
+add attribute "data-editable" to the following elements
+
+.client-name
+
+#guaranteeTitle
+#guaranteeTitle p
+
+#aboutSection p
+
+#businessHoursText
+#paymentMethodsTitle p
+
+#socialMediaLinks
+
+.client-logo
+
+add attribute "data-editable" to the following elements
+also allow "client-logo" image to be updated when clicked on the image
+
+When variable "edtable" is true, make all "data-editable" items editable
+---------------------
+
+in editable mode:
+replace socual icons with a "table" and a "placeholder" div below that
+
+table has 3 rows for facehook, instagram and twitter: 
+- column 1: checkbox
+- column 2: social icon
+- column 3: client's link (show "your social media link" in italic and light gray)
+
+when checkbox on any row is clicked, display social icon inside the "placeholder", with correct link from link,
+when unchecked, remove the icon from placeholder
+
+
+add column labels: "", "Media", "Your Social Link"
