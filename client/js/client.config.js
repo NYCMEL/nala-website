@@ -56,7 +56,7 @@ var config = {
     topProStatus: {
 	title:       "Top Pro status",
 	description: "Top Pros are among the highest-rated, most popular professionals on the platform. " +
-	             "Mel the Locksmith has maintained Top Pro status for 3 consecutive years.",
+	             "Mel the Locksmith has maintained Top Pro status for two consecutive years.",
 	years:       [2024, 2025],
     },
 }
