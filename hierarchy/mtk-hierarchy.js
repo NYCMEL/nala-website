@@ -632,45 +632,11 @@ class MTKHierarchy {
             this.displayLessonResources(moduleId, lessonId);
         }
 
-        this.advanceLessonOnClick(moduleId, lessonId);
-
         wc.publish('mtk-hierarchy:lesson-toggled', {
             moduleId,
             lessonId,
             isOpen: true,
             timestamp: new Date().toISOString()
-        });
-    }
-
-    /**
-     * Preserve the site's historical click-to-advance behaviour while still
-     * delegating progression rules to wc.lessonComplete / the backend.
-     */
-    advanceLessonOnClick(moduleId, lessonId) {
-        if (typeof wc === 'undefined' || typeof wc.lessonComplete !== 'function') return;
-        if (!wc.session || !wc.session.user) return;
-
-        const lesson = findLessonInHierarchy(moduleId, lessonId);
-        const lessonNo = lesson && Number.isFinite(Number(lesson.lesson_no))
-            ? Number(lesson.lesson_no)
-            : null;
-        const current = Number(wc.session.user.current_lesson);
-
-        if (!Number.isFinite(lessonNo) || !Number.isFinite(current)) return;
-
-        wc.lessonComplete(lessonNo, current, (err, result) => {
-            if (err) {
-                wc.warn('MTKHierarchy: click-to-advance lessonComplete failed', err);
-                return;
-            }
-
-            if (result && Number.isFinite(Number(result.current_lesson))) {
-                wc.session.user.current_lesson = Number(result.current_lesson);
-            }
-
-            if (result && result.advanced === true) {
-                this.enableNextLessonOrQuiz(moduleId, lessonId);
-            }
         });
     }
 
@@ -753,15 +719,7 @@ class MTKHierarchy {
                     wc.warn('MTKHierarchy: test-mode lessonComplete failed', err);
                     return;
                 }
-                if (result && Number.isFinite(Number(result.current_lesson))) {
-                    wc.session.user.current_lesson = Number(result.current_lesson);
-                }
-                if (moduleId && lessonId) this.enableNextLessonOrQuiz(moduleId, lessonId);
-                if (typeof wc.getSession === 'function') {
-                    wc.getSession(() => {
-                        if (wc.pages && typeof wc.pages.refresh === 'function') wc.pages.refresh('dashboard');
-                    });
-                }
+                this.syncProgressAfterCompletion(moduleId, lessonId, current, result);
             });
             return;
         }
@@ -784,12 +742,7 @@ class MTKHierarchy {
                         wc.warn('MTKHierarchy: lessonComplete failed on video end', err);
                         return;
                     }
-                    if (result && Number.isFinite(Number(result.current_lesson))) {
-                        wc.session.user.current_lesson = Number(result.current_lesson);
-                    }
-                    if (result && result.advanced === true && moduleId && lessonId) {
-                        this.enableNextLessonOrQuiz(moduleId, lessonId);
-                    }
+                    this.syncProgressAfterCompletion(moduleId, lessonId, current, result);
                     wc.log('MTKHierarchy: video-ended progress sync', {
                         lesson_no: Number(lessonNo),
                         previous_current: current,
@@ -798,103 +751,6 @@ class MTKHierarchy {
                 });
             });
         });
-    }
-
-    /**
-     * Enable next lesson or quiz link when current lesson is clicked
-     */
-    enableNextLessonOrQuiz(moduleId, lessonId) {
-        if (this.isRegisteredRole()) {
-            if (typeof wc !== 'undefined') {
-                wc.log("MTKHierarchy: registered role - skipping client-side unlock of next lesson/quiz");
-            }
-            return;
-        }
-
-        if (typeof wc !== 'undefined') {
-            wc.log("MTKHierarchy: Enabling next lesson or quiz", moduleId, lessonId);
-        }
-
-        let currentLesson = null;
-        let currentModule = null;
-        let lessonIndex = -1;
-
-        for (const course of this.config) {
-            if (!course.modules) continue;
-
-            const module = course.modules.find(m => m.id === moduleId);
-            if (!module || !module.lessons) continue;
-
-            currentModule = module;
-            lessonIndex = module.lessons.findIndex(l => l.id === lessonId);
-
-            if (lessonIndex !== -1) {
-                currentLesson = module.lessons[lessonIndex];
-                break;
-            }
-        }
-
-        if (!currentLesson || !currentModule) {
-            if (typeof wc !== 'undefined') {
-                wc.warn("MTKHierarchy: Lesson not found", moduleId, lessonId);
-            }
-            return;
-        }
-
-        const isLastLesson = lessonIndex === currentModule.lessons.length - 1;
-
-        if (isLastLesson) {
-            if (typeof wc !== 'undefined') {
-                wc.log("MTKHierarchy: Last lesson - enabling quiz link");
-            }
-
-            wc.publish('mtk-hierarchy:enable-quiz', {
-                moduleId,
-                lessonId,
-                timestamp: new Date().toISOString()
-            });
-
-            if (currentModule.quiz) {
-                currentModule.quiz.access = true;
-
-                const quizElement = this.elements.lhs.querySelector(`[data-quiz-id="${currentModule.quiz.id}"]`);
-                if (quizElement) {
-                    quizElement.classList.remove('mtk-quiz--disabled');
-                    if (typeof wc !== 'undefined') {
-                        wc.log("MTKHierarchy: Quiz link enabled in UI");
-                    }
-                }
-            }
-        } else {
-            const nextLesson = currentModule.lessons[lessonIndex + 1];
-
-            if (nextLesson) {
-                if (typeof wc !== 'undefined') {
-                    wc.log("MTKHierarchy: Enabling next lesson", nextLesson.id);
-                }
-
-                nextLesson.access = true;
-
-                const nextLessonElement = this.elements.lhs.querySelector(
-                    `[data-lesson-id="${nextLesson.id}"][data-module-id="${moduleId}"]`
-                );
-
-                if (nextLessonElement) {
-                    nextLessonElement.classList.remove('mtk-lesson--disabled');
-
-                    if (typeof wc !== 'undefined') {
-                        wc.log("MTKHierarchy: Next lesson enabled in UI", nextLesson.title);
-                    }
-                }
-
-                wc.publish('mtk-hierarchy:lesson-enabled', {
-                    moduleId,
-                    lessonId: nextLesson.id,
-                    previousLessonId: lessonId,
-                    timestamp: new Date().toISOString()
-                });
-            }
-        }
     }
 
     /**
@@ -1627,6 +1483,95 @@ class MTKHierarchy {
                 : 'Please finish the current lesson video before moving on to the next lesson.',
             closable: true,
             timer: 4
+        });
+    }
+
+    syncProgressAfterCompletion(moduleId, lessonId, previousCurrent, result) {
+        const nextCurrent = (result && Number.isFinite(Number(result.current_lesson)))
+            ? Number(result.current_lesson)
+            : previousCurrent;
+
+        if (wc.session && wc.session.user && Number.isFinite(nextCurrent)) {
+            wc.session.user.current_lesson = nextCurrent;
+        }
+
+        this.applyCurrentLessonAccess(nextCurrent);
+        this.render();
+
+        if (typeof wc.getSession === 'function') {
+            wc.getSession((loggedIn, session) => {
+                if (!loggedIn || !session || !session.user) return;
+
+                const refreshedCurrent = Number(session.user.current_lesson);
+                if (Number.isFinite(refreshedCurrent)) {
+                    this.applyCurrentLessonAccess(refreshedCurrent);
+                    this.render();
+                }
+
+                if (wc.pages && typeof wc.pages.refresh === 'function') {
+                    wc.pages.refresh('dashboard', { showPage: false });
+                }
+            }).catch((err) => {
+                wc.warn('MTKHierarchy: session refresh after completion failed', err);
+            });
+        }
+
+        wc.publish('mtk-hierarchy:lesson-completed', {
+            moduleId,
+            lessonId,
+            previousCurrent,
+            currentLesson: nextCurrent,
+            advanced: !!(result && result.advanced === true),
+            reason: result && result.reason ? result.reason : null,
+            timestamp: new Date().toISOString()
+        });
+    }
+
+    applyCurrentLessonAccess(currentLesson) {
+        if (!this.config || !Array.isArray(this.config) || !Number.isFinite(Number(currentLesson))) {
+            return;
+        }
+
+        const effectiveCurrent = Number(currentLesson);
+
+        this.config.forEach(course => {
+            if (!course.modules) return;
+
+            course.modules.forEach(module => {
+                let moduleHasAccess = false;
+
+                if (Array.isArray(module.lessons)) {
+                    module.lessons.forEach(lesson => {
+                        const lessonNo = Number(lesson.lesson_no);
+                        const lessonHasAccess = Number.isFinite(lessonNo) ? lessonNo <= effectiveCurrent : !!lesson.access;
+
+                        lesson.access = lessonHasAccess;
+                        lesson.processed = Number.isFinite(lessonNo) ? lessonNo < effectiveCurrent : !!lesson.processed;
+
+                        if (Array.isArray(lesson.resources)) {
+                            lesson.resources.forEach(resource => {
+                                resource.access = lessonHasAccess;
+                                resource.processed = Number.isFinite(lessonNo) ? lessonNo < effectiveCurrent : !!resource.processed;
+                            });
+                        }
+
+                        if (lessonHasAccess) {
+                            moduleHasAccess = true;
+                        }
+                    });
+                }
+
+                if (module.quiz && typeof module.quiz === 'object') {
+                    const quizLessonNo = Number(module.quiz.lesson_no);
+                    const quizHasAccess = Number.isFinite(quizLessonNo) ? quizLessonNo <= effectiveCurrent : !!module.quiz.access;
+                    module.quiz.access = quizHasAccess;
+                    if (quizHasAccess) {
+                        moduleHasAccess = true;
+                    }
+                }
+
+                module.access = moduleHasAccess;
+            });
         });
     }
 
