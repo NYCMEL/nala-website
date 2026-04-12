@@ -10,7 +10,7 @@ var config = {
 	ratingText:  "Excellent",
 	reviewCount: 52,
 	isTopPro:    true,
-	isOnline:    false,
+	isOnline:    true,
     },
     stats: [
 	{ icon: "verified_user", text: "Current Top Pro",      type: "badge"        },
