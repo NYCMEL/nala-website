@@ -35,7 +35,7 @@ var config = {
     tabs: [],
     about: {
 	description:
-	    "Your neighborhood locksmith, serving the New York metro area for over 17 years. " +
+	    "Your neighborhood locksmith, serving the New York metro area for over 2 years. " +
 	    "We specialize in residential, commercial, and automotive locksmith services with fast response times " +
 	    "and transparent pricing. Licensed, insured, and background-checked professionals you can trust.",
 	readMoreLink: "",
