@@ -361,6 +361,18 @@
     function bindEvents() {
         if (!window.wc || typeof wc.subscribe !== "function") return;
 
+	// B-IN-BOX SAVE CHANGES
+        wc.subscribe("client:save", function (_msg, data) {
+            console.log("=========", data, "==========");
+	    alert("Email should be send to this client to procure the request" );
+        });
+
+	// B-IN-BOX CLIENT REQUEST
+        wc.subscribe("mtk-request:submit", function (_msg, data) {
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>", data, "<<<<<<<<<<<<<<<<<<<<<<<");
+	    alert("Email should be send to this client to procure the request" );
+        });
+
         wc.subscribe("mtk-register-submit", function (_msg, data) {
             handleRegisterSubmit(data || {});
         });
