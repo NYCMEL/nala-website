@@ -90,83 +90,6 @@
         document.body.style.overflow = "";
     }
 
-    function getUser() {
-        return (window.wc && wc.session && wc.session.user) ? wc.session.user : null;
-    }
-
-    function isLoggedIn() {
-        return !!getUser();
-    }
-
-    function hasPremium(user) {
-        return !!(user && Number(user.has_premium) === 1);
-    }
-
-    function hasBusiness(user) {
-        return !!(user && Number(user.has_business_in_a_box) === 1);
-    }
-
-    function getAllowedPlans(user) {
-        if (!user) return [];
-
-        if (!hasPremium(user) && !hasBusiness(user)) {
-            return ["premium", "business"];
-        }
-
-        if (hasPremium(user) && !hasBusiness(user)) {
-            return ["business"];
-        }
-
-        return [];
-    }
-
-    function canPurchasePlan(plan) {
-        const user = getUser();
-        if (!user) return false;
-        return getAllowedPlans(user).includes(plan);
-    }
-
-    function loadPurchaseModalApi() {
-        if (window.WCPurchaseModal && typeof window.WCPurchaseModal.showPremiumShippingModal === "function") {
-            return Promise.resolve(window.WCPurchaseModal);
-        }
-
-        if (wc.febe.__purchaseModalLoader) {
-            return wc.febe.__purchaseModalLoader;
-        }
-
-        wc.febe.__purchaseModalLoader = new Promise(function (resolve, reject) {
-            const existing = document.querySelector('script[data-wc-purchase-modal="1"]');
-            if (existing) {
-                existing.addEventListener("load", function () {
-                    resolve(window.WCPurchaseModal);
-                }, { once: true });
-                existing.addEventListener("error", function () {
-                    reject(new Error("Failed to load purchase modal module."));
-                }, { once: true });
-                return;
-            }
-
-            const script = document.createElement("script");
-            script.src = getBaseUrl() + "buy/wc-purchase-modal.js";
-            script.async = true;
-            script.setAttribute("data-wc-purchase-modal", "1");
-            script.onload = function () {
-                resolve(window.WCPurchaseModal);
-            };
-            script.onerror = function () {
-                reject(new Error("Failed to load purchase modal module."));
-            };
-            document.head.appendChild(script);
-        });
-
-        return wc.febe.__purchaseModalLoader;
-    }
-
-    function createCheckoutSession(payload) {
-        return apiPost("/api/create_checkout_session.php", payload);
-    }
-
     function fetchPricing() {
         return apiGet("/api/pricing.php")
             .then((json) => {
@@ -180,46 +103,6 @@
                 console.warn("Failed to load pricing", err);
                 return null;
             });
-    }
-
-    async function handlePurchasePlan(plan) {
-        if (!isLoggedIn()) {
-            showMsg("warning", "Please log in before purchasing.", { icon: "warning", timer: 7 });
-            if (wc.pages && typeof wc.pages.show === "function") {
-                wc.pages.show("login");
-            }
-            return;
-        }
-
-        if (!canPurchasePlan(plan)) {
-            showMsg("warning", "That purchase option is not available for your current account.", {
-                icon: "warning",
-                timer: 8
-            });
-            return;
-        }
-
-        try {
-            const user = getUser();
-            const payload = plan === "premium"
-                ? await (await loadPurchaseModalApi()).showPremiumShippingModal(user)
-                : { plan: plan };
-
-            const res = await createCheckoutSession(payload);
-            if (!res.url) {
-                throw new Error("Stripe checkout URL was not returned.");
-            }
-            window.location.href = res.url;
-        } catch (err) {
-            if (err && err.message === "Checkout canceled") {
-                return;
-            }
-
-            showMsg("error", (err && err.message) || "Unable to start checkout.", {
-                icon: "error",
-                timer: 10
-            });
-        }
     }
 
     function showCheckoutStatusMessage() {
@@ -286,7 +169,9 @@
             jQuery("#header-public").show();
         }
 
-        syncPurchaseButtons();
+        if (wc.buy && typeof wc.buy.syncPurchaseButtons === "function") {
+            wc.buy.syncPurchaseButtons();
+        }
 
         if (wc.pages && typeof wc.pages.show === "function") {
             wc.pages.show("login");
@@ -304,7 +189,9 @@
             jQuery("#header-private").show();
         }
 
-        syncPurchaseButtons();
+        if (wc.buy && typeof wc.buy.syncPurchaseButtons === "function") {
+            wc.buy.syncPurchaseButtons();
+        }
 
         if (wc.pages && typeof wc.pages.show === "function") {
             wc.pages.show("dashboard");
@@ -326,44 +213,6 @@
                     timer: 8
                 });
             });
-    }
-
-    function syncPurchaseButtons() {
-        const user = getUser();
-        const premiumButtons = document.querySelectorAll('[data-purchase-plan="premium"]');
-        const businessButtons = document.querySelectorAll('[data-purchase-plan="business"]');
-
-        premiumButtons.forEach((btn) => {
-            if (!user) {
-                btn.disabled = false;
-                btn.style.display = "";
-                return;
-            }
-
-            if (canPurchasePlan("premium")) {
-                btn.disabled = false;
-                btn.style.display = "";
-            } else {
-                btn.disabled = true;
-                btn.style.display = "none";
-            }
-        });
-
-        businessButtons.forEach((btn) => {
-            if (!user) {
-                btn.disabled = false;
-                btn.style.display = "";
-                return;
-            }
-
-            if (canPurchasePlan("business")) {
-                btn.disabled = false;
-                btn.style.display = "";
-            } else {
-                btn.disabled = true;
-                btn.style.display = "none";
-            }
-        });
     }
 
     function goToPage(page) {
@@ -458,7 +307,9 @@
             if (purchaseBtn) {
                 e.preventDefault();
                 const plan = purchaseBtn.getAttribute("data-purchase-plan");
-                handlePurchasePlan(plan);
+                if (wc.buy && typeof wc.buy.handlePurchasePlan === "function") {
+                    wc.buy.handlePurchasePlan(plan);
+                }
                 return;
             }
 
@@ -468,7 +319,9 @@
                 const action = homeActionBtn.getAttribute("data-home-action");
 
                 if (action === "business") {
-                    handlePurchasePlan("business");
+                    if (wc.buy && typeof wc.buy.handlePurchasePlan === "function") {
+                        wc.buy.handlePurchasePlan("business");
+                    }
                     return;
                 }
 
@@ -564,7 +417,9 @@
             const payload = data || {};
 
             if (payload.plan === "premium" || payload.plan === "business") {
-                handlePurchasePlan(payload.plan);
+                if (wc.buy && typeof wc.buy.handlePurchasePlan === "function") {
+                    wc.buy.handlePurchasePlan(payload.plan);
+                }
                 return;
             }
 
@@ -598,9 +453,13 @@
         wc.subscribe("mtk-dashboard:subscription-clicked", function (_msg, data) {
             const payload = data || {};
             if (payload.subscriptionId === "premium-course") {
-                handlePurchasePlan("premium");
+                if (wc.buy && typeof wc.buy.handlePurchasePlan === "function") {
+                    wc.buy.handlePurchasePlan("premium");
+                }
             } else if (payload.subscriptionId === "business-in-a-box") {
-                handlePurchasePlan("business");
+                if (wc.buy && typeof wc.buy.handlePurchasePlan === "function") {
+                    wc.buy.handlePurchasePlan("business");
+                }
             }
         });
     }
@@ -609,17 +468,17 @@
         bindClicks();
         bindEvents();
         showCheckoutStatusMessage();
-        syncPurchaseButtons();
+        if (wc.buy && typeof wc.buy.syncPurchaseButtons === "function") {
+            wc.buy.syncPurchaseButtons();
+        }
         fetchPricing();
     }
 
     wc.febe.apiPost = apiPost;
-    wc.febe.handlePurchasePlan = handlePurchasePlan;
     wc.febe.handleManualLogout = handleManualLogout;
     wc.febe.handleRegisterSubmit = handleRegisterSubmit;
     wc.febe.handleLoginSubmit = handleLoginSubmit;
     wc.febe.showCheckoutStatusMessage = showCheckoutStatusMessage;
-    wc.febe.syncPurchaseButtons = syncPurchaseButtons;
     wc.febe.goToPage = goToPage;
     wc.febe.fetchPricing = fetchPricing;
 
