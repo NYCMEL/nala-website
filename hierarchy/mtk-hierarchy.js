@@ -603,6 +603,7 @@ class MTKHierarchy {
         const lessonElement = lessonHeader.closest('.mtk-lesson');
         const moduleId = lessonElement.dataset.moduleId;
         const lessonId = lessonElement.dataset.lessonId;
+        const lessonNo = Number(lessonElement.dataset.lessonNo);
 
         if (lessonElement.classList.contains('mtk-lesson--disabled')) {
             if (typeof wc !== 'undefined') {
@@ -631,6 +632,8 @@ class MTKHierarchy {
         } else {
             this.displayLessonResources(moduleId, lessonId);
         }
+
+        this.handleTestModeLessonAdvance(lessonNo, moduleId, lessonId);
 
         wc.publish('mtk-hierarchy:lesson-toggled', {
             moduleId,
@@ -712,14 +715,10 @@ class MTKHierarchy {
         if (!wc.session || !wc.session.user) return;
 
         if (wc.testingDisableVideoGate === true) {
-            const current = Number(wc.session.user.current_lesson);
-            if (!Number.isFinite(current)) return;
-            wc.lessonComplete(Number(lessonNo), current, (err, result) => {
-                if (err) {
-                    wc.warn('MTKHierarchy: test-mode lessonComplete failed', err);
-                    return;
-                }
-                this.syncProgressAfterCompletion(moduleId, lessonId, current, result);
+            wc.log('MTKHierarchy: skipping Vimeo completion tracking in test mode', {
+                lesson_no: Number(lessonNo),
+                moduleId,
+                lessonId
             });
             return;
         }
@@ -1483,6 +1482,29 @@ class MTKHierarchy {
                 : 'Please finish the current lesson video before moving on to the next lesson.',
             closable: true,
             timer: 4
+        });
+    }
+
+    handleTestModeLessonAdvance(lessonNo, moduleId, lessonId) {
+        if (wc.testingDisableVideoGate !== true) return;
+        if (!Number.isFinite(Number(lessonNo))) return;
+        if (typeof wc === 'undefined' || typeof wc.lessonComplete !== 'function') return;
+        if (!wc.session || !wc.session.user) return;
+
+        const current = Number(wc.session.user.current_lesson);
+        if (!Number.isFinite(current)) return;
+
+        wc.lessonComplete(Number(lessonNo), current, (err, result) => {
+            if (err) {
+                wc.warn('MTKHierarchy: test-mode lessonComplete failed on lesson click', err);
+                return;
+            }
+            this.syncProgressAfterCompletion(moduleId, lessonId, current, result);
+            wc.log('MTKHierarchy: test-mode click progress sync', {
+                lesson_no: Number(lessonNo),
+                previous_current: current,
+                response: result
+            });
         });
     }
 
