@@ -1,0 +1,339 @@
+@import "../../css/nala.scss";
+
+#client-image {
+  width: 100%;
+}
+
+body {
+  font-family: $font-primary;
+  color: $color-text-primary;
+  background-color: $color-bg-light;
+  line-height: $line-height-loose;
+  margin: 0;
+  padding: 0;
+}
+
+.client-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: $spacing-xl;
+  background-color: $color-white;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.breadcrumb {
+  display: flex;
+  gap: $spacing-sm;
+  align-items: center;
+  margin-bottom: $spacing-xl;
+  font-size: $font-size-base;
+  color: $color-text-secondary;
+
+  a {
+    color: $color-text-secondary;
+    text-decoration: none;
+    transition: $transition-fast;
+    &:hover { color: $color-client-primary; }
+  }
+
+  .breadcrumb-separator { color: $color-text-secondary; }
+}
+
+.client-layout {
+  display: flex;
+  gap: $spacing-2xl;
+  flex-wrap: wrap;
+}
+
+.client-main {
+  flex: 1;
+  min-width: 300px;
+}
+
+.client-sidebar {
+  width: 320px;
+  @media (max-width: $bp-lg) { width: 100%; }
+}
+
+.client-header {
+  display: flex;
+  gap: $spacing-xl;
+  margin-bottom: $spacing-2xl;
+  padding-bottom: $spacing-xl;
+  border-bottom: 1px solid $color-border;
+}
+
+.client-logo {
+  width: 150px;
+  height: 150px;
+  border-radius: $radius-circle;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: $shadow-md;
+  border: 1px $color-border-light solid;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.client-info { flex: 1; }
+
+.client-name {
+  font-size: 32px;
+  font-weight: $font-weight-medium;
+  margin-bottom: 12px;
+  color: $color-text-primary;
+}
+
+.client-rating {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-bottom: 12px;
+
+  .rating-text  { font-size: $font-size-lg; font-weight: $font-weight-medium; color: $color-success; }
+  .rating-value { font-weight: $font-weight-bold; color: $color-text-primary; }
+  .stars        { display: flex; gap: 2px; color: $color-star; }
+  .review-count { color: $color-text-secondary; font-size: $font-size-base; }
+}
+
+.client-badges {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-bottom: $font-size-lg;
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background-color: $color-client-primary;
+    color: $color-white;
+    border-radius: $font-size-lg;
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
+
+    .material-icons { font-size: 18px; }
+  }
+}
+
+.btn-share {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: 10px $spacing-xl;
+  border: 1px solid $color-border;
+  background-color: $color-white;
+  color: $color-text-primary;
+  border-radius: $radius-sm;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: $transition-default;
+
+  &:hover { background-color: $color-bg-light; box-shadow: $shadow-sm; }
+  .material-icons { font-size: $font-size-2xl; }
+}
+
+.client-stats {
+  display: flex;
+  flex-direction: column;
+  gap: $font-size-lg;
+  margin-bottom: $spacing-2xl;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: $font-size-md;
+
+  .material-icons { font-size: $font-size-3xl; color: $color-client-primary; }
+}
+
+.client-tabs {
+  display: flex;
+  gap: $spacing-sm;
+  border-bottom: 2px solid $color-border;
+  margin-bottom: $spacing-2xl;
+  overflow-x: auto;
+
+  .tab {
+    padding: 12px $font-size-lg;
+    background: none;
+    border: none;
+    color: $color-text-secondary;
+    font-size: $font-size-md;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: $transition-fast;
+    white-space: nowrap;
+
+    &:hover { color: $color-text-primary; }
+    &.active { color: $color-client-primary; border-bottom-color: $color-client-primary; }
+  }
+}
+
+.client-content {
+  .content-section {
+    margin-bottom: $spacing-2xl;
+
+    h2 { font-size: $font-size-2xl; font-weight: $font-weight-medium; margin-bottom: 12px; color: $color-text-primary; }
+    p  { color: $color-text-secondary; line-height: $line-height-loose; }
+    a  {
+      color: $color-client-primary;
+      text-decoration: none;
+      font-weight: $font-weight-medium;
+      &:hover { text-decoration: underline; }
+    }
+  }
+}
+
+.about-text { margin-bottom: $spacing-sm; }
+
+.top-pro-badges {
+  display: flex;
+  gap: $font-size-lg;
+  flex-wrap: wrap;
+  margin-top: $spacing-xl;
+
+  .pro-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-sm;
+
+    .badge-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: $radius-circle;
+      background: linear-gradient(135deg, $color-client-primary, #00bcd4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $color-white;
+      box-shadow: $shadow-md;
+      .material-icons { font-size: 32px; }
+    }
+
+    .badge-year { font-size: $font-size-base; color: $color-text-secondary; font-weight: $font-weight-medium; }
+  }
+}
+
+.card {
+  background: $color-white;
+  border-radius: $radius-sm;
+  padding: $spacing-xl;
+  box-shadow: $shadow-md;
+  margin-bottom: $spacing-xl;
+  transition: $transition-default;
+  &:hover { box-shadow: $shadow-hover; }
+}
+
+.contact-card {
+  .contact-header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-sm;
+    color: $color-text-secondary;
+    font-size: $font-size-base;
+    .material-icons { font-size: $font-size-2xl; }
+  }
+
+  .link-details {
+    display: inline-block;
+    color: $color-client-primary;
+    text-decoration: none;
+    font-size: $font-size-base;
+    margin-bottom: $font-size-lg;
+    &:hover { text-decoration: underline; }
+  }
+
+  .btn-estimate { width: 100%; margin-bottom: $font-size-lg; }
+
+  .online-status {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    justify-content: center;
+    font-size: $font-size-base;
+    color: $color-success;
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: $radius-circle;
+      background-color: $color-success;
+    }
+  }
+}
+
+.guarantee-card {
+  border: 1px solid $color-border;
+
+  .guarantee-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: $radius-circle;
+    background-color: rgba($color-client-primary, 0.1);
+    margin-bottom: $font-size-lg;
+    .material-icons { font-size: 28px; color: $color-client-primary; }
+  }
+
+  h3 { font-size: 18px; font-weight: $font-weight-medium; margin-bottom: $spacing-sm; color: $color-text-primary; }
+  p  { font-size: $font-size-base; color: $color-text-secondary; margin-bottom: $spacing-sm; line-height: 1.5; }
+
+  .link-learn-more {
+    color: $color-client-primary;
+    text-decoration: none;
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
+    &:hover { text-decoration: underline; }
+  }
+}
+
+.btn-primary {
+  padding: 12px $spacing-xl;
+  background-color: $color-client-primary;
+  color: $color-white;
+  border: none;
+  border-radius: $radius-sm;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: $transition-default;
+  box-shadow: $shadow-sm;
+
+  &:hover  { background-color: $color-client-hover; box-shadow: $shadow-md; transform: translateY(-1px); }
+  &:active { transform: translateY(0); }
+}
+
+@media (max-width: $bp-md) {
+  .client-header    { flex-direction: column; text-align: center; }
+  .client-logo      { margin: 0 auto; }
+  .client-name      { font-size: $font-size-3xl; }
+  .client-layout    { flex-direction: column; }
+  .client-sidebar   { order: -1; }
+}
+
+// ── Stat text styling ────────────────────────────────────
+
+// Review mode (default) — normal colors
+.stat-num   { color: $color-text-primary; font-weight: $font-weight-medium; }
+.stat-suffix,
+.stat-text  { color: $color-text-primary; }
+
+// Edit mode — add .edtable class to body or container to activate
+.edtable-mode .stat-suffix,
+.edtable-mode .stat-text  { color: $color-text-secondary; }
+.edtable-mode .stat-num   { color: $color-text-primary; font-weight: $font-weight-medium; }
