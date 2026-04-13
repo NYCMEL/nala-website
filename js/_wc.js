@@ -2,9 +2,24 @@ window.wc    = window.wc    || {};
 window.wcAPP = window.wcAPP || "NOT-SET";
 window.wcURL = window.wcURL || "";
 
+function nalaResolveApiUrl() {
+    const hostname = window.location.hostname || "";
+    const explicit = window.NALA_API_URL || window.localStorage.getItem("NALA_API_URL") || "";
+
+    if (explicit) {
+        return explicit.replace(/\/$/, "");
+    }
+
+    if (hostname === "localhost" || hostname === "127.0.0.1") {
+        return "http://" + hostname + ":9000";
+    }
+
+    return "https://nala-test.com";
+}
+
 wc.working   = location.origin != 'http://localhost:3000';
 wc.working = false; // temporary
-wc.apiURL    = "https://nala-test.com" || "https://nalanetwork.com";
+wc.apiURL    = nalaResolveApiUrl();
 wc.testing   = false;  /* = true SHOULD USE ALL LOCAL CONFIG FILES and others */
 wc.baseUrl   = (window.app && window.app.baseUrl) || (function () {
     const path = window.location.pathname || "/";

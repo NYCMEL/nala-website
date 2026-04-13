@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>NALA Persona Login Test</title>
+  <base href="/repo_deploy/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0a0f18;
+      --panel: #121a27;
+      --panel-2: #182233;
+      --line: #243248;
+      --text: #edf3ff;
+      --muted: #9eb0cc;
+      --accent: #2f80ff;
+      --good: #1f9d62;
+      --bad: #d45151;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(47,128,255,.16), transparent 28%),
+        linear-gradient(180deg, #0b1018, var(--bg));
+      color: var(--text);
+    }
+    .wrap {
+      width: min(920px, calc(100% - 32px));
+      margin: 32px auto;
+    }
+    .hero,
+    .panel {
+      background: rgba(18, 26, 39, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.25);
+    }
+    .hero {
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      line-height: 1.15;
+    }
+    p {
+      margin: 0;
+      color: var(--muted);
+    }
+    .panel {
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+    .label {
+      display: block;
+      margin: 0 0 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      color: var(--text);
+      font: inherit;
+    }
+    .row {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 16px;
+    }
+    button,
+    a.linkbtn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 14px;
+      border: 0;
+      border-radius: 12px;
+      font: inherit;
+      font-weight: 700;
+      color: #fff;
+      background: var(--accent);
+      cursor: pointer;
+      text-decoration: none;
+    }
+    button.alt {
+      background: #41526f;
+    }
+    button.good {
+      background: var(--good);
+    }
+    button.bad {
+      background: var(--bad);
+    }
+    button:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .status.ok {
+      color: #99e8bf;
+      border-color: rgba(31, 157, 98, 0.4);
+      background: rgba(31, 157, 98, 0.16);
+    }
+    .status.bad {
+      color: #ffb3b3;
+      border-color: rgba(212, 81, 81, 0.4);
+      background: rgba(212, 81, 81, 0.16);
+    }
+    .grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1.2fr .8fr;
+    }
+    pre {
+      margin: 0;
+      min-height: 220px;
+      padding: 16px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #0b121d;
+      color: #d9e6ff;
+      overflow: auto;
+      font-size: 13px;
+    }
+    .meta {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .meta div {
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #0f1724;
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+    .meta strong {
+      color: var(--text);
+    }
+    @media (max-width: 760px) {
+      .grid,
+      .row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="status" id="statusPill">Checking session…</div>
+      <h1>Persona Login Test</h1>
+      <p>Switch the current backend session between registered, premium, business, and admin. Logout here or on the website uses the same session and will sync back on refresh/poll.</p>
+    </section>
+
+    <section class="panel">
+      <label class="label" for="apiBase">API Base URL</label>
+      <input id="apiBase" />
+
+      <div class="row">
+        <button data-persona="registered">Login as Registered</button>
+        <button data-persona="premium">Login as Premium Purchased</button>
+        <button data-persona="business">Login as Business Purchased</button>
+        <button data-persona="admin" class="alt">Login as Admin</button>
+      </div>
+
+      <div class="row">
+        <button id="logoutBtn" class="bad">Logout</button>
+        <a class="linkbtn good" href="/repo_deploy/index.html" target="_blank" rel="noreferrer">Open Website</a>
+      </div>
+    </section>
+
+    <section class="grid">
+      <section class="panel">
+        <div class="label">Current Session</div>
+        <pre id="sessionView">{}</pre>
+      </section>
+
+      <section class="panel">
+        <div class="label">Live Summary</div>
+        <div class="meta">
+          <div><strong>Logged in:</strong> <span id="loggedInValue">-</span></div>
+          <div><strong>Email:</strong> <span id="emailValue">-</span></div>
+          <div><strong>Role:</strong> <span id="roleValue">-</span></div>
+          <div><strong>Premium:</strong> <span id="premiumValue">-</span></div>
+          <div><strong>Business:</strong> <span id="businessValue">-</span></div>
+        </div>
+      </section>
+    </section>
+  </div>
+
+  <script>
+    const apiBaseInput = document.getElementById("apiBase");
+    const sessionView = document.getElementById("sessionView");
+    const statusPill = document.getElementById("statusPill");
+    const loggedInValue = document.getElementById("loggedInValue");
+    const emailValue = document.getElementById("emailValue");
+    const roleValue = document.getElementById("roleValue");
+    const premiumValue = document.getElementById("premiumValue");
+    const businessValue = document.getElementById("businessValue");
+
+    let syncTimer = null;
+
+    function defaultApiBase() {
+      const host = window.location.hostname || "";
+      if (host === "localhost" || host === "127.0.0.1") {
+        return "https://nala-test.com";
+      }
+      return window.location.origin;
+    }
+
+    function getApiBase() {
+      return apiBaseInput.value.trim().replace(/\/$/, "");
+    }
+
+    function setBusy(isBusy) {
+      document.querySelectorAll("button").forEach((button) => {
+        button.disabled = isBusy;
+      });
+    }
+
+    function setStatus(text, kind) {
+      statusPill.textContent = text;
+      statusPill.className = "status" + (kind ? " " + kind : "");
+    }
+
+    function renderSession(payload) {
+      const user = payload && payload.user ? payload.user : null;
+      const loggedIn = !!(payload && payload.logged_in);
+
+      sessionView.textContent = JSON.stringify(payload || {}, null, 2);
+      loggedInValue.textContent = loggedIn ? "Yes" : "No";
+      emailValue.textContent = user && user.email ? user.email : "-";
+      roleValue.textContent = user && user.role ? user.role : "-";
+      premiumValue.textContent = user ? String(Number(user.has_premium || 0)) : "-";
+      businessValue.textContent = user ? String(Number(user.has_business_in_a_box || 0)) : "-";
+
+      if (loggedIn) {
+        setStatus("Session active", "ok");
+      } else {
+        setStatus("Logged out", "bad");
+      }
+    }
+
+    async function apiFetch(path, opts) {
+      const url = getApiBase() + path;
+      const response = await fetch(url, {
+        credentials: "include",
+        ...opts,
+      });
+      const text = await response.text();
+      let json = null;
+      try {
+        json = text ? JSON.parse(text) : {};
+      } catch (err) {
+        json = { ok: false, error: text || "Non-JSON response" };
+      }
+      if (!response.ok || (json && json.ok === false)) {
+        throw new Error((json && (json.error || json.message)) || ("HTTP " + response.status));
+      }
+      return json;
+    }
+
+    async function refreshSession() {
+      try {
+        const payload = await apiFetch("/api/me.php", { method: "GET" });
+        renderSession(payload);
+      } catch (err) {
+        sessionView.textContent = JSON.stringify({ ok: false, error: err.message }, null, 2);
+        setStatus(err.message || "Session check failed", "bad");
+      }
+    }
+
+    async function switchPersona(persona) {
+      setBusy(true);
+      try {
+        await apiFetch("/api/dev_persona.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ persona })
+        });
+        await refreshSession();
+      } catch (err) {
+        setStatus(err.message || "Persona switch failed", "bad");
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    async function logoutEverywhere() {
+      setBusy(true);
+      try {
+        await apiFetch("/api/logout.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" }
+        });
+      } catch (err) {
+        setStatus(err.message || "Logout failed", "bad");
+      } finally {
+        setBusy(false);
+        await refreshSession();
+      }
+    }
+
+    function startSync() {
+      if (syncTimer) clearInterval(syncTimer);
+      syncTimer = setInterval(refreshSession, 5000);
+      window.addEventListener("focus", refreshSession);
+      document.addEventListener("visibilitychange", function () {
+        if (!document.hidden) refreshSession();
+      });
+    }
+
+    apiBaseInput.value = window.localStorage.getItem("NALA_TEST_API_BASE") || defaultApiBase();
+    apiBaseInput.addEventListener("change", function () {
+      window.localStorage.setItem("NALA_TEST_API_BASE", getApiBase());
+      refreshSession();
+    });
+
+    document.querySelectorAll("[data-persona]").forEach((button) => {
+      button.addEventListener("click", function () {
+        switchPersona(button.getAttribute("data-persona"));
+      });
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", logoutEverywhere);
+
+    refreshSession();
+    startSync();
+  </script>
+</body>
+</html>
