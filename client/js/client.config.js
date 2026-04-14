@@ -7,7 +7,7 @@ var config = {
     nalaUID: "U12345", /* USED FOR IDENTIFYING THE CLIENT WHEN SENDING REQUESTS */
 
     business: {
-	name:        "Mel the Locksmith",
+	name:        "Your Company Name",
 	logo:        "img/clients/x.webp",
 	rating:      4.6,
 	ratingText:  "Excellent",
