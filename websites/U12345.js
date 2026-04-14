@@ -1,63 +1,57 @@
 var config = {
-    nalaUID: "U12345", /* USED FOR IDENTIFYING THE CLIENT WHEN SENDING REQUESTS */
+    nalaUID:  "U12345",
 
     business: {
-	name:        "Mel the Locksmith",
-	logo:        "img/mel.co.png",
-	rating:      3.5,
-	ratingText:  "Excellent",
-	reviewCount: 8,
-	isTopPro:    true,
-	isOnline:    false,
+        name:        "Your Company Name",
+        logo:        "data:image/png;base64,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",
+        rating:      4.6,
+        ratingText:  "Excellent",
+        reviewCount: 612,
+        isTopPro:    true,
+        isOnline:    false,
     },
     stats: [
-	{ icon: "verified_user", text: "Current Top Pro",      type: "badge"        },
-	{ icon: "emoji_events",  text: "Hired 13 times",       type: "achievement"  },
-	{ icon: "verified",      text: "Background checked",   type: "verification" },
-	{ icon: "groups",        text: "3 employees",          type: "team"         },
-	{ icon: "schedule",      text: "2 years in business",  type: "experience"   },
+        { icon: "verified_user", text: "Current Top Pro", type: "badge" },
+        { icon: "emoji_events", text: "Hired 13 times", type: "achievement" },
+        { icon: "verified", text: "Background checked", type: "verification" },
+        { icon: "groups", text: "2 employees", type: "team" },
+        { icon: "schedule", text: "5 years in business", type: "experience" }
     ],
     contact: {
-	priceText:       "Contact me for Estimate",
-	ctaButton:       "Need a Hand?",
-	viewDetailsLink: "View project details",
+        priceText: "Contact me for Estimate",
+        ctaButton: "Need a Hand?",
     },
     guarantee: {
-	title:         "Our Guarantee",
-	text:          "Work is guaranteed or your money back. We stand behind every job — residential, commercial, and automotive.",
-	learnMoreLink: "Learn more about our guarantee",
+        title:         "Our Guarantee",
+        text:          "Work is guaranteed or your money back. We stand behind every job — residential, commercial, and automotive.",
+        learnMoreLink: "Learn more about our guarantee",
     },
     tabs: [],
     about: {
-	description:
-	    "Your neighborhood locksmith, serving the New York and New Jersey metro area for over 3 years. " +
-	    "We specialize in residential, commercial, and automotive locksmith services with fast response times " +
-	    "and transparent pricing. Licensed, insured, and background-checked professionals you can trust.",
-	readMoreLink: "",
+        description: "Your neighborhood locksmith, serving the New York metro area for over 2 years. We specialize in residential, commercial, and automotive locksmith services with fast response times and transparent pricing. Licensed, insured, and background-checked professionals you can trust.",
+        readMoreLink: "",
     },
     businessHours: {
-	title: "Business hours",
-	text:  "Mon – Fri: 8:00 AM – 8:00 PM  |  Sat: 9:00 AM – 6:00 PM  |  Sun: Emergency calls only",
+        title: "Business hours",
+        text:  "Mon – Fri: 8:00 AM – 8:00 PM  |  Sat: 9:00 AM – 6:00 PM  |  Sun: Emergency calls only",
     },
     paymentMethods: {
-	title:   "Payment methods",
-	methods: "I accepts payments via Apple Pay, Cash, Credit card, PayPal and Zelle.",
+        title:   "Payment methods",
+        methods: "This pro accepts payments via Apple Pay, Cash, Check, Credit card, PayPal, Square cash app, Venmo, and Zelle.",
     },
     socialMedia: {
-	title: "Connect with me",
-	links: [
-	    { platform: "facebook",  icon: "img/facebook.png",  url: "" },
-	    { platform: "instagram", icon: "img/instagram.png", url: "blah..." },
-	    { platform: "twitter",   icon: "img/twitter.png",   url: "" },
-	]
+        title: "Social media",
+        links: [
+        { platform: "facebook", icon: "img/facebook.png", url: "" },
+        { platform: "instagram", icon: "img/instagram.png", url: "" },
+        { platform: "twitter", icon: "img/twitter.png", url: "" }
+        ]
     },
     topProStatus: {
-	title:       "Top Pro status",
-	description: "Top Pros are among the highest-rated, most popular professionals. " +
-	             "Mel the Locksmith has maintained Top Pro status for two consecutive years.",
-	years:       [2025],
+        title:       "Top Pro status",
+        description: "Top Pros are among the highest-rated, most popular professionals on the platform. Mel the Locksmith has maintained Top Pro status for 3 consecutive years.",
+        years:       [2022,2023,2024],
     },
 }
 
-// MAKE THIS CALL TO START CLIENT
 client(config);
