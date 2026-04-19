@@ -20,33 +20,8 @@
         return basePath && basePath.endsWith("/") ? basePath : (basePath || "/") + "/";
     }
 
-    function getApiBaseUrl() {
-        if (window.wc && typeof wc.apiURL === "string" && wc.apiURL) {
-            return wc.apiURL.replace(/\/$/, "");
-        }
-
-        const explicit = window.NALA_API_URL || window.localStorage.getItem("NALA_API_URL") || "";
-        if (explicit) {
-            return explicit.replace(/\/$/, "");
-        }
-
-        return window.location.origin;
-    }
-
-    function toApiUrl(path) {
-        if (!path) {
-            return getApiBaseUrl();
-        }
-
-        if (/^https?:\/\//i.test(path)) {
-            return path;
-        }
-
-        return getApiBaseUrl() + (path.charAt(0) === "/" ? path : "/" + path);
-    }
-
     function apiPost(url, data) {
-        return fetch(toApiUrl(url), {
+        return fetch(url, {
             method: "POST",
             credentials: "include",
             headers: {
@@ -66,7 +41,7 @@
     }
 
     function apiGet(url) {
-        return fetch(toApiUrl(url), {
+        return fetch(url, {
             method: "GET",
             credentials: "include"
         }).then(async (res) => {

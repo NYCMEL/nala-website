@@ -11,7 +11,7 @@ function nalaResolveApiUrl() {
     }
 
     if (hostname === "localhost" || hostname === "127.0.0.1") {
-        return "https://nala-test.com";
+        return "http://" + hostname + ":9000";
     }
 
     return "https://nala-test.com";
