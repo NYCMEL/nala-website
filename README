@@ -1,3 +1,10 @@
+1.⁠ ⁠I created 3 users:
+a) registered@nala.com, password: test,
+b) premium@nala.com, password: test,
+c) business@nala.com, password: test
+
+
+
 UPDATE PROGRESS IN DASHBOARD
 ------------------------------------
 wc.setDasbboardProgress(75)
