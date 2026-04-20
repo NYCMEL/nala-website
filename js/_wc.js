@@ -1597,46 +1597,17 @@ wc.submitQuiz = function (quizSessionId, moduleId, answersMap, callback) {
     });
 };
 
-/************************************************************
- * fix footer to bottom
- ************************************************************/
-wc.fixFooter = function() {
-    const footer = document.getElementById("page-footer");
-    if (!footer) return;
-
-    function adjustFooter() {
-	const docHeight = document.documentElement.scrollHeight;
-	const viewportHeight = window.innerHeight;
-
-	if (docHeight <= viewportHeight) {
-	    footer.style.position = "fixed";
-	    footer.style.bottom = "0";
-	    footer.style.left = "0";
-	    footer.style.width = "100%";
-	} else {
-	    footer.style.position = "static";
-	}
-    }
-
-    // Run after layout is truly ready
-    window.addEventListener("load", adjustFooter);
-    window.addEventListener("resize", adjustFooter);
-
-    // Extra safety: re-run after fonts/images
-    setTimeout(adjustFooter, 50);
-}
-
-/************************************************************
- * fix footer to bottom
- ************************************************************/
-/************************************************************
- * fix footer to bottom
- ************************************************************/
 wc.fixFooter = function() {
     const footer = document.getElementById("page-footer");
     if (!footer) return;
 
     wc._adjustFooter = function() {
+        footer.style.position = "static";
+        footer.style.bottom = "";
+        footer.style.left = "";
+        footer.style.width = "";
+        document.body.style.paddingBottom = "";
+
         const docHeight = document.documentElement.scrollHeight;
         const viewportHeight = window.innerHeight;
 
@@ -1645,6 +1616,7 @@ wc.fixFooter = function() {
             footer.style.bottom = "0";
             footer.style.left = "0";
             footer.style.width = "100%";
+            document.body.style.paddingBottom = footer.offsetHeight + "px";
         } else {
             footer.style.position = "static";
         }
@@ -1673,4 +1645,5 @@ wc.unfixFooter = function() {
     footer.style.removeProperty("bottom");
     footer.style.removeProperty("left");
     footer.style.removeProperty("width");
+    document.body.style.removeProperty("padding-bottom");
 };
