@@ -787,7 +787,7 @@
 
     'curriculum.duration.label': { en: 'Duration:', es: 'Duración:' },
     'curriculum.contact.email':  { en: 'Email: info@nala-locksmith.com',                   es: 'Correo: info@nala-locksmith.com' },
-    'curriculum.contact.addr':   { en: 'Address: 123 Security Blvd, Suite 100, Anytown, USA', es: 'Dirección: 123 Security Blvd, Suite 100, Anytown, USA' },
+    'curriculum.contact.addr':   { en: 'Address: 892 Tranquil Road, North Tazewell, VA 24630', es: 'Dirección: 892 Tranquil Road, North Tazewell, VA 24630' },
 
     // ── TOP / SCROLL BUTTON ────────────────────────────────────────
     'top.scrollBtn': { en: 'Scroll to top', es: 'Volver arriba' }

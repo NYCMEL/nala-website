@@ -634,7 +634,11 @@ a {
 }
 
 // Nav active link — from header.scss
-.nav-link.active {
+.nav-link.active[id="mtk-header-home"],
+.nav-link.active[id="mtk-header-register"],
+.nav-link.active[id="mtk-header-login"],
+.nav-link.active[id="mtk-header-dashboard"],
+.nav-link.active[id="mtk-header-hierarchy"] {
   color: $color-gold !important;
 }
 

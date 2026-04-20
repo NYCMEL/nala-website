@@ -17,9 +17,9 @@ window.app.footer = {
     },
     contact: {
 	title: _footerT('footer.contact.title', 'Contact Information'),
-	phone: "+1 (646) 303-1234",
+	phone: "",
 	email: "support@nalanetwork.com",
-	address: "1510 Park Ave, New York, NY 10010"
+	address: ["892 Tranquil Road", "North Tazewell, VA 24630"]
     },
     social: {
 	title: _footerT('footer.social.title', 'Social Media'),

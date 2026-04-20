@@ -46,14 +46,23 @@
     /**
      * Create contact item HTML
      * @param {string} icon - Font Awesome icon class
-     * @param {string} text - Contact text
+     * @param {string|string[]} text - Contact text
      * @param {string} [href] - Optional link href
      * @returns {string}
      */
     function createContactItem(icon, text, href) {
+	if (Array.isArray(text)) {
+	    text = text.filter(Boolean);
+	}
+
+	if (!text || (Array.isArray(text) && text.length === 0)) {
+	    return '';
+	}
+
+	const displayText = Array.isArray(text) ? text.join('<br>') : text;
 	const content = href 
-	      ? `<a href="${href}" class="mtk-footer__contact-link">${text}</a>`
-	      : `<p class="mtk-footer__contact-text">${text}</p>`;
+	      ? `<a href="${href}" class="mtk-footer__contact-link">${displayText}</a>`
+	      : `<p class="mtk-footer__contact-text">${displayText}</p>`;
 	
 	return `
       <li class="mtk-footer__contact-item">
@@ -93,8 +102,9 @@
     function renderFooter(footerElement, data) {
 	try {
 	    // Build contact items
+	    const contactPhone = data.contact.phone || '';
 	    const contactItems = [
-		createContactItem('fas fa-phone', data.contact.phone, `tel:${data.contact.phone.replace(/\D/g, '')}`),
+		contactPhone ? createContactItem('fas fa-phone', contactPhone, `tel:${contactPhone.replace(/\D/g, '')}`) : '',
 		createContactItem('fas fa-envelope', data.contact.email, `mailto:${data.contact.email}`),
 		createContactItem('fas fa-map-marker-alt', data.contact.address)
 	    ].join('');

@@ -132,18 +132,38 @@ a:hover {
   text-rendering: optimizeLegibility;
   user-select: none; }
 
-.nav-link.active {
+.nav-link.active[id="mtk-header-home"],
+.nav-link.active[id="mtk-header-register"],
+.nav-link.active[id="mtk-header-login"],
+.nav-link.active[id="mtk-header-dashboard"],
+.nav-link.active[id="mtk-header-hierarchy"] {
   color: gold !important; }
 
 .navbar-nav .nav-link {
   border-radius: 0 !important; }
 
-.navbar-nav .nav-link.active {
+.navbar-nav .nav-link.active[id="mtk-header-home"],
+.navbar-nav .nav-link.active[id="mtk-header-register"],
+.navbar-nav .nav-link.active[id="mtk-header-login"],
+.navbar-nav .nav-link.active[id="mtk-header-dashboard"],
+.navbar-nav .nav-link.active[id="mtk-header-hierarchy"] {
   border-bottom: 2px gold solid !important; }
 
-.navbar-nav .nav-link i,
-.navbar-nav .nav-link .fa,
-.navbar-nav .nav-link .material-icons {
+.navbar-nav .nav-link.active[id="mtk-header-home"] i,
+.navbar-nav .nav-link.active[id="mtk-header-register"] i,
+.navbar-nav .nav-link.active[id="mtk-header-login"] i,
+.navbar-nav .nav-link.active[id="mtk-header-dashboard"] i,
+.navbar-nav .nav-link.active[id="mtk-header-hierarchy"] i,
+.navbar-nav .nav-link.active[id="mtk-header-home"] .fa,
+.navbar-nav .nav-link.active[id="mtk-header-register"] .fa,
+.navbar-nav .nav-link.active[id="mtk-header-login"] .fa,
+.navbar-nav .nav-link.active[id="mtk-header-dashboard"] .fa,
+.navbar-nav .nav-link.active[id="mtk-header-hierarchy"] .fa,
+.navbar-nav .nav-link.active[id="mtk-header-home"] .material-icons,
+.navbar-nav .nav-link.active[id="mtk-header-register"] .material-icons,
+.navbar-nav .nav-link.active[id="mtk-header-login"] .material-icons,
+.navbar-nav .nav-link.active[id="mtk-header-dashboard"] .material-icons,
+.navbar-nav .nav-link.active[id="mtk-header-hierarchy"] .material-icons {
   color: gold; }
 
 /* Language toggle */
@@ -236,5 +256,9 @@ h1.title::after {
   background-color: gold;
   transform: translateX(-50%); }
 
-.nav-link.active {
+.nav-link.active[id="mtk-header-home"],
+.nav-link.active[id="mtk-header-register"],
+.nav-link.active[id="mtk-header-login"],
+.nav-link.active[id="mtk-header-dashboard"],
+.nav-link.active[id="mtk-header-hierarchy"] {
   color: gold !important; }

@@ -232,7 +232,11 @@ a:hover {
   text-rendering: optimizeLegibility;
   user-select: none; }
 
-.nav-link.active {
+.nav-link.active[id="mtk-header-home"],
+.nav-link.active[id="mtk-header-register"],
+.nav-link.active[id="mtk-header-login"],
+.nav-link.active[id="mtk-header-dashboard"],
+.nav-link.active[id="mtk-header-hierarchy"] {
   color: gold !important; }
 
 #page-content {

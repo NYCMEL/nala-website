@@ -13,13 +13,22 @@ $(".nav-link, .navbar-brand, .btn").on("click", function(e) {
 });
 
 function headerSelect(id) {
+    var pageLinks = [
+        "mtk-header-home",
+        "mtk-header-register",
+        "mtk-header-login",
+        "mtk-header-dashboard",
+        "mtk-header-hierarchy"
+    ];
+
     $(".nav-link, .navbar-brand, .btn").removeClass("active");
-    $(this).addClass("active");
     
     // FOLD HAMBURGER MENU
     $(".navbar-collapse.show").removeClass("show");
 
-    $("#" + id).addClass("active");
+    if (pageLinks.indexOf(id) !== -1) {
+        $("#" + id).addClass("active");
+    }
 }
 
 // toggleNavbar()

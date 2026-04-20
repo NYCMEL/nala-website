@@ -21,7 +21,7 @@
   &__user-name {
     font-size: 32px;
     font-weight: $font-weight-medium;
-    color: $color-primary;
+    color: #d4af37;
     margin: 0 0 $spacing-xl 0;
     letter-spacing: -0.5px;
   }
@@ -52,7 +52,7 @@
   &__progress-percentage {
     font-size: $font-size-3xl;
     font-weight: $font-weight-medium;
-    color: $color-primary;
+    color: #d4af37;
   }
 
   &__progress-bar {
@@ -62,6 +62,7 @@
 
   &__progress-fill {
     @extend %progress-bar-fill;
+    background: linear-gradient(90deg, #d4af37 0%, $color-gold 100%);
   }
 
   &__subscriptions {
@@ -96,17 +97,17 @@
     &:hover {
       transform: translateY(-4px);
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-      border-color: $color-primary;
+      border-color: #d4af37;
     }
 
-    &:focus        { outline: 2px solid $color-primary; outline-offset: 2px; }
-    &:focus-visible { outline: 3px solid $color-primary; outline-offset: 2px; }
+    &:focus        { outline: 2px solid #d4af37; outline-offset: 2px; }
+    &:focus-visible { outline: 3px solid #d4af37; outline-offset: 2px; }
   }
 
   &__card-icon {
     width: 48px;
     height: 48px;
-    background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+    background: linear-gradient(135deg, #d4af37 0%, $color-gold 100%);
     border-radius: $radius-circle;
     display: flex;
     align-items: center;
@@ -134,7 +135,7 @@
   &__card-price {
     font-size: $font-size-2xl;
     font-weight: $font-weight-medium;
-    color: $color-primary;
+    color: #d4af37;
     margin: 0;
   }
 

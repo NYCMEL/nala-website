@@ -10,9 +10,8 @@ window.app.footer = {
 	{
 	    title: "Contact Information",
 	    links: [
-		{ text: "Phone: +1 555-123-4567", event: "contact-phone" },
 		{ text: "Email: info@nala.org", event: "contact-email" },
-		{ text: "Address: 123 Main Street, NYC, NY", event: "contact-address" }
+		{ text: "Address: 892 Tranquil Road<br>North Tazewell, VA 24630", event: "contact-address" }
 	    ]
 	},
 	{
