@@ -142,6 +142,11 @@ a:hover {
 .navbar-nav .nav-link {
   border-radius: 0 !important; }
 
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active:hover,
+.nav-link:hover {
+  text-decoration: none !important; }
+
 .navbar-nav .nav-link.active[id="mtk-header-home"],
 .navbar-nav .nav-link.active[id="mtk-header-register"],
 .navbar-nav .nav-link.active[id="mtk-header-login"],

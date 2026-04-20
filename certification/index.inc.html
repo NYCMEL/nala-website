@@ -1,6 +1,6 @@
 <link href="certification/certification.css" rel="stylesheet">
 
-<section class="mtk-certification container py-5 border mt-5">
+<section id="mtk-certification-content" class="mtk-certification container py-5 border mt-5" hidden>
     <h1 align="center" class="title mb-4 fb" data-i18n="cert.section.title">NALA Certification</h1>
 
     <div class="container">
@@ -30,4 +30,12 @@
     </div>
 </section>
 
+<section id="mtk-certification-locked" class="mtk-certification mtk-certification--locked container py-5 border mt-5" hidden>
+    <h1 align="center" class="title mb-4 fb" data-i18n="cert.locked.title">Certification locked</h1>
+    <p class="text-center" data-i18n="cert.locked.body">
+        Certification is available after you complete the program.
+    </p>
+</section>
+
 <script src="certification/certification.config.js"></script>
+<script src="certification/certification.guard.js"></script>

@@ -501,6 +501,14 @@
       en: 'The NALA Certification recognizes successful completion of a structured, skills-focused locksmith training program designed to prepare students for real-world professional work. This certification confirms that the holder has demonstrated competency across core locksmith disciplines, including residential, commercial, and automotive services. Unlike purely theoretical credentials, the NALA Certification emphasizes practical understanding, industry terminology, and correct professional procedures. Graduates complete guided instruction, applied exercises, and assessments that reflect the standards expected in the field. Earning this certification signals commitment to professional development and readiness to operate with confidence, safety, and technical accuracy. It serves as a meaningful milestone for individuals entering the locksmith trade or advancing their existing skills.',
       es: 'La Certificación NALA reconoce la finalización exitosa de un programa de entrenamiento en cerrajería estructurado y orientado a las habilidades, diseñado para preparar a los estudiantes para el trabajo profesional en el mundo real. Esta certificación confirma que el titular ha demostrado competencia en las principales disciplinas de cerrajería, incluyendo servicios residenciales, comerciales y automotrices. A diferencia de las credenciales puramente teóricas, la Certificación NALA enfatiza la comprensión práctica, la terminología de la industria y los procedimientos profesionales correctos. Los graduados completan instrucción guiada, ejercicios aplicados y evaluaciones que reflejan los estándares esperados en el campo. Obtener esta certificación es una señal de compromiso con el desarrollo profesional y de estar preparado para operar con confianza, seguridad y precisión técnica. Sirve como un hito significativo para las personas que ingresan al oficio de cerrajero o que están avanzando en sus habilidades existentes.'
     },
+    'cert.locked.title': {
+      en: 'Certification locked',
+      es: 'Certificación bloqueada'
+    },
+    'cert.locked.body': {
+      en: 'Certification is available after you complete the program.',
+      es: 'La certificación estará disponible después de completar el programa.'
+    },
     'cert.cards.title': {
       en: 'Industry-Recognized Certifications',
       es: 'Certificaciones Reconocidas por la Industria'

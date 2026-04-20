@@ -292,7 +292,10 @@ h1.title::after {
   background: linear-gradient(135deg, var(--mtk-primary-dark) 0%, #0d47a1 100%); }
 
 .mtk-hierarchy .mtk-module__header:focus {
-  outline: 2px solid var(--mtk-accent);
+  outline: none; }
+
+.mtk-hierarchy .mtk-module__header:focus-visible {
+  outline: 2px solid gold;
   outline-offset: -2px; }
 
 .mtk-hierarchy .mtk-module__header .material-icons {
@@ -452,7 +455,10 @@ h1.title::after {
   box-shadow: var(--mtk-shadow-2); }
 
 .mtk-hierarchy .mtk-quiz:focus {
-  outline: 2px solid var(--mtk-accent);
+  outline: none; }
+
+.mtk-hierarchy .mtk-quiz:focus-visible {
+  outline: 2px solid gold;
   outline-offset: 2px; }
 
 .mtk-hierarchy .mtk-quiz.mtk-quiz--active {
