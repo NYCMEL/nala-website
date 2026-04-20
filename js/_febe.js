@@ -48,7 +48,7 @@ class _febe {
 
     createHandlers() {
 	return {
-	    "mtk-path:click": this.handleRegister,
+	    "mtk-path:click": this.handlePathClick.bind(this),
 	    "mtk-ready:click": this.handleRegister,
 	    "mtk-courses:click": this.handleRegister,
 	    "mtk-login-forgot-password": this.handleForgotPassword,
@@ -140,8 +140,18 @@ class _febe {
     //////////////////////////////////////////////////////////////////
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
-    handleDashboardClicks() {
-	alert("_febe: handleDashboardClicks");
+    handleDashboardClicks(data) {
+	if (!wc.buy || typeof wc.buy.handlePurchasePlan !== "function") {
+	    return;
+	}
+
+	const payload = data || {};
+	if (payload.subscriptionId === "business-in-a-box") {
+	    wc.buy.handlePurchasePlan("business");
+	    return;
+	}
+
+	wc.buy.handlePurchasePlan("premium");
     }
 
     //////////////////////////////////////////////////////////////////
@@ -163,6 +173,20 @@ class _febe {
 	if (wc.pages && typeof wc.pages.show === "function") {
 	    wc.pages.show("register");
 	}
+    }
+
+    handlePathClick(data) {
+	const payload = data || {};
+	if (
+	    (payload.plan === "premium" || payload.plan === "business") &&
+	    wc.buy &&
+	    typeof wc.buy.handlePurchasePlan === "function"
+	) {
+	    wc.buy.handlePurchasePlan(payload.plan);
+	    return;
+	}
+
+	this.handleRegister();
     }
     handleForgotPassword() {
 	const emailInput = document.querySelector("#mtk-email");
@@ -416,4 +440,3 @@ class _febe {
 
 /* auto-init */
 window._febe = new _febe();
-

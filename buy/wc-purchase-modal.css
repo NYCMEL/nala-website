@@ -1,0 +1,120 @@
+.wc-purchase-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(9, 18, 32, 0.6);
+}
+
+.wc-purchase-modal__panel {
+    width: min(100%, 720px);
+    max-height: 90vh;
+    overflow: auto;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+    padding: 28px;
+}
+
+.wc-purchase-modal__title {
+    margin: 0 0 8px;
+    font-size: 28px;
+    line-height: 1.2;
+    color: #0d47a1;
+}
+
+.wc-purchase-modal__intro {
+    margin: 0 0 20px;
+    color: #455a64;
+    font-size: 15px;
+}
+
+.wc-purchase-modal__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.wc-purchase-modal__full {
+    grid-column: 1 / -1;
+}
+
+.wc-purchase-modal__field label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 700;
+    color: #263238;
+}
+
+.wc-purchase-modal__field input,
+.wc-purchase-modal__field select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    border: 1px solid #cfd8dc;
+    border-radius: 10px;
+    font-size: 15px;
+    background: #fff;
+}
+
+.wc-purchase-modal__field input:focus,
+.wc-purchase-modal__field select:focus {
+    outline: none;
+    border-color: #1976d2;
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.14);
+}
+
+.wc-purchase-modal__error {
+    min-height: 22px;
+    margin: 14px 0 0;
+    color: #c62828;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.wc-purchase-modal__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.wc-purchase-modal__btn {
+    border: 0;
+    border-radius: 999px;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.wc-purchase-modal__btn--secondary {
+    background: #eceff1;
+    color: #37474f;
+}
+
+.wc-purchase-modal__btn--primary {
+    background: #1565c0;
+    color: #fff;
+}
+
+@media (max-width: 720px) {
+    .wc-purchase-modal__panel {
+        padding: 22px;
+    }
+
+    .wc-purchase-modal__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .wc-purchase-modal__actions {
+        flex-direction: column-reverse;
+    }
+
+    .wc-purchase-modal__btn {
+        width: 100%;
+    }
+}
