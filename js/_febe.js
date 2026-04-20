@@ -33,6 +33,8 @@ class _febe {
 	    "header-logo-private",
 	    "4-mtk-quiz-submitted",
 	    "mtk-dialog:action",
+	    "client:save",
+	    "mtk-request:submit"
 	];
 
 	// create handlers mapping
@@ -79,6 +81,9 @@ class _febe {
 	    "header-logo-private": this.handleHeaderLogoPrivateClick,
 	    "4-mtk-quiz-submitted": this.handleQuizSubmitted,
 	    "mtk-dialog:action": this.handleDialogActions,
+	    "client:save": this.handleClientSave,
+	    "mtk-request:submit": this.handleRequestSubmit,
+
 	};
     }
 
@@ -93,6 +98,23 @@ class _febe {
 	    wc.error("_febe: DO NOT HAVE:" + msg);
 	    alert("_febe: DO NOT HAVE:" + msg);
 	}
+    }
+
+    //////////////////////////////////////////////////////////////////
+    ///// HANDLERS
+    //////////////////////////////////////////////////////////////////
+    handleClientSave(data) {
+        console.log("=========", JSON.stringify(data), "==========");
+	alert("handleClientSave");
+    }
+
+
+    //////////////////////////////////////////////////////////////////
+    ///// HANDLERS
+    //////////////////////////////////////////////////////////////////
+    handleRequestSubmit(data) {
+        console.log("=========", JSON.stringify(data), "==========");
+	alert("handleRequestSubmit");
     }
 
     //////////////////////////////////////////////////////////////////
