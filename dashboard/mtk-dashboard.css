@@ -7,7 +7,7 @@
 
 .mtk-dashboard__progress-fill {
   height: 100%;
-  background: gold;
+  background: linear-gradient(90deg, #1976d2 0%, #2196f3 100%);
   border-radius: 4px;
   transition: width 600ms cubic-bezier(0.4, 0, 0.2, 1); }
 
@@ -150,7 +150,7 @@ a:hover {
 .nav-link.active[id="mtk-header-login"],
 .nav-link.active[id="mtk-header-dashboard"],
 .nav-link.active[id="mtk-header-hierarchy"] {
-  color: gold !important; }
+  color: #a98212 !important; }
 
 #page-content {
   flex: 1 0 auto; }
@@ -180,7 +180,7 @@ h1.title::after {
   bottom: 0;
   width: 30%;
   height: 3px;
-  background-color: gold;
+  background-color: #a98212;
   transform: translateX(-50%); }
 
 .mtk-dashboard {
@@ -204,7 +204,7 @@ h1.title::after {
 .mtk-dashboard__user-name {
   font-size: 32px;
   font-weight: 500;
-  color: gold;
+  color: #1976d2;
   margin: 0 0 24px 0;
   letter-spacing: -0.5px; }
 
@@ -232,7 +232,7 @@ h1.title::after {
 .mtk-dashboard__progress-percentage {
   font-size: 24px;
   font-weight: 500;
-  color: gold; }
+  color: #1976d2; }
 
 .mtk-dashboard__progress-bar {
   position: relative; }
@@ -266,20 +266,20 @@ h1.title::after {
 .mtk-dashboard__subscription-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-  border-color: gold; }
+  border-color: #1976d2; }
 
 .mtk-dashboard__subscription-card:focus {
-  outline: 2px solid gold;
+  outline: 2px solid #1976d2;
   outline-offset: 2px; }
 
 .mtk-dashboard__subscription-card:focus-visible {
-  outline: 3px solid gold;
+  outline: 3px solid #1976d2;
   outline-offset: 2px; }
 
 .mtk-dashboard__card-icon {
   width: 48px;
   height: 48px;
-  background: gold;
+  background: #a98212;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -306,7 +306,7 @@ h1.title::after {
 .mtk-dashboard__card-price {
   font-size: 20px;
   font-weight: 500;
-  color: gold;
+  color: #1976d2;
   margin: 0; }
 
 .mtk-dashboard .material-icons {

@@ -237,7 +237,7 @@ a:hover {
 .nav-link.active[id="mtk-header-login"],
 .nav-link.active[id="mtk-header-dashboard"],
 .nav-link.active[id="mtk-header-hierarchy"] {
-  color: gold !important; }
+  color: #a98212 !important; }
 
 #page-content {
   flex: 1 0 auto; }
@@ -267,7 +267,7 @@ h1.title::after {
   bottom: 0;
   width: 30%;
   height: 3px;
-  background-color: gold;
+  background-color: #a98212;
   transform: translateX(-50%); }
 
 .mtk-settings {
@@ -370,7 +370,7 @@ h1.title::after {
   user-select: none; }
 
 .mtk-settings__icon-btn .material-icons {
-  color: gold; }
+  color: #a98212; }
 
 .mtk-settings__actions {
   display: flex;

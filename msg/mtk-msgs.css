@@ -137,7 +137,7 @@ a:hover {
 .nav-link.active[id="mtk-header-login"],
 .nav-link.active[id="mtk-header-dashboard"],
 .nav-link.active[id="mtk-header-hierarchy"] {
-  color: gold !important; }
+  color: #a98212 !important; }
 
 #page-content {
   flex: 1 0 auto; }
@@ -167,7 +167,7 @@ h1.title::after {
   bottom: 0;
   width: 30%;
   height: 3px;
-  background-color: gold;
+  background-color: #a98212;
   transform: translateX(-50%); }
 
 .mtk-msgs {
@@ -277,7 +277,7 @@ h1.title::after {
 
 .mtk-msgs .mtk-msgs__button:hover {
   background-color: rgba(0, 0, 0, 0.08);
-  border: 1px gold solid; }
+  border: 1px #a98212 solid; }
 
 .mtk-msgs .mtk-msgs__button:focus {
   outline: 2px solid currentColor;

@@ -137,7 +137,7 @@ a:hover {
 .nav-link.active[id="mtk-header-login"],
 .nav-link.active[id="mtk-header-dashboard"],
 .nav-link.active[id="mtk-header-hierarchy"] {
-  color: gold !important; }
+  color: #a98212 !important; }
 
 #page-content {
   flex: 1 0 auto; }
@@ -167,7 +167,7 @@ h1.title::after {
   bottom: 0;
   width: 30%;
   height: 3px;
-  background-color: gold;
+  background-color: #a98212;
   transform: translateX(-50%); }
 
 html, body {
@@ -198,7 +198,7 @@ body {
   transition: color 200ms ease-in-out; }
 
 .mtk-footer a:hover {
-  color: gold; }
+  color: #a98212; }
 
 .mtk-footer img.brand-logo {
   max-width: 120px;
@@ -214,7 +214,7 @@ body {
   font-weight: 500;
   margin-bottom: 1rem;
   font-size: 1rem;
-  color: gold; }
+  color: #a98212; }
 
 .mtk-footer .footer-link {
   font-size: 13px;
@@ -233,8 +233,8 @@ body {
 
 .mtk-footer .social-icon:hover {
   transform: translateY(-2px);
-  color: gold; }
+  color: #a98212; }
 
 .mtk-footer .social-icon:hover {
   transform: translateY(-2px);
-  color: gold; }
+  color: #a98212; }

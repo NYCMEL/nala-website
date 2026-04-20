@@ -137,7 +137,7 @@ a:hover {
 .nav-link.active[id="mtk-header-login"],
 .nav-link.active[id="mtk-header-dashboard"],
 .nav-link.active[id="mtk-header-hierarchy"] {
-  color: gold !important; }
+  color: #a98212 !important; }
 
 .navbar-nav .nav-link {
   border-radius: 0 !important; }
@@ -152,7 +152,7 @@ a:hover {
 .navbar-nav .nav-link.active[id="mtk-header-login"],
 .navbar-nav .nav-link.active[id="mtk-header-dashboard"],
 .navbar-nav .nav-link.active[id="mtk-header-hierarchy"] {
-  border-bottom: 2px gold solid !important; }
+  border-bottom: 2px #a98212 solid !important; }
 
 .navbar-nav .nav-link.active[id="mtk-header-home"] i,
 .navbar-nav .nav-link.active[id="mtk-header-register"] i,
@@ -169,7 +169,7 @@ a:hover {
 .navbar-nav .nav-link.active[id="mtk-header-login"] .material-icons,
 .navbar-nav .nav-link.active[id="mtk-header-dashboard"] .material-icons,
 .navbar-nav .nav-link.active[id="mtk-header-hierarchy"] .material-icons {
-  color: gold; }
+  color: #a98212; }
 
 /* Language toggle */
 .nala-lang-toggle {
@@ -225,7 +225,7 @@ a:hover {
   top: 2px;
   bottom: 2px;
   width: calc(50% - 2px);
-  background: gold;
+  background: #a98212;
   border-radius: 16px;
   transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25); }
@@ -258,7 +258,7 @@ h1.title::after {
   bottom: 0;
   width: 30%;
   height: 3px;
-  background-color: gold;
+  background-color: #a98212;
   transform: translateX(-50%); }
 
 .nav-link.active[id="mtk-header-home"],
@@ -266,4 +266,4 @@ h1.title::after {
 .nav-link.active[id="mtk-header-login"],
 .nav-link.active[id="mtk-header-dashboard"],
 .nav-link.active[id="mtk-header-hierarchy"] {
-  color: gold !important; }
+  color: #a98212 !important; }

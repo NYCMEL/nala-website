@@ -21,7 +21,7 @@
   &__user-name {
     font-size: 32px;
     font-weight: $font-weight-medium;
-    color: $color-gold;
+    color: $color-primary;
     margin: 0 0 $spacing-xl 0;
     letter-spacing: -0.5px;
   }
@@ -52,7 +52,7 @@
   &__progress-percentage {
     font-size: $font-size-3xl;
     font-weight: $font-weight-medium;
-    color: $color-gold;
+    color: $color-primary;
   }
 
   &__progress-bar {
@@ -62,7 +62,7 @@
 
   &__progress-fill {
     @extend %progress-bar-fill;
-    background: $color-gold;
+    background: linear-gradient(90deg, $color-primary 0%, $color-primary-light 100%);
   }
 
   &__subscriptions {
@@ -97,11 +97,11 @@
     &:hover {
       transform: translateY(-4px);
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-      border-color: $color-gold;
+      border-color: $color-primary;
     }
 
-    &:focus        { outline: 2px solid $color-gold; outline-offset: 2px; }
-    &:focus-visible { outline: 3px solid $color-gold; outline-offset: 2px; }
+    &:focus        { outline: 2px solid $color-primary; outline-offset: 2px; }
+    &:focus-visible { outline: 3px solid $color-primary; outline-offset: 2px; }
   }
 
   &__card-icon {
@@ -135,7 +135,7 @@
   &__card-price {
     font-size: $font-size-2xl;
     font-weight: $font-weight-medium;
-    color: $color-gold;
+    color: $color-primary;
     margin: 0;
   }
 
