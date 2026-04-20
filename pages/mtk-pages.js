@@ -206,12 +206,24 @@ class Pages extends HTMLElement {
         this.current = page;
 
         // PUBLISH EVENT
-        wc.publish("mtk-pages", {
-            time:   new Date().getTime(),
-            action: "show",
-            page:   page,
-            label:  obj.label || page
-        });
+	wc.publish("mtk-pages", {
+	    time:   new Date().getTime(),
+	    action: "show",
+	    page:   page,
+	    label:  obj.label || page
+	});
+
+	if (window.i18n) {
+	    const applyI18n = () => {
+		window.i18n.applyDOM(target);
+		window.i18n.applyDOM(document);
+		window.i18n.applyAllConfigs();
+	    };
+
+	    setTimeout(applyI18n, 50);
+	    setTimeout(applyI18n, 300);
+	    setTimeout(applyI18n, 800);
+	}
 
         wc.log("mtk-pages: showing page:", page);
         wc.groupEnd();
