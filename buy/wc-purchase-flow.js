@@ -191,8 +191,15 @@
 
         try {
             const user = getUser();
-            const payload = plan === "premium"
-                ? await (await loadPurchaseModalApi()).showPremiumShippingModal(user)
+            const needsPremiumShipping = (plan === "premium") || (plan === "business" && !hasPremium(user));
+            const payload = needsPremiumShipping
+                ? await (await loadPurchaseModalApi()).showPremiumShippingModal(user, {
+                    plan: plan,
+                    title: plan === "business" ? "Lockout Kit Shipping Details" : undefined,
+                    intro: plan === "business"
+                        ? "Business in a Box includes Premium and the lockout kit, so we need the shipping address before opening Stripe Checkout."
+                        : undefined
+                })
                 : { plan: plan };
 
             const res = await createCheckoutSession(payload);

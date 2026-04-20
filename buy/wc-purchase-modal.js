@@ -69,17 +69,21 @@
             .replace(/'/g, "&#39;");
     }
 
-    function showPremiumShippingModal(user) {
+    function showPremiumShippingModal(user, options) {
+        options = options || {};
         ensureShippingModalStyles();
 
         return new Promise(function (resolve, reject) {
             const prefill = getShippingPrefill(user);
+            const title = options.title || "Premium Shipping Details";
+            const intro = options.intro || "Premium includes the lockout kit, so we need the shipping address before opening Stripe Checkout.";
+            const plan = options.plan || "premium";
             const modal = document.createElement("div");
             modal.className = "wc-purchase-modal";
             modal.innerHTML = `
                 <div class="wc-purchase-modal__panel" role="dialog" aria-modal="true" aria-labelledby="wc-purchase-modal-title">
-                    <h2 class="wc-purchase-modal__title" id="wc-purchase-modal-title">Premium Shipping Details</h2>
-                    <p class="wc-purchase-modal__intro">Premium includes the lockout kit, so we need the shipping address before opening Stripe Checkout.</p>
+                    <h2 class="wc-purchase-modal__title" id="wc-purchase-modal-title">${escapeHtml(title)}</h2>
+                    <p class="wc-purchase-modal__intro">${escapeHtml(intro)}</p>
                     <form class="wc-purchase-modal__form">
                         <div class="wc-purchase-modal__grid">
                             <div class="wc-purchase-modal__field wc-purchase-modal__full">
@@ -147,7 +151,7 @@
 
                 const formData = new FormData(form);
                 const payload = {
-                    plan: "premium",
+                    plan: plan,
                     customer_name: prefill.customer_name,
                     customer_email: prefill.customer_email,
                     customer_phone: prefill.customer_phone,
