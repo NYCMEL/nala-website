@@ -66,9 +66,13 @@ function bindHeaderEvents(root = document) {
 
         el.addEventListener("click", function(e) {
             e.preventDefault();
+            if (this.id === "header-dd-client") {
+                wc.log("[header] dropdown → Business In a Box → /client");
+                window.location.href = "client/index.html";
+                return;
+            }
             const map = {
                 "header-dd-profile": "mtk-header-settings",
-                "header-dd-client":  "mtk-header-client",
                 "header-dd-logout":  "mtk-header-logout"
             };
             const event = map[this.id];

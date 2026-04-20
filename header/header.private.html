@@ -85,9 +85,7 @@
 <script>
  wc.timeout(function(){
      try {
-	 var fullName = wc.session.user.name || '';
-	 var initials = fullName.trim().split(/\s+/).map(function(w){ return w[0]; }).join('').toUpperCase().slice(0,2);
-	 $("#uname").html(initials || fullName);
+	 $("#uname").html(wc.session.user.name);
      }
      catch(e) {
 	 console.info("header.private.html: NO user.name YET...");
