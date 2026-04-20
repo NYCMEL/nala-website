@@ -19,6 +19,7 @@ class _febe {
 	    "mtk-login-forgot-password",
 	    "mtk-login-register",
 	    "mtk-login-focus",
+	    "mtk-login-submit",
 	    "mtk-login-success",
 	    "MTK-parts.click",
 	    "mtk-hierarchy:resource:click",
@@ -57,6 +58,7 @@ class _febe {
 	    "mtk-hierarchy:lesson-toggled": this.handleLessonToggled,
 	    "mtk-register-submit": this.handleRegisterSubmit,
 	    "mtk-header-home": this.handleHome,
+	    "mtk-login-submit": this.handleLoginSubmit.bind(this),
 	    "mtk-login-success": this.handleLoginSuccess.bind(this),
 	    "mtk-dashboard:continue": this.handleCourse,
 	    "mtk-header-hierarchy": this.handleCourse,
@@ -336,6 +338,10 @@ class _febe {
 		alert(err);
 	    }
 	});
+    }
+
+    handleLoginSubmit(data) {
+	this.handleLoginSuccess(data);
     }
 
     handleCourse() {
