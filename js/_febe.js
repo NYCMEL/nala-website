@@ -37,6 +37,7 @@ class _febe {
 	this.handlers = this.createHandlers();
 
 	this.subscribe();
+	this.fetchPricing();
     }
 
     subscribe() {
@@ -188,6 +189,30 @@ class _febe {
 
 	this.handleRegister();
     }
+
+    fetchPricing() {
+	return fetch(wc.apiURL + "/api/pricing.php", {
+	    method: "GET",
+	    credentials: "include"
+	}).then(res => {
+	    return res.json().then(json => {
+		if (!res.ok) {
+		    throw new Error((json && (json.error || json.message)) || "pricing failed");
+		}
+
+		window.nalaPricing = json && json.prices ? json.prices : {};
+		document.dispatchEvent(new CustomEvent("nala-pricing:updated", {
+		    detail: window.nalaPricing
+		}));
+
+		return window.nalaPricing;
+	    });
+	}).catch(err => {
+	    wc.warn("Failed to load pricing", err);
+	    return null;
+	});
+    }
+
     handleForgotPassword() {
 	const emailInput = document.querySelector("#mtk-email");
 	const email = emailInput ? String(emailInput.value || "").trim() : "";
