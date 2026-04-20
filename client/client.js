@@ -66,13 +66,13 @@ class ClientProfile {
 		    t.classList.remove('active')
 		    t.style.color = '#adb5bd'
 		    t.style.background = 'none'
-		    t.style.borderBottomColor = 'transparent'
+		    t.style.marginBottom = '0'
 		    t.style.borderRadius = '0'
 		})
 		tab.classList.add('active')
 		tab.style.color = '#000'
 		tab.style.background = '#fff'
-		tab.style.borderBottomColor = '#9a7625'
+		tab.style.marginBottom = '-2px'
 		tab.style.borderRadius = '5px 5px 0 0'
 		wc.log('[client] edit tab →', tab.dataset.editTab)
 		wc.publish('client:edit-tab', { tab: tab.dataset.editTab })
