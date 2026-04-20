@@ -135,6 +135,17 @@ a:hover {
 .nav-link.active {
   color: gold !important; }
 
+.navbar-nav .nav-link {
+  border-radius: 0 !important; }
+
+.navbar-nav .nav-link.active {
+  border-bottom: 2px gold solid !important; }
+
+.navbar-nav .nav-link i,
+.navbar-nav .nav-link .fa,
+.navbar-nav .nav-link .material-icons {
+  color: gold; }
+
 /* Language toggle */
 .nala-lang-toggle {
   display: inline-flex;

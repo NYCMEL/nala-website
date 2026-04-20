@@ -89,6 +89,7 @@
     &:active { background-color: rgba(0, 0, 0, 0.12); }
 
     .material-icons { font-size: $font-size-2xl; user-select: none; }
+    .material-icons { color: $color-gold; }
   }
 
   &__actions {

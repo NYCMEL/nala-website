@@ -365,6 +365,9 @@ h1.title::after {
   font-size: 20px;
   user-select: none; }
 
+.mtk-settings__icon-btn .material-icons {
+  color: gold; }
+
 .mtk-settings__actions {
   display: flex;
   gap: 12px;
