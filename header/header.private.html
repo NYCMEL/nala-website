@@ -5,6 +5,15 @@
     <div class="container">
 	<a class="navbar-brand" href="#" id="header-logo-private"><img src="img/logo-nala-association.webp" height="60"> </a>
 
+	<!-- Language toggle: right of logo, desktop only, vertically centered -->
+	<button type="button" class="nala-lang-toggle d-none d-lg-inline-flex align-self-center ms-2" id="nala-lang-btn-desktop" aria-label="Switch language">
+	    <span class="nala-lang-inner">
+		<span class="nala-lang-option" data-lang="en">EN</span>
+		<span class="nala-lang-option" data-lang="es">ES</span>
+		<span class="nala-lang-slider"></span>
+	    </span>
+	</button>
+
 	<div class="d-flex align-items-center gap-2 ms-auto d-lg-none">
 	    <!-- Mobile: lang toggle + hamburger side by side -->
 	    <button type="button" class="nala-lang-toggle" id="nala-lang-btn-mobile" aria-label="Switch language">
@@ -26,12 +35,6 @@
 	    <div class="d-flex align-items-center gap-3" role="search">
 		<ul class="navbar-nav mb-2 mb-lg-0">
 		    <li class="nav-item">
-			<a class="nav-link" aria-current="page" href="#" id="mtk-header-settings">
-			    <i class="fa fa-user-circle"></i>&nbsp;<span id="uname"></span>&nbsp;&nbsp;
-			</a>
-		    </li>
-
-		    <li class="nav-item">
 			<a class="nav-link active" aria-current="page" href="#" id="mtk-header-dashboard">
 			    <i class="fa fa-dashboard"></i>
 			    <span data-i18n="nav.dashboard">Dashboard</span>
@@ -45,24 +48,33 @@
 			</a>
 		    </li>
 
-		    <li class="nav-item">
-			<a class="nav-link text-light" aria-current="page" href="#" id="mtk-header-logout">
-			    <i class="fa fa-sign-out"></i>
-			    <span data-i18n="nav.logout">Logout</span>
-			</a>
-		    </li>
-
 		    <button type="button" class="btn btn-dark" id="mtk-header-messages" disabled><i class="fa fa-bell fa-lg"></i></button>
-		</ul>
 
-		<!-- Desktop: language toggle -->
-		<button type="button" class="nala-lang-toggle d-none d-lg-inline-flex" id="nala-lang-btn-desktop" aria-label="Switch language">
-		    <span class="nala-lang-inner">
-			<span class="nala-lang-option" data-lang="en">EN</span>
-			<span class="nala-lang-option" data-lang="es">ES</span>
-			<span class="nala-lang-slider"></span>
-		    </span>
-		</button>
+		    <!-- User dropdown -->
+		    <li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="mtk-header-settings" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="white-space:nowrap">
+			    <i class="fa fa-user-circle"></i>&nbsp;<span id="uname"></span>
+			</a>
+			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="mtk-header-settings">
+			    <li>
+				<a class="dropdown-item" href="#" id="header-dd-profile">
+				    <i class="fa fa-cog me-2"></i>Profile Settings
+				</a>
+			    </li>
+			    <li>
+				<a class="dropdown-item" href="#" id="header-dd-client">
+				    <i class="fa fa-briefcase me-2"></i>Business In a Box
+				</a>
+			    </li>
+			    <li><hr class="dropdown-divider"></li>
+			    <li>
+				<a class="dropdown-item text-danger" href="#" id="header-dd-logout">
+				    <i class="fa fa-sign-out me-2"></i>Logout
+				</a>
+			    </li>
+			</ul>
+		    </li>
+		</ul>
 	    </div>
 	</div>
     </div>
@@ -73,10 +85,14 @@
 <script>
  wc.timeout(function(){
      try {
-	 $("#uname").html(wc.session.user.name);
+	 var fullName = wc.session.user.name || '';
+	 var initials = fullName.trim().split(/\s+/).map(function(w){ return w[0]; }).join('').toUpperCase().slice(0,2);
+	 $("#uname").html(initials || fullName);
      }
      catch(e) {
 	 console.info("header.private.html: NO user.name YET...");
      }
  }, 300, 1);
+
+
 </script>

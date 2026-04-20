@@ -43,6 +43,9 @@ function bindHeaderEvents(root = document) {
         if (el.dataset.headerBound === "1") return;
         el.dataset.headerBound = "1";
 
+        // Skip settings — it is a Bootstrap dropdown toggle, handled separately
+        if (el.id === "mtk-header-settings") return;
+
         el.addEventListener("click", function(e) {
             e.preventDefault();
             e.stopPropagation();
@@ -53,6 +56,26 @@ function bindHeaderEvents(root = document) {
             headerSelect(eid);
             wc.log(eid);
             wc.publish(eid);
+        });
+    });
+
+    // Dropdown item actions — bind once per root
+    root.querySelectorAll("#header-dd-profile, #header-dd-client, #header-dd-logout").forEach(el => {
+        if (el.dataset.headerBound === "1") return;
+        el.dataset.headerBound = "1";
+
+        el.addEventListener("click", function(e) {
+            e.preventDefault();
+            const map = {
+                "header-dd-profile": "mtk-header-settings",
+                "header-dd-client":  "mtk-header-client",
+                "header-dd-logout":  "mtk-header-logout"
+            };
+            const event = map[this.id];
+            if (event) {
+                wc.log("[header] dropdown →", event);
+                wc.publish(event);
+            }
         });
     });
 
