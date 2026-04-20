@@ -95,7 +95,7 @@
 
 .mtk-settings__input:disabled {
   color: rgba(0, 0, 0, 0.38);
-  background-color: #fafafa;
+  background-color: #ffffff;
   cursor: not-allowed; }
 
 .mtk-hidden {
@@ -276,11 +276,11 @@ h1.title::after {
   width: 100%;
   margin: 0 auto;
   color: rgba(0, 0, 0, 0.87);
-  background: #fafafa;
+  background: #ffffff;
   padding-bottom: 60px; }
 
 .mtk-settings__card {
-  background: #fafafa;
+  background: #ffffff;
   border-radius: 0;
   overflow: hidden; }
 
@@ -322,12 +322,12 @@ h1.title::after {
   align-items: center; }
 
 .mtk-settings__input--readonly {
-  background-color: #fafafa;
+  background-color: #ffffff;
   color: rgba(0, 0, 0, 0.6);
   cursor: default; }
 
 .mtk-settings__input--readonly:hover {
-  background-color: #fafafa; }
+  background-color: #ffffff; }
 
 .mtk-settings__input--password {
   padding-right: 48px;
@@ -466,21 +466,3 @@ h1.title::after {
   .mtk-settings__actions .mtk-settings__btn {
     width: 100%;
     justify-content: center; } }
-bkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    user-select: none; }
-
-@media (max-width: 768px) {
-  .mtk-settings {
-    max-width: 100%; }
-    .mtk-settings__content {
-      padding: 16px; }
-    .mtk-settings__header {
-      padding: 16px; }
-      .mtk-settings__header h2 {
-        font-size: 20px; }
-    .mtk-settings__actions {
-      flex-direction: column; }
-      .mtk-settings__actions .mtk-settings__btn {
-        width: 100%;
-        justify-content: center; } }
