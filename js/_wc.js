@@ -597,8 +597,20 @@ class Include extends HTMLElement {
 
     _activateScripts() {
         const scripts = Array.from(this.querySelectorAll("script"));
+        window.wcLoadedScripts = window.wcLoadedScripts || new Set();
 
         scripts.forEach((oldScript) => {
+            const scriptSrc = oldScript.getAttribute("src");
+
+            if (scriptSrc) {
+                const scriptKey = new URL(scriptSrc, window.location.href).href;
+                if (window.wcLoadedScripts.has(scriptKey)) {
+                    oldScript.remove();
+                    return;
+                }
+                window.wcLoadedScripts.add(scriptKey);
+            }
+
             const newScript = document.createElement("script");
 
             Array.from(oldScript.attributes).forEach((attr) => {
