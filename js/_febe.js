@@ -1,5 +1,7 @@
 class _febe {
     constructor() {
+	this.registerRequestInFlight = false;
+
 	// list of topics
 	this.topics = [
 	    "mtk-ready:click",
@@ -153,11 +155,14 @@ class _febe {
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
     handleRegister() {
-	wc.timeout(function(){
+	if (typeof window.nalaShowRegister === "function") {
+	    window.nalaShowRegister();
+	    return;
+	}
+
+	if (wc.pages && typeof wc.pages.show === "function") {
 	    wc.pages.show("register");
-	    
-	    $('[mtk-pages-id="register"]').css("display","block");
-	}, 300, 1);
+	}
     }
     handleForgotPassword() {
 	const emailInput = document.querySelector("#mtk-email");
@@ -211,6 +216,11 @@ class _febe {
 
     handleRegisterSubmit(data) {
 	// data ={name: 'Mel Heravi', email: 'mel.heravi@gmail.com', email2: 'mel.heravi@gmail.com', phone: '6463031234'}
+	if (this.registerRequestInFlight) {
+	    return;
+	}
+
+	this.registerRequestInFlight = true;
 
 	(() => {
 	    fetch(wc.apiURL + "/api/register.php", {
@@ -238,14 +248,16 @@ class _febe {
 		    return json;
 		});
 	    }).then(json => {
-        MTKMsgs.show({
-            type: "success",
-            icon: "success",
-            message: "Registration submitted. Check your email to set your password.",
-            closable: true,
-            timer: 12
-        });
-	    }).catch(console.error);
+		MTKMsgs.show({
+		    type: "success",
+		    icon: "success",
+		    message: (json && (json.message || json.msg)) ? (json.message || json.msg) : "Registration submitted. Check your email to set your password.",
+		    closable: true,
+		    timer: 12
+		});
+	    }).catch(console.error).finally(() => {
+		this.registerRequestInFlight = false;
+	    });
 	})();
     }
 
@@ -263,7 +275,17 @@ class _febe {
 	    }
 	}).catch(err => {
 	    wc.error(err);
-	    alert(err);
+	    if (window.MTKMsgs && typeof MTKMsgs.show === "function") {
+		MTKMsgs.show({
+		    type: "error",
+		    icon: "error",
+		    message: err && err.message ? err.message : String(err),
+		    closable: true,
+		    timer: 10
+		});
+	    } else {
+		alert(err);
+	    }
 	});
     }
 
@@ -293,10 +315,14 @@ class _febe {
     }
 
     handleLogout() {
-	wc.logout();
-	
-	// SHOW PUBLIC HEADER
-	$(".app-header").hide(() => $("#header-public").show(() => wc.pages.show("home")));
+	Promise.resolve(wc.logout()).finally(() => {
+	    wc.session = null;
+	    wc.user = null;
+	    wc.currentUser = null;
+
+	    // SHOW PUBLIC HEADER
+	    $(".app-header").hide(() => $("#header-public").show(() => wc.pages.show("home")));
+	});
     }
 
     //////////////////////////////////////////////////////////////////
@@ -390,5 +416,4 @@ class _febe {
 
 /* auto-init */
 window._febe = new _febe();
-
 

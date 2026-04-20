@@ -10,7 +10,7 @@
 		    </p>
 
 		    <div class="pt-5">
-			<a href="#" class="btn btn-primary" onclick="wc.pages.show('register');">Get Started</a>
+			<a href="#" class="btn btn-primary" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } return false;">Get Started</a>
 			<a href="#MTK-courses" class="btn btn-outline-primary">Our Program</a>
 		    </div>
 		</div>
