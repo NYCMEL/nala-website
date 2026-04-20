@@ -5,10 +5,11 @@
   width: 100%;
   margin: 0 auto;
   color: $color-text-87;
+  background: $color-bg-lighter;
   padding-bottom: 60px;
 
   &__card {
-    background: $color-white;
+    background: $color-bg-lighter;
     border-radius: $radius-none;
     overflow: hidden;
   }

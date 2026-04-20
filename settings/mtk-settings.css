@@ -271,10 +271,11 @@ h1.title::after {
   width: 100%;
   margin: 0 auto;
   color: rgba(0, 0, 0, 0.87);
+  background: #fafafa;
   padding-bottom: 60px; }
 
 .mtk-settings__card {
-  background: #ffffff;
+  background: #fafafa;
   border-radius: 0;
   overflow: hidden; }
 
