@@ -1,28 +1,19 @@
 // mtk-footer configuration
 window.app = window.app || {};
-var _footerT = (window.i18n && typeof window.i18n.t === 'function')
-    ? function (key, fallback) {
-        var value = window.i18n.t(key);
-        return value === key ? fallback : value;
-      }
-    : function (_key, fallback) {
-        return fallback;
-      };
-
 window.app.footer = {
     brand: {
 	logo: "img/footer-logo.png",
 	logoAlt: "NALA Association Logo",
-	description: _footerT('footer.brand.desc', '<i>NALA empowers locksmith professionals through education, certification, and industry leadership.</i> 2026 All rights reserved.')
+	description: "<i>NALA empowers locksmith professionals through education, certification, and industry leadership.</i> 2026 All Rights Reserved"
     },
     contact: {
-	title: _footerT('footer.contact.title', 'Contact Information'),
+	title: "Contact Information",
 	phone: "+1 (646) 303-1234",
-	email: "support@nalanetwork.com",
+	email: "info@nala-association.org",
 	address: "1510 Park Ave, New York, NY 10010"
     },
     social: {
-	title: _footerT('footer.social.title', 'Social Media'),
+	title: "Social Media",
 	links: [
 	    {
 		platform: "facebook",
@@ -51,6 +42,6 @@ window.app.footer = {
 	]
     },
     copyright: {
-	text: _footerT('footer.copyright', '2026 NALA - North America Locksmith Association')
+	text: "2026 NALA - North America Locksmith Association"
     }
 };

@@ -591,11 +591,6 @@ h1.title::after {
   color: var(--mtk-success);
   border-left: 4px solid var(--mtk-success); }
 
-.mtk-quiz .mtk-quiz__message--info {
-  background-color: rgba(10, 110, 253, 0.1);
-  color: var(--mtk-primary);
-  border-left: 4px solid var(--mtk-primary); }
-
 @media (max-width: 768px) {
   .mtk-quiz {
     padding: 16px; }

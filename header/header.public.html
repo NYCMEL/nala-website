@@ -5,56 +5,43 @@
     <div class="container">
 	<a class="navbar-brand" href="#" id="header-logo-public"><img src="img/logo-nala-association.webp" height="60"> </a>
 
-	<div class="d-flex align-items-center gap-2 ms-auto d-lg-none">
-	    <!-- Mobile: lang toggle + hamburger side by side -->
-	    <button type="button" class="nala-lang-toggle" id="nala-lang-btn-mobile" aria-label="Switch language">
-		<span class="nala-lang-inner">
-		    <span class="nala-lang-option" data-lang="en">EN</span>
-		    <span class="nala-lang-option" data-lang="es">ES</span>
-		    <span class="nala-lang-slider"></span>
-		</span>
-	    </button>
-	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" data-i18n-aria="nav.toggle">
-		<span class="navbar-toggler-icon"></span>
-	    </button>
-	</div>
+	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	</button>
 
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+		<!-- LHS MENUS -->
+		<ul>
+		    <li>
+			<i class="fa fa-user"></i> Mike Mason
+		    </li>
+		</ul>
 	    </ul>
 
-	    <div class="d-flex align-items-center gap-3">
-		<ul class="navbar-nav mb-2 mb-lg-0">
+	    <div class="d-flex">
+		<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 		    <li class="nav-item">
 			<a class="nav-link text-light" aria-current="page" href="#" id="mtk-header-home">
 			    <i class="fa fa-home"></i>
-			    <span data-i18n="nav.home">Home</span>
+			    Home
 			</a>
 		    </li>
 
 		    <li class="nav-item">
 			<a class="nav-link text-light" aria-current="page" href="#" id="mtk-header-register">
 			    <i class="fa fa-list"></i>
-			    <span data-i18n="nav.register">Register</span>
+			    Register
 			</a>
 		    </li>
 
 		    <li class="nav-item">
 			<a class="nav-link text-light" aria-current="page" href="#" id="mtk-header-login">
 			    <i class="fa fa-sign-in"></i>
-			    <span data-i18n="nav.login">Login</span>
+			    Login
 			</a>
 		    </li>
 		</ul>
-
-		<!-- Desktop: language toggle -->
-		<button type="button" class="nala-lang-toggle d-none d-lg-inline-flex" id="nala-lang-btn-desktop" aria-label="Switch language">
-		    <span class="nala-lang-inner">
-			<span class="nala-lang-option" data-lang="en">EN</span>
-			<span class="nala-lang-option" data-lang="es">ES</span>
-			<span class="nala-lang-slider"></span>
-		    </span>
-		</button>
 	    </div>
 	</div>
     </div>

@@ -1,54 +1,88 @@
 window.app = window.app || {};
 
-function _buildCourses() {
-    var t = window.i18n ? window.i18n.t.bind(window.i18n) : function(k){ return k; };
-    return {
-        title:       "<h1 class='title'>" + t('courses.title') + "</h1>",
-        description: t('courses.description'),
-        items: [
-            {
-                level:       t('courses.p1.level'),
-                title:       t('courses.p1.title'),
-                description: t('courses.p1.description'),
-                features:    [ t('courses.p1.f1'), t('courses.p1.f2'), t('courses.p1.f3') ],
-                cta: { label: t('courses.cta'), event: "courses:intro" }
-            },
-            {
-                level:       t('courses.p2.level'),
-                title:       t('courses.p2.title'),
-                description: t('courses.p2.description'),
-                features:    [ t('courses.p2.f1'), t('courses.p2.f2'), t('courses.p2.f3') ],
-                cta: { label: t('courses.cta'), event: "courses:residential" }
-            },
-            {
-                level:       t('courses.p3.level'),
-                title:       t('courses.p3.title'),
-                description: t('courses.p3.description'),
-                features:    [ t('courses.p3.f1'), t('courses.p3.f2'), t('courses.p3.f3') ],
-                cta: { label: t('courses.cta'), event: "courses:commercial" }
-            },
-            {
-                level:       t('courses.p4.level'),
-                title:       t('courses.p4.title'),
-                description: t('courses.p4.description'),
-                features:    [ t('courses.p4.f1'), t('courses.p4.f2'), t('courses.p4.f3') ],
-                cta: { label: t('courses.cta'), event: "courses:automotive" }
-            },
-            {
-                level:       t('courses.p5.level'),
-                title:       t('courses.p5.title'),
-                description: t('courses.p5.description'),
-                features:    [ t('courses.p5.f1'), t('courses.p5.f2'), t('courses.p5.f3') ],
-                cta: { label: t('courses.cta'), event: "courses:business" }
-            }
-        ]
-    };
-}
-
-window.app.courses = _buildCourses();
-
-// Rebuild on language change
-document.addEventListener('i18n:changed', function () {
-    window.app.courses = _buildCourses();
-    document.dispatchEvent(new CustomEvent('courses:rebuild'));
-});
+window.app.courses = {
+  title: "<h1 class='title'>Included in the Program</h1>",
+  description:
+    "One complete locksmith training program, organized into five connected parts<BR>that build practical skills from the fundamentals through business readiness.",
+  // cta: {
+  //     label: "",
+  //     event: ""
+  // },
+  items: [
+    {
+      level: "Part I",
+      title: "Introduction to Locksmithing",
+      description:
+        "Learn the foundations of locksmithing, including essential tools, common lock types, door hardware basics, and safe professional work practices.",
+      features: [
+        "Core tools, lock types & terminology",
+        "Door hardware and installation basics",
+        "Preparation for hands-on locksmith work"
+      ],
+      cta: {
+        label: "Get Started",
+        event: "courses:intro"
+      }
+    },
+    {
+      level: "Part II",
+      title: "Residential Locksmithing",
+      description:
+        "Build practical skills for residential service work, covering cylinders, rekeying fundamentals, deadbolts, and common home lock hardware.",
+      features: [
+        "Residential cylinders and rekeying concepts",
+        "Deadbolts, knobs & home hardware",
+        "Common residential service scenarios"
+      ],
+      cta: {
+        label: "Get Started",
+        event: "courses:residential"
+      }
+    },
+    {
+      level: "Part III",
+      title: "Commercial Locksmithing",
+      description:
+        "Understand commercial door and lock systems, including door types, keying concepts, and the basics of access control used in commercial environments.",
+      features: [
+        "Commercial doors and hardware",
+        "Key systems and master key concepts",
+        "Introduction to access control components"
+      ],
+      cta: {
+        label: "Get Started",
+        event: "courses:commercial"
+      }
+    },
+    {
+      level: "Part IV",
+      title: "Automotive Locksmithing",
+      description:
+        "Learn the fundamentals of automotive locksmithing, including vehicle entry principles, key types, and modern automotive security systems.",
+      features: [
+        "Vehicle entry principles",
+        "Automotive key types and technologies",
+        "Modern car locking systems"
+      ],
+      cta: {
+        label: "Get Started",
+        event: "courses:automotive"
+      }
+    },
+    {
+      level: "Part V",
+      title: "Building a Locksmith Business",
+      description:
+        "Learn the essentials of starting and operating a locksmith business, including licensing considerations, pricing fundamentals, customer communication, and marketing basics.",
+      features: [
+        "Licensing and business setup considerations",
+        "Pricing and service presentation",
+        "Customer relations and basic marketing"
+      ],
+      cta: {
+        label: "Get Started",
+        event: "courses:business"
+      }
+    }
+  ]
+};

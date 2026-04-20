@@ -240,3 +240,10 @@ h1.title::after {
 .mtk-courses .view-all {
   margin-top: 3rem;
   text-align: center; }
+nt-weight: 600;
+        line-height: 1.4; }
+  .mtk-courses .course-cta {
+    margin-top: auto; }
+  .mtk-courses .view-all {
+    margin-top: 3rem;
+    text-align: center; }

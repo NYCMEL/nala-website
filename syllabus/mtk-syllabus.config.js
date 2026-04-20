@@ -12,7 +12,7 @@ window.app.syllabus = [
                 "lessons": [
                     {
                         "lesson_no": 0,
-                        "title": "Introduction to your instructor and the course",
+                        "title": "Introduction",
                         "access": true,
                         "badge": {
                             "text": "Free Preview",
@@ -20,7 +20,7 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Introduction to your instructor and the course",
+                                "description": "Introduction",
                                 "url": "https://vimeo.com/827172729",
                                 "type": "video"
                             }
@@ -28,7 +28,7 @@ window.app.syllabus = [
                     },
                     {
                         "lesson_no": 1,
-                        "title": "The tools needed in your toolbag",
+                        "title": "The Tools Needed in Your Toolbag",
                         "access": true,
                         "badge": {
                             "text": "Free Preview",
@@ -36,7 +36,7 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 1 - The tools needed in your toolbag",
+                                "description": "Lesson 1 - The Tools Needed in Your Toolbag",
                                 "url": "https://vimeo.com/827172768",
                                 "type": "video"
                             }
@@ -44,7 +44,7 @@ window.app.syllabus = [
                     },
                     {
                         "lesson_no": 2,
-                        "title": "The different grades a lock is classified in",
+                        "title": "Lock Grades: How Locks Are Classified",
                         "access": true,
                         "badge": {
                             "text": "Free Preview",
@@ -52,7 +52,7 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 2 - The Different grades a lock is classified in",
+                                "description": "Lesson 2 - Lock Grades: How Locks Are Classified",
                                 "url": "https://vimeo.com/827172783",
                                 "type": "video"
                             }
@@ -60,7 +60,7 @@ window.app.syllabus = [
                     },
                     {
                         "lesson_no": 3,
-                        "title": "Understanding the deadbolt and how to install",
+                        "title": "Deadbolts: What They Are and How to Install Them",
                         "access": true,
                         "badge": {
                             "text": "Free Preview",
@@ -68,8 +68,8 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 3 - Understanding the deadbolt and how to install",
-                                "url": "https://vimeo.com/827172798",
+                                "description": "Lesson 3 - Deadbolts: What They Are and How to Install Them",
+                                "url": "https://vimeo.com/827172807",
                                 "type": "video"
                             },
                             {
@@ -81,7 +81,7 @@ window.app.syllabus = [
                     },
                     {
                         "lesson_no": 4,
-                        "title": "Understanding the doorknob and how to install",
+                        "title": "Doorknobs: What They Are and How to Install Them",
                         "access": true,
                         "badge": {
                             "text": "Locked",
@@ -89,8 +89,8 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 4 - Understanding the doorknob and how to install",
-                                "url": "https://vimeo.com/827922029",
+                                "description": "Lesson 4 - Doorknobs: What They Are and How to Install Them",
+                                "url": "https://vimeo.com/827172821",
                                 "type": "video"
                             },
                             {
@@ -102,7 +102,7 @@ window.app.syllabus = [
                     },
                     {
                         "lesson_no": 5,
-                        "title": "An overview of residential and commercial doors",
+                        "title": "Common Residential and Commercial Doors: A Quick Survey",
                         "access": true,
                         "badge": {
                             "text": "Locked",
@@ -110,39 +110,9 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 5 - A cursory of the different residential and commercial doors",
-                                "url": "https://vimeo.com/827172818",
+                                "description": "Lesson 5 - Common Residential and Commercial Doors: A Quick Survey",
+                                "url": "https://vimeo.com/827172835",
                                 "type": "video"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L5-aluminumdoor1.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L5-aluminumdoor2.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L5-aluminumdoor3.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L5-Commercialaluminumdoor1.jpeg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L5-Commercialaluminumdoor2.jpeg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L5-Commercialaluminumdoor3.jpeg",
-                                "type": "photo"
                             },
                             {
                                 "description": "Photo",
@@ -161,120 +131,19 @@ window.app.syllabus = [
                             },
                             {
                                 "description": "Photo",
-                                "url": "L5-Commercialmetaldoor2.jpeg",
+                                "url": "L5-Commercialaluminumdoor1.jpeg",
                                 "type": "photo"
                             },
                             {
                                 "description": "Photo",
-                                "url": "L5-Commercialmetaldoor3.jpeg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L5-Commericalmetaldoor1.jpeg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L5-Fiberglass-door1.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L5-Fiberglass-door2.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L5-Fiberglass-door3.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L5-Metaldoor1.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L5-Metaldoor2.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L5-Metaldoor3.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L5-Wooddoor1.png",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L5-Wooddoor2.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L5-Wooddoor3.jpg",
-                                "type": "photo"
-                            }
-                        ]
-                    },
-                    {
-                        "lesson_no": 6,
-                        "title": "Understanding pin tumbler cylinders",
-                        "access": true,
-                        "badge": {
-                            "text": "Locked",
-                            "color": "gray"
-                        },
-                        "resources": [
-                            {
-                                "description": "Lesson 6 - Understanding pin tumbler cylinders",
-                                "url": "https://vimeo.com/827172864",
-                                "type": "video"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L6-Pin-tumbler-cylinder1.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L6-Pin-tumbler-cylinder2.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L6-Pin-tumbler-cylinder3.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L6-Pin-tumbler-cylinder4.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L6-Pin-tumbler-cylinder5.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L6-Pin-tumbler-cylinder6.png",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L6-Pin-tumbler-cylinder7.jpg",
+                                "url": "L5-Commercialaluminumdoor2.jpeg",
                                 "type": "photo"
                             }
                         ]
                     }
                 ],
                 "quiz": {
-                    "lesson_no": 101,
+                    "lesson_no": 6,
                     "title": "Module Quiz: Foundations of Locksmithing",
                     "module_id": "M1",
                     "access": true,
@@ -304,7 +173,7 @@ window.app.syllabus = [
                 "lessons": [
                     {
                         "lesson_no": 7,
-                        "title": "Introduction to the KIK cylinder",
+                        "title": "Pin Tumbler Cylinders: How They Work",
                         "access": true,
                         "badge": {
                             "text": "Locked",
@@ -312,8 +181,49 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 7 - Introduction to the Kik Cylinder",
-                                "url": "https://vimeo.com/827172887",
+                                "description": "Lesson 7 - Pin Tumbler Cylinders: How They Work",
+                                "url": "https://vimeo.com/827172850",
+                                "type": "video"
+                            },
+                            {
+                                "description": "Photo",
+                                "url": "L6-Pin-tumbler-cylinder1.jpg",
+                                "type": "photo"
+                            },
+                            {
+                                "description": "Photo",
+                                "url": "L6-Pin-tumbler-cylinder2.jpg",
+                                "type": "photo"
+                            },
+                            {
+                                "description": "Photo",
+                                "url": "L6-Pin-tumbler-cylinder3.jpg",
+                                "type": "photo"
+                            },
+                            {
+                                "description": "Photo",
+                                "url": "L6-Pin-tumbler-cylinder4.jpg",
+                                "type": "photo"
+                            },
+                            {
+                                "description": "Photo",
+                                "url": "L6-Pin-tumbler-cylinder5.jpg",
+                                "type": "photo"
+                            }
+                        ]
+                    },
+                    {
+                        "lesson_no": 8,
+                        "title": "KIK Cylinders: An Introduction",
+                        "access": true,
+                        "badge": {
+                            "text": "Locked",
+                            "color": "gray"
+                        },
+                        "resources": [
+                            {
+                                "description": "Lesson 8 - KIK Cylinders: An Introduction",
+                                "url": "https://vimeo.com/827172867",
                                 "type": "video"
                             },
                             {
@@ -330,88 +240,12 @@ window.app.syllabus = [
                                 "description": "Photo",
                                 "url": "L7-Kik-Cylinder3.jpg",
                                 "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L7-Kik-Cylinder4.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L7-Kik-Cylinder5.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L7-Kik-Cylinder7.png",
-                                "type": "photo"
-                            }
-                        ]
-                    },
-                    {
-                        "lesson_no": 8,
-                        "title": "Introduction to the mortise cylinder",
-                        "access": true,
-                        "badge": {
-                            "text": "Locked",
-                            "color": "gray"
-                        },
-                        "resources": [
-                            {
-                                "description": "Lesson 8 - Introduction to the mortise cylinder",
-                                "url": "https://vimeo.com/827172904",
-                                "type": "video"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L8-Mortise-Cylinder1.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L8-Mortise-Cylinder2.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L8-Mortise-Cylinder3.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L8-Mortise-Cylinder4.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L8-Mortise-Cylinder5.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L8-Mortise-Cylinder6.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L8-Mortise-Cylinder7.png",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L8-Mortise-Cylinder8.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L8-Mortise-Cylinder9.jpg",
-                                "type": "photo"
                             }
                         ]
                     },
                     {
                         "lesson_no": 9,
-                        "title": "The difference between rim and mortise cylinders",
+                        "title": "Rim Cylinders: An Introduction",
                         "access": true,
                         "badge": {
                             "text": "Locked",
@@ -419,40 +253,25 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 9 - The difference between a Rim Cylinder and Mortise cylinder",
-                                "url": "https://vimeo.com/827172944",
+                                "description": "Lesson 9 - Rim Cylinders: An Introduction",
+                                "url": "https://vimeo.com/827172884",
                                 "type": "video"
                             },
                             {
                                 "description": "Photo",
-                                "url": "L9-Rim-vs.-Mortise1.jpg",
+                                "url": "L8-Rim-Cylinder1.jpg",
                                 "type": "photo"
                             },
                             {
                                 "description": "Photo",
-                                "url": "L9-Rim-vs.-Mortise2.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L9-Rim-vs.-Mortise3.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L9-Rim-vs.-Mortise4.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L9-Rim-vs.-Mortise5.gif",
+                                "url": "L8-Rim-Cylinder2.jpg",
                                 "type": "photo"
                             }
                         ]
                     },
                     {
                         "lesson_no": 10,
-                        "title": "Introduction to the profile cylinder",
+                        "title": "Mortise Cylinders: Key Differences and Use Cases",
                         "access": true,
                         "badge": {
                             "text": "Locked",
@@ -460,15 +279,25 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 10 - Introduction to the profile cylinder",
-                                "url": "https://vimeo.com/827172976",
+                                "description": "Lesson 10 - Mortise Cylinders: Key Differences and Use Cases",
+                                "url": "https://vimeo.com/827172899",
                                 "type": "video"
+                            },
+                            {
+                                "description": "Photo",
+                                "url": "L9-Mortise-cylinder1.jpg",
+                                "type": "photo"
+                            },
+                            {
+                                "description": "Photo",
+                                "url": "L9-Mortise-cylinder2.jpg",
+                                "type": "photo"
                             }
                         ]
                     },
                     {
                         "lesson_no": 11,
-                        "title": "Introduction to the mailbox lock",
+                        "title": "Profile Cylinders: An Introduction",
                         "access": true,
                         "badge": {
                             "text": "Locked",
@@ -476,71 +305,15 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 11 - Introduction to the mailbox lock",
-                                "url": "https://vimeo.com/827172997",
+                                "description": "Lesson 11 - Profile Cylinders: An Introduction",
+                                "url": "https://vimeo.com/827172916",
                                 "type": "video"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L11-Mailbox-Lock1.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L11-Mailbox-Lock2.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L11-Mailbox-Lock3.jpg",
-                                "type": "photo"
-                            }
-                        ]
-                    },
-                    {
-                        "lesson_no": 12,
-                        "title": "How to install a keypad deadbolt",
-                        "access": true,
-                        "badge": {
-                            "text": "Locked",
-                            "color": "gray"
-                        },
-                        "resources": [
-                            {
-                                "description": "Lesson 12 - How to install a keypad deadbolt",
-                                "url": "https://vimeo.com/827173017",
-                                "type": "video"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L12-Keypad-Deadbolt1.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L12-Keypad-Deadbolt2.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L12-Keypad-Deadbolt3.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L12-Keypad-Deadbolt4.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L12-Keypad-Deadbolt5.jpg",
-                                "type": "photo"
                             }
                         ]
                     }
                 ],
                 "quiz": {
-                    "lesson_no": 102,
+                    "lesson_no": 12,
                     "title": "Module Quiz: Residential Lock Cylinders",
                     "module_id": "M2",
                     "access": true,
@@ -564,7 +337,7 @@ window.app.syllabus = [
                 "lessons": [
                     {
                         "lesson_no": 13,
-                        "title": "Introduction to Kwikset SmartKey technology",
+                        "title": "Mailbox Locks: An Introduction",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -572,40 +345,25 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 13 - Introduction to the kwikset smart key technology",
-                                "url": "https://vimeo.com/827173033",
+                                "description": "Lesson 13 - Mailbox Locks: An Introduction",
+                                "url": "https://vimeo.com/827172933",
                                 "type": "video"
                             },
                             {
                                 "description": "Photo",
-                                "url": "L13-Kwikset-Smart-Key1.jpg",
+                                "url": "L11-Mailbox-Lock1.jpg",
                                 "type": "photo"
                             },
                             {
                                 "description": "Photo",
-                                "url": "L13-Kwikset-Smart-Key2.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L13-Kwikset-Smart-Key3.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L13-Kwikset-Smart-Key4.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L13-Kwikset-Smart-Key5.jpg",
+                                "url": "L11-Mailbox-Lock2.jpg",
                                 "type": "photo"
                             }
                         ]
                     },
                     {
                         "lesson_no": 14,
-                        "title": "The most common everyday keys",
+                        "title": "Keypad Deadbolts: How to Install One",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -613,40 +371,25 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 14 - The most common everyday keys",
-                                "url": "https://vimeo.com/827173066",
+                                "description": "Lesson 14 - Keypad Deadbolts: How to Install One",
+                                "url": "https://vimeo.com/827172950",
                                 "type": "video"
                             },
                             {
                                 "description": "Photo",
-                                "url": "L14-Common-Keys1.jpg",
+                                "url": "L12-Key-Machines1.jpg",
                                 "type": "photo"
                             },
                             {
                                 "description": "Photo",
-                                "url": "L14-Common-Keys2.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L14-Common-Keys3.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L14-Common-Keys4.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L14-Common-Keys5.jpg",
+                                "url": "L12-Key-Machines2.jpg",
                                 "type": "photo"
                             }
                         ]
                     },
                     {
                         "lesson_no": 15,
-                        "title": "How to duplicate a key",
+                        "title": "Kwikset SmartKey Technology: An Introduction",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -654,61 +397,20 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 15 - How to duplicate a key",
-                                "url": "https://vimeo.com/827173102",
+                                "description": "Lesson 15 - Kwikset SmartKey Technology: An Introduction",
+                                "url": "https://vimeo.com/827172966",
                                 "type": "video"
                             },
                             {
                                 "description": "Photo",
-                                "url": "L15-Duplicating-Keys1.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L15-Duplicating-Keys2.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L15-Duplicating-Keys3.png",
-                                "type": "photo"
-                            }
-                        ]
-                    },
-                    {
-                        "lesson_no": 16,
-                        "title": "Introduction to cut by code machines - HPC BLITZ",
-                        "access": false,
-                        "badge": {
-                            "text": "Locked",
-                            "color": "gray"
-                        },
-                        "resources": [
-                            {
-                                "description": "Lesson 16 - Introduction to cut by code machines - HPC BLITZ",
-                                "url": "https://vimeo.com/827173120",
-                                "type": "video"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L16-HPC-Blitz1.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L16-HPC-Blitz2.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L16-HPC-Blitz3.gif",
+                                "url": "L13-Key-Machines1.jpg",
                                 "type": "photo"
                             }
                         ]
                     }
                 ],
                 "quiz": {
-                    "lesson_no": 103,
+                    "lesson_no": 16,
                     "title": "Module Quiz: Keys and Key Machines",
                     "module_id": "M3",
                     "access": false,
@@ -727,12 +429,12 @@ window.app.syllabus = [
             },
             {
                 "module_id": "M4",
-                "title": "Commercial Hardware and High-Security Locks",
+                "title": "Lock Picking Techniques",
                 "access": false,
                 "lessons": [
                     {
                         "lesson_no": 17,
-                        "title": "Completing a fresh installation",
+                        "title": "Common Everyday Keys",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -740,15 +442,20 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 17 - Completing a fresh installation",
-                                "url": "https://vimeo.com/827173149",
+                                "description": "Lesson 17 - Common Everyday Keys",
+                                "url": "https://vimeo.com/827172984",
                                 "type": "video"
+                            },
+                            {
+                                "description": "Photo",
+                                "url": "L14-Lock-picking1.jpg",
+                                "type": "photo"
                             }
                         ]
                     },
                     {
                         "lesson_no": 18,
-                        "title": "Introduction to the Adams Rite lock",
+                        "title": "How to Duplicate a Key",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -756,30 +463,20 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 18 - Introduction to the Adams Rite lock",
-                                "url": "https://vimeo.com/827173180",
+                                "description": "Lesson 18 - How to Duplicate a Key",
+                                "url": "https://vimeo.com/827173000",
                                 "type": "video"
                             },
                             {
                                 "description": "Photo",
-                                "url": "L18-Adams-Rite1.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L18-Adams-Rite2.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L18-Adams-Rite3.png",
+                                "url": "L15-Raking1.jpg",
                                 "type": "photo"
                             }
                         ]
                     },
                     {
                         "lesson_no": 19,
-                        "title": "Introduction to high-security locks",
+                        "title": "How to Duplicate a Key (Continued)",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -787,62 +484,21 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 19 - Introduction to High Security Locks",
-                                "url": "https://vimeo.com/827173205",
+                                "description": "Lesson 19 - How to Duplicate a Key (Continued)",
+                                "url": "https://vimeo.com/827173017",
                                 "type": "video"
                             },
                             {
                                 "description": "Photo",
-                                "url": "L19-High-Security-Locks1.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L19-High-Security-Locks2.jpg",
-                                "type": "photo"
-                            }
-                        ]
-                    },
-                    {
-                        "lesson_no": 20,
-                        "title": "A cursory into panic bars and exit devices",
-                        "access": false,
-                        "badge": {
-                            "text": "Locked",
-                            "color": "gray"
-                        },
-                        "resources": [
-                            {
-                                "description": "Lesson 20 - A Cursory into Panic Bars and exit devices",
-                                "url": "https://vimeo.com/827173229",
-                                "type": "video"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L20-Panic-Bars-and-Exit-Devices1.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L20-Panic-Bars-and-Exit-Devices2.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L20-Panic-Bars-and-Exit-Devices3.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L20-Panic-Bars-and-Exit-Devices4.jpg",
+                                "url": "L16-SPP1.jpg",
                                 "type": "photo"
                             }
                         ]
                     }
                 ],
                 "quiz": {
-                    "lesson_no": 104,
-                    "title": "Module Quiz: Commercial Hardware and High-Security Locks",
+                    "lesson_no": 20,
+                    "title": "Module Quiz: Lock Picking Techniques",
                     "module_id": "M4",
                     "access": false,
                     "badge": {
@@ -855,7 +511,7 @@ window.app.syllabus = [
                         "pass_percent": 80
                     },
                     "type": "quiz",
-                    "description": "Module Quiz: Commercial Hardware and High-Security Locks"
+                    "description": "Module Quiz: Lock Picking Techniques"
                 }
             }
         ]
@@ -871,7 +527,7 @@ window.app.syllabus = [
                 "lessons": [
                     {
                         "lesson_no": 21,
-                        "title": "Introduction to your rekey kit",
+                        "title": "Pinning Kits: What They Are and How to Use Them",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -879,15 +535,15 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 21 - Introduction to your Rekey Kit",
-                                "url": "https://vimeo.com/827173256",
+                                "description": "Lesson 21 - Pinning Kits: What They Are and How to Use Them",
+                                "url": "https://vimeo.com/827173034",
                                 "type": "video"
                             }
                         ]
                     },
                     {
                         "lesson_no": 22,
-                        "title": "How to rekey a deadbolt",
+                        "title": "Pinning Kits: Pin Types and Basics",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -895,30 +551,20 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 22 - How to Rekey a Deadbolt",
-                                "url": "https://vimeo.com/827173273",
+                                "description": "Lesson 22 - Pinning Kits: Pin Types and Basics",
+                                "url": "https://vimeo.com/827173050",
                                 "type": "video"
                             },
                             {
                                 "description": "Photo",
-                                "url": "L22-Rekeying-a-Deadbolt1.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L22-Rekeying-a-Deadbolt2.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L22-Rekeying-a-Deadbolt3.png",
+                                "url": "L18-Rekeying-Tools1.jpg",
                                 "type": "photo"
                             }
                         ]
                     },
                     {
                         "lesson_no": 23,
-                        "title": "How to prep a doorknob to rekey the cylinder",
+                        "title": "Doorknobs: How to Disassemble and Rekey",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -926,25 +572,20 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 23 - How to Prep a doorknob to rekey the cylinder",
-                                "url": "https://vimeo.com/827173286",
+                                "description": "Lesson 23 - Doorknobs: How to Disassemble and Rekey",
+                                "url": "https://vimeo.com/827173068",
                                 "type": "video"
                             },
                             {
                                 "description": "Photo",
-                                "url": "L23-Prepping-Doorknob-for-Rekeying1.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L23-Prepping-Doorknob-for-Rekeying2.jpg",
+                                "url": "L19-Rekey-cylinder1.jpg",
                                 "type": "photo"
                             }
                         ]
                     },
                     {
                         "lesson_no": 24,
-                        "title": "Introduction to master keying",
+                        "title": "Deadbolts: How to Disassemble and Rekey",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -952,36 +593,20 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 24 - Introduction to master keying",
-                                "url": "https://vimeo.com/827173303",
+                                "description": "Lesson 24 - Deadbolts: How to Disassemble and Rekey",
+                                "url": "https://vimeo.com/827173084",
                                 "type": "video"
                             },
                             {
                                 "description": "Photo",
-                                "url": "L24-Masterkeying1.png",
+                                "url": "L20-Rekey-KIK1.jpg",
                                 "type": "photo"
-                            }
-                        ]
-                    },
-                    {
-                        "lesson_no": 25,
-                        "title": "Progression system master keying",
-                        "access": false,
-                        "badge": {
-                            "text": "Locked",
-                            "color": "gray"
-                        },
-                        "resources": [
-                            {
-                                "description": "Lesson 25 - Progression System Master keying",
-                                "url": "https://vimeo.com/827173322",
-                                "type": "video"
                             }
                         ]
                     }
                 ],
                 "quiz": {
-                    "lesson_no": 105,
+                    "lesson_no": 25,
                     "title": "Module Quiz: Rekeying Fundamentals",
                     "module_id": "M5",
                     "access": false,
@@ -1005,7 +630,7 @@ window.app.syllabus = [
                 "lessons": [
                     {
                         "lesson_no": 26,
-                        "title": "Hold-and-vary system master keying",
+                        "title": "Deadbolts: Install and Rekey",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -1013,15 +638,15 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 26 - Hold and Vary system master keying",
-                                "url": "https://vimeo.com/827173341",
+                                "description": "Lesson 26 - Deadbolts: Install and Rekey",
+                                "url": "https://vimeo.com/827173101",
                                 "type": "video"
                             }
                         ]
                     },
                     {
                         "lesson_no": 27,
-                        "title": "Introduction to lock picking",
+                        "title": "Mortise Cylinders: Disassemble and Rekey",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -1029,40 +654,20 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 27 - Introduction to Lock Picking",
-                                "url": "https://vimeo.com/827173374",
+                                "description": "Lesson 27 - Mortise Cylinders: Disassemble and Rekey",
+                                "url": "https://vimeo.com/827173118",
                                 "type": "video"
                             },
                             {
                                 "description": "Photo",
-                                "url": "L27-Lockpicking1.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L27-Lockpicking2.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L27-Lockpicking3.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L27-Lockpicking4.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L27-Lockpicking5.jpg",
+                                "url": "L22-Rekey-Mortise1.jpg",
                                 "type": "photo"
                             }
                         ]
                     },
                     {
                         "lesson_no": 28,
-                        "title": "Shimming a cylinder to remove the plug",
+                        "title": "Padlocks: Disassemble and Rekey",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -1070,71 +675,20 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 28 - Shimming a cylinder to remove the plug",
-                                "url": "https://vimeo.com/827173384",
+                                "description": "Lesson 28 - Padlocks: Disassemble and Rekey",
+                                "url": "https://vimeo.com/827173135",
                                 "type": "video"
                             },
                             {
                                 "description": "Photo",
-                                "url": "L28-Shimming-A-Cylinder1.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L28-Shimming-A-Cylinder2.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L28-Shimming-A-Cylinder3.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L28-Shimming-A-Cylinder4.jpg",
-                                "type": "photo"
-                            }
-                        ]
-                    },
-                    {
-                        "lesson_no": 29,
-                        "title": "Introduction to key extraction",
-                        "access": false,
-                        "badge": {
-                            "text": "Locked",
-                            "color": "gray"
-                        },
-                        "resources": [
-                            {
-                                "description": "Lesson 29 - Introduction to Key Extraction",
-                                "url": "https://vimeo.com/827173408",
-                                "type": "video"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L29-Key-Extraction1.png",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L29-Key-Extraction2.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L29-Key-Extraction3.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L29-Key-Extraction4.jpg",
+                                "url": "L23-Rekey-Padlock1.jpg",
                                 "type": "photo"
                             }
                         ]
                     }
                 ],
                 "quiz": {
-                    "lesson_no": 106,
+                    "lesson_no": 29,
                     "title": "Module Quiz: Advanced Rekeying",
                     "module_id": "M6",
                     "access": false,
@@ -1153,12 +707,12 @@ window.app.syllabus = [
             },
             {
                 "module_id": "M7",
-                "title": "Impressioning and Lockout Service",
+                "title": "Master Key Systems",
                 "access": false,
                 "lessons": [
                     {
                         "lesson_no": 30,
-                        "title": "Key impression",
+                        "title": "Master Keys: What They Are",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -1166,15 +720,20 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 30 - Key Impression",
-                                "url": "https://vimeo.com/827173429",
+                                "description": "Lesson 30 - Master Keys: What They Are",
+                                "url": "https://vimeo.com/827173152",
                                 "type": "video"
+                            },
+                            {
+                                "description": "Photo",
+                                "url": "L24-Master-keying1.jpg",
+                                "type": "photo"
                             }
                         ]
                     },
                     {
                         "lesson_no": 31,
-                        "title": "What to do before and after a lockout service",
+                        "title": "Master Keys: Calculating Master Pins",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -1182,15 +741,15 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 31 - What to do before and after a lockout service",
-                                "url": "https://vimeo.com/827173466",
+                                "description": "Lesson 31 - Master Keys: Calculating Master Pins",
+                                "url": "https://vimeo.com/827173168",
                                 "type": "video"
                             }
                         ]
                     },
                     {
                         "lesson_no": 32,
-                        "title": "How to drill a deadbolt",
+                        "title": "Master Keys: Building a Master Key System",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -1198,32 +757,16 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 32 - How to drill a deadbolt",
-                                "url": "https://vimeo.com/827173487",
-                                "type": "video"
-                            }
-                        ]
-                    },
-                    {
-                        "lesson_no": 33,
-                        "title": "A great method to unlock a doorknob",
-                        "access": false,
-                        "badge": {
-                            "text": "Locked",
-                            "color": "gray"
-                        },
-                        "resources": [
-                            {
-                                "description": "Lesson 33 - A great method to unlock a doorknob",
-                                "url": "https://vimeo.com/827173507",
+                                "description": "Lesson 32 - Master Keys: Building a Master Key System",
+                                "url": "https://vimeo.com/827173185",
                                 "type": "video"
                             }
                         ]
                     }
                 ],
                 "quiz": {
-                    "lesson_no": 107,
-                    "title": "Module Quiz: Impressioning and Lockout Service",
+                    "lesson_no": 33,
+                    "title": "Module Quiz: Master Key Systems",
                     "module_id": "M7",
                     "access": false,
                     "badge": {
@@ -1236,7 +779,7 @@ window.app.syllabus = [
                         "pass_percent": 80
                     },
                     "type": "quiz",
-                    "description": "Module Quiz: Impressioning and Lockout Service"
+                    "description": "Module Quiz: Master Key Systems"
                 }
             }
         ]
@@ -1247,12 +790,12 @@ window.app.syllabus = [
         "modules": [
             {
                 "module_id": "M8",
-                "title": "Lockout, Safe, and Auto Entry",
+                "title": "Automotive Locks and Entry",
                 "access": false,
                 "lessons": [
                     {
                         "lesson_no": 34,
-                        "title": "What to expect at a storage lockout",
+                        "title": "Automotive Keys and Locks: An Introduction",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -1260,15 +803,20 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 34 - What to expect at a storage lockout",
-                                "url": "https://vimeo.com/827173544",
+                                "description": "Lesson 34 - Automotive Keys and Locks: An Introduction",
+                                "url": "https://vimeo.com/827173201",
                                 "type": "video"
+                            },
+                            {
+                                "description": "Photo",
+                                "url": "L27-Auto-Locks-Overview1.jpg",
+                                "type": "photo"
                             }
                         ]
                     },
                     {
                         "lesson_no": 35,
-                        "title": "How to drill a small cheap safe",
+                        "title": "How to Open a Car Door",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -1276,15 +824,20 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 35 - How to drill a small cheap safe",
-                                "url": "https://vimeo.com/827173584",
+                                "description": "Lesson 35 - How to Open a Car Door",
+                                "url": "https://vimeo.com/827173219",
                                 "type": "video"
+                            },
+                            {
+                                "description": "Photo",
+                                "url": "L28-Car-door-opening1.jpg",
+                                "type": "photo"
                             }
                         ]
                     },
                     {
                         "lesson_no": 36,
-                        "title": "How to unlock a car",
+                        "title": "Automotive Key Types",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -1292,32 +845,21 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 36 - How to unlock a car",
-                                "url": "https://vimeo.com/827173602",
+                                "description": "Lesson 36 - Automotive Key Types",
+                                "url": "https://vimeo.com/827173236",
                                 "type": "video"
-                            }
-                        ]
-                    },
-                    {
-                        "lesson_no": 37,
-                        "title": "How to unlock a Toyota trunk",
-                        "access": false,
-                        "badge": {
-                            "text": "Locked",
-                            "color": "gray"
-                        },
-                        "resources": [
+                            },
                             {
-                                "description": "Lesson 37 - How to unlock a Toyota trunk",
-                                "url": "https://vimeo.com/827173627",
-                                "type": "video"
+                                "description": "Photo",
+                                "url": "L29-Auto-key-types1.jpg",
+                                "type": "photo"
                             }
                         ]
                     }
                 ],
                 "quiz": {
-                    "lesson_no": 108,
-                    "title": "Module Quiz: Lockout, Safe, and Auto Entry",
+                    "lesson_no": 37,
+                    "title": "Module Quiz: Automotive Locks and Entry",
                     "module_id": "M8",
                     "access": false,
                     "badge": {
@@ -1330,7 +872,7 @@ window.app.syllabus = [
                         "pass_percent": 80
                     },
                     "type": "quiz",
-                    "description": "Module Quiz: Lockout, Safe, and Auto Entry"
+                    "description": "Module Quiz: Automotive Locks and Entry"
                 }
             },
             {
@@ -1340,7 +882,7 @@ window.app.syllabus = [
                 "lessons": [
                     {
                         "lesson_no": 38,
-                        "title": "Introduction to car keys",
+                        "title": "Transponder Keys: An Introduction",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -1348,61 +890,15 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 38 - Introduction to Car Keys",
-                                "url": "https://vimeo.com/827173651",
-                                "type": "video"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L38-Car-Keys1.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L38-Car-Keys2.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L38-Car-Keys3.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L38-Car-Keys4.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L38-Car-Keys5.jpg",
-                                "type": "photo"
-                            },
-                            {
-                                "description": "Photo",
-                                "url": "L38-Car-Keys6.jpg",
-                                "type": "photo"
-                            }
-                        ]
-                    },
-                    {
-                        "lesson_no": 39,
-                        "title": "Introduction to the LISHI tool",
-                        "access": false,
-                        "badge": {
-                            "text": "Locked",
-                            "color": "gray"
-                        },
-                        "resources": [
-                            {
-                                "description": "Lesson 39 - Introduction to the LISHI tool",
-                                "url": "https://vimeo.com/827173666",
+                                "description": "Lesson 38 - Transponder Keys: An Introduction",
+                                "url": "https://vimeo.com/827173253",
                                 "type": "video"
                             }
                         ]
                     }
                 ],
                 "quiz": {
-                    "lesson_no": 109,
+                    "lesson_no": 39,
                     "title": "Module Quiz: Automotive Electronics",
                     "module_id": "M9",
                     "access": false,
@@ -1427,12 +923,12 @@ window.app.syllabus = [
         "modules": [
             {
                 "module_id": "M10",
-                "title": "Automotive Codes, Wafers, and Programming",
+                "title": "Commercial Door Hardware",
                 "access": false,
                 "lessons": [
                     {
                         "lesson_no": 40,
-                        "title": "How to locate the code on a Toyota",
+                        "title": "Commercial Doors: An Introduction",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -1440,15 +936,15 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 40 - How to locate the Code on a Toyota",
-                                "url": "https://vimeo.com/827173679",
+                                "description": "Lesson 40 - Commercial Doors: An Introduction",
+                                "url": "https://vimeo.com/827173270",
                                 "type": "video"
                             }
                         ]
                     },
                     {
                         "lesson_no": 41,
-                        "title": "How to locate the code on a Honda",
+                        "title": "Commercial Lock Hardware: Overview",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -1456,15 +952,15 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 41 - How to locate the code on a Honda",
-                                "url": "https://vimeo.com/827173711",
+                                "description": "Lesson 41 - Commercial Lock Hardware: Overview",
+                                "url": "https://vimeo.com/827173287",
                                 "type": "video"
                             }
                         ]
                     },
                     {
                         "lesson_no": 42,
-                        "title": "Decoding Toyota wafers",
+                        "title": "Exit Devices and Panic Bars: Basics",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -1472,15 +968,15 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 42 - Decoding Toyota wafers",
-                                "url": "https://vimeo.com/827173742",
+                                "description": "Lesson 42 - Exit Devices and Panic Bars: Basics",
+                                "url": "https://vimeo.com/827173305",
                                 "type": "video"
                             }
                         ]
                     },
                     {
                         "lesson_no": 43,
-                        "title": "How to program a Nissan 20 pincode using the Auto Propad",
+                        "title": "Door Closers: Basics",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -1488,16 +984,16 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 43 - How to Program a Nissan 20 Pincode using the Auto Propad",
-                                "url": "https://vimeo.com/827173770",
+                                "description": "Lesson 43 - Door Closers: Basics",
+                                "url": "https://vimeo.com/827173322",
                                 "type": "video"
                             }
                         ]
                     }
                 ],
                 "quiz": {
-                    "lesson_no": 110,
-                    "title": "Module Quiz: Automotive Codes, Wafers, and Programming",
+                    "lesson_no": 44,
+                    "title": "Module Quiz: Commercial Door Hardware",
                     "module_id": "M10",
                     "access": false,
                     "badge": {
@@ -1510,7 +1006,7 @@ window.app.syllabus = [
                         "pass_percent": 80
                     },
                     "type": "quiz",
-                    "description": "Module Quiz: Automotive Codes, Wafers, and Programming"
+                    "description": "Module Quiz: Commercial Door Hardware"
                 }
             }
         ]
@@ -1525,8 +1021,8 @@ window.app.syllabus = [
                 "access": false,
                 "lessons": [
                     {
-                        "lesson_no": 44,
-                        "title": "How and where to begin advertising as a locksmith",
+                        "lesson_no": 45,
+                        "title": "Locksmith Licensing",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -1534,13 +1030,94 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 44 - How and where to begin advertising as a Locksmith",
-                                "url": "https://vimeo.com/827173787",
+                                "description": "Lesson 45 - Locksmith Licensing",
+                                "url": "https://vimeo.com/827173408",
+                                "type": "video"
+                            }
+                        ]
+                    },
+                    {
+                        "lesson_no": 46,
+                        "title": "Insurance and Liability",
+                        "access": false,
+                        "badge": {
+                            "text": "Locked",
+                            "color": "gray"
+                        },
+                        "resources": [
+                            {
+                                "description": "Lesson 46 - Insurance and Liability",
+                                "url": "https://vimeo.com/827173425",
+                                "type": "video"
+                            }
+                        ]
+                    },
+                    {
+                        "lesson_no": 47,
+                        "title": "Pricing and Estimates",
+                        "access": false,
+                        "badge": {
+                            "text": "Locked",
+                            "color": "gray"
+                        },
+                        "resources": [
+                            {
+                                "description": "Lesson 47 - Pricing and Estimates",
+                                "url": "https://vimeo.com/827173442",
+                                "type": "video"
+                            }
+                        ]
+                    },
+                    {
+                        "lesson_no": 48,
+                        "title": "Customer Relations",
+                        "access": false,
+                        "badge": {
+                            "text": "Locked",
+                            "color": "gray"
+                        },
+                        "resources": [
+                            {
+                                "description": "Lesson 48 - Customer Relations",
+                                "url": "https://vimeo.com/827173460",
+                                "type": "video"
+                            }
+                        ]
+                    },
+                    {
+                        "lesson_no": 49,
+                        "title": "How to Begin Advertising as a Locksmith",
+                        "access": false,
+                        "badge": {
+                            "text": "Locked",
+                            "color": "gray"
+                        },
+                        "resources": [
+                            {
+                                "description": "Lesson 49 - How to Begin Advertising as a Locksmith",
+                                "url": "https://vimeo.com/827173770",
                                 "type": "video"
                             }
                         ]
                     }
-                ]
+                ],
+                "quiz": {
+                    "lesson_no": 50,
+                    "title": "Module Quiz: The Business of Locksmithing",
+                    "module_id": "M11",
+                    "access": false,
+                    "badge": {
+                        "text": "Quiz Locked",
+                        "color": "gray"
+                    },
+                    "rules": {
+                        "questions": 20,
+                        "choices": 4,
+                        "pass_percent": 80
+                    },
+                    "type": "quiz",
+                    "description": "Module Quiz: The Business of Locksmithing"
+                }
             },
             {
                 "module_id": "M12",
@@ -1548,8 +1125,8 @@ window.app.syllabus = [
                 "access": false,
                 "lessons": [
                     {
-                        "lesson_no": "certification",
-                        "title": "Receive your certification",
+                        "lesson_no": 51,
+                        "title": "Course Completion and Certification",
                         "access": false,
                         "badge": {
                             "text": "Locked",
@@ -1557,13 +1134,30 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Receive your Certification",
-                                "url": "final",
-                                "type": "page"
+                                "description": "Lesson 51 - Course Completion and Certification",
+                                "url": "https://vimeo.com/827173787",
+                                "type": "video"
                             }
                         ]
                     }
-                ]
+                ],
+                "quiz": {
+                    "lesson_no": 52,
+                    "title": "Final Quiz: Certification and Course Completion",
+                    "module_id": "M12",
+                    "access": false,
+                    "badge": {
+                        "text": "Quiz Locked",
+                        "color": "gray"
+                    },
+                    "rules": {
+                        "questions": 20,
+                        "choices": 4,
+                        "pass_percent": 80
+                    },
+                    "type": "quiz",
+                    "description": "Final Quiz: Certification and Course Completion"
+                }
             }
         ]
     }

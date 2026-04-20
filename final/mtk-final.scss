@@ -320,7 +320,7 @@
       line-height: 1;
       white-space: nowrap;
 
-      &--float   { top: 8px; transform: translateY(-50%) scale(0.78); font-size: $font-size-md; transform-origin: left center; }
+      &--float   { top: 0; transform: translateY(-50%) scale(0.78); font-size: $font-size-md; transform-origin: left center; }
       &--focused { color: var(--_primary); }
     }
 

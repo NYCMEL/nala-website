@@ -16,12 +16,6 @@ window.app.pages = [
     },
     {
         "cache": "true",
-        "page":  "login",
-        "label": "Login",
-        "url":   "<wc-include href='login/index.inc.html' />"
-    },
-    {
-        "cache": "false",
         "page":  "register",
         "label": "Register",
         "url":   "<wc-include href='register/index.inc.html' />"
@@ -33,16 +27,22 @@ window.app.pages = [
         "url":   "<wc-include href='dashboard/index.inc.html' />"
     },
     {
-        "cache": "true",
+        "cache": "false",
         "page":  "final",
         "label": "Final",
         "url":   "<wc-include href='final/index.inc.html' />"
     },
     {
-        "cache": "true",
+        "cache": "false",
         "page":  "hierarchy",
         "label": "Hierarchy",
         "url":   "<wc-include href='hierarchy/index.inc.html' />"
+    },
+    {
+        "cache": "true",
+        "page":  "final",
+        "label": "Final",
+        "url":   "<wc-include href='final/index.inc.html' />"
     },
     {
         "cache": "false",
@@ -55,5 +55,11 @@ window.app.pages = [
         "page":  "quiz",
         "label": "Quiz",
         "url":   "<wc-include href='quiz/index.inc.html' />"
-    }
+    },
+    {
+        "cache": "true",
+        "page":  "login",
+        "label": "Login",
+        "url":   "<wc-include href='login/index.inc.html' />"
+    },
 ];

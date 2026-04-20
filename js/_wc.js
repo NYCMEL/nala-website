@@ -2,38 +2,17 @@ window.wc    = window.wc    || {};
 window.wcAPP = window.wcAPP || "NOT-SET";
 window.wcURL = window.wcURL || "";
 
-function nalaResolveApiUrl() {
-    const hostname = window.location.hostname || "";
-    const explicit = window.NALA_API_URL || window.localStorage.getItem("NALA_API_URL") || "";
-
-    if (explicit) {
-        return explicit.replace(/\/$/, "");
-    }
-
-    if (hostname === "localhost" || hostname === "127.0.0.1") {
-        return "http://" + hostname + ":9000";
-    }
-
-    return "https://nala-test.com";
-}
-
 wc.working   = location.origin != 'http://localhost:3000';
-wc.working = false; // temporary
-wc.apiURL    = nalaResolveApiUrl();
+wc.apiURL    = "https://nala-test.com" || "https://nalanetwork.com";
 wc.testing   = false;  /* = true SHOULD USE ALL LOCAL CONFIG FILES and others */
-wc.baseUrl   = (window.app && window.app.baseUrl) || (function () {
-    const path = window.location.pathname || "/";
-    const basePath = path.replace(/[^/]*$/, "");
-    return basePath && basePath.endsWith("/") ? basePath : (basePath || "/") + "/";
-})();
 
 // Message storage
 wc.emsgs = [
-    { id: 1000, text: "Wrong credentials" },
+    { id: 1000, text: "Wrong 'Email' or 'Password' combination" },
     { id: 1001, text: "Create user failed" },
     { id: 1002, text: "No questions found for module" },
-    { id: 1003, text: "Registration Failed!" },
-    { id: 1004, text: 'You have successfully completed this set of tests' },
+    { id: 1003, text: "Registeration Failed!" },
+    { id: 1004, text: 'You have Successfully completed this set of tests' },
 ];
 
 wc.emsg = function (id) {
@@ -42,10 +21,6 @@ wc.emsg = function (id) {
     return `Error(${id}): ${msg.text}`;
 };
 // let msg = wc.emsg(1000);
-
-wc.msg = wc.msg || {};
-wc.msg.lessonLocked = 'Please finish the current lesson video before moving on to the next lesson.';
-wc.testingDisableVideoGate = true; // testing only
 
 /************************************************************
  * CONFIG INACTIVITY TIMER
@@ -620,24 +595,6 @@ wc.subscribe   = PubSub.subscribe;
 class Include extends HTMLElement {
     constructor() { super(); }
 
-    _activateScripts() {
-        const scripts = Array.from(this.querySelectorAll("script"));
-
-        scripts.forEach((oldScript) => {
-            const newScript = document.createElement("script");
-
-            Array.from(oldScript.attributes).forEach((attr) => {
-                newScript.setAttribute(attr.name, attr.value);
-            });
-
-            if (!oldScript.src) {
-                newScript.textContent = oldScript.textContent || "";
-            }
-
-            oldScript.parentNode.replaceChild(newScript, oldScript);
-        });
-    }
-
     connectedCallback() {
         const self = this;
         const href = $(this).attr("href");
@@ -660,7 +617,6 @@ class Include extends HTMLElement {
                 dataType: "html",
                 success: function (data) {
                     $(self).html(data); // <-- INJECT INSIDE <wc-include> ITSELF
-                    self._activateScripts();
 
                     self.dispatchEvent(new CustomEvent('include:loaded', {
                         detail: { href: href, include: self },
@@ -1101,13 +1057,13 @@ wc.login = async function (email, passwd) {
 /////////////////////////////////////////////////////////////////////////////////
 //// LOGOUT
 /////////////////////////////////////////////////////////////////////////////////
-wc.logout = async function (options = {}) {
+wc.logout = async function () {
     wc.log('logout');
 
-    const opts = Object.assign({
-        redirect: false,
-        redirectUrl: (wc.baseUrl || '/') + 'index.html?logout=' + Date.now()
-    }, options || {});
+    wc.session = wc.user = null;
+
+    // REMOVE USER NAME
+    wc.deleteCookie("user");
 
     try {
         const res = await fetch(wc.apiURL + '/api/logout.php', {
@@ -1120,20 +1076,17 @@ wc.logout = async function (options = {}) {
         if (!res.ok) {
             throw new Error(data.error || 'Logout failed');
         }
+
+        // reset
+        wc.currentUser = null;
+
+        wc.log('logged out', data);
+        return true;
     } catch (err) {
         wc.error('doLogout failed:', err);
+        throw err;
+    } finally {
     }
-
-    wc.session = null;
-    wc.user = null;
-    wc.currentUser = null;
-    wc.deleteCookie('user');
-
-    if (opts.redirect) {
-        window.location.href = opts.redirectUrl;
-    }
-
-    return true;
 };
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -1484,11 +1437,9 @@ wc.lessonComplete = function (clickedLessonNo, currentLessonNo, callback) {
         return;
     }
 
-    // TESTING RULE:
-    // Allow advancing when the user clicks the current lesson OR any previous lesson.
-    // This makes it possible to keep progressing while re-opening earlier lessons.
-    if (ln > cur) {
-        if (typeof callback === "function") callback(null, { ok: true, advanced: false, updated: false, reason: "client_guard_future_lesson", current_lesson: cur });
+    // Only advance if they clicked the latest lesson
+    if (ln !== cur) {
+        if (typeof callback === "function") callback(null, { ok: true, advanced: false, updated: false, reason: "client_guard_not_latest", current_lesson: cur });
         return;
     }
 
@@ -1544,53 +1495,22 @@ wc.setDasbboardProgress = function(percentage) {
  * answersMap format: { "29":"a", "37":"c", ... }
  ************************************************************/
 wc.submitQuiz = function (quizSessionId, moduleId, answersMap, callback) {
-    const payload = new URLSearchParams();
-    const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
-    let timeoutId = null;
-
-    payload.set("quiz_session_id", String(quizSessionId));
-    payload.set("module_id", String(moduleId));
-
-    Object.entries(answersMap || {}).forEach(([questionId, answer]) => {
-        payload.set(`answers[${questionId}]`, String(answer));
-    });
-
-    if (controller) {
-        timeoutId = setTimeout(() => {
-            controller.abort();
-        }, 15000);
-    }
+    const payload = {
+        quiz_session_id: quizSessionId,
+        module_id: moduleId,
+        answers: answersMap || {}
+    };
 
     fetch(wc.apiURL + "/api/submitQuiz.php", {
         method: "POST",
         credentials: "include",
-        headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" },
-        body: payload.toString(),
-        signal: controller ? controller.signal : undefined
-    }).then(async (res) => {
-        if (timeoutId) {
-            clearTimeout(timeoutId);
-            timeoutId = null;
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+    }).then(res => {
+        if (!res.ok) {
+            throw new Error("Failed to submit quiz");
         }
-
-        const text = await res.text();
-        let data = null;
-
-        try {
-            data = text ? JSON.parse(text) : {};
-        } catch (e) {
-            throw new Error("submitQuiz returned non-JSON. First 300 chars: " + text.slice(0, 300));
-        }
-
-        if (!res.ok || (data && data.ok === false)) {
-            const msg = (data && (data.error || data.message)) ? (data.error || data.message) : ("HTTP " + res.status);
-            const err = new Error(msg || "Failed to submit quiz");
-            err.status = res.status;
-            err.data = data;
-            throw err;
-        }
-
-        return data;
+        return res.json();
     }).then(data => {
         wc.log("submitQuiz data:", data);
 
@@ -1598,70 +1518,12 @@ wc.submitQuiz = function (quizSessionId, moduleId, answersMap, callback) {
             callback(null, data);
         }
     }).catch(err => {
-        if (timeoutId) {
-            clearTimeout(timeoutId);
-            timeoutId = null;
-        }
-
-        if (err && err.name === "AbortError") {
-            err = new Error("Quiz submission timed out after 15 seconds.");
-        }
-
         wc.error("submitQuiz error:", err);
 
         if (typeof callback === "function") {
             callback(err, null);
         }
     });
-};
-/************************************************************
- * FIX / UNFIX FOOTER ON SHORT PAGES
- ************************************************************/
-wc.fixFooter = function() {
-    const footer = document.getElementById("page-footer");
-    if (!footer) return;
-
-    wc._adjustFooter = function() {
-        const docHeight = document.documentElement.scrollHeight;
-        const viewportHeight = window.innerHeight;
-
-        if (docHeight <= viewportHeight) {
-            footer.style.position = "fixed";
-            footer.style.bottom = "0";
-            footer.style.left = "0";
-            footer.style.width = "100%";
-        } else {
-            footer.style.position = "static";
-            footer.style.removeProperty("bottom");
-            footer.style.removeProperty("left");
-            footer.style.removeProperty("width");
-        }
-    };
-
-    window.removeEventListener("load", wc._adjustFooter);
-    window.removeEventListener("resize", wc._adjustFooter);
-    window.addEventListener("load", wc._adjustFooter);
-    window.addEventListener("resize", wc._adjustFooter);
-
-    setTimeout(wc._adjustFooter, 50);
-};
-
-/************************************************************
- * REMOVE FIXED FOOTER BEHAVIOR
- ************************************************************/
-wc.unfixFooter = function() {
-    const footer = document.getElementById("page-footer");
-    if (!footer) return;
-
-    if (wc._adjustFooter) {
-        window.removeEventListener("load", wc._adjustFooter);
-        window.removeEventListener("resize", wc._adjustFooter);
-    }
-
-    footer.style.removeProperty("position");
-    footer.style.removeProperty("bottom");
-    footer.style.removeProperty("left");
-    footer.style.removeProperty("width");
 };
 
 /************************************************************
@@ -1706,31 +1568,17 @@ wc.fixFooter = function() {
     wc._adjustFooter = function() {
         const docHeight = document.documentElement.scrollHeight;
         const viewportHeight = window.innerHeight;
-        const footerHeight = footer.offsetHeight || 0;
-
-        document.documentElement.style.setProperty("--page-footer-height", footerHeight + "px");
 
         if (docHeight <= viewportHeight) {
             footer.style.position = "fixed";
             footer.style.bottom = "0";
             footer.style.left = "0";
             footer.style.width = "100%";
-            document.body.style.paddingBottom = footerHeight + "px";
         } else {
             footer.style.position = "static";
-            footer.style.removeProperty("bottom");
-            footer.style.removeProperty("left");
-            footer.style.removeProperty("width");
-            document.body.style.paddingBottom = "0";
         }
     };
 
-    if (wc._previousAdjustFooter) {
-        window.removeEventListener("load", wc._previousAdjustFooter);
-        window.removeEventListener("resize", wc._previousAdjustFooter);
-    }
-
-    wc._previousAdjustFooter = wc._adjustFooter;
     window.addEventListener("load", wc._adjustFooter);
     window.addEventListener("resize", wc._adjustFooter);
 
@@ -1750,12 +1598,8 @@ wc.unfixFooter = function() {
         window.removeEventListener("resize", wc._adjustFooter);
     }
 
-    const footerHeight = footer.offsetHeight || 0;
-    document.documentElement.style.setProperty("--page-footer-height", footerHeight + "px");
-
     footer.style.removeProperty("position");
     footer.style.removeProperty("bottom");
     footer.style.removeProperty("left");
     footer.style.removeProperty("width");
-    document.body.style.paddingBottom = "0";
 };

@@ -286,7 +286,7 @@ mtk-dialog.mtk-dialog {
   font-size: 0.875rem;
   font-weight: 500;
   letter-spacing: 0.00625em;
-  border-radius: 0px;
+  border-radius: 9999px;
   padding: 0.5rem 1.25rem;
   height: 40px;
   transition: box-shadow 200ms ease, background-color 0.15s ease;
@@ -365,5 +365,12 @@ mtk-dialog.mtk-dialog {
   .mtk-dialog__footer .btn {
     width: 100%;
     justify-content: center; }
+  .mtk-dialog__container {
+    border-radius: 16px; } }
+    flex-direction: column-reverse;
+    align-items: stretch; }
+    .mtk-dialog__footer .btn {
+      width: 100%;
+      justify-content: center; }
   .mtk-dialog__container {
     border-radius: 16px; } }

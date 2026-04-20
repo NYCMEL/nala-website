@@ -1,63 +1,15 @@
 <div class="client-container">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" id="breadcrumb"></nav>
 
-    <!-- Sticky header — inside container so it aligns naturally with content -->
-    <style>
-        #editModeBar .bar-inner { min-height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;width:100%;box-sizing:border-box }
-        #editModeBar .bar-title { display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden }
-        #editModeBar .bar-title .t-nala { font-size:20px;font-weight:700;color:#1565c0;text-transform:uppercase;letter-spacing:0.05em }
-        #editModeBar .bar-title .t-sub  { font-size:13px;font-weight:400;color:#90a4ae;display:inline-flex;align-items:center;gap:2px;white-space:nowrap }
-        #editModeBar .bar-controls { display:flex;align-items:center;gap:8px;flex-shrink:0 }
-        #editModeBar .bar-label { font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap }
-        #editModeBar #saveChangesBtn { white-space:nowrap;padding:6px 14px;font-size:13px;font-weight:600;border:none;border-radius:20px;background:#1565c0;color:#fff;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,0.2) }
-        @media (max-width:480px) {
-            #editModeBar .bar-title .t-sub { display:none }
-            #editModeBar .bar-title .t-nala { font-size:16px }
-            #editModeBar .bar-label { font-size:12px }
-            #editModeBar #saveChangesBtn { padding:5px 10px;font-size:12px }
-        }
-    </style>
-    <div id="editModeBar" style="display:none;position:sticky;top:0;z-index:1000;
-        flex-direction:column;
-        margin:-24px -24px 0 -24px;
-        background:linear-gradient(135deg,#e3f2fd,#bbdefb);
-        box-shadow:0 2px 8px rgba(0,0,0,0.15)">
-        <div class="bar-inner">
-            <!-- Title -->
-            <span class="bar-title">
-                <span class="t-nala">NALA</span>
-                <span class="t-sub"><span class="material-icons" style="font-size:16px;color:#90a4ae">chevron_right</span>Go Live</span>
-            </span>
-            <!-- Switch + Save -->
-            <div class="bar-controls">
-                <button id="saveChangesBtn" style="display:none"
-                    onmouseover="this.style.background='#0d47a1'"
-                    onmouseout="this.style.background='#1565c0'">
-                    Save Changes
-                </button>
-                <span class="bar-label" style="color:#546e7a"
-                    onclick="document.getElementById('editModeToggle').checked=false;document.getElementById('editModeToggle').dispatchEvent(new Event('change'))">Review</span>
-                <label class="edit-switch" style="position:relative;display:inline-block;width:44px;height:24px;cursor:pointer;flex-shrink:0">
-                    <input type="checkbox" id="editModeToggle" style="opacity:0;width:0;height:0">
-                    <span class="edit-switch-slider" style="position:absolute;inset:0;background:#90a4ae;border-radius:24px;transition:0.2s"></span>
-                    <span class="edit-switch-knob" style="position:absolute;height:18px;width:18px;left:3px;bottom:3px;
-                        background:#fff;border-radius:50%;transition:0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.3)"></span>
-                </label>
-                <span class="bar-label" style="color:#1565c0"
-                    onclick="document.getElementById('editModeToggle').checked=true;document.getElementById('editModeToggle').dispatchEvent(new Event('change'))">Edit</span>
-            </div>
-        </div>
-        <div id="editModeHint" style="display:none;padding:0 24px 6px;margin-top:-8px;font-size:11px;font-style:italic;color:#546e7a">
-            Editable fields are marked with blue dashed borders. Please update as necessary.
-        </div>
-    </div>
-    <div class="client-layout" style="margin-top:25px">
+    <div class="client-layout">
 	<!-- Main Content -->
 	<main class="client-main">
 	    <!-- Header Section -->
 	    <header class="client-header">
-		<div class="client-logo" id="clientLogo" data-editable></div>
+		<div class="client-logo" id="clientLogo"></div>
 		<div class="client-info">
-		    <h1 class="client-name" id="clientName" data-editable></h1>
+		    <h1 class="client-name" id="clientName"></h1>
 		    <div class="client-rating" id="clientRating"></div>
 		    <div class="client-badges" id="clientBadges"></div>
 		    <button class="btn-share" id="btnShare">
@@ -78,29 +30,29 @@
 		<!-- About Section -->
 		<section class="content-section" id="aboutSection">
 		    <h2>About</h2>
-		    <p class="about-text" id="aboutText" data-editable></p>
+		    <p class="about-text" id="aboutText"></p>
 		</section>
 
 		<!-- Business Hours -->
 		<section class="content-section">
 		    <h2 id="businessHoursTitle"></h2>
-		    <p id="businessHoursText" data-editable></p>
+		    <p id="businessHoursText"></p>
 		</section>
 
 		<!-- Payment Methods -->
 		<section class="content-section">
 		    <h2 id="paymentMethodsTitle"></h2>
-		    <p id="paymentMethodsText" data-editable></p>
+		    <p id="paymentMethodsText"></p>
 		</section>
 
 		<!-- Social Media -->
 		<section class="content-section">
 		    <h2 id="socialMediaTitle"></h2>
-		    <div id="socialMediaLinks" data-editable></div>
+		    <div id="socialMediaLinks"></div>
 		</section>
 
 		<!-- Top Pro Status -->
-		<section class="content-section" id="topProSection" style="display:none">
+		<section class="content-section">
 		    <h2 id="topProTitle"></h2>
 		    <p id="topProDescription"></p>
 		    <div class="top-pro-badges" id="topProBadges"></div>
@@ -116,6 +68,7 @@
 		    <span class="material-icons">chat_bubble_outline</span>
 		    <span id="contactPrice"></span>
 		</div>
+		<a href="#" class="link-details" id="viewDetailsLink"></a>
 		<button class="btn-primary btn-estimate" id="btnEstimate"></button>
 		<div class="online-status" id="onlineStatus">
 		    <span class="status-dot"></span>
@@ -125,99 +78,13 @@
 
 	    <!-- Guarantee Card -->
 	    <div class="card guarantee-card">
-		<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-		    <div class="guarantee-icon" style="margin-bottom:0;flex-shrink:0">
-			<span class="material-icons">verified_user</span>
-		    </div>
-		    <h3 id="guaranteeTitle" style="margin:0;font-size:18px;font-weight:500"></h3>
+		<div class="guarantee-icon">
+		    <span class="material-icons">verified_user</span>
 		</div>
+		<h3 id="guaranteeTitle"></h3>
 		<p id="guaranteeText"></p>
 		<a href="#" class="link-learn-more" id="learnMoreLink"></a>
 	    </div>
 	</aside>
     </div>
 </div>
-
-<!-- REQUEST DIALOG — inlined to avoid nested wc-include timing issues -->
-<link href="client/css/mtk-request.css" rel="stylesheet">
-
-<mtk-request class="mtk-request">
-
-    <!-- Trigger button hidden — opened via wc.publish("mtk-request:open") -->
-    <button type="button" class="btn btn-primary open-dialog" style="display:none" aria-hidden="true">
-	Request Estimate
-    </button>
-
-    <div class="modal fade" tabindex="-1">
-	<div class="modal-dialog modal-dialog-centered">
-	    <div class="modal-content">
-
-		<div class="modal-header">
-		    <h5 class="modal-title"></h5>
-		    <button type="button" class="btn-close close-dialog"></button>
-		</div>
-
-		<div class="modal-body">
-		    <form>
-
-			<div class="md-field">
-			    <input type="text" class="name" required />
-			    <label></label>
-			</div>
-
-			<div class="md-field">
-			    <input type="email" class="email" />
-			    <label></label>
-			</div>
-
-			<div class="md-field">
-			    <input type="tel" class="phone" />
-			    <label></label>
-			</div>
-
-			<div class="md-field">
-			    <input type="text" class="address" />
-			    <label></label>
-			</div>
-
-			<div class="md-field">
-			    <textarea class="help" rows="3"></textarea>
-			    <label></label>
-			</div>
-
-			<!-- RADIO GROUP -->
-			<div class="contact-group">
-			    <div class="group-label">Preferred Contact Method</div>
-			    <div class="radio-group"></div>
-			</div>
-
-			<div class="phone-times" style="margin-top:12px">
-			    <div style="font-size:13px;color:#777;margin-bottom:8px">Best Time to Call</div>
-			    <div class="call-time-checks" style="display:flex;flex-direction:column;gap:8px"></div>
-			</div>
-
-			<input type="hidden" class="nala-uid" name="nalaUID" value="" />
-
-			<div class="submit-wrap">
-			    <button type="submit" class="btn btn-primary submit-btn"></button>
-			</div>
-
-		    </form>
-		</div>
-
-	    </div>
-	</div>
-    </div>
-
-</mtk-request>
-
-<script src="client/js/mtk-request.config.js"></script>
-<script src="client/js/mtk-request.js"></script>
-
-<!-- THIS IS FOR TESTING -->
-<script src="client/js/client.config.js"></script>
-
-<script>
- // CALL TO FILL THE TEMPLATE
- client(config);
-</script>

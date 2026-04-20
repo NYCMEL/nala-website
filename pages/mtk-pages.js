@@ -1,6 +1,6 @@
 /**
  * mtk-pages
- * Web component for managing multi-page navigation without full page reloads.
+ * Web component for managing multi-page navigation without page reloads.
  * Reads config from window.app.pages
  */
 class Pages extends HTMLElement {
@@ -12,23 +12,31 @@ class Pages extends HTMLElement {
             this.id = "mtk-pages";
         }
 
-        wc.pages = this;
-        this.currentPage = null;
-
-        this._historyReady = false;
-        this._suppressNextPush = false;
-        this._allowExitOnce = false;
-        this._onPopState = this._onPopState.bind(this);
+        // Bind popstate so browser Back / Forward buttons trigger show()
+        this._onPopState = (e) => {
+            if (e.state && e.state.mtkPage) {
+                this._isPopping = true;
+                this.show(e.state.mtkPage);
+                this._isPopping = false;
+            }
+        };
+        window.addEventListener("popstate", this._onPopState);
 
         this._waitForData();
 
         wc.groupEnd();
-    }
+    };
 
     disconnectedCallback() {
+        wc.group("mtk-pages.disconnectedCallback");
         window.removeEventListener("popstate", this._onPopState);
-    }
+        wc.groupEnd();
+    };
 
+    /**
+     * Wait for window.app.pages to be available then initialize.
+     * @private
+     */
     _waitForData() {
         wc.group("mtk-pages._waitForData");
 
@@ -55,28 +63,40 @@ class Pages extends HTMLElement {
         check();
 
         wc.groupEnd();
-    }
+    };
 
+    /**
+     * Build page containers and show the default page.
+     * @private
+     */
     _process(data) {
         wc.group("mtk-pages._process", data);
 
-        this.data = data;
+        this.data  = data;
         this.cname = "pages";
-        wc.pages = this;
 
+        // BUILD PAGE DIV FOR EACH ENTRY
         let html = "";
         for (let i = 0; i < data.length; i++) {
             html += `<div class="mtk-pages__page ${data[i].page}" mtk-pages-id="${data[i].page}" style="display:none"></div>`;
         }
         this.innerHTML = html;
 
+        // SHOW DEFAULT PAGE FROM ATTRIBUTE OR FIRST IN LIST
         const defaultPage = this.getAttribute("page") || data[0].page;
-        const requestedPublicPage = window.__nalaRequestedPublicPage;
-        const initialPage = requestedPublicPage || defaultPage;
 
-        this._initHistory(initialPage);
-        this.show(initialPage, { replaceHistory: true });
+        // On first load, seed history.state so popstate always has mtkPage.
+        // replaceState (not pushState) so pressing Back from page 1 exits the
+        // app cleanly rather than looping back to itself.
+        const restoredPage = (history.state && history.state.mtkPage) || defaultPage;
+        history.replaceState({ mtkPage: restoredPage }, "", this._pageUrl(restoredPage));
 
+        // Show without pushing a new entry — replaceState above already owns this slot
+        this._isPopping = true;
+        this.show(restoredPage);
+        this._isPopping = false;
+
+        // DEV TOOLBAR
         if (this.getAttribute("env") === "dev") {
             this._dev();
         }
@@ -84,141 +104,53 @@ class Pages extends HTMLElement {
         this.style.visibility = "visible";
 
         wc.groupEnd();
-    }
+    };
 
-    _initHistory(defaultPage) {
-        if (this._historyReady) return;
-
-        const initialPage = defaultPage || "home";
-
-        try {
-            window.history.replaceState(
-                { app: "nala", page: initialPage, guard: false },
-                "",
-                window.location.href
-            );
-
-            window.history.pushState(
-                { app: "nala", page: initialPage, guard: true },
-                "",
-                window.location.href
-            );
-
-            window.addEventListener("popstate", this._onPopState);
-            this._historyReady = true;
-
-            wc.log("mtk-pages: history barrier initialized for page:", initialPage);
-        } catch (e) {
-            wc.warn("mtk-pages: history init failed", e);
+    /**
+     * Build the URL fragment stored in history for a given page.
+     * Uses hash by default — no server-side routing required.
+     * Override by setting window.app.historyMode = "hash" | "query" | "path"
+     * @private
+     */
+    _pageUrl(page) {
+        const mode = (window.app && window.app.historyMode) || "hash";
+        if (mode === "path")  return "/" + page;
+        if (mode === "query") {
+            const u = new URL(window.location.href);
+            u.searchParams.set("page", page);
+            return u.pathname + u.search;
         }
-    }
+        return "#" + page; // default: hash
+    };
 
-    _updateHistory(page, opts = {}) {
-        if (!this._historyReady) return;
-        if (opts.fromPopState === true) return;
+    /**
+     * Show a page by ID. Creates content on first visit, respects cache setting.
+     * @param {string} page - The page ID to display
+     */
+    show(page) {
+        wc.group("mtk-pages.show:", page);
 
-        if (this._suppressNextPush === true) {
-            this._suppressNextPush = false;
-            return;
-        }
+	switch(page) 
+	{
+	    case "login": // fix footer to bottom of page
+	    case "register":
+	    case "dashboard":
+	    wc.fixFooter();
+	    break;
 
-        const state = {
-            app: "nala",
-            page: page,
-            guard: true
-        };
+	    default:
+	    wc.unfixFooter();
+	    break;
+	} 
+	
+	try {
+	    headerSelect("mtk-header-" + page);
 
-        try {
-            if (opts.replaceHistory === true) {
-                window.history.replaceState(state, "", window.location.href);
-            } else {
-                window.history.pushState(state, "", window.location.href);
-            }
-        } catch (e) {
-            wc.warn("mtk-pages: history update failed", e);
-        }
-    }
-
-    _onPopState(event) {
-        const state = event && event.state ? event.state : null;
-        const fallbackPage = this.currentPage || (this.data && this.data[0] ? this.data[0].page : "home");
-
-        if (this.currentPage === "dashboard" && this._allowExitOnce !== true) {
-            const leave = window.confirm("Are you sure you want to leave?");
-
-            if (!leave) {
-                try {
-                    window.history.pushState(
-                        { app: "nala", page: "dashboard", guard: true },
-                        "",
-                        window.location.href
-                    );
-                } catch (e) {
-                    wc.warn("mtk-pages: failed to restore dashboard state", e);
-                }
-
-                this._suppressNextPush = true;
-                this.show("dashboard", {
-                    fromPopState: true,
-                    replaceHistory: true,
-                    forceReload: true
-                });
-                return;
-            }
-
-            this._allowExitOnce = true;
-            setTimeout(() => {
-                window.history.back();
-            }, 0);
-            return;
-        }
-
-        if (this._allowExitOnce === true) {
-            this._allowExitOnce = false;
-            return;
-        }
-
-        if (state && state.app === "nala" && state.page) {
-            this._suppressNextPush = true;
-            this.show(state.page, {
-                fromPopState: true,
-                replaceHistory: true,
-                forceReload: state.page === "dashboard"
-            });
-            return;
-        }
-
-        try {
-            window.history.pushState(
-                { app: "nala", page: fallbackPage, guard: true },
-                "",
-                window.location.href
-            );
-        } catch (e) {
-            wc.warn("mtk-pages: failed to restore guarded state", e);
-        }
-
-        this._suppressNextPush = true;
-        this.show(fallbackPage, { fromPopState: true, replaceHistory: true });
-    }
-
-    show(page, opts = {}) {
-        wc.group("mtk-pages.show:", page, opts);
-
-        switch (page) {
-            case "login":
-            case "dashboard":
-                wc.fixFooter();
-                break;
-
-            default:
-                wc.unfixFooter();
-                break;
-        }
-
-        try {
-            headerSelect("mtk-header-" + page);
-        } catch (e) {}
+	    // FIX FOOTER TO BOTTOM ON SMALL PAGES
+	    //checkFooter();
+	} catch(e) {
+	    //wc.error(e.name + ' > ' + e.message);
+	}
 
         if (!this.data) {
             wc.warn("mtk-pages: not initialized yet");
@@ -226,6 +158,7 @@ class Pages extends HTMLElement {
             return;
         }
 
+        // FIND PAGE CONFIG
         const obj = this.data.find(o => o.page === page);
 
         if (!obj) {
@@ -234,12 +167,12 @@ class Pages extends HTMLElement {
             return;
         }
 
+        // HIDE ALL PAGES
         const allPages = this.querySelectorAll(".mtk-pages__page");
-        allPages.forEach(el => {
-            el.style.display = "none";
-        });
+        allPages.forEach(el => el.style.display = "none");
 
-        const target = this.querySelector(`[mtk-pages-id="${page}"]`);
+        // GET TARGET PAGE ELEMENT
+        const target = this.querySelector(`.${page}`);
 
         if (!target) {
             wc.warn("mtk-pages: DOM element not found for page:", page);
@@ -249,88 +182,66 @@ class Pages extends HTMLElement {
 
         const isEmpty = target.innerHTML.trim() === "";
 
-        const shouldReload =
-            opts.forceReload === true ||
-            isEmpty ||
-            (page === "dashboard" && (obj.cache === false || obj.cache === "false"));
-
-        if (shouldReload) {
-            target.innerHTML = "";
+        // LOAD CONTENT IF EMPTY OR CACHE IS FALSE
+        if (isEmpty || obj.cache === "false") {
             target.innerHTML = obj.url;
         }
 
+        // SHOW THE PAGE
         target.style.display = "block";
-        this.currentPage = page;
 
-        this._updateHistory(page, opts);
-
+        // SCROLL TO TOP
         window.scrollTo(0, 0);
 
-        wc.publish("mtk-pages", {
-            time: new Date().getTime(),
-            action: "show",
-            page: page,
-            label: obj.label || page
-        });
-
-        // ── i18n: apply translations after page is injected ──────────────
-        // mtk-pages injects <wc-include> via innerHTML which fires include:loaded
-        // asynchronously. We apply multiple deferred passes to ensure all
-        // wc-include fragments (and their nested JS-rendered content) are
-        // fully translated regardless of connection speed.
-        if (window.i18n) {
-            var _i18nTarget = target;
-            var _i18nRebuildEvents = [
-                'carousel:rebuild', 'tiles:rebuild', 'courses:rebuild',
-                'path:rebuild', 'certification:rebuild', 'gift:rebuild', 'final:rebuild'
-            ];
-            function _i18nApply() {
-                window.i18n.applyDOM(_i18nTarget);
-                window.i18n.applyDOM(document);
-                window.i18n.applyAllConfigs();
-                _i18nRebuildEvents.forEach(function(ev) {
-                    document.dispatchEvent(new CustomEvent(ev));
-                });
-            }
-            // Pass 1: after wc-include connectedCallback fires (≈ 1 tick)
-            setTimeout(_i18nApply, 50);
-            // Pass 2: after component polling loops render content
-            setTimeout(_i18nApply, 300);
-            // Pass 3: safety net for slow polling / network
-            setTimeout(_i18nApply, 800);
-            // Pass 4: final sweep
-            setTimeout(function() {
-                window.i18n.applyDOM(document);
-                window.i18n.applyAllConfigs();
-            }, 2000);
+        // PUSH HISTORY ENTRY
+        // Skipped when show() is called from popstate (_isPopping = true) or
+        // from _process() initial load, so the browser stack never gets
+        // duplicate or ghost entries.
+        if (!this._isPopping) {
+            history.pushState({ mtkPage: page }, obj.label || page, this._pageUrl(page));
+            wc.log("mtk-pages: pushState →", page);
         }
-        // ─────────────────────────────────────────────────────────────────
+
+        // Track current page
+        this.current = page;
+
+        // PUBLISH EVENT
+        wc.publish("mtk-pages", {
+            time:   new Date().getTime(),
+            action: "show",
+            page:   page,
+            label:  obj.label || page
+        });
 
         wc.log("mtk-pages: showing page:", page);
         wc.groupEnd();
         return page;
-    }
+    };
 
-    refresh(page, opts = {}) {
-        wc.group("mtk-pages.refresh:", page, opts);
+    /**
+     * Refresh a page - clears content and reloads it.
+     * Does NOT push a new history entry (same page, just reloaded).
+     * @param {string} page - The page ID to refresh
+     */
+    refresh(page) {
+        wc.group("mtk-pages.refresh:", page);
 
-        const target = this.querySelector(`[mtk-pages-id="${page}"]`);
-        if (target) {
-            target.innerHTML = "";
-        }
+        const target = this.querySelector(`.${page}`);
+        if (target) target.innerHTML = "";
 
-        const shouldShowPage = opts.showPage === true || this.currentPage === page;
-
-        if (shouldShowPage) {
-            this.show(page, { forceReload: true, replaceHistory: true });
-        } else {
-            wc.log("mtk-pages.refresh: cache cleared only, page not shown:", page);
-        }
+        // Refresh is not a navigation — suppress pushState
+        this._isPopping = true;
+        this.show(page);
+        this._isPopping = false;
 
         wc.groupEnd();
         return page;
-    }
+    };
 
+    /**
+     * Add a new page dynamically at runtime.
+     * @param {Object} values - { page, url, cache, label }
+     */
     new(values) {
         wc.group("mtk-pages.new:", values);
 
@@ -348,10 +259,11 @@ class Pages extends HTMLElement {
         div.style.display = "none";
         this.appendChild(div);
 
+        // ADD TO DEV TOOLBAR IF PRESENT
         const toolbar = document.querySelector(".mtk-pages-toolbar");
         if (toolbar) {
             const btn = document.createElement("button");
-            btn.type = "button";
+            btn.type      = "button";
             btn.className = "btn btn-sm btn-danger mtk-pages-btn-tester";
             btn.style.cssText = "font-size:11px;border-radius:0";
             btn.textContent = values.label || values.page;
@@ -362,8 +274,27 @@ class Pages extends HTMLElement {
         this.show(values.page);
 
         wc.groupEnd();
-    }
+    };
 
+    /**
+     * Programmatic back — mirrors browser Back button.
+     */
+    back() {
+        history.back();
+    };
+
+    /**
+     * Programmatic forward — mirrors browser Forward button.
+     */
+    forward() {
+        history.forward();
+    };
+
+    /**
+     * Dev toolbar - renders fixed buttons for each page.
+     * Only shown when env="dev" attribute is set.
+     * @private
+     */
     _dev() {
         wc.group("mtk-pages._dev");
 
@@ -377,11 +308,11 @@ class Pages extends HTMLElement {
         for (let i = 0; i < this.data.length; i++) {
             const idx = i;
             const btn = document.createElement("button");
-            btn.type = "button";
+            btn.type      = "button";
             btn.className = "btn btn-sm btn-success mtk-pages-btn-tester";
             btn.style.cssText = "font-size:11px;border-radius:0";
             btn.textContent = this.data[idx].label || this.data[idx].page;
-            btn.addEventListener("click", function () {
+            btn.addEventListener("click", function() {
                 self.show(self.data[idx].page);
             });
             toolbar.appendChild(btn);
@@ -390,7 +321,11 @@ class Pages extends HTMLElement {
         document.body.appendChild(toolbar);
 
         wc.groupEnd();
-    }
+    };
 }
 
 window.customElements.define('mtk-pages', Pages);
+
+wc.timeout(function(){
+    wc.pages = document.getElementById('mtk-pages');
+}, 300, 1);

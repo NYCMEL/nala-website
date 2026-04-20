@@ -7,7 +7,6 @@
         const mount = document.getElementById(mountId);
 
         if (!mount) return false;
-        mount.innerHTML = "";
 
         const tileEl = document.createElement("div");
         tileEl.className = "mtk-tile";

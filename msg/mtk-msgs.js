@@ -298,35 +298,31 @@ class MTKMsgs {
 
     // Public API
     static show(messageData) {
-	document.querySelectorAll('.mtk-msgs').forEach((element) => {
-	    if (element && element._mtkMsgsInstance) {
-		element._mtkMsgsInstance.show(messageData);
-	    }
-	});
+	const element = document.querySelector('.mtk-msgs');
+	if (element && element._mtkMsgsInstance) {
+	    element._mtkMsgsInstance.show(messageData);
+	}
     }
 
     static hide() {
-	document.querySelectorAll('.mtk-msgs').forEach((element) => {
-	    if (element && element._mtkMsgsInstance) {
-		element._mtkMsgsInstance.hide();
-	    }
-	});
+	const element = document.querySelector('.mtk-msgs');
+	if (element && element._mtkMsgsInstance) {
+	    element._mtkMsgsInstance.hide();
+	}
     }
 
     static toggle(messageData) {
-	document.querySelectorAll('.mtk-msgs').forEach((element) => {
-	    if (element && element._mtkMsgsInstance) {
-		element._mtkMsgsInstance.toggle(messageData);
-	    }
-	});
+	const element = document.querySelector('.mtk-msgs');
+	if (element && element._mtkMsgsInstance) {
+	    element._mtkMsgsInstance.toggle(messageData);
+	}
     }
 
     static unblock() {
-	document.querySelectorAll('.mtk-msgs').forEach((element) => {
-	    if (element && element._mtkMsgsInstance) {
-		element._mtkMsgsInstance.unblock();
-	    }
-	});
+	const element = document.querySelector('.mtk-msgs');
+	if (element && element._mtkMsgsInstance) {
+	    element._mtkMsgsInstance.unblock();
+	}
     }
 }
 

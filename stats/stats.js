@@ -1,19 +1,17 @@
 (function () {
 
-    function renderStats() {
-        const row     = document.getElementById("_stats-row");
+    function initStats() {
+        const row = document.getElementById("_stats-row");
         const wrapper = document.getElementById("_stats");
 
         if (!row || !wrapper) return false;
         if (!window.app || !app.stats) return false;
 
         wc.log("_stats init:", app.stats);
-        row.innerHTML = "";
 
         function createStat(stat) {
             const col = document.createElement("div");
             col.className = "col-12 col-md-4 _stats-item";
-            col.setAttribute("data-stat-id", stat.id);
 
             col.innerHTML = `
                 <div class="_stats-value"
@@ -32,9 +30,12 @@
 
             function tick(now) {
                 const progress = Math.min((now - startTime) / duration, 1);
-                const value    = Math.floor(progress * target);
+                const value = Math.floor(progress * target);
                 el.textContent = value + suffix;
-                if (progress < 1) requestAnimationFrame(tick);
+
+                if (progress < 1) {
+                    requestAnimationFrame(tick);
+                }
             }
 
             requestAnimationFrame(tick);
@@ -50,14 +51,15 @@
             });
         }
 
+        // Render stats **with 0** only
         app.stats.forEach(stat => row.appendChild(createStat(stat)));
 
-        // Observe when stats wrapper is visible — animate once
+        // Observe when stats wrapper is visible
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     animateStats();
-                    observer.disconnect();
+                    observer.disconnect(); // one-time trigger
                 }
             });
         }, { threshold: 0.4 });
@@ -67,21 +69,8 @@
         return true;
     }
 
-    // Initial render
     const wait = setInterval(() => {
-        if (renderStats()) clearInterval(wait);
+        if (initStats()) clearInterval(wait);
     }, 50);
-
-    // Re-render labels when language changes (no re-animation)
-    document.addEventListener('i18n:changed', function () {
-        if (!window.app || !app.stats) return;
-        const row = document.getElementById("_stats-row");
-        if (!row) return;
-        app.stats.forEach(function (stat) {
-            const col   = row.querySelector('[data-stat-id="' + stat.id + '"]');
-            const label = col && col.querySelector('._stats-label');
-            if (label) label.textContent = stat.label;
-        });
-    });
 
 })();

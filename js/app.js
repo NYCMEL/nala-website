@@ -3,19 +3,15 @@
 /////////////////////////////////////////////////////////////////////////////////
 window.app = window.app || {};
 
-app.baseUrl  = (function () {
-    const path = window.location.pathname || "/";
-    const basePath = path.replace(/[^/]*$/, "");
-    return basePath && basePath.endsWith("/") ? basePath : (basePath || "/") + "/";
-})();
+app.baseUrl  = "/repo_deploy/";
 app.quizSize = 20; 
 
 // Message storage
 app.emsgs = [
-    { id: 1000, text: "Wrong credentials" },
+    { id: 1000, text: "Wrong 'Email' or 'Password' combination" },
     { id: 1001, text: "Create user failed" },
     { id: 1002, text: "No questions found for module" },
-    { id: 1003, text: "Registration Failed!" },
+    { id: 1003, text: "Registeration Failed!" },
 ];
 
 app.emsg = function (id) {
@@ -121,8 +117,6 @@ document.addEventListener("click", function (e) {
 })();
 
 // localhot. CHANGE BROWSER TITLE
-if (0) {
-    if (document.location.protocol == "http:") {
-	document.title = "NALA - Local";
-    }
+if (document.location.protocol == "http:") {
+    document.title = "NALA - Local";
 }

@@ -298,7 +298,6 @@
 
   .mtk-quiz__message--error   { background-color: rgba(176, 0, 32, 0.1); color: var(--mtk-error); border-left: 4px solid var(--mtk-error); }
   .mtk-quiz__message--success { background-color: rgba(0, 200, 83, 0.1); color: var(--mtk-success); border-left: 4px solid var(--mtk-success); }
-  .mtk-quiz__message--info    { background-color: rgba(10, 110, 253, 0.1); color: var(--mtk-primary); border-left: 4px solid var(--mtk-primary); }
 
   @media (max-width: $bp-md) {
     padding: $font-size-lg;

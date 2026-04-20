@@ -1,74 +1,101 @@
 window.app = window.app || {};
 
-function _buildCarouselSlides() {
-    var t = window.i18n ? window.i18n.t.bind(window.i18n) : function(k){ return k; };
-    return [
-        {
-            id: "slide-1",
-            html: `
-<div class="p-4">
-    <article class="carousel-card">
-        <h2 align="center">${t('carousel.slide1.title')}</h2>
-        <p>${t('carousel.slide1.body')}</p>
-    </article>
-</div>`
-        },
-        {
-            id: "slide-2",
-            html: `
-<div class="p-4">
-    <article class="carousel-card">
-        <h2 align="center">${t('carousel.slide2.title')}</h2>
-        <p>${t('carousel.slide2.body')}</p>
-    </article>
-</div>`
-        },
-        {
-            id: "slide-3",
-            html: `
-<div class="p-4">
-    <article class="carousel-card">
-        <h2 align="center">${t('carousel.slide3.title')}</h2>
-        <p>${t('carousel.slide3.body')}</p>
-    </article>
-</div>`
-        },
-        {
-            id: "slide-4",
-            html: `
-<div class="p-4">
-    <article class="carousel-card">
-        <h2 align="center">${t('carousel.slide4.title')}</h2>
-        <p>${t('carousel.slide4.body')}</p>
-    </article>
-</div>`
-        },
-        {
-            id: "slide-5",
-            html: `
-<div class="p-4">
-    <article class="carousel-card">
-        <h2 align="center">${t('carousel.slide5.title')}</h2>
-        <p>${t('carousel.slide5.body')}</p>
-    </article>
-</div>`
-        }
-    ];
-}
-
 window.app.carousel = {
-    id:         "mtk-carousel",
+    id: "mtk-carousel",
     startIndex: 0,
-    autoPlay:   false,
-    interval:   4000,
-    slides:     _buildCarouselSlides()
-};
+    autoPlay: false,
+    interval: 4000,
+    slides: [
+	{
+	    id: "slide-1",
+	    html: `
+<div class="p-4">
+    <article class="carousel-card">
+	<h2 align="center">
+	    Career Switcher
+	</h2>
 
-// Rebuild slides and re-render when language changes
-document.addEventListener('i18n:changed', function () {
-    if (window.app && window.app.carousel) {
-        window.app.carousel.slides = _buildCarouselSlides();
-        // Signal carousel.js to re-render
-        document.dispatchEvent(new CustomEvent('carousel:rebuild'));
-    }
-});
+	<p>
+Someone leaving an office or retail job uses the program to learn residential and
+commercial locksmithing fundamentals. By following the structured lessons and
+practicing alongside the videos, they build confidence handling basic service calls
+and entry-level jobs.
+	</p>
+    </article>
+</div>
+      `
+	},
+	{
+	    id: "slide-2",
+	    html: `
+<div class="p-4">
+    <article class="carousel-card">
+	<h2 align="center">
+	Handyman Expanding Services
+        </h2>
+
+    <p>
+A general handyman uses the program to add locksmithing as a paid service.
+Residential rekeying, deadbolt installation, and keypad locks become add-on
+services that increase the value of each job.
+    </p>
+</article>
+</div>
+      `
+	},
+	{
+	    id: "slide-3",
+	    html: `
+<div class="p-4">
+<article class="carousel-card">
+	<h2 align="center">
+	    Automotive Focus
+        </h2>
+
+    <p>
+A learner with an interest in cars focuses on the automotive sections of the program
+to understand vehicle entry methods, key types, and modern locking systems, using
+the training as a foundation for further hands-on experience.
+    </p>
+</article>
+</div>
+      `
+	},
+	{
+	    id: "slide-4",
+	    html: `
+<div class="p-4">
+<article class="carousel-card">
+	<h2 align="center">
+	    Business Builder
+        </h2>
+
+    <p>
+Someone with technical skills but no business background follows the business
+modules to understand pricing, licensing considerations, customer communication,
+and marketing fundamentals before launching a locksmith service.
+    </p>
+</article>
+</div>
+      `
+	},
+	{
+	    id: "slide-5",
+	    html: `
+<div class="p-4">
+<article class="carousel-card">
+	<h2 align="center">
+	    Supplemental Trade Skill
+        </h2>
+
+    <p>
+An electrician or security technician uses the program to better understand locks,
+doors, and access control hardware, allowing them to coordinate more effectively
+on job sites and offer broader solutions.
+    </p>
+</article>
+</div>
+      `
+	}
+    ]
+};
