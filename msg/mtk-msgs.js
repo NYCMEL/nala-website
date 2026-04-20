@@ -1,4 +1,14 @@
 // mtk-msgs.js - Material Design message panel component
+(function () {
+if (window.__mtkMsgsScriptLoaded) {
+    if (typeof window.initMtkMsgs === 'function') {
+	window.initMtkMsgs();
+    }
+    return;
+}
+
+window.__mtkMsgsScriptLoaded = true;
+
 class MTKMsgs {
     constructor(element) {
 	this.element = element;
@@ -29,8 +39,8 @@ class MTKMsgs {
 	}
 
 	// Load configuration
-	if (typeof mtkMsgsConfig !== 'undefined') {
-	    this.config = mtkMsgsConfig;
+	if (window.mtkMsgsConfig) {
+	    this.config = window.mtkMsgsConfig;
 	}
 
 	// Bind events
@@ -330,6 +340,8 @@ class MTKMsgs {
     }
 }
 
+window.MTKMsgs = MTKMsgs;
+
 // Wait for DOM and initialize
 function initMtkMsgs() {
     const element = document.querySelector('.mtk-msgs');
@@ -337,6 +349,8 @@ function initMtkMsgs() {
 	element._mtkMsgsInstance = new MTKMsgs(element);
     }
 }
+
+window.initMtkMsgs = initMtkMsgs;
 
 // Try to initialize immediately if DOM is ready
 if (document.readyState === 'loading') {
@@ -369,3 +383,4 @@ observer.observe(document.body, {
     childList: true,
     subtree: true
 });
+}());

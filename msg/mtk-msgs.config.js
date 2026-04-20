@@ -1,5 +1,5 @@
 // mtk-msgs configuration
-const mtkMsgsConfig = {
+window.mtkMsgsConfig = window.mtkMsgsConfig || {
   messages: {
     info: {
       type: 'info',
