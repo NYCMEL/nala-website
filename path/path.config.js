@@ -1,56 +1,79 @@
 (function () {
     window.app = window.app || {};
 
-    window.app.path = {
-        heading: "Choose Your Training Package",
-        subheading: "Pick the option that fits your goals—start free, upgrade anytime, or launch with Business-in-a-Box.",
-        plans: [
-            {
-                id: "trial",
-                title: "Trial",
-                price: "$0",
-                period: "",
-                description: "Explore the program with a small preview before you commit.",
-                features: [
-                    "Introduction to Locksmithing",
-                    "3 free lessons",
-                    "Preview the learning platform",
-                    "Upgrade anytime"
-                ],
-                cta: "Get Started",
-                popular: false
-            },
-            {
-                id: "premium",
-                title: "Premium",
-                price: "$1,999",
-                period: "One-time payment · financing up to 24 months available via Klarna",
-                description: "Full program access with a certificate of completion.",
-                features: [
-                    "Full program access (all 5 parts)",
-                    "Full access included",
-                    "Certificate of completion",
-                    "Learn at your own pace"
-                ],
-                cta: "Get Started",
-                popular: true
-            },
-            {
-                id: "business",
-                title: "Business-in-a-Box",
-                price: "$3,999",
-                period: "One-time payment · financing up to 24 months available via Klarna",
-                description: "Everything in Premium, plus tools to help you launch your locksmith business.",
-                features: [
-                    "Everything included in Premium",
-                    "Pre-built locksmith website",
-                    "Business card and branding templates",
-                    "Service pricing starter framework",
-                    "Marketing launch checklist"
-                ],
-                cta: "Get Started",
-                popular: false
-            }
-        ]
-    };
+    function getDisplayPrice(key, fallback) {
+        var pricing = window.nalaPricing || {};
+        var entry = pricing[key] || {};
+        return entry.display || fallback;
+    }
+
+    function _buildPath() {
+        var t = window.i18n ? window.i18n.t.bind(window.i18n) : function(k){ return k; };
+        return {
+            heading:    t('path.heading'),
+            subheading: t('path.subheading'),
+            plans: [
+                {
+                    id:          "trial",
+                    title:       t('path.trial.title'),
+                    price:       "$0",
+                    period:      "",
+                    description: t('path.trial.description'),
+                    features: [
+                        t('path.trial.f1'),
+                        t('path.trial.f2'),
+                        t('path.trial.f3'),
+                        t('path.trial.f4')
+                    ],
+                    cta:     t('path.cta'),
+                    popular: false
+                },
+                {
+                    id:          "premium",
+                    title:       t('path.premium.title'),
+                    price:       getDisplayPrice('premium', "$1,999"),
+                    period:      t('path.premium.period'),
+                    description: t('path.premium.description'),
+                    features: [
+                        t('path.premium.f1'),
+                        t('path.premium.f2'),
+                        t('path.premium.f3'),
+                        t('path.premium.f4'),
+                        t('path.premium.f5')
+                    ],
+                    cta:     t('path.cta'),
+                    popular: true
+                },
+                {
+                    id:          "business",
+                    title:       t('path.business.title'),
+                    price:       getDisplayPrice('business_full', "$3,998"),
+                    period:      t('path.business.period'),
+                    description: t('path.business.description'),
+                    features: [
+                        t('path.business.f1'),
+                        t('path.business.f2'),
+                        t('path.business.f3'),
+                        t('path.business.f4'),
+                        t('path.business.f5')
+                    ],
+                    cta:     t('path.cta'),
+                    popular: false
+                }
+            ]
+        };
+    }
+
+    window.app.path = _buildPath();
+
+    // Rebuild on language change
+    document.addEventListener('i18n:changed', function () {
+        window.app.path = _buildPath();
+        document.dispatchEvent(new CustomEvent('path:rebuild'));
+    });
+
+    document.addEventListener('nala-pricing:updated', function () {
+        window.app.path = _buildPath();
+        document.dispatchEvent(new CustomEvent('path:rebuild'));
+    });
 })();
