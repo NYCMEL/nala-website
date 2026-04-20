@@ -4,8 +4,8 @@
     <style>
         #editModeBar .bar-inner { min-height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;width:100%;box-sizing:border-box }
         #editModeBar .bar-title { display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden }
-        #editModeBar .bar-title .t-nala { font-size:20px;font-weight:700;color:#1565c0;text-transform:uppercase;letter-spacing:0.05em }
-        #editModeBar .bar-title .t-sub  { font-size:16px;font-weight:400;color:#666;display:inline-flex;align-items:center;gap:2px;white-space:nowrap }
+        #editModeBar .bar-title .t-nala { font-size:20px;font-weight:700;color:#ffffff;text-transform:uppercase;letter-spacing:0.05em }
+        #editModeBar .bar-title .t-sub  { font-size:13px;font-weight:400;color:#adb5bd;display:inline-flex;align-items:center;gap:2px;white-space:nowrap }
         #editModeBar .bar-controls { display:flex;align-items:center;gap:8px;flex-shrink:0 }
         #editModeBar .bar-label { font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap }
         #editModeBar #saveChangesBtn { white-space:nowrap;padding:6px 14px;font-size:13px;font-weight:600;border:none;border-radius:20px;background:#1565c0;color:#fff;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,0.2) }
@@ -19,15 +19,13 @@
     <div id="editModeBar" style="display:none;position:sticky;top:0;z-index:1000;
         flex-direction:column;
         margin:-24px -24px 0 -24px;
-        background:linear-gradient(135deg,#e3f2fd,#bbdefb);
+        background:#212529;
         box-shadow:0 2px 8px rgba(0,0,0,0.15)">
         <div class="bar-inner">
             <!-- Title -->
             <span class="bar-title">
                 <span class="t-nala">NALA</span>
-                <span class="t-sub"><span class="material-icons" style="font-size:18px;color:#000">chevron_right</span>
-		    Business in a Box
-		</span>
+                <span class="t-sub"><span class="material-icons" style="font-size:16px;color:#adb5bd">chevron_right</span>Go Live</span>
             </span>
             <!-- Switch + Save -->
             <div class="bar-controls">
@@ -36,7 +34,7 @@
                     onmouseout="this.style.background='#1565c0'">
                     Save Changes
                 </button>
-                <span class="bar-label" style="color:#546e7a"
+                <span class="bar-label" style="color:#adb5bd"
                     onclick="document.getElementById('editModeToggle').checked=false;document.getElementById('editModeToggle').dispatchEvent(new Event('change'))">Review</span>
                 <label class="edit-switch" style="position:relative;display:inline-block;width:44px;height:24px;cursor:pointer;flex-shrink:0">
                     <input type="checkbox" id="editModeToggle" style="opacity:0;width:0;height:0">
@@ -44,11 +42,11 @@
                     <span class="edit-switch-knob" style="position:absolute;height:18px;width:18px;left:3px;bottom:3px;
                         background:#fff;border-radius:50%;transition:0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.3)"></span>
                 </label>
-                <span class="bar-label" style="color:#1565c0"
+                <span class="bar-label" style="color:#90caf9"
                     onclick="document.getElementById('editModeToggle').checked=true;document.getElementById('editModeToggle').dispatchEvent(new Event('change'))">Edit</span>
             </div>
         </div>
-        <div id="editModeHint" style="display:none;padding:0 24px 6px;margin-top:-8px;font-size:11px;font-style:italic;color:#546e7a">
+        <div id="editModeHint" style="display:none;padding:0 24px 6px;margin-top:-8px;font-size:11px;font-style:italic;color:#adb5bd">
             Editable fields are marked with blue dashed borders. Please update as necessary.
         </div>
     </div>
