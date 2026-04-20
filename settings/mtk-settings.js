@@ -178,8 +178,7 @@ if (typeof MtkSettings === 'undefined') {
 	exitEditMode() {
             this.state.editMode = false;
             this.elements.currentPassword.disabled = true;
-            this.elements.currentPassword.value    =
-		this.maskPassword(this.config.user.currentPassword);
+            this.elements.currentPassword.value    = this.maskPassword(this.config.user.currentPassword);
             this.elements.newPasswordGroup.classList.add('mtk-settings__hidden');
             this.elements.confirmPasswordGroup.classList.add('mtk-settings__hidden');
             this.elements.newPassword.value    = '';
@@ -221,7 +220,7 @@ if (typeof MtkSettings === 'undefined') {
                     icon:     type === 'success' ? 'success' : 'error',
                     message:  message,
                     closable: true,
-                    timer:    10
+                    timer:    0
                 });
                 return;
             }
