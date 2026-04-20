@@ -92,6 +92,7 @@
       const stateField = this.config.form.fields.find(f => f.id === 'state');
       if (!stateField || !stateField.options) return;
 
+      select.innerHTML = '';
       stateField.options.forEach(opt => {
         const option = document.createElement('option');
         option.value = opt.value;
@@ -182,14 +183,48 @@
 
       const data = this._collectFormData();
 
-      this._publish(this.config.events.submit, {
-        id:        this.config.id,
+      const payload = {
+        id: this.config.id,
         timestamp: new Date().toISOString(),
-        data
-      });
+        data: Object.assign({
+          accountEmail: (window.wc && wc.session && wc.session.user && wc.session.user.email) ? wc.session.user.email : '',
+          accountName: (window.wc && wc.session && wc.session.user && wc.session.user.name) ? wc.session.user.name : ''
+        }, data)
+      };
 
-      this._showSnackbar('success', this.config.messages.success, 'check_circle');
-      this._resetForm();
+      const deliveryEndpoint = this.config.deliveryApi && this.config.deliveryApi.enabled
+        ? String(this.config.deliveryApi.endpoint || '').trim()
+        : '';
+
+      const finishSuccess = () => {
+        this._publish(this.config.events.submit, payload);
+        this._showSnackbar('success', this.config.messages.success, 'check_circle');
+        this._resetForm();
+      };
+
+      if (!deliveryEndpoint) {
+        finishSuccess();
+        return;
+      }
+
+      fetch(deliveryEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          source: 'nala-gift',
+          submittedAt: payload.timestamp,
+          form: payload.data
+        })
+      }).then(async (res) => {
+        if (!res.ok) {
+          const text = await res.text().catch(() => '');
+          throw new Error(text || 'Gift delivery request failed.');
+        }
+        finishSuccess();
+      }).catch((err) => {
+        console.error('[MTKGift] delivery request failed', err);
+        this._showSnackbar('error', err.message || 'Could not submit gift request.', 'error_outline');
+      });
     }
 
     // ── Private: Handle cancel ────────────────────────────────────────────────
@@ -224,6 +259,20 @@
         }
       });
 
+      // State must be a valid configured US state or territory
+      const stateSelect = this.el.querySelector('#mtk-gift-state');
+      if (stateSelect) {
+        const allowed = (this.config.form.fields.find(f => f.id === 'state')?.options || []).map(opt => String(opt.value || '')).filter(Boolean);
+        if (!allowed.includes(String(stateSelect.value || '').trim())) {
+          stateSelect.classList.add('is-invalid');
+          stateSelect.setAttribute('aria-invalid', 'true');
+          const wrapper = stateSelect.closest('[data-field]');
+          const errorSpan = wrapper ? wrapper.querySelector('.mtk-gift__field-error') : null;
+          if (errorSpan) errorSpan.classList.add('is-visible');
+          isValid = false;
+        }
+      }
+
       // ZIP pattern validation
       const zipInput = this.el.querySelector('#mtk-gift-zip');
       if (zipInput && zipInput.value) {
@@ -254,6 +303,7 @@
       const fd = new FormData(form);
       const data = {};
       fd.forEach((value, key) => { data[key] = value; });
+      data.country = 'US';
       return data;
     }
 

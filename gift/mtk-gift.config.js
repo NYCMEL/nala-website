@@ -112,7 +112,15 @@ const MTKGiftConfig = {
             { value: "WA", label: "WA" },
             { value: "WV", label: "WV" },
             { value: "WI", label: "WI" },
-            { value: "WY", label: "WY" }
+            { value: "WY", label: "WY" },
+
+            { value: "DC", label: "DC" },
+            { value: "AS", label: "AS" },
+            { value: "GU", label: "GU" },
+            { value: "MP", label: "MP" },
+            { value: "PR", label: "PR" },
+            { value: "UM", label: "UM" },
+            { value: "VI", label: "VI" },
           ]
         },
         {
@@ -152,6 +160,10 @@ const MTKGiftConfig = {
       cancel: "mtk-gift:cancel",
       open: "mtk-gift:open",
       close: "mtk-gift:close"
+    },
+    deliveryApi: {
+      endpoint: "",
+      enabled: false
     }
   }
 };
