@@ -59,17 +59,21 @@ class ClientProfile {
 	    // Set active style on load
 	    if (tab.classList.contains('active')) {
 		tab.style.color = '#fff'
-		tab.style.borderBottomColor = '#90caf9'
+		tab.style.borderBottomColor = '#9a7625'
 	    }
 	    tab.addEventListener('click', () => {
 		tabs.forEach(t => {
 		    t.classList.remove('active')
 		    t.style.color = '#adb5bd'
+		    t.style.background = 'none'
 		    t.style.borderBottomColor = 'transparent'
+		    t.style.borderRadius = '0'
 		})
 		tab.classList.add('active')
-		tab.style.color = '#fff'
-		tab.style.borderBottomColor = '#90caf9'
+		tab.style.color = '#000'
+		tab.style.background = '#fff'
+		tab.style.borderBottomColor = '#9a7625'
+		tab.style.borderRadius = '5px 5px 0 0'
 		wc.log('[client] edit tab →', tab.dataset.editTab)
 		wc.publish('client:edit-tab', { tab: tab.dataset.editTab })
 	    })
