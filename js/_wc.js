@@ -1601,6 +1601,15 @@ wc.fixFooter = function() {
     const footer = document.getElementById("page-footer");
     if (!footer) return;
 
+    if (wc._adjustFooter) {
+        window.removeEventListener("load", wc._adjustFooter);
+        window.removeEventListener("resize", wc._adjustFooter);
+    }
+    if (wc._adjustFooterTimeout) {
+        clearTimeout(wc._adjustFooterTimeout);
+        wc._adjustFooterTimeout = null;
+    }
+
     wc._adjustFooter = function() {
         footer.style.position = "static";
         footer.style.bottom = "";
@@ -1625,7 +1634,7 @@ wc.fixFooter = function() {
     window.addEventListener("load", wc._adjustFooter);
     window.addEventListener("resize", wc._adjustFooter);
 
-    setTimeout(wc._adjustFooter, 50);
+    wc._adjustFooterTimeout = setTimeout(wc._adjustFooter, 50);
 };
 
 
@@ -1639,6 +1648,10 @@ wc.unfixFooter = function() {
     if (wc._adjustFooter) {
         window.removeEventListener("load", wc._adjustFooter);
         window.removeEventListener("resize", wc._adjustFooter);
+    }
+    if (wc._adjustFooterTimeout) {
+        clearTimeout(wc._adjustFooterTimeout);
+        wc._adjustFooterTimeout = null;
     }
 
     footer.style.removeProperty("position");
