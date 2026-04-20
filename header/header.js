@@ -31,21 +31,24 @@ $(document).on("click", function(e) {
     }
 });
 
-// Dropdown item actions
+// Dropdown item actions — always close dropdown after selection
 $(document).on("click", "#header-dd-profile", function(e) {
     e.preventDefault();
+    $("#nala-user-dd").hide();
     wc.log("mtk-header-settings");
     wc.publish("mtk-header-settings");
 });
 
 $(document).on("click", "#header-dd-client", function(e) {
     e.preventDefault();
+    $("#nala-user-dd").hide();
     wc.log("mtk-header-client → /client");
     window.location.href = "client/index.html";
 });
 
 $(document).on("click", "#header-dd-logout", function(e) {
     e.preventDefault();
+    $("#nala-user-dd").hide();
     wc.log("mtk-header-logout");
     wc.publish("mtk-header-logout");
 });
