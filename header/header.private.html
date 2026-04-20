@@ -4,8 +4,18 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="header">
     <div class="container">
 	<a class="navbar-brand" href="#" id="header-logo-private"><img src="img/logo-nala-association.webp" height="60"> </a>
-	
+
+	<!-- Language toggle: right of logo, desktop only, vertically centered -->
+	<button type="button" class="nala-lang-toggle d-none d-lg-inline-flex align-self-center ms-2" aria-label="Switch language">
+	    <span class="nala-lang-inner">
+		<span class="nala-lang-option" data-lang="en">EN</span>
+		<span class="nala-lang-option" data-lang="es">ES</span>
+		<span class="nala-lang-slider"></span>
+	    </span>
+	</button>
+
 	<div class="d-flex align-items-center gap-2 ms-auto d-lg-none">
+	    <!-- Mobile: lang toggle + hamburger side by side -->
 	    <button type="button" class="nala-lang-toggle" aria-label="Switch language">
 		<span class="nala-lang-inner">
 		    <span class="nala-lang-option" data-lang="en">EN</span>
@@ -22,14 +32,8 @@
 	    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 	    </ul>
 
-	    <div class="d-flex" role="search">
-		<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-		    <li class="nav-item">
-			<a class="nav-link" aria-current="page" href="#" id="mtk-header-settings">
-			    <i class="fa fa-user-circle"></i>&nbsp;<span id="uname"></span>&nbsp;&nbsp;
-			</a>
-		    </li>
-
+	    <div class="d-flex align-items-center gap-2" role="search">
+		<ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
 		    <li class="nav-item">
 			<a class="nav-link active" aria-current="page" href="#" id="mtk-header-dashboard">
 			    <i class="fa fa-dashboard"></i>
@@ -45,22 +49,34 @@
 		    </li>
 
 		    <li class="nav-item">
-			<a class="nav-link text-light" aria-current="page" href="#" id="mtk-header-logout">
-			    <i class="fa fa-sign-out"></i>
-			    <span data-i18n="nav.logout">Logout</span>
-			</a>
+			<button type="button" class="btn btn-dark" id="mtk-header-messages" disabled><i class="fa fa-bell fa-lg"></i></button>
 		    </li>
 
-		    <button type="button" class="btn btn-dark" id="mtk-header-messages" disabled><i class="fa fa-bell fa-lg"></i></button>
-		    <!-- <button type="button" class="btn btn-dark" id="mtk-header-settings"><i class="fa fa-cog fa-lg"></i></button> -->
+		    <!-- User dropdown (manual toggle, no Popper needed) -->
+		    <li class="nav-item" style="position:relative">
+			<a class="nav-link nala-user-menu" href="#" id="mtk-header-settings" style="white-space:nowrap">
+			    <i class="fa fa-user-circle"></i>&nbsp;<span id="uname"></span>&nbsp;<i class="fa fa-caret-down" style="font-size:11px;opacity:0.7"></i>
+			</a>
+			<ul class="dropdown-menu dropdown-menu-end" id="nala-user-dd" style="display:none;position:absolute;right:0;top:100%;z-index:9999;min-width:210px">
+			    <li>
+				<a class="dropdown-item" href="#" id="header-dd-profile">
+				    <i class="fa fa-cog me-2"></i>Profile Settings
+				</a>
+			    </li>
+			    <li>
+				<a class="dropdown-item" href="#" id="header-dd-client">
+				    <i class="fa fa-briefcase me-2"></i>Business In a Box
+				</a>
+			    </li>
+			    <li><hr class="dropdown-divider"></li>
+			    <li>
+				<a class="dropdown-item text-danger" href="#" id="header-dd-logout">
+				    <i class="fa fa-sign-out me-2"></i>Logout
+				</a>
+			    </li>
+			</ul>
+		    </li>
 		</ul>
-		<button type="button" class="nala-lang-toggle d-none d-lg-inline-flex ms-3" aria-label="Switch language">
-		    <span class="nala-lang-inner">
-			<span class="nala-lang-option" data-lang="en">EN</span>
-			<span class="nala-lang-option" data-lang="es">ES</span>
-			<span class="nala-lang-slider"></span>
-		    </span>
-		</button>
 	    </div>
 	</div>
     </div>

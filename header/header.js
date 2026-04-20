@@ -1,15 +1,53 @@
 // PUBLISH ALL CLICKS
-$(".nav-link, .navbar-brand, .btn").on("click", function(e) {
+// Use delegated handler so exclusions work even after wc-include injects the HTML
+$(document).on("click", ".nav-link, .navbar-brand, .btn", function(e) {
+    // Skip dropdown toggle — let Bootstrap handle it
+    if (this.id === "mtk-header-settings" || $(this).hasClass("nala-user-menu") || $(this).hasClass("dropdown-item")) return;
+
     e.preventDefault();
     e.stopPropagation();
     e.stopImmediatePropagation();
-    
+
     let eid = this.id;
 
     headerSelect(eid);
 
     let msg = eid; wc.log(msg);
     wc.publish(msg);
+});
+
+// Manual user dropdown toggle (avoids Popper dependency)
+$(document).on("click", "#mtk-header-settings, .nala-user-menu", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var dd = $("#nala-user-dd");
+    dd.toggle();
+});
+
+// Close dropdown when clicking outside
+$(document).on("click", function(e) {
+    if (!$(e.target).closest("#mtk-header-settings, #nala-user-dd, .nala-user-menu").length) {
+        $("#nala-user-dd").hide();
+    }
+});
+
+// Dropdown item actions
+$(document).on("click", "#header-dd-profile", function(e) {
+    e.preventDefault();
+    wc.log("mtk-header-settings");
+    wc.publish("mtk-header-settings");
+});
+
+$(document).on("click", "#header-dd-client", function(e) {
+    e.preventDefault();
+    wc.log("mtk-header-client → /client");
+    window.location.href = "client/index.html";
+});
+
+$(document).on("click", "#header-dd-logout", function(e) {
+    e.preventDefault();
+    wc.log("mtk-header-logout");
+    wc.publish("mtk-header-logout");
 });
 
 function headerSelect(id) {

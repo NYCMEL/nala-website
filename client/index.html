@@ -25,7 +25,7 @@
 	<link href="css/fonts/fonts.css" rel="stylesheet">
 
 	<!-- APPLICATION STYLES -->
-	<link href="css/app.css" rel="stylesheet">
+	<link href="css/nala.css" rel="stylesheet">
     </head>
 
     <body id="wc">
@@ -41,16 +41,29 @@
 	
 	<!-- YOUR CODE FROM HERE... -->
 
-	<!-- CLIENT -->
-	<div style="border:2px red dashed">
-	    <link href="client/client.css" rel="stylesheet">
-	    
-	    <wc-include href="client/client.html"/>
+	<link href="client/css/client.css" rel="stylesheet">
 
-	    <script src="client/client.config.js"></script>
-	    <script src="client/client.js"></script>
+	<!-- CLIENT -->
+	<script src="client/js/client.js"></script>
+
+	<div>
+	    <wc-include href="client/client.html"/>
 	</div>
 
-	<!-- YOUR CODE TO HERE -->
+	<script>
+	    // After client.js is defined, load /websites/{nalaUID}.js if param present
+	    // Must run AFTER wc-include fires so DOM exists, but client.js already defines window.client
+	    (function() {
+		var uid = new URLSearchParams(window.location.search).get('nalaUID');
+		if (!uid || !/^[a-zA-Z0-9_-]+$/.test(uid)) return;
+		console.log('[client] nalaUID=' + uid + ' — loading /websites/' + uid + '.js');
+		var s = document.createElement('script');
+		s.src = 'websites/' + uid + '.js';
+		s.onerror = function() {
+		    console.warn('[client] /websites/' + uid + '.js not found — no config loaded');
+		};
+		document.body.appendChild(s);
+	    })();
+	</script>
     </body>
 </html>
