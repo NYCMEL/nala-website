@@ -207,12 +207,37 @@
             price.className = 'mtk-dashboard__card-price';
             price.textContent = option.price || '';
 
+            // If Active, append "Click here to view Business in a Box" to description
+            const isActive = (option.price || '').trim().toLowerCase() === 'active';
+            if (isActive) {
+                const cta = document.createElement('span');
+                cta.className = 'mtk-dashboard__card-cta';
+                cta.textContent = ' Click here to view Business in a Box.';
+                cta.style.cssText = 'display:block;margin-top:6px;font-size:0.85em;font-style:italic;opacity:0.8;cursor:pointer';
+                description.appendChild(cta);
+            }
+
             card.appendChild(icon);
             card.appendChild(title);
             card.appendChild(description);
             card.appendChild(price);
 
-            if (option.clickable !== false) {
+            if (isActive) {
+                // Active cards always clickable — navigate to client
+                card.setAttribute('role', 'button');
+                card.setAttribute('tabindex', '0');
+                card.style.cursor = 'pointer';
+                card.addEventListener('click', () => {
+                    wc.log('[dashboard] Active card clicked → client page');
+                    window.location.href = 'client/index.html';
+                });
+                card.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        window.location.href = 'client/index.html';
+                    }
+                });
+            } else if (option.clickable !== false) {
                 card.addEventListener('click', () => this.handleSubscriptionClick(option));
                 card.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
