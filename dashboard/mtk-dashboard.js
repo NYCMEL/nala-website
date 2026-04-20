@@ -208,7 +208,7 @@
             price.textContent = option.price || '';
 
             // If Active, append "Click here to view Business in a Box" to description
-            const isActive = (option.price || '').trim().toLowerCase() === 'active';
+            const isActive = (option.price || '').trim().toLowerCase() === 'active' && (option.id || '').includes('business');
             if (isActive) {
                 const cta = document.createElement('span');
                 cta.className = 'mtk-dashboard__card-cta';
