@@ -1,11 +1,11 @@
 /**
  * mtk-final.config.js
- * Safe to load multiple times — uses window guard instead of const.
+ * Always overwrite config so stale values do not survive across page loads/navigation.
  */
 
-window.MTK_FINAL_CONFIG = window.MTK_FINAL_CONFIG || {
+window.MTK_FINAL_CONFIG = {
     user: {
-        currentEmail: 'mel@google.com'
+        currentEmail: ''
     },
 
     strings: {
