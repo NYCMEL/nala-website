@@ -85,12 +85,26 @@
 <script src="header/header.js"></script>
 
 <script>
- wc.timeout(function(){
-     try {
-	 $("#uname").html(wc.session.user.name);
+ // Watch #uname and always reduce to first name only
+ (function() {
+     function setFirstName() {
+	 var el = document.getElementById('uname');
+	 if (!el) return;
+	 var full = el.textContent || el.innerHTML || '';
+	 var first = full.trim().split(' ')[0];
+	 if (first && el.innerHTML !== first) el.innerHTML = first;
      }
-     catch(e) {
-	 console.info("header.private.html: NO user.name YET...");
+
+     // MutationObserver — fires whenever _wc.js sets full name
+     var observer = new MutationObserver(setFirstName);
+     function attachObserver() {
+	 var el = document.getElementById('uname');
+	 if (el) {
+	     observer.observe(el, { childList: true, characterData: true, subtree: true });
+	 } else {
+	     setTimeout(attachObserver, 100);
+	 }
      }
- }, 300, 1);
+     attachObserver();
+ })();
 </script>

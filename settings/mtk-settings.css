@@ -95,7 +95,7 @@
 
 .mtk-settings__input:disabled {
   color: rgba(0, 0, 0, 0.38);
-  background-color: #fafafa;
+  background-color: #ffffff;
   cursor: not-allowed; }
 
 .mtk-hidden {
@@ -276,11 +276,11 @@ h1.title::after {
   width: 100%;
   margin: 0 auto;
   color: rgba(0, 0, 0, 0.87);
-  background: #fafafa;
+  background: #ffffff;
   padding-bottom: 60px; }
 
 .mtk-settings__card {
-  background: #fafafa;
+  background: #ffffff;
   border-radius: 0;
   overflow: hidden; }
 
@@ -319,15 +319,15 @@ h1.title::after {
 .mtk-settings__input-wrapper {
   position: relative;
   display: flex;
-  align-items: center; }
+  align-items: stretch; }
 
 .mtk-settings__input--readonly {
-  background-color: #fafafa;
+  background-color: #ffffff;
   color: rgba(0, 0, 0, 0.6);
   cursor: default; }
 
 .mtk-settings__input--readonly:hover {
-  background-color: #fafafa; }
+  background-color: #ffffff; }
 
 .mtk-settings__input--password {
   padding-right: 48px;
@@ -339,8 +339,9 @@ h1.title::after {
 .mtk-settings__icon-btn {
   position: absolute;
   right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
   width: 40px;
   height: 40px;
   display: flex;
@@ -368,10 +369,12 @@ h1.title::after {
 
 .mtk-settings__icon-btn .material-icons {
   font-size: 20px;
-  user-select: none; }
-
-.mtk-settings__icon-btn .material-icons {
-  color: #a98212; }
+  user-select: none;
+  color: #a98212;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1; }
 
 .mtk-settings__actions {
   display: flex;
@@ -466,21 +469,3 @@ h1.title::after {
   .mtk-settings__actions .mtk-settings__btn {
     width: 100%;
     justify-content: center; } }
-bkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    user-select: none; }
-
-@media (max-width: 768px) {
-  .mtk-settings {
-    max-width: 100%; }
-    .mtk-settings__content {
-      padding: 16px; }
-    .mtk-settings__header {
-      padding: 16px; }
-      .mtk-settings__header h2 {
-        font-size: 20px; }
-    .mtk-settings__actions {
-      flex-direction: column; }
-      .mtk-settings__actions .mtk-settings__btn {
-        width: 100%;
-        justify-content: center; } }

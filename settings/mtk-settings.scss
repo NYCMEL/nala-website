@@ -49,7 +49,7 @@
     margin-bottom: $spacing-sm;
   }
 
-  &__input-wrapper { position: relative; display: flex; align-items: center; }
+  &__input-wrapper { position: relative; display: flex; align-items: stretch; }
 
   &__input {
     @extend %input-base;
@@ -71,8 +71,9 @@
   &__icon-btn {
     position: absolute;
     right: $spacing-sm;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
     width: 40px;
     height: 40px;
     @include flex-center;
@@ -88,8 +89,7 @@
     &:focus  { background-color: rgba(0, 0, 0, 0.08); outline: 2px solid $color-primary; outline-offset: 2px; }
     &:active { background-color: rgba(0, 0, 0, 0.12); }
 
-    .material-icons { font-size: $font-size-2xl; user-select: none; }
-    .material-icons { color: $color-gold; }
+    .material-icons { font-size: $font-size-2xl; user-select: none; color: $color-gold; display:flex; align-items: center; justify-content: center; line-height: 1; }
   }
 
   &__actions {
