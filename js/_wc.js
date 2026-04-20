@@ -1069,7 +1069,8 @@ wc.login = async function (email, passwd) {
 		// START TRACKING when logged in
 		wc.startInactivityTracking();
 
-		$("#uname").html(wc.session.user.name);
+		var _unameFirst = (wc.session.user.name || '').trim().split(' ')[0];
+		$("#uname").html(_unameFirst);
 	    } else {
 		wc.log('IS NOT LOGGED IN');
 		wc.pages.show('home');

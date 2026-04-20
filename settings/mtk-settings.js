@@ -147,6 +147,30 @@ if (typeof MtkSettings === 'undefined') {
             this.elements.updateBtn.addEventListener('click', () => this.enterEditMode());
             this.elements.saveBtn.addEventListener('click', () => this.handleSaveClick());
             this.elements.cancelBtn.addEventListener('click', () => this.exitEditMode());
+
+	    // Visibility toggles
+	    this._bindVisibilityToggle(
+		this.elements.toggleCurrentPassword,
+		this.elements.currentPassword
+	    );
+	    this._bindVisibilityToggle(
+		this.elements.toggleNewPassword,
+		this.elements.newPassword
+	    );
+	    this._bindVisibilityToggle(
+		this.elements.toggleConfirmPassword,
+		this.elements.confirmPassword
+	    );
+	}
+
+	_bindVisibilityToggle(btn, input) {
+	    if (!btn || !input) return;
+	    btn.addEventListener('click', () => {
+		const isPassword = input.type === 'password';
+		input.type = isPassword ? 'text' : 'password';
+		const icon = btn.querySelector('.material-icons');
+		if (icon) icon.textContent = isPassword ? 'visibility_off' : 'visibility';
+	    });
 	}
 
 	enterEditMode() {

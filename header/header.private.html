@@ -85,12 +85,14 @@
 <script src="header/header.js"></script>
 
 <script>
+ // Fallback: set first name if _wc.js hasn't run yet
  wc.timeout(function(){
      try {
-	 $("#uname").html(wc.session.user.name);
-     }
-     catch(e) {
-	 console.info("header.private.html: NO user.name YET...");
-     }
- }, 300, 1);
+	 var el = document.getElementById('uname');
+	 if (el && !el.innerHTML.trim()) {
+	     var first = (wc.session.user.name || '').trim().split(' ')[0];
+	     el.innerHTML = first;
+	 }
+     } catch(e) {}
+ }, 500, 1);
 </script>
