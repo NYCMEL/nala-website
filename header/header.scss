@@ -4,25 +4,38 @@
 .nav-link.active[id="mtk-header-register"],
 .nav-link.active[id="mtk-header-login"],
 .nav-link.active[id="mtk-header-dashboard"],
-.nav-link.active[id="mtk-header-hierarchy"] {
+.nav-link.active[id="mtk-header-hierarchy"],
+.nav-link.active[id="mtk-header-settings"] {
   color: $color-gold !important;
 }
 
 .navbar-nav .nav-link {
   border-radius: 0 !important;
+  color: rgba(255, 255, 255, 0.84) !important;
 }
 
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-link.active:hover,
 .nav-link:hover {
+  color: rgba(255, 255, 255, 0.96) !important;
   text-decoration: none !important;
+}
+
+.navbar-nav .nav-link.active[id="mtk-header-home"]:hover,
+.navbar-nav .nav-link.active[id="mtk-header-register"]:hover,
+.navbar-nav .nav-link.active[id="mtk-header-login"]:hover,
+.navbar-nav .nav-link.active[id="mtk-header-dashboard"]:hover,
+.navbar-nav .nav-link.active[id="mtk-header-hierarchy"]:hover,
+.navbar-nav .nav-link.active[id="mtk-header-settings"]:hover {
+  color: $color-gold !important;
 }
 
 .navbar-nav .nav-link.active[id="mtk-header-home"],
 .navbar-nav .nav-link.active[id="mtk-header-register"],
 .navbar-nav .nav-link.active[id="mtk-header-login"],
 .navbar-nav .nav-link.active[id="mtk-header-dashboard"],
-.navbar-nav .nav-link.active[id="mtk-header-hierarchy"] {
+.navbar-nav .nav-link.active[id="mtk-header-hierarchy"],
+.navbar-nav .nav-link.active[id="mtk-header-settings"] {
   border-bottom: 2px $color-gold solid !important;
 }
 
@@ -31,15 +44,18 @@
 .navbar-nav .nav-link.active[id="mtk-header-login"] i,
 .navbar-nav .nav-link.active[id="mtk-header-dashboard"] i,
 .navbar-nav .nav-link.active[id="mtk-header-hierarchy"] i,
+.navbar-nav .nav-link.active[id="mtk-header-settings"] i,
 .navbar-nav .nav-link.active[id="mtk-header-home"] .fa,
 .navbar-nav .nav-link.active[id="mtk-header-register"] .fa,
 .navbar-nav .nav-link.active[id="mtk-header-login"] .fa,
 .navbar-nav .nav-link.active[id="mtk-header-dashboard"] .fa,
 .navbar-nav .nav-link.active[id="mtk-header-hierarchy"] .fa,
+.navbar-nav .nav-link.active[id="mtk-header-settings"] .fa,
 .navbar-nav .nav-link.active[id="mtk-header-home"] .material-icons,
 .navbar-nav .nav-link.active[id="mtk-header-register"] .material-icons,
 .navbar-nav .nav-link.active[id="mtk-header-login"] .material-icons,
 .navbar-nav .nav-link.active[id="mtk-header-dashboard"] .material-icons,
-.navbar-nav .nav-link.active[id="mtk-header-hierarchy"] .material-icons {
+.navbar-nav .nav-link.active[id="mtk-header-hierarchy"] .material-icons,
+.navbar-nav .nav-link.active[id="mtk-header-settings"] .material-icons {
   color: $color-gold;
 }

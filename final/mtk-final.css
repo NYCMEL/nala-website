@@ -101,7 +101,7 @@ body {
   font-size: 16px;
   line-height: 1.6;
   color: #212121;
-  background-color: #fafafa;
+  background-color: #ffffff;
   margin: 0;
   padding: 0;
   margin-top: 80px; }
@@ -136,7 +136,8 @@ a:hover {
 .nav-link.active[id="mtk-header-register"],
 .nav-link.active[id="mtk-header-login"],
 .nav-link.active[id="mtk-header-dashboard"],
-.nav-link.active[id="mtk-header-hierarchy"] {
+.nav-link.active[id="mtk-header-hierarchy"],
+.nav-link.active[id="mtk-header-settings"] {
   color: #a98212 !important; }
 
 #page-content {

@@ -18,7 +18,8 @@ function headerSelect(id) {
         "mtk-header-register",
         "mtk-header-login",
         "mtk-header-dashboard",
-        "mtk-header-hierarchy"
+        "mtk-header-hierarchy",
+        "mtk-header-settings"
     ];
 
     $(".nav-link, .navbar-brand, .btn").removeClass("active");

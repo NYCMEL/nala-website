@@ -94,7 +94,7 @@ $color-info-text:         #055160;   // msgs info text
 // — Neutrals & Surfaces —
 $color-white:             #ffffff;
 $color-bg-light:          #f5f5f5;   // settings input bg, client bg
-$color-bg-lighter:        #fafafa;   // settings readonly, dashboard card, hierarchy bg
+$color-bg-lighter:        #ffffff;   // main page background, settings readonly, dashboard card
 $color-bg-page:           #f5f7fb;   // path section bg
 $color-bg-stats:          #f5f8ff;   // stats section bg
 $color-bg-courses:        #eef2ff;   // courses level badge bg
@@ -127,9 +127,9 @@ $color-divider-dialog:    #e7e0ec;   // dialog divider
 $color-overlay-dark:      rgba(0, 0, 0, 0.5);
 $color-overlay-white-08:  rgba(255, 255, 255, 0.08);
 $color-overlay-white-16:  rgba(255, 255, 255, 0.16);
-$color-footer-text:       rgba(255, 255, 255, 0.87);
-$color-footer-muted:      rgba(255, 255, 255, 0.60);
-$color-footer-dim:        rgba(255, 255, 255, 0.38);
+$color-footer-text:       rgba(255, 255, 255, 0.96);
+$color-footer-muted:      rgba(255, 255, 255, 0.78);
+$color-footer-dim:        rgba(255, 255, 255, 0.62);
 $color-footer-divider:    rgba(255, 255, 255, 0.12);
 
 
@@ -638,7 +638,8 @@ a {
 .nav-link.active[id="mtk-header-register"],
 .nav-link.active[id="mtk-header-login"],
 .nav-link.active[id="mtk-header-dashboard"],
-.nav-link.active[id="mtk-header-hierarchy"] {
+.nav-link.active[id="mtk-header-hierarchy"],
+.nav-link.active[id="mtk-header-settings"] {
   color: $color-gold !important;
 }
 
