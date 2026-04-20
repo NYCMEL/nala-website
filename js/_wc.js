@@ -595,6 +595,24 @@ wc.subscribe   = PubSub.subscribe;
 class Include extends HTMLElement {
     constructor() { super(); }
 
+    _activateScripts() {
+        const scripts = Array.from(this.querySelectorAll("script"));
+
+        scripts.forEach((oldScript) => {
+            const newScript = document.createElement("script");
+
+            Array.from(oldScript.attributes).forEach((attr) => {
+                newScript.setAttribute(attr.name, attr.value);
+            });
+
+            if (!oldScript.src) {
+                newScript.textContent = oldScript.textContent || "";
+            }
+
+            oldScript.parentNode.replaceChild(newScript, oldScript);
+        });
+    }
+
     connectedCallback() {
         const self = this;
         const href = $(this).attr("href");
@@ -617,6 +635,7 @@ class Include extends HTMLElement {
                 dataType: "html",
                 success: function (data) {
                     $(self).html(data); // <-- INJECT INSIDE <wc-include> ITSELF
+                    self._activateScripts();
 
                     self.dispatchEvent(new CustomEvent('include:loaded', {
                         detail: { href: href, include: self },

@@ -21,10 +21,10 @@
     function showRegisterPage() {
         window.__nalaRequestedPublicPage = "register";
 
-        const pagesRef = getPagesRef();
-        if (pagesRef) {
-            pagesRef.show("register");
-        }
+	const pagesRef = getPagesRef();
+	if (pagesRef) {
+	    pagesRef.show("register", { replaceHistory: true });
+	}
     }
 
     function bootstrapInitialPage() {
