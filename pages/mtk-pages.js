@@ -134,6 +134,7 @@ class Pages extends HTMLElement {
 	{
 	    case "login": // fix footer to bottom of page
 	    case "register":
+	    case "dashboard":
 	    wc.fixFooter();
 	    break;
 
