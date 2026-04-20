@@ -53,3 +53,61 @@ function toggleNavbar() {
         }, 100);
     }
 }
+
+(function initLangToggle() {
+    function setActive(lang) {
+        document.querySelectorAll('.nala-lang-toggle').forEach(function (btn) {
+            var enOpt = btn.querySelector('[data-lang="en"]');
+            var esOpt = btn.querySelector('[data-lang="es"]');
+            var slider = btn.querySelector('.nala-lang-slider');
+
+            if (lang === 'es') {
+                btn.classList.add('nala-lang-es');
+                if (enOpt) enOpt.classList.remove('nala-lang-active');
+                if (esOpt) esOpt.classList.add('nala-lang-active');
+                if (slider) slider.style.transform = 'translateX(100%)';
+            } else {
+                btn.classList.remove('nala-lang-es');
+                if (enOpt) enOpt.classList.add('nala-lang-active');
+                if (esOpt) esOpt.classList.remove('nala-lang-active');
+                if (slider) slider.style.transform = 'translateX(0)';
+            }
+        });
+    }
+
+    function bindToggles() {
+        document.querySelectorAll('.nala-lang-toggle').forEach(function (btn) {
+            if (btn.dataset.langBound === '1') return;
+            btn.dataset.langBound = '1';
+
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var current = window.i18n ? window.i18n.getLang() : 'en';
+                var next = current === 'en' ? 'es' : 'en';
+                if (window.i18n) window.i18n.setLang(next);
+                setActive(next);
+            });
+        });
+    }
+
+    function initState() {
+        var lang = window.i18n ? window.i18n.getLang() : 'en';
+        setActive(lang);
+        bindToggles();
+    }
+
+    document.addEventListener('include:loaded', function () {
+        setTimeout(initState, 50);
+    });
+
+    document.addEventListener('i18n:changed', function (e) {
+        setActive(e.detail && e.detail.lang ? e.detail.lang : 'en');
+    });
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initState);
+    } else {
+        initState();
+    }
+})();
