@@ -57,40 +57,10 @@
 	    
 	    <script src="pages/mtk-pages.config.js"></script>
 	    <script src="pages/mtk-pages.js"></script>
+	    <script src="pages/mtk-pages.shell.js"></script>
 	</div>
 
 	<!-- YOUR CODE TO HERE... -->
-
-	<script>
-	 // INITIAL PAGE
-	 wc.getSession(function (loggedIn, session, err) {
-	     if (err) return;
-	     
-	     if (loggedIn) {
-		 try {
-		     wc.timeout(function(){
-			 wc.pages.show('dashboard');
-
-			 // SHOW PUBLIC HEADER
-			 $(".app-header").hide(function() {
-			     $("#header-private").show();
-			 });
-		     }, 300, 1);
-
-		     wc.log('IS LOGGED IN');
-		 } catch(e) {
-		     console.error(e.name + ' > ' + e.message);
-		 }
-	     } else {
-		 wc.log('IS NOT LOGGED IN');
-		 
-		 // SHOW PUBLIC HEADER
-		 $(".app-header").hide(function() {
-		     $("#header-public").show();
-		 });
-	     }
-	 });
-	</script>
 
 	<!-- YOUR CODE TO HERE -->
     </body>
