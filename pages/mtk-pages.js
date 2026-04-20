@@ -143,36 +143,38 @@ class Pages extends HTMLElement {
         const state = event && event.state ? event.state : null;
         const fallbackPage = this.currentPage || (this.data && this.data[0] ? this.data[0].page : "home");
 
-        if (this.currentPage === "dashboard" && this._allowExitOnce !== true) {
-            const leave = window.confirm("Are you sure you want to leave?");
+	if (0) {
+            if (this.currentPage === "dashboard" && this._allowExitOnce !== true) {
+		const leave = window.confirm("Are you sure you want to leave?");
 
-            if (!leave) {
-                try {
-                    window.history.pushState(
-                        { app: "nala", page: "dashboard", guard: true },
-                        "",
-                        window.location.href
-                    );
-                } catch (e) {
-                    wc.warn("mtk-pages: failed to restore dashboard state", e);
-                }
+		if (!leave) {
+                    try {
+			window.history.pushState(
+                            { app: "nala", page: "dashboard", guard: true },
+                            "",
+                            window.location.href
+			);
+                    } catch (e) {
+			wc.warn("mtk-pages: failed to restore dashboard state", e);
+                    }
 
-                this._suppressNextPush = true;
-                this.show("dashboard", {
-                    fromPopState: true,
-                    replaceHistory: true,
-                    forceReload: true
-                });
-                return;
+                    this._suppressNextPush = true;
+                    this.show("dashboard", {
+			fromPopState: true,
+			replaceHistory: true,
+			forceReload: true
+                    });
+                    return;
+		}
+
+		this._allowExitOnce = true;
+		setTimeout(() => {
+                    window.history.back();
+		}, 0);
+		return;
             }
-
-            this._allowExitOnce = true;
-            setTimeout(() => {
-                window.history.back();
-            }, 0);
-            return;
-        }
-
+	}
+	
         if (this._allowExitOnce === true) {
             this._allowExitOnce = false;
             return;
