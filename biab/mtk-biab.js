@@ -214,28 +214,6 @@ class MtkBiab {
   _buildIframePanel(tab) {
     return `
       <div class="mtk-biab__iframe-panel">
-        <div class="mtk-biab__iframe-toolbar" role="toolbar" aria-label="Browser toolbar">
-          <button
-            class="mtk-biab__iframe-btn"
-            aria-label="Reload page"
-            data-action="iframe-reload"
-            data-tab-id="${tab.id}"
-          >
-            <span class="material-icons" aria-hidden="true">refresh</span>
-          </button>
-          <div class="mtk-biab__iframe-url" aria-label="Current URL">
-            <span class="material-icons" aria-hidden="true">lock</span>
-            <span>${tab.iframeUrl}</span>
-          </div>
-          <button
-            class="mtk-biab__iframe-btn"
-            aria-label="Open in new tab"
-            data-action="iframe-open"
-            data-url="${tab.iframeUrl}"
-          >
-            <span class="material-icons" aria-hidden="true">open_in_new</span>
-          </button>
-        </div>
         <iframe
           class="mtk-biab__iframe"
           id="mtk-biab-iframe-${tab.id}"
