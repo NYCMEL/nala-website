@@ -37,6 +37,7 @@
 	<!-- COMMON STUFF -->
 	<script src="js/_wc.js"></script>
 	<script src="js/app.js"></script>
+	<script src="buy/wc-purchase-flow.js"></script>
 	<script src="js/_febe.js" defer></script>
 	
 	<!-- YOUR CODE FROM HERE... -->
@@ -46,11 +47,64 @@
 	<!-- CLIENT -->
 	<script src="client/js/client.js"></script>
 
-	<div>
+	<div id="client-access-root">
 	    <wc-include href="client/client.html"/>
 	</div>
 
 	<script>
+	    (function() {
+		var uid = new URLSearchParams(window.location.search).get('nalaUID');
+		if (uid) return;
+
+		function renderLockedState(mode) {
+		    var root = document.getElementById('client-access-root');
+		    if (!root) return;
+
+		    var title = mode === 'premium' ? 'Business in a Box' : 'Business in a Box Access';
+		    var message = mode === 'premium'
+			? 'To purchase Business in a Box services, click here.'
+			: 'To gain access to the full course and Business in a Box services, click here.';
+		    var buttons = mode === 'premium'
+			? '<button type="button" class="btn btn-primary" data-purchase-plan="business">Purchase Business in a Box</button>'
+			: '<div style="display:flex;gap:12px;flex-wrap:wrap">'
+			    + '<button type="button" class="btn btn-outline-primary" data-purchase-plan="premium">Purchase Premium</button>'
+			    + '<button type="button" class="btn btn-primary" data-purchase-plan="business">Purchase Premium + Business in a Box</button>'
+			    + '</div>';
+
+		    root.innerHTML = ''
+			+ '<div class="container" style="max-width:900px;margin:120px auto 48px;padding:0 16px">'
+			+ '  <div style="background:#fff;border:1px solid #e0e0e0;border-radius:6px;padding:32px;box-shadow:0 2px 6px rgba(0,0,0,0.08)">'
+			+ '    <div style="width:56px;height:56px;border-radius:50%;background:#a98212;color:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:18px">'
+			+ '      <span class="material-icons">storefront</span>'
+			+ '    </div>'
+			+ '    <h1 style="margin:0 0 14px 0;font-size:32px;color:#212121">' + title + '</h1>'
+			+ '    <p style="margin:0 0 22px 0;font-size:18px;color:#424242">' + message + '</p>'
+			+      buttons
+			+ '  </div>'
+			+ '</div>';
+
+		    root.querySelectorAll('[data-purchase-plan]').forEach(function(btn) {
+			btn.addEventListener('click', function() {
+			    if (window.wc && wc.buy && typeof wc.buy.handlePurchasePlan === 'function') {
+				wc.buy.handlePurchasePlan(btn.getAttribute('data-purchase-plan'));
+			    }
+			});
+		    });
+
+		    if (window.wc && wc.buy && typeof wc.buy.syncPurchaseButtons === 'function') {
+			wc.buy.syncPurchaseButtons();
+		    }
+		}
+
+		wc.getSession(function(loggedIn, session) {
+		    var user = session && session.user ? session.user : {};
+		    var hasBusiness = Number(user.has_business_in_a_box || 0) === 1;
+		    var hasPremium = Number(user.has_premium || 0) === 1;
+		    if (hasBusiness) return;
+		    renderLockedState(hasPremium ? 'premium' : 'registered');
+		});
+	    })();
+
 	    // After client.js is defined, load /websites/{nalaUID}.js if param present
 	    // Must run AFTER wc-include fires so DOM exists, but client.js already defines window.client
 	    (function() {

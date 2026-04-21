@@ -181,9 +181,17 @@
                     this.elements.subscriptionGrid.appendChild(card);
                 });
             }
+
+            if (window.wc && wc.buy && typeof wc.buy.syncPurchaseButtons === 'function') {
+                wc.buy.syncPurchaseButtons();
+            }
         }
 
         createSubscriptionCard(option) {
+            if (option && option.variant === 'message') {
+                return this.createMessageCard(option);
+            }
+
             const card = document.createElement('div');
             card.className = 'mtk-dashboard__subscription-card';
             card.setAttribute('role', option.clickable === false ? 'group' : 'button');
@@ -247,6 +255,50 @@
                 });
             } else {
                 card.classList.add('mtk-dashboard__subscription-card--static');
+            }
+
+            return card;
+        }
+
+        createMessageCard(option) {
+            const card = document.createElement('div');
+            card.className = 'mtk-dashboard__message-card';
+
+            const icon = document.createElement('div');
+            icon.className = 'mtk-dashboard__message-icon';
+            icon.innerHTML = `<span class="material-icons" aria-hidden="true">${option.icon || 'work'}</span>`;
+
+            const title = document.createElement('h3');
+            title.className = 'mtk-dashboard__message-title';
+            title.textContent = option.title || '';
+
+            const description = document.createElement('p');
+            description.className = 'mtk-dashboard__message-description';
+            description.textContent = option.description || '';
+
+            const actions = document.createElement('div');
+            actions.className = 'mtk-dashboard__message-actions';
+
+            const buttons = Array.isArray(option.buttons) ? option.buttons : [];
+            buttons.forEach((btnConfig) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = btnConfig.className || 'btn btn-primary';
+                btn.textContent = btnConfig.label || 'Purchase';
+                btn.setAttribute('data-purchase-plan', btnConfig.plan || '');
+                btn.addEventListener('click', () => {
+                    if (window.wc && wc.buy && typeof wc.buy.handlePurchasePlan === 'function') {
+                        wc.buy.handlePurchasePlan(btnConfig.plan || '');
+                    }
+                });
+                actions.appendChild(btn);
+            });
+
+            card.appendChild(icon);
+            card.appendChild(title);
+            card.appendChild(description);
+            if (buttons.length) {
+                card.appendChild(actions);
             }
 
             return card;
@@ -383,12 +435,18 @@
                         clickable: false
                     },
                     {
-                        id: 'business-in-a-box',
-                        icon: 'work',
+                        id: 'business-in-a-box-message',
+                        variant: 'message',
+                        icon: 'storefront',
                         title: _t('dashboard.option.business.title', 'Business in a Box'),
-                        description: _t('dashboard.option.business.addOn', 'Add the full business package to your Premium access.'),
-                        price: getDisplayPrice('business_addon', '$1,999'),
-                        clickable: true
+                        description: _t('dashboard.option.business.purchaseOnly', 'To purchase Business in a Box services, click here.'),
+                        buttons: [
+                            {
+                                plan: 'business',
+                                label: _t('dashboard.option.business.buttonOnly', 'Purchase Business in a Box'),
+                                className: 'btn btn-primary'
+                            }
+                        ]
                     }
                 ]
             };
@@ -398,20 +456,23 @@
             title: _t('dashboard.chooseNext', 'Choose your next step:'),
             options: [
                 {
-                    id: 'premium-course',
-                    icon: 'school',
-                    title: _t('dashboard.option.premium.title', 'Premium'),
-                    description: _t('dashboard.option.premium.description', 'Full premium locksmith course access.'),
-                    price: getDisplayPrice('premium', '$1,999'),
-                    clickable: true
-                },
-                {
-                    id: 'business-in-a-box',
-                    icon: 'work',
+                    id: 'business-in-a-box-message',
+                    variant: 'message',
+                    icon: 'storefront',
                     title: _t('dashboard.option.business.title', 'Business in a Box'),
-                    description: _t('dashboard.option.business.description', 'Premium plus the Business in a Box add-on.'),
-                    price: getDisplayPrice('business_full', '$3,998'),
-                    clickable: true
+                    description: _t('dashboard.option.business.purchaseWithPremium', 'To gain access to the full course and Business in a Box services, click here.'),
+                    buttons: [
+                        {
+                            plan: 'premium',
+                            label: _t('dashboard.option.premium.button', 'Purchase Premium'),
+                            className: 'btn btn-outline-primary'
+                        },
+                        {
+                            plan: 'business',
+                            label: _t('dashboard.option.business.buttonBundle', 'Purchase Premium + Business in a Box'),
+                            className: 'btn btn-primary'
+                        }
+                    ]
                 }
             ]
         };

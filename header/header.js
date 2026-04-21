@@ -42,6 +42,19 @@ $(document).on("click", "#header-dd-profile", function(e) {
 $(document).on("click", "#header-dd-client", function(e) {
     e.preventDefault();
     $("#nala-user-dd").hide();
+    var user = (window.wc && wc.session && wc.session.user) ? wc.session.user : {};
+    if (Number(user.has_business_in_a_box || 0) !== 1) {
+        if (window.MTKMsgs && typeof MTKMsgs.show === "function") {
+            MTKMsgs.show({
+                type: "warning",
+                icon: "warning",
+                message: "Business in a Box is only available for users with Business access.",
+                closable: true,
+                timer: 8
+            });
+        }
+        return;
+    }
     wc.log("mtk-header-client → /client");
     window.location.href = "client/index.html";
 });
@@ -161,4 +174,24 @@ function toggleNavbar() {
     } else {
         initState();
     }
+})();
+
+(function initBusinessInABoxAccess() {
+    function syncBusinessMenu() {
+        var user = (window.wc && wc.session && wc.session.user) ? wc.session.user : {};
+        var hasBusiness = Number(user.has_business_in_a_box || 0) === 1;
+        var menuItem = document.getElementById("header-dd-client");
+        if (!menuItem) return;
+
+        var listItem = menuItem.closest("li");
+        if (!listItem) return;
+
+        listItem.style.display = hasBusiness ? "" : "none";
+    }
+
+    document.addEventListener("DOMContentLoaded", syncBusinessMenu);
+    document.addEventListener("include:loaded", function () {
+        setTimeout(syncBusinessMenu, 50);
+    });
+    setTimeout(syncBusinessMenu, 250);
 })();
