@@ -609,6 +609,11 @@ $color-loading-bg: #757575;   // semi-opaque dark grey overlay
   box-sizing: border-box;
 }
 
+html,
+body {
+  min-height: 100%;
+}
+
 body {
   font-family: $font-primary;
   font-size: $font-size-lg;
@@ -618,6 +623,9 @@ body {
   margin: 0;
   padding: 0;
   margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 80px);
 }
 
 a {
@@ -650,6 +658,15 @@ a {
 // Page wrapper — pushes footer to bottom when body uses flex column
 #page-content {
   flex: 1 0 auto;
+}
+
+#page-footer,
+.app-header {
+  flex-shrink: 0;
+}
+
+#page-footer {
+  margin-top: auto;
 }
 
 

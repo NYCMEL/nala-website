@@ -424,7 +424,19 @@
                     } : null
                 ].filter(Boolean)
             }
-            : null;
+            : (hasPremium || hasBusiness)
+                ? {
+                    id: 'lockout-kit-tracking-pending',
+                    variant: 'message',
+                    icon: 'inventory_2',
+                    title: _t('dashboard.gift.title', 'Track Your Lockout Kit'),
+                    description: _t(
+                        'dashboard.gift.pending',
+                        'Your complimentary Lockout Kit is tied to your Premium purchase. Tracking will appear here after the order is created.'
+                    ),
+                    buttons: []
+                }
+                : null;
 
         if (hasBusiness) {
             const options = [
