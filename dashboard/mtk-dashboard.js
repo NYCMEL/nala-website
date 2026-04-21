@@ -262,7 +262,7 @@
 
         createMessageCard(option) {
             const card = document.createElement('div');
-            card.className = 'mtk-dashboard__message-card';
+            card.className = 'mtk-dashboard__subscription-card mtk-dashboard__subscription-card--static mtk-dashboard__message-card';
 
             const icon = document.createElement('div');
             icon.className = 'mtk-dashboard__message-icon';
