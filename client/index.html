@@ -105,6 +105,65 @@
 		});
 	    })();
 
+	    (function() {
+		function loadScript(src, onload, onerror) {
+		    var s = document.createElement('script');
+		    s.src = src;
+		    if (typeof onload === 'function') s.onload = onload;
+		    if (typeof onerror === 'function') s.onerror = onerror;
+		    document.body.appendChild(s);
+		}
+
+		function bootProfile(profile) {
+		    if (!profile || typeof window.client !== 'function') {
+			return;
+		    }
+
+		    window.config = profile;
+		    window.client(profile);
+		}
+
+		function loadDefaultConfig() {
+		    loadScript('client/js/client.config.js', function() {
+			if (typeof window.config !== 'undefined' && typeof window.client === 'function') {
+			    window.client(window.config);
+			}
+		    }, function() {
+			console.warn('[client] Failed to load fallback client.config.js');
+		    });
+		}
+
+		var uid = new URLSearchParams(window.location.search).get('nalaUID');
+		if (uid) return;
+
+		wc.getSession(function(loggedIn, session) {
+		    var user = session && session.user ? session.user : {};
+		    var hasBusiness = Number(user.has_business_in_a_box || 0) === 1;
+		    if (!hasBusiness) return;
+
+		    fetch(wc.apiURL + '/api/business_in_a_box_profile.php', {
+			credentials: 'include'
+		    }).then(function(res) {
+			return res.json().then(function(json) {
+			    if (!res.ok) {
+				throw new Error((json && (json.error || json.message)) || 'Could not load Business in a Box profile.');
+			    }
+			    return json;
+			});
+		    }).then(function(json) {
+			if (json && json.profile) {
+			    bootProfile(json.profile);
+			    return;
+			}
+
+			loadDefaultConfig();
+		    }).catch(function(err) {
+			console.warn('[client] Failed to load saved Business in a Box profile', err);
+			loadDefaultConfig();
+		    });
+		});
+	    })();
+
 	    // After client.js is defined, load /websites/{nalaUID}.js if param present
 	    // Must run AFTER wc-include fires so DOM exists, but client.js already defines window.client
 	    (function() {
