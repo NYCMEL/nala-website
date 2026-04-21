@@ -621,11 +621,10 @@ body {
   color: $color-text-primary;
   background-color: $color-bg-lighter;
   margin: 0;
-  padding: 0;
-  margin-top: 80px;
+  padding: 80px 0 0;
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 80px);
+  min-height: 100vh;
 }
 
 a {

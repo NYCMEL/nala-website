@@ -409,8 +409,8 @@
                 id: 'lockout-kit-tracking',
                 variant: 'message',
                 icon: giftTracking.status === 'shipped' ? 'local_shipping' : 'inventory_2',
-                title: _t('dashboard.gift.title', 'Track Your Lockout Kit'),
-                description: giftTracking.message || _t('dashboard.gift.description', 'View the status of your complimentary Lockout Kit order.'),
+                title: _t('dashboard.gift.title', 'Track your lockout kit'),
+                description: giftTracking.message || _t('dashboard.gift.description', 'View the status of your complimentary lockout kit order.'),
                 buttons: [
                     giftTracking.tracking_url ? {
                         label: _t('dashboard.gift.trackShipment', 'Track Shipment'),
@@ -429,10 +429,10 @@
                     id: 'lockout-kit-tracking-pending',
                     variant: 'message',
                     icon: 'inventory_2',
-                    title: _t('dashboard.gift.title', 'Track Your Lockout Kit'),
+                    title: _t('dashboard.gift.title', 'Track your lockout kit'),
                     description: _t(
                         'dashboard.gift.pending',
-                        'Your complimentary Lockout Kit is tied to your Premium purchase. Tracking will appear here after the order is created.'
+                        'Your complimentary lockout kit is tied to your Premium purchase. Tracking will appear here after the order is created.'
                     ),
                     buttons: []
                 }

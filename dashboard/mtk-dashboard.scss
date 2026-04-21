@@ -139,6 +139,52 @@
     margin: 0;
   }
 
+  &__message-card {
+    background: $color-bg-lighter;
+    border: 1px solid $color-border;
+    border-radius: $radius-xs;
+    padding: $spacing-xl;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    box-shadow: none;
+  }
+
+  &__message-icon {
+    width: 48px;
+    height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $radius-circle;
+    background: $color-gold;
+    color: $color-white;
+    margin-bottom: $font-size-lg;
+
+    .material-icons { font-size: 28px; color: $color-white; }
+  }
+
+  &__message-title {
+    font-size: 18px;
+    font-weight: $font-weight-medium;
+    color: $color-text-primary;
+    margin: 0 0 $spacing-sm 0;
+  }
+
+  &__message-description {
+    font-size: $font-size-base;
+    color: $color-text-secondary;
+    line-height: 1.5;
+    margin: 0 0 $font-size-lg 0;
+    min-height: 42px;
+  }
+
+  &__message-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
   .material-icons { @include material-icon; }
 
   @media (max-width: $bp-md) {
