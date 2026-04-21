@@ -104,8 +104,91 @@ class _febe {
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
     handleClientSave(data) {
-        console.log("=========", JSON.stringify(data), "==========");
-	alert("handleClientSave");
+	const instance = window._clientProfileInstance;
+	const source = instance && instance.data ? JSON.parse(JSON.stringify(instance.data)) : {};
+	const changes = data || {};
+
+	source.nalaUID = String(source.nalaUID || changes.nalaUID || "").trim();
+	source.business = source.business || {};
+	source.about = source.about || {};
+	source.businessHours = source.businessHours || {};
+	source.paymentMethods = source.paymentMethods || {};
+	source.guarantee = source.guarantee || {};
+	source.socialMedia = source.socialMedia || {};
+	source.socialMedia.links = Array.isArray(source.socialMedia.links) ? source.socialMedia.links : [];
+	source.stats = Array.isArray(source.stats) ? source.stats : [];
+
+	if (changes.clientName !== undefined) source.business.name = changes.clientName;
+	if (changes.aboutText !== undefined) source.about.description = changes.aboutText;
+	if (changes.businessHoursText !== undefined) source.businessHours.text = changes.businessHoursText;
+	if (changes.paymentMethodsText !== undefined) source.paymentMethods.methods = changes.paymentMethodsText;
+	if (changes.guaranteeTitle !== undefined) source.guarantee.title = changes.guaranteeTitle;
+	if (Array.isArray(changes.socialMedia)) source.socialMedia.links = changes.socialMedia;
+
+	if (Array.isArray(changes.stats)) {
+	    source.stats = source.stats.map((stat, index) => {
+		const next = Object.assign({}, stat);
+		const updatedText = changes.stats[index];
+		if (updatedText === undefined || updatedText === null || updatedText === "") {
+		    return next;
+		}
+
+		if (typeof next.text === "string" && /^(\d+)(.*)$/.test(next.text)) {
+		    next.text = next.text.replace(/^(\d+)(.*)$/, String(updatedText) + "$2");
+		} else {
+		    next.text = String(updatedText);
+		}
+		return next;
+	    });
+	}
+
+	const payload = source;
+	if (typeof changes.clientLogo === "string" && changes.clientLogo.indexOf("data:") === 0) {
+	    payload.profile_photo_data_url = changes.clientLogo;
+	}
+
+	return fetch(wc.apiURL + "/api/business_in_a_box_profile.php", {
+	    method: "POST",
+	    credentials: "include",
+	    headers: { "Content-Type": "application/json" },
+	    body: JSON.stringify(payload)
+	}).then(res => {
+	    return res.json().then(json => {
+		if (!res.ok) {
+		    throw new Error((json && (json.error || json.message)) || "Could not save Business in a Box profile.");
+		}
+		return json;
+	    });
+	}).then(json => {
+	    if (json && json.profile && instance) {
+		instance.data = json.profile;
+	    }
+
+	    if (window.MTKMsgs && typeof MTKMsgs.show === "function") {
+		MTKMsgs.show({
+		    type: "success",
+		    icon: "success",
+		    message: "Business in a Box changes saved.",
+		    closable: true,
+		    timer: 6
+		});
+	    }
+
+	    return json;
+	}).catch(err => {
+	    wc.error("Business in a Box save failed", err);
+	    if (window.MTKMsgs && typeof MTKMsgs.show === "function") {
+		MTKMsgs.show({
+		    type: "error",
+		    icon: "error",
+		    message: err && err.message ? err.message : "Could not save Business in a Box changes.",
+		    closable: true,
+		    timer: 10
+		});
+	    } else {
+		alert(err && err.message ? err.message : "Could not save Business in a Box changes.");
+	    }
+	});
     }
 
 
@@ -113,8 +196,44 @@ class _febe {
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
     handleRequestSubmit(data) {
-        console.log("=========", JSON.stringify(data), "==========");
-	alert("handleRequestSubmit");
+	return fetch(wc.apiURL + "/api/business_in_a_box_request.php", {
+	    method: "POST",
+	    credentials: "include",
+	    headers: { "Content-Type": "application/json" },
+	    body: JSON.stringify(data || {})
+	}).then(res => {
+	    return res.json().then(json => {
+		if (!res.ok) {
+		    throw new Error((json && (json.error || json.message)) || "Could not submit request.");
+		}
+		return json;
+	    });
+	}).then(json => {
+	    if (window.MTKMsgs && typeof MTKMsgs.show === "function") {
+		MTKMsgs.show({
+		    type: "success",
+		    icon: "success",
+		    message: "Request submitted successfully.",
+		    closable: true,
+		    timer: 8
+		});
+	    }
+
+	    return json;
+	}).catch(err => {
+	    wc.error("Business in a Box request submit failed", err);
+	    if (window.MTKMsgs && typeof MTKMsgs.show === "function") {
+		MTKMsgs.show({
+		    type: "error",
+		    icon: "error",
+		    message: err && err.message ? err.message : "Could not submit request.",
+		    closable: true,
+		    timer: 10
+		});
+	    } else {
+		alert(err && err.message ? err.message : "Could not submit request.");
+	    }
+	});
     }
 
     //////////////////////////////////////////////////////////////////
