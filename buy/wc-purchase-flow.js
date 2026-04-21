@@ -9,6 +9,14 @@
     }
     wc.buy.__initialized = true;
 
+    function t(key, fallback) {
+        if (!window.i18n || typeof window.i18n.t !== "function") {
+            return fallback;
+        }
+        const value = window.i18n.t(key);
+        return value === key ? fallback : value;
+    }
+
     function getBaseUrl() {
         if (window.app && typeof app.baseUrl === "string" && app.baseUrl) {
             return app.baseUrl;
@@ -174,7 +182,7 @@
 
     async function handlePurchasePlan(plan) {
         if (!isLoggedIn()) {
-            showMsg("warning", "Please log in before purchasing.", { icon: "warning", timer: 7 });
+            showMsg("warning", t("purchase.loginRequired", "Please log in before purchasing."), { icon: "warning", timer: 7 });
             if (window.wc && wc.pages && typeof wc.pages.show === "function") {
                 wc.pages.show("login");
             }
@@ -182,7 +190,7 @@
         }
 
         if (!canPurchasePlan(plan)) {
-            showMsg("warning", "That purchase option is not available for your current account.", {
+            showMsg("warning", t("purchase.notAvailable", "That purchase option is not available for your current account."), {
                 icon: "warning",
                 timer: 8
             });
@@ -195,16 +203,16 @@
             const payload = needsPremiumShipping
                 ? await (await loadPurchaseModalApi()).showPremiumShippingModal(user, {
                     plan: plan,
-                    title: plan === "business" ? "Lockout Kit Shipping Details" : undefined,
+                    title: plan === "business" ? t("purchase.shippingTitle", "Lockout Kit Shipping Details") : undefined,
                     intro: plan === "business"
-                        ? "Business in a Box includes Premium and the lockout kit, so we need the shipping address before opening Stripe Checkout."
+                        ? t("purchase.shippingIntroBusiness", "Business in a Box includes Premium and the lockout kit, so we need the shipping address before opening Stripe Checkout.")
                         : undefined
                 })
                 : { plan: plan };
 
             const res = await createCheckoutSession(payload);
             if (!res.url) {
-                throw new Error("Stripe checkout URL was not returned.");
+                throw new Error(t("purchase.checkoutMissing", "Stripe checkout URL was not returned."));
             }
             window.location.href = res.url;
         } catch (err) {
@@ -212,7 +220,7 @@
                 return;
             }
 
-            showMsg("error", (err && err.message) || "Unable to start checkout.", {
+            showMsg("error", (err && err.message) || t("purchase.checkoutFailed", "Unable to start checkout."), {
                 icon: "error",
                 timer: 10
             });

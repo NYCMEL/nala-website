@@ -192,9 +192,21 @@
       en: 'Curriculum',
       es: 'Currículo'
     },
+    'nav.profileSettings': {
+      en: 'Profile Settings',
+      es: 'Configuración del perfil'
+    },
+    'nav.businessBox': {
+      en: 'Business in a Box',
+      es: 'Negocio en una Caja'
+    },
     'nav.logout': {
       en: 'Logout',
       es: 'Cerrar Sesión'
+    },
+    'nav.businessAccessOnly': {
+      en: 'Business in a Box is only available for users with Business access.',
+      es: 'Negocio en una Caja solo está disponible para usuarios con acceso Business.'
     },
 
     // ── HERO ──────────────────────────────────────────────────────
@@ -639,6 +651,7 @@
     'dashboard.option.business.purchaseWithPremium': { en: 'To gain access to the full course and Business in a Box services, click here.', es: 'Para obtener acceso al curso completo y a los servicios de Negocio en una Caja, haz clic aquí.' },
     'dashboard.option.business.buttonOnly': { en: 'Purchase Business in a Box', es: 'Comprar Negocio en una Caja' },
     'dashboard.option.business.buttonBundle': { en: 'Purchase Premium + Business in a Box', es: 'Comprar Premium + Negocio en una Caja' },
+    'dashboard.option.business.viewCta': { en: 'Click here to view Business in a Box.', es: 'Haz clic aquí para ver Negocio en una Caja.' },
     'dashboard.subs.title':      { en: 'You can also subscribe to our premium features:', es: 'También puedes suscribirte a nuestras funciones premium:' },
     'dashboard.sub1.title':      { en: 'Premium Courses',               es: 'Cursos Premium' },
     'dashboard.sub1.description':{ en: 'Access advanced courses and certifications', es: 'Accede a cursos avanzados y certificaciones' },
@@ -675,6 +688,40 @@
     'settings.error.noEmail':    { en: 'No account email found for password reset.', es: 'No se encontró correo de cuenta para restablecer la contraseña.' },
     'settings.success.reset':    { en: 'Password reset email sent. Please check your inbox.', es: 'Correo de restablecimiento enviado. Por favor revisa tu bandeja de entrada.' },
     'settings.error.resetFail':  { en: 'Could not send reset link.',    es: 'No se pudo enviar el enlace de restablecimiento.' },
+
+    // ── PURCHASE FLOW ────────────────────────────────────────────
+    'purchase.loginRequired':    { en: 'Please log in before purchasing.', es: 'Por favor inicia sesión antes de comprar.' },
+    'purchase.notAvailable':     { en: 'That purchase option is not available for your current account.', es: 'Esa opción de compra no está disponible para tu cuenta actual.' },
+    'purchase.shippingTitle':    { en: 'Lockout Kit Shipping Details', es: 'Detalles de envío del kit de apertura' },
+    'purchase.shippingIntroBusiness': { en: 'Business in a Box includes Premium and the lockout kit, so we need the shipping address before opening Stripe Checkout.', es: 'Negocio en una Caja incluye Premium y el kit de apertura, así que necesitamos la dirección de envío antes de abrir Stripe Checkout.' },
+    'purchase.premiumShippingTitle': { en: 'Premium Shipping Details', es: 'Detalles de envío de Premium' },
+    'purchase.premiumShippingIntro': { en: 'Premium includes the lockout kit, so we need the shipping address before opening Stripe Checkout.', es: 'Premium incluye el kit de apertura, así que necesitamos la dirección de envío antes de abrir Stripe Checkout.' },
+    'purchase.recipientName':    { en: 'Recipient Name', es: 'Nombre del destinatario' },
+    'purchase.recipientName.short': { en: 'recipient name', es: 'nombre del destinatario' },
+    'purchase.address1':         { en: 'Address Line 1', es: 'Dirección línea 1' },
+    'purchase.address1.short':   { en: 'address line 1', es: 'dirección línea 1' },
+    'purchase.address2':         { en: 'Address Line 2', es: 'Dirección línea 2' },
+    'purchase.city':             { en: 'City', es: 'Ciudad' },
+    'purchase.city.short':       { en: 'city', es: 'ciudad' },
+    'purchase.state':            { en: 'State', es: 'Estado' },
+    'purchase.state.short':      { en: 'state', es: 'estado' },
+    'purchase.selectState':      { en: 'Select state', es: 'Selecciona un estado' },
+    'purchase.postalCode':       { en: 'ZIP / Postal Code', es: 'Código postal' },
+    'purchase.postalCode.short': { en: 'ZIP / postal code', es: 'código postal' },
+    'purchase.country':          { en: 'Country', es: 'País' },
+    'purchase.cancel':           { en: 'Cancel', es: 'Cancelar' },
+    'purchase.continueCheckout': { en: 'Continue to Checkout', es: 'Continuar al pago' },
+    'purchase.completeFields':   { en: 'Please complete:', es: 'Por favor completa:' },
+    'purchase.checkoutMissing':  { en: 'Stripe checkout URL was not returned.', es: 'No se devolvió la URL de pago de Stripe.' },
+    'purchase.checkoutFailed':   { en: 'Unable to start checkout.', es: 'No se pudo iniciar el pago.' },
+
+    // ── CLIENT ───────────────────────────────────────────────────
+    'client.locked.title':       { en: 'Business in a Box', es: 'Negocio en una Caja' },
+    'client.locked.accessTitle': { en: 'Business in a Box Access', es: 'Acceso a Negocio en una Caja' },
+    'client.profile.loadError':  { en: 'Could not load Business in a Box profile.', es: 'No se pudo cargar el perfil de Negocio en una Caja.' },
+
+    // ── HIERARCHY ────────────────────────────────────────────────
+    'hierarchy.empty':           { en: 'Select a resource to view its content', es: 'Selecciona un recurso para ver su contenido' },
 
     // ── FINAL / CERTIFICATE ───────────────────────────────────────
     'final.successHeading':      { en: 'Congratulations!',              es: '¡Felicitaciones!' },

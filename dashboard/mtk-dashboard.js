@@ -220,7 +220,7 @@
             if (isActive) {
                 const cta = document.createElement('span');
                 cta.className = 'mtk-dashboard__card-cta';
-                cta.textContent = ' Click here to view Business in a Box.';
+                cta.textContent = ' ' + _t('dashboard.option.business.viewCta', 'Click here to view Business in a Box.');
                 cta.style.cssText = 'display:block;margin-top:6px;font-size:0.85em;font-style:italic;opacity:0.8;cursor:pointer';
                 description.appendChild(cta);
             }

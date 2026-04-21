@@ -53,6 +53,12 @@
 
 	<script>
 	    (function() {
+		function t(key, fallback) {
+		    if (!window.i18n || typeof window.i18n.t !== 'function') return fallback;
+		    var value = window.i18n.t(key);
+		    return value === key ? fallback : value;
+		}
+
 		var uid = new URLSearchParams(window.location.search).get('nalaUID');
 		if (uid) return;
 
@@ -60,15 +66,15 @@
 		    var root = document.getElementById('client-access-root');
 		    if (!root) return;
 
-		    var title = mode === 'premium' ? 'Business in a Box' : 'Business in a Box Access';
+		    var title = mode === 'premium' ? t('client.locked.title', 'Business in a Box') : t('client.locked.accessTitle', 'Business in a Box Access');
 		    var message = mode === 'premium'
-			? 'To purchase Business in a Box services, click here.'
-			: 'To gain access to the full course and Business in a Box services, click here.';
+			? t('dashboard.option.business.purchaseOnly', 'To purchase Business in a Box services, click here.')
+			: t('dashboard.option.business.purchaseWithPremium', 'To gain access to the full course and Business in a Box services, click here.');
 		    var buttons = mode === 'premium'
-			? '<button type="button" class="btn btn-primary" data-purchase-plan="business">Purchase Business in a Box</button>'
+			? '<button type="button" class="btn btn-primary" data-purchase-plan="business">' + t('dashboard.option.business.buttonOnly', 'Purchase Business in a Box') + '</button>'
 			: '<div style="display:flex;gap:12px;flex-wrap:wrap">'
-			    + '<button type="button" class="btn btn-outline-primary" data-purchase-plan="premium">Purchase Premium</button>'
-			    + '<button type="button" class="btn btn-primary" data-purchase-plan="business">Purchase Premium + Business in a Box</button>'
+			    + '<button type="button" class="btn btn-outline-primary" data-purchase-plan="premium">' + t('dashboard.option.premium.button', 'Purchase Premium') + '</button>'
+			    + '<button type="button" class="btn btn-primary" data-purchase-plan="business">' + t('dashboard.option.business.buttonBundle', 'Purchase Premium + Business in a Box') + '</button>'
 			    + '</div>';
 
 		    root.innerHTML = ''
@@ -146,7 +152,7 @@
 		    }).then(function(res) {
 			return res.json().then(function(json) {
 			    if (!res.ok) {
-				throw new Error((json && (json.error || json.message)) || 'Could not load Business in a Box profile.');
+				throw new Error((json && (json.error || json.message)) || t('client.profile.loadError', 'Could not load Business in a Box profile.'));
 			    }
 			    return json;
 			});

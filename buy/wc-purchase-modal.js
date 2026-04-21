@@ -5,6 +5,14 @@
         return;
     }
 
+    function t(key, fallback) {
+        if (!window.i18n || typeof window.i18n.t !== "function") {
+            return fallback;
+        }
+        const value = window.i18n.t(key);
+        return value === key ? fallback : value;
+    }
+
     const US_STATES = [
         "", "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA",
         "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM",
@@ -34,7 +42,7 @@
 
     function buildStateOptions(selectedValue) {
         return US_STATES.map(function (state) {
-            const label = state || "Select state";
+            const label = state || t("purchase.selectState", "Select state");
             const selected = state === selectedValue ? " selected" : "";
             const disabled = state === "" ? " disabled" : "";
             return '<option value="' + state + '"' + selected + disabled + '>' + label + "</option>";
@@ -75,8 +83,8 @@
 
         return new Promise(function (resolve, reject) {
             const prefill = getShippingPrefill(user);
-            const title = options.title || "Premium Shipping Details";
-            const intro = options.intro || "Premium includes the lockout kit, so we need the shipping address before opening Stripe Checkout.";
+            const title = options.title || t("purchase.premiumShippingTitle", "Premium Shipping Details");
+            const intro = options.intro || t("purchase.premiumShippingIntro", "Premium includes the lockout kit, so we need the shipping address before opening Stripe Checkout.");
             const plan = options.plan || "premium";
             const modal = document.createElement("div");
             modal.className = "wc-purchase-modal";
@@ -87,38 +95,38 @@
                     <form class="wc-purchase-modal__form">
                         <div class="wc-purchase-modal__grid">
                             <div class="wc-purchase-modal__field wc-purchase-modal__full">
-                                <label for="wc-shipping-name">Recipient Name</label>
+                                <label for="wc-shipping-name">${escapeHtml(t("purchase.recipientName", "Recipient Name"))}</label>
                                 <input id="wc-shipping-name" name="shipping_name" type="text" value="${escapeHtml(prefill.shipping_name)}" />
                             </div>
                             <div class="wc-purchase-modal__field wc-purchase-modal__full">
-                                <label for="wc-shipping-address1">Address Line 1</label>
+                                <label for="wc-shipping-address1">${escapeHtml(t("purchase.address1", "Address Line 1"))}</label>
                                 <input id="wc-shipping-address1" name="shipping_address1" type="text" value="${escapeHtml(prefill.shipping_address1)}" />
                             </div>
                             <div class="wc-purchase-modal__field wc-purchase-modal__full">
-                                <label for="wc-shipping-address2">Address Line 2</label>
+                                <label for="wc-shipping-address2">${escapeHtml(t("purchase.address2", "Address Line 2"))}</label>
                                 <input id="wc-shipping-address2" name="shipping_address2" type="text" value="${escapeHtml(prefill.shipping_address2)}" />
                             </div>
                             <div class="wc-purchase-modal__field">
-                                <label for="wc-shipping-city">City</label>
+                                <label for="wc-shipping-city">${escapeHtml(t("purchase.city", "City"))}</label>
                                 <input id="wc-shipping-city" name="shipping_city" type="text" value="${escapeHtml(prefill.shipping_city)}" />
                             </div>
                             <div class="wc-purchase-modal__field">
-                                <label for="wc-shipping-state">State</label>
+                                <label for="wc-shipping-state">${escapeHtml(t("purchase.state", "State"))}</label>
                                 <select id="wc-shipping-state" name="shipping_state">${buildStateOptions(prefill.shipping_state)}</select>
                             </div>
                             <div class="wc-purchase-modal__field">
-                                <label for="wc-shipping-postal-code">ZIP / Postal Code</label>
+                                <label for="wc-shipping-postal-code">${escapeHtml(t("purchase.postalCode", "ZIP / Postal Code"))}</label>
                                 <input id="wc-shipping-postal-code" name="shipping_postal_code" type="text" value="${escapeHtml(prefill.shipping_postal_code)}" />
                             </div>
                             <div class="wc-purchase-modal__field">
-                                <label for="wc-shipping-country">Country</label>
+                                <label for="wc-shipping-country">${escapeHtml(t("purchase.country", "Country"))}</label>
                                 <input id="wc-shipping-country" name="shipping_country" type="text" value="US" readonly />
                             </div>
                         </div>
                         <div class="wc-purchase-modal__error" data-error></div>
                         <div class="wc-purchase-modal__actions">
-                            <button type="button" class="wc-purchase-modal__btn wc-purchase-modal__btn--secondary" data-action="cancel">Cancel</button>
-                            <button type="submit" class="wc-purchase-modal__btn wc-purchase-modal__btn--primary">Continue to Checkout</button>
+                            <button type="button" class="wc-purchase-modal__btn wc-purchase-modal__btn--secondary" data-action="cancel">${escapeHtml(t("purchase.cancel", "Cancel"))}</button>
+                            <button type="submit" class="wc-purchase-modal__btn wc-purchase-modal__btn--primary">${escapeHtml(t("purchase.continueCheckout", "Continue to Checkout"))}</button>
                         </div>
                     </form>
                 </div>
@@ -163,14 +171,14 @@
                 });
 
                 const missingLabels = [];
-                if (!payload.shipping_name) missingLabels.push("recipient name");
-                if (!payload.shipping_address1) missingLabels.push("address line 1");
-                if (!payload.shipping_city) missingLabels.push("city");
-                if (!payload.shipping_state) missingLabels.push("state");
-                if (!payload.shipping_postal_code) missingLabels.push("ZIP / postal code");
+                if (!payload.shipping_name) missingLabels.push(t("purchase.recipientName.short", "recipient name"));
+                if (!payload.shipping_address1) missingLabels.push(t("purchase.address1.short", "address line 1"));
+                if (!payload.shipping_city) missingLabels.push(t("purchase.city.short", "city"));
+                if (!payload.shipping_state) missingLabels.push(t("purchase.state.short", "state"));
+                if (!payload.shipping_postal_code) missingLabels.push(t("purchase.postalCode.short", "ZIP / postal code"));
 
                 if (missingLabels.length) {
-                    errorEl.textContent = "Please complete: " + missingLabels.join(", ") + ".";
+                    errorEl.textContent = t("purchase.completeFields", "Please complete:") + " " + missingLabels.join(", ") + ".";
                     return;
                 }
 

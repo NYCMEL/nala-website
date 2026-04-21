@@ -44,11 +44,14 @@ $(document).on("click", "#header-dd-client", function(e) {
     $("#nala-user-dd").hide();
     var user = (window.wc && wc.session && wc.session.user) ? wc.session.user : {};
     if (Number(user.has_business_in_a_box || 0) !== 1) {
+        var message = (window.i18n && typeof window.i18n.t === "function")
+            ? window.i18n.t("nav.businessAccessOnly")
+            : "Business in a Box is only available for users with Business access.";
         if (window.MTKMsgs && typeof MTKMsgs.show === "function") {
             MTKMsgs.show({
                 type: "warning",
                 icon: "warning",
-                message: "Business in a Box is only available for users with Business access.",
+                message: message,
                 closable: true,
                 timer: 8
             });
