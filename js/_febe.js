@@ -93,7 +93,7 @@ class _febe {
 	const handler = this.handlers[msg];
 
 	if (handler) {
-	    handler(data);
+	    handler.call(this, data);
 	} else {
 	    wc.error("_febe: DO NOT HAVE:" + msg);
 	    alert("_febe: DO NOT HAVE:" + msg);
