@@ -119,11 +119,14 @@ mtk-biab.mtk-biab {
   }
 
   &__header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 0 24px;
     display: flex;
     align-items: center;
     height: 64px;
     gap: 0;
+    width: 100%;
   }
 
   &__logo {
@@ -194,7 +197,7 @@ mtk-biab.mtk-biab {
     color: $header-tab-color;
     font-family: $font-primary;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;  // always 600 — prevents layout shift on active toggle
     letter-spacing: 0.1px;
     cursor: pointer;
     white-space: nowrap;
@@ -237,7 +240,6 @@ mtk-biab.mtk-biab {
 
     &.is-active {
       color: $header-tab-active-color;
-      font-weight: 600;
 
       .material-icons {
         color: $header-tab-indicator;

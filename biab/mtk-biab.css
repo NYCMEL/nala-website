@@ -52,11 +52,14 @@ mtk-biab.mtk-biab {
   z-index: 100; }
 
 .mtk-biab__header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 0 24px;
   display: flex;
   align-items: center;
   height: 64px;
-  gap: 0; }
+  gap: 0;
+  width: 100%; }
 
 .mtk-biab__logo {
   display: flex;
@@ -111,7 +114,7 @@ mtk-biab.mtk-biab {
   color: rgba(255, 255, 255, 0.65);
   font-family: "Google Sans", "Segoe UI", system-ui, sans-serif;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.1px;
   cursor: pointer;
   white-space: nowrap;
@@ -142,8 +145,7 @@ mtk-biab.mtk-biab {
     outline-offset: -2px;
     border-radius: 4px; }
   .mtk-biab__tab-btn.is-active {
-    color: #ffffff;
-    font-weight: 600; }
+    color: #ffffff; }
     .mtk-biab__tab-btn.is-active .material-icons {
       color: #4fc3f7; }
     .mtk-biab__tab-btn.is-active::after {

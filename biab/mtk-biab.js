@@ -148,40 +148,36 @@ class MtkBiab {
   _buildHeader() {
     return `
       <header class="mtk-biab__header" role="banner">
-        <div class="container">
-          <div class="row g-0">
-            <div class="mtk-biab__header-inner col-md-12">
-              <a class="mtk-biab__logo" href="#" tabindex="0" aria-label="NALA - Business in a Box">
-                <img class="mtk-biab__logo-icon" src="img/logo-nala-association.webp" alt="NALA logo" />
-                <span class="mtk-biab__logo-text">
-                  <span class="mtk-biab__logo-full"><small> Business in a Box</small></span>
-                  <span class="mtk-biab__logo-short">NALA</span>
-                </span>
-              </a>
-              <div class="mtk-biab__header-divider" aria-hidden="true"></div>
-              <nav
-                class="mtk-biab__tabs-nav"
-                role="tablist"
-                aria-label="Main navigation tabs"
+        <div class="mtk-biab__header-inner">
+          <a class="mtk-biab__logo" href="#" tabindex="0" aria-label="NALA - Business in a Box">
+            <img class="mtk-biab__logo-icon" src="img/logo-nala-association.webp" alt="NALA logo" />
+            <span class="mtk-biab__logo-text">
+              <span class="mtk-biab__logo-full"><small> Business in a Box</small></span>
+              <span class="mtk-biab__logo-short">NALA</span>
+            </span>
+          </a>
+          <div class="mtk-biab__header-divider" aria-hidden="true"></div>
+          <nav
+            class="mtk-biab__tabs-nav"
+            role="tablist"
+            aria-label="Main navigation tabs"
+          >
+            ${this.tabs.map((tab, i) => `
+              <button
+                class="mtk-biab__tab-btn${tab.active ? ' is-active' : ''}"
+                role="tab"
+                id="mtk-biab-tab-${tab.id}"
+                aria-controls="mtk-biab-panel-${tab.id}"
+                aria-selected="${tab.active ? 'true' : 'false'}"
+                tabindex="${tab.active ? '0' : '-1'}"
+                data-action="select-tab"
+                data-tab-id="${tab.id}"
               >
-                ${this.tabs.map((tab, i) => `
-                  <button
-                    class="mtk-biab__tab-btn${tab.active ? ' is-active' : ''}"
-                    role="tab"
-                    id="mtk-biab-tab-${tab.id}"
-                    aria-controls="mtk-biab-panel-${tab.id}"
-                    aria-selected="${tab.active ? 'true' : 'false'}"
-                    tabindex="${tab.active ? '0' : '-1'}"
-                    data-action="select-tab"
-                    data-tab-id="${tab.id}"
-                  >
-                    <span class="material-icons" aria-hidden="true">${tab.icon}</span>
-                    <span>${tab.label}</span>
-                  </button>
-                `).join('')}
-              </nav>
-            </div>
-          </div>
+                <span class="material-icons" aria-hidden="true">${tab.icon}</span>
+                <span>${tab.label}</span>
+              </button>
+            `).join('')}
+          </nav>
         </div>
       </header>
     `;
