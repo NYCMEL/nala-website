@@ -1555,6 +1555,8 @@ class MTKHierarchy {
         }
 
         const effectiveCurrent = Number(currentLesson);
+        const lastStandardLessonNo = this.getLastStandardLessonNumber();
+        const certificationUnlocked = this.isCertificationUnlocked(effectiveCurrent, lastStandardLessonNo);
 
         this.config.forEach(course => {
             if (!course.modules) return;
@@ -1565,15 +1567,22 @@ class MTKHierarchy {
                 if (Array.isArray(module.lessons)) {
                     module.lessons.forEach(lesson => {
                         const lessonNo = Number(lesson.lesson_no);
-                        const lessonHasAccess = Number.isFinite(lessonNo) ? lessonNo <= effectiveCurrent : !!lesson.access;
+                        const isCertificationLesson = this.isCertificationLesson(lesson);
+                        const lessonHasAccess = isCertificationLesson
+                            ? certificationUnlocked
+                            : Number.isFinite(lessonNo) ? lessonNo <= effectiveCurrent : !!lesson.access;
 
                         lesson.access = lessonHasAccess;
-                        lesson.processed = Number.isFinite(lessonNo) ? lessonNo < effectiveCurrent : !!lesson.processed;
+                        lesson.processed = isCertificationLesson
+                            ? certificationUnlocked
+                            : Number.isFinite(lessonNo) ? lessonNo < effectiveCurrent : !!lesson.processed;
 
                         if (Array.isArray(lesson.resources)) {
                             lesson.resources.forEach(resource => {
                                 resource.access = lessonHasAccess;
-                                resource.processed = Number.isFinite(lessonNo) ? lessonNo < effectiveCurrent : !!resource.processed;
+                                resource.processed = isCertificationLesson
+                                    ? certificationUnlocked
+                                    : Number.isFinite(lessonNo) ? lessonNo < effectiveCurrent : !!resource.processed;
                             });
                         }
 
@@ -1595,6 +1604,58 @@ class MTKHierarchy {
                 module.access = moduleHasAccess;
             });
         });
+    }
+
+    getLastStandardLessonNumber() {
+        if (!this.config || !Array.isArray(this.config)) {
+            return null;
+        }
+
+        let maxLessonNo = null;
+
+        this.config.forEach(course => {
+            if (!Array.isArray(course.modules)) return;
+
+            course.modules.forEach(module => {
+                if (!Array.isArray(module.lessons)) return;
+
+                module.lessons.forEach(lesson => {
+                    if (this.isCertificationLesson(lesson)) return;
+
+                    const lessonNo = Number(lesson.lesson_no);
+                    if (!Number.isFinite(lessonNo)) return;
+
+                    maxLessonNo = maxLessonNo === null ? lessonNo : Math.max(maxLessonNo, lessonNo);
+                });
+            });
+        });
+
+        return maxLessonNo;
+    }
+
+    isCertificationLesson(lesson) {
+        if (!lesson || typeof lesson !== 'object') {
+            return false;
+        }
+
+        if (String(lesson.lesson_no || '').toLowerCase() === 'certification') {
+            return true;
+        }
+
+        const title = String(lesson.title || '').toLowerCase();
+        return title.indexOf('receive your certification') !== -1;
+    }
+
+    isCertificationUnlocked(currentLesson, lastStandardLessonNo) {
+        if (!Number.isFinite(Number(currentLesson))) {
+            return false;
+        }
+
+        if (!Number.isFinite(Number(lastStandardLessonNo))) {
+            return false;
+        }
+
+        return Number(currentLesson) > Number(lastStandardLessonNo);
     }
 
     goToPurchaseSection() {

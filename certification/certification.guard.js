@@ -12,10 +12,36 @@
         return false;
     }
 
+    function getLastStandardLessonNumber() {
+        var hierarchy = window.app && Array.isArray(window.app.hierarchy) ? window.app.hierarchy : [];
+        var maxLessonNo = null;
+
+        hierarchy.forEach(function (course) {
+            (course.modules || []).forEach(function (module) {
+                (module.lessons || []).forEach(function (lesson) {
+                    var lessonKey = String((lesson && lesson.lesson_no) || '').toLowerCase();
+                    var title = String((lesson && lesson.title) || '').toLowerCase();
+                    var isCertificationLesson = lessonKey === 'certification' || title.indexOf('receive your certification') !== -1;
+                    var lessonNo = Number(lesson && lesson.lesson_no);
+
+                    if (isCertificationLesson || !Number.isFinite(lessonNo)) {
+                        return;
+                    }
+
+                    maxLessonNo = maxLessonNo === null ? lessonNo : Math.max(maxLessonNo, lessonNo);
+                });
+            });
+        });
+
+        return maxLessonNo;
+    }
+
     function hasCompletedProgram(session) {
         session = session || {};
         var user = session.user || {};
         var dashboard = session.dashboard || {};
+        var currentLesson = toNumber(user.current_lesson);
+        var lastStandardLessonNo = getLastStandardLessonNumber();
 
         var progress = Math.max(
             toNumber(dashboard.progress),
@@ -26,7 +52,8 @@
             toNumber(user.course_progress)
         );
 
-        return progress >= 100 ||
+        return (Number.isFinite(lastStandardLessonNo) && currentLesson > lastStandardLessonNo) ||
+            progress >= 100 ||
             isTruthyFlag(user.completed) ||
             isTruthyFlag(user.has_completed) ||
             isTruthyFlag(user.course_completed) ||
