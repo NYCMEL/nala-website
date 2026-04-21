@@ -6,7 +6,8 @@ mtk-biab.mtk-biab {
   background-color: #f1f3f4;
   color: #202124;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; }
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden; }
 
 .mtk-biab *,
 .mtk-biab *::before,
@@ -41,7 +42,8 @@ mtk-biab.mtk-biab {
 .mtk-biab__wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; }
+  min-height: 100vh;
+  scrollbar-gutter: stable; }
 
 .mtk-biab__header {
   background-color: #212529;

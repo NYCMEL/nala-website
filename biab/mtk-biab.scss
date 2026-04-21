@@ -47,6 +47,7 @@ mtk-biab.mtk-biab {
   color: $md-on-surface;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 // ============================================================
@@ -98,6 +99,7 @@ mtk-biab.mtk-biab {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    scrollbar-gutter: stable;
   }
 
   // ── Header dark theme tokens

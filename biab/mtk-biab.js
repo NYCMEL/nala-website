@@ -457,16 +457,13 @@ class MtkBiab {
       btn.tabIndex = isActive ? 0 : -1;
     });
 
-    // Tab panels
+    // Tab panels — use visibility to avoid layout reflow
     const allPanels = this.el.querySelectorAll('.mtk-biab__tab-panel');
     allPanels.forEach(panel => {
       const isActive = panel.dataset.panelId === tabId;
       panel.classList.toggle('is-active', isActive);
-      if (isActive) {
-        panel.removeAttribute('hidden');
-      } else {
-        panel.setAttribute('hidden', '');
-      }
+      panel.hidden = !isActive;
+      panel.style.display = isActive ? '' : 'none';
     });
 
     if (!silent) {
