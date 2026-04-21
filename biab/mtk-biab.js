@@ -222,11 +222,15 @@ class MtkBiab {
             <span class="material-icons" aria-hidden="true">open_in_new</span>
           </button>
         </div>
-        <div class="mtk-biab__iframe mtk-biab__iframe-placeholder" aria-label="Client website preview">
-          <span class="material-icons" aria-hidden="true">language</span>
-          <h3>Client Website Preview</h3>
-          <p>Your client website will appear here. Configure <code>iframeUrl</code> in <code>mtk-biab.config.js</code> to load a page, or replace with your live site URL.</p>
-        </div>
+        <iframe
+          class="mtk-biab__iframe"
+          id="mtk-biab-iframe-${tab.id}"
+          src="${tab.iframeUrl}"
+          title="Client Website Preview"
+          aria-label="Client website preview"
+          loading="lazy"
+          allow="fullscreen"
+        ></iframe>
       </div>
     `;
   }
@@ -431,10 +435,8 @@ class MtkBiab {
 
   _handleIframeReload(btn) {
     const { tabId } = btn.dataset;
-    const placeholder = this.el.querySelector(`#mtk-biab-panel-${tabId} .mtk-biab__iframe`);
-    if (placeholder && placeholder.tagName === 'IFRAME') {
-      placeholder.src = placeholder.src;
-    }
+    const iframe = this.el.querySelector(`#mtk-biab-iframe-${tabId}`);
+    if (iframe) iframe.src = iframe.src;
   }
 
   _handleIframeOpen(btn) {
