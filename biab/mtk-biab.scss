@@ -90,11 +90,19 @@ mtk-biab.mtk-biab {
     min-height: 100vh;
   }
 
+  // ── Header dark theme tokens
+  $header-bg:               #212529;
+  $header-tab-color:        rgba(#fff, 0.65);
+  $header-tab-hover-bg:     rgba(#fff, 0.08);
+  $header-tab-active-color: #ffffff;
+  $header-tab-indicator:    #4fc3f7;
+  $header-divider-color:    rgba(#fff, 0.15);
+
   // ── Header ───────────────────────────────────────────────
   &__header {
-    background-color: $md-surface;
-    border-bottom: 1px solid $md-outline;
-    box-shadow: $md-elevation-1;
+    background-color: $header-bg;
+    border-bottom: 1px solid rgba(#000, 0.3);
+    box-shadow: 0 2px 8px rgba(#000, 0.4);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -104,8 +112,8 @@ mtk-biab.mtk-biab {
     padding: 0 24px;
     display: flex;
     align-items: center;
-    gap: 16px;
     height: 64px;
+    gap: 0;
   }
 
   &__logo {
@@ -114,25 +122,39 @@ mtk-biab.mtk-biab {
     gap: 10px;
     text-decoration: none;
     flex-shrink: 0;
+    margin-right: auto; // logo stays left, tabs pushed right
 
-    .material-icons {
-      font-size: 28px;
-      color: $md-primary;
+    &-icon {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      flex-shrink: 0;
+      image-rendering: auto;
     }
 
     &-text {
       font-size: 18px;
-      font-weight: 600;
-      color: $md-on-surface;
+      font-weight: 700;
+      color: #ffffff;
       letter-spacing: -0.2px;
+      white-space: nowrap;
+    }
+
+    &-full {
+      display: inline;
+    }
+
+    &-short {
+      display: none;
     }
   }
 
   &__header-divider {
     width: 1px;
     height: 32px;
-    background: $md-outline;
+    background: $header-divider-color;
     flex-shrink: 0;
+    margin: 0 8px;
   }
 
   // ── Tab Navigation ───────────────────────────────────────
@@ -142,7 +164,7 @@ mtk-biab.mtk-biab {
     gap: 0;
     overflow-x: auto;
     scrollbar-width: none;
-    flex: 1;
+    // no flex:1 — tabs cluster right naturally via logo margin-right:auto
 
     &::-webkit-scrollbar {
       display: none;
@@ -154,11 +176,11 @@ mtk-biab.mtk-biab {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 0 16px;
+    padding: 0 18px;
     height: 64px;
     border: none;
     background: transparent;
-    color: $md-on-surface-variant;
+    color: $header-tab-color;
     font-family: $font-primary;
     font-size: 14px;
     font-weight: 500;
@@ -181,33 +203,33 @@ mtk-biab.mtk-biab {
       left: 0;
       right: 0;
       height: 3px;
-      background: $md-primary;
+      background: $header-tab-indicator;
       border-radius: 3px 3px 0 0;
       transform: scaleX(0);
       transition: transform $md-transition-standard;
     }
 
     &:hover {
-      background-color: rgba($md-primary, 0.06);
-      color: $md-primary;
+      background-color: $header-tab-hover-bg;
+      color: #ffffff;
 
       .material-icons {
-        color: $md-primary;
+        color: #ffffff;
       }
     }
 
     &:focus-visible {
-      outline: 2px solid $md-primary;
+      outline: 2px solid $header-tab-indicator;
       outline-offset: -2px;
       border-radius: 4px;
     }
 
     &.is-active {
-      color: $md-primary;
+      color: $header-tab-active-color;
       font-weight: 600;
 
       .material-icons {
-        color: $md-primary;
+        color: $header-tab-indicator;
       }
 
       &::after {
@@ -215,12 +237,12 @@ mtk-biab.mtk-biab {
       }
     }
 
-    // Ripple effect
+    // Ripple
     &::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle, rgba($md-primary, 0.18) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(#fff, 0.14) 0%, transparent 70%);
       opacity: 0;
       transform: scale(0.5);
       transition: opacity $md-transition-fast, transform $md-transition-fast;
@@ -706,6 +728,11 @@ mtk-biab.mtk-biab {
       padding: 0 12px;
       font-size: 13px;
       gap: 6px;
+      color: rgba(255, 255, 255, 0.65);
+
+      &.is-active {
+        color: #ffffff;
+      }
 
       .material-icons {
         font-size: 16px;
@@ -714,6 +741,11 @@ mtk-biab.mtk-biab {
 
     &__header-inner {
       padding: 0 12px;
+    }
+
+    &__logo {
+      &-full { display: none; }
+      &-short { display: inline; }
     }
 
     &__content-card {
