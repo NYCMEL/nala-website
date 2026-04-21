@@ -148,7 +148,7 @@ class MtkBiab {
   _buildHeader() {
     return `
       <header class="mtk-biab__header" role="banner">
-        <div class="mtk-biab__container">
+        <div class="container">
           <div class="row g-0">
             <div class="mtk-biab__header-inner col-md-12">
               <a class="mtk-biab__logo" href="#" tabindex="0" aria-label="NALA - Business in a Box">

@@ -339,15 +339,15 @@ mtk-biab.mtk-biab {
   &__sidebar {
     width: 280px;
     min-width: 280px;
-    background: #fffbfe;             // MD3 surface
+    background: #f7f7f7;
     border-right: none;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
     overflow-x: hidden;
     padding: 12px 0 24px;
-    // MD3 drawer elevation
-    box-shadow: 1px 0 0 0 #cac4d0;  // MD3 outline-variant tone
+    // Right shadow to separate drawer from content
+    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.08), 1px 0 0 0 #cac4d0;
   }
 
   // Section group label (like MD3 NavigationDrawer subheader)
@@ -514,7 +514,7 @@ mtk-biab.mtk-biab {
     flex: 1;
     padding: 28px 32px;
     overflow-y: auto;
-    background: $md-background;
+    background: #ffffff;
   }
 
   &__content-panel {

@@ -213,14 +213,14 @@ mtk-biab.mtk-biab {
 .mtk-biab__sidebar {
   width: 280px;
   min-width: 280px;
-  background: #fffbfe;
+  background: #f7f7f7;
   border-right: none;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 12px 0 24px;
-  box-shadow: 1px 0 0 0 #cac4d0; }
+  box-shadow: 4px 0 8px rgba(0, 0, 0, 0.08), 1px 0 0 0 #cac4d0; }
 
 .mtk-biab__sidebar-menu {
   margin-bottom: 4px; }
@@ -344,7 +344,7 @@ mtk-biab.mtk-biab {
   flex: 1;
   padding: 28px 32px;
   overflow-y: auto;
-  background: #f1f3f4; }
+  background: #ffffff; }
 
 .mtk-biab__content-panel {
   display: none;
