@@ -11,6 +11,7 @@ var mtkSettingsConfig = {
     },
     labels: {
         title: "Profile Settings",
+        privacyTitle: "Privacy Settings",
         userName: "Full Name",
         userEmail: "Email Address",
         currentPassword: "Current Password",

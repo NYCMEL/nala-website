@@ -42,6 +42,17 @@ if (typeof MtkSettings === 'undefined') {
             });
 	}
 
+	t(key, fallback, vars = {}) {
+	    let text = (window.i18n && typeof window.i18n.t === 'function') ? window.i18n.t(key) : fallback;
+	    if (text === key || text == null) {
+		text = fallback;
+	    }
+	    Object.keys(vars).forEach((name) => {
+		text = String(text).replace(`{${name}}`, vars[name]);
+	    });
+	    return text;
+	}
+
 	/**
 	 * CONFIG LOADING LOGIC
 	 */
@@ -73,7 +84,8 @@ if (typeof MtkSettings === 'undefined') {
 			currentPassword: ''
                     },
                     labels: {
-			title: 'Profile Settings'
+			title: 'Profile Settings',
+			privacyTitle: 'Privacy Settings'
                     },
                     validation: {
 			passwordMinLength: 8,
@@ -119,6 +131,11 @@ if (typeof MtkSettings === 'undefined') {
             if (this.config.labels?.title) {
 		this.elements.title.textContent = this.config.labels.title;
             }
+
+	    const privacyTitle = document.getElementById('mtk-settings-privacy-title');
+	    if (privacyTitle && this.config.labels?.privacyTitle) {
+		privacyTitle.textContent = this.config.labels.privacyTitle;
+	    }
 
             this.elements.fullName.value = this.formatFullName();
             this.elements.email.value = this.config.user.email || '';
@@ -200,16 +217,16 @@ if (typeof MtkSettings === 'undefined') {
             const v = this.config.validation;
 
             if (password.length < v.passwordMinLength)
-		return { valid: false, message: `Minimum ${v.passwordMinLength} characters` };
+		return { valid: false, message: this.t('settings.error.minLength', `Minimum ${v.passwordMinLength} characters`, { n: v.passwordMinLength }) };
 
             if (v.passwordRequireUppercase && !/[A-Z]/.test(password))
-		return { valid: false, message: 'Must contain uppercase letter' };
+		return { valid: false, message: this.t('settings.error.uppercase', 'Must contain uppercase letter') };
 
             if (v.passwordRequireLowercase && !/[a-z]/.test(password))
-		return { valid: false, message: 'Must contain lowercase letter' };
+		return { valid: false, message: this.t('settings.error.lowercase', 'Must contain lowercase letter') };
 
             if (v.passwordRequireNumber && !/[0-9]/.test(password))
-		return { valid: false, message: 'Must contain number' };
+		return { valid: false, message: this.t('settings.error.number', 'Must contain number') };
 
             return { valid: true };
 	}
@@ -220,7 +237,7 @@ if (typeof MtkSettings === 'undefined') {
             const confirm = this.elements.confirmPassword.value;
 
             if (current !== this.config.user.currentPassword) {
-		alert('Current password incorrect');
+		alert(this.t('settings.error.currentPassword', 'Current password incorrect'));
 		return;
             }
 
@@ -231,7 +248,7 @@ if (typeof MtkSettings === 'undefined') {
             }
 
             if (newPass !== confirm) {
-		alert('Passwords do not match');
+		alert(this.t('settings.error.passwordMismatch', 'Passwords do not match'));
 		return;
             }
 

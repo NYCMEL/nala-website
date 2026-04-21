@@ -630,10 +630,15 @@
     'dashboard.option.premium.title': { en: 'Premium',                  es: 'Premium' },
     'dashboard.option.premium.description': { en: 'Full premium locksmith course access.', es: 'Acceso completo al curso premium de cerrajería.' },
     'dashboard.option.premium.active': { en: 'Your Premium locksmith training access is active.', es: 'Tu acceso a la capacitación premium de cerrajería está activo.' },
+    'dashboard.option.premium.button': { en: 'Purchase Premium', es: 'Comprar Premium' },
     'dashboard.option.business.title': { en: 'Business in a Box',       es: 'Negocio en una Caja' },
     'dashboard.option.business.description': { en: 'Premium plus the Business in a Box add-on.', es: 'Premium más el complemento Negocio en una Caja.' },
     'dashboard.option.business.active': { en: 'Your Business in a Box package is active.', es: 'Tu paquete Negocio en una Caja está activo.' },
     'dashboard.option.business.addOn': { en: 'Add Business in a Box to your Premium access.', es: 'Agrega Negocio en una Caja a tu acceso Premium.' },
+    'dashboard.option.business.purchaseOnly': { en: 'To purchase Business in a Box services, click here.', es: 'Para comprar los servicios de Negocio en una Caja, haz clic aquí.' },
+    'dashboard.option.business.purchaseWithPremium': { en: 'To gain access to the full course and Business in a Box services, click here.', es: 'Para obtener acceso al curso completo y a los servicios de Negocio en una Caja, haz clic aquí.' },
+    'dashboard.option.business.buttonOnly': { en: 'Purchase Business in a Box', es: 'Comprar Negocio en una Caja' },
+    'dashboard.option.business.buttonBundle': { en: 'Purchase Premium + Business in a Box', es: 'Comprar Premium + Negocio en una Caja' },
     'dashboard.subs.title':      { en: 'You can also subscribe to our premium features:', es: 'También puedes suscribirte a nuestras funciones premium:' },
     'dashboard.sub1.title':      { en: 'Premium Courses',               es: 'Cursos Premium' },
     'dashboard.sub1.description':{ en: 'Access advanced courses and certifications', es: 'Accede a cursos avanzados y certificaciones' },
@@ -652,7 +657,10 @@
     'settings.userEmail':        { en: 'Email Address',                 es: 'Correo electrónico' },
     'settings.currentPassword':  { en: 'Current Password',              es: 'Contraseña actual' },
     'settings.newPassword':      { en: 'New Password',                  es: 'Nueva contraseña' },
+    'settings.newPasswordPlaceholder': { en: 'Enter new password',      es: 'Ingresa una nueva contraseña' },
     'settings.confirmPassword':  { en: 'Confirm New Password',          es: 'Confirmar nueva contraseña' },
+    'settings.confirmPasswordPlaceholder': { en: 'Re-enter new password', es: 'Vuelve a ingresar la nueva contraseña' },
+    'settings.passwordStrength': { en: 'Password strength:',            es: 'Seguridad de la contraseña:' },
     'settings.updateButton':     { en: 'Update',                        es: 'Actualizar' },
     'settings.saveButton':       { en: 'Save Changes',                  es: 'Guardar cambios' },
     'settings.cancelButton':     { en: 'Cancel',                        es: 'Cancelar' },
@@ -662,6 +670,8 @@
     'settings.error.uppercase':  { en: 'Must contain uppercase letter', es: 'Debe contener una letra mayúscula' },
     'settings.error.lowercase':  { en: 'Must contain lowercase letter', es: 'Debe contener una letra minúscula' },
     'settings.error.number':     { en: 'Must contain number',           es: 'Debe contener un número' },
+    'settings.error.currentPassword': { en: 'Current password incorrect', es: 'La contraseña actual es incorrecta' },
+    'settings.error.passwordMismatch': { en: 'Passwords do not match',  es: 'Las contraseñas no coinciden' },
     'settings.error.noEmail':    { en: 'No account email found for password reset.', es: 'No se encontró correo de cuenta para restablecer la contraseña.' },
     'settings.success.reset':    { en: 'Password reset email sent. Please check your inbox.', es: 'Correo de restablecimiento enviado. Por favor revisa tu bandeja de entrada.' },
     'settings.error.resetFail':  { en: 'Could not send reset link.',    es: 'No se pudo enviar el enlace de restablecimiento.' },
@@ -1029,6 +1039,7 @@
     var sett = global.window && window.mtkSettingsConfig;
     if (sett && sett.labels) {
       sett.labels.title           = t('settings.title');
+      sett.labels.privacyTitle    = t('settings.privacyTitle');
       sett.labels.userName        = t('settings.userName');
       sett.labels.userEmail       = t('settings.userEmail');
       sett.labels.currentPassword = t('settings.currentPassword');

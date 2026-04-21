@@ -7,7 +7,7 @@
 	<div class="container">
 	    <div class="row">
 		<div class="mtk-settings__header">
-		    <h2 id="mtk-settings-title">Profile & Settings</h2>
+		    <h2 id="mtk-settings-title" data-i18n="settings.title">Profile & Settings</h2>
 		</div>
 	    </div>
 	</div>
@@ -16,15 +16,15 @@
 	    <div class="row">
 		<div class="col-md-4 border border-left pt-2 mt-3">
 		    <div class="bg-warning p-2" style="border-radius:4px;">
-			<apan id="mtk-settings-title" class="fb" style="font-size:larger;padding-left:10px;">Privacy Settings</span>
+			<span id="mtk-settings-privacy-title" class="fb" style="font-size:larger;padding-left:10px;" data-i18n="settings.privacyTitle">Privacy Settings</span>
 		    </div>
 
 		    <!-- Content -->
 		    <div class="mtk-settings__content">
 			<!-- Full Name (Read-only) -->
 			<div class="mtk-settings__form-group">
-			    <label class="mtk-settings__label" for="mtk-settings-fullname">
-				Name
+			    <label class="mtk-settings__label" for="mtk-settings-fullname" data-i18n="settings.userName">
+				Full Name
 			    </label>
 			    <div class="mtk-settings__input-wrapper">
 				<input 
@@ -41,7 +41,7 @@
 			
 			<!-- Email Address (Read-only) -->
 			<div class="mtk-settings__form-group">
-			    <label class="mtk-settings__label" for="mtk-settings-email">
+			    <label class="mtk-settings__label" for="mtk-settings-email" data-i18n="settings.userEmail">
 				Email Address
 			    </label>
 			    <div class="mtk-settings__input-wrapper">
@@ -59,7 +59,7 @@
 			
 			<!-- Current Password -->
 			<div class="mtk-settings__form-group">
-			    <label class="mtk-settings__label" for="mtk-settings-current-password">
+			    <label class="mtk-settings__label" for="mtk-settings-current-password" data-i18n="settings.currentPassword">
 				Current Password
 			    </label>
 			    <div class="mtk-settings__input-wrapper">
@@ -81,14 +81,14 @@
 				    aria-label="Update Password"
 				>
 				    <span class="material-icons">edit</span>
-				    Update
+				    <span data-i18n="settings.updateButton">Update</span>
 				</button>
 			    </div>
 			</div>
 			
 			<!-- New Password (Hidden by default) -->
 			<div class="mtk-settings__form-group mtk-settings__hidden" id="mtk-settings-new-password-group">
-			    <label class="mtk-settings__label" for="mtk-settings-new-password">
+			    <label class="mtk-settings__label" for="mtk-settings-new-password" data-i18n="settings.newPassword">
 				New Password
 			    </label>
 			    <div class="mtk-settings__input-wrapper">
@@ -97,13 +97,14 @@
 				    id="mtk-settings-new-password" 
 				    class="mtk-settings__input mtk-settings__input--password" 
 				    placeholder="Enter new password"
+				    data-i18n-placeholder="settings.newPasswordPlaceholder"
 				    aria-label="New Password"
 				    autocomplete="new-password"
 				    aria-describedby="mtk-settings-password-strength-text mtk-settings-new-password-error"
 				/>
 			    </div>
 			    <div class="mtk-settings__password-strength" id="mtk-settings-password-strength">
-				<span id="mtk-settings-password-strength-text">Password strength: </span>
+				<span id="mtk-settings-password-strength-text" data-i18n="settings.passwordStrength">Password strength:</span>
 				<div class="mtk-settings__password-strength-bar">
 				    <div class="mtk-settings__password-strength-bar-fill" id="mtk-settings-password-strength-fill"></div>
 				</div>
@@ -116,7 +117,7 @@
 			
 			<!-- Confirm Password (Hidden by default) -->
 			<div class="mtk-settings__form-group mtk-settings__hidden" id="mtk-settings-confirm-password-group">
-			    <label class="mtk-settings__label" for="mtk-settings-confirm-password">
+			    <label class="mtk-settings__label" for="mtk-settings-confirm-password" data-i18n="settings.confirmPassword">
 				Confirm New Password
 			    </label>
 			    <div class="mtk-settings__input-wrapper">
@@ -125,6 +126,7 @@
 				    id="mtk-settings-confirm-password" 
 				    class="mtk-settings__input mtk-settings__input--password" 
 				    placeholder="Re-enter new password"
+				    data-i18n-placeholder="settings.confirmPasswordPlaceholder"
 				    aria-label="Confirm New Password"
 				    autocomplete="new-password"
 				    aria-describedby="mtk-settings-confirm-password-error"
@@ -144,11 +146,11 @@
 				      id="mtk-settings-cancel-btn"
 				      aria-label="Cancel"
 			    >
-				Cancel
+				<span data-i18n="settings.cancelButton">Cancel</span>
 			    </button>
 			    <button type="button" class="mtk-settings__btn mtk-settings__btn--primary" id="mtk-settings-save-btn" aria-label="Save Changes">
 				<span class="material-icons">save</span>
-				Save Changes
+				<span data-i18n="settings.saveButton">Save Changes</span>
 			    </button>
 			</div>
 		    </div>
