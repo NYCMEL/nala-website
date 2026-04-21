@@ -285,9 +285,13 @@
                 btn.type = 'button';
                 btn.className = btnConfig.className || 'btn btn-primary';
                 btn.textContent = btnConfig.label || 'Purchase';
-                btn.setAttribute('data-purchase-plan', btnConfig.plan || '');
+                if (btnConfig.plan) {
+                    btn.setAttribute('data-purchase-plan', btnConfig.plan || '');
+                }
                 btn.addEventListener('click', () => {
-                    if (window.wc && wc.buy && typeof wc.buy.handlePurchasePlan === 'function') {
+                    if (btnConfig.href) {
+                        window.open(btnConfig.href, btnConfig.target || '_blank', 'noopener');
+                    } else if (window.wc && wc.buy && typeof wc.buy.handlePurchasePlan === 'function') {
                         wc.buy.handlePurchasePlan(btnConfig.plan || '');
                     }
                 });
@@ -395,60 +399,90 @@
 
     function getDashboardPurchaseOptions() {
         const user = (window.wc && wc.session && wc.session.user) ? wc.session.user : {};
+        const giftTracking = (window.wc && wc.session && (wc.session.gift_tracking || user.gift_tracking))
+            ? (wc.session.gift_tracking || user.gift_tracking)
+            : null;
         const hasPremium = Number(user.has_premium || 0) === 1;
         const hasBusiness = Number(user.has_business_in_a_box || 0) === 1;
+        const giftTrackingCard = (giftTracking && giftTracking.available)
+            ? {
+                id: 'lockout-kit-tracking',
+                variant: 'message',
+                icon: giftTracking.status === 'shipped' ? 'local_shipping' : 'inventory_2',
+                title: _t('dashboard.gift.title', 'Track Your Lockout Kit'),
+                description: giftTracking.message || _t('dashboard.gift.description', 'View the status of your complimentary Lockout Kit order.'),
+                buttons: [
+                    giftTracking.tracking_url ? {
+                        label: _t('dashboard.gift.trackShipment', 'Track Shipment'),
+                        href: giftTracking.tracking_url,
+                        className: 'btn btn-primary'
+                    } : null,
+                    giftTracking.order_status_url ? {
+                        label: _t('dashboard.gift.viewOrder', 'View Order Status'),
+                        href: giftTracking.order_status_url,
+                        className: giftTracking.tracking_url ? 'btn btn-outline-primary' : 'btn btn-primary'
+                    } : null
+                ].filter(Boolean)
+            }
+            : null;
 
         if (hasBusiness) {
+            const options = [
+                {
+                    id: 'active-premium',
+                    icon: 'school',
+                    title: _t('dashboard.option.premium.title', 'Premium'),
+                    description: _t('dashboard.option.premium.active', 'Your Premium locksmith training access is active.'),
+                    price: _t('dashboard.price.active', 'Active'),
+                    clickable: false
+                },
+                {
+                    id: 'active-business-in-a-box',
+                    icon: 'work',
+                    title: _t('dashboard.option.business.title', 'Business in a Box'),
+                    description: _t('dashboard.option.business.active', 'Your Business in a Box package is active.'),
+                    price: _t('dashboard.price.active', 'Active'),
+                    clickable: false
+                }
+            ];
+            if (giftTrackingCard) options.push(giftTrackingCard);
+
             return {
                 title: _t('dashboard.activeProducts', 'Your active products'),
-                options: [
-                    {
-                        id: 'active-premium',
-                        icon: 'school',
-                        title: _t('dashboard.option.premium.title', 'Premium'),
-                        description: _t('dashboard.option.premium.active', 'Your Premium locksmith training access is active.'),
-                        price: _t('dashboard.price.active', 'Active'),
-                        clickable: false
-                    },
-                    {
-                        id: 'active-business-in-a-box',
-                        icon: 'work',
-                        title: _t('dashboard.option.business.title', 'Business in a Box'),
-                        description: _t('dashboard.option.business.active', 'Your Business in a Box package is active.'),
-                        price: _t('dashboard.price.active', 'Active'),
-                        clickable: false
-                    }
-                ]
+                options: options
             };
         }
 
         if (hasPremium) {
+            const options = [
+                {
+                    id: 'active-premium',
+                    icon: 'school',
+                    title: _t('dashboard.option.premium.title', 'Premium'),
+                    description: _t('dashboard.option.premium.active', 'Your Premium locksmith training access is active.'),
+                    price: _t('dashboard.price.active', 'Active'),
+                    clickable: false
+                },
+                {
+                    id: 'business-in-a-box-message',
+                    variant: 'message',
+                    icon: 'storefront',
+                    title: _t('dashboard.option.business.title', 'Business in a Box'),
+                    description: _t('dashboard.option.business.purchaseOnly', 'To purchase Business in a Box services, click here.'),
+                    buttons: [
+                        {
+                            plan: 'business',
+                            label: _t('dashboard.option.business.buttonOnly', 'Purchase Business in a Box'),
+                            className: 'btn btn-primary'
+                        }
+                    ]
+                }
+            ];
+            if (giftTrackingCard) options.push(giftTrackingCard);
+
             return {
                 title: _t('dashboard.activeProducts', 'Your active products'),
-                options: [
-                    {
-                        id: 'active-premium',
-                        icon: 'school',
-                        title: _t('dashboard.option.premium.title', 'Premium'),
-                        description: _t('dashboard.option.premium.active', 'Your Premium locksmith training access is active.'),
-                        price: _t('dashboard.price.active', 'Active'),
-                        clickable: false
-                    },
-                    {
-                        id: 'business-in-a-box-message',
-                        variant: 'message',
-                        icon: 'storefront',
-                        title: _t('dashboard.option.business.title', 'Business in a Box'),
-                        description: _t('dashboard.option.business.purchaseOnly', 'To purchase Business in a Box services, click here.'),
-                        buttons: [
-                            {
-                                plan: 'business',
-                                label: _t('dashboard.option.business.buttonOnly', 'Purchase Business in a Box'),
-                                className: 'btn btn-primary'
-                            }
-                        ]
-                    }
-                ]
+                options: options
             };
         }
 

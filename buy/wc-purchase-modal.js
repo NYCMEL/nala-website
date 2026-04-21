@@ -47,13 +47,13 @@
         ).trim();
 
         return {
-            shipping_name: fullName,
-            shipping_address1: String((user && user.shipping_address1) || "").trim(),
-            shipping_address2: String((user && user.shipping_address2) || "").trim(),
+            shipping_name: String((user && user.shipping_name) || fullName).trim(),
+            shipping_address1: String((user && (user.shipping_address1 || user.shipping_address_1)) || "").trim(),
+            shipping_address2: String((user && (user.shipping_address2 || user.shipping_address_2)) || "").trim(),
             shipping_city: String((user && user.shipping_city) || "").trim(),
             shipping_state: String((user && user.shipping_state) || "").trim().toUpperCase(),
-            shipping_postal_code: String((user && user.shipping_postal_code) || "").trim(),
-            shipping_country: "US",
+            shipping_postal_code: String((user && (user.shipping_postal_code || user.shipping_zip)) || "").trim(),
+            shipping_country: String((user && user.shipping_country) || "US").trim().toUpperCase() || "US",
             customer_name: fullName,
             customer_email: String((user && user.email) || "").trim(),
             customer_phone: String((user && user.phone) || "").trim()
