@@ -120,6 +120,12 @@ mtk-biab.mtk-biab {
     z-index: 100;
   }
 
+  // ── Push content below fixed header ──────────────────────
+  &__content {
+    flex: 1;
+    padding: 0;
+  }
+
   &__header-inner {
     max-width: 1200px;
     margin: 0 auto;
@@ -206,6 +212,7 @@ mtk-biab.mtk-biab {
     transition: color $md-transition-fast, background-color $md-transition-fast;
     border-radius: 0;
     outline: none;
+    overflow: hidden;
 
     .material-icons {
       font-size: 18px;
@@ -213,7 +220,11 @@ mtk-biab.mtk-biab {
     }
 
     &::after {
-      content: '';
+      display: none; // disabled — using real element instead
+    }
+
+    // Real indicator element — always scoped to button
+    .mtk-biab__tab-indicator {
       position: absolute;
       bottom: 0;
       left: 0;
@@ -223,6 +234,7 @@ mtk-biab.mtk-biab {
       border-radius: 3px 3px 0 0;
       transform: scaleX(0);
       transition: transform $md-transition-standard;
+      pointer-events: none;
     }
 
     &:hover {
@@ -247,7 +259,7 @@ mtk-biab.mtk-biab {
         color: $header-tab-indicator;
       }
 
-      &::after {
+      .mtk-biab__tab-indicator {
         transform: scaleX(1);
       }
     }
@@ -267,12 +279,6 @@ mtk-biab.mtk-biab {
       opacity: 1;
       transform: scale(1);
     }
-  }
-
-  // ── Main Content Area ────────────────────────────────────
-  &__content {
-    flex: 1;
-    padding: 0;
   }
 
   &__tab-panel {

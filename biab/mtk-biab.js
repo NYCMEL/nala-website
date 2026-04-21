@@ -175,6 +175,7 @@ class MtkBiab {
               >
                 <span class="material-icons" aria-hidden="true">${tab.icon}</span>
                 <span>${tab.label}</span>
+                <span class="mtk-biab__tab-indicator" aria-hidden="true"></span>
               </button>
             `).join('')}
           </nav>
@@ -343,6 +344,13 @@ class MtkBiab {
   }
 
   _onClick(e) {
+    // Prevent hash-only anchors from navigating (avoids wc-include re-injection)
+    const anchor = e.target.closest('a[href="#"]');
+    if (anchor) {
+      e.preventDefault();
+      return;
+    }
+
     const btn = e.target.closest('[data-action]');
     if (!btn) return;
 
