@@ -143,9 +143,12 @@ class MtkBiab {
     return `
       <header class="mtk-biab__header" role="banner">
         <div class="mtk-biab__header-inner">
-          <a class="mtk-biab__logo" href="#" tabindex="0" aria-label="MTK Business In A Box">
-            <span class="material-icons" aria-hidden="true">business_center</span>
-            <span class="mtk-biab__logo-text">MTK BiaB</span>
+          <a class="mtk-biab__logo" href="#" tabindex="0" aria-label="NALA - Business in a Box">
+            <img class="mtk-biab__logo-icon" src="/favicon.ico" alt="" aria-hidden="true" />
+            <span class="mtk-biab__logo-text">
+              <span class="mtk-biab__logo-full">NALA &ndash; Business in a Box</span>
+              <span class="mtk-biab__logo-short">NALA</span>
+            </span>
           </a>
           <div class="mtk-biab__header-divider" aria-hidden="true"></div>
           <nav
