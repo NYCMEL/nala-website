@@ -9,7 +9,7 @@ const MTK_BIAB_CONFIG = {
 	    icon: "language",
 	    active: true,
 	    type: "iframe",
-	    iframeUrl: "https://your-client-page-url.com"
+	    iframeUrl: "biab/parts/index.html"
 	},
 	{
 	    id: "business-guide",
