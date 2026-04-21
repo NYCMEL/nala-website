@@ -1,6 +1,9 @@
 (function () {
     const form = document.getElementById("mtk-register");
     const fields = ["name", "email", "email2", "phone"];
+    const t = (key, fallback) => {
+	return window.i18n && typeof window.i18n.t === "function" ? window.i18n.t(key) : fallback;
+    };
 
     const name = document.getElementById("name");
     const email = document.getElementById("email");
@@ -18,8 +21,13 @@
     const phoneError = phoneField.querySelector(".helper");
 
     const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const US_PHONE_REGEX =
-	  /^(?:\+1\s?)?(?:\(\d{3}\)|\d{3})[\s.-]?\d{3}[\s.-]?\d{4}$/;
+    const PHONE_REGEX = /^\+?[0-9().\-\s]{7,20}$/;
+
+    function isValidPhone(value) {
+	const raw = value.trim();
+	const digits = raw.replace(/\D/g, "");
+	return PHONE_REGEX.test(raw) && digits.length >= 7 && digits.length <= 15;
+    }
 
     fields.forEach(id => {
 	const input = document.getElementById(id);
@@ -37,7 +45,7 @@
 
     function clearNameError() {
 	name.classList.remove("error");
-	nameError.textContent = "First Name, Middle Initial, Last Name";
+	nameError.textContent = t("register.name.helper", "First Name, Middle Initial, Last Name");
 	nameError.classList.remove("error");
     }
 
@@ -61,7 +69,7 @@
 
     function clearPhoneError() {
 	phone.classList.remove("error");
-	phoneError.textContent = "Phone Number";
+	phoneError.textContent = t("register.phone.helper", "Phone Number");
 	phoneError.classList.remove("error");
     }
 
@@ -80,7 +88,7 @@
     });
 
     phone.addEventListener("input", () => {
-	if (US_PHONE_REGEX.test(phone.value.trim())) clearPhoneError();
+	if (isValidPhone(phone.value.trim())) clearPhoneError();
     });
 
     form.addEventListener("submit", event => {
@@ -99,25 +107,25 @@
 	}
 
 	if (name.value.trim().length < 3) {
-	    showNameError("Name must be at least 3 characters");
+	    showNameError(t("register.error.name.length", "Name must be at least 3 characters"));
 	    name.focus();
 	    return;
 	}
 
 	if (!EMAIL_REGEX.test(email.value.trim())) {
-	    showEmailError("Enter a valid email address");
+	    showEmailError(t("register.error.email.invalid", "Enter a valid email address"));
 	    email.focus();
 	    return;
 	}
 
 	if (email.value.trim() !== email2.value.trim()) {
-	    showEmailError("Emails do not match");
+	    showEmailError(t("register.error.email.mismatch", "Emails do not match"));
 	    email2.focus();
 	    return;
 	}
 
-	if (!US_PHONE_REGEX.test(phone.value.trim())) {
-	    showPhoneError("Enter a valid US phone number");
+	if (!isValidPhone(phone.value.trim())) {
+	    showPhoneError(t("register.error.phone.invalid", "Enter a valid phone number"));
 	    phone.focus();
 	    return;
 	}

@@ -410,6 +410,20 @@ class _febe {
 
     handleRegisterSubmit(data) {
 	// data ={name: 'Mel Heravi', email: 'mel.heravi@gmail.com', email2: 'mel.heravi@gmail.com', phone: '6463031234'}
+	const translateRegisterMessage = (message, fallbackKey) => {
+	    const dict = {
+		"Please fill in all required fields.": "register.error.requiredFields",
+		"An account with that email already exists.": "register.error.exists",
+		"server_error": "register.error.server",
+		"Registration submitted. Check your email to set your password.": "register.success"
+	    };
+	    const key = dict[message] || fallbackKey;
+	    if (window.i18n && typeof window.i18n.t === "function" && key) {
+		return window.i18n.t(key);
+	    }
+	    return message;
+	};
+
 	if (this.registerRequestInFlight) {
 	    return;
 	}
@@ -430,10 +444,11 @@ class _febe {
 	    }).then(res => {
 		return res.json().then(json => {
 		    if (!res.ok) {
+			const message = (json && (json.error || json.message)) ? (json.error || json.message) : wc.emsg(1003);
 			MTKMsgs.show({
 			    type: 'error',
 			    icon: 'error',
-			    message: (json && (json.error || json.message)) ? (json.error || json.message) : wc.emsg(1003),
+			    message: translateRegisterMessage(message, "register.error.server"),
 			    closable: true,
 			    timer: 10
 			});
@@ -443,10 +458,11 @@ class _febe {
 		    return json;
 		});
 	    }).then(json => {
+		const message = (json && (json.message || json.msg)) ? (json.message || json.msg) : "Registration submitted. Check your email to set your password.";
 		MTKMsgs.show({
 		    type: "success",
 		    icon: "success",
-		    message: (json && (json.message || json.msg)) ? (json.message || json.msg) : "Registration submitted. Check your email to set your password.",
+		    message: translateRegisterMessage(message, "register.success"),
 		    closable: true,
 		    timer: 12
 		});

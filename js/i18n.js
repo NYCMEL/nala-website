@@ -614,7 +614,11 @@
     'register.error.name.length': { en: 'Name must be at least 3 characters', es: 'El nombre debe tener al menos 3 caracteres' },
     'register.error.email.invalid': { en: 'Enter a valid email address', es: 'Ingresa una dirección de correo válida' },
     'register.error.email.mismatch': { en: 'Emails do not match',       es: 'Los correos no coinciden' },
-    'register.error.phone.invalid': { en: 'Enter a valid US phone number', es: 'Ingresa un número de teléfono de EE.UU. válido' },
+    'register.error.phone.invalid': { en: 'Enter a valid phone number',  es: 'Ingresa un número de teléfono válido' },
+    'register.error.requiredFields': { en: 'Please fill in all required fields.', es: 'Por favor completa todos los campos obligatorios.' },
+    'register.error.exists':      { en: 'An account with that email already exists.', es: 'Ya existe una cuenta con ese correo.' },
+    'register.error.server':      { en: 'Registration failed. Please try again.', es: 'El registro falló. Inténtalo de nuevo.' },
+    'register.success':           { en: 'Registration submitted. Check your email to set your password.', es: 'Registro enviado. Revisa tu correo para establecer tu contraseña.' },
 
     // ── DASHBOARD ─────────────────────────────────────────────────
     'dashboard.continue':        { en: 'Continue with Program',         es: 'Continuar con el programa' },
