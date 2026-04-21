@@ -152,7 +152,7 @@ class MtkBiab {
           <div class="row g-0">
             <div class="mtk-biab__header-inner col-md-12">
               <a class="mtk-biab__logo" href="#" tabindex="0" aria-label="NALA - Business in a Box">
-                <img class="mtk-biab__logo-icon" src="../img/logo-nala-association.webp" alt="NALA logo" />
+                <img class="mtk-biab__logo-icon" src="img/logo-nala-association.webp" alt="NALA logo" />
                 <span class="mtk-biab__logo-text">
                   <span class="mtk-biab__logo-full"><small> Business in a Box</small></span>
                   <span class="mtk-biab__logo-short">NALA</span>
