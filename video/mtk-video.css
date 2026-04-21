@@ -96,6 +96,10 @@
 *::after {
   box-sizing: border-box; }
 
+html,
+body {
+  min-height: 100%; }
+
 body {
   font-family: "Roboto", Arial, sans-serif;
   font-size: 16px;
@@ -103,8 +107,10 @@ body {
   color: #212121;
   background-color: #ffffff;
   margin: 0;
-  padding: 0;
-  margin-top: 80px; }
+  padding: 80px 0 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; }
 
 a {
   color: #1976d2;
@@ -142,6 +148,13 @@ a:hover {
 
 #page-content {
   flex: 1 0 auto; }
+
+#page-footer,
+.app-header {
+  flex-shrink: 0; }
+
+#page-footer {
+  margin-top: auto; }
 
 .course-card {
   border: 1px #cecece solid;
@@ -207,8 +220,3 @@ h1.title::after {
   font-weight: 500;
   text-align: left;
   box-sizing: border-box; }
-fff;
-      font-size: 1rem;
-      font-weight: 500;
-      text-align: left;
-      box-sizing: border-box; }

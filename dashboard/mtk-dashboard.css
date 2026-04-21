@@ -109,6 +109,10 @@
 *::after {
   box-sizing: border-box; }
 
+html,
+body {
+  min-height: 100%; }
+
 body {
   font-family: "Roboto", Arial, sans-serif;
   font-size: 16px;
@@ -116,8 +120,10 @@ body {
   color: #212121;
   background-color: #ffffff;
   margin: 0;
-  padding: 0;
-  margin-top: 80px; }
+  padding: 80px 0 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; }
 
 a {
   color: #1976d2;
@@ -155,6 +161,13 @@ a:hover {
 
 #page-content {
   flex: 1 0 auto; }
+
+#page-footer,
+.app-header {
+  flex-shrink: 0; }
+
+#page-footer {
+  margin-top: auto; }
 
 .course-card {
   border: 1px #cecece solid;
@@ -238,6 +251,9 @@ h1.title::after {
 .mtk-dashboard__progress-bar {
   position: relative; }
 
+.mtk-dashboard__progress-fill {
+  background: linear-gradient(90deg, #1976d2 0%, #2196f3 100%); }
+
 .mtk-dashboard__subscriptions {
   background: #ffffff;
   border-radius: 4px;
@@ -252,54 +268,11 @@ h1.title::after {
 
 .mtk-dashboard__subscription-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px; }
 
-.mtk-dashboard__message-card {
-  background: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  box-shadow: none; }
-
-.mtk-dashboard__message-icon {
-  width: 48px;
-  height: 48px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: #a98212;
-  color: #fff;
-  margin-bottom: 16px; }
-
-.mtk-dashboard__message-icon .material-icons {
-  font-size: 28px;
-  color: #ffffff; }
-
-.mtk-dashboard__message-title {
-  font-size: 18px;
-  font-weight: 500;
-  color: #212121;
-  margin: 0 0 8px 0; }
-
-.mtk-dashboard__message-description {
-  font-size: 14px;
-  color: #757575;
-  line-height: 1.5;
-  margin: 0 0 16px 0;
-  min-height: 42px; }
-
-.mtk-dashboard__message-actions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap; }
-
 .mtk-dashboard__subscription-card {
-  background: #fafafa;
+  background: #ffffff;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
   padding: 24px;
@@ -353,6 +326,49 @@ h1.title::after {
   color: #1976d2;
   margin: 0; }
 
+.mtk-dashboard__message-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: none; }
+
+.mtk-dashboard__message-icon {
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #a98212;
+  color: #ffffff;
+  margin-bottom: 16px; }
+
+.mtk-dashboard__message-icon .material-icons {
+  font-size: 28px;
+  color: #ffffff; }
+
+.mtk-dashboard__message-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #212121;
+  margin: 0 0 8px 0; }
+
+.mtk-dashboard__message-description {
+  font-size: 14px;
+  color: #757575;
+  line-height: 1.5;
+  margin: 0 0 16px 0;
+  min-height: 42px; }
+
+.mtk-dashboard__message-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap; }
+
 .mtk-dashboard .material-icons {
   font-family: "Material Icons";
   font-weight: normal;
@@ -381,17 +397,7 @@ h1.title::after {
   .mtk-dashboard__subscriptions {
     padding: 24px; }
   .mtk-dashboard__subscription-grid {
-    grid-template-columns: 1fr; }
-  .mtk-dashboard__message-card {
-    padding: 24px; }
-  .mtk-dashboard__message-title {
-    font-size: 24px; }
-  .mtk-dashboard__message-description {
-    font-size: 16px; }
-  .mtk-dashboard__message-actions {
-    flex-direction: column; }
-  .mtk-dashboard__message-actions .btn {
-    width: 100%; } }
+    grid-template-columns: 1fr; } }
 
 .mtk-dashboard__header, .mtk-dashboard__subscriptions {
   animation: mtk-fade-in 600ms cubic-bezier(0.4, 0, 0.2, 1); }

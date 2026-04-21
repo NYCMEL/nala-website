@@ -1,28 +1,27 @@
 .mtk-request {
   display: block;
-  font-family: var(--bs-font-sans-serif);
-}
+  font-family: var(--bs-font-sans-serif); }
+
 .mtk-request .card {
   border-radius: 12px;
-  padding: 20px;
-}
+  padding: 20px; }
+
 .mtk-request .form-control, .mtk-request .form-select {
-  border-radius: 8px;
-}
+  border-radius: 8px; }
+
 .mtk-request label {
   font-weight: 500;
-  margin-bottom: 4px;
-}
+  margin-bottom: 4px; }
+
 .mtk-request .phone-times {
-  display: none;
-}
+  display: none; }
+
 .mtk-request .phone-times.active {
-  display: block;
-}
+  display: block; }
+
 .mtk-request button {
-  margin-top: 15px;
-}
+  margin-top: 15px; }
+
 .mtk-request :focus {
   outline: 2px solid #0d6efd;
-  outline-offset: 2px;
-}
+  outline-offset: 2px; }
