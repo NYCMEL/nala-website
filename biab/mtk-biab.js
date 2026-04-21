@@ -133,7 +133,13 @@ class MtkBiab {
       <div class="mtk-biab__wrapper">
         ${this._buildHeader()}
         <main class="mtk-biab__content" id="mtk-biab-content">
-          ${this.tabs.map(tab => this._buildTabPanel(tab)).join('')}
+          <div class="mtk-biab__container">
+            <div class="row g-0">
+              <div class="col-md-12">
+                ${this.tabs.map(tab => this._buildTabPanel(tab)).join('')}
+              </div>
+            </div>
+          </div>
         </main>
       </div>
     `;
@@ -142,7 +148,7 @@ class MtkBiab {
   _buildHeader() {
     return `
       <header class="mtk-biab__header" role="banner">
-        <div class="container-fluid px-0">
+        <div class="mtk-biab__container">
           <div class="row g-0">
             <div class="mtk-biab__header-inner col-md-12">
               <a class="mtk-biab__logo" href="#" tabindex="0" aria-label="NALA - Business in a Box">
@@ -246,7 +252,6 @@ class MtkBiab {
   _buildSidebarPanel(tab) {
     const { menus } = tab.sidebar;
 
-    // Build sidebar nav
     const sidebarHTML = menus.map((menu, mi) => `
       <nav class="mtk-biab__sidebar-menu" aria-label="${menu.label}">
         <button
@@ -286,7 +291,6 @@ class MtkBiab {
       </nav>
     `).join('');
 
-    // Build all content panels for all items in all menus
     const contentPanels = menus.flatMap(menu =>
       menu.items.map(item => `
         <article
@@ -342,10 +346,14 @@ class MtkBiab {
   _buildSimplePanel(tab) {
     return `
       <div class="mtk-biab__simple-panel">
-        <div class="mtk-biab__content-card">
-          <h2 class="mtk-biab__content-title">${tab.content.title}</h2>
-          <div class="mtk-biab__content-body">
-            ${tab.content.body}
+        <div class="row g-0">
+          <div class="col-md-12">
+            <div class="mtk-biab__content-card">
+              <h2 class="mtk-biab__content-title">${tab.content.title}</h2>
+              <div class="mtk-biab__content-body">
+                ${tab.content.body}
+              </div>
+            </div>
           </div>
         </div>
       </div>

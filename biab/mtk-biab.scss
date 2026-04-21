@@ -83,6 +83,16 @@ mtk-biab.mtk-biab {
     }
   }
 
+  // ── Container ────────────────────────────────────────────
+  &__container {
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   // ── Wrapper ──────────────────────────────────────────────
   &__wrapper {
     display: flex;
@@ -423,100 +433,55 @@ mtk-biab.mtk-biab {
     min-height: calc(100vh - 64px);
   }
 
-  // ── Sidebar Navigation ───────────────────────────────────
+  // ── MD3 Navigation Drawer ────────────────────────────────
   &__sidebar {
-    width: 260px;
-    min-width: 260px;
-    background: $md-surface;
-    border-right: 1px solid $md-outline;
+    width: 280px;
+    min-width: 280px;
+    background: #fffbfe;             // MD3 surface
+    border-right: none;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    padding: 16px 0 24px;
+    overflow-x: hidden;
+    padding: 12px 0 24px;
+    // MD3 drawer elevation
+    box-shadow: 1px 0 0 0 #cac4d0;  // MD3 outline-variant tone
   }
 
+  // Section group label (like MD3 NavigationDrawer subheader)
   &__sidebar-menu {
-    margin-bottom: 8px;
+    margin-bottom: 4px;
   }
 
   &__sidebar-menu-header {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px 16px 4px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    color: $md-on-surface-variant;
-    cursor: pointer;
-    user-select: none;
-
-    .material-icons {
-      font-size: 18px;
-      color: $md-primary;
-    }
-
-    &-chevron {
-      margin-left: auto;
-      font-size: 18px !important;
-      color: $md-on-surface-variant !important;
-      transition: transform $md-transition-standard;
-    }
-
-    &.is-collapsed &-chevron {
-      transform: rotate(-90deg);
-    }
-  }
-
-  &__sidebar-items {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    transition: max-height $md-transition-emphasized, opacity $md-transition-standard;
-    max-height: 1000px;
-    opacity: 1;
-
-    &.is-collapsed {
-      max-height: 0;
-      opacity: 0;
-    }
-  }
-
-  &__sidebar-item {
-    display: block;
-  }
-
-  &__sidebar-item-btn {
-    display: flex;
-    align-items: center;
     gap: 12px;
     width: 100%;
-    padding: 10px 16px 10px 28px;
+    padding: 14px 24px 10px;
     border: none;
     background: transparent;
-    color: $md-on-surface-variant;
     font-family: $font-primary;
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 0.2px;
-    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #49454f;                  // MD3 on-surface-variant
     cursor: pointer;
-    border-radius: 0 24px 24px 0;
-    margin-right: 12px;
-    transition: background-color $md-transition-fast, color $md-transition-fast;
-    outline: none;
+    user-select: none;
+    text-align: left;
+    transition: background-color $md-transition-fast;
 
+    // Section icon
     .material-icons {
-      font-size: 18px;
+      font-size: 20px;
+      color: $md-primary;
       flex-shrink: 0;
-      transition: color $md-transition-fast;
     }
 
+    // Hover state ripple surface
     &:hover {
-      background-color: rgba($md-primary, 0.06);
-      color: $md-on-surface;
+      background: rgba($md-primary, 0.05);
     }
 
     &:focus-visible {
@@ -524,21 +489,122 @@ mtk-biab.mtk-biab {
       outline-offset: -2px;
     }
 
-    &.is-active {
-      background-color: $md-primary-light;
-      color: $md-primary-dark;
-      font-weight: 600;
+    &-chevron {
+      margin-left: auto;
+      font-size: 20px !important;
+      color: #79747e !important;     // MD3 outline
+      transition: transform $md-transition-standard;
+      flex-shrink: 0;
+    }
 
-      .material-icons {
-        color: $md-primary;
-      }
+    &.is-collapsed &-chevron {
+      transform: rotate(-90deg);
     }
   }
 
+  // MD3 NavigationDrawer item list
+  &__sidebar-items {
+    list-style: none;
+    margin: 0;
+    padding: 0 12px;                 // MD3 spec: 12px side padding for pill items
+    overflow: hidden;
+    transition: max-height $md-transition-emphasized, opacity $md-transition-standard;
+    max-height: 2000px;
+    opacity: 1;
+
+    &.is-collapsed {
+      max-height: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+
+  &__sidebar-item {
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  // MD3 NavigationDrawer destination item — pill shape
+  &__sidebar-item-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    height: 56px;                    // MD3 nav item height
+    padding: 0 24px 0 16px;
+    border: none;
+    background: transparent;
+    color: #49454f;                  // MD3 on-surface-variant (inactive)
+    font-family: $font-primary;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 28px;             // MD3 full-pill
+    transition:
+      background-color $md-transition-fast,
+      color $md-transition-fast,
+      box-shadow $md-transition-fast;
+    outline: none;
+    overflow: hidden;
+
+    // Icon
+    .material-icons {
+      font-size: 24px;
+      flex-shrink: 0;
+      color: #49454f;
+      transition: color $md-transition-fast;
+    }
+
+    // MD3 state layer
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: currentColor;
+      opacity: 0;
+      transition: opacity $md-transition-fast;
+      pointer-events: none;
+    }
+
+    &:hover::before   { opacity: 0.08; }
+    &:active::before  { opacity: 0.12; }
+
+    &:hover {
+      color: #1d192b;               // MD3 on-surface (hover)
+      .material-icons { color: #1d192b; }
+    }
+
+    &:focus-visible {
+      outline: 3px solid $md-primary;
+      outline-offset: 2px;
+    }
+
+    // MD3 active / selected destination
+    &.is-active {
+      background-color: #e8def8;    // MD3 secondary-container
+      color: #21005d;               // MD3 on-secondary-container
+      font-weight: 700;
+
+      .material-icons {
+        color: #21005d;
+      }
+
+      // Active indicator — no extra outline needed, bg does the job
+      &::before { opacity: 0; }
+
+      &:hover::before { opacity: 0.08; }
+    }
+  }
+
+  // MD3 Divider between menu groups
   &__sidebar-divider {
     height: 1px;
-    background: $md-outline-variant;
-    margin: 8px 16px;
+    background: #cac4d0;            // MD3 outline-variant
+    margin: 12px 16px;
   }
 
   // ── Sidebar Main Content ─────────────────────────────────
@@ -699,22 +765,29 @@ mtk-biab.mtk-biab {
       width: 100%;
       min-width: unset;
       border-right: none;
-      border-bottom: 1px solid $md-outline;
+      border-bottom: 1px solid #cac4d0;
       padding: 8px 0;
+      box-shadow: none;
     }
 
     &__sidebar-items {
       display: flex;
       flex-wrap: nowrap;
       overflow-x: auto;
-      padding: 0 12px 0;
+      padding: 4px 8px;
+      gap: 4px;
+    }
+
+    &__sidebar-item {
+      margin-bottom: 0;
+      flex-shrink: 0;
     }
 
     &__sidebar-item-btn {
+      height: 40px;
       white-space: nowrap;
-      border-radius: 24px;
-      padding: 8px 16px;
-      margin-right: 4px;
+      padding: 0 16px;
+      font-size: 13px;
     }
 
     &__sidebar-menu-header {
