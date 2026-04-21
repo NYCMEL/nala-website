@@ -1770,6 +1770,25 @@ function overlayTitlesFromLocalConfig(sessionParts, localParts) {
     return sessionParts;
 }
 
+function applyInitialProgressAccess(hierarchyInstance) {
+    if (!hierarchyInstance || typeof hierarchyInstance.applyCurrentLessonAccess !== 'function') {
+        return;
+    }
+
+    const currentLesson = (typeof wc !== 'undefined' &&
+        wc.session &&
+        wc.session.user &&
+        Number.isFinite(Number(wc.session.user.current_lesson)))
+        ? Number(wc.session.user.current_lesson)
+        : null;
+
+    if (!Number.isFinite(currentLesson)) {
+        return;
+    }
+
+    hierarchyInstance.applyCurrentLessonAccess(currentLesson);
+}
+
 if (wc.testing) {
     // LOCAL MODE - Use window.app.hierarchy
     if (typeof window.app !== 'undefined' && window.app.hierarchy) {
@@ -1781,6 +1800,7 @@ if (wc.testing) {
         }
 
         const hierarchy = new MTKHierarchy(window.app.hierarchy);
+        applyInitialProgressAccess(hierarchy);
         window.MTKHierarchy = hierarchy;
 
         subscribeToEvents();
@@ -1810,6 +1830,7 @@ if (wc.testing) {
     wc.log("testing:", wc.testing, window.app.hierarchy);
 
     const hierarchy = new MTKHierarchy(window.app.hierarchy);
+    applyInitialProgressAccess(hierarchy);
     window.MTKHierarchy = hierarchy;
 
     subscribeToEvents();
