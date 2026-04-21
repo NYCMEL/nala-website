@@ -125,11 +125,12 @@ mtk-biab.mtk-biab {
     margin-right: auto; // logo stays left, tabs pushed right
 
     &-icon {
-      width: 28px;
-      height: 28px;
+      height: 40px;
+      width: auto;
+      max-width: 120px;
       object-fit: contain;
       flex-shrink: 0;
-      image-rendering: auto;
+      display: block;
     }
 
     &-text {
@@ -746,6 +747,7 @@ mtk-biab.mtk-biab {
     &__logo {
       &-full { display: none; }
       &-short { display: inline; }
+      &-icon { height: 32px; }
     }
 
     &__content-card {

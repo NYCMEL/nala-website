@@ -58,11 +58,12 @@ mtk-biab.mtk-biab {
   flex-shrink: 0;
   margin-right: auto; }
   .mtk-biab__logo-icon {
-    width: 28px;
-    height: 28px;
+    height: 40px;
+    width: auto;
+    max-width: 120px;
     object-fit: contain;
     flex-shrink: 0;
-    image-rendering: auto; }
+    display: block; }
   .mtk-biab__logo-text {
     font-size: 18px;
     font-weight: 700;
@@ -519,6 +520,8 @@ mtk-biab.mtk-biab {
     display: none; }
   .mtk-biab__logo-short {
     display: inline; }
+  .mtk-biab__logo-icon {
+    height: 32px; }
   .mtk-biab__content-card {
     padding: 20px 20px; } }
 

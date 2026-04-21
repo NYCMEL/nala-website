@@ -144,9 +144,9 @@ class MtkBiab {
       <header class="mtk-biab__header" role="banner">
         <div class="mtk-biab__header-inner">
           <a class="mtk-biab__logo" href="#" tabindex="0" aria-label="NALA - Business in a Box">
-            <img class="mtk-biab__logo-icon" src="/favicon.ico" alt="" aria-hidden="true" />
+            <img class="mtk-biab__logo-icon" src="../img/logo-nala-association.webp" alt="NALA logo" />
             <span class="mtk-biab__logo-text">
-              <span class="mtk-biab__logo-full">NALA &ndash; Business in a Box</span>
+              <span class="mtk-biab__logo-full"><small> Business in a Box</small></span>
               <span class="mtk-biab__logo-short">NALA</span>
             </span>
           </a>
@@ -164,6 +164,7 @@ class MtkBiab {
                 aria-controls="mtk-biab-panel-${tab.id}"
                 aria-selected="${tab.active ? 'true' : 'false'}"
                 tabindex="${tab.active ? '0' : '-1'}"
+                data-action="select-tab"
                 data-tab-id="${tab.id}"
               >
                 <span class="material-icons" aria-hidden="true">${tab.icon}</span>
@@ -362,6 +363,9 @@ class MtkBiab {
     const action = btn.dataset.action;
 
     switch (action) {
+      case 'select-tab':
+        this._activateTab(btn.dataset.tabId);
+        break;
       case 'select-item':
         this._handleItemClick(btn);
         break;
