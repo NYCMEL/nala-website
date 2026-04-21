@@ -1600,6 +1600,7 @@ wc.submitQuiz = function (quizSessionId, moduleId, answersMap, callback) {
 
 wc.fixFooter = function() {
     const footer = document.getElementById("page-footer");
+    const pageContent = document.getElementById("page-content");
     if (!footer) return;
 
     if (wc._adjustFooter) {
@@ -1618,24 +1619,28 @@ wc.fixFooter = function() {
         footer.style.width = "";
         document.body.style.paddingBottom = "";
 
-        const docHeight = document.documentElement.scrollHeight;
-        const viewportHeight = window.innerHeight;
-
-        if (docHeight <= viewportHeight) {
-            footer.style.position = "fixed";
-            footer.style.bottom = "0";
-            footer.style.left = "0";
-            footer.style.width = "100%";
-            document.body.style.paddingBottom = footer.offsetHeight + "px";
-        } else {
-            footer.style.position = "static";
+        if (!pageContent) {
+            return;
         }
+
+        pageContent.style.minHeight = "";
+
+        const visibleHeader = Array.from(document.querySelectorAll(".app-header")).find(function(el) {
+            return window.getComputedStyle(el).display !== "none";
+        });
+
+        const headerHeight = visibleHeader ? visibleHeader.offsetHeight : 0;
+        const footerHeight = footer.offsetHeight || 0;
+        const minContentHeight = Math.max(window.innerHeight - headerHeight - footerHeight, 0);
+
+        pageContent.style.minHeight = minContentHeight + "px";
     };
 
     window.addEventListener("load", wc._adjustFooter);
     window.addEventListener("resize", wc._adjustFooter);
 
     wc._adjustFooterTimeout = setTimeout(wc._adjustFooter, 50);
+    setTimeout(wc._adjustFooter, 250);
 };
 
 
@@ -1644,6 +1649,7 @@ wc.fixFooter = function() {
  ************************************************************/
 wc.unfixFooter = function() {
     const footer = document.getElementById("page-footer");
+    const pageContent = document.getElementById("page-content");
     if (!footer) return;
 
     if (wc._adjustFooter) {
@@ -1660,4 +1666,7 @@ wc.unfixFooter = function() {
     footer.style.removeProperty("left");
     footer.style.removeProperty("width");
     document.body.style.removeProperty("padding-bottom");
+    if (pageContent) {
+        pageContent.style.removeProperty("min-height");
+    }
 };
