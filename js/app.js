@@ -78,7 +78,7 @@ document.addEventListener("click", function (e) {
 // ADD RIPPLE EFFECT TO ALL BUTTONS
 (function applyRippleToButtons() {
     function addRipple(root = document) {
-	root.querySelectorAll("button:not(.mtk-ripple)").forEach(btn => {
+	root.querySelectorAll("button:not(.mtk-ripple):not(.mtk-biab__tab-btn):not(.mtk-biab__sidebar-item-btn):not(.mtk-biab__sidebar-menu-header)").forEach(btn => {
 	    btn.classList.add("mtk-ripple");
 	});
     }
@@ -97,7 +97,10 @@ document.addEventListener("click", function (e) {
 		    if (node.nodeType !== 1) return;
 
 		    if (node.tagName === "BUTTON") {
-			node.classList.add("mtk-ripple");
+			// Skip mtk-biab buttons
+			if (!node.closest('.mtk-biab')) {
+			    node.classList.add("mtk-ripple");
+			}
 		    } else {
 			addRipple(node);
 		    }
