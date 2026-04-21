@@ -424,6 +424,7 @@ class _febe {
 		body: JSON.stringify({
 		    name: data.name,
 		    email: data.email,
+		    email2: data.email2,
 		    phone: data.phone
 		})
 	    }).then(res => {
