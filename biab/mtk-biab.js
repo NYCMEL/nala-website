@@ -106,7 +106,7 @@ class MtkBiab {
       case this.events.publish.itemSelect:
         // External item selection request
         if (data && data.tabId && data.itemId) {
-          this._activateItem(data.tabId, data.itemId);
+          this._activateItem(data.tabId, data.itemId, data.menuId, null, true);
         }
         break;
 
@@ -481,7 +481,7 @@ class MtkBiab {
 
   // ── Item Activation ────────────────────────────────────────────────────────
 
-  _activateItem(tabId, itemId, menuId, clickedBtn) {
+  _activateItem(tabId, itemId, menuId, clickedBtn, silent = false) {
     // Deactivate previous item buttons in this tab
     const prevBtns = this.el.querySelectorAll(
       `#mtk-biab-panel-${tabId} .mtk-biab__sidebar-item-btn.is-active`
@@ -523,7 +523,9 @@ class MtkBiab {
     this.activeMenuState[tabId] = { menuId, itemId };
 
     // Publish
-    this._publish(this.events.publish.itemSelect, { tabId, menuId, itemId });
+    if (!silent) {
+      this._publish(this.events.publish.itemSelect, { tabId, menuId, itemId });
+    }
   }
 
   // ── Expand Menu ────────────────────────────────────────────────────────────

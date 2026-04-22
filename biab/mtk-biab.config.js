@@ -7,7 +7,7 @@ const MTK_BIAB_CONFIG = {
       id: "website-maker",
       label: "Website Maker",
       icon: "language",
-      active: true,
+      active: false,
       type: "iframe",
       iframeUrl: "client"
     },
@@ -15,7 +15,7 @@ const MTK_BIAB_CONFIG = {
       id: "business-guide",
       label: "Business Guide & Pricing",
       icon: "menu_book",
-      active: false,
+      active: true,
       type: "sidebar",
       sidebar: {
         menus: [

@@ -231,18 +231,18 @@
             card.appendChild(price);
 
             if (isActive) {
-                // Active cards always clickable — navigate to client
+                // Active cards always clickable — navigate to BIAB
                 card.setAttribute('role', 'button');
                 card.setAttribute('tabindex', '0');
                 card.style.cursor = 'pointer';
                 card.addEventListener('click', () => {
-                    wc.log('[dashboard] Active card clicked → client page');
-                    window.location.href = 'client/index.html';
+                    wc.log('[dashboard] Active card clicked → BIAB page');
+                    window.location.href = 'biab/index.html';
                 });
                 card.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
-                        window.location.href = 'client/index.html';
+                        window.location.href = 'biab/index.html';
                     }
                 });
             } else if (option.clickable !== false) {
