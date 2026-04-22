@@ -703,43 +703,8 @@ const MTK_BIAB_CONFIG = {
                 content: {
                   title: "Logo Concepts",
                   body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#eef4ff;color:#0d47a1;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
-<h3>Recommended Implementation</h3>
-<p>The best practical version is a guided logo generator, not a totally open-ended canvas. Let the user pick a business tone, icon direction, and color family, then generate a few controlled concepts.</p>
-
-<h3>Inputs</h3>
-<ul>
-  <li>Business name</li>
-  <li>Slogan (optional)</li>
-  <li>Brand tone: budget / premium / commercial / family / emergency</li>
-  <li>Icon direction: key / shield / keyhole / monogram / wordmark</li>
-  <li>Color palette</li>
-</ul>
-
-<h3>Outputs</h3>
-<ul>
-  <li>Primary logo</li>
-  <li>Icon-only logo</li>
-  <li>Horizontal logo</li>
-  <li>Square logo</li>
-  <li>Black version</li>
-  <li>White version</li>
-</ul>
-
-<h3>Good Locksmith Logo Directions</h3>
-<ul>
-  <li>Clean wordmark with subtle keyhole or key accent</li>
-  <li>Shield plus monogram for trust and security</li>
-  <li>Minimal modern icon for commercial feel</li>
-  <li>Bold van-friendly mark readable from a distance</li>
-</ul>
-
-<h3>Avoid</h3>
-<ul>
-  <li>Tiny details</li>
-  <li>Overly metallic fake effects</li>
-  <li>Generic clip-art feel</li>
-  <li>Too many colors</li>
-</ul>`
+<p>This prototype uses free Google Fonts and temporary in-house SVG icons so the workflow can be tested now. <strong>Before production, buy a premium locksmith icon pack and a licensed production font set.</strong></p>
+<div data-logo-designer-panel="concepts"></div>`
                 }
               },
               {
@@ -749,22 +714,8 @@ const MTK_BIAB_CONFIG = {
                 content: {
                   title: "Brand Guidelines",
                   body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fff4e5;color:#8a4b00;font-size:12px;font-weight:700;text-transform:uppercase;">Intermediate</span></p>
-<h3>What the Customer Should Receive</h3>
-<ul>
-  <li>Primary logo</li>
-  <li>Secondary logo</li>
-  <li>Icon mark</li>
-  <li>Light-background version</li>
-  <li>Dark-background version</li>
-  <li>Color palette with HEX values</li>
-  <li>Font pairings</li>
-  <li>Spacing rules</li>
-  <li>Minimum size rules</li>
-  <li>“Do not” examples</li>
-</ul>
-
-<h3>Why This Matters</h3>
-<p>Consistency creates trust. A locksmith who uses the same look across vehicle wrap, business cards, invoices, website, and Google profile feels more established and professional.</p>`
+<p>These guidelines are generated from the user’s live logo selections so the output feels like a real starter brand system instead of static advice.</p>
+<div data-logo-designer-panel="guidelines"></div>`
                 }
               },
               {
@@ -774,19 +725,8 @@ const MTK_BIAB_CONFIG = {
                 content: {
                   title: "Logo Variations",
                   body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fff4e5;color:#8a4b00;font-size:12px;font-weight:700;text-transform:uppercase;">Intermediate</span></p>
-<h3>Recommended Export Set</h3>
-<ul>
-  <li>SVG</li>
-  <li>PNG with transparent background</li>
-  <li>PDF print version</li>
-  <li>Favicon square</li>
-  <li>Social profile image</li>
-  <li>Van decal version</li>
-  <li>Single-color embroidery-safe version</li>
-</ul>
-
-<h3>Recommended UX</h3>
-<p>After the user picks a logo direction, show all required variants as one pack. Do not make them manually recreate the logo in multiple sizes.</p>`
+<p>The variation pack below shows the same logo system adapted for light, dark, social, favicon, and one-color use so buyers understand what a production handoff should include.</p>
+<div data-logo-designer-panel="variations"></div>`
                 }
               }
             ]

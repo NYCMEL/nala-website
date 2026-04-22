@@ -34,6 +34,178 @@ if (typeof window.wc === 'undefined') {
 }
 // ────────────────────────────────────────────────────────────────────────────
 
+const MTK_BIAB_LOGO_ICONS = [
+  {
+    key: 'precision-key',
+    label: 'Precision Key',
+    svg: `
+      <svg viewBox="0 0 96 96" aria-hidden="true">
+        <circle cx="28" cy="48" r="16" fill="currentColor"></circle>
+        <circle cx="28" cy="48" r="7" fill="var(--logo-bg, #ffffff)"></circle>
+        <rect x="42" y="43" width="34" height="10" rx="5" fill="currentColor"></rect>
+        <rect x="68" y="43" width="6" height="18" rx="2" fill="currentColor"></rect>
+        <rect x="58" y="43" width="6" height="14" rx="2" fill="currentColor"></rect>
+      </svg>`
+  },
+  {
+    key: 'shield-lock',
+    label: 'Shield Lock',
+    svg: `
+      <svg viewBox="0 0 96 96" aria-hidden="true">
+        <path d="M48 12l24 8v18c0 20-10 34-24 42C34 72 24 58 24 38V20l24-8z" fill="currentColor"></path>
+        <rect x="37" y="43" width="22" height="19" rx="4" fill="var(--logo-bg, #ffffff)"></rect>
+        <path d="M40 43v-5c0-5 3-10 8-10s8 5 8 10v5" fill="none" stroke="var(--logo-bg, #ffffff)" stroke-width="6" stroke-linecap="round"></path>
+      </svg>`
+  },
+  {
+    key: 'modern-keyhole',
+    label: 'Modern Keyhole',
+    svg: `
+      <svg viewBox="0 0 96 96" aria-hidden="true">
+        <circle cx="48" cy="36" r="18" fill="currentColor"></circle>
+        <path d="M48 44l10 24H38l10-24z" fill="currentColor"></path>
+        <circle cx="48" cy="36" r="7" fill="var(--logo-bg, #ffffff)"></circle>
+      </svg>`
+  },
+  {
+    key: 'entry-lock',
+    label: 'Entry Lock',
+    svg: `
+      <svg viewBox="0 0 96 96" aria-hidden="true">
+        <rect x="26" y="38" width="44" height="34" rx="8" fill="currentColor"></rect>
+        <path d="M34 38V30c0-8 6-14 14-14s14 6 14 14v8" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"></path>
+        <circle cx="48" cy="54" r="5" fill="var(--logo-bg, #ffffff)"></circle>
+        <rect x="46" y="54" width="4" height="10" rx="2" fill="var(--logo-bg, #ffffff)"></rect>
+      </svg>`
+  },
+  {
+    key: 'garage-key',
+    label: 'Garage Key',
+    svg: `
+      <svg viewBox="0 0 96 96" aria-hidden="true">
+        <path d="M19 55l20-20 11 11 19-19 8 8-19 19 11 11-20 20-30-30z" fill="currentColor"></path>
+        <circle cx="33" cy="40" r="6" fill="var(--logo-bg, #ffffff)"></circle>
+      </svg>`
+  },
+  {
+    key: 'monogram-n',
+    label: 'Monogram N',
+    svg: `
+      <svg viewBox="0 0 96 96" aria-hidden="true">
+        <rect x="18" y="18" width="60" height="60" rx="18" fill="currentColor"></rect>
+        <path d="M34 64V32h7l21 20V32h8v32h-7L42 44v20h-8z" fill="var(--logo-bg, #ffffff)"></path>
+      </svg>`
+  }
+];
+
+const MTK_BIAB_LOGO_PALETTES = [
+  {
+    key: 'midnight-brass',
+    label: 'Midnight Brass',
+    description: 'High-trust dark navy with warm brass accents for premium residential and commercial positioning.',
+    surface: '#0f172a',
+    surfaceSoft: '#16213b',
+    primary: '#c6952d',
+    accent: '#f5d36c',
+    textOnDark: '#f8fafc',
+    textOnLight: '#0f172a',
+    neutral: '#e5e7eb'
+  },
+  {
+    key: 'forest-steel',
+    label: 'Forest Steel',
+    description: 'Professional green and steel for locksmiths leaning into property managers, hardware, and security.',
+    surface: '#163126',
+    surfaceSoft: '#23483a',
+    primary: '#7dbb8b',
+    accent: '#dfe7e2',
+    textOnDark: '#f7fbf8',
+    textOnLight: '#163126',
+    neutral: '#d1d5db'
+  },
+  {
+    key: 'signal-orange',
+    label: 'Signal Orange',
+    description: 'Urgency-focused palette suited to mobile, emergency, and roadside-first positioning.',
+    surface: '#1f2937',
+    surfaceSoft: '#374151',
+    primary: '#f97316',
+    accent: '#fed7aa',
+    textOnDark: '#ffffff',
+    textOnLight: '#1f2937',
+    neutral: '#e5e7eb'
+  },
+  {
+    key: 'royal-cobalt',
+    label: 'Royal Cobalt',
+    description: 'Crisp blue system for corporate, access-control, and service-contract oriented brands.',
+    surface: '#0b1f52',
+    surfaceSoft: '#14317a',
+    primary: '#4da3ff',
+    accent: '#dbeafe',
+    textOnDark: '#f8fbff',
+    textOnLight: '#0b1f52',
+    neutral: '#dbe4f0'
+  }
+];
+
+const MTK_BIAB_LOGO_FONTS = [
+  {
+    key: 'outfit-manrope',
+    label: 'Outfit + Manrope',
+    headline: "'Outfit', 'Segoe UI', sans-serif",
+    body: "'Manrope', 'Segoe UI', sans-serif",
+    rationale: 'Modern geometric pairing with clean counters and excellent van, website, and social readability.'
+  },
+  {
+    key: 'archivo-manrope',
+    label: 'Archivo Black + Manrope',
+    headline: "'Archivo Black', 'Arial Black', sans-serif",
+    body: "'Manrope', 'Segoe UI', sans-serif",
+    rationale: 'Bold signage-first wordmark system for roadside visibility and simple fleet graphics.'
+  },
+  {
+    key: 'space-libre',
+    label: 'Space Grotesk + Libre Baskerville',
+    headline: "'Space Grotesk', 'Segoe UI', sans-serif",
+    body: "'Libre Baskerville', Georgia, serif",
+    rationale: 'A more premium pairing that balances modern locksmith service with established trust.'
+  }
+];
+
+const MTK_BIAB_LOGO_TEMPLATES = [
+  {
+    key: 'service-wordmark',
+    label: 'Service Wordmark',
+    badge: 'Best for vans',
+    description: 'Horizontal lockup with strong icon-left hierarchy for vehicle wraps, Google profile art, and website headers.'
+  },
+  {
+    key: 'trusted-shield',
+    label: 'Trusted Shield',
+    badge: 'Best for trust',
+    description: 'Badge-driven system with stronger security cues for rekeys, property managers, and commercial accounts.'
+  },
+  {
+    key: 'modern-stack',
+    label: 'Modern Stack',
+    badge: 'Best for web',
+    description: 'Clean stacked layout for websites, proposals, and social assets with a simple modern feel.'
+  },
+  {
+    key: 'monogram-seal',
+    label: 'Monogram Seal',
+    badge: 'Best for premium',
+    description: 'Compact emblem system suited to invoices, stationery, stamps, and polished premium brands.'
+  }
+];
+
+const MTK_BIAB_LOGO_VARIATIONS = [
+  { key: 'horizontal', label: 'Horizontal', description: 'Primary website and van lockup.' },
+  { key: 'stacked', label: 'Stacked', description: 'Balanced for square ads and flyers.' },
+  { key: 'badge', label: 'Badge', description: 'Compact seal for uniforms, decals, and favicons.' },
+  { key: 'icon-only', label: 'Icon Only', description: 'Small-format social avatar and favicon mark.' }
+];
 
 class MtkBiab {
   /**
@@ -45,6 +217,7 @@ class MtkBiab {
     this.cfg    = cfg;
     this.tabs   = cfg.tabs;
     this.events = cfg.events;
+    this.logoDesignerState = this._getDefaultLogoDesignerState();
 
     // Active state
     this.activeTabId    = null;
@@ -58,6 +231,7 @@ class MtkBiab {
   _init() {
     this._subscribeAll();
     this._render();
+    this._renderDynamicPanels();
     this._bindAll();
     this._activateDefaultTab();
 
@@ -341,6 +515,7 @@ class MtkBiab {
     // Delegate all interactions from the root element
     this.el.addEventListener('click', this._onClick.bind(this));
     this.el.addEventListener('keydown', this._onKeydown.bind(this));
+    this.el.addEventListener('input', this._onInput.bind(this));
   }
 
   _onClick(e) {
@@ -372,6 +547,38 @@ class MtkBiab {
       case 'iframe-open':
         this._handleIframeOpen(btn);
         break;
+      case 'logo-set-icon':
+        this._setLogoDesignerState('iconKey', btn.dataset.logoValue);
+        break;
+      case 'logo-set-palette':
+        this._setLogoDesignerState('paletteKey', btn.dataset.logoValue);
+        break;
+      case 'logo-set-font':
+        this._setLogoDesignerState('fontKey', btn.dataset.logoValue);
+        break;
+      case 'logo-set-template':
+        this._setLogoDesignerState('templateKey', btn.dataset.logoValue);
+        break;
+      case 'logo-set-variation':
+        this._setLogoDesignerState('variationKey', btn.dataset.logoValue);
+        break;
+    }
+  }
+
+  _onInput(e) {
+    const field = e.target.dataset.logoField;
+    if (!field) return;
+    const cursorStart = typeof e.target.selectionStart === 'number' ? e.target.selectionStart : null;
+    const cursorEnd = typeof e.target.selectionEnd === 'number' ? e.target.selectionEnd : cursorStart;
+    this.logoDesignerState[field] = e.target.value;
+    this._renderDynamicPanels();
+
+    const replacement = this.el.querySelector(`[data-logo-field="${field}"]`);
+    if (replacement) {
+      replacement.focus();
+      if (cursorStart !== null && typeof replacement.setSelectionRange === 'function') {
+        replacement.setSelectionRange(cursorStart, cursorEnd);
+      }
     }
   }
 
@@ -519,6 +726,8 @@ class MtkBiab {
       targetPanel.focus({ preventScroll: true });
     }
 
+    this._renderDynamicPanels();
+
     // Update state
     this.activeMenuState[tabId] = { menuId, itemId };
 
@@ -541,6 +750,338 @@ class MtkBiab {
       headerBtn.classList.remove('is-collapsed');
       headerBtn.setAttribute('aria-expanded', 'true');
     }
+  }
+
+  _getDefaultLogoDesignerState() {
+    return {
+      businessName: 'Harbor Lock & Key',
+      tagline: 'Mobile locksmith, rekeys, and access upgrades',
+      iconKey: 'precision-key',
+      paletteKey: 'midnight-brass',
+      fontKey: 'outfit-manrope',
+      templateKey: 'service-wordmark',
+      variationKey: 'horizontal'
+    };
+  }
+
+  _setLogoDesignerState(field, value) {
+    if (!field || typeof value === 'undefined') return;
+    this.logoDesignerState[field] = value;
+    this._renderDynamicPanels();
+  }
+
+  _renderDynamicPanels() {
+    this._renderLogoConceptsPanel();
+    this._renderLogoGuidelinesPanel();
+    this._renderLogoVariationsPanel();
+  }
+
+  _renderLogoConceptsPanel() {
+    const mount = this.el.querySelector('[data-logo-designer-panel="concepts"]');
+    if (!mount) return;
+
+    const state = this.logoDesignerState;
+    const icon = this._getLogoResource(MTK_BIAB_LOGO_ICONS, state.iconKey);
+    const palette = this._getLogoResource(MTK_BIAB_LOGO_PALETTES, state.paletteKey);
+    const font = this._getLogoResource(MTK_BIAB_LOGO_FONTS, state.fontKey);
+    const template = this._getLogoResource(MTK_BIAB_LOGO_TEMPLATES, state.templateKey);
+    const variation = this._getLogoResource(MTK_BIAB_LOGO_VARIATIONS, state.variationKey);
+
+    mount.innerHTML = `
+      <section class="mtk-biab__logo-designer">
+        <div class="mtk-biab__logo-note">
+          <strong>Production note:</strong> this builder uses free test icons and Google Fonts for workflow validation. Replace them with a paid locksmith icon set and a licensed production font set before launch.
+        </div>
+
+        <div class="mtk-biab__logo-grid">
+          <div class="mtk-biab__logo-controls">
+            <div class="mtk-biab__logo-control-group">
+              <h3>Brand text</h3>
+              <label class="mtk-biab__logo-label">Business name
+                <input class="mtk-biab__logo-input" data-logo-field="businessName" type="text" maxlength="40" value="${this._escapeHtml(state.businessName)}">
+              </label>
+              <label class="mtk-biab__logo-label">Tagline
+                <input class="mtk-biab__logo-input" data-logo-field="tagline" type="text" maxlength="70" value="${this._escapeHtml(state.tagline)}">
+              </label>
+            </div>
+
+            <div class="mtk-biab__logo-control-group">
+              <h3>Icon library</h3>
+              <p>Starter test icons for locksmith brands. These are intentionally simple so they remain readable on vans, invoices, and social avatars.</p>
+              <div class="mtk-biab__logo-option-grid">
+                ${MTK_BIAB_LOGO_ICONS.map(option => `
+                  <button type="button" class="mtk-biab__logo-option-card${option.key === state.iconKey ? ' is-active' : ''}" data-action="logo-set-icon" data-logo-value="${option.key}">
+                    <span class="mtk-biab__logo-option-icon" style="--logo-option-color:${palette.primary};--logo-bg:${palette.surface};">${option.svg}</span>
+                    <span class="mtk-biab__logo-option-title">${option.label}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="mtk-biab__logo-control-group">
+              <h3>Color schemes</h3>
+              <p>Each scheme is built for contrast, vehicle readability, and a practical locksmith positioning.</p>
+              <div class="mtk-biab__logo-option-grid">
+                ${MTK_BIAB_LOGO_PALETTES.map(option => `
+                  <button type="button" class="mtk-biab__logo-swatch-card${option.key === state.paletteKey ? ' is-active' : ''}" data-action="logo-set-palette" data-logo-value="${option.key}">
+                    <span class="mtk-biab__logo-swatch-row">
+                      <span class="mtk-biab__logo-swatch" style="background:${option.surface};"></span>
+                      <span class="mtk-biab__logo-swatch" style="background:${option.primary};"></span>
+                      <span class="mtk-biab__logo-swatch" style="background:${option.accent};"></span>
+                    </span>
+                    <span class="mtk-biab__logo-option-title">${option.label}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="mtk-biab__logo-control-group">
+              <h3>Font systems</h3>
+              <div class="mtk-biab__logo-stack">
+                ${MTK_BIAB_LOGO_FONTS.map(option => `
+                  <button type="button" class="mtk-biab__logo-choice${option.key === state.fontKey ? ' is-active' : ''}" data-action="logo-set-font" data-logo-value="${option.key}">
+                    <strong style="font-family:${option.headline};">${option.label}</strong>
+                    <span>${option.rationale}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="mtk-biab__logo-control-group">
+              <h3>Template direction</h3>
+              <div class="mtk-biab__logo-stack">
+                ${MTK_BIAB_LOGO_TEMPLATES.map(option => `
+                  <button type="button" class="mtk-biab__logo-choice${option.key === state.templateKey ? ' is-active' : ''}" data-action="logo-set-template" data-logo-value="${option.key}">
+                    <strong>${option.label}</strong>
+                    <span>${option.description}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="mtk-biab__logo-control-group">
+              <h3>Primary variation</h3>
+              <div class="mtk-biab__logo-pill-row">
+                ${MTK_BIAB_LOGO_VARIATIONS.map(option => `
+                  <button type="button" class="mtk-biab__logo-pill${option.key === state.variationKey ? ' is-active' : ''}" data-action="logo-set-variation" data-logo-value="${option.key}">${option.label}</button>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+
+          <div class="mtk-biab__logo-preview-area">
+            <div class="mtk-biab__logo-preview-summary">
+              <span class="mtk-biab__logo-badge">Research-based starter direction</span>
+              <h3>${template.label}</h3>
+              <p>${template.description}</p>
+              <ul>
+                <li><strong>Chosen icon:</strong> ${icon.label}</li>
+                <li><strong>Chosen palette:</strong> ${palette.label}</li>
+                <li><strong>Chosen font system:</strong> ${font.label}</li>
+                <li><strong>Chosen primary variation:</strong> ${variation.label}</li>
+              </ul>
+            </div>
+
+            <div class="mtk-biab__logo-preview-grid">
+              ${this._buildLogoPreviewCard('Primary concept', this._buildLogoMarkup(state, 'primary-dark'), palette.surface, palette.textOnDark)}
+              ${this._buildLogoPreviewCard('Light-background concept', this._buildLogoMarkup(state, 'primary-light'), '#ffffff', palette.textOnLight, true)}
+              ${this._buildLogoPreviewCard('Social avatar / favicon', this._buildLogoMarkup(state, 'icon-only'), palette.surfaceSoft, palette.textOnDark)}
+              ${this._buildLogoPreviewCard('Vehicle / signage lockup', this._buildLogoMarkup(state, 'horizontal-banner'), palette.surface, palette.textOnDark)}
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  _renderLogoGuidelinesPanel() {
+    const mount = this.el.querySelector('[data-logo-designer-panel="guidelines"]');
+    if (!mount) return;
+
+    const state = this.logoDesignerState;
+    const palette = this._getLogoResource(MTK_BIAB_LOGO_PALETTES, state.paletteKey);
+    const font = this._getLogoResource(MTK_BIAB_LOGO_FONTS, state.fontKey);
+    const template = this._getLogoResource(MTK_BIAB_LOGO_TEMPLATES, state.templateKey);
+    const variation = this._getLogoResource(MTK_BIAB_LOGO_VARIATIONS, state.variationKey);
+
+    mount.innerHTML = `
+      <section class="mtk-biab__logo-guidelines">
+        <div class="mtk-biab__logo-preview-summary">
+          <span class="mtk-biab__logo-badge">Starter brand system</span>
+          <h3>${this._escapeHtml(state.businessName)}</h3>
+          <p>Built for simplicity, memorability, scalability, and contrast across van graphics, invoices, Google Business Profile, and web headers.</p>
+        </div>
+
+        <div class="mtk-biab__logo-guideline-grid">
+          <div class="mtk-biab__logo-guideline-card">
+            <h4>Color system</h4>
+            <p>${palette.description}</p>
+            <div class="mtk-biab__logo-swatch-row">
+              <span class="mtk-biab__logo-swatch mtk-biab__logo-swatch--large" style="background:${palette.surface};"></span>
+              <span class="mtk-biab__logo-swatch mtk-biab__logo-swatch--large" style="background:${palette.primary};"></span>
+              <span class="mtk-biab__logo-swatch mtk-biab__logo-swatch--large" style="background:${palette.accent};"></span>
+            </div>
+            <ul>
+              <li><strong>Base:</strong> ${palette.surface}</li>
+              <li><strong>Primary:</strong> ${palette.primary}</li>
+              <li><strong>Accent:</strong> ${palette.accent}</li>
+            </ul>
+          </div>
+
+          <div class="mtk-biab__logo-guideline-card">
+            <h4>Typography</h4>
+            <p>${font.rationale}</p>
+            <div class="mtk-biab__logo-font-demo">
+              <div style="font-family:${font.headline};">Primary wordmark face</div>
+              <div style="font-family:${font.body};">Support copy / tagline face</div>
+            </div>
+            <ul>
+              <li>Use the headline face for the business name only.</li>
+              <li>Use the support face for taglines, subheads, and stationery body copy.</li>
+              <li>Keep tracking tight and avoid stretching or outlining the type.</li>
+            </ul>
+          </div>
+
+          <div class="mtk-biab__logo-guideline-card">
+            <h4>Layout rules</h4>
+            <ul>
+              <li><strong>Template:</strong> ${template.label}</li>
+              <li><strong>Primary variation:</strong> ${variation.label}</li>
+              <li>Keep icon-to-wordmark spacing consistent across every application.</li>
+              <li>Protect minimum clear space equal to half the icon width.</li>
+              <li>Never add metallic bevels, drop shadows, or tiny hardware details.</li>
+            </ul>
+          </div>
+
+          <div class="mtk-biab__logo-guideline-card">
+            <h4>Production checklist</h4>
+            <ul>
+              <li>Replace test icons with a premium locksmith icon pack.</li>
+              <li>Replace free prototype fonts with the licensed production set you choose.</li>
+              <li>Export SVG, transparent PNG, PDF, and one-color embroidery-safe files.</li>
+              <li>Test on a white invoice, dark website header, and a van mockup before final approval.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  _renderLogoVariationsPanel() {
+    const mount = this.el.querySelector('[data-logo-designer-panel="variations"]');
+    if (!mount) return;
+
+    const state = this.logoDesignerState;
+    const palette = this._getLogoResource(MTK_BIAB_LOGO_PALETTES, state.paletteKey);
+
+    mount.innerHTML = `
+      <section class="mtk-biab__logo-variations">
+        <div class="mtk-biab__logo-note">
+          <strong>Expected production handoff:</strong> every approved locksmith logo should ship with dark, light, social, favicon, and one-color variants.
+        </div>
+
+        <div class="mtk-biab__logo-preview-grid">
+          ${this._buildLogoPreviewCard('Dark background primary', this._buildLogoMarkup(state, 'primary-dark'), palette.surface, palette.textOnDark)}
+          ${this._buildLogoPreviewCard('White background primary', this._buildLogoMarkup(state, 'primary-light'), '#ffffff', palette.textOnLight, true)}
+          ${this._buildLogoPreviewCard('One-color mark', this._buildLogoMarkup(state, 'mono'), '#f3f4f6', '#111827', true)}
+          ${this._buildLogoPreviewCard('Badge / favicon', this._buildLogoMarkup(state, 'icon-only'), palette.surfaceSoft, palette.textOnDark)}
+          ${this._buildLogoPreviewCard('Stacked social format', this._buildLogoMarkup(state, 'stacked'), '#ffffff', palette.textOnLight, true)}
+          ${this._buildLogoPreviewCard('Service van banner', this._buildLogoMarkup(state, 'horizontal-banner'), palette.surface, palette.textOnDark)}
+        </div>
+      </section>
+    `;
+  }
+
+  _buildLogoPreviewCard(label, markup, background, textColor, isLight = false) {
+    const cardClass = isLight ? ' mtk-biab__logo-preview-card--light' : '';
+    return `
+      <article class="mtk-biab__logo-preview-card${cardClass}">
+        <div class="mtk-biab__logo-preview-label">${label}</div>
+        <div class="mtk-biab__logo-preview-canvas" style="background:${background};color:${textColor};">
+          ${markup}
+        </div>
+      </article>
+    `;
+  }
+
+  _buildLogoMarkup(state, variant) {
+    const palette = this._getLogoResource(MTK_BIAB_LOGO_PALETTES, state.paletteKey);
+    const font = this._getLogoResource(MTK_BIAB_LOGO_FONTS, state.fontKey);
+    const icon = this._getLogoResource(MTK_BIAB_LOGO_ICONS, state.iconKey);
+    const template = this._getLogoResource(MTK_BIAB_LOGO_TEMPLATES, state.templateKey);
+    const businessName = this._escapeHtml(state.businessName || 'Your Locksmith Brand');
+    const tagline = this._escapeHtml(state.tagline || 'Residential, commercial, automotive');
+    const isMono = variant === 'mono';
+    const iconColor = isMono ? '#111827' : palette.primary;
+    const bgColor = variant === 'primary-light' || variant === 'stacked' ? '#ffffff' : palette.surface;
+    const textColor = bgColor === '#ffffff' ? palette.textOnLight : palette.textOnDark;
+    const iconMarkup = `<span class="mtk-biab__logo-mark" style="color:${iconColor};--logo-bg:${bgColor};">${icon.svg}</span>`;
+    const resolvedVariant = (variant === 'primary-dark' || variant === 'primary-light')
+      ? state.variationKey
+      : variant;
+
+    if (resolvedVariant === 'icon-only') {
+      return `<div class="mtk-biab__logo-lockup mtk-biab__logo-lockup--icon-only">${iconMarkup}</div>`;
+    }
+
+    if (resolvedVariant === 'stacked' || template.key === 'modern-stack') {
+      return `
+        <div class="mtk-biab__logo-lockup mtk-biab__logo-lockup--stacked" style="--logo-heading-font:${font.headline};--logo-body-font:${font.body};color:${textColor};">
+          ${iconMarkup}
+          <div class="mtk-biab__logo-copy">
+            <div class="mtk-biab__logo-name">${businessName}</div>
+            <div class="mtk-biab__logo-tagline">${tagline}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    if (resolvedVariant === 'horizontal-banner' || resolvedVariant === 'horizontal' || template.key === 'service-wordmark') {
+      return `
+        <div class="mtk-biab__logo-lockup mtk-biab__logo-lockup--horizontal" style="--logo-heading-font:${font.headline};--logo-body-font:${font.body};color:${textColor};">
+          ${iconMarkup}
+          <div class="mtk-biab__logo-copy">
+            <div class="mtk-biab__logo-name">${businessName}</div>
+            <div class="mtk-biab__logo-tagline">${tagline}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    if (resolvedVariant === 'badge' || template.key === 'trusted-shield' || template.key === 'monogram-seal') {
+      return `
+        <div class="mtk-biab__logo-lockup mtk-biab__logo-lockup--badge" style="--logo-heading-font:${font.headline};--logo-body-font:${font.body};color:${textColor};border-color:${isMono ? '#111827' : palette.primary};">
+          ${iconMarkup}
+          <div class="mtk-biab__logo-copy">
+            <div class="mtk-biab__logo-name">${businessName}</div>
+            <div class="mtk-biab__logo-tagline">${tagline}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="mtk-biab__logo-lockup mtk-biab__logo-lockup--horizontal" style="--logo-heading-font:${font.headline};--logo-body-font:${font.body};color:${textColor};">
+        ${iconMarkup}
+        <div class="mtk-biab__logo-copy">
+          <div class="mtk-biab__logo-name">${businessName}</div>
+          <div class="mtk-biab__logo-tagline">${tagline}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  _getLogoResource(collection, key) {
+    return collection.find(item => item.key === key) || collection[0];
+  }
+
+  _escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
   }
 }
 
