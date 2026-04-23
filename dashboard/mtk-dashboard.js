@@ -158,7 +158,7 @@
             // Animate counter from 0 to target
             if (this.elements.progressPercentage) {
                 this.elements.progressPercentage.textContent = '0%';
-                const duration = 1000; // ms
+                const duration = 2200; // ms
                 const steps = 40;
                 const stepTime = duration / steps;
                 let current = 0;
