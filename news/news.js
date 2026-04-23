@@ -1,90 +1,130 @@
 /**
  * news.js
- * News & Articles page — Vanilla JS
- * Subscribes to wc events, handles article interactions
+ * Renders news cards from NEWS_CONFIG and handles article detail view.
+ * "Read More" replaces the grid with the full article + Back button.
  */
 
 (function () {
     'use strict';
 
-    // ── Wait for DOM ──────────────────────────────────────────
     function init() {
         const page = document.querySelector('.news-page');
         if (!page) return;
+        if (page.dataset.newsInit === '1') return;
+        page.dataset.newsInit = '1';
 
-        bindCards(page);
-        bindReadMore(page);
+        const config = (typeof window.NEWS_CONFIG !== 'undefined') ? window.NEWS_CONFIG : null;
+        if (!config) {
+            console.error('[news] NEWS_CONFIG not found.');
+            return;
+        }
+
+        renderGrid(page, config);
     }
 
-    // ── Card hover interaction ────────────────────────────────
-    function bindCards(page) {
-        const cards = page.querySelectorAll('.news-card');
-        cards.forEach(card => {
-            card.addEventListener('click', function () {
-                const title = this.querySelector('.news-card__title');
-                if (!title) return;
+    function renderGrid(page, config) {
+        const grid = page.querySelector('#newsGrid');
+        if (!grid) return;
 
-                const payload = {
-                    title:    title.textContent.trim(),
-                    category: (this.querySelector('.news-card__category') || {}).textContent || '',
-                    date:     (this.querySelector('.news-card__date')     || {}).textContent || ''
-                };
+        grid.innerHTML = config.articles.map(article => `
+            <article class="news-card" data-article-id="${article.id}">
+                <div class="news-card__image">
+                    <span class="material-icons" aria-hidden="true">${article.icon}</span>
+                </div>
+                <div class="news-card__body">
+                    <span class="news-card__category">${article.category}</span>
+                    <h2 class="news-card__title">${article.title}</h2>
+                    <p class="news-card__excerpt">${article.excerpt}</p>
+                    <div class="news-card__meta">
+                        <span class="news-card__date"><i class="fa fa-calendar"></i> ${article.date}</span>
+                        <a href="#" class="news-card__link" data-article-id="${article.id}">Read More <i class="fa fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </article>
+        `).join('');
 
-                wc.log('news:article-click', payload);
-                wc.publish('news:article-click', payload);
-            });
-        });
+        bindReadMore(grid, page, config);
+
+        wc.log('news:grid-rendered', { count: config.articles.length });
+        wc.publish('news:grid-rendered', { count: config.articles.length });
     }
 
-    // ── Read More links ───────────────────────────────────────
-    function bindReadMore(page) {
-        page.querySelectorAll('.news-card__link').forEach(link => {
+    function bindReadMore(grid, page, config) {
+        grid.querySelectorAll('.news-card__link').forEach(link => {
             link.addEventListener('click', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
-
-                const card    = this.closest('.news-card');
-                const title   = card  ? card.querySelector('.news-card__title')    : null;
-                const category = card ? card.querySelector('.news-card__category') : null;
-
-                const payload = {
-                    title:    title    ? title.textContent.trim()    : '',
-                    category: category ? category.textContent.trim() : ''
-                };
-
-                wc.log('news:read-more', payload);
-                wc.publish('news:read-more', payload);
+                const id = this.dataset.articleId;
+                const article = config.articles.find(a => a.id === id);
+                if (article) showArticle(page, config, article);
             });
         });
     }
 
-    // ── Subscribe to wc events ────────────────────────────────
+    function showArticle(page, config, article) {
+        const container = page.querySelector('.container');
+        if (!container) return;
+
+        if (!page.dataset.gridHtml) {
+            page.dataset.gridHtml = container.innerHTML;
+        }
+
+        container.innerHTML = `
+            <div class="row g-0">
+                <div class="col-md-12">
+                    <div class="news-article">
+                        <button class="news-article__back" id="newsBackBtn">
+                            <i class="fa fa-arrow-left"></i> Back to News
+                        </button>
+                        <div class="news-article__header">
+                            <span class="news-card__category">${article.category}</span>
+                            <h1 class="news-article__title">${article.title}</h1>
+                            <p class="news-article__date"><i class="fa fa-calendar"></i> ${article.date}</p>
+                        </div>
+                        <div class="news-article__body">
+                            ${article.body}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        container.querySelector('#newsBackBtn').addEventListener('click', () => showGrid(page, config));
+        page.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        wc.log('news:article-open', { id: article.id, title: article.title });
+        wc.publish('news:article-open', { id: article.id, title: article.title });
+    }
+
+    function showGrid(page, config) {
+        const container = page.querySelector('.container');
+        if (!container || !page.dataset.gridHtml) return;
+
+        container.innerHTML = page.dataset.gridHtml;
+        delete page.dataset.gridHtml;
+
+        const grid = page.querySelector('#newsGrid');
+        if (grid) bindReadMore(grid, page, config);
+
+        page.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        wc.log('news:grid-restored', {});
+        wc.publish('news:grid-restored', {});
+    }
+
     if (typeof wc !== 'undefined' && typeof wc.subscribe === 'function') {
-        wc.subscribe('news:article-click', function (event, data) {
-            wc.log('[news] article-click received', data);
-        });
-
-        wc.subscribe('news:read-more', function (event, data) {
-            wc.log('[news] read-more received', data);
-        });
+        wc.subscribe('news:article-open',  (e, d) => wc.log('[news] article-open',  d));
+        wc.subscribe('news:grid-rendered', (e, d) => wc.log('[news] grid-rendered', d));
+        wc.subscribe('news:grid-restored', (e, d) => wc.log('[news] grid-restored', d));
     }
 
-    // ── Init on DOM ready ─────────────────────────────────────
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
+    function tryInit() {
+        if (document.querySelector('.news-page')) { init(); return true; }
+        return false;
     }
 
-    // ── Also re-init when wc-include injects the page ─────────
-    if (typeof MutationObserver !== 'undefined') {
-        const observer = new MutationObserver(function () {
-            if (document.querySelector('.news-page')) {
-                observer.disconnect();
-                init();
-            }
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
+    if (!tryInit()) {
+        const obs = new MutationObserver(() => { if (tryInit()) obs.disconnect(); });
+        obs.observe(document.body, { childList: true, subtree: true });
     }
 
 })();
