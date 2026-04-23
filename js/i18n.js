@@ -178,6 +178,10 @@
       en: 'Login',
       es: 'Iniciar Sesión'
     },
+    'nav.news': {
+      en: 'News & Articles',
+      es: 'Noticias y Artículos'
+    },
     'nav.toggle': {
       en: 'Toggle navigation',
       es: 'Alternar navegación'

@@ -69,6 +69,26 @@ $(document).on("click", "#header-dd-logout", function(e) {
     wc.publish("mtk-header-logout");
 });
 
+// MAP PAGE NAME → HEADER LINK ID
+var pageToHeaderId = {
+    "home":      "mtk-header-home",
+    "news":      "mtk-header-news",
+    "register":  "mtk-header-register",
+    "login":     "mtk-header-login",
+    "dashboard": "mtk-header-dashboard",
+    "hierarchy": "mtk-header-hierarchy",
+    "settings":  "mtk-header-settings"
+};
+
+// RESTORE ACTIVE HEADER LINK whenever a page is shown (including reload)
+PubSub.subscribe("mtk-pages", function (msg, data) {
+    if (data && data.action === "show" && data.page) {
+        var headerId = pageToHeaderId[data.page];
+        if (headerId) headerSelect(headerId);
+    }
+});
+
+
 function headerSelect(id) {
     var pageLinks = [
         "mtk-header-home",
