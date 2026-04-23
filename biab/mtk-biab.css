@@ -77,9 +77,9 @@ mtk-biab.mtk-biab {
   margin-right: auto; }
 
 .mtk-biab__logo-icon {
-  height: 40px;
+  height: 70px;
   width: auto;
-  max-width: 120px;
+  max-width: 140px;
   object-fit: contain;
   flex-shrink: 0;
   display: block; }
@@ -530,7 +530,7 @@ mtk-biab.mtk-biab {
   .mtk-biab__logo-short {
     display: inline; }
   .mtk-biab__logo-icon {
-    height: 32px; }
+    height: 48px; }
   .mtk-biab__content-card {
     padding: 20px 20px; } }
 

@@ -233,8 +233,8 @@ class MtkBiab {
     const sidebarHTML = menus.map((menu, mi) => `
       <nav class="mtk-biab__sidebar-menu" aria-label="${menu.label}">
         <button
-          class="mtk-biab__sidebar-menu-header"
-          aria-expanded="true"
+          class="mtk-biab__sidebar-menu-header is-collapsed"
+          aria-expanded="false"
           aria-controls="mtk-biab-menu-items-${tab.id}-${menu.id}"
           data-action="toggle-menu"
           data-tab-id="${tab.id}"
@@ -245,7 +245,7 @@ class MtkBiab {
           <span class="material-icons mtk-biab__sidebar-menu-header-chevron" aria-hidden="true">expand_more</span>
         </button>
         <ul
-          class="mtk-biab__sidebar-items"
+          class="mtk-biab__sidebar-items is-collapsed"
           id="mtk-biab-menu-items-${tab.id}-${menu.id}"
           role="list"
         >
