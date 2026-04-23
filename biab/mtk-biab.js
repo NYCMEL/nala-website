@@ -348,6 +348,10 @@ class MtkBiab {
     const anchor = e.target.closest('a[href="#"]');
     if (anchor) {
       e.preventDefault();
+      // Logo click → go home
+      if (anchor.classList.contains('mtk-biab__logo')) {
+        window.location.replace('/repo_deploy/');
+      }
       return;
     }
 

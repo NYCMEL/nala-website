@@ -258,6 +258,7 @@ class _febe {
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
     handleHeaderLogoPublicClick() {
+	headerSelect('mtk-header-home');
 	wc.pages.show("home");
     }
 

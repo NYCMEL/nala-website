@@ -106,8 +106,8 @@ mtk-biab.mtk-biab {
   $header-bg:               #212529;
   $header-tab-color:        rgba(#fff, 0.65);
   $header-tab-hover-bg:     rgba(#fff, 0.08);
-  $header-tab-active-color: #ffffff;
-  $header-tab-indicator:    #4fc3f7;
+  $header-tab-active-color: #a98211;
+  $header-tab-indicator:    #a98211;
   $header-divider-color:    rgba(#fff, 0.15);
 
   // ── Header ───────────────────────────────────────────────
@@ -132,7 +132,7 @@ mtk-biab.mtk-biab {
     padding: 0 24px;
     display: flex;
     align-items: center;
-    height: 64px;
+    height: 80px;
     gap: 0;
     width: 100%;
   }
@@ -199,7 +199,7 @@ mtk-biab.mtk-biab {
     align-items: center;
     gap: 8px;
     padding: 0 18px;
-    height: 64px;
+    height: 80px;
     border: none;
     background: transparent;
     color: $header-tab-color;
@@ -213,6 +213,12 @@ mtk-biab.mtk-biab {
     border-radius: 0;
     outline: none;
     overflow: hidden;
+
+    // Kill external mtk-ripple injection
+    .mtk-ripple-wave,
+    .mtk-ripple-surface {
+      display: none !important;
+    }
 
     .material-icons {
       font-size: 18px;
@@ -327,7 +333,7 @@ mtk-biab.mtk-biab {
   // ── iFrame Panel (Website Maker) ─────────────────────────
   &__iframe-panel {
     width: 100%;
-    height: calc(100vh - 64px);
+    height: calc(100vh - 80px);
     display: flex;
     flex-direction: column;
   }
@@ -342,7 +348,7 @@ mtk-biab.mtk-biab {
   // ── Sidebar Layout Panel ─────────────────────────────────
   &__sidebar-panel {
     display: flex;
-    min-height: calc(100vh - 64px);
+    min-height: calc(100vh - 80px);
   }
 
   // ── MD3 Navigation Drawer ────────────────────────────────
