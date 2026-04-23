@@ -72,6 +72,7 @@ $(document).on("click", "#header-dd-logout", function(e) {
 function headerSelect(id) {
     var pageLinks = [
         "mtk-header-home",
+        "mtk-header-news",
         "mtk-header-register",
         "mtk-header-login",
         "mtk-header-dashboard",
