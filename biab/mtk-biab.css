@@ -519,11 +519,14 @@ mtk-biab.mtk-biab {
     padding: 8px 0;
     box-shadow: none; }
   .mtk-biab__sidebar-items {
-    display: flex;
+    display: flex !important;
     flex-wrap: nowrap;
     overflow-x: auto;
     padding: 4px 8px;
-    gap: 4px; }
+    gap: 4px;
+    max-height: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important; }
   .mtk-biab__sidebar-item {
     margin-bottom: 0;
     flex-shrink: 0; }

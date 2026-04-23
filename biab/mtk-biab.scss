@@ -680,11 +680,14 @@ mtk-biab.mtk-biab {
     }
 
     &__sidebar-items {
-      display: flex;
+      display: flex !important;
       flex-wrap: nowrap;
       overflow-x: auto;
       padding: 4px 8px;
       gap: 4px;
+      max-height: none !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
     }
 
     &__sidebar-item {
