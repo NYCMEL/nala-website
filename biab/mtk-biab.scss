@@ -216,16 +216,16 @@ mtk-biab.mtk-biab {
     position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 0 18px;
+    gap: 6px;
+    padding: 0 12px;
     height: 86px;
     border: none;
     background: transparent;
     color: $header-tab-color;
     font-family: $font-primary;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;  // always 600 — prevents layout shift on active toggle
-    letter-spacing: 0.1px;
+    letter-spacing: 0;
     cursor: pointer;
     white-space: nowrap;
     transition: color $md-transition-fast, background-color $md-transition-fast;
@@ -661,6 +661,22 @@ mtk-biab.mtk-biab {
     to {
       opacity: 1;
       transform: translateX(0);
+    }
+  }
+
+  @media (max-width: 1100px) {
+    &__tab-btn {
+      padding: 0 10px;
+      font-size: 12px;
+      gap: 4px;
+
+      .material-icons {
+        display: none;
+      }
+    }
+
+    &__header-inner {
+      padding: 0 12px;
     }
   }
 
