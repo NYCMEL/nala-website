@@ -458,6 +458,8 @@ class MtkBiab {
     if (nav) nav.classList.remove('is-open');
     if (btn) btn.setAttribute('aria-expanded', 'false');
   }
+
+  _handleMenuToggle(btn) {
     const { tabId, menuId } = btn.dataset;
     const itemsEl = this.el.querySelector(`#mtk-biab-menu-items-${tabId}-${menuId}`);
     const isCollapsed = itemsEl.classList.toggle('is-collapsed');
