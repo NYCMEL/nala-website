@@ -96,6 +96,10 @@
 *::after {
   box-sizing: border-box; }
 
+html,
+body {
+  min-height: 100%; }
+
 body {
   font-family: "Roboto", Arial, sans-serif;
   font-size: 16px;
@@ -103,16 +107,17 @@ body {
   color: #212121;
   background-color: #ffffff;
   margin: 0;
-  padding: 0;
-  margin-top: 80px; }
+  padding: 80px 0 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; }
 
 a {
   color: #1976d2;
   text-decoration: none;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
-
-a:hover {
-  text-decoration: underline; }
+  a:hover {
+    text-decoration: underline; }
 
 .material-icons {
   font-family: "Material Icons";
@@ -143,6 +148,13 @@ a:hover {
 #page-content {
   flex: 1 0 auto; }
 
+#page-footer,
+.app-header {
+  flex-shrink: 0; }
+
+#page-footer {
+  margin-top: auto; }
+
 .course-card {
   border: 1px #cecece solid;
   border-radius: 4px; }
@@ -160,37 +172,31 @@ h1 {
 h1.title {
   position: relative;
   padding-bottom: 0.5rem; }
-
-h1.title::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  width: 30%;
-  height: 3px;
-  background-color: #a98212;
-  transform: translateX(-50%); }
+  h1.title::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 30%;
+    height: 3px;
+    background-color: #a98212;
+    transform: translateX(-50%); }
 
 #_stats {
   background-color: #f5f8ff; }
-
-#_stats ._stats-item {
-  padding: 1.5rem; }
-
-#_stats ._stats-item ._stats-value {
-  font-size: 3rem;
-  font-weight: 700;
-  color: #2663eb;
-  line-height: 1.2; }
-
-#_stats ._stats-item ._stats-label {
-  margin-top: 0.5rem;
-  font-size: 1.1rem;
-  font-weight: 400;
-  color: #5f6368; }
+  #_stats ._stats-item {
+    padding: 1.5rem; }
+    #_stats ._stats-item ._stats-value {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #2663eb;
+      line-height: 1.2; }
+    #_stats ._stats-item ._stats-label {
+      margin-top: 0.5rem;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: #5f6368; }
 
 @media (max-width: 768px) {
   #_stats ._stats-item ._stats-value {
-    font-size: 2.4rem; } }
-tats ._stats-item ._stats-value {
     font-size: 2.4rem; } }
