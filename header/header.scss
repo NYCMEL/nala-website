@@ -1,6 +1,7 @@
 @import "../css/nala.scss";
 
 .nav-link.active[id="mtk-header-home"],
+.nav-link.active[id="mtk-header-news"],
 .nav-link.active[id="mtk-header-register"],
 .nav-link.active[id="mtk-header-login"],
 .nav-link.active[id="mtk-header-dashboard"],
@@ -22,6 +23,7 @@
 }
 
 .navbar-nav .nav-link.active[id="mtk-header-home"]:hover,
+.navbar-nav .nav-link.active[id="mtk-header-news"]:hover,
 .navbar-nav .nav-link.active[id="mtk-header-register"]:hover,
 .navbar-nav .nav-link.active[id="mtk-header-login"]:hover,
 .navbar-nav .nav-link.active[id="mtk-header-dashboard"]:hover,
@@ -31,6 +33,7 @@
 }
 
 .navbar-nav .nav-link.active[id="mtk-header-home"],
+.navbar-nav .nav-link.active[id="mtk-header-news"],
 .navbar-nav .nav-link.active[id="mtk-header-register"],
 .navbar-nav .nav-link.active[id="mtk-header-login"],
 .navbar-nav .nav-link.active[id="mtk-header-dashboard"],
@@ -40,18 +43,21 @@
 }
 
 .navbar-nav .nav-link.active[id="mtk-header-home"] i,
+.navbar-nav .nav-link.active[id="mtk-header-news"] i,
 .navbar-nav .nav-link.active[id="mtk-header-register"] i,
 .navbar-nav .nav-link.active[id="mtk-header-login"] i,
 .navbar-nav .nav-link.active[id="mtk-header-dashboard"] i,
 .navbar-nav .nav-link.active[id="mtk-header-hierarchy"] i,
 .navbar-nav .nav-link.active[id="mtk-header-settings"] i,
 .navbar-nav .nav-link.active[id="mtk-header-home"] .fa,
+.navbar-nav .nav-link.active[id="mtk-header-news"] .fa,
 .navbar-nav .nav-link.active[id="mtk-header-register"] .fa,
 .navbar-nav .nav-link.active[id="mtk-header-login"] .fa,
 .navbar-nav .nav-link.active[id="mtk-header-dashboard"] .fa,
 .navbar-nav .nav-link.active[id="mtk-header-hierarchy"] .fa,
 .navbar-nav .nav-link.active[id="mtk-header-settings"] .fa,
 .navbar-nav .nav-link.active[id="mtk-header-home"] .material-icons,
+.navbar-nav .nav-link.active[id="mtk-header-news"] .material-icons,
 .navbar-nav .nav-link.active[id="mtk-header-register"] .material-icons,
 .navbar-nav .nav-link.active[id="mtk-header-login"] .material-icons,
 .navbar-nav .nav-link.active[id="mtk-header-dashboard"] .material-icons,
