@@ -84,6 +84,9 @@ class MtkBiab {
   onMessage(event, data) {
     console.log(`[mtk-biab] onMessage received → ${event}`, data);
 
+    // Ignore events we published ourselves to prevent infinite loops
+    if (this._publishing) return;
+
     switch (event) {
       case this.events.publish.ready:
         // Component ready — no further action needed here
@@ -118,8 +121,10 @@ class MtkBiab {
   // ── Publish helper ─────────────────────────────────────────────────────────
 
   _publish(eventName, data) {
+    this._publishing = true;
     wc.log(eventName, data);
     wc.publish(eventName, data);
+    this._publishing = false;
   }
 
   // ── Render ─────────────────────────────────────────────────────────────────

@@ -230,12 +230,12 @@ h1.title {
     transform: translateY(-2px); }
   .news-card__image {
     background: linear-gradient(135deg, #a98211 0%, #7a5e0c 100%);
-    height: 120px;
+    height: 72px;
     display: flex;
     align-items: center;
     justify-content: center; }
     .news-card__image .material-icons {
-      font-size: 48px;
+      font-size: 32px;
       color: rgba(255, 255, 255, 0.85); }
   .news-card__body {
     padding: 20px;
