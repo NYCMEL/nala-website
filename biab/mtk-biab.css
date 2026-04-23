@@ -421,6 +421,11 @@ mtk-biab.mtk-biab {
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
   gap: 22px; }
 
+.mtk-biab__logo-controls-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 20px; }
+
 .mtk-biab__logo-controls,
 .mtk-biab__logo-preview-area,
 .mtk-biab__logo-guideline-card,
@@ -598,6 +603,8 @@ mtk-biab.mtk-biab {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
   margin-top: 16px; }
+  .mtk-biab__logo-preview-grid--concepts {
+    align-items: stretch; }
 
 .mtk-biab__logo-preview-card {
   border: 1px solid #e2e8f0;
@@ -606,6 +613,16 @@ mtk-biab.mtk-biab {
   background: #ffffff; }
   .mtk-biab__logo-preview-card--light {
     box-shadow: inset 0 0 0 1px #e2e8f0; }
+  .mtk-biab__logo-preview-card--hero {
+    grid-column: 1 / -1; }
+    .mtk-biab__logo-preview-card--hero .mtk-biab__logo-preview-canvas {
+      min-height: 260px;
+      padding: 32px; }
+    .mtk-biab__logo-preview-card--hero .mtk-biab__logo-name {
+      font-size: 42px; }
+    .mtk-biab__logo-preview-card--hero .mtk-biab__logo-mark {
+      width: 86px;
+      height: 86px; }
 
 .mtk-biab__logo-preview-label {
   padding: 10px 14px;
@@ -622,6 +639,12 @@ mtk-biab.mtk-biab {
   display: flex;
   align-items: center;
   justify-content: center; }
+
+.mtk-biab__logo-preview-area--hero {
+  padding: 24px; }
+  .mtk-biab__logo-preview-area--hero .mtk-biab__logo-preview-grid,
+  .mtk-biab__logo-preview-area--hero .mtk-biab__logo-preview-card {
+    margin-top: 0; }
 
 .mtk-biab__logo-lockup {
   display: inline-flex;
@@ -798,7 +821,8 @@ mtk-biab.mtk-biab {
   .mtk-biab__logo-grid,
   .mtk-biab__logo-guideline-grid,
   .mtk-biab__logo-preview-grid,
-  .mtk-biab__logo-option-grid {
+  .mtk-biab__logo-option-grid,
+  .mtk-biab__logo-controls-grid {
     grid-template-columns: 1fr; }
   .mtk-biab__logo-name {
     font-size: 24px; }

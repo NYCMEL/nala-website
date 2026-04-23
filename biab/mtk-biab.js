@@ -793,8 +793,29 @@ class MtkBiab {
           <strong>Production note:</strong> this builder uses free test icons and Google Fonts for workflow validation. Replace them with a paid locksmith icon set and a licensed production font set before launch.
         </div>
 
-        <div class="mtk-biab__logo-grid">
-          <div class="mtk-biab__logo-controls">
+        <div class="mtk-biab__logo-preview-area mtk-biab__logo-preview-area--hero">
+          <div class="mtk-biab__logo-preview-summary">
+            <span class="mtk-biab__logo-badge">Research-based starter direction</span>
+            <h3>${template.label}</h3>
+            <p>${template.description}</p>
+            <ul>
+              <li><strong>Chosen icon:</strong> ${icon.label}</li>
+              <li><strong>Chosen palette:</strong> ${palette.label}</li>
+              <li><strong>Chosen font system:</strong> ${font.label}</li>
+              <li><strong>Chosen primary variation:</strong> ${variation.label}</li>
+            </ul>
+          </div>
+
+          <div class="mtk-biab__logo-preview-grid mtk-biab__logo-preview-grid--concepts">
+            ${this._buildLogoPreviewCard('Primary concept', this._buildLogoMarkup(state, 'primary-dark'), palette.surface, palette.textOnDark, false, 'hero')}
+            ${this._buildLogoPreviewCard('Light-background concept', this._buildLogoMarkup(state, 'primary-light'), '#ffffff', palette.textOnLight, true)}
+            ${this._buildLogoPreviewCard('Social avatar / favicon', this._buildLogoMarkup(state, 'icon-only'), palette.surfaceSoft, palette.textOnDark)}
+            ${this._buildLogoPreviewCard('Vehicle / signage lockup', this._buildLogoMarkup(state, 'horizontal-banner'), palette.surface, palette.textOnDark)}
+          </div>
+        </div>
+
+        <div class="mtk-biab__logo-controls">
+          <div class="mtk-biab__logo-controls-grid">
             <div class="mtk-biab__logo-control-group">
               <h3>Brand text</h3>
               <label class="mtk-biab__logo-label">Business name
@@ -868,27 +889,6 @@ class MtkBiab {
               </div>
             </div>
           </div>
-
-          <div class="mtk-biab__logo-preview-area">
-            <div class="mtk-biab__logo-preview-summary">
-              <span class="mtk-biab__logo-badge">Research-based starter direction</span>
-              <h3>${template.label}</h3>
-              <p>${template.description}</p>
-              <ul>
-                <li><strong>Chosen icon:</strong> ${icon.label}</li>
-                <li><strong>Chosen palette:</strong> ${palette.label}</li>
-                <li><strong>Chosen font system:</strong> ${font.label}</li>
-                <li><strong>Chosen primary variation:</strong> ${variation.label}</li>
-              </ul>
-            </div>
-
-            <div class="mtk-biab__logo-preview-grid">
-              ${this._buildLogoPreviewCard('Primary concept', this._buildLogoMarkup(state, 'primary-dark'), palette.surface, palette.textOnDark)}
-              ${this._buildLogoPreviewCard('Light-background concept', this._buildLogoMarkup(state, 'primary-light'), '#ffffff', palette.textOnLight, true)}
-              ${this._buildLogoPreviewCard('Social avatar / favicon', this._buildLogoMarkup(state, 'icon-only'), palette.surfaceSoft, palette.textOnDark)}
-              ${this._buildLogoPreviewCard('Vehicle / signage lockup', this._buildLogoMarkup(state, 'horizontal-banner'), palette.surface, palette.textOnDark)}
-            </div>
-          </div>
         </div>
       </section>
     `;
@@ -906,6 +906,10 @@ class MtkBiab {
 
     mount.innerHTML = `
       <section class="mtk-biab__logo-guidelines">
+        <div class="mtk-biab__logo-preview-area mtk-biab__logo-preview-area--hero">
+          ${this._buildLogoPreviewCard('Approved guideline sample', this._buildLogoMarkup(state, 'primary-dark'), palette.surface, palette.textOnDark, false, 'hero')}
+        </div>
+
         <div class="mtk-biab__logo-preview-summary">
           <span class="mtk-biab__logo-badge">Starter brand system</span>
           <h3>${this._escapeHtml(state.businessName)}</h3>
@@ -980,6 +984,10 @@ class MtkBiab {
           <strong>Expected production handoff:</strong> every approved locksmith logo should ship with dark, light, social, favicon, and one-color variants.
         </div>
 
+        <div class="mtk-biab__logo-preview-area mtk-biab__logo-preview-area--hero">
+          ${this._buildLogoPreviewCard('Primary selected variation', this._buildLogoMarkup(state, 'primary-dark'), palette.surface, palette.textOnDark, false, 'hero')}
+        </div>
+
         <div class="mtk-biab__logo-preview-grid">
           ${this._buildLogoPreviewCard('Dark background primary', this._buildLogoMarkup(state, 'primary-dark'), palette.surface, palette.textOnDark)}
           ${this._buildLogoPreviewCard('White background primary', this._buildLogoMarkup(state, 'primary-light'), '#ffffff', palette.textOnLight, true)}
@@ -992,10 +1000,11 @@ class MtkBiab {
     `;
   }
 
-  _buildLogoPreviewCard(label, markup, background, textColor, isLight = false) {
+  _buildLogoPreviewCard(label, markup, background, textColor, isLight = false, size = 'standard') {
     const cardClass = isLight ? ' mtk-biab__logo-preview-card--light' : '';
+    const sizeClass = size === 'hero' ? ' mtk-biab__logo-preview-card--hero' : '';
     return `
-      <article class="mtk-biab__logo-preview-card${cardClass}">
+      <article class="mtk-biab__logo-preview-card${cardClass}${sizeClass}">
         <div class="mtk-biab__logo-preview-label">${label}</div>
         <div class="mtk-biab__logo-preview-canvas" style="background:${background};color:${textColor};">
           ${markup}
