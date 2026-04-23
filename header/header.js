@@ -219,3 +219,39 @@ function toggleNavbar() {
     });
     setTimeout(syncBusinessMenu, 250);
 })();
+
+// RESTORE ACTIVE HEADER LINK ON RELOAD
+// Reads history.state.mtkPage (set by mtk-pages) and maps it to a header link id
+(function restoreActiveHeaderLink() {
+    var pageToHeaderId = {
+        'home':      'mtk-header-home',
+        'news':      'mtk-header-news',
+        'register':  'mtk-header-register',
+        'login':     'mtk-header-login',
+        'dashboard': 'mtk-header-dashboard',
+        'hierarchy': 'mtk-header-hierarchy',
+        'settings':  'mtk-header-settings'
+    };
+
+    function restore() {
+        var page = (history.state && history.state.mtkPage) || 'home';
+        var id   = pageToHeaderId[page];
+        if (id) headerSelect(id);
+    }
+
+    // Run after header is injected via wc-include
+    document.addEventListener('include:loaded', function () {
+        setTimeout(restore, 50);
+    });
+
+    // Also run on popstate (back/forward navigation)
+    window.addEventListener('popstate', function (e) {
+        if (e.state && e.state.mtkPage) {
+            var id = pageToHeaderId[e.state.mtkPage];
+            if (id) headerSelect(id);
+        }
+    });
+
+    // Fallback: run after short delay in case include already fired
+    setTimeout(restore, 300);
+})();
