@@ -5,7 +5,7 @@
 .news-page {
   padding: 20px 0 40px;
   background: $color-bg-light;
-  min-height: 60vh;
+  min-height: calc(100vh - 80px - 340px); // viewport minus header minus approx footer
 }
 
 .news-header {

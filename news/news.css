@@ -185,7 +185,7 @@ h1.title {
 .news-page {
   padding: 20px 0 40px;
   background: #f5f5f5;
-  min-height: 60vh; }
+  min-height: calc(100vh - 80px - 340px); }
 
 .news-header {
   text-align: center;

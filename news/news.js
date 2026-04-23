@@ -90,7 +90,7 @@
         `;
 
         container.querySelector('#newsBackBtn').addEventListener('click', () => showGrid(page, config));
-        page.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
 
         wc.log('news:article-open', { id: article.id, title: article.title });
         wc.publish('news:article-open', { id: article.id, title: article.title });
@@ -106,7 +106,7 @@
         const grid = page.querySelector('#newsGrid');
         if (grid) bindReadMore(grid, page, config);
 
-        page.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         wc.log('news:grid-restored', {});
         wc.publish('news:grid-restored', {});
     }
