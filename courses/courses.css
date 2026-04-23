@@ -101,12 +101,9 @@ html,
 body {
   min-height: 100%; }
 
-<<<<<<< HEAD
-=======
 html {
   overflow-y: scroll; }
 
->>>>>>> 04.21.2026.B
 body {
   font-family: "Roboto", Arial, sans-serif;
   font-size: 16px;
@@ -114,11 +111,7 @@ body {
   color: #212121;
   background-color: #ffffff;
   margin: 0;
-<<<<<<< HEAD
-  padding: 80px 0 0;
-=======
   padding: 86px 0 0;
->>>>>>> 04.21.2026.B
   display: flex;
   flex-direction: column;
   min-height: 100vh; }
@@ -127,8 +120,9 @@ a {
   color: #1976d2;
   text-decoration: none;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
-  a:hover {
-    text-decoration: underline; }
+
+a:hover {
+  text-decoration: underline; }
 
 .material-icons {
   font-family: "Material Icons";
@@ -183,79 +177,20 @@ h1 {
 h1.title {
   position: relative;
   padding-bottom: 0.5rem; }
-  h1.title::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    width: 30%;
-    height: 3px;
-    background-color: #a98212;
-    transform: translateX(-50%); }
+
+h1.title::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 30%;
+  height: 3px;
+  background-color: #a98212;
+  transform: translateX(-50%); }
 
 .mtk-courses {
   padding: 2rem 0;
   background-color: #ffffff; }
-<<<<<<< HEAD
-  .mtk-courses h2 {
-    font-weight: 600;
-    margin-bottom: 0.5rem; }
-  .mtk-courses .mtk-description {
-    color: #6b7280;
-    margin-bottom: 3rem; }
-  .mtk-courses .course-card {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    padding: 2rem;
-    background-color: #ffffff;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-    transition: transform 0.25s ease, box-shadow 0.25s ease; }
-    .mtk-courses .course-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08); }
-  .mtk-courses .course-level {
-    display: inline-block;
-    align-self: flex-start;
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    padding: 0.35rem 0.75rem;
-    margin-bottom: 0.75rem;
-    background-color: #eef2ff;
-    color: #1e3a8a;
-    line-height: 1; }
-  .mtk-courses .course-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 0.75rem; }
-  .mtk-courses .course-description {
-    color: #6b7280;
-    margin-bottom: 1.5rem; }
-  .mtk-courses .course-features {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 2rem 0; }
-    .mtk-courses .course-features li {
-      position: relative;
-      padding-left: 1.75rem;
-      margin-bottom: 0.5rem;
-      color: #374151; }
-      .mtk-courses .course-features li::before {
-        content: "✓";
-        position: absolute;
-        left: 0;
-        top: 0;
-        color: #2563eb;
-        font-weight: 600;
-        line-height: 1.4; }
-  .mtk-courses .course-cta {
-    margin-top: auto; }
-  .mtk-courses .view-all {
-    margin-top: 3rem;
-    text-align: center; }
-=======
 
 .mtk-courses h2 {
   font-weight: 600;
@@ -326,4 +261,3 @@ h1.title {
 .mtk-courses .view-all {
   margin-top: 3rem;
   text-align: center; }
->>>>>>> 04.21.2026.B
