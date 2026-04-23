@@ -324,12 +324,14 @@ class MtkBiab {
   _buildSimplePanel(tab) {
     return `
       <div class="mtk-biab__simple-panel">
-        <div class="row g-0">
-          <div class="col-md-12">
-            <div class="mtk-biab__content-card">
-              <h2 class="mtk-biab__content-title">${tab.content.title}</h2>
-              <div class="mtk-biab__content-body">
-                ${tab.content.body}
+        <div class="mtk-biab__container">
+          <div class="row g-0">
+            <div class="col-md-12">
+              <div class="mtk-biab__content-card">
+                <h2 class="mtk-biab__content-title">${tab.content.title}</h2>
+                <div class="mtk-biab__content-body">
+                  ${tab.content.body}
+                </div>
               </div>
             </div>
           </div>

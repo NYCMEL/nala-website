@@ -298,36 +298,8 @@ mtk-biab.mtk-biab {
 
   // ── Simple Tab Panel (Invoicing etc.) ────────────────────
   &__simple-panel {
-    padding: 32px 24px;
-    max-width: 960px;
-    margin: 0 auto;
-
-    &-title {
-      font-size: 24px;
-      font-weight: 600;
-      color: $md-on-surface;
-      margin: 0 0 16px;
-      letter-spacing: -0.3px;
-    }
-
-    &-card {
-      background: $md-surface;
-      border-radius: 12px;
-      padding: 28px 32px;
-      box-shadow: $md-elevation-1;
-      border: 1px solid $md-outline-variant;
-
-      p {
-        font-size: 15px;
-        line-height: 1.7;
-        color: $md-on-surface-variant;
-        margin: 0 0 16px;
-
-        &:last-child {
-          margin: 0;
-        }
-      }
-    }
+    padding: 32px 0;
+    width: 100%;
   }
 
   // ── iFrame Panel (Website Maker) ─────────────────────────
