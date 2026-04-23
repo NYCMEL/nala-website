@@ -256,7 +256,8 @@ class MtkBiab {
    * @param {Object} data
    */
   onMessage(event, data) {
-    console.log(`[mtk-biab] onMessage received → ${event}`, data);
+    // Ignore events we published ourselves to prevent infinite loops
+    if (this._publishing) return;
 
     switch (event) {
       case this.events.publish.ready:
@@ -292,8 +293,10 @@ class MtkBiab {
   // ── Publish helper ─────────────────────────────────────────────────────────
 
   _publish(eventName, data) {
+    this._publishing = true;
     wc.log(eventName, data);
     wc.publish(eventName, data);
+    this._publishing = false;
   }
 
   // ── Render ─────────────────────────────────────────────────────────────────
@@ -324,15 +327,28 @@ class MtkBiab {
       <header class="mtk-biab__header" role="banner">
         <div class="mtk-biab__header-inner">
           <a class="mtk-biab__logo" href="#" tabindex="0" aria-label="NALA - Business in a Box">
-            <img class="mtk-biab__logo-icon" src="img/logo-nala-association.webp" alt="NALA logo" />
+            <img class="mtk-biab__logo-icon" src="img/logo-nala-association.webp" alt="NALA logo" height="70" />
             <span class="mtk-biab__logo-text">
               <span class="mtk-biab__logo-full"><small> Business in a Box</small></span>
               <span class="mtk-biab__logo-short">NALA</span>
             </span>
           </a>
+
+          <button
+            class="mtk-biab__hamburger"
+            aria-label="Toggle navigation"
+            aria-expanded="false"
+            aria-controls="mtk-biab-tabs-nav"
+            data-action="toggle-nav"
+          >
+            <span class="material-icons" aria-hidden="true">menu</span>
+          </button>
+
           <div class="mtk-biab__header-divider" aria-hidden="true"></div>
+
           <nav
             class="mtk-biab__tabs-nav"
+            id="mtk-biab-tabs-nav"
             role="tablist"
             aria-label="Main navigation tabs"
           >
@@ -404,8 +420,8 @@ class MtkBiab {
     const sidebarHTML = menus.map((menu, mi) => `
       <nav class="mtk-biab__sidebar-menu" aria-label="${menu.label}">
         <button
-          class="mtk-biab__sidebar-menu-header"
-          aria-expanded="true"
+          class="mtk-biab__sidebar-menu-header is-collapsed"
+          aria-expanded="false"
           aria-controls="mtk-biab-menu-items-${tab.id}-${menu.id}"
           data-action="toggle-menu"
           data-tab-id="${tab.id}"
@@ -416,7 +432,7 @@ class MtkBiab {
           <span class="material-icons mtk-biab__sidebar-menu-header-chevron" aria-hidden="true">expand_more</span>
         </button>
         <ul
-          class="mtk-biab__sidebar-items"
+          class="mtk-biab__sidebar-items is-collapsed"
           id="mtk-biab-menu-items-${tab.id}-${menu.id}"
           role="list"
         >
@@ -495,12 +511,14 @@ class MtkBiab {
   _buildSimplePanel(tab) {
     return `
       <div class="mtk-biab__simple-panel">
-        <div class="row g-0">
-          <div class="col-md-12">
-            <div class="mtk-biab__content-card">
-              <h2 class="mtk-biab__content-title">${tab.content.title}</h2>
-              <div class="mtk-biab__content-body">
-                ${tab.content.body}
+        <div class="mtk-biab__container">
+          <div class="row g-0">
+            <div class="col-md-12">
+              <div class="mtk-biab__content-card">
+                <h2 class="mtk-biab__content-title">${tab.content.title}</h2>
+                <div class="mtk-biab__content-body">
+                  ${tab.content.body}
+                </div>
               </div>
             </div>
           </div>
@@ -523,6 +541,10 @@ class MtkBiab {
     const anchor = e.target.closest('a[href="#"]');
     if (anchor) {
       e.preventDefault();
+      // Logo click → go home
+      if (anchor.classList.contains('mtk-biab__logo')) {
+        window.location.replace('/repo_deploy/');
+      }
       return;
     }
 
@@ -532,8 +554,12 @@ class MtkBiab {
     const action = btn.dataset.action;
 
     switch (action) {
+      case 'toggle-nav':
+        this._handleNavToggle();
+        break;
       case 'select-tab':
         this._activateTab(btn.dataset.tabId);
+        this._closeNav();
         break;
       case 'select-item':
         this._handleItemClick(btn);
@@ -623,6 +649,21 @@ class MtkBiab {
   _handleItemClick(btn) {
     const { tabId, menuId, itemId } = btn.dataset;
     this._activateItem(tabId, itemId, menuId, btn);
+  }
+
+  _handleNavToggle() {
+    const nav = this.el.querySelector('.mtk-biab__tabs-nav');
+    const btn = this.el.querySelector('.mtk-biab__hamburger');
+    if (!nav) return;
+    const isOpen = nav.classList.toggle('is-open');
+    if (btn) btn.setAttribute('aria-expanded', String(isOpen));
+  }
+
+  _closeNav() {
+    const nav = this.el.querySelector('.mtk-biab__tabs-nav');
+    const btn = this.el.querySelector('.mtk-biab__hamburger');
+    if (nav) nav.classList.remove('is-open');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
   }
 
   _handleMenuToggle(btn) {

@@ -72,3 +72,38 @@
 }
 
 .helper.error { color: $color-error-dark; }
+
+// ── Agree checkboxes ─────────────────────────────────────
+.md-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 16px;
+
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    accent-color: $color-register-primary;
+    cursor: pointer;
+  }
+
+  label {
+    font-size: 14px;
+    color: #444;
+    cursor: pointer;
+    line-height: 1.5;
+
+    a {
+      color: $color-register-primary;
+      text-decoration: underline;
+      &:hover { opacity: 0.8; }
+    }
+  }
+
+  &.checkbox-error {
+    label { color: $color-error-dark; }
+    input[type="checkbox"] { outline: 2px solid $color-error-dark; }
+  }
+}

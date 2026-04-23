@@ -58,8 +58,13 @@ $(document).on("click", "#header-dd-client", function(e) {
         }
         return;
     }
+<<<<<<< HEAD
     wc.log("mtk-header-client → /biab");
     window.location.href = "biab/index.html";
+=======
+    wc.log("mtk-header-client → /repo_deploy/biab");
+    window.location.replace("/repo_deploy/biab");
+>>>>>>> 04.21.2026.B
 });
 
 $(document).on("click", "#header-dd-logout", function(e) {
@@ -69,9 +74,30 @@ $(document).on("click", "#header-dd-logout", function(e) {
     wc.publish("mtk-header-logout");
 });
 
+// MAP PAGE NAME → HEADER LINK ID
+var pageToHeaderId = {
+    "home":      "mtk-header-home",
+    "news":      "mtk-header-news",
+    "register":  "mtk-header-register",
+    "login":     "mtk-header-login",
+    "dashboard": "mtk-header-dashboard",
+    "hierarchy": "mtk-header-hierarchy",
+    "settings":  "mtk-header-settings"
+};
+
+// RESTORE ACTIVE HEADER LINK whenever a page is shown (including reload)
+PubSub.subscribe("mtk-pages", function (msg, data) {
+    if (data && data.action === "show" && data.page) {
+        var headerId = pageToHeaderId[data.page];
+        if (headerId) headerSelect(headerId);
+    }
+});
+
+
 function headerSelect(id) {
     var pageLinks = [
         "mtk-header-home",
+        "mtk-header-news",
         "mtk-header-register",
         "mtk-header-login",
         "mtk-header-dashboard",
@@ -197,4 +223,40 @@ function toggleNavbar() {
         setTimeout(syncBusinessMenu, 50);
     });
     setTimeout(syncBusinessMenu, 250);
+})();
+
+// RESTORE ACTIVE HEADER LINK ON RELOAD
+// Reads history.state.mtkPage (set by mtk-pages) and maps it to a header link id
+(function restoreActiveHeaderLink() {
+    var pageToHeaderId = {
+        'home':      'mtk-header-home',
+        'news':      'mtk-header-news',
+        'register':  'mtk-header-register',
+        'login':     'mtk-header-login',
+        'dashboard': 'mtk-header-dashboard',
+        'hierarchy': 'mtk-header-hierarchy',
+        'settings':  'mtk-header-settings'
+    };
+
+    function restore() {
+        var page = (history.state && history.state.mtkPage) || 'home';
+        var id   = pageToHeaderId[page];
+        if (id) headerSelect(id);
+    }
+
+    // Run after header is injected via wc-include
+    document.addEventListener('include:loaded', function () {
+        setTimeout(restore, 50);
+    });
+
+    // Also run on popstate (back/forward navigation)
+    window.addEventListener('popstate', function (e) {
+        if (e.state && e.state.mtkPage) {
+            var id = pageToHeaderId[e.state.mtkPage];
+            if (id) headerSelect(id);
+        }
+    });
+
+    // Fallback: run after short delay in case include already fired
+    setTimeout(restore, 300);
 })();

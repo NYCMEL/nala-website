@@ -87,7 +87,7 @@ mtk-biab.mtk-biab {
   // ── Container ────────────────────────────────────────────
   &__container {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1320px;
     margin-left: auto;
     margin-right: auto;
     padding-left: 0;
@@ -106,11 +106,10 @@ mtk-biab.mtk-biab {
   $header-bg:               #212529;
   $header-tab-color:        rgba(#fff, 0.65);
   $header-tab-hover-bg:     rgba(#fff, 0.08);
-  $header-tab-active-color: #ffffff;
-  $header-tab-indicator:    #4fc3f7;
+  $header-tab-active-color: #a98211;
+  $header-tab-indicator:    #a98211;
   $header-divider-color:    rgba(#fff, 0.15);
 
-  // ── Header ───────────────────────────────────────────────
   &__header {
     background-color: $header-bg;
     border-bottom: 1px solid rgba(#000, 0.3);
@@ -127,12 +126,12 @@ mtk-biab.mtk-biab {
   }
 
   &__header-inner {
-    max-width: 1200px;
+    max-width: 1320px;
     margin: 0 auto;
     padding: 0 24px;
     display: flex;
     align-items: center;
-    height: 64px;
+    height: 86px;
     gap: 0;
     width: 100%;
   }
@@ -146,9 +145,7 @@ mtk-biab.mtk-biab {
     margin-right: auto; // logo stays left, tabs pushed right
 
     &-icon {
-      height: 40px;
-      width: auto;
-      max-width: 120px;
+      height: 70px;
       object-fit: contain;
       flex-shrink: 0;
       display: block;
@@ -179,6 +176,28 @@ mtk-biab.mtk-biab {
     margin: 0 8px;
   }
 
+  // ── Hamburger ─────────────────────────────────────────────
+  &__hamburger {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    color: rgba(#fff, 0.8);
+    cursor: pointer;
+    border-radius: 4px;
+    margin-left: auto;
+    flex-shrink: 0;
+    transition: background-color $md-transition-fast;
+
+    .material-icons { font-size: 26px; }
+
+    &:hover { background: rgba(#fff, 0.1); }
+    &:focus-visible { outline: 2px solid $header-tab-indicator; }
+  }
+
   // ── Tab Navigation ───────────────────────────────────────
   &__tabs-nav {
     display: flex;
@@ -197,22 +216,28 @@ mtk-biab.mtk-biab {
     position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 0 18px;
-    height: 64px;
+    gap: 6px;
+    padding: 0 12px;
+    height: 86px;
     border: none;
     background: transparent;
     color: $header-tab-color;
     font-family: $font-primary;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;  // always 600 — prevents layout shift on active toggle
-    letter-spacing: 0.1px;
+    letter-spacing: 0;
     cursor: pointer;
     white-space: nowrap;
     transition: color $md-transition-fast, background-color $md-transition-fast;
     border-radius: 0;
     outline: none;
     overflow: hidden;
+
+    // Kill external mtk-ripple injection
+    .mtk-ripple-wave,
+    .mtk-ripple-surface {
+      display: none !important;
+    }
 
     .material-icons {
       font-size: 18px;
@@ -292,42 +317,14 @@ mtk-biab.mtk-biab {
 
   // ── Simple Tab Panel (Invoicing etc.) ────────────────────
   &__simple-panel {
-    padding: 32px 24px;
-    max-width: 960px;
-    margin: 0 auto;
-
-    &-title {
-      font-size: 24px;
-      font-weight: 600;
-      color: $md-on-surface;
-      margin: 0 0 16px;
-      letter-spacing: -0.3px;
-    }
-
-    &-card {
-      background: $md-surface;
-      border-radius: 12px;
-      padding: 28px 32px;
-      box-shadow: $md-elevation-1;
-      border: 1px solid $md-outline-variant;
-
-      p {
-        font-size: 15px;
-        line-height: 1.7;
-        color: $md-on-surface-variant;
-        margin: 0 0 16px;
-
-        &:last-child {
-          margin: 0;
-        }
-      }
-    }
+    padding: 32px 0;
+    width: 100%;
   }
 
   // ── iFrame Panel (Website Maker) ─────────────────────────
   &__iframe-panel {
     width: 100%;
-    height: calc(100vh - 64px);
+    height: calc(100vh - 86px);
     display: flex;
     flex-direction: column;
   }
@@ -342,7 +339,7 @@ mtk-biab.mtk-biab {
   // ── Sidebar Layout Panel ─────────────────────────────────
   &__sidebar-panel {
     display: flex;
-    min-height: calc(100vh - 64px);
+    min-height: calc(100vh - 86px);
   }
 
   // ── MD3 Navigation Drawer ────────────────────────────────
@@ -667,6 +664,22 @@ mtk-biab.mtk-biab {
     }
   }
 
+  @media (max-width: 1100px) {
+    &__tab-btn {
+      padding: 0 10px;
+      font-size: 12px;
+      gap: 4px;
+
+      .material-icons {
+        display: none;
+      }
+    }
+
+    &__header-inner {
+      padding: 0 12px;
+    }
+  }
+
   // ── Responsive ───────────────────────────────────────────
   @media (max-width: 768px) {
     &__sidebar-panel {
@@ -683,11 +696,14 @@ mtk-biab.mtk-biab {
     }
 
     &__sidebar-items {
-      display: flex;
+      display: flex !important;
       flex-wrap: nowrap;
       overflow-x: auto;
       padding: 4px 8px;
       gap: 4px;
+      max-height: none !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
     }
 
     &__sidebar-item {
@@ -710,18 +726,52 @@ mtk-biab.mtk-biab {
       padding: 20px 16px;
     }
 
+    &__hamburger {
+      display: flex;
+    }
+
+    &__header-divider {
+      display: none;
+    }
+
+    &__tabs-nav {
+      display: none;
+      position: absolute;
+      top: 86px;
+      left: 0;
+      right: 0;
+      background: #212529;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      overflow-x: visible;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      z-index: 999;
+
+      &.is-open {
+        display: flex;
+      }
+    }
+
     &__tab-btn {
-      padding: 0 12px;
-      font-size: 13px;
-      gap: 6px;
+      padding: 0 20px;
+      font-size: 14px;
+      gap: 10px;
+      height: 52px;
+      justify-content: flex-start;
+      border-bottom: 1px solid rgba(#fff, 0.08);
       color: rgba(255, 255, 255, 0.65);
 
       &.is-active {
-        color: #ffffff;
+        color: #a98211;
       }
 
       .material-icons {
-        font-size: 16px;
+        font-size: 20px;
+      }
+
+      .mtk-biab__tab-indicator {
+        display: none;
       }
     }
 
@@ -732,7 +782,7 @@ mtk-biab.mtk-biab {
     &__logo {
       &-full { display: none; }
       &-short { display: inline; }
-      &-icon { height: 32px; }
+      &-icon { height: 48px; }
     }
 
     &__content-card {

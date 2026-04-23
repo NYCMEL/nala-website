@@ -100,6 +100,12 @@ html,
 body {
   min-height: 100%; }
 
+<<<<<<< HEAD
+=======
+html {
+  overflow-y: scroll; }
+
+>>>>>>> 04.21.2026.B
 body {
   font-family: "Roboto", Arial, sans-serif;
   font-size: 16px;
@@ -107,7 +113,11 @@ body {
   color: #212121;
   background-color: #ffffff;
   margin: 0;
+<<<<<<< HEAD
   padding: 80px 0 0;
+=======
+  padding: 86px 0 0;
+>>>>>>> 04.21.2026.B
   display: flex;
   flex-direction: column;
   min-height: 100vh; }
@@ -251,3 +261,36 @@ h1.title::after {
 
 .helper.error {
   color: #d32f2f; }
+
+.md-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 16px; }
+
+.md-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: #1b76d2;
+  cursor: pointer; }
+
+.md-checkbox label {
+  font-size: 14px;
+  color: #444;
+  cursor: pointer;
+  line-height: 1.5; }
+
+.md-checkbox label a {
+  color: #1b76d2;
+  text-decoration: underline; }
+
+.md-checkbox label a:hover {
+  opacity: 0.8; }
+
+.md-checkbox.checkbox-error label {
+  color: #d32f2f; }
+
+.md-checkbox.checkbox-error input[type="checkbox"] {
+  outline: 2px solid #d32f2f; }

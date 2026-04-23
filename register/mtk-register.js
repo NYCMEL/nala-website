@@ -91,6 +91,13 @@
 	if (isValidPhone(phone.value.trim())) clearPhoneError();
     });
 
+    ["agreePrivacy", "agreeTerms"].forEach(id => {
+	const cb = document.getElementById(id);
+	if (cb) cb.addEventListener("change", () => {
+	    cb.closest(".md-checkbox").classList.remove("checkbox-error");
+	});
+    });
+
     form.addEventListener("submit", event => {
 	event.preventDefault();
 
@@ -127,6 +134,21 @@
 	if (!isValidPhone(phone.value.trim())) {
 	    showPhoneError(t("register.error.phone.invalid", "Enter a valid phone number"));
 	    phone.focus();
+	    return;
+	}
+
+	const agreePrivacy = document.getElementById("agreePrivacy");
+	const agreeTerms   = document.getElementById("agreeTerms");
+
+	if (!agreePrivacy || !agreePrivacy.checked) {
+	    agreePrivacy && agreePrivacy.focus();
+	    agreePrivacy && agreePrivacy.closest(".md-checkbox").classList.add("checkbox-error");
+	    return;
+	}
+
+	if (!agreeTerms || !agreeTerms.checked) {
+	    agreeTerms && agreeTerms.focus();
+	    agreeTerms && agreeTerms.closest(".md-checkbox").classList.add("checkbox-error");
 	    return;
 	}
 

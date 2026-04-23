@@ -12,6 +12,7 @@ class _febe {
 	    "mtk-header-login",
 	    "mtk-header-logout",
 	    "mtk-header-home",
+	    "mtk-header-news",
 	    "mtk-header-hierarchy",
 	    "mtk-header-register",
 	    "mtk-header-settings",
@@ -62,6 +63,7 @@ class _febe {
 	    "mtk-hierarchy:lesson-toggled": this.handleLessonToggled,
 	    "mtk-register-submit": this.handleRegisterSubmit,
 	    "mtk-header-home": this.handleHome,
+	    "mtk-header-news": this.handleNews,
 	    "mtk-login-submit": this.handleLoginSubmit.bind(this),
 	    "mtk-login-success": this.handleLoginSuccess.bind(this),
 	    "mtk-dashboard:continue": this.handleCourse,
@@ -256,6 +258,7 @@ class _febe {
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
     handleHeaderLogoPublicClick() {
+	headerSelect('mtk-header-home');
 	wc.pages.show("home");
     }
 
@@ -474,6 +477,10 @@ class _febe {
 
     handleHome() {
 	wc.pages.show("home");
+    }
+
+    handleNews() {
+	wc.pages.show("news");
     }
 
     handleLoginSuccess(data) {
