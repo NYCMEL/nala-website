@@ -116,9 +116,8 @@ a {
   color: #1976d2;
   text-decoration: none;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
-
-a:hover {
-  text-decoration: underline; }
+  a:hover {
+    text-decoration: underline; }
 
 .material-icons {
   font-family: "Material Icons";
@@ -173,16 +172,15 @@ h1 {
 h1.title {
   position: relative;
   padding-bottom: 0.5rem; }
-
-h1.title::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  width: 30%;
-  height: 3px;
-  background-color: #a98212;
-  transform: translateX(-50%); }
+  h1.title::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 30%;
+    height: 3px;
+    background-color: #a98212;
+    transform: translateX(-50%); }
 
 .nav-link.active[id="mtk-header-home"],
 .nav-link.active[id="mtk-header-news"],

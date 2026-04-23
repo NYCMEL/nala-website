@@ -137,6 +137,7 @@
 
         renderProgress() {
             const progress = this.config.progress || {};
+            const target = Number(progress.percentage || 0);
 
             if (this.elements.progressLabel) {
                 this.elements.progressLabel.textContent = progress.label || 'Your progress to date:';
@@ -146,21 +147,36 @@
                 this.elements.courseTitle.textContent = progress.courseTitle || 'NALA - Locksmith Course';
             }
 
-            if (this.elements.progressPercentage) {
-                this.elements.progressPercentage.textContent = `${Number(progress.percentage || 0)}%`;
+            // Reset to 0 then animate to target
+            if (this.elements.progressFill) {
+                this.elements.progressFill.style.width = '0%';
+                setTimeout(() => {
+                    this.elements.progressFill.style.width = `${target}%`;
+                }, 80);
             }
 
-            if (this.elements.progressFill) {
-                setTimeout(() => {
-                    this.elements.progressFill.style.width = `${Number(progress.percentage || 0)}%`;
-                }, 100);
+            // Animate counter from 0 to target
+            if (this.elements.progressPercentage) {
+                this.elements.progressPercentage.textContent = '0%';
+                const duration = 1000; // ms
+                const steps = 40;
+                const stepTime = duration / steps;
+                let current = 0;
+                const interval = setInterval(() => {
+                    current += target / steps;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(interval);
+                    }
+                    this.elements.progressPercentage.textContent = `${Math.round(current)}%`;
+                }, stepTime);
             }
 
             if (this.elements.progressBar) {
-                this.elements.progressBar.setAttribute('aria-valuenow', Number(progress.percentage || 0));
+                this.elements.progressBar.setAttribute('aria-valuenow', target);
                 this.elements.progressBar.setAttribute(
                     'aria-label',
-                    `Course progress: ${Number(progress.percentage || 0)}% complete`
+                    `Course progress: ${target}% complete`
                 );
             }
         }
