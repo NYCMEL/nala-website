@@ -96,6 +96,13 @@
 *::after {
   box-sizing: border-box; }
 
+html,
+body {
+  min-height: 100%; }
+
+html {
+  overflow-y: scroll; }
+
 body {
   font-family: "Roboto", Arial, sans-serif;
   font-size: 16px;
@@ -103,8 +110,10 @@ body {
   color: #212121;
   background-color: #ffffff;
   margin: 0;
-  padding: 0;
-  margin-top: 80px; }
+  padding: 86px 0 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; }
 
 a {
   color: #1976d2;
@@ -142,6 +151,13 @@ a:hover {
 
 #page-content {
   flex: 1 0 auto; }
+
+#page-footer,
+.app-header {
+  flex-shrink: 0; }
+
+#page-footer {
+  margin-top: auto; }
 
 .course-card {
   border: 1px #cecece solid;
@@ -207,5 +223,3 @@ h1.title::after {
 .mtk-ready .mtk-ready-btn:active {
   transform: translateY(0);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); }
-  transform: translateY(0);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); }

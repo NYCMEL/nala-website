@@ -153,15 +153,28 @@ class MtkBiab {
       <header class="mtk-biab__header" role="banner">
         <div class="mtk-biab__header-inner">
           <a class="mtk-biab__logo" href="#" tabindex="0" aria-label="NALA - Business in a Box">
-            <img class="mtk-biab__logo-icon" src="img/logo-nala-association.webp" alt="NALA logo" />
+            <img class="mtk-biab__logo-icon" src="img/logo-nala-association.webp" alt="NALA logo" height="70" />
             <span class="mtk-biab__logo-text">
               <span class="mtk-biab__logo-full"><small> Business in a Box</small></span>
               <span class="mtk-biab__logo-short">NALA</span>
             </span>
           </a>
+
+          <button
+            class="mtk-biab__hamburger"
+            aria-label="Toggle navigation"
+            aria-expanded="false"
+            aria-controls="mtk-biab-tabs-nav"
+            data-action="toggle-nav"
+          >
+            <span class="material-icons" aria-hidden="true">menu</span>
+          </button>
+
           <div class="mtk-biab__header-divider" aria-hidden="true"></div>
+
           <nav
             class="mtk-biab__tabs-nav"
+            id="mtk-biab-tabs-nav"
             role="tablist"
             aria-label="Main navigation tabs"
           >
@@ -366,8 +379,12 @@ class MtkBiab {
     const action = btn.dataset.action;
 
     switch (action) {
+      case 'toggle-nav':
+        this._handleNavToggle();
+        break;
       case 'select-tab':
         this._activateTab(btn.dataset.tabId);
+        this._closeNav();
         break;
       case 'select-item':
         this._handleItemClick(btn);
@@ -427,7 +444,20 @@ class MtkBiab {
     this._activateItem(tabId, itemId, menuId, btn);
   }
 
-  _handleMenuToggle(btn) {
+  _handleNavToggle() {
+    const nav = this.el.querySelector('.mtk-biab__tabs-nav');
+    const btn = this.el.querySelector('.mtk-biab__hamburger');
+    if (!nav) return;
+    const isOpen = nav.classList.toggle('is-open');
+    if (btn) btn.setAttribute('aria-expanded', String(isOpen));
+  }
+
+  _closeNav() {
+    const nav = this.el.querySelector('.mtk-biab__tabs-nav');
+    const btn = this.el.querySelector('.mtk-biab__hamburger');
+    if (nav) nav.classList.remove('is-open');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+  }
     const { tabId, menuId } = btn.dataset;
     const itemsEl = this.el.querySelector(`#mtk-biab-menu-items-${tabId}-${menuId}`);
     const isCollapsed = itemsEl.classList.toggle('is-collapsed');

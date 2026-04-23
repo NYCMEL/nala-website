@@ -168,6 +168,13 @@ mtk-gift .mtk-gift__btn--submit:disabled,
 *::after {
   box-sizing: border-box; }
 
+html,
+body {
+  min-height: 100%; }
+
+html {
+  overflow-y: scroll; }
+
 body {
   font-family: "Roboto", Arial, sans-serif;
   font-size: 16px;
@@ -175,8 +182,10 @@ body {
   color: #212121;
   background-color: #ffffff;
   margin: 0;
-  padding: 0;
-  margin-top: 80px; }
+  padding: 86px 0 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; }
 
 a {
   color: #1976d2;
@@ -214,6 +223,13 @@ a:hover {
 
 #page-content {
   flex: 1 0 auto; }
+
+#page-footer,
+.app-header {
+  flex-shrink: 0; }
+
+#page-footer {
+  margin-top: auto; }
 
 .course-card {
   border: 1px #cecece solid;
@@ -596,38 +612,6 @@ mtk-gift .mtk-gift__snackbar--error,
   border: 1px solid #faa6a0; }
 
 mtk-gift .mtk-gift__snackbar--error .material-icons,
-.mtk-gift .mtk-gift__snackbar--error .material-icons {
-  color: #d32f2f; }
-
-mtk-gift .mtk-gift__snackbar--info,
-.mtk-gift .mtk-gift__snackbar--info {
-  background: #e4f0fc;
-  color: #1565c0;
-  border: 1px solid #9bc7f3; }
-
-mtk-gift .mtk-gift__snackbar--info .material-icons,
-.mtk-gift .mtk-gift__snackbar--info .material-icons {
-  color: #1976d2; }
-
-mtk-gift *:focus-visible,
-.mtk-gift *:focus-visible {
-  outline: 3px solid rgba(25, 118, 210, 0.35);
-  outline-offset: 2px; }
-
-@media (max-width: 480px) {
-  mtk-gift .mtk-gift__field--quarter,
-  mtk-gift .mtk-gift__field--half,
-  .mtk-gift .mtk-gift__field--quarter,
-  .mtk-gift .mtk-gift__field--half {
-    flex: 1 1 100%; }
-  mtk-gift .mtk-gift__header,
-  .mtk-gift .mtk-gift__header {
-    padding: 16px 16px 12px; }
-  mtk-gift .mtk-gift__body,
-  .mtk-gift .mtk-gift__body {
-    padding: 16px; } }
-
-ckbar--error .material-icons,
 .mtk-gift .mtk-gift__snackbar--error .material-icons {
   color: #d32f2f; }
 
