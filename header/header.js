@@ -58,13 +58,8 @@ $(document).on("click", "#header-dd-client", function(e) {
         }
         return;
     }
-<<<<<<< HEAD
-    wc.log("mtk-header-client → /biab");
-    window.location.href = "biab/index.html";
-=======
     wc.log("mtk-header-client → /repo_deploy/biab");
     window.location.replace("/repo_deploy/biab");
->>>>>>> 04.21.2026.B
 });
 
 $(document).on("click", "#header-dd-logout", function(e) {
