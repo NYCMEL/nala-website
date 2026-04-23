@@ -82,8 +82,6 @@ class MtkBiab {
    * @param {Object} data
    */
   onMessage(event, data) {
-    console.log(`[mtk-biab] onMessage received → ${event}`, data);
-
     // Ignore events we published ourselves to prevent infinite loops
     if (this._publishing) return;
 

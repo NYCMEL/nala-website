@@ -9,7 +9,7 @@ const MTK_BIAB_CONFIG = {
       icon: "language",
       active: true,
       type: "iframe",
-      iframeUrl: "client"
+      iframeUrl: "/repo_deploy/client/index.html"
     },
     {
       id: "business-guide",
@@ -290,11 +290,6 @@ const MTK_BIAB_CONFIG = {
       itemSelect: "mtk-biab:item-select",
       ready: "mtk-biab:ready"
     },
-    subscribe: [
-      "mtk-biab:tab-change",
-      "mtk-biab:menu-select",
-      "mtk-biab:item-select",
-      "mtk-biab:ready"
-    ]
+    subscribe: []
   }
 };
