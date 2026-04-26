@@ -1,0 +1,160 @@
+NEWS PAGE — REBUILD PROMPT
+═══════════════════════════════════════════════════════════════════════
+
+
+PROJECT CONTEXT
+
+    Part of the NALA locksmith website.
+    Stack: Bootstrap 5, jQuery, Material Icons, Font Awesome.
+    wc.subscribe / wc.publish = pub/sub via PubSub.js
+    wc.log = dev console logger
+    Branch: 04.20.2026 at https://github.com/NYCMEL/nala-website
+
+
+DIRECTORY
+
+    news/
+        index.inc.html      ← main page file (wc-include fragment)
+        news.js             ← renders cards + article detail view
+        news.config.js      ← article data (window.NEWS_CONFIG)
+        news.scss           ← all styles (NEVER edit news.css directly)
+
+
+PAGE LAYOUT
+
+    Row 1 — full-width video row (grid-column: 1 / -1):
+        3 Vimeo videos side by side, each in its own .news-video-item
+        Use full embed URLs with app_id=58479 (required by Vimeo security)
+
+    Row 2 — 3 equal article columns:
+        Cards distributed from hidden #newsGrid into #newsGridCol2/3/4
+        Distribution is done via JS after news.js fires news:grid-rendered
+
+    Container: .container (Bootstrap), max-width 1200px, centered
+    Grid: .news-three-col → repeat(3, 1fr), gap: 10px both axes
+    Column gap between cards: 10px (flex column + gap:10px on .news-col-articles)
+
+
+VIDEO EMBED URLS (use exactly — app_id required)
+
+    Safe Lockout:
+        https://player.vimeo.com/video/1106503990?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479
+
+    Marketing Video 3.2:
+        https://player.vimeo.com/video/1106503753?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479
+
+    Marketing Video 1.3:
+        https://player.vimeo.com/video/1106503213?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479
+
+    Vimeo player API script:
+        <script src="https://player.vimeo.com/api/player.js"></script>
+
+    Video wrapper: 16:9 ratio via padding-top:56.25% + position:relative
+    Label bar: dark (#111) background, gray (#adb5bd) text, 11px, centered
+
+
+CARD DIMENSIONS
+
+    .news-card:
+        height: 380px
+        width: 100%
+        margin-bottom: 10px
+
+    .news-card__image (header band):
+        height: 72px (fixed, original size — do NOT override)
+        gold gradient background
+
+    .news-card__body:
+        flex: 1
+        overflow: hidden
+        excerpt area: overflow-y:auto, min-height:0, flex:1
+
+    .news-card__meta (date + Read More):
+        flex-shrink: 0 — always visible at bottom, never clipped
+
+
+ARTICLE DISTRIBUTION (JS)
+
+    news.js renders all cards into a hidden #newsGrid div (position:absolute,
+    visibility:hidden, height:0, overflow:hidden) inside .news-page.
+
+    A distribution script subscribes to 'news:grid-rendered' (fired by news.js
+    after it populates #newsGrid), then:
+        1. Selects all .news-card elements from #newsGrid
+        2. Clones each card (cloneNode(true))
+        3. Distributes clones round-robin across #newsGridCol2, #newsGridCol3,
+           #newsGridCol4 using index % 3
+        4. Re-binds .news-card__link click on each clone:
+               → dispatches a MouseEvent('click') on the original hidden link
+               → news.js handles article detail view from there
+
+    Fallback: setTimeout(distributeArticles, 1000) in case wc isn't ready.
+
+    Poll loop: if wc.subscribe isn't available yet, poll every 100ms until it is.
+
+
+NEWS.JS PATCHES (applied — keep these)
+
+    showArticle() saves/restores page.innerHTML (not just container.innerHTML)
+    so the 3-column layout + videos are correctly restored on Back button.
+
+    showGrid() re-publishes 'news:grid-rendered' after restore so the
+    distribution script re-runs and clones are re-populated.
+
+    Container selector updated to: page.querySelector('.container-fluid, .container')
+
+    Article detail view replaces page.innerHTML with a clean single-column
+    layout (max-width:800px, centered) including the Back button, article
+    header, and body. CSS link is re-injected inline.
+
+
+NEWS.SCSS (canonical — always use this as base)
+
+    @import "../css/nala.scss";
+
+    .news-page     — padding 20px 0 40px, bg $color-bg-light, min-height calc
+    .news-header   — centered, border-bottom 2px #a98211, margin-bottom 20px
+    .news-title    — 32px, 700 weight
+    .news-subtitle — 16px, secondary color
+
+    .news-grid     — grid repeat(3,1fr), gap 24px (used only by hidden #newsGrid,
+                     not the visible columns — visible columns use flex)
+
+    .news-card     — white bg, 12px radius, flex column, height:380px, width:100%,
+                     margin-bottom:10px, border 1px #e8eaed, box-shadow
+
+    .news-card__image   — gradient #a98211→#7a5e0c, height:72px
+    .news-card__body    — padding 20px, flex column, flex:1, overflow:hidden
+    .news-card__excerpt — flex:1, overflow-y:auto, min-height:0
+    .news-card__meta    — flex-shrink:0, border-top 1px #f0f0f0, margin-top:auto
+    .news-card__link    — color #a98211, 13px, 600 weight
+
+    .news-article  — white bg, 12px radius, padding 32px 40px 40px, border
+    .news-article__back — gold border button, hover fills gold
+    .news-article__title — 28px, 700 weight
+    .news-article__body p — 16px, line-height 1.8
+
+
+RESPONSIVE
+
+    Below 767px: grid collapses to 1fr, videos stack vertically
+
+
+PAGES CONFIG
+
+    Add to mtk-pages.config.js:
+        { "cache": "false", "page": "news", "label": "News",
+          "url": "<wc-include href='news/index.inc.html' />" }
+
+    Add nav link in header to publish 'news' or navigate to #news.
+
+
+CRITICAL RULES
+
+    1. NEVER edit news.css directly — always edit news.scss
+    2. Videos require full embed URL with app_id=58479
+    3. Cards are CLONED from hidden #newsGrid — never moved (appendChild moves DOM nodes)
+    4. news.js saves/restores full page.innerHTML — not just the container
+    5. wc.publish('news:grid-rendered') must be called after grid restore so
+       distribution re-runs
+    6. .news-card__meta must always have flex-shrink:0 so date/Read More never disappear
