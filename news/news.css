@@ -230,6 +230,9 @@ h1.title::after {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  height: 380px;
+  width: 100%;
+  margin-bottom: 20px;
   transition: box-shadow 200ms ease, transform 200ms ease;
   border: 1px solid #e8eaed; }
 
@@ -252,7 +255,8 @@ h1.title::after {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  flex: 1; }
+  flex: 1;
+  overflow: hidden; }
 
 .news-card__category {
   font-size: 11px;
@@ -275,7 +279,9 @@ h1.title::after {
   color: #757575;
   line-height: 1.65;
   margin: 0 0 16px;
-  flex: 1; }
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0; }
 
 .news-card__meta {
   display: flex;
@@ -283,7 +289,8 @@ h1.title::after {
   justify-content: space-between;
   margin-top: auto;
   padding-top: 12px;
-  border-top: 1px solid #f0f0f0; }
+  border-top: 1px solid #f0f0f0;
+  flex-shrink: 0; }
 
 .news-card__date {
   font-size: 12px;
