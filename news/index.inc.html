@@ -3,55 +3,6 @@
 
     <link href="news/news.css" rel="stylesheet">
     <script src="https://player.vimeo.com/api/player.js"></script>
-
-    <style>
-     .news-three-col {
-         display: grid;
-         grid-template-columns: repeat(3, 1fr);
-         gap: 10px;
-         align-items: start;
-     }
-     .news-col-videos {
-         grid-column: 1 / -1;
-         display: flex;
-         flex-direction: row;
-         gap: 10px;
-     }
-     .news-col-videos .news-video-item {
-         flex: 1;
-     }
-     .news-video-item {
-         border-radius: 8px;
-         overflow: hidden;
-         background: #000;
-         box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-     }
-     .news-video-wrap {
-         padding: 56.25% 0 0;
-         position: relative;
-     }
-     .news-video-wrap iframe {
-         position: absolute;
-         top: 0; left: 0;
-         width: 100%; height: 100%;
-         border: none;
-     }
-     .news-video-label {
-         background: #111;
-         color: #adb5bd;
-         font-size: 11px;
-         padding: 6px 10px;
-         text-align: center;
-     }
-     .news-col-articles { min-width: 0; display: flex; flex-direction: column; gap: 10px; }
-
-     @media (max-width: 767px) {
-         .news-three-col { grid-template-columns: 1fr; }
-         .news-col-videos { flex-direction: column; }
-         .news-col-videos .news-video-item { flex: none; width: 100%; }
-     }
-    </style>
-
     <div class="container">
         <div class="news-header">
             <h1 class="news-title">News &amp; Articles</h1>
@@ -66,31 +17,31 @@
                 <div class="news-video-item">
                     <div class="news-video-wrap">
                         <iframe src="https://player.vimeo.com/video/1106503990?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
-				     allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-				     referrerpolicy="strict-origin-when-cross-origin"
-				     title="Safe Lockout - updated"></iframe>
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            title="Safe Lockout - updated"></iframe>
                     </div>
-                    <div class="news-video-label">Marketing Video A</div>
+                    <div class="news-video-label">Safe Lockout</div>
                 </div>
 
                 <div class="news-video-item">
                     <div class="news-video-wrap">
                         <iframe src="https://player.vimeo.com/video/1106503753?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
-				allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-				referrerpolicy="strict-origin-when-cross-origin"
-				title="Marketing Video 3.2 updated"></iframe>
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            title="Marketing Video 3.2 updated"></iframe>
                     </div>
-                    <div class="news-video-label">Marketing Video B</div>
+                    <div class="news-video-label">Marketing Video 3.2</div>
                 </div>
 
                 <div class="news-video-item">
                     <div class="news-video-wrap">
                         <iframe src="https://player.vimeo.com/video/1106503213?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
-				     allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-				     referrerpolicy="strict-origin-when-cross-origin"
-				     title="Marketing Video 1.3 updated"></iframe>
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            title="Marketing Video 1.3 updated"></iframe>
                     </div>
-                    <div class="news-video-label">Marketing Video C</div>
+                    <div class="news-video-label">Marketing Video 1.3</div>
                 </div>
 
             </div>
@@ -115,64 +66,64 @@
 </div><!-- /.news-page -->
 
 <script>
- (function() {
-     function distributeArticles() {
-         var grid = document.getElementById('newsGrid');
-         var col2 = document.getElementById('newsGridCol2');
-         var col3 = document.getElementById('newsGridCol3');
-         var col4 = document.getElementById('newsGridCol4');
-         if (!grid || !col2 || !col3 || !col4) return;
+(function() {
+    function distributeArticles() {
+        var grid = document.getElementById('newsGrid');
+        var col2 = document.getElementById('newsGridCol2');
+        var col3 = document.getElementById('newsGridCol3');
+        var col4 = document.getElementById('newsGridCol4');
+        if (!grid || !col2 || !col3 || !col4) return;
 
-         var cards = Array.from(grid.querySelectorAll('.news-card'));
-         if (!cards.length) return;
+        var cards = Array.from(grid.querySelectorAll('.news-card'));
+        if (!cards.length) return;
 
-         col2.innerHTML = '';
-         col3.innerHTML = '';
-         col4.innerHTML = '';
+        col2.innerHTML = '';
+        col3.innerHTML = '';
+        col4.innerHTML = '';
 
-         cards.forEach(function(card, i) {
-             var clone = card.cloneNode(true);
-             var cols = [col2, col3, col4];
-             cols[i % 3].appendChild(clone);
-         });
+        cards.forEach(function(card, i) {
+            var clone = card.cloneNode(true);
+            var cols = [col2, col3, col4];
+            cols[i % 3].appendChild(clone);
+        });
 
-         // Re-bind Read More on clones
-         [col2, col3, col4].forEach(function(col) {
-             col.querySelectorAll('.news-card__link').forEach(function(link) {
-                 link.addEventListener('click', function(e) {
-                     e.preventDefault();
-                     e.stopPropagation();
-                     // Move cards back to grid so news.js can save/restore them
-                     var articleId = link.dataset.articleId;
-                     // Trigger via the original hidden link
-                     var orig = grid.querySelector('[data-article-id="' + articleId + '"].news-card__link');
-                     if (orig) {
-                         var evt = new MouseEvent('click', { bubbles: true, cancelable: true });
-                         orig.dispatchEvent(evt);
-                     }
-                 });
-             });
-         });
-     }
+        // Re-bind Read More on clones
+        [col2, col3, col4].forEach(function(col) {
+            col.querySelectorAll('.news-card__link').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    // Move cards back to grid so news.js can save/restore them
+                    var articleId = link.dataset.articleId;
+                    // Trigger via the original hidden link
+                    var orig = grid.querySelector('[data-article-id="' + articleId + '"].news-card__link');
+                    if (orig) {
+                        var evt = new MouseEvent('click', { bubbles: true, cancelable: true });
+                        orig.dispatchEvent(evt);
+                    }
+                });
+            });
+        });
+    }
 
-     // Subscribe to news:grid-rendered event fired by news.js
-     function trySubscribe() {
-         if (typeof wc !== 'undefined' && wc.subscribe) {
-             wc.subscribe('news:grid-rendered', function() {
-                 setTimeout(distributeArticles, 50);
-             });
-             return true;
-         }
-         return false;
-     }
+    // Subscribe to news:grid-rendered event fired by news.js
+    function trySubscribe() {
+        if (typeof wc !== 'undefined' && wc.subscribe) {
+            wc.subscribe('news:grid-rendered', function() {
+                setTimeout(distributeArticles, 50);
+            });
+            return true;
+        }
+        return false;
+    }
 
-     if (!trySubscribe()) {
-         var poll = setInterval(function() { if (trySubscribe()) clearInterval(poll); }, 100);
-     }
+    if (!trySubscribe()) {
+        var poll = setInterval(function() { if (trySubscribe()) clearInterval(poll); }, 100);
+    }
 
-     // Fallback safety net
-     setTimeout(distributeArticles, 1000);
- })();
+    // Fallback safety net
+    setTimeout(distributeArticles, 1000);
+})();
 </script>
 
 <script src="news/news.config.js"></script>
