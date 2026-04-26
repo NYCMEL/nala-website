@@ -47,7 +47,8 @@
 
         @media (max-width: 767px) {
             .news-three-col { grid-template-columns: 1fr; }
-            .news-col-videos { position: static; }
+            .news-col-videos { flex-direction: column; }
+            .news-col-videos .news-video-item { flex: none; width: 100%; }
         }
     </style>
 
