@@ -8,15 +8,17 @@
         .news-three-col {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
+            gap: 10px;
             align-items: start;
         }
         .news-col-videos {
+            grid-column: 1 / -1;
             display: flex;
-            flex-direction: column;
-            gap: 20px;
-            position: sticky;
-            top: 80px;
+            flex-direction: row;
+            gap: 10px;
+        }
+        .news-col-videos .news-video-item {
+            flex: 1;
         }
         .news-video-item {
             border-radius: 8px;
@@ -41,7 +43,7 @@
             padding: 6px 10px;
             text-align: center;
         }
-        .news-col-articles { min-width: 0; display: flex; flex-direction: column; gap: 15px; }
+        .news-col-articles { min-width: 0; display: flex; flex-direction: column; gap: 10px; }
 
         @media (max-width: 767px) {
             .news-three-col { grid-template-columns: 1fr; }
@@ -98,6 +100,9 @@
             <!-- COLUMN 3 -->
             <div class="news-col-articles" id="newsGridCol3"></div>
 
+            <!-- COLUMN 4 (3rd article col) -->
+            <div class="news-col-articles" id="newsGridCol4"></div>
+
         </div>
     </div>
 
@@ -114,21 +119,24 @@
         var grid = document.getElementById('newsGrid');
         var col2 = document.getElementById('newsGridCol2');
         var col3 = document.getElementById('newsGridCol3');
-        if (!grid || !col2 || !col3) return;
+        var col4 = document.getElementById('newsGridCol4');
+        if (!grid || !col2 || !col3 || !col4) return;
 
         var cards = Array.from(grid.querySelectorAll('.news-card'));
         if (!cards.length) return;
 
         col2.innerHTML = '';
         col3.innerHTML = '';
+        col4.innerHTML = '';
 
         cards.forEach(function(card, i) {
             var clone = card.cloneNode(true);
-            (i % 2 === 0 ? col2 : col3).appendChild(clone);
+            var cols = [col2, col3, col4];
+            cols[i % 3].appendChild(clone);
         });
 
-        // Re-bind Read More on clones — publish event that news.js listens to
-        [col2, col3].forEach(function(col) {
+        // Re-bind Read More on clones
+        [col2, col3, col4].forEach(function(col) {
             col.querySelectorAll('.news-card__link').forEach(function(link) {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
