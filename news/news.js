@@ -62,34 +62,33 @@
     }
 
     function showArticle(page, config, article) {
-        const container = page.querySelector('.container');
+        const container = page.querySelector('.container-fluid, .container');
         if (!container) return;
 
         if (!page.dataset.gridHtml) {
-            page.dataset.gridHtml = container.innerHTML;
+            page.dataset.gridHtml = page.innerHTML;
         }
 
-        container.innerHTML = `
-            <div class="row g-0">
-                <div class="col-md-12">
-                    <div class="news-article">
-                        <button class="news-article__back" id="newsBackBtn">
-                            <i class="fa fa-arrow-left"></i> Back to News
-                        </button>
-                        <div class="news-article__header">
-                            <span class="news-card__category">${article.category}</span>
-                            <h1 class="news-article__title">${article.title}</h1>
-                            <p class="news-article__date"><i class="fa fa-calendar"></i> ${article.date}</p>
-                        </div>
-                        <div class="news-article__body">
-                            ${article.body}
-                        </div>
+        page.innerHTML = `
+            <link href="news/news.css" rel="stylesheet">
+            <div class="container" style="max-width:800px;margin:0 auto;padding:24px 16px">
+                <div class="news-article">
+                    <button class="news-article__back" id="newsBackBtn">
+                        <i class="fa fa-arrow-left"></i> Back to News
+                    </button>
+                    <div class="news-article__header">
+                        <span class="news-card__category">${article.category}</span>
+                        <h1 class="news-article__title">${article.title}</h1>
+                        <p class="news-article__date"><i class="fa fa-calendar"></i> ${article.date}</p>
+                    </div>
+                    <div class="news-article__body">
+                        ${article.body}
                     </div>
                 </div>
             </div>
         `;
 
-        container.querySelector('#newsBackBtn').addEventListener('click', () => showGrid(page, config));
+        page.querySelector('#newsBackBtn').addEventListener('click', () => showGrid(page, config));
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
         wc.log('news:article-open', { id: article.id, title: article.title });
@@ -97,14 +96,15 @@
     }
 
     function showGrid(page, config) {
-        const container = page.querySelector('.container');
-        if (!container || !page.dataset.gridHtml) return;
+        if (!page.dataset.gridHtml) return;
 
-        container.innerHTML = page.dataset.gridHtml;
+        page.innerHTML = page.dataset.gridHtml;
         delete page.dataset.gridHtml;
 
         const grid = page.querySelector('#newsGrid');
         if (grid) bindReadMore(grid, page, config);
+        // Re-trigger distribution
+        if (typeof wc !== 'undefined') wc.publish('news:grid-rendered', {});
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
         wc.log('news:grid-restored', {});

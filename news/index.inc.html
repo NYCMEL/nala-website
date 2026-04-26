@@ -127,14 +127,20 @@
             (i % 2 === 0 ? col2 : col3).appendChild(clone);
         });
 
-        // Re-bind Read More on clones — proxy click to original
+        // Re-bind Read More on clones — publish event that news.js listens to
         [col2, col3].forEach(function(col) {
             col.querySelectorAll('.news-card__link').forEach(function(link) {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    var orig = grid.querySelector('.news-card__link[data-article-id="' + link.dataset.articleId + '"]');
-                    if (orig) orig.click();
+                    // Move cards back to grid so news.js can save/restore them
+                    var articleId = link.dataset.articleId;
+                    // Trigger via the original hidden link
+                    var orig = grid.querySelector('[data-article-id="' + articleId + '"].news-card__link');
+                    if (orig) {
+                        var evt = new MouseEvent('click', { bubbles: true, cancelable: true });
+                        orig.dispatchEvent(evt);
+                    }
                 });
             });
         });
