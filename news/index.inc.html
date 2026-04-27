@@ -284,11 +284,27 @@
         prev = resetButton(prev);
         next = resetButton(next);
 
+        function pauseInactiveVideos() {
+            slides.forEach(function(slide, i) {
+                if (i === activeIndex) return;
+
+                var iframe = slide.querySelector('iframe');
+                if (!iframe) return;
+
+                if (window.Vimeo && window.Vimeo.Player) {
+                    new window.Vimeo.Player(iframe).pause().catch(function() {});
+                } else {
+                    iframe.src = iframe.src;
+                }
+            });
+        }
+
         function showVideo(index) {
             activeIndex = (index + slides.length) % slides.length;
             slides.forEach(function(slide, i) {
                 slide.classList.toggle('is-active', i === activeIndex);
             });
+            pauseInactiveVideos();
         }
 
         prev.addEventListener('click', function() { showVideo(activeIndex - 1); });
