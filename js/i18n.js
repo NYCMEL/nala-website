@@ -179,8 +179,8 @@
       es: 'Iniciar Sesión'
     },
     'nav.news': {
-      en: 'News & Articles',
-      es: 'Noticias y Artículos'
+      en: 'About',
+      es: 'Acerca de'
     },
     'nav.toggle': {
       en: 'Toggle navigation',

@@ -23,7 +23,7 @@ window.app.pages = [
     {
         "cache": "true",
         "page":  "news",
-        "label": "News & Articles",
+        "label": "About",
         "url":   "<wc-include href='news/index.inc.html' />"
     },
     {

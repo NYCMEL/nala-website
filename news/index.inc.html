@@ -1,114 +1,266 @@
-<!-- NEWS & ARTICLES -->
-<div class="news-page">
+<!-- ABOUT -->
+<div class="news-page about-page">
 
     <link href="news/news.css" rel="stylesheet">
     <script src="https://player.vimeo.com/api/player.js"></script>
 
     <style>
-        .news-three-col {
+        .about-page {
+            background: linear-gradient(180deg, #f7f7f7 0%, #ffffff 54%, #f5f2eb 100%);
+        }
+
+        .about-page .container {
+            max-width: 1180px;
+        }
+
+        .about-layout {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            align-items: start;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 28px;
+            align-items: stretch;
         }
-        .news-col-videos {
-            grid-column: 1 / -1;
-            display: flex;
-            flex-direction: row;
-            gap: 10px;
-        }
-        .news-col-videos .news-video-item {
-            flex: 1;
-        }
-        .news-video-item {
+
+        .about-panel {
+            background: #ffffff;
+            border: 1px solid #e5dfd2;
             border-radius: 8px;
-            overflow: hidden;
-            background: #000;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 14px 34px rgba(33, 33, 33, 0.08);
+            padding: 22px;
+            min-width: 0;
         }
-        .news-video-wrap {
+
+        .about-panel__header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid #eadfca;
+        }
+
+        .about-panel__title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #202124;
+            margin: 0 0 4px;
+        }
+
+        .about-panel__subtitle {
+            font-size: 14px;
+            color: #666;
+            margin: 0;
+        }
+
+        .about-carousel-controls {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .about-carousel-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #a98211;
+            border-radius: 50%;
+            background: #ffffff;
+            color: #7a5e0c;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+        }
+
+        .about-carousel-btn:hover,
+        .about-carousel-btn:focus {
+            background: #a98211;
+            color: #ffffff;
+            outline: none;
+            transform: translateY(-1px);
+        }
+
+        .about-video-stage,
+        .about-article-stage {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-video-slide,
+        .about-article-slide {
+            display: none;
+            animation: mtk-fade-in 220ms ease;
+        }
+
+        .about-video-slide.is-active,
+        .about-article-slide.is-active {
+            display: block;
+        }
+
+        .about-video-frame {
             padding: 56.25% 0 0;
             position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            background: #111;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
         }
-        .news-video-wrap iframe {
+
+        .about-video-frame iframe {
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             border: none;
         }
-        .news-video-label {
-            background: #111;
-            color: #adb5bd;
-            font-size: 11px;
-            padding: 6px 10px;
-            text-align: center;
-        }
-        .news-col-articles { min-width: 0; display: flex; flex-direction: column; gap: 10px; }
 
-        @media (max-width: 767px) {
-            .news-three-col { grid-template-columns: 1fr; }
-            .news-col-videos { flex-direction: column; }
-            .news-col-videos .news-video-item { flex: none; width: 100%; }
+        .about-video-caption {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 14px;
+            color: #3c4043;
+        }
+
+        .about-video-caption strong {
+            font-size: 17px;
+            color: #202124;
+        }
+
+        .about-count {
+            font-size: 12px;
+            color: #7a5e0c;
+            background: #fbf4e5;
+            border: 1px solid #ead9b5;
+            border-radius: 999px;
+            padding: 3px 10px;
+            white-space: nowrap;
+        }
+
+        .about-article-stage .news-card {
+            height: 420px;
+            margin-bottom: 0;
+            box-shadow: none;
+        }
+
+        .about-hidden-grid {
+            position: absolute;
+            visibility: hidden;
+            height: 0;
+            overflow: hidden;
+        }
+
+        @media (max-width: 900px) {
+            .about-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .about-panel {
+                padding: 16px;
+            }
+
+            .about-panel__header {
+                flex-direction: column;
+            }
+
+            .about-carousel-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
         }
     </style>
 
     <div class="container">
         <div class="news-header">
-            <h1 class="news-title">News &amp; Articles</h1>
-            <p class="news-subtitle">Stay up to date with the latest from NALA</p>
+            <h1 class="news-title">About</h1>
+            <p class="news-subtitle">Videos, news, and articles from NALA</p>
         </div>
 
-        <div class="news-three-col">
-
-            <!-- COLUMN 1: 3 videos stacked -->
-            <div class="news-col-videos">
-
-                <div class="news-video-item">
-                    <div class="news-video-wrap">
-                        <iframe src="https://player.vimeo.com/video/1106503990?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
-                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin"
-                            title="Safe Lockout - updated"></iframe>
+        <div class="about-layout">
+            <section class="about-panel" aria-labelledby="aboutVideosTitle">
+                <div class="about-panel__header">
+                    <div>
+                        <h2 class="about-panel__title" id="aboutVideosTitle">Videos</h2>
+                        <p class="about-panel__subtitle">Watch the latest marketing videos.</p>
                     </div>
-                    <div class="news-video-label">Safe Lockout</div>
+                    <div class="about-carousel-controls" aria-label="Video carousel controls">
+                        <button class="about-carousel-btn" type="button" id="aboutVideoPrev" aria-label="Previous video">
+                            <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                        </button>
+                        <button class="about-carousel-btn" type="button" id="aboutVideoNext" aria-label="Next video">
+                            <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </div>
 
-                <div class="news-video-item">
-                    <div class="news-video-wrap">
-                        <iframe src="https://player.vimeo.com/video/1106503753?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
-                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin"
-                            title="Marketing Video 3.2 updated"></iframe>
+                <div class="about-video-stage" id="aboutVideoStage">
+                    <article class="about-video-slide is-active" data-video-title="Marketing Video 3.2">
+                        <div class="about-video-frame">
+                            <iframe src="https://player.vimeo.com/video/1106503753?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                title="Marketing Video 3.2 updated"></iframe>
+                        </div>
+                        <div class="about-video-caption">
+                            <strong>Marketing Video 3.2</strong>
+                            <span class="about-count" data-video-count>1 of 3</span>
+                        </div>
+                    </article>
+
+                    <article class="about-video-slide" data-video-title="Marketing Video 2.2">
+                        <div class="about-video-frame">
+                            <iframe src="https://player.vimeo.com/video/1106503424?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                title="Marketing Video 2.2 updated"></iframe>
+                        </div>
+                        <div class="about-video-caption">
+                            <strong>Marketing Video 2.2</strong>
+                            <span class="about-count" data-video-count>2 of 3</span>
+                        </div>
+                    </article>
+
+                    <article class="about-video-slide" data-video-title="Marketing Video 1.3">
+                        <div class="about-video-frame">
+                            <iframe src="https://player.vimeo.com/video/1106503213?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                title="Marketing Video 1.3 updated"></iframe>
+                        </div>
+                        <div class="about-video-caption">
+                            <strong>Marketing Video 1.3</strong>
+                            <span class="about-count" data-video-count>3 of 3</span>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="about-panel" aria-labelledby="aboutArticlesTitle">
+                <div class="about-panel__header">
+                    <div>
+                        <h2 class="about-panel__title" id="aboutArticlesTitle">News &amp; Articles</h2>
+                        <p class="about-panel__subtitle">Browse recent updates and industry notes.</p>
                     </div>
-                    <div class="news-video-label">Marketing Video 3.2</div>
+                    <div class="about-carousel-controls" aria-label="Article carousel controls">
+                        <button class="about-carousel-btn" type="button" id="aboutArticlePrev" aria-label="Previous article">
+                            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                        </button>
+                        <button class="about-carousel-btn" type="button" id="aboutArticleNext" aria-label="Next article">
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </div>
 
-                <div class="news-video-item">
-                    <div class="news-video-wrap">
-                        <iframe src="https://player.vimeo.com/video/1106503213?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
-                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin"
-                            title="Marketing Video 1.3 updated"></iframe>
-                    </div>
-                    <div class="news-video-label">Marketing Video 1.3</div>
-                </div>
-
-            </div>
-
-            <!-- COLUMN 2 -->
-            <div class="news-col-articles" id="newsGridCol2"></div>
-
-            <!-- COLUMN 3 -->
-            <div class="news-col-articles" id="newsGridCol3"></div>
-
-            <!-- COLUMN 4 (3rd article col) -->
-            <div class="news-col-articles" id="newsGridCol4"></div>
-
+                <div class="about-article-stage" id="aboutArticleStage"></div>
+            </section>
         </div>
     </div>
 
-    <!-- Hidden: news.js renders here; we clone cards into col2/col3 -->
-    <div style="position:absolute;visibility:hidden;height:0;overflow:hidden">
+    <div class="about-hidden-grid">
         <div class="news-grid" id="newsGrid"></div>
     </div>
 
@@ -116,62 +268,116 @@
 
 <script>
 (function() {
-    function distributeArticles() {
+    function resetButton(button) {
+        var fresh = button.cloneNode(true);
+        button.parentNode.replaceChild(fresh, button);
+        return fresh;
+    }
+
+    function setupVideoCarousel() {
+        var slides = Array.from(document.querySelectorAll('#aboutVideoStage .about-video-slide'));
+        var prev = document.getElementById('aboutVideoPrev');
+        var next = document.getElementById('aboutVideoNext');
+        var activeIndex = 0;
+
+        if (!slides.length || !prev || !next) return;
+        prev = resetButton(prev);
+        next = resetButton(next);
+
+        function showVideo(index) {
+            activeIndex = (index + slides.length) % slides.length;
+            slides.forEach(function(slide, i) {
+                slide.classList.toggle('is-active', i === activeIndex);
+            });
+        }
+
+        prev.addEventListener('click', function() { showVideo(activeIndex - 1); });
+        next.addEventListener('click', function() { showVideo(activeIndex + 1); });
+    }
+
+    function setupArticleCarousel() {
         var grid = document.getElementById('newsGrid');
-        var col2 = document.getElementById('newsGridCol2');
-        var col3 = document.getElementById('newsGridCol3');
-        var col4 = document.getElementById('newsGridCol4');
-        if (!grid || !col2 || !col3 || !col4) return;
+        var stage = document.getElementById('aboutArticleStage');
+        var prev = document.getElementById('aboutArticlePrev');
+        var next = document.getElementById('aboutArticleNext');
+
+        if (!grid || !stage || !prev || !next) return;
 
         var cards = Array.from(grid.querySelectorAll('.news-card'));
         if (!cards.length) return;
+        prev = resetButton(prev);
+        next = resetButton(next);
 
-        col2.innerHTML = '';
-        col3.innerHTML = '';
-        col4.innerHTML = '';
-
+        stage.innerHTML = '';
         cards.forEach(function(card, i) {
+            var slide = document.createElement('div');
+            slide.className = 'about-article-slide' + (i === 0 ? ' is-active' : '');
+            slide.dataset.articleIndex = String(i);
+
             var clone = card.cloneNode(true);
-            var cols = [col2, col3, col4];
-            cols[i % 3].appendChild(clone);
+            var count = document.createElement('span');
+            count.className = 'about-count';
+            count.textContent = (i + 1) + ' of ' + cards.length;
+            clone.querySelector('.news-card__meta').appendChild(count);
+
+            slide.appendChild(clone);
+            stage.appendChild(slide);
         });
 
-        // Re-bind Read More on clones
-        [col2, col3, col4].forEach(function(col) {
-            col.querySelectorAll('.news-card__link').forEach(function(link) {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    // Move cards back to grid so news.js can save/restore them
-                    var articleId = link.dataset.articleId;
-                    // Trigger via the original hidden link
-                    var orig = grid.querySelector('[data-article-id="' + articleId + '"].news-card__link');
-                    if (orig) {
-                        var evt = new MouseEvent('click', { bubbles: true, cancelable: true });
-                        orig.dispatchEvent(evt);
-                    }
-                });
+        var slides = Array.from(stage.querySelectorAll('.about-article-slide'));
+        var activeIndex = 0;
+
+        function showArticle(index) {
+            activeIndex = (index + slides.length) % slides.length;
+            slides.forEach(function(slide, i) {
+                slide.classList.toggle('is-active', i === activeIndex);
+            });
+        }
+
+        stage.querySelectorAll('.news-card__link').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                var original = grid.querySelector('[data-article-id="' + link.dataset.articleId + '"].news-card__link');
+                if (original) {
+                    original.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+                }
             });
         });
+
+        prev.addEventListener('click', function() { showArticle(activeIndex - 1); });
+        next.addEventListener('click', function() { showArticle(activeIndex + 1); });
     }
 
-    // Subscribe to news:grid-rendered event fired by news.js
-    function trySubscribe() {
+    function subscribeToNewsGrid() {
         if (typeof wc !== 'undefined' && wc.subscribe) {
             wc.subscribe('news:grid-rendered', function() {
-                setTimeout(distributeArticles, 50);
+                setTimeout(function() {
+                    setupVideoCarousel();
+                    setupArticleCarousel();
+                }, 50);
+            });
+            wc.subscribe('news:grid-restored', function() {
+                setTimeout(function() {
+                    setupVideoCarousel();
+                    setupArticleCarousel();
+                }, 50);
             });
             return true;
         }
         return false;
     }
 
-    if (!trySubscribe()) {
-        var poll = setInterval(function() { if (trySubscribe()) clearInterval(poll); }, 100);
+    setupVideoCarousel();
+
+    if (!subscribeToNewsGrid()) {
+        var poll = setInterval(function() {
+            if (subscribeToNewsGrid()) clearInterval(poll);
+        }, 100);
     }
 
-    // Fallback safety net
-    setTimeout(distributeArticles, 1000);
+    setTimeout(setupArticleCarousel, 1000);
 })();
 </script>
 
