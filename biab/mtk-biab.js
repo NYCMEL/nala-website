@@ -136,8 +136,8 @@ const MTK_BIAB_LOGO_PALETTES = [
     neutral: '#e5e7eb'
   },
   {
-    key: 'royal-cobalt',
-    label: 'Royal Cobalt',
+    key: 'contract-bronze',
+    label: 'Contract Bronze',
     description: 'Refined bronze system for corporate, access-control, and service-contract oriented brands.',
     surface: '#3a2f1b',
     surfaceSoft: '#4a3a08',

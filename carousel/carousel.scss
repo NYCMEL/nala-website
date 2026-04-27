@@ -55,6 +55,11 @@
     color: #000;
     font-size: $font-size-3xl;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
 
     &.prev { left: 12px; }
     &.next { right: 12px; }

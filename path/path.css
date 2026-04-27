@@ -201,7 +201,7 @@ h1.title::after {
 
 .mtk-path .mtk-card {
   background-color: #ffffff;
-  padding: 2.5rem;
+  padding: 1.75rem;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -226,7 +226,7 @@ h1.title::after {
   font-weight: 500; }
 
 .mtk-path .price {
-  font-size: 3rem;
+  font-size: clamp(2rem, 3.2vw, 2.6rem);
   font-weight: 700;
   line-height: 1; }
 
@@ -246,7 +246,8 @@ h1.title::after {
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.94rem;
   color: #111827; }
 
 .mtk-path li .check {

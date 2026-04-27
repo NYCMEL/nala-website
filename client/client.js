@@ -95,6 +95,7 @@ class ClientProfile {
 	// Always show the bar
 	bar.style.display = 'flex'
 	bar.style.flexDirection = 'column'
+	this.renderPersonalUrl()
 
 	// Only show controls if editable is defined
 	// Always show edit controls on /client (nalaUID guard already handled above)
@@ -193,6 +194,39 @@ class ClientProfile {
 		if (btn) btn.style.display = 'none'
 	    }
 	})
+    }
+
+    renderPersonalUrl() {
+	const urlText = document.getElementById('personalUrlText')
+	const copyBtn = document.getElementById('copyPersonalUrlBtn')
+	if (!urlText) return
+
+	const uid = this.data && this.data.nalaUID ? String(this.data.nalaUID) : ''
+	const url = this.getPersonalUrl(uid)
+	urlText.textContent = url
+	urlText.title = url
+
+	if (copyBtn) {
+	    copyBtn.onclick = function() {
+		if (navigator.clipboard && navigator.clipboard.writeText) {
+		    navigator.clipboard.writeText(url).then(function() {
+			copyBtn.textContent = 'Copied'
+			setTimeout(function() { copyBtn.textContent = 'Copy' }, 1400)
+		    }).catch(function() {
+			window.prompt('Copy your personal page URL:', url)
+		    })
+		} else {
+		    window.prompt('Copy your personal page URL:', url)
+		}
+	    }
+	}
+    }
+
+    getPersonalUrl(uid) {
+	const origin = window.location.origin || ''
+	const basePath = '/repo_deploy/client/index.html'
+	const query = uid ? '?nalaUID=' + encodeURIComponent(uid) : ''
+	return origin + basePath + query
     }
 
     _generateConfigJs(changes) {

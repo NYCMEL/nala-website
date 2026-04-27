@@ -30,7 +30,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "article",
                 content: {
                   title: "Business Plan Template",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#eef4ff;color:#0d47a1;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
+                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
 <h3>Purpose</h3>
 <p>This template is for a locksmith who wants to build a real business, not just take occasional side jobs. Use it to decide what you will offer, how you will price it, how you will market it, and how you will stay profitable.</p>
 
@@ -165,7 +165,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "checklist",
                 content: {
                   title: "Startup Checklist",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#eef4ff;color:#0d47a1;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
+                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
 <h3>Before Launch</h3>
 <ul>
   <li>Choose a business name</li>
@@ -300,7 +300,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "account_balance",
                 content: {
                   title: "Financial Planning Guide",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#eef4ff;color:#0d47a1;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
+                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
 <h3>Core Rule</h3>
 <p>Revenue is not profit, and cash in the account is not all yours to spend.</p>
 
@@ -378,7 +378,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "map",
                 content: {
                   title: "Northeast Region Pricing",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#eef4ff;color:#0d47a1;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
+                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
 <h3>How to Use This Page</h3>
 <p>These are starter price bands for locksmith businesses operating in Northeast markets. Final pricing should be adjusted for travel radius, traffic, parking, hardware grade, job complexity, urgency, and local competition. Dense metro areas often justify pricing near the top of the range or above it.</p>
 <p><em>These are starter bands, not guaranteed market prices.</em></p>
@@ -425,7 +425,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "map",
                 content: {
                   title: "Southeast Region Pricing",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#eef4ff;color:#0d47a1;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
+                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
 <h3>How to Use This Page</h3>
 <p>These are starter price bands for locksmith businesses operating in Southeast and lower-cost Southern markets. Final pricing should be adjusted for travel radius, after-hours demand, suburban spread, hardware grade, and local competition.</p>
 <p><em>These are starter bands, not guaranteed market prices.</em></p>
@@ -472,7 +472,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "map",
                 content: {
                   title: "Midwest Region Pricing",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#eef4ff;color:#0d47a1;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
+                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
 <h3>How to Use This Page</h3>
 <p>These are starter price bands for locksmith businesses operating in Midwest markets. Final pricing should be adjusted for drive time, weather, hardware grade, urgency, and the density of your service territory.</p>
 <p><em>These are starter bands, not guaranteed market prices.</em></p>
@@ -519,7 +519,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "map",
                 content: {
                   title: "West Region Pricing",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#eef4ff;color:#0d47a1;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
+                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
 <h3>How to Use This Page</h3>
 <p>These are starter price bands for locksmith businesses operating in Western markets. Final pricing should be adjusted for metro density, regional cost of living, fuel cost, travel radius, hardware grade, and job complexity. Large Western metros often justify top-of-range pricing or above.</p>
 <p><em>These are starter bands, not guaranteed market prices.</em></p>
@@ -584,7 +584,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "style",
                 content: {
                   title: "Business Card Designer",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#eef4ff;color:#0d47a1;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
+                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
 <h3>Recommended Implementation</h3>
 <p>The fastest useful version is a template-based designer. Let the locksmith enter their business name, phone, email, website, city, logo, colors, and tagline. Then place that data into a small set of locked, professional layouts.</p>
 
@@ -628,7 +628,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "note_alt",
                 content: {
                   title: "Letterhead Designer",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#eef4ff;color:#0d47a1;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
+                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
 <h3>Recommended Implementation</h3>
 <p>Use the same template-based system as the business cards. The user should enter their brand details once and have them populate automatically across all stationery products.</p>
 
@@ -667,7 +667,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "mail",
                 content: {
                   title: "Envelope Designer",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#eef4ff;color:#0d47a1;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
+                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
 <h3>Recommended Implementation</h3>
 <p>Use simple templates. This is not the place for heavy design. The goal is a clean, branded envelope that feels professional.</p>
 
@@ -702,7 +702,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "auto_awesome",
                 content: {
                   title: "Logo Concepts",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#eef4ff;color:#0d47a1;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
+                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
 <p>This prototype uses free Google Fonts and temporary in-house SVG icons so the workflow can be tested now. <strong>Before production, buy a premium locksmith icon pack and a licensed production font set.</strong></p>
 <div data-logo-designer-panel="concepts"></div>`
                 }
@@ -737,68 +737,121 @@ const MTK_BIAB_CONFIG = {
             icon: "ads_click",
             items: [
               {
+                id: "google-business-profile",
+                label: "Google Business Profile",
+                icon: "storefront",
+                content: {
+                  title: "Google Business Profile Setup",
+                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
+<p>Do this before ads. A complete Google Business Profile helps customers find the locksmith on Google Search and Maps, and it is also required for many Local Services Ads setups.</p>
+<div class="mtk-biab-guide">
+  <div class="mtk-biab-guide__step"><strong>1. Open the setup page.</strong><p>Use the business Google account, not a personal account that will be lost later.</p><a class="mtk-biab-guide__link" href="https://business.google.com/add" target="_blank" rel="noopener">Open Google Business Profile setup</a></div>
+  <div class="mtk-biab-guide__step"><strong>2. Add or claim the business.</strong><p>If the business already appears on Google, claim it. If it does not exist yet, add it as a new business.</p><a class="mtk-biab-guide__link" href="https://support.google.com/business/answer/2911778?hl=en" target="_blank" rel="noopener">Read Google's add or claim guide</a></div>
+  <div class="mtk-biab-guide__step"><strong>3. Choose the correct business type.</strong><p>Most new locksmiths are service-area businesses. If customers do not visit a staffed storefront with signage, hide the address and list service areas instead.</p><a class="mtk-biab-guide__link" href="https://support.google.com/business/answer/9157481?hl=en" target="_blank" rel="noopener">Set service areas correctly</a></div>
+  <div class="mtk-biab-guide__step"><strong>4. Fill in every core field.</strong><p>Add business name, phone, website, hours, service categories, service descriptions, opening date, and a plain-language business description.</p></div>
+  <div class="mtk-biab-guide__step"><strong>5. Upload proof and photos.</strong><p>Add logo, cover image, vehicle photos, tools, team photos, and real job photos. Do not use fake stock photos as the main proof.</p></div>
+  <div class="mtk-biab-guide__step"><strong>6. Verify the profile.</strong><p>Follow the verification option Google gives you. Video verification is common; record slowly and show business proof clearly.</p><a class="mtk-biab-guide__link" href="https://support.google.com/business/answer/7107242?hl=en" target="_blank" rel="noopener">Open Google's verification help</a></div>
+  <div class="mtk-biab-guide__step"><strong>7. Ask for the first real reviews.</strong><p>After each completed job, send the review link the same day. Never buy reviews or review your own business.</p><a class="mtk-biab-guide__link" href="https://support.google.com/business/answer/3474122?hl=en" target="_blank" rel="noopener">Get your Google review link</a></div>
+</div>
+<p><strong>Done means:</strong> the profile is verified, service areas are accurate, the phone and website are correct, photos are live, and the business can receive reviews.</p>`
+                }
+              },
+              {
+                id: "seo-setup",
+                label: "SEO & Search Console",
+                icon: "search",
+                content: {
+                  title: "SEO & Search Console Setup",
+                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
+<p>The goal is to make the locksmith website understandable to Google and useful to local customers. Do not make fake city pages or copy the same page twenty times.</p>
+<div class="mtk-biab-guide">
+  <div class="mtk-biab-guide__step"><strong>1. Write the service-area list.</strong><p>List the exact cities, neighborhoods, ZIP codes, or counties the locksmith can actually reach. Keep it honest and practical.</p></div>
+  <div class="mtk-biab-guide__step"><strong>2. Create the essential pages.</strong><p>Homepage, About, Contact, Residential Locksmith, Commercial Locksmith, Rekey, Lock Change, Lockout, and Auto Lockout if offered.</p></div>
+  <div class="mtk-biab-guide__step"><strong>3. Put the phone number high on every page.</strong><p>The number should be clickable on mobile and match the Google Business Profile phone number.</p></div>
+  <div class="mtk-biab-guide__step"><strong>4. Add Search Console.</strong><p>Add the live website as a property and verify ownership. If possible, use the domain property method.</p><a class="mtk-biab-guide__link" href="https://search.google.com/search-console/welcome" target="_blank" rel="noopener">Open Search Console</a><a class="mtk-biab-guide__link" href="https://support.google.com/webmasters/answer/9008080?hl=en" target="_blank" rel="noopener">Verify site ownership</a></div>
+  <div class="mtk-biab-guide__step"><strong>5. Submit the sitemap.</strong><p>After verification, submit the website sitemap so Google can discover the pages faster.</p><a class="mtk-biab-guide__link" href="https://support.google.com/webmasters/answer/183668?hl=en" target="_blank" rel="noopener">Submit a sitemap</a></div>
+  <div class="mtk-biab-guide__step"><strong>6. Add local trust content.</strong><p>Use real photos, service descriptions, FAQs, reviews, licensing information when applicable, and clear service-area language.</p></div>
+  <div class="mtk-biab-guide__step"><strong>7. Check indexing once per week.</strong><p>In Search Console, look for coverage/indexing problems, manual actions, mobile usability issues, and top search queries.</p></div>
+</div>
+<p><strong>Done means:</strong> Google Search Console is verified, the sitemap is submitted, the site has service pages, and the business name, phone, and website match everywhere.</p>`
+                }
+              },
+              {
+                id: "local-services-ads",
+                label: "Local Services Ads",
+                icon: "verified",
+                content: {
+                  title: "Local Services Ads Setup",
+                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fff4e5;color:#8a4b00;font-size:12px;font-weight:700;text-transform:uppercase;">Intermediate</span></p>
+<p>Local Services Ads can be strong for locksmith leads, but Google may require screening, licenses, insurance, background checks, and a verified Google Business Profile.</p>
+<div class="mtk-biab-guide">
+  <div class="mtk-biab-guide__step"><strong>1. Confirm eligibility.</strong><p>Start with Google's Local Services Ads onboarding and choose the correct country, state, and locksmith category.</p><a class="mtk-biab-guide__link" href="https://ads.google.com/local-services-ads/" target="_blank" rel="noopener">Open Local Services Ads</a><a class="mtk-biab-guide__link" href="https://support.google.com/localservices/answer/6224841?co=GENIE.CountryCode%3DUS&amp;hl=en" target="_blank" rel="noopener">Read Google's getting started guide</a></div>
+  <div class="mtk-biab-guide__step"><strong>2. Prepare business documents.</strong><p>Gather business registration, insurance, licensing, owner information, field worker information, and the Google Business Profile login.</p><a class="mtk-biab-guide__link" href="https://support.google.com/localservices/answer/12174778?co=GENIE.CountryCode%3DUS&amp;hl=en" target="_blank" rel="noopener">Review U.S. verification requirements</a></div>
+  <div class="mtk-biab-guide__step"><strong>3. Connect the Google Business Profile.</strong><p>The person setting up ads should be an owner or manager of the verified profile.</p></div>
+  <div class="mtk-biab-guide__step"><strong>4. Complete screening.</strong><p>Submit the requested checks exactly as Google asks. Do not launch before verification is complete.</p><a class="mtk-biab-guide__link" href="https://support.google.com/localservices/answer/6226575?hl=en" target="_blank" rel="noopener">Understand screening and verification</a></div>
+  <div class="mtk-biab-guide__step"><strong>5. Choose services and service areas.</strong><p>Turn on only services the locksmith can actually perform and answer quickly. Keep the area tight at launch.</p></div>
+  <div class="mtk-biab-guide__step"><strong>6. Set lead handling rules.</strong><p>Answer calls fast, mark bad leads, listen to calls, and pause ads if nobody can answer.</p></div>
+</div>
+<p><strong>Done means:</strong> the profile is verified, required checks are approved, services and service areas are accurate, and someone is ready to answer every lead.</p>`
+                }
+              },
+              {
+                id: "google-ads",
+                label: "Google Search Ads",
+                icon: "ads_click",
+                content: {
+                  title: "Google Search Ads Setup",
+                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fff4e5;color:#8a4b00;font-size:12px;font-weight:700;text-transform:uppercase;">Intermediate</span></p>
+<p>Use standard Search campaigns only after the website, phone number, service area, and tracking are ready. Start small and target buying intent.</p>
+<div class="mtk-biab-guide">
+  <div class="mtk-biab-guide__step"><strong>1. Open Google Ads.</strong><p>Create the account with the business Google login and connect the Google Business Profile when prompted.</p><a class="mtk-biab-guide__link" href="https://ads.google.com/home/" target="_blank" rel="noopener">Open Google Ads</a><a class="mtk-biab-guide__link" href="https://support.google.com/google-ads/answer/6324971?hl=en" target="_blank" rel="noopener">Create a campaign</a></div>
+  <div class="mtk-biab-guide__step"><strong>2. Create one Search campaign.</strong><p>Choose Leads or Website traffic, then select Search. Do not start with broad automated campaign types for a brand-new locksmith account.</p><a class="mtk-biab-guide__link" href="https://support.google.com/google-ads/answer/9510373?hl=en" target="_blank" rel="noopener">Create a Search campaign</a></div>
+  <div class="mtk-biab-guide__step"><strong>3. Use one service cluster.</strong><p>Example: one campaign for Rekey and Lock Change, or one campaign for Lockout. Keep emergency, rekey, and commercial work separate.</p></div>
+  <div class="mtk-biab-guide__step"><strong>4. Set a tight service area.</strong><p>Advertise only where the business can arrive reliably and profitably.</p></div>
+  <div class="mtk-biab-guide__step"><strong>5. Use high-intent keywords.</strong><p>Start with phrase and exact match terms like "locksmith near me", "rekey locks", "lock change", and "house lockout".</p></div>
+  <div class="mtk-biab-guide__step"><strong>6. Add negative keywords on day one.</strong><p>Add free, DIY, job, salary, training, course, wholesale, key blank, template, and how to.</p><a class="mtk-biab-guide__link" href="https://support.google.com/google-ads/answer/2453972?hl=en" target="_blank" rel="noopener">Set negative keywords</a></div>
+  <div class="mtk-biab-guide__step"><strong>7. Send each ad to the matching page.</strong><p>Rekey ads go to the rekey page. Lockout ads go to the lockout page. Do not send everything to the homepage.</p></div>
+  <div class="mtk-biab-guide__step"><strong>8. Check search terms twice per week.</strong><p>Pause bad keywords, add negatives, and keep the budget where the calls are profitable.</p></div>
+</div>
+<p><strong>Done means:</strong> one focused Search campaign is live, conversion tracking is ready, negative keywords are added, and the landing page matches the ad.</p>`
+                }
+              },
+              {
+                id: "analytics-tracking",
+                label: "Analytics & Tracking",
+                icon: "monitoring",
+                content: {
+                  title: "Analytics & Tracking Setup",
+                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fff4e5;color:#8a4b00;font-size:12px;font-weight:700;text-transform:uppercase;">Intermediate</span></p>
+<p>Tracking tells the owner which marketing creates real calls and forms. Without it, ads become guessing.</p>
+<div class="mtk-biab-guide">
+  <div class="mtk-biab-guide__step"><strong>1. Create Google Analytics 4.</strong><p>Create an Analytics account and GA4 property for the locksmith website.</p><a class="mtk-biab-guide__link" href="https://analytics.google.com/" target="_blank" rel="noopener">Open Google Analytics</a><a class="mtk-biab-guide__link" href="https://support.google.com/analytics/answer/14183469?hl=en" target="_blank" rel="noopener">Set up Analytics for a website</a></div>
+  <div class="mtk-biab-guide__step"><strong>2. Add a web data stream.</strong><p>Enter the live website URL and copy the measurement ID.</p></div>
+  <div class="mtk-biab-guide__step"><strong>3. Install the tag.</strong><p>Add the Google tag to the website or use Google Tag Manager if the business is ready for that.</p><a class="mtk-biab-guide__link" href="https://support.google.com/tagmanager/answer/6103696?hl=en" target="_blank" rel="noopener">Set up Google Tag Manager</a></div>
+  <div class="mtk-biab-guide__step"><strong>4. Track important actions.</strong><p>Track phone button clicks, contact form submissions, quote requests, and clicks from the Google Business Profile when possible.</p></div>
+  <div class="mtk-biab-guide__step"><strong>5. Link Google Ads.</strong><p>Connect Google Ads and Analytics so campaigns can use conversion data.</p><a class="mtk-biab-guide__link" href="https://support.google.com/analytics/answer/9379420?hl=en" target="_blank" rel="noopener">Link Google Ads and Analytics</a></div>
+  <div class="mtk-biab-guide__step"><strong>6. Test before spending.</strong><p>Click the phone link and send a test form. Confirm the events show up before increasing ad budget.</p></div>
+</div>
+<p><strong>Done means:</strong> GA4 is installed, events are tested, Google Ads is linked if used, and the owner can see which channels produce leads.</p>`
+                }
+              },
+              {
                 id: "social-media-setup",
                 label: "Social Media Setup",
                 icon: "share",
                 content: {
                   title: "Social Media Setup",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#eef4ff;color:#0d47a1;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
-<h3>Best Starter Channels for a Local Locksmith</h3>
-<ul>
-  <li>Google Business Profile first</li>
-  <li>Facebook business page second</li>
-  <li>Instagram only if the business will post consistently</li>
-  <li>Nextdoor if active in the service area</li>
-</ul>
-
-<h3>Step-by-Step</h3>
-<ol>
-  <li>Use the same business name, phone, and website everywhere.</li>
-  <li>Upload the logo, cover image, and service-area description.</li>
-  <li>Add hours, contact buttons, and service list.</li>
-  <li>Write a short, clear business bio.</li>
-  <li>Upload a few real photos.</li>
-  <li>Publish 6 to 10 starter posts before sending traffic.</li>
-  <li>Create a repeatable review request process.</li>
-</ol>
-
-<h3>Starter Post Ideas</h3>
-<ul>
-  <li>Rekey education</li>
-  <li>Lock maintenance tips</li>
-  <li>Commercial hardware examples</li>
-  <li>“What to do when locked out” tips</li>
-  <li>Service-area announcement posts</li>
-  <li>Customer review highlights</li>
-</ul>`
-                }
-              },
-              {
-                id: "seo-setup",
-                label: "SEO Setup",
-                icon: "search",
-                content: {
-                  title: "SEO Setup",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fff4e5;color:#8a4b00;font-size:12px;font-weight:700;text-transform:uppercase;">Intermediate</span></p>
-<h3>Goal</h3>
-<p>Show up for high-intent local searches like “locksmith near me,” “rekey locks in [city],” “car lockout [city],” and “commercial locksmith [city].”</p>
-
-<h3>Step-by-Step</h3>
-<ol>
-  <li>Create a unique page title and meta description for each important page.</li>
-  <li>Build separate pages for major service types.</li>
-  <li>Build city or service-area pages only for places the business truly serves.</li>
-  <li>Put phone number and service area high on every page.</li>
-  <li>Add trust signals: reviews, FAQs, real photos, service details.</li>
-  <li>Link related service pages together.</li>
-  <li>Add local business schema only if implemented correctly.</li>
-  <li>Keep business name, address, and phone data consistent across listings.</li>
-  <li>Connect Google Search Console and analytics.</li>
-  <li>Update the site regularly instead of publishing and forgetting it.</li>
-</ol>
-
-<h3>SEO Warning</h3>
-<p>Do not mass-produce thin city pages with nearly identical text. That usually creates weak pages and hurts trust.</p>`
+                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
+<p>Social media is trust support for a locksmith. It should prove the business is real, active, and reachable.</p>
+<div class="mtk-biab-guide">
+  <div class="mtk-biab-guide__step"><strong>1. Create the main pages.</strong><p>Start with Facebook Business Page. Add Instagram only if the business can post photos consistently.</p><a class="mtk-biab-guide__link" href="https://www.facebook.com/pages/create" target="_blank" rel="noopener">Create a Facebook Page</a><a class="mtk-biab-guide__link" href="https://help.instagram.com/502981923235522" target="_blank" rel="noopener">Set up an Instagram business account</a></div>
+  <div class="mtk-biab-guide__step"><strong>2. Match business details exactly.</strong><p>Use the same business name, phone, website, service area, and hours as the website and Google Business Profile.</p></div>
+  <div class="mtk-biab-guide__step"><strong>3. Upload brand assets.</strong><p>Add logo, cover image, short description, service list, and clickable contact buttons.</p></div>
+  <div class="mtk-biab-guide__step"><strong>4. Publish ten starter posts.</strong><p>Use rekey tips, lockout tips, deadbolt education, commercial hardware examples, service-area posts, and review highlights.</p></div>
+  <div class="mtk-biab-guide__step"><strong>5. Create a simple weekly habit.</strong><p>Post one real photo, one tip, and one service reminder every week. Keep it practical.</p></div>
+  <div class="mtk-biab-guide__step"><strong>6. Save responses.</strong><p>Prepare short replies for pricing requests, service-area questions, after-hours calls, and review thank-yous.</p></div>
+</div>
+<p><strong>Done means:</strong> the pages look real, contact details match, starter posts are published, and someone can respond to messages.</p>`
                 }
               },
               {
@@ -808,100 +861,16 @@ const MTK_BIAB_CONFIG = {
                 content: {
                   title: "Email Campaigns",
                   body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fff4e5;color:#8a4b00;font-size:12px;font-weight:700;text-transform:uppercase;">Intermediate</span></p>
-<h3>What Email Should Do for a Locksmith Business</h3>
-<ul>
-  <li>Follow up on quotes</li>
-  <li>Request reviews</li>
-  <li>Reconnect with past customers</li>
-  <li>Stay top of mind with property managers and business clients</li>
-  <li>Educate instead of spam</li>
-</ul>
-
-<h3>Core Automations</h3>
-<ol>
-  <li>New customer thank-you + receipt</li>
-  <li>Review request 1 day later</li>
-  <li>Quote follow-up if the customer did not book</li>
-  <li>6-month home or business security follow-up</li>
-  <li>Periodic B2B follow-up for property managers, offices, and realtors</li>
-</ol>
-
-<h3>Starter Sequence</h3>
-<ul>
-  <li><strong>Email 1:</strong> Thanks for choosing us</li>
-  <li><strong>Email 2:</strong> Please leave a review</li>
-  <li><strong>Email 3:</strong> We’re here for rekeys, lock changes, and commercial service when you need us</li>
-</ul>
-
-<h3>Rules</h3>
-<ul>
-  <li>Always identify the business clearly</li>
-  <li>Use a real reply-to address</li>
-  <li>Keep subject lines honest</li>
-  <li>Offer actual value</li>
-  <li>Follow applicable email rules and consent practices</li>
-</ul>`
-                }
-              },
-              {
-                id: "google-ads",
-                label: "Google Ads Setup",
-                icon: "ads_click",
-                content: {
-                  title: "Google Ads Setup",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fff4e5;color:#8a4b00;font-size:12px;font-weight:700;text-transform:uppercase;">Intermediate</span></p>
-<h3>Strategic Note</h3>
-<p>For locksmiths, Google Business Profile should be set up first. Where eligible, Local Services Ads may be one of the best paid channels. Standard Google Ads can work well too, but only when tightly targeted and tracked.</p>
-
-<h3>Step-by-Step</h3>
-<ol>
-  <li>Create the Google Ads account using the main business Google account.</li>
-  <li>Make sure the website is live and the Google Business Profile is set up correctly.</li>
-  <li>Install call and form conversion tracking before spending heavily.</li>
-  <li>Start with one campaign for one service cluster.</li>
-  <li>Target only the real service area.</li>
-  <li>Use high-intent keywords only.</li>
-  <li>Write ads that mention the real service and real location.</li>
-  <li>Send traffic to a matching service page, not just the homepage.</li>
-  <li>Add negative keywords immediately.</li>
-  <li>Review search terms and performance every few days.</li>
-</ol>
-
-<h3>Starter Campaign Structure</h3>
-<p><strong>Campaign 1: Lockouts</strong></p>
-<ul>
-  <li>House lockout</li>
-  <li>Car lockout</li>
-  <li>Locksmith near me</li>
-</ul>
-
-<p><strong>Campaign 2: Rekey / Lock Change</strong></p>
-<ul>
-  <li>Rekey locks</li>
-  <li>Lock change</li>
-  <li>Deadbolt installation</li>
-</ul>
-
-<h3>Starter Negative Keywords</h3>
-<ul>
-  <li>free</li>
-  <li>diy</li>
-  <li>job</li>
-  <li>salary</li>
-  <li>training</li>
-  <li>course</li>
-  <li>how to</li>
-  <li>wholesale</li>
-  <li>key blank</li>
-</ul>
-
-<h3>Do Not Launch Ads Until</h3>
-<ul>
-  <li>The phone is answered quickly</li>
-  <li>The landing page matches the ad</li>
-  <li>Tracking is working</li>
-  <li>The service area is set correctly</li>
-</ul>`
+<p>Email should help with follow-up, review requests, repeat service, and commercial relationships. Keep it simple and useful.</p>
+<div class="mtk-biab-guide">
+  <div class="mtk-biab-guide__step"><strong>1. Choose an email platform.</strong><p>Use a reputable tool and connect the business email address before sending campaigns.</p><a class="mtk-biab-guide__link" href="https://mailchimp.com/help/create-an-account/" target="_blank" rel="noopener">Create a Mailchimp account</a><a class="mtk-biab-guide__link" href="https://help.klaviyo.com/hc/en-us/articles/115005255728" target="_blank" rel="noopener">Create a Klaviyo account</a></div>
+  <div class="mtk-biab-guide__step"><strong>2. Create the customer list fields.</strong><p>Save name, email, phone, service type, service date, city, and whether the customer is residential or commercial.</p></div>
+  <div class="mtk-biab-guide__step"><strong>3. Build the review request email.</strong><p>Send it one day after a completed job. Include the Google review link and a short thank-you.</p></div>
+  <div class="mtk-biab-guide__step"><strong>4. Build the quote follow-up email.</strong><p>If a customer asks for a quote but does not book, follow up once with the phone number and clear next step.</p></div>
+  <div class="mtk-biab-guide__step"><strong>5. Build the commercial follow-up.</strong><p>For property managers, offices, realtors, and small businesses, send a helpful reminder every few months.</p></div>
+  <div class="mtk-biab-guide__step"><strong>6. Stay compliant.</strong><p>Use honest subject lines, a real reply-to address, and an unsubscribe option where required. Do not buy random email lists.</p><a class="mtk-biab-guide__link" href="https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business" target="_blank" rel="noopener">Read CAN-SPAM rules</a></div>
+</div>
+<p><strong>Done means:</strong> the owner can send a review request, follow up on quotes, and contact past customers without guessing what to write.</p>`
                 }
               }
             ]

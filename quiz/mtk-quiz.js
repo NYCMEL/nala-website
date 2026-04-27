@@ -439,13 +439,7 @@
 
 			    const afterSessionSync = () => {
 				if (passed) {
-				    if (wc.pages && typeof wc.pages.show === 'function') {
-					wc.pages.show('hierarchy');
-				    } else if (wc.pages && typeof wc.pages.refresh === 'function') {
-					wc.pages.refresh('hierarchy', { showPage: true });
-				    }
-
-				    this.showGlobalMessageAfterNavigation(resultMessageConfig);
+				    this.showGlobalMessage(resultMessageConfig);
 				}
 			    };
 
@@ -456,8 +450,8 @@
 			    if (window.wc && typeof wc.getSession === 'function') {
 				wc.getSession(() => {
 				    if (wc.pages && typeof wc.pages.refresh === 'function') {
-					wc.pages.refresh('dashboard');
-					wc.pages.refresh('hierarchy');
+					wc.pages.refresh('dashboard', { showPage: false });
+					wc.pages.refresh('hierarchy', { showPage: false });
 				    }
 				    afterSessionSync();
 				}).catch((sessionError) => {

@@ -54,13 +54,21 @@
         return true;
     }
 
-    // Wait for each MTK-{id} independently
-    window.app.tiles.forEach(tile => {
-        const waitForMount = setInterval(() => {
-            if (renderTile(tile)) {
-                clearInterval(waitForMount);
-            }
-        }, 50);
-    });
+    function renderAllTiles() {
+        if (!window.app || !Array.isArray(window.app.tiles)) return;
+
+        // Wait for each MTK-{id} independently
+        window.app.tiles.forEach(tile => {
+            const waitForMount = setInterval(() => {
+                if (renderTile(tile)) {
+                    clearInterval(waitForMount);
+                }
+            }, 50);
+        });
+    }
+
+    renderAllTiles();
+
+    document.addEventListener('tiles:rebuild', renderAllTiles);
 
 })();

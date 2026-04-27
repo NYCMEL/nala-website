@@ -80,7 +80,7 @@
 
     function buildPlanCard(plan) {
         var col = document.createElement("div");
-        col.className = "col-12 col-md-6";
+        col.className = "col-12 col-md-4";
 
         var card = document.createElement("div");
         card.className = "mtk-card";

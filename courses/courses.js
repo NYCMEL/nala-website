@@ -34,7 +34,7 @@
 
             data.items.forEach(function (item) {
                 var col = document.createElement("div");
-                col.className = "col-12 col-md-4";
+                col.className = "col-12 col-sm-6 col-lg";
 
                 var features = item.features.map(function (f) {
                     return "<li>" + f + "</li>";

@@ -235,11 +235,27 @@ class Pages extends HTMLElement {
      * Does NOT push a new history entry (same page, just reloaded).
      * @param {string} page - The page ID to refresh
      */
-    refresh(page) {
+    refresh(page, options) {
         wc.group("mtk-pages.refresh:", page);
 
         const target = this.querySelector(`.${page}`);
         if (target) target.innerHTML = "";
+
+        const opts = options || {};
+        if (opts.showPage === false) {
+            const obj = this.data && this.data.find(o => o.page === page);
+            if (target && obj) {
+                target.innerHTML = obj.url;
+                wc.publish("mtk-pages", {
+                    time:   new Date().getTime(),
+                    action: "refresh",
+                    page:   page,
+                    label:  obj.label || page
+                });
+            }
+            wc.groupEnd();
+            return page;
+        }
 
         // Refresh is not a navigation — suppress pushState
         this._isPopping = true;
