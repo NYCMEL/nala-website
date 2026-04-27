@@ -21,6 +21,6 @@ window.app.stats = [
 	"id": "experience",
 	"value": 10,
 	"suffix": "+",
-	"label": _t("stats.experience", "Years Experience")
+	"label": _t("stats.experience", "Years of Experience")
     }
 ];

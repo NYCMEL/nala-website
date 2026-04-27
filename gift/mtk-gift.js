@@ -48,7 +48,7 @@
       function log(channel, payload) {
         console.log(
           `%c[wc.log] %c${channel}`,
-          'color:#1a73e8;font-weight:700',
+          'color:#a98211;font-weight:700',
           'color:#202124;font-weight:500',
           '→',
           payload,
@@ -416,3 +416,4 @@
   window.MTKGift = MTKGift;
 
 })();
+

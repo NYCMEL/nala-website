@@ -1316,11 +1316,11 @@ wc.injectMaterialStyles = function () {
         }
 
         .wc-md-btn-text {
-            color: #6200ee;
+            color: #a98212;
         }
 
         .wc-md-btn-primary {
-            background: #6200ee;
+            background: #a98212;
             color: #fff;
             box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),
                         0 2px 2px 0 rgba(0,0,0,.14),
@@ -1328,7 +1328,7 @@ wc.injectMaterialStyles = function () {
         }
 
         .wc-md-btn-primary:hover {
-            background: #5300d6;
+            background: #7a5e0c;
         }
     `;
 
@@ -1670,3 +1670,4 @@ wc.unfixFooter = function() {
         pageContent.style.removeProperty("min-height");
     }
 };
+

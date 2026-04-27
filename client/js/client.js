@@ -139,7 +139,7 @@ class ClientProfile {
 		setTimeout(function() {
 		    newSaveBtn.style.display = 'none'
 		    newSaveBtn.textContent = 'Save Changes'
-		    newSaveBtn.style.background = '#1565c0'
+		    newSaveBtn.style.background = '#7a5e0c'
 		}, 2000)
 	    }
 	    // Strip all previous click listeners via cloneNode, then attach once
@@ -258,7 +258,7 @@ class ClientProfile {
     }
 
     _applyEditSwitchStyle(slider, knob, isEdit) {
-	if (slider) slider.style.background = isEdit ? '#009fd9' : '#ccc'
+	if (slider) slider.style.background = isEdit ? '#a98212' : '#ccc'
 	if (knob)   knob.style.transform    = isEdit ? 'translateX(20px)' : 'translateX(0)'
     }
 
@@ -289,7 +289,7 @@ class ClientProfile {
 
 	this.renderSocialMedia(true)
 	document.querySelectorAll('[data-editable]').forEach(function(el) {
-	    el.style.outline = '2px dashed #009fd9'
+	    el.style.outline = '2px dashed #a98212'
 
 	    // Logo uses click-to-replace — no contenteditable
 	    if (el.id === 'clientLogo') {
@@ -494,7 +494,7 @@ class ClientProfile {
 				<input type="text" class="social-url" data-index="${i}"
 				    value="${l.url || ''}"
 				    placeholder="Your social media link"
-				    style="width:100%;border:none;border-bottom:${l.url ? '2px solid #009fd9' : '1px solid #ccc'};
+				    style="width:100%;border:none;border-bottom:${l.url ? '2px solid #a98212' : '1px solid #ccc'};
 					   outline:none;font-size:13px;
 					   color:#212121;
 					   padding:4px 0;background:transparent;transition:border 0.2s">
@@ -518,11 +518,11 @@ class ClientProfile {
 	container.querySelectorAll(".social-url").forEach(function(input) {
 
 	    input.addEventListener("focus", function() {
-		input.style.borderBottom = "2px solid #009fd9"
+		input.style.borderBottom = "2px solid #a98212"
 	    })
 
 	    input.addEventListener("blur", function() {
-		input.style.borderBottom = input.value.trim() ? "2px solid #009fd9" : "1px solid #ccc"
+		input.style.borderBottom = input.value.trim() ? "2px solid #a98212" : "1px solid #ccc"
 	    })
 
 	    input.addEventListener("input", function() {
@@ -767,3 +767,4 @@ document.addEventListener("DOMContentLoaded", async () => {
 	console.error("[_client] Failed to initialize:", err)
     }
 })
+

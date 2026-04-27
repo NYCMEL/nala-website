@@ -77,7 +77,7 @@ class MtkRequest {
         row.innerHTML = `
           <input type="checkbox" class="call-time-check" value="${value}"
             ${checked ? 'checked' : ''}
-            style="width:16px;height:16px;accent-color:#009fd9;cursor:pointer">
+            style="width:16px;height:16px;accent-color:#a98212;cursor:pointer">
           ${label}
         `;
         return row;

@@ -331,11 +331,11 @@ h1.title::after {
   background-color: rgba(0, 0, 0, 0.12); }
 
 .mtk-msgs.mtk-msgs--info {
-  background-color: #0dcaf0;
-  color: #055160; }
+  background-color: #fbf4e5;
+  color: #4a3a08; }
 
 .mtk-msgs.mtk-msgs--info .mtk-msgs__button, .mtk-msgs.mtk-msgs--info .mtk-msgs__close {
-  color: #055160; }
+  color: #4a3a08; }
 
 .mtk-msgs.mtk-msgs--warning {
   background-color: #ffc107;
@@ -357,3 +357,4 @@ h1.title::after {
 
 .mtk-msgs.mtk-msgs--success .mtk-msgs__button, .mtk-msgs.mtk-msgs--success .mtk-msgs__close {
   color: #ffffff; }
+

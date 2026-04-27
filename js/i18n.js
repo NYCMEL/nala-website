@@ -15,8 +15,8 @@
  *
  * LANGUAGE DETECTION ORDER
  * ─────────────────────────
- *   1. localStorage item  nala_lang
- *   2. ?lang=  query-string parameter
+ *   1. ?lang=  query-string parameter
+ *   2. localStorage item  nala_lang
  *   3. Browser navigator.language  (es-* → 'es', else 'en')
  *   4. Default: 'en'
  * ============================================================
@@ -237,7 +237,7 @@
       es: 'Inserción Laboral'
     },
     'stats.experience': {
-      en: 'Years Experience',
+      en: 'Years of Experience',
       es: 'Años de Experiencia'
     },
 
@@ -307,7 +307,7 @@
       es: 'Entrenamiento en Cerrajería'
     },
     'about.body1': {
-      en: 'Professional Locksmith Training Online, Structured, Measurable. A step-by-step program covering Residential, Commercial, Safes, and Automotive fundamentals, supported by US-style exams and checkpoints throughout the course.',
+      en: 'Professional locksmith training online: structured, measurable, and practical. This step-by-step program covers residential, commercial, safe, and automotive fundamentals, supported by US-style exams and checkpoints throughout the course.',
       es: 'Entrenamiento profesional en cerrajería en línea: estructurado y medible. Un programa paso a paso que cubre los fundamentos de cerrajería residencial, comercial, cajas fuertes y automotriz, con exámenes al estilo estadounidense y puntos de control a lo largo del curso.'
     },
     'about.cta.start': {
@@ -337,8 +337,12 @@
       es: 'Por qué elegir nuestro programa'
     },
     'tile.subheading': {
-      en: 'Online . Self-Paced . Exams Included',
+      en: 'Online. Self-Paced. Exams Included.',
       es: 'En línea · A tu propio ritmo · Exámenes incluidos'
+    },
+    'tile.back.title': {
+      en: 'What you will learn',
+      es: 'Lo que aprenderás'
     },
     'tile.1.front': {
       en: 'Training Built for Real Service Calls',
@@ -349,8 +353,8 @@
       es: 'Las lecciones están estructuradas en torno a tareas reales de cerrajería como reclave, instalación de cerraduras, reemplazo de hardware y resolución de problemas, ayudando a los estudiantes a entender cómo se aplican los conceptos en el campo.'
     },
     'tile.2.front': {
-      en: 'Step-by-Step Video with Clear Instructions',
-      es: 'Videos Paso a Paso con Instrucciones Claras'
+      en: 'Step-by-Step Videos with Clear Instructions',
+      es: 'Videos paso a paso con instrucciones claras'
     },
     'tile.2.back': {
       en: 'Each topic is broken down into focused lessons with visual demonstrations, allowing students to pause, review, and revisit techniques as often as needed.',
@@ -388,6 +392,34 @@
       en: 'In addition to technical skills, the program introduces business concepts such as licensing considerations, pricing, customer relations, and service presentation.',
       es: 'Además de las habilidades técnicas, el programa introduce conceptos de negocios como consideraciones de licencias, precios, relaciones con clientes y presentación de servicios.'
     },
+
+    // ── ABOUT / NEWS PAGE ────────────────────────────────────────
+    'aboutPage.title': { en: 'About', es: 'Acerca de NALA' },
+    'aboutPage.subtitle': {
+      en: 'Videos, news, and articles from NALA',
+      es: 'Videos, noticias y artículos de NALA'
+    },
+    'aboutPage.videos.title': { en: 'Videos', es: 'Videos' },
+    'aboutPage.videos.subtitle': {
+      en: 'Watch the latest program videos.',
+      es: 'Mira los videos más recientes del programa.'
+    },
+    'aboutPage.articles.title': { en: 'News & Articles', es: 'Noticias y Artículos' },
+    'aboutPage.articles.subtitle': {
+      en: 'Browse recent updates and industry notes.',
+      es: 'Explora novedades recientes y notas de la industria.'
+    },
+    'aboutPage.video.safe': { en: 'Master Safe Lockout Skills', es: 'Domina la apertura de cajas fuertes' },
+    'aboutPage.video.career': { en: 'Build Your Locksmith Career Online', es: 'Construye tu carrera de cerrajería en línea' },
+    'aboutPage.video.pace': { en: 'Learn at Your Own Pace', es: 'Aprende a tu propio ritmo' },
+    'aboutPage.video.work': { en: 'Train for Real Locksmith Work', es: 'Prepárate para trabajos reales de cerrajería' },
+    'aboutPage.video.cta': { en: 'Get Started', es: 'Comenzar' },
+    'aboutPage.video.prev': { en: 'Previous video', es: 'Video anterior' },
+    'aboutPage.video.next': { en: 'Next video', es: 'Video siguiente' },
+    'aboutPage.article.prev': { en: 'Previous article', es: 'Artículo anterior' },
+    'aboutPage.article.next': { en: 'Next article', es: 'Artículo siguiente' },
+    'aboutPage.article.readMore': { en: 'Read More', es: 'Leer más' },
+    'aboutPage.article.back': { en: 'Back to News', es: 'Volver a noticias' },
 
     // ── BUSINESS IN A BOX ─────────────────────────────────────────
     'biz.heading': {
@@ -934,15 +966,15 @@
    * Detect the preferred language from all sources.
    */
   function detectLang() {
-    // 1. localStorage
+    // 1. ?lang= query string
+    var match = location.search.match(/[?&]lang=(en|es)/);
+    if (match) return match[1];
+
+    // 2. localStorage
     try {
       var stored = localStorage.getItem('nala_lang');
       if (stored === 'en' || stored === 'es') return stored;
     } catch (e) {}
-
-    // 2. ?lang= query string
-    var match = location.search.match(/[?&]lang=(en|es)/);
-    if (match) return match[1];
 
     // 3. Browser language
     var nav = (navigator.language || navigator.userLanguage || 'en').toLowerCase();

@@ -1,14 +1,14 @@
 const items = [
-  "Lorem ipsum dolor sit amet",
-  "Consectetur adipiscing elit",
-  "Sed do eiusmod tempor",
-  "Incididunt ut labore",
-  "Et dolore magna aliqua",
-  "Ut enim ad minim veniam",
-  "Quis nostrud exercitation",
-  "Ullamco laboris nisi",
-  "Ut aliquip ex ea commodo",
-  "Consequat duis aute irure"
+  "Residential lock service",
+  "Commercial hardware support",
+  "Safe lockout fundamentals",
+  "Automotive lock basics",
+  "Key cutting and duplication",
+  "Rekeying practice",
+  "Tool selection guidance",
+  "Customer service basics",
+  "Business setup support",
+  "Course progress tracking"
 ];
 
 const list = document.getElementById("md-list");

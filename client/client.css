@@ -493,7 +493,7 @@ body {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background-color: rgba(0, 159, 217, 0.1);
+  background-color: rgba(169, 130, 18, 0.1);
   margin-bottom: 16px; }
 
 .guarantee-card .guarantee-icon .material-icons {
@@ -553,3 +553,4 @@ body {
     flex-direction: column; }
   .client-sidebar {
     order: -1; } }
+

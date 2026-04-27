@@ -5,33 +5,18 @@ function _buildTiles() {
     return [
         {
             id: "tile-1", flip: true,
-            front: { title: t('tile.1.front'), body: "", bgColor: "#74b9ff" },
-            back:  { title: "...", body: "<p>" + t('tile.1.back') + "</p>", bgColor: "#0984e3" }
+            front: { title: t('tile.1.front'), body: "", bgColor: "#a98211" },
+            back:  { title: t('tile.back.title'), body: "<p>" + t('tile.1.back') + "</p>", bgColor: "#212529" }
         },
         {
             id: "tile-2", flip: true,
-            front: { title: t('tile.2.front'), body: "", bgColor: "#74b9ff" },
-            back:  { title: "...", body: "<p>" + t('tile.2.back') + "</p>", bgColor: "#0984e3" }
+            front: { title: t('tile.2.front'), body: "", bgColor: "#7a5e0c" },
+            back:  { title: t('tile.back.title'), body: "<p>" + t('tile.2.back') + "</p>", bgColor: "#212529" }
         },
         {
             id: "tile-3", flip: true,
-            front: { title: t('tile.3.front'), body: "", bgColor: "#74b9ff" },
-            back:  { title: "...", body: "<p>" + t('tile.3.back') + "</p>", bgColor: "#0984e3" }
-        },
-        {
-            id: "tile-4", flip: true,
-            front: { title: t('tile.4.front'), body: "", bgColor: "#74b9ff" },
-            back:  { title: "...", body: "<p>" + t('tile.4.back') + "</p>", bgColor: "#0984e3" }
-        },
-        {
-            id: "tile-5", flip: true,
-            front: { title: t('tile.5.front'), body: "", bgColor: "#74b9ff" },
-            back:  { title: "...", body: "<p>" + t('tile.5.back') + "</p>", bgColor: "#0984e3" }
-        },
-        {
-            id: "tile-6", flip: true,
-            front: { title: t('tile.6.front'), body: "", bgColor: "#74b9ff" },
-            back:  { title: "...", body: "<p>" + t('tile.6.back') + "</p>", bgColor: "#0984e3" }
+            front: { title: t('tile.3.front'), body: "", bgColor: "#3a2f1b" },
+            back:  { title: t('tile.back.title'), body: "<p>" + t('tile.3.back') + "</p>", bgColor: "#212529" }
         }
     ];
 }

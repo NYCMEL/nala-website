@@ -231,7 +231,7 @@ h1.title::after {
   background: #a98212 !important; }
 
 .mtk-tile-back {
-  background: #1f5486 !important;
+  background: #212529 !important;
   transform: rotateY(180deg); }
 
 .mtk-tile .mtk-tile-front > .mtk-tile-title {

@@ -6,7 +6,7 @@ window.app.avatar = {
   front: {
     title: "John Doe",
     body: "<p>Front description of avatar.</p>",
-    bgColor: "#2196F3",
+    bgColor: "#a98211",
     textColor: "#ffffff",
     image: "https://i.pravatar.cc/150?img=3"
   },
@@ -18,4 +18,5 @@ window.app.avatar = {
     image: "https://i.pravatar.cc/150?img=3"
   }
 };
+
 

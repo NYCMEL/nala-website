@@ -187,22 +187,22 @@
 
     <div class="container">
         <div class="news-header">
-            <h1 class="news-title">About</h1>
-            <p class="news-subtitle">Videos, news, and articles from NALA</p>
+            <h1 class="news-title" data-i18n="aboutPage.title">About</h1>
+            <p class="news-subtitle" data-i18n="aboutPage.subtitle">Videos, news, and articles from NALA</p>
         </div>
 
         <div class="about-layout">
             <section class="about-panel" aria-labelledby="aboutVideosTitle">
                 <div class="about-panel__header">
                     <div>
-                        <h2 class="about-panel__title" id="aboutVideosTitle">Videos</h2>
-                        <p class="about-panel__subtitle">Watch the latest marketing videos.</p>
+                        <h2 class="about-panel__title" id="aboutVideosTitle" data-i18n="aboutPage.videos.title">Videos</h2>
+                        <p class="about-panel__subtitle" data-i18n="aboutPage.videos.subtitle">Watch the latest program videos.</p>
                     </div>
                     <div class="about-carousel-controls" aria-label="Video carousel controls">
-                        <button class="about-carousel-btn" type="button" id="aboutVideoPrev" aria-label="Previous video">
+                        <button class="about-carousel-btn" type="button" id="aboutVideoPrev" aria-label="Previous video" data-i18n-aria="aboutPage.video.prev">
                             <i class="fa fa-arrow-up" aria-hidden="true"></i>
                         </button>
-                        <button class="about-carousel-btn" type="button" id="aboutVideoNext" aria-label="Next video">
+                        <button class="about-carousel-btn" type="button" id="aboutVideoNext" aria-label="Next video" data-i18n-aria="aboutPage.video.next">
                             <i class="fa fa-arrow-down" aria-hidden="true"></i>
                         </button>
                     </div>
@@ -211,65 +211,65 @@
                 <div class="about-video-stage" id="aboutVideoStage">
                     <article class="about-video-slide is-active" data-video-title="Master Safe Lockout Skills">
                         <div class="about-video-caption">
-                            <strong>Master Safe Lockout Skills</strong>
+                            <strong data-i18n="aboutPage.video.safe">Master Safe Lockout Skills</strong>
                             <span class="about-count" data-video-count>1 of 4</span>
                         </div>
                         <div class="about-video-frame">
                             <iframe src="https://player.vimeo.com/video/1106503990?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
                                 allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
                                 referrerpolicy="strict-origin-when-cross-origin"
-                                title="Safe Lockout - updated"></iframe>
+                                title="Master Safe Lockout Skills" data-i18n-title="aboutPage.video.safe"></iframe>
                         </div>
                         <div class="about-video-cta">
-                            <button type="button" class="btn btn-primary" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } else { wc.publish('mtk-ready:click'); } return false;">Get Started</button>
+                            <button type="button" class="btn btn-primary" data-i18n="aboutPage.video.cta" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } else { wc.publish('mtk-ready:click'); } return false;">Get Started</button>
                         </div>
                     </article>
 
                     <article class="about-video-slide" data-video-title="Build Your Locksmith Career Online">
                         <div class="about-video-caption">
-                            <strong>Build Your Locksmith Career Online</strong>
+                            <strong data-i18n="aboutPage.video.career">Build Your Locksmith Career Online</strong>
                             <span class="about-count" data-video-count>2 of 4</span>
                         </div>
                         <div class="about-video-frame">
                             <iframe src="https://player.vimeo.com/video/1106503753?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
                                 allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
                                 referrerpolicy="strict-origin-when-cross-origin"
-                                title="Build Your Locksmith Career Online"></iframe>
+                                title="Build Your Locksmith Career Online" data-i18n-title="aboutPage.video.career"></iframe>
                         </div>
                         <div class="about-video-cta">
-                            <button type="button" class="btn btn-primary" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } else { wc.publish('mtk-ready:click'); } return false;">Get Started</button>
+                            <button type="button" class="btn btn-primary" data-i18n="aboutPage.video.cta" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } else { wc.publish('mtk-ready:click'); } return false;">Get Started</button>
                         </div>
                     </article>
 
                     <article class="about-video-slide" data-video-title="Learn at Your Own Pace">
                         <div class="about-video-caption">
-                            <strong>Learn at Your Own Pace</strong>
+                            <strong data-i18n="aboutPage.video.pace">Learn at Your Own Pace</strong>
                             <span class="about-count" data-video-count>3 of 4</span>
                         </div>
                         <div class="about-video-frame">
                             <iframe src="https://player.vimeo.com/video/1106503424?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
                                 allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
                                 referrerpolicy="strict-origin-when-cross-origin"
-                                title="Learn at Your Own Pace"></iframe>
+                                title="Learn at Your Own Pace" data-i18n-title="aboutPage.video.pace"></iframe>
                         </div>
                         <div class="about-video-cta">
-                            <button type="button" class="btn btn-primary" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } else { wc.publish('mtk-ready:click'); } return false;">Get Started</button>
+                            <button type="button" class="btn btn-primary" data-i18n="aboutPage.video.cta" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } else { wc.publish('mtk-ready:click'); } return false;">Get Started</button>
                         </div>
                     </article>
 
                     <article class="about-video-slide" data-video-title="Train for Real Locksmith Work">
                         <div class="about-video-caption">
-                            <strong>Train for Real Locksmith Work</strong>
+                            <strong data-i18n="aboutPage.video.work">Train for Real Locksmith Work</strong>
                             <span class="about-count" data-video-count>4 of 4</span>
                         </div>
                         <div class="about-video-frame">
                             <iframe src="https://player.vimeo.com/video/1106503213?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
                                 allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
                                 referrerpolicy="strict-origin-when-cross-origin"
-                                title="Train for Real Locksmith Work"></iframe>
+                                title="Train for Real Locksmith Work" data-i18n-title="aboutPage.video.work"></iframe>
                         </div>
                         <div class="about-video-cta">
-                            <button type="button" class="btn btn-primary" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } else { wc.publish('mtk-ready:click'); } return false;">Get Started</button>
+                            <button type="button" class="btn btn-primary" data-i18n="aboutPage.video.cta" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } else { wc.publish('mtk-ready:click'); } return false;">Get Started</button>
                         </div>
                     </article>
                 </div>
@@ -278,14 +278,14 @@
             <section class="about-panel" aria-labelledby="aboutArticlesTitle">
                 <div class="about-panel__header">
                     <div>
-                        <h2 class="about-panel__title" id="aboutArticlesTitle">News &amp; Articles</h2>
-                        <p class="about-panel__subtitle">Browse recent updates and industry notes.</p>
+                        <h2 class="about-panel__title" id="aboutArticlesTitle" data-i18n="aboutPage.articles.title">News &amp; Articles</h2>
+                        <p class="about-panel__subtitle" data-i18n="aboutPage.articles.subtitle">Browse recent updates and industry notes.</p>
                     </div>
                     <div class="about-carousel-controls" aria-label="Article carousel controls">
-                        <button class="about-carousel-btn" type="button" id="aboutArticlePrev" aria-label="Previous article">
+                        <button class="about-carousel-btn" type="button" id="aboutArticlePrev" aria-label="Previous article" data-i18n-aria="aboutPage.article.prev">
                             <i class="fa fa-arrow-left" aria-hidden="true"></i>
                         </button>
-                        <button class="about-carousel-btn" type="button" id="aboutArticleNext" aria-label="Next article">
+                        <button class="about-carousel-btn" type="button" id="aboutArticleNext" aria-label="Next article" data-i18n-aria="aboutPage.article.next">
                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
                         </button>
                     </div>
@@ -304,6 +304,22 @@
 
 <script>
 (function() {
+    function getLang() {
+        return (window.i18n && typeof window.i18n.getLang === 'function') ? window.i18n.getLang() : 'en';
+    }
+
+    function formatCount(index, total) {
+        return getLang() === 'es'
+            ? (index + 1) + ' de ' + total
+            : (index + 1) + ' of ' + total;
+    }
+
+    function translateArea(root) {
+        if (window.i18n && typeof window.i18n.applyDOM === 'function') {
+            window.i18n.applyDOM(root || document);
+        }
+    }
+
     function resetButton(button) {
         var fresh = button.cloneNode(true);
         button.parentNode.replaceChild(fresh, button);
@@ -319,6 +335,14 @@
         if (!slides.length || !prev || !next) return;
         prev = resetButton(prev);
         next = resetButton(next);
+        translateArea(prev.parentNode);
+
+        function updateVideoCounts() {
+            slides.forEach(function(slide, i) {
+                var count = slide.querySelector('[data-video-count]');
+                if (count) count.textContent = formatCount(i, slides.length);
+            });
+        }
 
         function pauseInactiveVideos() {
             slides.forEach(function(slide, i) {
@@ -343,6 +367,8 @@
             pauseInactiveVideos();
         }
 
+        translateArea(document.getElementById('aboutVideoStage'));
+        updateVideoCounts();
         prev.addEventListener('click', function() { showVideo(activeIndex - 1); });
         next.addEventListener('click', function() { showVideo(activeIndex + 1); });
     }
@@ -369,7 +395,7 @@
             var clone = card.cloneNode(true);
             var count = document.createElement('span');
             count.className = 'about-count';
-            count.textContent = (i + 1) + ' of ' + cards.length;
+            count.textContent = formatCount(i, cards.length);
             clone.querySelector('.news-card__meta').appendChild(count);
 
             slide.appendChild(clone);
@@ -400,6 +426,7 @@
 
         prev.addEventListener('click', function() { showArticle(activeIndex - 1); });
         next.addEventListener('click', function() { showArticle(activeIndex + 1); });
+        translateArea(stage);
     }
 
     function subscribeToNewsGrid() {

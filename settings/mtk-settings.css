@@ -90,7 +90,7 @@
   background-color: #ebebeb; }
 
 .mtk-settings__input:focus {
-  background-color: #e8eaf6;
+  background-color: #fbf4e5;
   border-bottom-color: #a98212; }
 
 .mtk-settings__input:disabled {
@@ -451,7 +451,7 @@ h1.title::after {
   display: none !important; }
 
 .mtk-settings--edit-mode .mtk-settings__input--readonly {
-  background-color: #e8eaf6; }
+  background-color: #fbf4e5; }
 
 .mtk-settings .material-icons {
   font-family: "Material Icons";
@@ -485,3 +485,4 @@ h1.title::after {
   .mtk-settings__actions .mtk-settings__btn {
     width: 100%;
     justify-content: center; } }
+

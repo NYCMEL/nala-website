@@ -88,8 +88,8 @@ $color-star:              #ffc107;   // client star rating (same amber)
 $color-gold:              #a98212;   // footer h3, nav active link highlight
 
 // — Info / Cyan —
-$color-info-bg:           #0dcaf0;   // msgs info background
-$color-info-text:         #055160;   // msgs info text
+$color-info-bg:           #fbf4e5;   // msgs info background
+$color-info-text:         #4a3a08;   // msgs info text
 
 // — Neutrals & Surfaces —
 $color-white:             #ffffff;
@@ -434,7 +434,7 @@ $bp-xl:  1200px;
   transition: $transition-fast;
 
   &:hover   { background-color: darken($color-bg-light, 4%); }
-  &:focus   { background-color: #e8eaf6; border-bottom-color: $color-primary; }
+  &:focus   { background-color: #fbf4e5; border-bottom-color: $color-primary; }
   &:disabled {
     color: $color-text-disabled;
     background-color: $color-bg-lighter;
@@ -717,3 +717,5 @@ h1.title {
     transform: translateX(-50%);
   }
 }
+
+

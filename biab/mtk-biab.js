@@ -138,13 +138,13 @@ const MTK_BIAB_LOGO_PALETTES = [
   {
     key: 'royal-cobalt',
     label: 'Royal Cobalt',
-    description: 'Crisp blue system for corporate, access-control, and service-contract oriented brands.',
-    surface: '#0b1f52',
-    surfaceSoft: '#14317a',
-    primary: '#4da3ff',
-    accent: '#dbeafe',
+    description: 'Refined bronze system for corporate, access-control, and service-contract oriented brands.',
+    surface: '#3a2f1b',
+    surfaceSoft: '#4a3a08',
+    primary: '#c6952d',
+    accent: '#fbf4e5',
     textOnDark: '#f8fbff',
-    textOnLight: '#0b1f52',
+    textOnLight: '#3a2f1b',
     neutral: '#dbe4f0'
   }
 ];
@@ -1190,3 +1190,5 @@ class MtkBiab {
     setTimeout(() => observer.disconnect(), 15000);
   }
 })();
+
+

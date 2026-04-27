@@ -7,6 +7,10 @@
 (function () {
     'use strict';
 
+    function t(key, fallback) {
+        return (window.i18n && typeof window.i18n.t === 'function') ? window.i18n.t(key) : fallback;
+    }
+
     function init() {
         const page = document.querySelector('.news-page');
         if (!page) return;
@@ -37,7 +41,7 @@
                     <p class="news-card__excerpt">${article.excerpt}</p>
                     <div class="news-card__meta">
                         <span class="news-card__date"><i class="fa fa-calendar"></i> ${article.date}</span>
-                        <a href="#" class="news-card__link" data-article-id="${article.id}">Read More <i class="fa fa-arrow-right"></i></a>
+                        <a href="#" class="news-card__link" data-article-id="${article.id}">${t('aboutPage.article.readMore', 'Read More')} <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
             </article>
@@ -74,7 +78,7 @@
             <div class="container" style="max-width:800px;margin:0 auto;padding:24px 16px">
                 <div class="news-article">
                     <button class="news-article__back" id="newsBackBtn">
-                        <i class="fa fa-arrow-left"></i> Back to News
+                        <i class="fa fa-arrow-left"></i> ${t('aboutPage.article.back', 'Back to News')}
                     </button>
                     <div class="news-article__header">
                         <span class="news-card__category">${article.category}</span>
