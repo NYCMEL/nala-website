@@ -207,6 +207,49 @@ const MTK_BIAB_LOGO_VARIATIONS = [
   { key: 'icon-only', label: 'Icon Only', description: 'Small-format social avatar and favicon mark.' }
 ];
 
+const MTK_BIAB_I18N = {
+  en: {
+    selectOption: 'Select an option',
+    chooseTopic: 'Choose a topic from the menu on the left to get started.',
+    applyLogo: 'Apply to Website Maker',
+    uploadLogo: 'Upload your own logo',
+    download: 'Download',
+    email: 'Send in an email',
+    previous: 'Previous',
+    next: 'Next',
+    step: 'Step',
+    finalDocument: 'Final document',
+    businessInfo: 'Business Info',
+    contactInfo: 'Contact Info',
+    serviceSetup: 'Service Setup',
+    marketingSetup: 'Marketing Setup',
+    operations: 'Operations',
+    invoiceSetup: 'Invoice Setup',
+    automationIntro: 'These APIs can reduce manual work, but they need OAuth, approved access, and server-side credential handling before the website can create or change accounts automatically.',
+    logoApplied: 'Logo sent to the Website Maker. Open or refresh the Website Maker tab if it is not visible yet.'
+  },
+  es: {
+    selectOption: 'Selecciona una opción',
+    chooseTopic: 'Elige un tema del menú de la izquierda para comenzar.',
+    applyLogo: 'Aplicar al creador de página',
+    uploadLogo: 'Subir tu propio logo',
+    download: 'Descargar',
+    email: 'Enviar por correo',
+    previous: 'Anterior',
+    next: 'Siguiente',
+    step: 'Paso',
+    finalDocument: 'Documento final',
+    businessInfo: 'Información del negocio',
+    contactInfo: 'Información de contacto',
+    serviceSetup: 'Configuración de servicios',
+    marketingSetup: 'Configuración de marketing',
+    operations: 'Operaciones',
+    invoiceSetup: 'Configuración de factura',
+    automationIntro: 'Estas APIs pueden reducir trabajo manual, pero requieren OAuth, acceso aprobado y manejo seguro de credenciales en el servidor antes de que el sitio pueda crear o modificar cuentas automáticamente.',
+    logoApplied: 'Logo enviado al creador de página. Abre o actualiza la pestaña Website Maker si aún no aparece.'
+  }
+};
+
 class MtkBiab {
   /**
    * @param {HTMLElement} el  - The <mtk-biab> root element
@@ -218,6 +261,8 @@ class MtkBiab {
     this.tabs   = cfg.tabs;
     this.events = cfg.events;
     this.logoDesignerState = this._getDefaultLogoDesignerState();
+    this.formState = this._getDefaultFormState();
+    this.formSteps = {};
 
     // Active state
     this.activeTabId    = null;
@@ -232,8 +277,10 @@ class MtkBiab {
     this._subscribeAll();
     this._render();
     this._renderDynamicPanels();
+    this._renderToolPanels();
     this._bindAll();
     this._activateDefaultTab();
+    this._bindLanguageChanges();
 
     // Publish ready
     this._publish(this.events.publish.ready, {
@@ -369,6 +416,10 @@ class MtkBiab {
               </button>
             `).join('')}
           </nav>
+          <div class="mtk-biab__lang-switch" aria-label="Language">
+            <button type="button" data-action="set-lang" data-lang="en">EN</button>
+            <button type="button" data-action="set-lang" data-lang="es">ES</button>
+          </div>
         </div>
       </header>
     `;
@@ -499,8 +550,8 @@ class MtkBiab {
             aria-live="polite"
           >
             <span class="material-icons" aria-hidden="true">touch_app</span>
-            <h3>Select an option</h3>
-            <p>Choose a topic from the menu on the left to get started.</p>
+            <h3>${this._t('selectOption')}</h3>
+            <p>${this._t('chooseTopic')}</p>
           </div>
           ${contentPanels}
         </div>
@@ -588,10 +639,36 @@ class MtkBiab {
       case 'logo-set-variation':
         this._setLogoDesignerState('variationKey', btn.dataset.logoValue);
         break;
+      case 'logo-apply-to-client':
+        this._applyLogoToClient();
+        break;
+      case 'logo-upload':
+        this._openLogoUpload();
+        break;
+      case 'set-lang':
+        this._setLanguage(btn.dataset.lang);
+        break;
+      case 'tool-prev':
+        this._moveToolStep(btn.dataset.tool, -1);
+        break;
+      case 'tool-next':
+        this._moveToolStep(btn.dataset.tool, 1);
+        break;
+      case 'tool-download':
+        this._downloadToolDocument(btn.dataset.tool);
+        break;
+      case 'tool-email':
+        this._emailToolDocument(btn.dataset.tool);
+        break;
     }
   }
 
   _onInput(e) {
+    if (e.target.dataset.toolField) {
+      this._updateToolField(e.target.dataset.tool, e.target.dataset.toolField, e.target.value);
+      return;
+    }
+
     const field = e.target.dataset.logoField;
     if (!field) return;
     const cursorStart = typeof e.target.selectionStart === 'number' ? e.target.selectionStart : null;
@@ -801,7 +878,8 @@ class MtkBiab {
       paletteKey: 'midnight-brass',
       fontKey: 'outfit-manrope',
       templateKey: 'service-wordmark',
-      variationKey: 'horizontal'
+      variationKey: 'horizontal',
+      customLogo: ''
     };
   }
 
@@ -815,6 +893,14 @@ class MtkBiab {
     this._renderLogoConceptsPanel();
     this._renderLogoGuidelinesPanel();
     this._renderLogoVariationsPanel();
+    this._renderStationeryPanels();
+  }
+
+  _renderToolPanels() {
+    this._renderBusinessPlanTool();
+    this._renderStartupTool();
+    this._renderInvoiceTool();
+    this._renderAutomationTool();
   }
 
   _renderLogoConceptsPanel() {
@@ -831,7 +917,7 @@ class MtkBiab {
     mount.innerHTML = `
       <section class="mtk-biab__logo-designer">
         <div class="mtk-biab__logo-note">
-          <strong>Production note:</strong> this builder uses free test icons and Google Fonts for workflow validation. Replace them with a paid locksmith icon set and a licensed production font set before launch.
+          <strong>Step 1:</strong> choose the name, tagline, logo source, color system, font system, and template direction. Then apply the approved mark to the Website Maker.
         </div>
 
         <div class="mtk-biab__logo-preview-area mtk-biab__logo-preview-area--hero">
@@ -839,6 +925,10 @@ class MtkBiab {
             <span class="mtk-biab__logo-badge">Research-based starter direction</span>
             <h3>${template.label}</h3>
             <p>${template.description}</p>
+            <div class="mtk-biab__logo-actions">
+              <button type="button" class="mtk-biab__action-btn" data-action="logo-upload">${this._t('uploadLogo')}</button>
+              <button type="button" class="mtk-biab__action-btn mtk-biab__action-btn--primary" data-action="logo-apply-to-client">${this._t('applyLogo')}</button>
+            </div>
             <ul>
               <li><strong>Chosen icon:</strong> ${icon.label}</li>
               <li><strong>Chosen palette:</strong> ${palette.label}</li>
@@ -870,6 +960,7 @@ class MtkBiab {
             <div class="mtk-biab__logo-control-group">
               <h3>Icon library</h3>
               <p>Starter test icons for locksmith brands. These are intentionally simple so they remain readable on vans, invoices, and social avatars.</p>
+              ${state.customLogo ? '<p><strong>Custom logo uploaded.</strong> It will be used in previews and stationery until another logo is chosen.</p>' : ''}
               <div class="mtk-biab__logo-option-grid">
                 ${MTK_BIAB_LOGO_ICONS.map(option => `
                   <button type="button" class="mtk-biab__logo-option-card${option.key === state.iconKey ? ' is-active' : ''}" data-action="logo-set-icon" data-logo-value="${option.key}">
@@ -947,6 +1038,9 @@ class MtkBiab {
 
     mount.innerHTML = `
       <section class="mtk-biab__logo-guidelines">
+        <div class="mtk-biab__logo-note">
+          <strong>Step 2:</strong> review the rules that keep the logo consistent on invoices, stationery, Google profiles, vans, and the public website.
+        </div>
         <div class="mtk-biab__logo-preview-area mtk-biab__logo-preview-area--hero">
           ${this._buildLogoPreviewCard('Approved guideline sample', this._buildLogoMarkup(state, 'primary-dark'), palette.surface, palette.textOnDark, false, 'hero')}
         </div>
@@ -1022,7 +1116,7 @@ class MtkBiab {
     mount.innerHTML = `
       <section class="mtk-biab__logo-variations">
         <div class="mtk-biab__logo-note">
-          <strong>Expected production handoff:</strong> every approved locksmith logo should ship with dark, light, social, favicon, and one-color variants.
+          <strong>Step 3:</strong> inspect the production variations. A real handoff should include dark, light, social, favicon, one-color, and vehicle/banner versions.
         </div>
 
         <div class="mtk-biab__logo-preview-area mtk-biab__logo-preview-area--hero">
@@ -1065,7 +1159,9 @@ class MtkBiab {
     const iconColor = isMono ? '#111827' : palette.primary;
     const bgColor = variant === 'primary-light' || variant === 'stacked' ? '#ffffff' : palette.surface;
     const textColor = bgColor === '#ffffff' ? palette.textOnLight : palette.textOnDark;
-    const iconMarkup = `<span class="mtk-biab__logo-mark" style="color:${iconColor};--logo-bg:${bgColor};">${icon.svg}</span>`;
+    const iconMarkup = state.customLogo
+      ? `<span class="mtk-biab__logo-mark mtk-biab__logo-mark--custom"><img src="${state.customLogo}" alt=""></span>`
+      : `<span class="mtk-biab__logo-mark" style="color:${iconColor};--logo-bg:${bgColor};">${icon.svg}</span>`;
     const resolvedVariant = (variant === 'primary-dark' || variant === 'primary-light')
       ? state.variationKey
       : variant;
@@ -1123,6 +1219,312 @@ class MtkBiab {
 
   _getLogoResource(collection, key) {
     return collection.find(item => item.key === key) || collection[0];
+  }
+
+  _getLang() {
+    return (window.i18n && typeof window.i18n.getLang === 'function') ? window.i18n.getLang() : 'en';
+  }
+
+  _t(key) {
+    const lang = this._getLang();
+    return (MTK_BIAB_I18N[lang] && MTK_BIAB_I18N[lang][key]) || MTK_BIAB_I18N.en[key] || key;
+  }
+
+  _setLanguage(lang) {
+    if (window.i18n && typeof window.i18n.setLang === 'function') {
+      window.i18n.setLang(lang);
+      return;
+    }
+    document.documentElement.lang = lang;
+    this._handleLanguageChanged();
+  }
+
+  _bindLanguageChanges() {
+    document.addEventListener('i18n:changed', () => this._handleLanguageChanged());
+  }
+
+  _handleLanguageChanged() {
+    this._render();
+    this._renderDynamicPanels();
+    this._renderToolPanels();
+    this._activateDefaultTab();
+  }
+
+  _openLogoUpload() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = () => {
+      const file = input.files && input.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        this.logoDesignerState.customLogo = event.target.result;
+        this._renderDynamicPanels();
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  }
+
+  _buildLogoDataUrl() {
+    if (this.logoDesignerState.customLogo) return this.logoDesignerState.customLogo;
+    const state = this.logoDesignerState;
+    const palette = this._getLogoResource(MTK_BIAB_LOGO_PALETTES, state.paletteKey);
+    const name = this._escapeHtml(state.businessName || 'Your Locksmith Brand');
+    const tagline = this._escapeHtml(state.tagline || '');
+    const initials = name.split(/\s+/).map(word => word.charAt(0)).join('').slice(0, 3).toUpperCase();
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="720" height="240" viewBox="0 0 720 240">
+      <rect width="720" height="240" rx="28" fill="${palette.surface}"/>
+      <circle cx="108" cy="120" r="58" fill="${palette.primary}"/>
+      <text x="108" y="137" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" font-weight="800" fill="${palette.surface}">${initials}</text>
+      <text x="194" y="108" font-family="Arial, sans-serif" font-size="42" font-weight="800" fill="${palette.textOnDark}">${name}</text>
+      <text x="196" y="151" font-family="Arial, sans-serif" font-size="22" fill="${palette.accent}">${tagline}</text>
+    </svg>`;
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }
+
+  _applyLogoToClient() {
+    const logo = this._buildLogoDataUrl();
+    const payload = {
+      logo,
+      businessName: this.logoDesignerState.businessName,
+      tagline: this.logoDesignerState.tagline
+    };
+    try {
+      localStorage.setItem('nalaBiabLogo', JSON.stringify(payload));
+    } catch (err) {
+      wc.warn('[mtk-biab] Could not save logo locally', err);
+    }
+
+    const iframe = this.el.querySelector('#mtk-biab-iframe-website-maker');
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.postMessage({ type: 'nala:biab-logo', payload }, '*');
+    }
+
+    wc.publish('mtk-biab:logo-applied', payload);
+    if (window.MTKMsgs && typeof MTKMsgs.show === 'function') {
+      MTKMsgs.show({ type: 'success', icon: 'success', message: this._t('logoApplied'), closable: true, timer: 5 });
+    }
+  }
+
+  _getDefaultFormState() {
+    return {
+      'business-plan': {
+        businessName: 'Harbor Lock & Key',
+        ownerName: '',
+        serviceArea: '',
+        coreServices: 'Rekeys, lock changes, lockouts, deadbolt installation',
+        customerFocus: 'Homeowners, property managers, small businesses',
+        launchGoal: 'Book the first 25 paid locksmith jobs and collect 10 reviews.',
+        pricingPlan: 'Use fixed service call pricing plus itemized labor and parts.',
+        marketingPlan: 'Google Business Profile, local SEO, review requests, and tightly targeted ads.'
+      },
+      'startup-checklist': {
+        legal: '',
+        phoneEmail: '',
+        website: '',
+        profile: '',
+        insurance: '',
+        payments: '',
+        launch: ''
+      },
+      'invoice-setup': {
+        businessName: 'Harbor Lock & Key',
+        invoicePrefix: 'HLK',
+        businessPhone: '',
+        businessEmail: '',
+        paymentTerms: 'Due on receipt',
+        taxLine: 'Sales tax shown separately where applicable',
+        warranty: 'Workmanship warranty applies to installed parts and labor unless otherwise stated.'
+      }
+    };
+  }
+
+  _moveToolStep(tool, direction) {
+    const steps = this._getToolSteps(tool);
+    const current = this.formSteps[tool] || 0;
+    this.formSteps[tool] = Math.max(0, Math.min(steps.length - 1, current + direction));
+    this._renderToolPanels();
+  }
+
+  _updateToolField(tool, field, value) {
+    if (!this.formState[tool]) return;
+    this.formState[tool][field] = value;
+    this._renderToolPreview(tool);
+  }
+
+  _getToolSteps(tool) {
+    const map = {
+      'business-plan': [
+        { title: this._t('businessInfo'), fields: ['businessName', 'ownerName', 'serviceArea'] },
+        { title: this._t('serviceSetup'), fields: ['coreServices', 'customerFocus'] },
+        { title: this._t('marketingSetup'), fields: ['launchGoal', 'pricingPlan', 'marketingPlan'] }
+      ],
+      'startup-checklist': [
+        { title: this._t('businessInfo'), fields: ['legal', 'phoneEmail'] },
+        { title: this._t('marketingSetup'), fields: ['website', 'profile'] },
+        { title: this._t('operations'), fields: ['insurance', 'payments', 'launch'] }
+      ],
+      'invoice-setup': [
+        { title: this._t('businessInfo'), fields: ['businessName', 'invoicePrefix'] },
+        { title: this._t('contactInfo'), fields: ['businessPhone', 'businessEmail'] },
+        { title: this._t('invoiceSetup'), fields: ['paymentTerms', 'taxLine', 'warranty'] }
+      ]
+    };
+    return map[tool] || [];
+  }
+
+  _renderBusinessPlanTool() {
+    this._renderWizardTool('business-plan', 'Business Plan Builder');
+  }
+
+  _renderStartupTool() {
+    this._renderWizardTool('startup-checklist', 'Startup Checklist Builder');
+  }
+
+  _renderInvoiceTool() {
+    this._renderWizardTool('invoice-setup', 'Invoice Setup Builder');
+  }
+
+  _renderWizardTool(tool, heading) {
+    const mount = this.el.querySelector(`[data-biab-tool="${tool}"]`);
+    if (!mount) return;
+    const steps = this._getToolSteps(tool);
+    const stepIndex = this.formSteps[tool] || 0;
+    const active = steps[stepIndex] || steps[0];
+    const state = this.formState[tool] || {};
+    mount.innerHTML = `
+      <section class="mtk-biab-tool">
+        <div class="mtk-biab-tool__head">
+          <div>
+            <span class="mtk-biab__logo-badge">${this._t('step')} ${stepIndex + 1} / ${steps.length}</span>
+            <h3>${heading}</h3>
+            <p>${active.title}</p>
+          </div>
+          <div class="mtk-biab-tool__actions">
+            <button type="button" class="mtk-biab__action-btn" data-action="tool-download" data-tool="${tool}">${this._t('download')}</button>
+            <button type="button" class="mtk-biab__action-btn" data-action="tool-email" data-tool="${tool}">${this._t('email')}</button>
+          </div>
+        </div>
+        <div class="mtk-biab-tool__grid">
+          <div class="mtk-biab-tool__form">
+            ${active.fields.map(field => this._buildToolField(tool, field, state[field])).join('')}
+            <div class="mtk-biab-tool__nav">
+              <button type="button" class="mtk-biab__action-btn" data-action="tool-prev" data-tool="${tool}" ${stepIndex === 0 ? 'disabled' : ''}>${this._t('previous')}</button>
+              <button type="button" class="mtk-biab__action-btn mtk-biab__action-btn--primary" data-action="tool-next" data-tool="${tool}" ${stepIndex === steps.length - 1 ? 'disabled' : ''}>${this._t('next')}</button>
+            </div>
+          </div>
+          <article class="mtk-biab-tool__preview" data-tool-preview="${tool}">
+            ${this._buildToolDocument(tool)}
+          </article>
+        </div>
+      </section>
+    `;
+  }
+
+  _buildToolField(tool, field, value) {
+    const labels = {
+      businessName: 'Business name',
+      ownerName: 'Owner name',
+      serviceArea: 'Service area',
+      coreServices: 'Core services',
+      customerFocus: 'Customer focus',
+      launchGoal: 'Launch goal',
+      pricingPlan: 'Pricing plan',
+      marketingPlan: 'Marketing plan',
+      legal: 'Registration / licensing steps',
+      phoneEmail: 'Phone and email setup',
+      website: 'Website setup',
+      profile: 'Google Business Profile setup',
+      insurance: 'Insurance / compliance',
+      payments: 'Payments and bookkeeping',
+      launch: 'Launch-day checklist',
+      invoicePrefix: 'Invoice prefix',
+      businessPhone: 'Business phone',
+      businessEmail: 'Business email',
+      paymentTerms: 'Payment terms',
+      taxLine: 'Tax line',
+      warranty: 'Warranty / disclosure'
+    };
+    return `
+      <label class="mtk-biab-tool__field">${labels[field] || field}
+        <textarea data-tool="${tool}" data-tool-field="${field}" rows="3">${this._escapeHtml(value || '')}</textarea>
+      </label>
+    `;
+  }
+
+  _renderToolPreview(tool) {
+    const target = this.el.querySelector(`[data-tool-preview="${tool}"]`);
+    if (target) target.innerHTML = this._buildToolDocument(tool);
+  }
+
+  _buildToolDocument(tool) {
+    const s = this.formState[tool] || {};
+    if (tool === 'startup-checklist') {
+      return `<h3>${this._t('finalDocument')}</h3><ol><li>${this._escapeHtml(s.legal)}</li><li>${this._escapeHtml(s.phoneEmail)}</li><li>${this._escapeHtml(s.website)}</li><li>${this._escapeHtml(s.profile)}</li><li>${this._escapeHtml(s.insurance)}</li><li>${this._escapeHtml(s.payments)}</li><li>${this._escapeHtml(s.launch)}</li></ol>`;
+    }
+    if (tool === 'invoice-setup') {
+      return `<h3>${s.businessName || 'Invoice Setup'}</h3><p><strong>Invoice numbering:</strong> ${this._escapeHtml(s.invoicePrefix)}-0001</p><p><strong>Phone:</strong> ${this._escapeHtml(s.businessPhone)}<br><strong>Email:</strong> ${this._escapeHtml(s.businessEmail)}</p><p><strong>Payment terms:</strong> ${this._escapeHtml(s.paymentTerms)}</p><p><strong>Tax:</strong> ${this._escapeHtml(s.taxLine)}</p><p><strong>Warranty:</strong> ${this._escapeHtml(s.warranty)}</p>`;
+    }
+    return `<h3>${this._escapeHtml(s.businessName || 'Business Plan')}</h3><p><strong>Owner:</strong> ${this._escapeHtml(s.ownerName)}</p><p><strong>Service area:</strong> ${this._escapeHtml(s.serviceArea)}</p><p><strong>Core services:</strong> ${this._escapeHtml(s.coreServices)}</p><p><strong>Customer focus:</strong> ${this._escapeHtml(s.customerFocus)}</p><p><strong>Launch goal:</strong> ${this._escapeHtml(s.launchGoal)}</p><p><strong>Pricing:</strong> ${this._escapeHtml(s.pricingPlan)}</p><p><strong>Marketing:</strong> ${this._escapeHtml(s.marketingPlan)}</p>`;
+  }
+
+  _downloadToolDocument(tool) {
+    const html = `<!doctype html><html><head><meta charset="utf-8"><title>${tool}</title></head><body>${this._buildToolDocument(tool)}</body></html>`;
+    const blob = new Blob([html], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `${tool}-${new Date().toISOString().slice(0, 10)}.html`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  _emailToolDocument(tool) {
+    const text = this._buildToolDocument(tool).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    window.location.href = `mailto:?subject=${encodeURIComponent(tool.replace(/-/g, ' '))}&body=${encodeURIComponent(text)}`;
+  }
+
+  _renderAutomationTool() {
+    const mount = this.el.querySelector('[data-biab-tool="automation-options"]');
+    if (!mount) return;
+    mount.innerHTML = `
+      <section class="mtk-biab-tool">
+        <div class="mtk-biab-tool__head"><div><h3>Automation Readiness</h3><p>${this._t('automationIntro')}</p></div></div>
+        <div class="mtk-biab-api-grid">
+          ${[
+            ['Google Ads API', 'Create accounts/campaign pieces, keywords, budgets, conversion actions after OAuth and developer-token approval.', 'https://developers.google.com/google-ads/api/docs/start'],
+            ['Business Profile APIs', 'Read and manage business locations, attributes, photos, and some profile data after account authorization.', 'https://developers.google.com/my-business'],
+            ['Search Console API', 'Add verified sites, inspect URLs, submit sitemaps, and read performance data.', 'https://developers.google.com/webmaster-tools'],
+            ['Google Analytics Admin API', 'Create/manage GA4 properties and data streams when authorized.', 'https://developers.google.com/analytics/devguides/config/admin/v1'],
+            ['Local Services Ads', 'API surface is limited compared with standard Google Ads; eligibility and screening still require Google workflows.', 'https://developers.google.com/google-ads/api/docs/campaigns/local-service-campaigns']
+          ].map(([name, detail, href]) => `<article class="mtk-biab-api-card"><h4>${name}</h4><p>${detail}</p><a class="mtk-biab-guide__link" href="${href}" target="_blank" rel="noopener">Open docs</a></article>`).join('')}
+        </div>
+      </section>
+    `;
+  }
+
+  _renderStationeryPanels() {
+    ['business-card', 'letterhead', 'envelope'].forEach(type => {
+      const mount = this.el.querySelector(`[data-stationery-designer-panel="${type}"]`);
+      if (!mount) return;
+      const logo = this._buildLogoDataUrl();
+      const state = this.logoDesignerState;
+      mount.innerHTML = `
+        <section class="mtk-biab-stationery">
+          <div class="mtk-biab-tool__head">
+            <div><span class="mtk-biab__logo-badge">Auto-filled from logo designer</span><h3>${type.replace('-', ' ')}</h3><p>Logo, business name, and tagline update automatically from the Logo Designer.</p></div>
+            <button type="button" class="mtk-biab__action-btn mtk-biab__action-btn--primary" data-action="logo-apply-to-client">${this._t('applyLogo')}</button>
+          </div>
+          <div class="mtk-biab-stationery__preview mtk-biab-stationery__preview--${type}">
+            <img src="${logo}" alt="">
+            <strong>${this._escapeHtml(state.businessName)}</strong>
+            <span>${this._escapeHtml(state.tagline)}</span>
+            <small>(555) 555-0123 · service@example.com · yourlocksmith.com</small>
+          </div>
+        </section>
+      `;
+    });
   }
 
   _escapeHtml(value) {

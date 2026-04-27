@@ -30,7 +30,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "article",
                 content: {
                   title: "Business Plan Template",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
+                  body: `<div data-biab-tool="business-plan"></div><p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
 <h3>Purpose</h3>
 <p>This template is for a locksmith who wants to build a real business, not just take occasional side jobs. Use it to decide what you will offer, how you will price it, how you will market it, and how you will stay profitable.</p>
 
@@ -165,7 +165,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "checklist",
                 content: {
                   title: "Startup Checklist",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
+                  body: `<div data-biab-tool="startup-checklist"></div><p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
 <h3>Before Launch</h3>
 <ul>
   <li>Choose a business name</li>
@@ -584,7 +584,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "style",
                 content: {
                   title: "Business Card Designer",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
+                  body: `<div data-stationery-designer-panel="business-card"></div><p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
 <h3>Recommended Implementation</h3>
 <p>The fastest useful version is a template-based designer. Let the locksmith enter their business name, phone, email, website, city, logo, colors, and tagline. Then place that data into a small set of locked, professional layouts.</p>
 
@@ -628,7 +628,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "note_alt",
                 content: {
                   title: "Letterhead Designer",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
+                  body: `<div data-stationery-designer-panel="letterhead"></div><p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
 <h3>Recommended Implementation</h3>
 <p>Use the same template-based system as the business cards. The user should enter their brand details once and have them populate automatically across all stationery products.</p>
 
@@ -667,7 +667,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "mail",
                 content: {
                   title: "Envelope Designer",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
+                  body: `<div data-stationery-designer-panel="envelope"></div><p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
 <h3>Recommended Implementation</h3>
 <p>Use simple templates. This is not the place for heavy design. The goal is a clean, branded envelope that feels professional.</p>
 
@@ -836,6 +836,15 @@ const MTK_BIAB_CONFIG = {
                 }
               },
               {
+                id: "automation-options",
+                label: "Automation Options",
+                icon: "api",
+                content: {
+                  title: "Marketing API Automation Options",
+                  body: `<div data-biab-tool="automation-options"></div>`
+                }
+              },
+              {
                 id: "social-media-setup",
                 label: "Social Media Setup",
                 icon: "share",
@@ -886,7 +895,7 @@ const MTK_BIAB_CONFIG = {
       type: "simple",
       content: {
         title: "Invoicing",
-        body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fff4e5;color:#8a4b00;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
+        body: `<div data-biab-tool="invoice-setup"></div><p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fff4e5;color:#8a4b00;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
 <h3>Important Note</h3>
 <p>There is no single universal U.S. federal invoice format for ordinary small businesses, but good recordkeeping matters. Your invoices should be clear, itemized, professional, and consistent with your tax, accounting, and local legal requirements.</p>
 <p>State and local requirements may add more, especially for tax display, contractor work categories, or license disclosures.</p>

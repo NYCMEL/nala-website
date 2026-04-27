@@ -40,6 +40,7 @@ class ClientProfile {
     }
 
     init() {
+	this.applyExternalLogo()
 	this.renderHeader()
 	this.renderStats()
 	this.renderTabs()
@@ -49,6 +50,34 @@ class ClientProfile {
 	this.initGlobalClickListener()
 	// Always show header bar
 	this.initEditSwitch()
+	this.bindExternalLogo()
+	if (this.data && this.data.business && this.data.business.name) {
+	    document.title = this.data.business.name
+	}
+    }
+
+    applyExternalLogo() {
+	try {
+	    const stored = JSON.parse(localStorage.getItem('nalaBiabLogo') || 'null')
+	    if (stored && stored.logo) {
+		this.data.business.logo = stored.logo
+		if (stored.businessName && (!this.data.business.name || this.data.business.name === 'Your Company Name')) {
+		    this.data.business.name = stored.businessName
+		}
+	    }
+	} catch (err) {
+	    wc.warn('[client] Could not apply stored BIAB logo', err)
+	}
+    }
+
+    bindExternalLogo() {
+	window.addEventListener('message', (event) => {
+	    if (!event.data || event.data.type !== 'nala:biab-logo' || !event.data.payload) return
+	    this.data.business.logo = event.data.payload.logo
+	    if (event.data.payload.businessName) this.data.business.name = event.data.payload.businessName
+	    this.renderHeader()
+	    document.title = this.data.business.name
+	})
     }
 
     initEditSwitch() {
