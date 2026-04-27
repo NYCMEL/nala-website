@@ -116,7 +116,7 @@ body {
   min-height: 100vh; }
 
 a {
-  color: #1976d2;
+  color: #a98212;
   text-decoration: none;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
 
@@ -188,9 +188,9 @@ h1.title::after {
   transform: translateX(-50%); }
 
 .mtk-quiz {
-  --mtk-primary:        #0a6efd;
-  --mtk-primary-light:  #2196f3;
-  --mtk-primary-dark:   #0a58ca;
+  --mtk-primary:        #a98212;
+  --mtk-primary-light:  #c6952d;
+  --mtk-primary-dark:   #7a5e0c;
   --mtk-secondary:      #6c757d;
   --mtk-surface:        #ffffff;
   --mtk-background:     #ffffff;

@@ -116,7 +116,7 @@ body {
   min-height: 100vh; }
 
 a {
-  color: #1976d2;
+  color: #a98212;
   text-decoration: none;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
 
@@ -186,3 +186,103 @@ h1.title::after {
   height: 3px;
   background-color: #a98212;
   transform: translateX(-50%); }
+
+:root {
+  --nala-gold: #a98212;
+  --nala-gold-dark: #7a5e0c;
+  --nala-bronze: #c6952d;
+  --nala-cream: #fbf4e5;
+  --nala-ink: #212121;
+}
+
+.btn-primary,
+.btn.btn-primary,
+button.btn-primary,
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  color: #ffffff !important;
+  background-color: var(--nala-gold) !important;
+  border-color: var(--nala-gold) !important;
+  box-shadow: none;
+}
+
+.btn-primary:hover,
+.btn.btn-primary:hover,
+button.btn-primary:hover {
+  background-color: var(--nala-gold-dark) !important;
+  border-color: var(--nala-gold-dark) !important;
+  transform: translateY(-1px);
+}
+
+.btn-outline-primary,
+.btn.btn-outline-primary {
+  color: var(--nala-gold) !important;
+  border-color: var(--nala-gold) !important;
+}
+
+.btn-outline-primary:hover,
+.btn.btn-outline-primary:hover {
+  color: #ffffff !important;
+}
+
+a {
+  color: var(--nala-gold);
+}
+
+a:hover {
+  color: var(--nala-gold-dark);
+}
+
+.btn,
+.course-card,
+.card,
+.news-card,
+.mtk-card,
+.mtk-dashboard__subscription-card {
+  transition: transform 180ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 180ms cubic-bezier(0.4, 0, 0.2, 1), background-color 180ms cubic-bezier(0.4, 0, 0.2, 1), border-color 180ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover,
+.course-card:hover,
+.news-card:hover,
+.mtk-card:hover {
+  transform: translateY(-3px);
+}
+
+#MTK-hero .MTK-hero-card,
+#MTK-hero .MTK-hero-rhs,
+#_stats,
+#carousel,
+.mtk-courses,
+.mtk-path,
+#business-in-a-box,
+.news-page {
+  animation: nala-soft-rise 520ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+#MTK-hero .MTK-hero-rhs { animation-delay: 80ms; }
+#_stats { animation-delay: 120ms; }
+#carousel { animation-delay: 160ms; }
+.mtk-courses, .mtk-path { animation-delay: 100ms; }
+
+@keyframes nala-soft-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
+}

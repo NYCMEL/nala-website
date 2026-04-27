@@ -116,7 +116,7 @@ body {
   min-height: 100vh; }
 
 a {
-  color: #1976d2;
+  color: #a98212;
   text-decoration: none;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
 
@@ -232,7 +232,7 @@ h1.title::after {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #82d4fa;
+  background: #c6952d;
   color: #000;
   font-size: 24px;
   cursor: pointer; }
@@ -258,7 +258,7 @@ h1.title::after {
   cursor: pointer; }
 
 .mtk-carousel .mtk-carousel-dots .mtk-carousel-dot.active {
-  background: #82d4fa; }
+  background: #c6952d; }
 
 @media (max-width: 576px) {
   .mtk-carousel {

@@ -117,7 +117,7 @@ body {
   min-height: 100vh; }
 
 a {
-  color: #1976d2;
+  color: #a98212;
   text-decoration: none;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
 
@@ -222,8 +222,8 @@ h1.title::after {
   text-transform: uppercase;
   padding: 0.35rem 0.75rem;
   margin-bottom: 0.75rem;
-  background-color: #eef2ff;
-  color: #1e3a8a;
+  background-color: #fbf4e5;
+  color: #7a5e0c;
   line-height: 1; }
 
 .mtk-courses .course-title {
@@ -251,7 +251,7 @@ h1.title::after {
   position: absolute;
   left: 0;
   top: 0;
-  color: #2563eb;
+  color: #a98212;
   font-weight: 600;
   line-height: 1.4; }
 

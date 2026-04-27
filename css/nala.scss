@@ -33,27 +33,27 @@ $font-material-icons: 'Material Icons';
 //  COLOR PALETTE
 // ────────────────────────────────────────────────────────────
 
-// — Brand / Primary blues —
-$color-primary:           #1976d2;   // dashboard, login, hierarchy, ready-btn text
-$color-primary-dark:      #1565c0;   // login hover, final, mtk-final primary
-$color-primary-darker:    #0d47a1;   // dialog active, hierarchy deep
-$color-primary-light:     #2196f3;   // dashboard gradient end, hierarchy light
-$color-primary-alt:       #0a6efd;   // settings btn-primary / quiz primary
-$color-primary-alt-dark:  #0a58ca;   // quiz primary-dark
-$color-blue-path:         #2563eb;   // path badge, courses check, path btn
-$color-blue-path-dark:    #1e40af;   // path btn hover
-$color-blue-stat:         #2663eb;   // stats value
-$color-blue-courses:      #1e3a8a;   // courses level label text
-$color-tile-front:        #3a87d1;   // tile face front
-$color-client-primary:    #009fd9;   // client component primary
-$color-client-hover:      #0088ba;   // client primary hover
-$color-register-primary:  #1b76d2;   // register form primary
+// — Brand / Primary golds —
+$color-primary:           #a98212;   // dashboard, login, hierarchy, ready-btn text
+$color-primary-dark:      #7a5e0c;   // login hover, final, mtk-final primary
+$color-primary-darker:    #4a3a08;   // dialog active, hierarchy deep
+$color-primary-light:     #c6952d;   // dashboard gradient end, hierarchy light
+$color-primary-alt:       #a98212;   // settings btn-primary / quiz primary
+$color-primary-alt-dark:  #7a5e0c;   // quiz primary-dark
+$color-blue-path:         #a98212;   // path badge, courses check, path btn
+$color-blue-path-dark:    #7a5e0c;   // path btn hover
+$color-blue-stat:         #a98212;   // stats value
+$color-blue-courses:      #7a5e0c;   // courses level label text
+$color-tile-front:        #a98212;   // tile face front
+$color-client-primary:    #a98212;   // client component primary
+$color-client-hover:      #7a5e0c;   // client primary hover
+$color-register-primary:  #a98212;   // register form primary
 
 // — Accent / Hero —
-$color-hero-bg:           #81d4fa;   // hero section background
-$color-carousel-accent:   #82d4fa;   // carousel viewport tint, dot active, btn bg
-$color-ready-bg:          #5b88b1;   // ready section background
-$color-ready-title:       #bfe7ff;   // ready section title
+$color-hero-bg:           #fbf4e5;   // hero section background
+$color-carousel-accent:   #c6952d;   // carousel viewport tint, dot active, btn bg
+$color-ready-bg:          #4a3a08;   // ready section background
+$color-ready-title:       #fbf4e5;   // ready section title
 
 // — Accent pink / magenta —
 $color-accent:            #ff4081;   // hierarchy quiz gradient, quiz-launch
@@ -67,7 +67,7 @@ $color-success-darker:    #2e7d32;   // dialog btn-success hover, box checkmark
 $color-success-md:        #198754;   // msgs success bg
 $color-success-final:     #1b7d37;   // final component success token
 $color-green-check:       #16a34a;   // path list check
-$color-green-courses:     #2563eb;   // courses feature check (reuses path blue)
+$color-green-courses:     #a98212;   // courses feature check
 
 // — Error / Danger / Red —
 $color-error:             #f44336;   // settings strength weak, error text
@@ -95,9 +95,9 @@ $color-info-text:         #055160;   // msgs info text
 $color-white:             #ffffff;
 $color-bg-light:          #f5f5f5;   // settings input bg, client bg
 $color-bg-lighter:        #ffffff;   // main page background, settings readonly, dashboard card
-$color-bg-page:           #f5f7fb;   // path section bg
-$color-bg-stats:          #f5f8ff;   // stats section bg
-$color-bg-courses:        #eef2ff;   // courses level badge bg
+$color-bg-page:           #faf7f0;   // path section bg
+$color-bg-stats:          #faf7f0;   // stats section bg
+$color-bg-courses:        #fbf4e5;   // courses level badge bg
 $color-surface-dim:       #f8f9fa;   // final surface-dim token
 $color-surface-container: #eef2f7;   // final surface-container token
 

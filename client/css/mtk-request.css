@@ -42,7 +42,7 @@
 .mtk-request .md-field select:focus + label {
   top: -10px;
   font-size: 12px;
-  color: #0d6efd; }
+  color: #a98212; }
 
 .mtk-request .contact-group {
   margin: 20px 0; }
@@ -81,13 +81,13 @@
   flex-shrink: 0; }
 
 .mtk-request .radio-item input:checked + .radio-custom {
-  border-color: #0d6efd; }
+  border-color: #a98212; }
 
 .mtk-request .radio-item input:checked + .radio-custom::after {
   content: "";
   width: 10px;
   height: 10px;
-  background: #0d6efd;
+  background: #a98212;
   border-radius: 50%;
   position: absolute;
   top: 2px;
@@ -109,7 +109,7 @@
   width: auto; }
 
 .mtk-request :focus {
-  outline: 2px solid #0d6efd;
+  outline: 2px solid #a98212;
   outline-offset: 2px; }
 
 .mtk-request .modal-dialog {

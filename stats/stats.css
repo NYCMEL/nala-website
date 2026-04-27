@@ -116,7 +116,7 @@ body {
   min-height: 100vh; }
 
 a {
-  color: #1976d2;
+  color: #a98212;
   text-decoration: none;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
 
@@ -188,7 +188,7 @@ h1.title::after {
   transform: translateX(-50%); }
 
 #_stats {
-  background-color: #f5f8ff; }
+  background-color: #faf7f0; }
 
 #_stats ._stats-item {
   padding: 1.5rem; }

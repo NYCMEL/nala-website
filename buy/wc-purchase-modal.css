@@ -23,7 +23,7 @@
     margin: 0 0 8px;
     font-size: 28px;
     line-height: 1.2;
-    color: #0d47a1;
+    color: #4a3a08;
 }
 
 .wc-purchase-modal__intro {
@@ -63,7 +63,7 @@
 .wc-purchase-modal__field input:focus,
 .wc-purchase-modal__field select:focus {
     outline: none;
-    border-color: #1976d2;
+    border-color: #a98212;
     box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.14);
 }
 
@@ -97,7 +97,7 @@
 }
 
 .wc-purchase-modal__btn--primary {
-    background: #1565c0;
+    background: #7a5e0c;
     color: #fff;
 }
 

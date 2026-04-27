@@ -159,17 +159,17 @@
             if (this.elements.progressPercentage) {
                 this.elements.progressPercentage.textContent = '0%';
                 const duration = 2200; // ms
-                const steps = 40;
-                const stepTime = duration / steps;
-                let current = 0;
-                const interval = setInterval(() => {
-                    current += target / steps;
-                    if (current >= target) {
-                        current = target;
-                        clearInterval(interval);
-                    }
+                const startTime = performance.now();
+                const easeOutCubic = (value) => 1 - Math.pow(1 - value, 3);
+
+                const tick = (now) => {
+                    const progressValue = Math.min((now - startTime) / duration, 1);
+                    const current = target * easeOutCubic(progressValue);
                     this.elements.progressPercentage.textContent = `${Math.round(current)}%`;
-                }, stepTime);
+                    if (progressValue < 1) requestAnimationFrame(tick);
+                };
+
+                requestAnimationFrame(tick);
             }
 
             if (this.elements.progressBar) {

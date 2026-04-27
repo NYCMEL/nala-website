@@ -116,7 +116,7 @@ body {
   min-height: 100vh; }
 
 a {
-  color: #1976d2;
+  color: #a98212;
   text-decoration: none;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
 
@@ -228,7 +228,7 @@ h1.title::after {
   flex: 1; }
 
 .mtk-tile-front {
-  background: #3a87d1 !important; }
+  background: #a98212 !important; }
 
 .mtk-tile-back {
   background: #1f5486 !important;

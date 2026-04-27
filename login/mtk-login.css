@@ -116,7 +116,7 @@ body {
   min-height: 100vh; }
 
 a {
-  color: #1976d2;
+  color: #a98212;
   text-decoration: none;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
 
@@ -229,7 +229,7 @@ h1.title::after {
   transition: border-color 200ms; }
 
 .mtk-login form .form-group input:focus {
-  border-color: #1976d2;
+  border-color: #a98212;
   box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2); }
 
 .mtk-login form .form-group .error {
@@ -242,14 +242,14 @@ h1.title::after {
   font-size: 16px;
   font-weight: 500;
   color: #ffffff;
-  background-color: #1976d2;
+  background-color: #a98212;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 200ms; }
 
 .mtk-login form button:hover, .mtk-login form button:focus {
-  background-color: #1565c0;
+  background-color: #7a5e0c;
   outline: none; }
 
 .mtk-login form .links {
@@ -258,7 +258,7 @@ h1.title::after {
   font-size: 14px; }
 
 .mtk-login form .links a {
-  color: #1976d2;
+  color: #a98212;
   text-decoration: none;
   cursor: pointer; }
 

@@ -116,7 +116,7 @@ body {
   min-height: 100vh; }
 
 a {
-  color: #1976d2;
+  color: #a98212;
   text-decoration: none;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
 
@@ -213,13 +213,13 @@ h1.title::after {
 
 .md-field input:focus {
   outline: none;
-  border-bottom-color: #1b76d2; }
+  border-bottom-color: #a98212; }
 
 .md-field input:focus + label,
 .md-field input:not(:placeholder-shown) + label {
   transform: translateY(-18px);
   font-size: 12px;
-  color: #1b76d2; }
+  color: #a98212; }
 
 .md-field label {
   position: absolute;
@@ -242,7 +242,7 @@ h1.title::after {
   width: 100%;
   padding: 12px;
   border: none;
-  background: #1b76d2;
+  background: #a98212;
   color: #ffffff;
   font-size: 16px;
   border-radius: 4px;
@@ -266,7 +266,7 @@ h1.title::after {
   height: 18px;
   margin-top: 2px;
   flex-shrink: 0;
-  accent-color: #1b76d2;
+  accent-color: #a98212;
   cursor: pointer; }
 
 .md-checkbox label {
@@ -276,7 +276,7 @@ h1.title::after {
   line-height: 1.5; }
 
 .md-checkbox label a {
-  color: #1b76d2;
+  color: #a98212;
   text-decoration: underline; }
 
 .md-checkbox label a:hover {

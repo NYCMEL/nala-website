@@ -116,7 +116,7 @@ body {
   min-height: 100vh; }
 
 a {
-  color: #1976d2;
+  color: #a98212;
   text-decoration: none;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
 
@@ -189,7 +189,7 @@ h1.title::after {
 
 #MTK-hero {
   z-index: 1;
-  background-color: #81d4fa !important;
+  background-color: #fbf4e5 !important;
   padding-top: 50px !important;
   padding-bottom: 50px !important;
   width: 100%; }

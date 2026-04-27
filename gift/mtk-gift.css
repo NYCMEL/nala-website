@@ -47,19 +47,19 @@ mtk-gift .mtk-gift__btn--submit:focus-visible,
 
 mtk-gift .mtk-gift__btn--submit,
 .mtk-gift .mtk-gift__btn--submit {
-  background: #1976d2;
+  background: #a98212;
   color: #ffffff;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06); }
 
 mtk-gift .mtk-gift__btn--submit:hover,
 .mtk-gift .mtk-gift__btn--submit:hover {
-  background: #1565c0;
+  background: #7a5e0c;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
   transform: translateY(-1px); }
 
 mtk-gift .mtk-gift__btn--submit:active,
 .mtk-gift .mtk-gift__btn--submit:active {
-  background: #0d47a1;
+  background: #4a3a08;
   transform: translateY(0); }
 
 mtk-gift .mtk-gift__btn--submit:disabled,
@@ -188,7 +188,7 @@ body {
   min-height: 100vh; }
 
 a {
-  color: #1976d2;
+  color: #a98212;
   text-decoration: none;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
 
@@ -277,7 +277,7 @@ mtk-gift .mtk-gift__card,
 
 mtk-gift .mtk-gift__header,
 .mtk-gift .mtk-gift__header {
-  background: #1976d2;
+  background: #a98212;
   padding: 24px 24px 16px;
   display: flex;
   align-items: center;
@@ -347,7 +347,7 @@ mtk-gift .mtk-gift__address-label,
 mtk-gift .mtk-gift__address-label .material-icons,
 .mtk-gift .mtk-gift__address-label .material-icons {
   font-size: 16px;
-  color: #1976d2; }
+  color: #a98212; }
 
 mtk-gift .mtk-gift__row,
 .mtk-gift .mtk-gift__row {
@@ -411,7 +411,7 @@ mtk-gift .mtk-gift__input:focus,
 mtk-gift .mtk-gift__select:focus,
 .mtk-gift .mtk-gift__input:focus,
 .mtk-gift .mtk-gift__select:focus {
-  border-color: #1976d2;
+  border-color: #a98212;
   border-width: 2px; }
 
 mtk-gift .mtk-gift__input:focus + .mtk-gift__label,
@@ -424,7 +424,7 @@ mtk-gift .mtk-gift__select:not(:placeholder-shown) + .mtk-gift__label,
 .mtk-gift .mtk-gift__select:not(:placeholder-shown) + .mtk-gift__label {
   top: 6px;
   font-size: 12px;
-  color: #1976d2;
+  color: #a98212;
   letter-spacing: 0.025em; }
 
 mtk-gift .mtk-gift__input.is-invalid,
@@ -453,7 +453,7 @@ mtk-gift .mtk-gift__select.has-value + .mtk-gift__label,
 .mtk-gift .mtk-gift__select.has-value + .mtk-gift__label {
   top: 6px;
   font-size: 12px;
-  color: #1976d2;
+  color: #a98212;
   letter-spacing: 0.025em; }
 
 mtk-gift .mtk-gift__select option[value=""],
@@ -554,7 +554,7 @@ mtk-gift .mtk-gift__btn.btn-link,
 .mtk-gift .mtk-gift__btn.btn-link {
   flex: 1;
   background: transparent;
-  color: #1976d2;
+  color: #a98212;
   border: none;
   box-shadow: none;
   text-decoration: underline;
@@ -567,7 +567,7 @@ mtk-gift .mtk-gift__btn.btn-link,
 mtk-gift .mtk-gift__btn.btn-link:hover,
 .mtk-gift .mtk-gift__btn.btn-link:hover {
   background: rgba(25, 118, 210, 0.08);
-  text-decoration-color: #1976d2; }
+  text-decoration-color: #a98212; }
 
 mtk-gift .mtk-gift__btn.btn-link:focus-visible,
 .mtk-gift .mtk-gift__btn.btn-link:focus-visible {
@@ -618,12 +618,12 @@ mtk-gift .mtk-gift__snackbar--error .material-icons,
 mtk-gift .mtk-gift__snackbar--info,
 .mtk-gift .mtk-gift__snackbar--info {
   background: #e4f0fc;
-  color: #1565c0;
+  color: #7a5e0c;
   border: 1px solid #9bc7f3; }
 
 mtk-gift .mtk-gift__snackbar--info .material-icons,
 .mtk-gift .mtk-gift__snackbar--info .material-icons {
-  color: #1976d2; }
+  color: #a98212; }
 
 mtk-gift *:focus-visible,
 .mtk-gift *:focus-visible {

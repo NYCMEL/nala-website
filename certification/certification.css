@@ -108,7 +108,7 @@ body {
   margin-top: 80px; }
 
 a {
-  color: #1976d2;
+  color: #a98212;
   text-decoration: none;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
 
@@ -185,7 +185,7 @@ h1.title::after {
 
 .mtk-certification .mtk-icon {
   font-size: 32px;
-  color: #1976d2;
+  color: #a98212;
   margin-bottom: 12px; }
 
 .mtk-certification .mtk-card-title {
@@ -203,8 +203,8 @@ h1.title::after {
 
 .mtk-certification .mtk-list li::before {
   content: "✓";
-  color: #1976d2;
+  color: #a98212;
   margin-right: 8px; }
   content: "✓";
-      color: #1976d2;
+      color: #a98212;
       margin-right: 8px; }

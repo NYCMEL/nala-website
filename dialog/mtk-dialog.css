@@ -116,7 +116,7 @@ body {
   min-height: 100vh; }
 
 a {
-  color: #1976d2;
+  color: #a98212;
   text-decoration: none;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
 
@@ -229,7 +229,7 @@ mtk-dialog.mtk-dialog {
   outline: none; }
 
 .mtk-dialog__container:focus-visible {
-  outline: 3px solid #1976d2;
+  outline: 3px solid #a98212;
   outline-offset: 2px; }
 
 .mtk-dialog__header {
@@ -279,7 +279,7 @@ mtk-dialog.mtk-dialog {
   background-color: rgba(73, 69, 79, 0.08); }
 
 .mtk-dialog__close-btn:focus-visible {
-  outline: 3px solid #1976d2;
+  outline: 3px solid #a98212;
   outline-offset: 2px;
   background-color: rgba(73, 69, 79, 0.12); }
 
@@ -316,20 +316,20 @@ mtk-dialog.mtk-dialog {
   border: none; }
 
 .mtk-dialog__footer .btn:focus-visible {
-  outline: 3px solid #1976d2;
+  outline: 3px solid #a98212;
   outline-offset: 2px; }
 
 .mtk-dialog__footer .btn-primary {
-  background-color: #1976d2;
+  background-color: #a98212;
   color: #ffffff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
 
 .mtk-dialog__footer .btn-primary:hover {
-  background-color: #1565c0;
+  background-color: #7a5e0c;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.24); }
 
 .mtk-dialog__footer .btn-primary:active {
-  background-color: #0d47a1; }
+  background-color: #4a3a08; }
 
 .mtk-dialog__footer .btn-danger {
   background-color: #d32f2f;
@@ -365,7 +365,7 @@ mtk-dialog.mtk-dialog {
 
 .mtk-dialog__footer .btn-link {
   background: transparent;
-  color: #1976d2;
+  color: #a98212;
   box-shadow: none; }
 
 .mtk-dialog__footer .btn-link:hover {

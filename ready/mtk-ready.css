@@ -116,7 +116,7 @@ body {
   min-height: 100vh; }
 
 a {
-  color: #1976d2;
+  color: #a98212;
   text-decoration: none;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
 
@@ -188,7 +188,7 @@ h1.title::after {
   transform: translateX(-50%); }
 
 .mtk-ready {
-  background-color: #5b88b1;
+  background-color: #4a3a08;
   padding: 48px 0;
   overflow: hidden; }
 
@@ -198,7 +198,7 @@ h1.title::after {
 .mtk-ready .mtk-ready-title {
   font-size: 1.75rem;
   font-weight: 600;
-  color: #bfe7ff;
+  color: #fbf4e5;
   margin-bottom: 8px; }
 
 .mtk-ready .mtk-ready-desc {
@@ -209,7 +209,7 @@ h1.title::after {
 
 .mtk-ready .mtk-ready-btn {
   background-color: #ffffff;
-  color: #1565c0;
+  color: #7a5e0c;
   font-weight: 500;
   padding: 12px 24px;
   border-radius: 8px;
