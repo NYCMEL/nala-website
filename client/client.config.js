@@ -51,6 +51,11 @@ const clientData = {
 	    { platform: "<img src='img/twitter.png' height=30>",  url: "#" }
 	]
     },
+    reviews: [
+	{ id: "rev-001", customerName: "Maria S.", rating: 5, text: "Fast response, clear price, and the new deadbolt works perfectly.", createdAt: "2026-04-10", published: true },
+	{ id: "rev-002", customerName: "Jordan P.", rating: 4, text: "Professional service and good communication from arrival through payment.", createdAt: "2026-04-18", published: true },
+	{ id: "rev-003", customerName: "Ari L.", rating: 3, text: "The lock was fixed, but arrival took longer than expected.", createdAt: "2026-04-21", published: false }
+    ],
     topProStatus: {
 	title: "Top Pro status",
 	description: "Top Pros are among the highest-rated, most popular professionals on Thumbtack.",

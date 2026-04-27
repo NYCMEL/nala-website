@@ -226,7 +226,17 @@ const MTK_BIAB_I18N = {
     operations: 'Operations',
     invoiceSetup: 'Invoice Setup',
     automationIntro: 'These APIs can reduce manual work, but they need OAuth, approved access, and server-side credential handling before the website can create or change accounts automatically.',
-    logoApplied: 'Logo sent to the Website Maker. Open or refresh the Website Maker tab if it is not visible yet.'
+    logoApplied: 'Logo sent to the Website Maker. Open or refresh the Website Maker tab if it is not visible yet.',
+    reviewsIntro: 'Send review requests after completed jobs. Every submitted rating counts toward the public average; you can only choose which written reviews appear on the webpage.',
+    sendReviewRequest: 'Send review request',
+    customerName: 'Customer name',
+    customerEmail: 'Customer email',
+    jobType: 'Job type or note',
+    publicReviewLink: 'Public review link',
+    visibleOnWebsite: 'Show on webpage',
+    hiddenOnWebsite: 'Hidden from webpage',
+    allRatingsCount: 'All ratings count',
+    publishedReviews: 'Published reviews'
   },
   es: {
     selectOption: 'Selecciona una opción',
@@ -246,7 +256,17 @@ const MTK_BIAB_I18N = {
     operations: 'Operaciones',
     invoiceSetup: 'Configuración de factura',
     automationIntro: 'Estas APIs pueden reducir trabajo manual, pero requieren OAuth, acceso aprobado y manejo seguro de credenciales en el servidor antes de que el sitio pueda crear o modificar cuentas automáticamente.',
-    logoApplied: 'Logo enviado al creador de página. Abre o actualiza la pestaña Website Maker si aún no aparece.'
+    logoApplied: 'Logo enviado al creador de página. Abre o actualiza la pestaña Website Maker si aún no aparece.',
+    reviewsIntro: 'Envía solicitudes de reseña después de trabajos terminados. Cada calificación enviada cuenta para el promedio público; solo puedes elegir qué reseñas escritas aparecen en la página web.',
+    sendReviewRequest: 'Enviar solicitud de reseña',
+    customerName: 'Nombre del cliente',
+    customerEmail: 'Correo del cliente',
+    jobType: 'Tipo de trabajo o nota',
+    publicReviewLink: 'Enlace público de reseña',
+    visibleOnWebsite: 'Mostrar en la página',
+    hiddenOnWebsite: 'Oculta en la página',
+    allRatingsCount: 'Todas las calificaciones cuentan',
+    publishedReviews: 'Reseñas publicadas'
   }
 };
 
@@ -262,6 +282,8 @@ class MtkBiab {
     this.events = cfg.events;
     this.logoDesignerState = this._getDefaultLogoDesignerState();
     this.formState = this._getDefaultFormState();
+    this.reviewState = this._getDefaultReviewState();
+    this.reviewsLoadedForUid = '';
     this.formSteps = {};
 
     // Active state
@@ -660,10 +682,21 @@ class MtkBiab {
       case 'tool-email':
         this._emailToolDocument(btn.dataset.tool);
         break;
+      case 'review-send-request':
+        this._sendReviewRequest();
+        break;
+      case 'review-toggle-published':
+        this._toggleReviewPublished(btn.dataset.reviewId);
+        break;
     }
   }
 
   _onInput(e) {
+    if (e.target.dataset.reviewField) {
+      this.reviewState.request[e.target.dataset.reviewField] = e.target.value;
+      return;
+    }
+
     if (e.target.dataset.toolField) {
       this._updateToolField(e.target.dataset.tool, e.target.dataset.toolField, e.target.value);
       return;
@@ -901,6 +934,7 @@ class MtkBiab {
     this._renderStartupTool();
     this._renderInvoiceTool();
     this._renderAutomationTool();
+    this._renderReviewsTool();
   }
 
   _renderLogoConceptsPanel() {
@@ -1341,6 +1375,17 @@ class MtkBiab {
     };
   }
 
+  _getDefaultReviewState() {
+    return {
+      request: {
+        customerName: '',
+        customerEmail: '',
+        jobType: ''
+      },
+      reviews: []
+    };
+  }
+
   _moveToolStep(tool, direction) {
     const steps = this._getToolSteps(tool);
     const current = this.formSteps[tool] || 0;
@@ -1483,6 +1528,174 @@ class MtkBiab {
   _emailToolDocument(tool) {
     const text = this._buildToolDocument(tool).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
     window.location.href = `mailto:?subject=${encodeURIComponent(tool.replace(/-/g, ' '))}&body=${encodeURIComponent(text)}`;
+  }
+
+  _renderReviewsTool() {
+    const mount = this.el.querySelector('[data-biab-tool="reviews"]');
+    if (!mount) return;
+    this._loadSavedReviewState();
+    const request = this.reviewState.request;
+    const reviews = this.reviewState.reviews;
+    const ratingTotal = reviews.reduce((sum, review) => sum + Number(review.rating || 0), 0);
+    const ratingCount = reviews.length;
+    const average = ratingCount ? (ratingTotal / ratingCount).toFixed(1) : '0.0';
+    const publishedCount = reviews.filter(review => review.published).length;
+    const reviewUrl = this._buildReviewUrl();
+
+    mount.innerHTML = `
+      <section class="mtk-biab-tool mtk-biab-reviews">
+        <div class="mtk-biab-tool__head">
+          <div>
+            <span class="mtk-biab__logo-badge">${this._t('allRatingsCount')}</span>
+            <h3>Review Requests</h3>
+            <p>${this._t('reviewsIntro')}</p>
+          </div>
+          <div class="mtk-biab-reviews__score" aria-label="Current rating">
+            <strong>${average}</strong>
+            <span>${'★'.repeat(Math.round(Number(average)))}</span>
+            <small>${ratingCount} ratings · ${publishedCount} shown</small>
+          </div>
+        </div>
+
+        <div class="mtk-biab-tool__grid">
+          <form class="mtk-biab-tool__form" onsubmit="return false">
+            <label class="mtk-biab-tool__field">${this._t('customerName')}
+              <input data-review-field="customerName" type="text" value="${this._escapeHtml(request.customerName)}" placeholder="Jane Customer">
+            </label>
+            <label class="mtk-biab-tool__field">${this._t('customerEmail')}
+              <input data-review-field="customerEmail" type="email" value="${this._escapeHtml(request.customerEmail)}" placeholder="jane@example.com">
+            </label>
+            <label class="mtk-biab-tool__field">${this._t('jobType')}
+              <textarea data-review-field="jobType" rows="3" placeholder="Rekey, lockout, lock change...">${this._escapeHtml(request.jobType)}</textarea>
+            </label>
+            <label class="mtk-biab-tool__field">${this._t('publicReviewLink')}
+              <input type="text" readonly value="${this._escapeHtml(reviewUrl)}">
+            </label>
+            <button type="button" class="mtk-biab__action-btn mtk-biab__action-btn--primary mtk-biab-reviews__send" data-action="review-send-request">
+              ${this._t('sendReviewRequest')}
+            </button>
+          </form>
+
+          <article class="mtk-biab-tool__preview">
+            <h3>${this._t('publishedReviews')}</h3>
+            <p>Written reviews can be hidden from the public webpage, but the rating number remains part of the business average.</p>
+            <div class="mtk-biab-reviews__list">
+              ${reviews.length ? reviews.map(review => this._buildReviewModerationCard(review)).join('') : '<p>No customer reviews have been submitted yet.</p>'}
+            </div>
+          </article>
+        </div>
+      </section>
+    `;
+  }
+
+  _buildReviewModerationCard(review) {
+    const status = review.published ? this._t('visibleOnWebsite') : this._t('hiddenOnWebsite');
+    return `
+      <article class="mtk-biab-reviews__card${review.published ? ' is-published' : ''}">
+        <div>
+          <strong>${this._escapeHtml(review.customerName)}</strong>
+          <span class="mtk-biab-reviews__stars">${'★'.repeat(Number(review.rating || 0))}</span>
+          <small>${this._escapeHtml(review.createdAt)}</small>
+        </div>
+        <p>${this._escapeHtml(review.text)}</p>
+        <button type="button" class="mtk-biab__action-btn" data-action="review-toggle-published" data-review-id="${this._escapeHtml(review.id)}">
+          ${status}
+        </button>
+      </article>
+    `;
+  }
+
+  _getReviewUid() {
+    let uid = (window.config && window.config.nalaUID) || '';
+    try {
+      const iframe = this.el.querySelector('#mtk-biab-iframe-website-maker');
+      const profile = iframe && iframe.contentWindow && iframe.contentWindow._clientProfileInstance;
+      if (profile && profile.data && profile.data.nalaUID) uid = profile.data.nalaUID;
+    } catch (err) {
+      wc.warn('[mtk-biab] Could not read Website Maker profile UID', err);
+    }
+    return uid || 'U12345';
+  }
+
+  _buildReviewUrl(token = '') {
+    const origin = window.location.origin || '';
+    const uid = this._getReviewUid();
+    const tokenQuery = token ? `&token=${encodeURIComponent(token)}` : '';
+    return `${origin}/repo_deploy/client/review.html?nalaUID=${encodeURIComponent(uid)}${tokenQuery}`;
+  }
+
+  _sendReviewRequest() {
+    const request = this.reviewState.request;
+    const token = this._createReviewToken();
+    const payload = {
+      nalaUID: this._getReviewUid(),
+      token,
+      customerName: request.customerName.trim(),
+      customerEmail: request.customerEmail.trim(),
+      jobType: request.jobType.trim(),
+      reviewUrl: this._buildReviewUrl(token)
+    };
+
+    if (!payload.customerName || !payload.customerEmail) {
+      if (window.MTKMsgs && typeof MTKMsgs.show === 'function') {
+        MTKMsgs.show({ type: 'error', icon: 'error', message: 'Add the customer name and email before sending.', closable: true, timer: 6 });
+      }
+      return;
+    }
+
+    wc.publish('mtk-biab:review-request', payload);
+    if (window.MTKMsgs && typeof MTKMsgs.show === 'function') {
+      MTKMsgs.show({ type: 'success', icon: 'success', message: 'Review request queued for email delivery.', closable: true, timer: 6 });
+    }
+    this.reviewState.request = { customerName: '', customerEmail: '', jobType: '' };
+    this._renderReviewsTool();
+  }
+
+  _createReviewToken() {
+    if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+      return window.crypto.randomUUID();
+    }
+    return 'review-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+  }
+
+  _loadSavedReviewState() {
+    const uid = this._getReviewUid();
+    if (!uid || this.reviewsLoadedForUid === uid || !window.fetch) return;
+    this.reviewsLoadedForUid = uid;
+
+    fetch((window.wc && wc.apiURL ? wc.apiURL : '') + `/api/business_in_a_box_reviews.php?nalaUID=${encodeURIComponent(uid)}`, {
+      credentials: 'include'
+    }).then(res => res.json().then(json => {
+      if (!res.ok) throw new Error((json && (json.error || json.message)) || 'Could not load reviews.');
+      return json;
+    })).then(json => {
+      if (Array.isArray(json.reviews) && json.reviews.length) {
+        this.reviewState.reviews = json.reviews;
+        this._renderReviewsTool();
+      }
+    }).catch(err => {
+      wc.warn('[mtk-biab] Could not load saved reviews', err);
+    });
+  }
+
+  _toggleReviewPublished(reviewId) {
+    const review = this.reviewState.reviews.find(item => item.id === reviewId);
+    if (!review) return;
+    review.published = !review.published;
+    wc.publish('mtk-biab:reviews-save', {
+      nalaUID: this._getReviewUid(),
+      reviews: this.reviewState.reviews,
+      rating: this._calculateReviewAverage(),
+      reviewCount: this.reviewState.reviews.length
+    });
+    this._renderReviewsTool();
+  }
+
+  _calculateReviewAverage() {
+    const reviews = this.reviewState.reviews;
+    if (!reviews.length) return 0;
+    const total = reviews.reduce((sum, review) => sum + Number(review.rating || 0), 0);
+    return Math.round((total / reviews.length) * 10) / 10;
   }
 
   _renderAutomationTool() {

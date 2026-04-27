@@ -521,9 +521,9 @@ mtk-biab.mtk-biab {
     color: #202124;
     font-size: 13px;
     font-weight: 800; }
-    .mtk-biab-tool__field textarea {
+    .mtk-biab-tool__field textarea,
+    .mtk-biab-tool__field input {
       width: 100%;
-      min-height: 82px;
       resize: vertical;
       border: 1px solid #cfc5af;
       border-radius: 8px;
@@ -532,6 +532,8 @@ mtk-biab.mtk-biab {
       font-weight: 500;
       color: #34302a;
       background: #fff; }
+    .mtk-biab-tool__field textarea {
+      min-height: 82px; }
   .mtk-biab-tool__preview {
     min-height: 260px;
     padding: 22px;
@@ -555,6 +557,54 @@ mtk-biab.mtk-biab {
   .mtk-biab-api-card h4 {
     margin: 0 0 8px;
     color: #202124; }
+
+.mtk-biab-reviews__score {
+  min-width: 160px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid #e0d3ad;
+  background: #fffaf0;
+  text-align: right; }
+  .mtk-biab-reviews__score strong {
+    display: block;
+    color: #202124;
+    font-size: 34px;
+    line-height: 1; }
+  .mtk-biab-reviews__score span,
+  .mtk-biab-reviews__stars {
+    color: #a98212;
+    letter-spacing: 1px; }
+  .mtk-biab-reviews__score small {
+    display: block;
+    color: #5f6368;
+    margin-top: 4px; }
+
+.mtk-biab-reviews__send {
+  justify-self: start; }
+
+.mtk-biab-reviews__list {
+  display: grid;
+  gap: 12px; }
+
+.mtk-biab-reviews__card {
+  border: 1px solid #e3dac5;
+  border-radius: 8px;
+  padding: 14px;
+  background: #fbf8f1; }
+  .mtk-biab-reviews__card.is-published {
+    background: #fff;
+    border-color: #c9b36e; }
+  .mtk-biab-reviews__card div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 8px; }
+  .mtk-biab-reviews__card p {
+    margin: 0 0 12px;
+    color: #34302a; }
+  .mtk-biab-reviews__card small {
+    color: #5f6368; }
 
 .mtk-biab-stationery__preview {
   display: grid;

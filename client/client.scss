@@ -195,6 +195,111 @@ body {
 
 .about-text { margin-bottom: $spacing-sm; }
 
+.client-reviews {
+  display: grid;
+  gap: 14px;
+}
+
+.client-review-card {
+  border: 1px solid #e0d3ad;
+  border-radius: $radius-sm;
+  padding: $font-size-lg;
+  background: #fffdf8;
+
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: $spacing-sm;
+
+    span {
+      color: $color-client-primary;
+      white-space: nowrap;
+    }
+  }
+
+  p { margin-bottom: $spacing-sm; }
+  small { color: $color-text-secondary; }
+}
+
+.client-review-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-2xl $font-size-lg;
+  background: #f7f4ed;
+}
+
+.client-review-form {
+  width: min(680px, 100%);
+  background: $color-white;
+  border: 1px solid #e0d3ad;
+  border-radius: $radius-sm;
+  padding: $spacing-2xl;
+  box-shadow: 0 12px 30px rgba(30, 24, 12, 0.12);
+
+  &__brand .material-icons {
+    width: 54px;
+    height: 54px;
+    border-radius: $radius-circle;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: $color-client-primary;
+    color: $color-white;
+    margin-bottom: $font-size-lg;
+  }
+
+  label,
+  fieldset {
+    display: grid;
+    gap: $spacing-sm;
+    margin: 0 0 18px;
+    color: #2a2519;
+    font-weight: $font-weight-medium;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    width: 100%;
+    border: 1px solid #cdbb85;
+    border-radius: 6px;
+    padding: 11px 12px;
+    font: inherit;
+    color: $color-text-primary;
+  }
+
+  &__stars {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 4px;
+
+    label {
+      margin: 0;
+      cursor: pointer;
+    }
+
+    input {
+      position: absolute;
+      opacity: 0;
+    }
+
+    span {
+      font-size: 34px;
+      color: #c7c0ac;
+    }
+
+    input:checked ~ span,
+    label:hover span,
+    label:hover ~ label span {
+      color: $color-client-primary;
+    }
+  }
+}
+
 .top-pro-badges {
   display: flex;
   gap: $font-size-lg;

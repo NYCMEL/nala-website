@@ -35,7 +35,9 @@ class _febe {
 	    "4-mtk-quiz-submitted",
 	    "mtk-dialog:action",
 	    "client:save",
-	    "mtk-request:submit"
+	    "mtk-request:submit",
+	    "mtk-biab:review-request",
+	    "mtk-biab:reviews-save"
 	];
 
 	// create handlers mapping
@@ -85,6 +87,8 @@ class _febe {
 	    "mtk-dialog:action": this.handleDialogActions,
 	    "client:save": this.handleClientSave,
 	    "mtk-request:submit": this.handleRequestSubmit,
+	    "mtk-biab:review-request": this.handleBiabReviewRequest,
+	    "mtk-biab:reviews-save": this.handleBiabReviewsSave,
 
 	};
     }
@@ -119,6 +123,7 @@ class _febe {
 	source.socialMedia = source.socialMedia || {};
 	source.socialMedia.links = Array.isArray(source.socialMedia.links) ? source.socialMedia.links : [];
 	source.stats = Array.isArray(source.stats) ? source.stats : [];
+	source.reviews = Array.isArray(source.reviews) ? source.reviews : [];
 
 	if (changes.clientName !== undefined) source.business.name = changes.clientName;
 	if (changes.aboutText !== undefined) source.about.description = changes.aboutText;
@@ -126,6 +131,9 @@ class _febe {
 	if (changes.paymentMethodsText !== undefined) source.paymentMethods.methods = changes.paymentMethodsText;
 	if (changes.guaranteeTitle !== undefined) source.guarantee.title = changes.guaranteeTitle;
 	if (Array.isArray(changes.socialMedia)) source.socialMedia.links = changes.socialMedia;
+	if (Array.isArray(changes.reviews)) source.reviews = changes.reviews;
+	if (changes.rating !== undefined) source.business.rating = Number(changes.rating);
+	if (changes.reviewCount !== undefined) source.business.reviewCount = Number(changes.reviewCount);
 
 	if (Array.isArray(changes.stats)) {
 	    source.stats = source.stats.map((stat, index) => {
@@ -234,6 +242,64 @@ class _febe {
 		});
 	    } else {
 		alert(err && err.message ? err.message : "Could not submit request.");
+	    }
+	});
+    }
+
+    handleBiabReviewRequest(data) {
+	return this.postBiabJson("/api/business_in_a_box_review_request.php", data || {}, "Review request email sent.", "Could not send review request email.");
+    }
+
+    handleBiabReviewsSave(data) {
+	const instance = window._clientProfileInstance;
+	if (instance && instance.data && data) {
+	    instance.data.reviews = Array.isArray(data.reviews) ? data.reviews : instance.data.reviews;
+	    instance.data.business = instance.data.business || {};
+	    if (data.rating !== undefined) instance.data.business.rating = Number(data.rating);
+	    if (data.reviewCount !== undefined) instance.data.business.reviewCount = Number(data.reviewCount);
+	    instance.renderHeader();
+	    instance.renderReviews();
+	}
+
+	return this.postBiabJson("/api/business_in_a_box_reviews.php", data || {}, "Review display settings saved.", "Could not save review display settings.");
+    }
+
+    postBiabJson(path, payload, successMessage, errorMessage) {
+	return fetch(wc.apiURL + path, {
+	    method: "POST",
+	    credentials: "include",
+	    headers: { "Content-Type": "application/json" },
+	    body: JSON.stringify(payload || {})
+	}).then(res => {
+	    return res.json().then(json => {
+		if (!res.ok) {
+		    throw new Error((json && (json.error || json.message)) || errorMessage);
+		}
+		return json;
+	    });
+	}).then(json => {
+	    if (window.MTKMsgs && typeof MTKMsgs.show === "function") {
+		MTKMsgs.show({
+		    type: "success",
+		    icon: "success",
+		    message: successMessage,
+		    closable: true,
+		    timer: 6
+		});
+	    }
+	    return json;
+	}).catch(err => {
+	    wc.error("Business in a Box API request failed", err);
+	    if (window.MTKMsgs && typeof MTKMsgs.show === "function") {
+		MTKMsgs.show({
+		    type: "error",
+		    icon: "error",
+		    message: err && err.message ? err.message : errorMessage,
+		    closable: true,
+		    timer: 10
+		});
+	    } else {
+		alert(err && err.message ? err.message : errorMessage);
 	    }
 	});
     }

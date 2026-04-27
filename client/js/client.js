@@ -36,6 +36,7 @@ var client = window.client = function(config) {
 class ClientProfile {
     constructor(data) {
 	this.data = data
+	this.data.reviews = Array.isArray(this.data.reviews) ? this.data.reviews : []
 	this.init()
     }
 
@@ -51,6 +52,7 @@ class ClientProfile {
 	// Always show header bar
 	this.initEditSwitch()
 	this.bindExternalLogo()
+	this.loadSavedReviews()
 	if (this.data && this.data.business && this.data.business.name) {
 	    document.title = this.data.business.name
 	}
@@ -77,6 +79,31 @@ class ClientProfile {
 	    if (event.data.payload.businessName) this.data.business.name = event.data.payload.businessName
 	    this.renderHeader()
 	    document.title = this.data.business.name
+	})
+    }
+
+    loadSavedReviews() {
+	const uid = new URLSearchParams(window.location.search).get('nalaUID') || (this.data && this.data.nalaUID) || ''
+	if (!uid || !window.fetch) return
+
+	const self = this
+	fetch((window.wc && wc.apiURL ? wc.apiURL : '') + '/api/business_in_a_box_reviews.php?nalaUID=' + encodeURIComponent(uid), {
+	    credentials: 'include'
+	}).then(function(res) {
+	    return res.json().then(function(json) {
+		if (!res.ok) throw new Error((json && (json.error || json.message)) || 'Could not load reviews.')
+		return json
+	    })
+	}).then(function(json) {
+	    if (Array.isArray(json.reviews) && json.reviews.length) {
+		self.data.reviews = json.reviews
+		self.data.business.rating = Number(json.rating || self.data.business.rating)
+		self.data.business.reviewCount = Number(json.reviewCount || self.data.business.reviewCount)
+		self.renderHeader()
+		self.renderReviews()
+	    }
+	}).catch(function(err) {
+	    wc.warn('[client] Could not load saved reviews', err)
 	})
     }
 
@@ -248,6 +275,18 @@ class ClientProfile {
 		return '        { platform: "' + l.platform + '", icon: "' + l.icon + '", url: "' + (l.url||'') + '" }'
 	    }).join(',\n')
 
+	const reviews = (changes.reviews || d.reviews || [])
+	    .map(function(r) {
+		return '        ' + JSON.stringify({
+		    id: r.id || '',
+		    customerName: r.customerName || '',
+		    rating: Number(r.rating || 0),
+		    text: r.text || '',
+		    createdAt: r.createdAt || '',
+		    published: r.published !== false
+		})
+	    }).join(',\n')
+
 	// Stats — merge updated numbers back in
 	const stats = d.stats.map(function(s, i) {
 	    const updatedNum = changes.stats && changes.stats[i]
@@ -309,6 +348,9 @@ class ClientProfile {
 	    socialLinks,
 	    '        ]',
 	    '    },',
+	    '    reviews: [',
+	    reviews,
+	    '    ],',
 	    '    topProStatus: {',
 	    '        title:       "' + d.topProStatus.title + '",',
 	    '        description: "' + d.topProStatus.description + '",',
@@ -484,6 +526,8 @@ class ClientProfile {
 	document.getElementById("socialMediaTitle").textContent = this.data.socialMedia.title
 	this.renderSocialMedia()
 
+	this.renderReviews()
+
 	// Top Pro status
 	// Only show Top Pro section if isTopPro is true
 	const topProSection = document.getElementById("topProSection")
@@ -504,6 +548,43 @@ class ClientProfile {
     `,
 	    )
 	    .join("")
+    }
+
+    renderReviews() {
+	const section = document.getElementById("reviewsSection")
+	const list = document.getElementById("clientReviews")
+	if (!section || !list) return
+
+	const reviews = Array.isArray(this.data.reviews) ? this.data.reviews : []
+	const visible = reviews.filter(function(review) {
+	    return review && review.published !== false && review.text
+	})
+
+	const self = this
+	section.style.display = visible.length ? "" : "none"
+	list.innerHTML = visible.map(function(review) {
+	    const rating = Math.max(0, Math.min(5, Number(review.rating || 0)))
+	    const stars = "★".repeat(Math.round(rating))
+	    return `
+		<article class="client-review-card">
+		    <div class="client-review-card__head">
+			<strong>${self._escapeHtml(review.customerName || "Customer")}</strong>
+			<span>${stars}</span>
+		    </div>
+		    <p>${self._escapeHtml(review.text)}</p>
+		    <small>${self._escapeHtml(review.createdAt || "")}</small>
+		</article>
+	    `
+	}).join("")
+    }
+
+    _escapeHtml(value) {
+	return String(value)
+	    .replace(/&/g, '&amp;')
+	    .replace(/</g, '&lt;')
+	    .replace(/>/g, '&gt;')
+	    .replace(/"/g, '&quot;')
+	    .replace(/'/g, '&#39;')
     }
 
     renderSocialMedia(forceEdit) {

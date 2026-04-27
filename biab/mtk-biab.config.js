@@ -888,6 +888,17 @@ const MTK_BIAB_CONFIG = {
       }
     },
     {
+      id: "reviews",
+      label: "Reviews",
+      icon: "rate_review",
+      active: false,
+      type: "simple",
+      content: {
+        title: "Customer Reviews",
+        body: `<div data-biab-tool="reviews"></div>`
+      }
+    },
+    {
       id: "invoicing",
       label: "Invoicing",
       icon: "receipt_long",
