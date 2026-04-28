@@ -19,7 +19,20 @@ mtk-biab.mtk-biab {
 .mtk-biab-tool__nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px; }
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px; }
+
+.mtk-biab__lang-switch button, .mtk-biab__lang-switch .mtk-biab__action-btn,
+.mtk-biab__logo-actions button,
+.mtk-biab__logo-actions .mtk-biab__action-btn,
+.mtk-biab-tool__actions button,
+.mtk-biab-tool__actions .mtk-biab__action-btn,
+.mtk-biab-tool__nav button,
+.mtk-biab-tool__nav .mtk-biab__action-btn {
+  flex: 0 0 auto;
+  width: auto !important;
+  height: auto !important; }
 
 .mtk-biab__lang-switch {
   margin-left: 12px; }

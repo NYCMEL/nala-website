@@ -61,7 +61,15 @@ mtk-biab.mtk-biab {
 .mtk-biab-tool__nav {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 10px;
+  margin-top: 16px;
+
+  button, .mtk-biab__action-btn {
+    flex: 0 0 auto;
+    width: auto !important;
+    height: auto !important;
+  }
 }
 
 .mtk-biab__lang-switch {
