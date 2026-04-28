@@ -1071,6 +1071,20 @@ class MtkBiab {
       targetPanel.classList.add('is-active');
       targetPanel.focus({ preventScroll: true });
 
+      // Auto-expand pricing items (no close btn)
+      if (itemId && itemId.startsWith('pricing-')) {
+        const pricingBody = targetPanel.querySelector('.mtk-biab__content-body--collapsed');
+        if (pricingBody) {
+          pricingBody.removeAttribute('hidden');
+          pricingBody.classList.remove('mtk-biab__content-body--collapsed');
+          const pricingLink = targetPanel.querySelector('.mtk-biab__read-more-link');
+          if (pricingLink) pricingLink.remove();
+          // Hide badge
+          const badge = pricingBody.querySelector('p > span[style*="border-radius:999px"]');
+          if (badge && badge.closest('p')) badge.closest('p').style.display = 'none';
+        }
+      }
+
       // Reset any previously expanded guide body back to collapsed
       targetPanel.querySelectorAll('.mtk-biab__guide-header').forEach(h => h.remove());
       targetPanel.querySelectorAll('.mtk-biab__content-body').forEach(b => {
