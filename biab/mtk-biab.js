@@ -582,6 +582,13 @@ class MtkBiab {
             <p class="mtk-biab__content-subtitle">${menu.label} · ${tab.label}</p>
             ${(() => {
               const hasTool = item.content.body.includes('data-biab-tool=');
+              const isPricing = item.id && item.id.startsWith('pricing-');
+
+              // Pricing items: always expanded, no link
+              if (isPricing) {
+                return `<div class="mtk-biab__content-body">${item.content.body}</div>`;
+              }
+
               if (hasTool) {
                 // Extract just the tool div — collapse everything after it
                 const toolMatch = item.content.body.match(/(<div[^>]*data-biab-tool[^>]*>.*?<\/div>)/s);
@@ -699,6 +706,9 @@ class MtkBiab {
               if (badgeP) badgeP.style.display = 'none';
             }
 
+            // Hide the first h3 inside the body (it's now shown as the small header)
+            if (firstH3) firstH3.style.display = 'none';
+
             // Build header row: heading text + X button
             const headerRow = document.createElement('div');
             headerRow.className = 'mtk-biab__guide-header';
@@ -715,6 +725,8 @@ class MtkBiab {
               body.setAttribute('hidden', '');
               body.classList.add('mtk-biab__content-body--collapsed');
               headerRow.remove();
+              // Restore h3 visibility
+              if (firstH3) firstH3.style.display = '';
               // Restore badge visibility
               if (badge && badge.closest('p')) badge.closest('p').style.display = '';
               // Restore Read More link
@@ -1091,7 +1103,8 @@ class MtkBiab {
         if (!b.querySelector('[data-biab-tool]') && !b.hasAttribute('hidden')) {
           b.setAttribute('hidden', '');
           b.classList.add('mtk-biab__content-body--collapsed');
-          // Restore hidden badge
+          // Restore hidden h3 and badge
+          b.querySelectorAll('h3').forEach(h => h.style.display = '');
           const badge = b.querySelector('p > span[style*="border-radius:999px"]');
           if (badge && badge.closest('p')) badge.closest('p').style.display = '';
           // Re-insert Read More link if missing
