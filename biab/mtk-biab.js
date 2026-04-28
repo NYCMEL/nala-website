@@ -1907,17 +1907,45 @@ class MtkBiab {
     this._renderInvoiceRecords();
   }
 
+  _apiUrl(path) {
+    const base = document.querySelector('base[href]');
+    if (base) {
+      try {
+        const baseUrl = new URL(base.href);
+        const basePath = baseUrl.pathname.replace(/\/$/, '');
+        if (basePath && basePath !== '/') return basePath + path;
+      } catch (err) {
+        // Fall back below.
+      }
+    }
+    const apiRoot = window.wc && wc.apiURL ? wc.apiURL.replace(/\/$/, '') : '';
+    if (apiRoot) return apiRoot + path;
+    return path;
+  }
+
+  _readJsonResponse(res, fallbackMessage) {
+    return res.text().then(text => {
+      let json = null;
+      try {
+        json = text ? JSON.parse(text) : {};
+      } catch (err) {
+        throw new Error(fallbackMessage);
+      }
+      if (!res.ok) {
+        throw new Error((json && (json.error || json.message)) || fallbackMessage);
+      }
+      return json;
+    });
+  }
+
   _loadSavedInvoices() {
     const uid = this._getReviewUid();
     if (!uid || this.invoiceState.loadedForUid === uid || !window.fetch) return;
     this.invoiceState.loadedForUid = uid;
-    fetch((window.wc && wc.apiURL ? wc.apiURL : '') + `/api/business_in_a_box_invoices.php?nalaUID=${encodeURIComponent(uid)}`, {
+    fetch(this._apiUrl(`/api/business_in_a_box_invoices.php?nalaUID=${encodeURIComponent(uid)}`), {
       credentials: 'include'
     })
-      .then(res => res.json().then(json => {
-        if (!res.ok) throw new Error((json && (json.error || json.message)) || 'Could not load invoices.');
-        return json;
-      }))
+      .then(res => this._readJsonResponse(res, 'Could not load invoice records.'))
       .then(json => {
         this.invoiceState.records = Array.isArray(json.invoices) ? json.invoices : [];
         this._renderInvoiceRecords();
@@ -1940,16 +1968,13 @@ class MtkBiab {
       invoice: this._getInvoicePayload()
     };
     if (!options.silent) this._setInvoiceStatus('Saving invoice...');
-    return fetch((window.wc && wc.apiURL ? wc.apiURL : '') + '/api/business_in_a_box_invoices.php', {
+    return fetch(this._apiUrl('/api/business_in_a_box_invoices.php'), {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     })
-      .then(res => res.json().then(json => {
-        if (!res.ok) throw new Error((json && (json.error || json.message)) || 'Could not save invoice.');
-        return json;
-      }))
+      .then(res => this._readJsonResponse(res, 'Could not save invoice record.'))
       .then(json => {
         if (json && json.id) this.formState['invoice-setup'].id = json.id;
         this.invoiceState.records = Array.isArray(json.invoices) ? json.invoices : this.invoiceState.records;
@@ -2151,12 +2176,9 @@ class MtkBiab {
     if (!uid || this.reviewsLoadedForUid === uid || !window.fetch) return;
     this.reviewsLoadedForUid = uid;
 
-    fetch((window.wc && wc.apiURL ? wc.apiURL : '') + `/api/business_in_a_box_reviews.php?nalaUID=${encodeURIComponent(uid)}`, {
+    fetch(this._apiUrl(`/api/business_in_a_box_reviews.php?nalaUID=${encodeURIComponent(uid)}`), {
       credentials: 'include'
-    }).then(res => res.json().then(json => {
-      if (!res.ok) throw new Error((json && (json.error || json.message)) || 'Could not load reviews.');
-      return json;
-    })).then(json => {
+    }).then(res => this._readJsonResponse(res, 'Could not load reviews.')).then(json => {
       if (Array.isArray(json.reviews) && json.reviews.length) {
         this.reviewState.reviews = json.reviews;
         this._renderReviewsTool();
