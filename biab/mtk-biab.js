@@ -669,6 +669,9 @@ class MtkBiab {
       case 'logo-upload':
         this._openLogoUpload();
         break;
+      case 'logo-download-set':
+        this._downloadLogoSet();
+        break;
       case 'set-lang':
         this._setLanguage(btn.dataset.lang);
         break;
@@ -928,6 +931,7 @@ class MtkBiab {
     this._renderLogoConceptsPanel();
     this._renderLogoGuidelinesPanel();
     this._renderLogoVariationsPanel();
+    this._renderLogoDownloadsPanel();
     this._renderStationeryPanels();
   }
 
@@ -983,7 +987,7 @@ class MtkBiab {
 
         <div class="mtk-biab__logo-controls">
           <div class="mtk-biab__logo-controls-grid">
-            <div class="mtk-biab__logo-control-group">
+            <div class="mtk-biab__logo-control-group mtk-biab__logo-control-group--brand">
               <h3>Brand text</h3>
               <label class="mtk-biab__logo-label">Business name
                 <input class="mtk-biab__logo-input" data-logo-field="businessName" type="text" maxlength="40" value="${this._escapeHtml(state.businessName)}">
@@ -991,6 +995,17 @@ class MtkBiab {
               <label class="mtk-biab__logo-label">Tagline
                 <input class="mtk-biab__logo-input" data-logo-field="tagline" type="text" maxlength="70" value="${this._escapeHtml(state.tagline)}">
               </label>
+              <div class="mtk-biab__logo-subcontrol">
+                <h4>Primary variation</h4>
+                <div class="mtk-biab__logo-pill-row">
+                  ${MTK_BIAB_LOGO_VARIATIONS.map(option => `
+                    <button type="button" role="radio" aria-checked="${option.key === state.variationKey}" class="mtk-biab__logo-pill${option.key === state.variationKey ? ' is-active' : ''}" data-action="logo-set-variation" data-logo-value="${option.key}">
+                      <span class="mtk-biab__logo-radio" aria-hidden="true"></span>
+                      <span>${option.label}</span>
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
             </div>
 
             <div class="mtk-biab__logo-control-group">
@@ -1047,18 +1062,6 @@ class MtkBiab {
                     <span class="mtk-biab__logo-radio" aria-hidden="true"></span>
                     <strong>${option.label}</strong>
                     <span>${option.description}</span>
-                  </button>
-                `).join('')}
-              </div>
-            </div>
-
-            <div class="mtk-biab__logo-control-group">
-              <h3>Primary variation</h3>
-              <div class="mtk-biab__logo-pill-row">
-                ${MTK_BIAB_LOGO_VARIATIONS.map(option => `
-                  <button type="button" role="radio" aria-checked="${option.key === state.variationKey}" class="mtk-biab__logo-pill${option.key === state.variationKey ? ' is-active' : ''}" data-action="logo-set-variation" data-logo-value="${option.key}">
-                    <span class="mtk-biab__logo-radio" aria-hidden="true"></span>
-                    <span>${option.label}</span>
                   </button>
                 `).join('')}
               </div>
@@ -1327,6 +1330,118 @@ class MtkBiab {
     return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
   }
 
+  _downloadLogoSet() {
+    const state = this.logoDesignerState;
+    const variants = [
+      ['primary-dark', 'primary-dark'],
+      ['primary-light', 'primary-light'],
+      ['social-icon', 'icon-only'],
+      ['one-color', 'mono']
+    ];
+
+    variants.forEach(([name, variant]) => {
+      this._downloadTextFile(
+        `${this._slugify(state.businessName)}-${name}.svg`,
+        this._buildExportLogoSvg(variant),
+        'image/svg+xml'
+      );
+    });
+
+    this._downloadTextFile(
+      `${this._slugify(state.businessName)}-brand-notes.txt`,
+      this._buildLogoBrandNotes(),
+      'text/plain'
+    );
+  }
+
+  _buildExportLogoSvg(variant) {
+    const state = this.logoDesignerState;
+    const palette = this._getLogoResource(MTK_BIAB_LOGO_PALETTES, state.paletteKey);
+    const font = this._getLogoResource(MTK_BIAB_LOGO_FONTS, state.fontKey);
+    const name = this._escapeXml(state.businessName || 'Your Locksmith Brand');
+    const tagline = this._escapeXml(state.tagline || 'Residential, commercial, automotive');
+    const initials = this._escapeXml((state.businessName || 'YLB').split(/\s+/).map(word => word.charAt(0)).join('').slice(0, 3).toUpperCase());
+    const isLight = variant === 'primary-light';
+    const isMono = variant === 'mono';
+    const isIcon = variant === 'icon-only';
+    const bg = isLight || isMono ? '#ffffff' : palette.surface;
+    const primary = isMono ? '#111827' : palette.primary;
+    const text = isLight || isMono ? palette.textOnLight : palette.textOnDark;
+    const accent = isMono ? '#111827' : palette.accent;
+    const width = isIcon ? 512 : 1440;
+    const height = isIcon ? 512 : 480;
+
+    if (isIcon) {
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="${name} icon">
+  <rect width="${width}" height="${height}" rx="112" fill="${palette.surface}"/>
+  <circle cx="256" cy="256" r="142" fill="${primary}"/>
+  <text x="256" y="289" text-anchor="middle" font-family="Arial, sans-serif" font-size="112" font-weight="800" fill="${palette.surface}">${initials}</text>
+</svg>`;
+    }
+
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="${name} logo">
+  <rect width="${width}" height="${height}" rx="56" fill="${bg}"/>
+  <circle cx="220" cy="240" r="116" fill="${primary}"/>
+  <text x="220" y="274" text-anchor="middle" font-family="Arial, sans-serif" font-size="86" font-weight="800" fill="${bg}">${initials}</text>
+  <text x="390" y="218" font-family="${this._escapeXml(font.headline.replace(/'/g, ''))}" font-size="86" font-weight="800" fill="${text}">${name}</text>
+  <text x="394" y="292" font-family="${this._escapeXml(font.body.replace(/'/g, ''))}" font-size="40" fill="${accent}">${tagline}</text>
+</svg>`;
+  }
+
+  _buildLogoBrandNotes() {
+    const state = this.logoDesignerState;
+    const palette = this._getLogoResource(MTK_BIAB_LOGO_PALETTES, state.paletteKey);
+    const font = this._getLogoResource(MTK_BIAB_LOGO_FONTS, state.fontKey);
+    const template = this._getLogoResource(MTK_BIAB_LOGO_TEMPLATES, state.templateKey);
+    const variation = this._getLogoResource(MTK_BIAB_LOGO_VARIATIONS, state.variationKey);
+    return [
+      `${state.businessName || 'Your Locksmith Brand'} - Logo Package`,
+      '',
+      `Tagline: ${state.tagline || ''}`,
+      `Template: ${template.label}`,
+      `Primary variation: ${variation.label}`,
+      `Palette: ${palette.label}`,
+      `Base color: ${palette.surface}`,
+      `Primary color: ${palette.primary}`,
+      `Accent color: ${palette.accent}`,
+      `Headline font: ${font.label}`,
+      '',
+      'Included files:',
+      '- primary-dark.svg',
+      '- primary-light.svg',
+      '- social-icon.svg',
+      '- one-color.svg',
+      '',
+      'Production notes:',
+      '- Use SVG for websites, signs, print, and embroidery vendor handoff.',
+      '- Keep clear space around the logo equal to at least half the icon width.',
+      '- Do not stretch, outline, bevel, or add drop shadows to the mark.',
+      '- Replace prototype icons/fonts with licensed production assets before final commercial use.'
+    ].join('\n');
+  }
+
+  _downloadTextFile(filename, content, type) {
+    const blob = new Blob([content], { type });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  _slugify(value) {
+    return String(value || 'locksmith-logo').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'locksmith-logo';
+  }
+
+  _escapeXml(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
+  }
+
   _applyLogoToClient() {
     const logo = this._buildLogoDataUrl();
     const payload = {
@@ -1472,6 +1587,49 @@ class MtkBiab {
           <article class="mtk-biab-tool__preview" data-tool-preview="${tool}">
             ${this._buildToolDocument(tool)}
           </article>
+        </div>
+      </section>
+    `;
+  }
+
+  _renderLogoDownloadsPanel() {
+    const mount = this.el.querySelector('[data-logo-designer-panel="downloads"]');
+    if (!mount) return;
+
+    const state = this.logoDesignerState;
+    const palette = this._getLogoResource(MTK_BIAB_LOGO_PALETTES, state.paletteKey);
+    const font = this._getLogoResource(MTK_BIAB_LOGO_FONTS, state.fontKey);
+    const template = this._getLogoResource(MTK_BIAB_LOGO_TEMPLATES, state.templateKey);
+
+    mount.innerHTML = `
+      <section class="mtk-biab__logo-downloads">
+        <div class="mtk-biab__logo-note">
+          <strong>Step 4:</strong> download a professional starter logo set. The files are vector SVGs, so they can be used by a designer, printer, website builder, or sign shop.
+        </div>
+        <div class="mtk-biab__logo-download-grid">
+          <article class="mtk-biab__logo-download-card">
+            <span class="material-icons" aria-hidden="true">folder_zip</span>
+            <h3>Professional logo set</h3>
+            <p>Includes primary dark, primary light, social icon, one-color mark, and a brand notes file with colors, typography, and usage guidance.</p>
+            <button type="button" class="mtk-biab__action-btn mtk-biab__action-btn--primary" data-action="logo-download-set">Download logo set</button>
+          </article>
+          <article class="mtk-biab__logo-download-card">
+            <span class="material-icons" aria-hidden="true">fact_check</span>
+            <h3>Package summary</h3>
+            <ul>
+              <li><strong>Business:</strong> ${this._escapeHtml(state.businessName)}</li>
+              <li><strong>Template:</strong> ${template.label}</li>
+              <li><strong>Palette:</strong> ${palette.label}</li>
+              <li><strong>Font system:</strong> ${font.label}</li>
+              <li><strong>Format:</strong> SVG vector files plus brand notes</li>
+            </ul>
+          </article>
+        </div>
+        <div class="mtk-biab__logo-preview-grid">
+          ${this._buildLogoPreviewCard('Included: dark primary', this._buildLogoMarkup(state, 'primary-dark'), palette.surface, palette.textOnDark)}
+          ${this._buildLogoPreviewCard('Included: light primary', this._buildLogoMarkup(state, 'primary-light'), '#ffffff', palette.textOnLight, true)}
+          ${this._buildLogoPreviewCard('Included: icon mark', this._buildLogoMarkup(state, 'icon-only'), palette.surfaceSoft, palette.textOnDark)}
+          ${this._buildLogoPreviewCard('Included: one-color mark', this._buildLogoMarkup(state, 'mono'), '#f3f4f6', '#111827', true)}
         </div>
       </section>
     `;

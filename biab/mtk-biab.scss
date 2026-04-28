@@ -368,12 +368,13 @@ mtk-biab.mtk-biab {
 
 .mtk-biab__logo-controls-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 18px;
   align-items: start;
 }
 
 .mtk-biab__logo-control-group {
+  grid-column: span 6;
   min-width: 0;
   padding: 18px;
   border: 1px solid #eadfca;
@@ -390,6 +391,27 @@ mtk-biab.mtk-biab {
     margin: 0 0 14px;
     color: #5f6368;
     line-height: 1.55;
+  }
+}
+
+.mtk-biab__logo-control-group--brand {
+  grid-column: span 5;
+}
+
+.mtk-biab__logo-control-group--brand + .mtk-biab__logo-control-group {
+  grid-column: span 7;
+}
+
+.mtk-biab__logo-subcontrol {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #eadfca;
+
+  h4 {
+    margin: 0 0 10px;
+    color: #202124;
+    font-size: 14px;
+    font-weight: 800;
   }
 }
 
@@ -562,6 +584,53 @@ mtk-biab.mtk-biab {
   padding-bottom: 12px;
 }
 
+.mtk-biab__logo-download-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.9fr) minmax(300px, 1.1fr);
+  gap: 16px;
+  margin: 18px 0;
+}
+
+.mtk-biab__logo-download-card {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid #eadfca;
+  border-radius: 10px;
+  background: #fffaf0;
+  color: #34302a;
+
+  .material-icons {
+    width: 46px;
+    height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #a98211;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+
+  h3 {
+    margin: 0 0 8px;
+    color: #202124;
+  }
+
+  p {
+    margin: 0 0 16px;
+    line-height: 1.6;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 18px;
+  }
+
+  li {
+    margin-bottom: 7px;
+  }
+}
+
 .mtk-biab__logo-lockup {
   max-width: 100%;
   min-width: 0;
@@ -642,10 +711,17 @@ mtk-biab.mtk-biab {
   .mtk-biab__logo-controls-grid,
   .mtk-biab__logo-option-grid,
   .mtk-biab__logo-pill-row,
+  .mtk-biab__logo-download-grid,
   .mtk-biab__logo-preview-area--hero,
   .mtk-biab__logo-preview-grid {
     display: grid;
     grid-template-columns: 1fr;
+  }
+
+  .mtk-biab__logo-control-group,
+  .mtk-biab__logo-control-group--brand,
+  .mtk-biab__logo-control-group--brand + .mtk-biab__logo-control-group {
+    grid-column: 1 / -1;
   }
 }
 

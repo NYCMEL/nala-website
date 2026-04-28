@@ -728,6 +728,17 @@ const MTK_BIAB_CONFIG = {
 <p>The variation pack below shows the same logo system adapted for light, dark, social, favicon, and one-color use so buyers understand what a production handoff should include.</p>
 <div data-logo-designer-panel="variations"></div>`
                 }
+              },
+              {
+                id: "logo-downloads",
+                label: "Logo Downloads",
+                icon: "download",
+                content: {
+                  title: "Logo Downloads",
+                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fff4e5;color:#8a4b00;font-size:12px;font-weight:700;text-transform:uppercase;">Professional</span></p>
+<p>Download a production starter package with SVG logo files, color notes, and usage guidance for web, invoices, social profiles, and print handoff.</p>
+<div data-logo-designer-panel="downloads"></div>`
+                }
               }
             ]
           },
