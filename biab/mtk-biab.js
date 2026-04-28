@@ -285,6 +285,7 @@ class MtkBiab {
     this.reviewState = this._getDefaultReviewState();
     this.reviewsLoadedForUid = '';
     this.formSteps = {};
+    this.completedSteps = {}; // { 'business-plan': Set([0,1,...]) }
 
     // Active state
     this.activeTabId    = null;
@@ -1466,8 +1467,30 @@ class MtkBiab {
   _moveToolStep(tool, direction) {
     const steps = this._getToolSteps(tool);
     const current = this.formSteps[tool] || 0;
+    // Mark current step as complete when moving forward
+    if (direction > 0) {
+      if (!this.completedSteps[tool]) this.completedSteps[tool] = new Set();
+      this.completedSteps[tool].add(current);
+      this._updateSidebarStepBadge(tool, current, true);
+    }
     this.formSteps[tool] = Math.max(0, Math.min(steps.length - 1, current + direction));
     this._renderToolPanels();
+  }
+
+  _updateSidebarStepBadge(tool, stepIndex, completed) {
+    const btn = this.el.querySelector(
+      `.mtk-biab__sidebar-subitem-btn[data-tool="${tool}"][data-step="${stepIndex}"]`
+    );
+    if (!btn) return;
+    const badge = btn.querySelector('.mtk-biab__sidebar-step-num');
+    if (!badge) return;
+    if (completed) {
+      badge.innerHTML = '&#10003;';
+      badge.classList.add('is-complete');
+    } else {
+      badge.innerHTML = stepIndex + 1;
+      badge.classList.remove('is-complete');
+    }
   }
 
   _updateToolField(tool, field, value) {

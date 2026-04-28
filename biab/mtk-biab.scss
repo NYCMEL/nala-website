@@ -823,7 +823,13 @@ mtk-biab.mtk-biab {
     font-size: 10px !important;
     font-weight: 700 !important;
     flex-shrink: 0 !important;
-    transition: background 0.15s, color 0.15s;
+    transition: background 0.2s, color 0.2s;
+
+    &.is-complete {
+      background: #2e7d32 !important;
+      color: #fff !important;
+      font-size: 11px !important;
+    }
   }
 
   // ── Sidebar Main Content ─────────────────────────────────
