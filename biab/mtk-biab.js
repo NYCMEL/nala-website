@@ -584,35 +584,24 @@ class MtkBiab {
               const hasTool = item.content.body.includes('data-biab-tool=');
               const isPricing = item.id && item.id.startsWith('pricing-');
 
-              // Pricing items: always expanded, no link
-              if (isPricing) {
+              // Pricing items or items with NO tool: always expanded, no link
+              if (isPricing || !hasTool) {
                 return `<div class="mtk-biab__content-body">${item.content.body}</div>`;
               }
 
-              if (hasTool) {
-                // Extract just the tool div — collapse everything after it
-                const toolMatch = item.content.body.match(/(<div[^>]*data-biab-tool[^>]*>.*?<\/div>)/s);
-                const toolDiv = toolMatch ? toolMatch[0] : '';
-                const rest = item.content.body.replace(toolDiv, '').trim();
-                return `
-                  <div class="mtk-biab__content-body">${toolDiv}</div>
-                  ${rest ? `
-                    <div class="mtk-biab__content-body mtk-biab__content-body--collapsed" hidden>${rest}</div>
-                    <a href="#" class="mtk-biab__read-more-link" data-action="expand-body">
-                      <span class="material-icons">menu_book</span>
-                      Guides. Read More…
-                    </a>
-                  ` : ''}
-                `;
-              }
+              // Items WITH a tool wizard: show tool immediately, collapse static guide below
+              const toolMatch = item.content.body.match(/(<div[^>]*data-biab-tool[^>]*>.*?<\/div>)/s);
+              const toolDiv = toolMatch ? toolMatch[0] : '';
+              const rest = item.content.body.replace(toolDiv, '').trim();
               return `
-                <div class="mtk-biab__content-body mtk-biab__content-body--collapsed" hidden>
-                  ${item.content.body}
-                </div>
-                <a href="#" class="mtk-biab__read-more-link" data-action="expand-body">
-                  <span class="material-icons">menu_book</span>
-                  Guides. Read More…
-                </a>
+                <div class="mtk-biab__content-body">${toolDiv}</div>
+                ${rest ? `
+                  <div class="mtk-biab__content-body mtk-biab__content-body--collapsed" hidden>${rest}</div>
+                  <a href="#" class="mtk-biab__read-more-link" data-action="expand-body">
+                    <span class="material-icons">menu_book</span>
+                    Guides. Read More…
+                  </a>
+                ` : ''}
               `;
             })()}
           </div>
@@ -1085,8 +1074,10 @@ class MtkBiab {
 
       // Reset any previously expanded guide body back to collapsed
       targetPanel.querySelectorAll('.mtk-biab__guide-header').forEach(h => h.remove());
-      // Skip reset for pricing items — always shown expanded
-      if (!itemId || !itemId.startsWith('pricing-')) {
+      // Only reset items that have tool wizards (others are always expanded)
+      const hasPricingId = itemId && itemId.startsWith('pricing-');
+      const hasTool = targetPanel.querySelector('[data-biab-tool]');
+      if (!hasPricingId && hasTool) {
       targetPanel.querySelectorAll('.mtk-biab__content-body').forEach(b => {
         if (!b.querySelector('[data-biab-tool]') && !b.hasAttribute('hidden')) {
           b.setAttribute('hidden', '');
