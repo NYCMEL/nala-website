@@ -609,6 +609,7 @@ class MtkBiab {
     this.el.addEventListener('click', this._onClick.bind(this));
     this.el.addEventListener('keydown', this._onKeydown.bind(this));
     this.el.addEventListener('input', this._onInput.bind(this));
+    this.el.addEventListener('change', this._onInput.bind(this));
   }
 
   _onClick(e) {
@@ -1489,12 +1490,33 @@ class MtkBiab {
       },
       'invoice-setup': {
         businessName: 'Harbor Lock & Key',
-        invoicePrefix: 'HLK',
+        dbaName: '',
+        businessAddress: '',
         businessPhone: '',
         businessEmail: '',
+        businessWebsite: '',
+        licenseNumber: '',
+        invoiceNumber: 'HLK-0001',
+        invoiceDate: new Date().toISOString().slice(0, 10),
+        customerName: '',
+        customerEmail: '',
+        serviceAddress: '',
+        billingAddress: '',
+        workDescription: 'Opened front entry door using non-destructive methods where possible, rekeyed 2 cylinders, cut 4 keys, tested operation with customer, and confirmed proper latch and key function before leaving.',
+        serviceFeeDescription: 'Service call / trip fee',
+        serviceFeeAmount: '0.00',
+        laborDescription: 'Locksmith labor',
+        laborAmount: '0.00',
+        partsDescription: 'Parts / hardware',
+        partsAmount: '0.00',
+        taxAmount: '0.00',
         paymentTerms: 'Due on receipt',
-        taxLine: 'Sales tax shown separately where applicable',
-        warranty: 'Workmanship warranty applies to installed parts and labor unless otherwise stated.'
+        paymentMethod: '',
+        paymentStatus: 'Unpaid',
+        technician: '',
+        authorizationNote: 'Authorization confirmed by customer before work began.',
+        warranty: 'Workmanship warranty applies to installed parts and labor unless otherwise stated.',
+        disclosureNote: 'No warranty on customer-supplied parts unless stated. Destructive entry and after-hours fees are disclosed before work begins.'
       }
     };
   }
@@ -1536,9 +1558,10 @@ class MtkBiab {
         { title: this._t('operations'), fields: ['insurance', 'payments', 'launch'] }
       ],
       'invoice-setup': [
-        { title: this._t('businessInfo'), fields: ['businessName', 'invoicePrefix'] },
-        { title: this._t('contactInfo'), fields: ['businessPhone', 'businessEmail'] },
-        { title: this._t('invoiceSetup'), fields: ['paymentTerms', 'taxLine', 'warranty'] }
+        { title: 'Business and invoice details', fields: ['invoiceNumber', 'invoiceDate', 'businessName', 'dbaName', 'businessAddress', 'businessPhone', 'businessEmail', 'businessWebsite', 'licenseNumber'] },
+        { title: 'Customer and job details', fields: ['customerName', 'customerEmail', 'serviceAddress', 'billingAddress', 'technician', 'workDescription'] },
+        { title: 'Itemized charges', fields: ['serviceFeeDescription', 'serviceFeeAmount', 'laborDescription', 'laborAmount', 'partsDescription', 'partsAmount', 'taxAmount'] },
+        { title: 'Payment and disclosures', fields: ['paymentTerms', 'paymentMethod', 'paymentStatus', 'authorizationNote', 'warranty', 'disclosureNote'] }
       ]
     };
     return map[tool] || [];
@@ -1653,15 +1676,71 @@ class MtkBiab {
       payments: 'Payments and bookkeeping',
       launch: 'Launch-day checklist',
       invoicePrefix: 'Invoice prefix',
+      invoiceNumber: 'Invoice number',
+      invoiceDate: 'Invoice date',
+      dbaName: 'DBA name, if used',
+      businessAddress: 'Business address / mailing address',
       businessPhone: 'Business phone',
       businessEmail: 'Business email',
+      businessWebsite: 'Business website',
+      licenseNumber: 'License number, if required',
+      customerName: 'Customer name',
+      customerEmail: 'Customer email',
+      serviceAddress: 'Service address',
+      billingAddress: 'Billing address, if different',
+      workDescription: 'Clear description of work performed',
+      serviceFeeDescription: 'Service fee description',
+      serviceFeeAmount: 'Service fee amount',
+      laborDescription: 'Labor line item',
+      laborAmount: 'Labor amount',
+      partsDescription: 'Parts / hardware line item',
+      partsAmount: 'Parts / hardware amount',
+      taxAmount: 'Tax amount, if applicable',
       paymentTerms: 'Payment terms',
+      paymentMethod: 'Payment method',
+      paymentStatus: 'Payment status',
+      technician: 'Technician name or ID',
+      authorizationNote: 'Authorization note',
       taxLine: 'Tax line',
-      warranty: 'Warranty / disclosure'
+      warranty: 'Warranty note',
+      disclosureNote: 'Other disclosures'
     };
+    const fieldValue = this._escapeHtml(value || '');
+    const amountFields = new Set(['serviceFeeAmount', 'laborAmount', 'partsAmount', 'taxAmount']);
+    const longFields = new Set(['businessAddress', 'serviceAddress', 'billingAddress', 'workDescription', 'authorizationNote', 'warranty', 'disclosureNote']);
+    const inputTypes = {
+      invoiceDate: 'date',
+      businessEmail: 'email',
+      customerEmail: 'email',
+      businessWebsite: 'url',
+      businessPhone: 'tel'
+    };
+    if (field === 'paymentStatus') {
+      return `
+        <label class="mtk-biab-tool__field">${labels[field] || field}
+          <select data-tool="${tool}" data-tool-field="${field}">
+            ${['Unpaid', 'Paid', 'Partially paid'].map(option => `<option value="${option}" ${value === option ? 'selected' : ''}>${option}</option>`).join('')}
+          </select>
+        </label>
+      `;
+    }
+    if (amountFields.has(field)) {
+      return `
+        <label class="mtk-biab-tool__field">${labels[field] || field}
+          <input data-tool="${tool}" data-tool-field="${field}" type="number" min="0" step="0.01" value="${fieldValue}">
+        </label>
+      `;
+    }
+    if (longFields.has(field)) {
+      return `
+        <label class="mtk-biab-tool__field">${labels[field] || field}
+          <textarea data-tool="${tool}" data-tool-field="${field}" rows="3">${fieldValue}</textarea>
+        </label>
+      `;
+    }
     return `
       <label class="mtk-biab-tool__field">${labels[field] || field}
-        <textarea data-tool="${tool}" data-tool-field="${field}" rows="3">${this._escapeHtml(value || '')}</textarea>
+        <input data-tool="${tool}" data-tool-field="${field}" type="${inputTypes[field] || 'text'}" value="${fieldValue}">
       </label>
     `;
   }
@@ -1677,13 +1756,86 @@ class MtkBiab {
       return `<h3>${this._t('finalDocument')}</h3><ol><li>${this._escapeHtml(s.legal)}</li><li>${this._escapeHtml(s.phoneEmail)}</li><li>${this._escapeHtml(s.website)}</li><li>${this._escapeHtml(s.profile)}</li><li>${this._escapeHtml(s.insurance)}</li><li>${this._escapeHtml(s.payments)}</li><li>${this._escapeHtml(s.launch)}</li></ol>`;
     }
     if (tool === 'invoice-setup') {
-      return `<h3>${s.businessName || 'Invoice Setup'}</h3><p><strong>Invoice numbering:</strong> ${this._escapeHtml(s.invoicePrefix)}-0001</p><p><strong>Phone:</strong> ${this._escapeHtml(s.businessPhone)}<br><strong>Email:</strong> ${this._escapeHtml(s.businessEmail)}</p><p><strong>Payment terms:</strong> ${this._escapeHtml(s.paymentTerms)}</p><p><strong>Tax:</strong> ${this._escapeHtml(s.taxLine)}</p><p><strong>Warranty:</strong> ${this._escapeHtml(s.warranty)}</p>`;
+      return this._buildInvoiceDocument(s);
     }
     return `<h3>${this._escapeHtml(s.businessName || 'Business Plan')}</h3><p><strong>Owner:</strong> ${this._escapeHtml(s.ownerName)}</p><p><strong>Service area:</strong> ${this._escapeHtml(s.serviceArea)}</p><p><strong>Core services:</strong> ${this._escapeHtml(s.coreServices)}</p><p><strong>Customer focus:</strong> ${this._escapeHtml(s.customerFocus)}</p><p><strong>Launch goal:</strong> ${this._escapeHtml(s.launchGoal)}</p><p><strong>Pricing:</strong> ${this._escapeHtml(s.pricingPlan)}</p><p><strong>Marketing:</strong> ${this._escapeHtml(s.marketingPlan)}</p>`;
   }
 
+  _buildInvoiceDocument(s) {
+    const raw = value => Number(String(value || '0').replace(/[^0-9.-]/g, '')) || 0;
+    const money = value => '$' + raw(value).toFixed(2);
+    const subtotal = raw(s.serviceFeeAmount) + raw(s.laborAmount) + raw(s.partsAmount);
+    const tax = raw(s.taxAmount);
+    const total = subtotal + tax;
+
+    return `
+      <article class="mtk-biab-invoice">
+        <header class="mtk-biab-invoice__header">
+          <div>
+            <h3>${this._escapeHtml(s.businessName || 'Locksmith Business')}</h3>
+            ${s.dbaName ? `<p><strong>DBA:</strong> ${this._escapeHtml(s.dbaName)}</p>` : ''}
+            <p>${this._escapeHtml(s.businessAddress || 'Business address / mailing address')}</p>
+            <p>${this._escapeHtml(s.businessPhone || 'Business phone')} · ${this._escapeHtml(s.businessEmail || 'Business email')}</p>
+            ${s.businessWebsite ? `<p>${this._escapeHtml(s.businessWebsite)}</p>` : ''}
+            ${s.licenseNumber ? `<p><strong>License:</strong> ${this._escapeHtml(s.licenseNumber)}</p>` : ''}
+          </div>
+          <div class="mtk-biab-invoice__meta">
+            <h4>Invoice</h4>
+            <p><strong>No.</strong> ${this._escapeHtml(s.invoiceNumber || '')}</p>
+            <p><strong>Date:</strong> ${this._escapeHtml(s.invoiceDate || '')}</p>
+            <p><strong>Status:</strong> ${this._escapeHtml(s.paymentStatus || '')}</p>
+          </div>
+        </header>
+
+        <section class="mtk-biab-invoice__parties">
+          <div>
+            <h4>Bill To</h4>
+            <p>${this._escapeHtml(s.customerName || 'Customer name')}</p>
+            ${s.customerEmail ? `<p>${this._escapeHtml(s.customerEmail)}</p>` : ''}
+            <p>${this._escapeHtml(s.billingAddress || s.serviceAddress || 'Billing address')}</p>
+          </div>
+          <div>
+            <h4>Service Location</h4>
+            <p>${this._escapeHtml(s.serviceAddress || 'Service address')}</p>
+            ${s.technician ? `<p><strong>Technician:</strong> ${this._escapeHtml(s.technician)}</p>` : ''}
+          </div>
+        </section>
+
+        <section class="mtk-biab-invoice__work">
+          <h4>Work Performed</h4>
+          <p>${this._escapeHtml(s.workDescription || '')}</p>
+        </section>
+
+        <table class="mtk-biab-invoice__table">
+          <thead><tr><th>Description</th><th>Amount</th></tr></thead>
+          <tbody>
+            <tr><td>${this._escapeHtml(s.serviceFeeDescription || 'Service call / trip fee')}</td><td>${money(s.serviceFeeAmount)}</td></tr>
+            <tr><td>${this._escapeHtml(s.laborDescription || 'Labor')}</td><td>${money(s.laborAmount)}</td></tr>
+            <tr><td>${this._escapeHtml(s.partsDescription || 'Parts / hardware')}</td><td>${money(s.partsAmount)}</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><th>Subtotal</th><td>${money(subtotal)}</td></tr>
+            <tr><th>Tax</th><td>${money(tax)}</td></tr>
+            <tr><th>Total</th><td>${money(total)}</td></tr>
+          </tfoot>
+        </table>
+
+        <section class="mtk-biab-invoice__terms">
+          <p><strong>Payment terms:</strong> ${this._escapeHtml(s.paymentTerms || '')}</p>
+          <p><strong>Payment method:</strong> ${this._escapeHtml(s.paymentMethod || 'Not recorded')}</p>
+          <p><strong>Authorization:</strong> ${this._escapeHtml(s.authorizationNote || '')}</p>
+          <p><strong>Warranty:</strong> ${this._escapeHtml(s.warranty || '')}</p>
+          <p><strong>Disclosures:</strong> ${this._escapeHtml(s.disclosureNote || '')}</p>
+        </section>
+      </article>
+    `;
+  }
+
   _downloadToolDocument(tool) {
-    const html = `<!doctype html><html><head><meta charset="utf-8"><title>${tool}</title></head><body>${this._buildToolDocument(tool)}</body></html>`;
+    const invoiceStyles = tool === 'invoice-setup' ? `<style>
+      body{margin:24px;font-family:Arial,sans-serif;color:#202124;background:#f7f3eb}.mtk-biab-invoice{max-width:900px;margin:auto;border:1px solid #d9cda9;border-radius:10px;background:#fff;overflow:hidden}.mtk-biab-invoice__header,.mtk-biab-invoice__parties,.mtk-biab-invoice__work,.mtk-biab-invoice__terms{padding:18px}.mtk-biab-invoice__header{display:grid;grid-template-columns:minmax(0,1fr)190px;gap:18px;background:#fffaf0;border-bottom:1px solid #eadfca}.mtk-biab-invoice__header h3{margin:0 0 8px;font-size:24px}.mtk-biab-invoice p{margin:0 0 6px;line-height:1.55}.mtk-biab-invoice__meta{padding:14px;border-radius:8px;background:#202124;color:#fff}.mtk-biab-invoice__parties{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;border-bottom:1px solid #eadfca}.mtk-biab-invoice h4{margin:0 0 8px;color:#4a3a08;font-size:14px;text-transform:uppercase}.mtk-biab-invoice__work{border-bottom:1px solid #eadfca}.mtk-biab-invoice__table{width:100%;border-collapse:collapse;font-size:14px}.mtk-biab-invoice__table th,.mtk-biab-invoice__table td{padding:12px 18px;border-bottom:1px solid #eadfca;text-align:left}.mtk-biab-invoice__table th:last-child,.mtk-biab-invoice__table td:last-child{text-align:right;white-space:nowrap}.mtk-biab-invoice__table thead th{background:#fbf4e5;color:#4a3a08}.mtk-biab-invoice__table tfoot th,.mtk-biab-invoice__table tfoot td{font-weight:800}.mtk-biab-invoice__table tfoot tr:last-child th,.mtk-biab-invoice__table tfoot tr:last-child td{background:#202124;color:#fff;font-size:16px}.mtk-biab-invoice__terms{background:#fffdf8}@media(max-width:700px){.mtk-biab-invoice__header,.mtk-biab-invoice__parties{grid-template-columns:1fr}}
+    </style>` : '';
+    const html = `<!doctype html><html><head><meta charset="utf-8"><title>${tool}</title>${invoiceStyles}</head><body>${this._buildToolDocument(tool)}</body></html>`;
     const blob = new Blob([html], { type: 'text/html' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
@@ -1694,6 +1846,12 @@ class MtkBiab {
 
   _emailToolDocument(tool) {
     const text = this._buildToolDocument(tool).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    if (tool === 'invoice-setup') {
+      const s = this.formState[tool] || {};
+      const subject = `Invoice ${s.invoiceNumber || ''} from ${s.businessName || 'Locksmith Business'}`.trim();
+      window.location.href = `mailto:${encodeURIComponent(s.customerEmail || '')}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
+      return;
+    }
     window.location.href = `mailto:?subject=${encodeURIComponent(tool.replace(/-/g, ' '))}&body=${encodeURIComponent(text)}`;
   }
 

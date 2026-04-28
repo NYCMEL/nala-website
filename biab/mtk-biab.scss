@@ -51,8 +51,10 @@ mtk-biab.mtk-biab {
 }
 
 .mtk-biab__sidebar-item-btn span:not(.material-icons) {
+  flex: 1 1 auto;
   min-width: 0;
   line-height: 1.25;
+  text-align: left;
 }
 
 .mtk-biab__lang-switch,
@@ -162,7 +164,8 @@ mtk-biab.mtk-biab {
     font-weight: 800;
 
     textarea,
-    input {
+    input,
+    select {
       width: 100%;
       resize: vertical;
       border: 1px solid #cfc5af;
@@ -203,6 +206,136 @@ mtk-biab.mtk-biab {
   border-radius: 8px;
   border: 1px solid #eadfca;
   background: #fff;
+}
+
+.mtk-biab-invoice {
+  border: 1px solid #d9cda9;
+  border-radius: 10px;
+  background: #fff;
+  color: #202124;
+  overflow: hidden;
+}
+
+.mtk-biab-invoice__header,
+.mtk-biab-invoice__parties,
+.mtk-biab-invoice__work,
+.mtk-biab-invoice__terms {
+  padding: 18px;
+}
+
+.mtk-biab-invoice__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 190px;
+  gap: 18px;
+  background: #fffaf0;
+  border-bottom: 1px solid #eadfca;
+
+  h3 {
+    margin: 0 0 8px;
+    font-size: 24px;
+  }
+
+  p {
+    margin: 0 0 4px;
+    color: #34302a;
+  }
+}
+
+.mtk-biab-invoice__meta {
+  padding: 14px;
+  border-radius: 8px;
+  background: #202124;
+  color: #fff;
+
+  h4,
+  p {
+    margin: 0 0 6px;
+    color: inherit;
+  }
+}
+
+.mtk-biab-invoice__parties {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  border-bottom: 1px solid #eadfca;
+
+  h4 {
+    margin: 0 0 8px;
+    color: #4a3a08;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+
+  p {
+    margin: 0 0 6px;
+    color: #34302a;
+    line-height: 1.55;
+  }
+}
+
+.mtk-biab-invoice__work {
+  border-bottom: 1px solid #eadfca;
+
+  h4 {
+    margin: 0 0 8px;
+    color: #4a3a08;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+
+  p {
+    margin: 0 0 6px;
+    color: #34302a;
+    line-height: 1.55;
+  }
+}
+
+.mtk-biab-invoice__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+
+  th,
+  td {
+    padding: 12px 18px;
+    border-bottom: 1px solid #eadfca;
+    text-align: left;
+  }
+
+  th:last-child,
+  td:last-child {
+    width: 140px;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  thead th {
+    background: #fbf4e5;
+    color: #4a3a08;
+  }
+
+  tfoot th,
+  tfoot td {
+    font-weight: 800;
+  }
+
+  tfoot tr:last-child th,
+  tfoot tr:last-child td {
+    background: #202124;
+    color: #fff;
+    font-size: 16px;
+  }
+}
+
+.mtk-biab-invoice__terms {
+  background: #fffdf8;
+
+  p {
+    margin: 0 0 6px;
+    color: #34302a;
+    line-height: 1.55;
+  }
 }
 
 .mtk-biab-reviews__score {
@@ -708,6 +841,8 @@ mtk-biab.mtk-biab {
   .mtk-biab-tool__head,
   .mtk-biab-tool__grid,
   .mtk-biab-api-grid,
+  .mtk-biab-invoice__header,
+  .mtk-biab-invoice__parties,
   .mtk-biab__logo-controls-grid,
   .mtk-biab__logo-option-grid,
   .mtk-biab__logo-pill-row,
