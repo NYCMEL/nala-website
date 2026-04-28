@@ -1270,6 +1270,7 @@ mtk-biab.mtk-biab {
   &__sidebar-menu-header {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 12px;
     width: 100%;
     padding: 14px 24px 10px;
@@ -1363,6 +1364,13 @@ mtk-biab.mtk-biab {
       box-shadow $md-transition-fast;
     outline: none;
     overflow: hidden;
+
+    > span:not(.material-icons) {
+      flex: 1 1 auto;
+      min-width: 0;
+      line-height: 1.25;
+      text-align: left;
+    }
 
     // Icon
     .material-icons {
