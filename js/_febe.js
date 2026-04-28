@@ -264,19 +264,51 @@ class _febe {
 	return this.postBiabJson("/api/business_in_a_box_reviews.php", data || {}, "Review display settings saved.", "Could not save review display settings.");
     }
 
+    getBiabApiUrl(path) {
+	const normalizedPath = path && path.charAt(0) === "/" ? path : "/" + path;
+	const base = document.querySelector("base[href]");
+
+	if (base) {
+	    try {
+		const baseUrl = new URL(base.getAttribute("href"), window.location.origin);
+		const basePath = baseUrl.pathname.replace(/\/$/, "");
+		if (basePath && basePath !== "/") {
+		    return basePath + normalizedPath;
+		}
+	    } catch (err) {
+		console.warn("Could not resolve BIAB API base path", err);
+	    }
+	}
+
+	const apiRoot = wc && wc.apiURL ? String(wc.apiURL).replace(/\/$/, "") : "";
+	return apiRoot + normalizedPath;
+    }
+
+    readBiabJsonResponse(res, errorMessage) {
+	return res.text().then(text => {
+	    let json = {};
+	    try {
+		json = text ? JSON.parse(text) : {};
+	    } catch (err) {
+		throw new Error(errorMessage);
+	    }
+
+	    if (!res.ok || json.error) {
+		throw new Error((json && (json.error || json.message)) || errorMessage);
+	    }
+
+	    return json;
+	});
+    }
+
     postBiabJson(path, payload, successMessage, errorMessage) {
-	return fetch(wc.apiURL + path, {
+	return fetch(this.getBiabApiUrl(path), {
 	    method: "POST",
 	    credentials: "include",
 	    headers: { "Content-Type": "application/json" },
 	    body: JSON.stringify(payload || {})
 	}).then(res => {
-	    return res.json().then(json => {
-		if (!res.ok) {
-		    throw new Error((json && (json.error || json.message)) || errorMessage);
-		}
-		return json;
-	    });
+	    return this.readBiabJsonResponse(res, errorMessage);
 	}).then(json => {
 	    if (window.MTKMsgs && typeof MTKMsgs.show === "function") {
 		MTKMsgs.show({
