@@ -815,6 +815,20 @@ class MtkBiab {
     const subitems = btn.closest('li').querySelector('.mtk-biab__sidebar-subitems');
     if (!subitems) return;
     const isOpen = subitems.classList.contains('is-open');
+
+    // Collapse all other open subitems first (accordion)
+    if (!isOpen) {
+      this.el.querySelectorAll('.mtk-biab__sidebar-subitems.is-open').forEach(s => {
+        s.classList.remove('is-open');
+        const parentBtn = s.closest('li').querySelector('.mtk-biab__sidebar-item-btn');
+        if (parentBtn) {
+          parentBtn.setAttribute('aria-expanded', 'false');
+          const ch = parentBtn.querySelector('.mtk-biab__sidebar-item-chevron');
+          if (ch) ch.style.transform = 'rotate(0deg)';
+        }
+      });
+    }
+
     subitems.classList.toggle('is-open', !isOpen);
     btn.setAttribute('aria-expanded', String(!isOpen));
     const chevron = btn.querySelector('.mtk-biab__sidebar-item-chevron');
@@ -849,6 +863,8 @@ class MtkBiab {
       'invoice-setup':    () => this._renderInvoiceTool()
     };
     if (renderMap[tool]) renderMap[tool]();
+    // Update h2 to match selected step
+    this._updateContentTitle(tool);
 
     wc.log('[biab] step selected →', tool, stepIndex);
     wc.publish('mtk-biab:step-select', { tabId, menuId, itemId, tool, step: stepIndex });
@@ -857,17 +873,24 @@ class MtkBiab {
     _handleMenuToggle(btn) {
     const { tabId, menuId } = btn.dataset;
     const itemsEl = this.el.querySelector(`#mtk-biab-menu-items-${tabId}-${menuId}`);
-    const isCollapsed = itemsEl.classList.toggle('is-collapsed');
+    const willOpen = itemsEl.classList.contains('is-collapsed');
 
-    btn.classList.toggle('is-collapsed', isCollapsed);
-    btn.setAttribute('aria-expanded', String(!isCollapsed));
+    // Collapse ALL other menus in this tab first (accordion behaviour)
+    if (willOpen) {
+      this.el.querySelectorAll(`.mtk-biab__sidebar-menu-header[data-tab-id="${tabId}"]`).forEach(h => {
+        if (h.dataset.menuId === menuId) return;
+        const otherItems = this.el.querySelector(`#mtk-biab-menu-items-${tabId}-${h.dataset.menuId}`);
+        if (otherItems) otherItems.classList.add('is-collapsed');
+        h.classList.add('is-collapsed');
+        h.setAttribute('aria-expanded', 'false');
+      });
+    }
 
-    // Publish menu select
-    this._publish(this.events.publish.menuSelect, {
-      tabId,
-      menuId,
-      collapsed: isCollapsed
-    });
+    itemsEl.classList.toggle('is-collapsed', !willOpen);
+    btn.classList.toggle('is-collapsed', !willOpen);
+    btn.setAttribute('aria-expanded', String(willOpen));
+
+    this._publish(this.events.publish.menuSelect, { tabId, menuId, collapsed: !willOpen });
   }
 
   _handleIframeReload(btn) {
@@ -1475,6 +1498,22 @@ class MtkBiab {
     }
     this.formSteps[tool] = Math.max(0, Math.min(steps.length - 1, current + direction));
     this._renderToolPanels();
+    // Update content-title h2 to match current step
+    this._updateContentTitle(tool);
+  }
+
+  _updateContentTitle(tool) {
+    const steps = this._getToolSteps(tool);
+    const stepIndex = this.formSteps[tool] || 0;
+    const step = steps[stepIndex];
+    if (!step) return;
+    // Find the active content panel that contains this tool
+    const mount = this.el.querySelector(`[data-biab-tool="${tool}"]`);
+    if (!mount) return;
+    const panel = mount.closest('.mtk-biab__content-panel');
+    if (!panel) return;
+    const h2 = panel.querySelector('.mtk-biab__content-title');
+    if (h2) h2.textContent = step.title;
   }
 
   _updateSidebarStepBadge(tool, stepIndex, completed) {
