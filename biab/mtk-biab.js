@@ -580,9 +580,34 @@ class MtkBiab {
           <div class="mtk-biab__content-card">
             <h2 class="mtk-biab__content-title">${item.content.title}</h2>
             <p class="mtk-biab__content-subtitle">${menu.label} · ${tab.label}</p>
-            <div class="mtk-biab__content-body">
-              ${item.content.body}
-            </div>
+            ${(() => {
+              const hasTool = item.content.body.includes('data-biab-tool=');
+              if (hasTool) {
+                // Extract just the tool div — collapse everything after it
+                const toolMatch = item.content.body.match(/(<div[^>]*data-biab-tool[^>]*>.*?<\/div>)/s);
+                const toolDiv = toolMatch ? toolMatch[0] : '';
+                const rest = item.content.body.replace(toolDiv, '').trim();
+                return `
+                  <div class="mtk-biab__content-body">${toolDiv}</div>
+                  ${rest ? `
+                    <div class="mtk-biab__content-body mtk-biab__content-body--collapsed" hidden>${rest}</div>
+                    <a href="#" class="mtk-biab__read-more-link" data-action="expand-body">
+                      <span class="material-icons">menu_book</span>
+                      Guides. Read More…
+                    </a>
+                  ` : ''}
+                `;
+              }
+              return `
+                <div class="mtk-biab__content-body mtk-biab__content-body--collapsed" hidden>
+                  ${item.content.body}
+                </div>
+                <a href="#" class="mtk-biab__read-more-link" data-action="expand-body">
+                  <span class="material-icons">menu_book</span>
+                  Guides. Read More…
+                </a>
+              `;
+            })()}
           </div>
         </article>
       `)
@@ -648,6 +673,20 @@ class MtkBiab {
       // Logo click → go home
       if (anchor.classList.contains('mtk-biab__logo')) {
         window.location.replace('/repo_deploy/');
+        return;
+      }
+      // Read More expand — handle before returning
+      if (anchor.dataset.action === 'expand-body') {
+        const card = anchor.closest('.mtk-biab__content-card');
+        if (card) {
+          const body = card.querySelector('.mtk-biab__content-body--collapsed');
+          if (body) {
+            body.removeAttribute('hidden');
+            body.classList.remove('mtk-biab__content-body--collapsed');
+          }
+          anchor.remove();
+        }
+        return;
       }
       return;
     }
@@ -669,6 +708,17 @@ class MtkBiab {
         this._handleItemClick(btn);
         this._toggleSubitems(btn);
         break;
+      case 'expand-body': {
+        const card = btn.closest('.mtk-biab__content-card');
+        if (!card) break;
+        const body = card.querySelector('.mtk-biab__content-body--collapsed');
+        if (body) {
+          body.removeAttribute('hidden');
+          body.classList.remove('mtk-biab__content-body--collapsed');
+        }
+        btn.remove();
+        break;
+      }
       case 'select-step':
         this._handleStepClick(btn);
         break;
@@ -976,6 +1026,29 @@ class MtkBiab {
     if (targetPanel) {
       targetPanel.classList.add('is-active');
       targetPanel.focus({ preventScroll: true });
+
+      // Reset any previously expanded guide body back to collapsed
+      const expandedBody = targetPanel.querySelector(
+        '.mtk-biab__content-body:not(.mtk-biab__content-body--collapsed) ~ .mtk-biab__read-more-link'
+      );
+      // Re-hide body if it was expanded and no Read More link is present
+      const allBodies = targetPanel.querySelectorAll('.mtk-biab__content-body');
+      allBodies.forEach(b => {
+        // Only reset the static guide body (not tool bodies)
+        if (!b.querySelector('[data-biab-tool]') && !b.hasAttribute('hidden')) {
+          b.setAttribute('hidden', '');
+          b.classList.add('mtk-biab__content-body--collapsed');
+          // Re-insert Read More link if missing
+          if (!targetPanel.querySelector('.mtk-biab__read-more-link')) {
+            const link = document.createElement('a');
+            link.href = '#';
+            link.className = 'mtk-biab__read-more-link';
+            link.dataset.action = 'expand-body';
+            link.innerHTML = '<span class="material-icons">menu_book</span> Guides. Read More…';
+            b.insertAdjacentElement('afterend', link);
+          }
+        }
+      });
     }
 
     this._renderDynamicPanels();

@@ -836,6 +836,24 @@ mtk-biab.mtk-biab {
     }
   }
 
+  // ── Read More Link ───────────────────────────────────────
+  &__read-more-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #a98211;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.15s;
+
+    .material-icons { font-size: 18px; }
+
+    &:hover { color: #7a5e0c; text-decoration: none; }
+  }
+
   // ── Sidebar Main Content ─────────────────────────────────
   &__sidebar-content {
     flex: 1;
