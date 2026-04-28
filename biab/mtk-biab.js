@@ -1544,8 +1544,7 @@ class MtkBiab {
         <div class="mtk-biab-tool__head">
           <div>
             <span class="mtk-biab__logo-badge">${this._t('step')} ${stepIndex + 1} / ${steps.length}</span>
-            <h3>${heading}</h3>
-            <p>${active.title}</p>
+            <h3>${active.title}</h3>
           </div>
           <div class="mtk-biab-tool__actions">
             <button type="button" class="mtk-biab__action-btn" data-action="tool-download" data-tool="${tool}">${this._t('download')}</button>
