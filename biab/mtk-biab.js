@@ -236,8 +236,7 @@ const MTK_BIAB_I18N = {
     visibleOnWebsite: 'Show on webpage',
     hiddenOnWebsite: 'Hidden from webpage',
     allRatingsCount: 'All ratings count',
-    publishedReviews: 'Published reviews',
-    reviewValidation: 'Add the customer name and email before sending.'
+    publishedReviews: 'Published reviews'
   },
   es: {
     selectOption: 'Selecciona una opción',
@@ -267,293 +266,7 @@ const MTK_BIAB_I18N = {
     visibleOnWebsite: 'Mostrar en la página',
     hiddenOnWebsite: 'Oculta en la página',
     allRatingsCount: 'Todas las calificaciones cuentan',
-    publishedReviews: 'Reseñas publicadas',
-    reviewValidation: 'Agrega el nombre y el correo del cliente antes de enviar.'
-  }
-};
-
-const MTK_BIAB_GUIDED_SETUPS = {
-  'business-plan-template': {
-    badge: 'Starter',
-    title: 'Business Plan Guided Setup',
-    intro: 'Turn the written business plan into a launch-ready operating plan. Complete each section, then use the Business Plan Builder output as the working document.',
-    apiNote: 'No public agency API can write a full business plan for the owner, but the steps below connect to the official systems that supply the facts used in the plan.',
-    steps: [
-      {
-        title: 'Choose the business basics',
-        summary: 'Decide the legal name, public brand name, owner, service area, and launch model.',
-        details: ['Write the exact business name you plan to use publicly.', 'Pick mobile, storefront, or hybrid.', 'List the cities, ZIP codes, or counties you can reach profitably.', 'Use the Business Plan Builder at the bottom of this page to capture the answers.'],
-        links: [
-          ['Check domain availability', 'https://domains.google/'],
-          ['SBA business plan guide', 'https://www.sba.gov/business-guide/plan-your-business/write-your-business-plan']
-        ]
-      },
-      {
-        title: 'Define launch services',
-        summary: 'Start with services you can perform reliably and profitably.',
-        details: ['Select 5 to 8 launch services.', 'Separate residential, commercial, and automotive work.', 'Delay advanced services until tools, training, insurance, and pricing are ready.'],
-        links: [['Use NALA course training as service proof', 'https://nalanetwork.com/']]
-      },
-      {
-        title: 'Build pricing assumptions',
-        summary: 'Write the pricing rules before you advertise.',
-        details: ['Set service call, labor, parts markup, emergency, and after-hours rules.', 'Use the region pricing guides as starter ranges.', 'Review pricing weekly once real jobs come in.']
-      },
-      {
-        title: 'Create the marketing plan',
-        summary: 'Pick the channels you can actually maintain.',
-        details: ['Start with Google Business Profile, website SEO, review requests, and one focused ad channel.', 'Do not open every channel unless someone will manage it.', 'Track calls, forms, booked jobs, and customer source.'],
-        links: [
-          ['Google Business Profile', 'https://business.google.com/add'],
-          ['Google Search Console', 'https://search.google.com/search-console/welcome']
-        ]
-      },
-      {
-        title: 'Finalize the first 90 days',
-        summary: 'Set simple measurable launch targets.',
-        details: ['Set targets for first jobs, first reviews, average ticket, ad spend, and referral partners.', 'Use the completed plan as the owner checklist during launch.', 'Download or email the Business Plan Builder document when finished.']
-      }
-    ]
-  },
-  'startup-checklist': {
-    badge: 'Starter',
-    title: 'Startup Checklist Guided Setup',
-    intro: 'Complete the launch setup in the order a new locksmith business usually needs it: entity, EIN, banking, licensing, phone, website, profile, insurance, payments, and launch workflow.',
-    apiNote: 'Most government startup tasks still require the owner to complete official forms manually. EIN is free through the IRS online assistant, but it is not an open API.',
-    steps: [
-      {
-        title: 'Register or confirm the business entity',
-        summary: 'Form the legal entity before applying for an EIN when an LLC, corporation, or partnership is being created.',
-        details: ['Choose sole proprietor, LLC, corporation, or partnership with a qualified professional if needed.', 'File with the state before the EIN if you are forming a legal entity.', 'Save the filing confirmation and legal name exactly as approved.'],
-        links: [
-          ['SBA registration overview', 'https://www.sba.gov/business-guide/launch-your-business/register-your-business'],
-          ['Find state requirements', 'https://www.sba.gov/business-guide/launch-your-business/apply-licenses-permits']
-        ]
-      },
-      {
-        title: 'Apply for the EIN',
-        summary: 'Use the official IRS application. It is free, must be completed in one session, and should be saved immediately.',
-        details: ['Open the IRS EIN assistant during its posted operating hours.', 'Select the correct entity type.', 'Enter the responsible party information.', 'Submit the application and download or print the confirmation letter.', 'Store the confirmation with business records.'],
-        links: [
-          ['Apply for EIN at IRS.gov', 'https://www.irs.gov/businesses/small-businesses-self-employed/apply-for-an-employer-identification-number-ein-online'],
-          ['IRS EIN information', 'https://www.irs.gov/businesses/employer-identification-number']
-        ]
-      },
-      {
-        title: 'Open banking and bookkeeping',
-        summary: 'Separate business money from personal money before the first job.',
-        details: ['Open an operating account.', 'Create a tax reserve bucket.', 'Choose bookkeeping software or a spreadsheet workflow.', 'Save receipts and match every payment to an invoice.']
-      },
-      {
-        title: 'Check locksmith licensing and insurance',
-        summary: 'Confirm state, county, city, and category-specific rules before advertising.',
-        details: ['Check locksmith licensing, local business licenses, contractor categories, sales tax registration, and access-control rules.', 'Get general liability, commercial auto, and tool coverage quotes.', 'Keep license and insurance proof available for Google and customers.'],
-        links: [['SBA licenses and permits guide', 'https://www.sba.gov/business-guide/launch-your-business/apply-licenses-permits']]
-      },
-      {
-        title: 'Set up phone, email, domain, and website',
-        summary: 'Make the business reachable and consistent everywhere.',
-        details: ['Use the prebuilt Website Maker URL shown in this guide as the starter website.', 'Apply or upload the logo from the Logo Designer before publishing.', 'Create a business email and dedicated phone line.', 'Keep the business name, phone, service area, and hours consistent everywhere.']
-      },
-      {
-        title: 'Launch Google profile, payments, and reviews',
-        summary: 'Finish the public trust systems before spending on ads.',
-        details: ['Create or claim the Google Business Profile.', 'Set up invoicing and payment processing.', 'Prepare review request templates.', 'Test the full job workflow from call to invoice to review request.'],
-        links: [
-          ['Google Business Profile setup', 'https://business.google.com/add'],
-          ['Get Google review link', 'https://support.google.com/business/answer/3474122?hl=en']
-        ]
-      }
-    ]
-  },
-  'legal-guide': {
-    badge: 'Starter',
-    title: 'Legal Readiness Guided Setup',
-    intro: 'This is a practical launch checklist, not legal advice. Complete each item with local rules and professional help where needed.',
-    apiNote: 'Licensing and entity APIs vary by state and city. Treat automation as state-specific later work; the owner still needs to verify local rules.',
-    steps: [
-      {
-        title: 'Confirm business formation and permits',
-        summary: 'Make sure the business can legally operate in its location and service category.',
-        details: ['Confirm entity status, DBA if used, local business license, sales tax registration, and locksmith-specific licensing.', 'Document renewal dates.', 'Keep copies of approvals in one folder.'],
-        links: [['SBA licenses and permits guide', 'https://www.sba.gov/business-guide/launch-your-business/apply-licenses-permits']]
-      },
-      {
-        title: 'Document insurance',
-        summary: 'Carry coverage that matches the actual work offered.',
-        details: ['Get general liability, commercial auto, tools/inland marine, and workers compensation if applicable.', 'Ask the carrier about locksmith, access control, safe, and automotive exclusions.']
-      },
-      {
-        title: 'Create authorization rules',
-        summary: 'No unlock, rekey, or security hardware change should happen without authorization.',
-        details: ['Define what ID or proof is required.', 'Record who approved the work.', 'Document unusual circumstances.', 'Use a written destructive-entry approval when needed.']
-      },
-      {
-        title: 'Write customer policies',
-        summary: 'Make estimates, payment, warranty, cancellation, and customer-supplied-parts rules clear.',
-        details: ['Add policy language to invoices and estimates.', 'Use honest pricing and avoid fake low advertised prices.', 'Keep warranty terms narrow and specific.']
-      },
-      {
-        title: 'Protect records and customer data',
-        summary: 'Names, addresses, gate codes, photos, and job notes need controlled handling.',
-        details: ['Limit access to customer records.', 'Avoid storing sensitive codes in plain text when possible.', 'Keep invoices, photos, payments, and communications organized.']
-      }
-    ]
-  },
-  'financial-guide': {
-    badge: 'Starter',
-    title: 'Financial Setup Guide',
-    intro: 'Set up simple money systems so revenue, taxes, inventory, marketing, and owner pay do not get mixed together.',
-    apiNote: 'Bookkeeping tools have APIs, but bank feeds and payment data require OAuth and secure server-side credential storage before automation.',
-    steps: [
-      {
-        title: 'Create money buckets',
-        summary: 'Separate operating cash, tax reserve, owner pay, inventory, vehicle, and marketing.',
-        details: ['Open or label accounts for each bucket.', 'Move tax reserve money on a schedule.', 'Do not spend tax or inventory reserve as owner pay.']
-      },
-      {
-        title: 'Choose bookkeeping workflow',
-        summary: 'Pick software or a spreadsheet before jobs start.',
-        details: ['Record every invoice, payment, part, tool, fuel, ad charge, and refund.', 'Reconcile weekly.', 'Review profit and loss monthly.'],
-        links: [
-          ['QuickBooks developer docs', 'https://developer.intuit.com/app/developer/qbo/docs/get-started'],
-          ['Xero API docs', 'https://developer.xero.com/documentation/']
-        ]
-      },
-      {
-        title: 'Build pricing from cost',
-        summary: 'Every price should cover travel, labor, parts, fees, overhead, callbacks, taxes, and profit.',
-        details: ['Set target gross margin.', 'Track actual parts cost.', 'Compare expected job time to real job time.', 'Adjust prices after real data comes in.']
-      },
-      {
-        title: 'Track weekly KPIs',
-        summary: 'Use a small dashboard instead of guessing.',
-        details: ['Track calls, booked jobs, completed jobs, average ticket, ad spend, cost per booked job, reviews, unpaid invoices, and net cash.']
-      },
-      {
-        title: 'Prepare tax and reporting rhythm',
-        summary: 'Avoid surprise tax problems by setting a monthly routine.',
-        details: ['Save receipts.', 'Review taxable sales and labor rules with a professional.', 'Set reminders for estimated taxes, sales tax, payroll, and renewals where applicable.'],
-        links: [['IRS small business tax center', 'https://www.irs.gov/businesses/small-businesses-self-employed']]
-      }
-    ]
-  },
-  'google-business-profile': {
-    badge: 'Starter',
-    title: 'Google Business Profile Guided Setup',
-    intro: 'Create or claim the profile, verify it, and prepare it to receive real reviews.',
-    apiNote: 'Business Profile APIs can manage locations after OAuth and API access approval. New small businesses usually still complete setup and verification manually first.',
-    steps: [
-      {
-        title: 'Open the setup page',
-        summary: 'Use the business Google account that the owner will keep.',
-        details: ['Use a durable business login.', 'Do not build the profile under a temporary personal account.', 'Keep owner access documented.'],
-        links: [['Open Business Profile setup', 'https://business.google.com/add']]
-      },
-      {
-        title: 'Add or claim the business',
-        summary: 'Find the existing listing if one exists, or create a new one if it does not.',
-        details: ['Search for the business name and address/service area.', 'Claim the existing listing if present.', 'Avoid duplicate profiles.'],
-        links: [['Google add or claim guide', 'https://support.google.com/business/answer/2911778?hl=en']]
-      },
-      {
-        title: 'Set service-area details',
-        summary: 'Most mobile locksmiths should use service-area settings instead of showing a home address.',
-        details: ['Hide the address if customers do not visit a staffed storefront.', 'Add realistic service areas.', 'Use categories and services that match actual work.'],
-        links: [['Set service areas', 'https://support.google.com/business/answer/9157481?hl=en']]
-      },
-      {
-        title: 'Complete profile proof',
-        summary: 'Add fields, photos, hours, services, and verification material.',
-        details: ['Add phone, website, hours, services, description, logo, cover image, vehicle photos, and job photos.', 'Prepare business registration, insurance, or license proof when requested.'],
-        links: [['Verify the profile', 'https://support.google.com/business/answer/7107242?hl=en']]
-      },
-      {
-        title: 'Prepare reviews',
-        summary: 'Get the review link and use it after completed jobs.',
-        details: ['Send review requests after real jobs only.', 'Never buy reviews or review your own business.', 'Save the review link in Business in a Box.'],
-        links: [['Get review link', 'https://support.google.com/business/answer/3474122?hl=en']]
-      }
-    ]
-  },
-  'seo-setup': {
-    badge: 'Starter',
-    title: 'SEO and Search Console Guided Setup',
-    intro: 'Make the website understandable to Google and useful to local customers.',
-    apiNote: 'Search Console APIs can submit sitemaps and inspect URLs for verified properties. They cannot replace good service pages or verified ownership.',
-    steps: [
-      { title: 'Write the service area', summary: 'List real cities, neighborhoods, ZIP codes, and counties served.', details: ['Keep the list honest.', 'Do not create fake doorway pages.', 'Match the website, Google profile, and ads.'] },
-      { title: 'Create essential pages', summary: 'Cover the services customers search for.', details: ['Homepage, About, Contact, Residential, Commercial, Rekey, Lock Change, Lockout, and Auto Lockout if offered.', 'Use clear phone and service-area language.'] },
-      { title: 'Verify Search Console', summary: 'Add the live website and verify ownership.', details: ['Use domain property if possible.', 'Keep the verification method active.', 'Give the owner access.'], links: [['Open Search Console', 'https://search.google.com/search-console/welcome'], ['Verify ownership', 'https://support.google.com/webmasters/answer/9008080?hl=en']] },
-      { title: 'Submit sitemap', summary: 'Tell Google where the site pages are.', details: ['Submit the sitemap after verification.', 'Check indexing problems weekly.'], links: [['Submit a sitemap', 'https://support.google.com/webmasters/answer/183668?hl=en']] },
-      { title: 'Monitor indexing and queries', summary: 'Use Search Console to watch problems and opportunities.', details: ['Inspect important URLs.', 'Review top queries.', 'Fix mobile and indexing issues.'], links: [['URL Inspection API overview', 'https://developers.google.com/search/blog/2022/01/url-inspection-api']] }
-    ]
-  },
-  'local-services-ads': {
-    badge: 'Intermediate',
-    title: 'Local Services Ads Guided Setup',
-    intro: 'Prepare eligibility, documents, screening, service areas, and lead handling before spending.',
-    apiNote: 'Local Services Ads are tied to Google screening and verification. API support is limited compared with standard Google Ads campaign automation.',
-    steps: [
-      { title: 'Confirm eligibility', summary: 'Start with Google Local Services Ads and choose locksmith category.', details: ['Select country, state, and service category.', 'Check if locksmith screening is available in the area.'], links: [['Open Local Services Ads', 'https://ads.google.com/local-services-ads/'], ['Getting started guide', 'https://support.google.com/localservices/answer/6224841?co=GENIE.CountryCode%3DUS&hl=en']] },
-      { title: 'Prepare documents', summary: 'Gather verification information before applying.', details: ['Business registration, insurance, licenses, owner info, field worker info, and Google profile access.'], links: [['U.S. verification requirements', 'https://support.google.com/localservices/answer/12174778?co=GENIE.CountryCode%3DUS&hl=en']] },
-      { title: 'Complete screening', summary: 'Submit checks exactly as Google requests.', details: ['Do not advertise before approval.', 'Respond quickly to verification requests.', 'Keep documents current.'], links: [['Screening and verification', 'https://support.google.com/localservices/answer/6226575?hl=en']] },
-      { title: 'Set services and areas', summary: 'Only advertise work the business can answer and perform.', details: ['Use a tight service area at launch.', 'Turn on only profitable services.', 'Pause ads when nobody can answer calls.'] },
-      { title: 'Create lead handling rules', summary: 'Answer fast and review lead quality.', details: ['Listen to calls.', 'Mark bad leads.', 'Track booked jobs and real cost per booked job.'] }
-    ]
-  },
-  'google-ads': {
-    badge: 'Intermediate',
-    title: 'Google Search Ads Guided Setup',
-    intro: 'Launch one focused Search campaign only after the site, phone, profile, and tracking are ready.',
-    apiNote: 'Google Ads API can automate campaigns, keywords, budgets, and conversions after OAuth, developer-token approval, and secure backend setup.',
-    steps: [
-      { title: 'Open Google Ads', summary: 'Create the account with the business Google login.', details: ['Connect the Google Business Profile when prompted.', 'Use billing owned by the business.'], links: [['Open Google Ads', 'https://ads.google.com/home/'], ['Create a campaign', 'https://support.google.com/google-ads/answer/6324971?hl=en']] },
-      { title: 'Create one Search campaign', summary: 'Start with a tightly focused service cluster.', details: ['Separate emergency, rekey, lock change, and commercial work.', 'Avoid broad automated campaign types at launch.'], links: [['Create a Search campaign', 'https://support.google.com/google-ads/answer/9510373?hl=en']] },
-      { title: 'Set targeting and keywords', summary: 'Use exact and phrase intent terms in a small service area.', details: ['Use high-intent terms.', 'Set a realistic daily budget.', 'Send ads to matching landing pages.'] },
-      { title: 'Add negative keywords', summary: 'Block free, DIY, jobs, salary, training, wholesale, and template searches.', details: ['Review search terms twice per week.', 'Add negatives aggressively during launch.'], links: [['Negative keywords guide', 'https://support.google.com/google-ads/answer/2453972?hl=en']] },
-      { title: 'Connect conversion tracking', summary: 'Track calls and forms before increasing budget.', details: ['Test phone-click and form events.', 'Import or create conversions.', 'Review cost per booked job, not just cost per click.'], links: [['Google Ads API docs', 'https://developers.google.com/google-ads/api/docs/start']] }
-    ]
-  },
-  'analytics-tracking': {
-    badge: 'Intermediate',
-    title: 'Analytics and Tracking Guided Setup',
-    intro: 'Set up analytics so the owner can see which marketing channels produce calls, forms, and booked jobs.',
-    apiNote: 'Google Analytics Admin API can create and manage GA4 resources after OAuth. Event quality still depends on correct website tagging.',
-    steps: [
-      { title: 'Create GA4', summary: 'Create an Analytics account and property for the live website.', details: ['Use the owner business Google account.', 'Create a web data stream.', 'Copy the measurement ID.'], links: [['Open Google Analytics', 'https://analytics.google.com/'], ['Set up Analytics', 'https://support.google.com/analytics/answer/14183469?hl=en']] },
-      { title: 'Install the tag', summary: 'Add the Google tag or Google Tag Manager.', details: ['Use one tagging method.', 'Avoid duplicate tags.', 'Confirm data is received.'], links: [['Google Tag Manager setup', 'https://support.google.com/tagmanager/answer/6103696?hl=en']] },
-      { title: 'Track lead actions', summary: 'Track phone clicks, forms, quote requests, and important buttons.', details: ['Mark real lead events as conversions.', 'Test on mobile and desktop.', 'Document what each event means.'] },
-      { title: 'Link Google Ads', summary: 'Connect Analytics and Ads if ads are used.', details: ['Import conversion data when appropriate.', 'Check attribution and event names before spending.'], links: [['Link Ads and Analytics', 'https://support.google.com/analytics/answer/9379420?hl=en']] },
-      { title: 'Document the dashboard', summary: 'Create a weekly readout for the owner.', details: ['Review traffic source, calls, forms, booked jobs, and ad spend.', 'Use decisions, not vanity metrics.'], links: [['Analytics Admin API', 'https://developers.google.com/analytics/devguides/config/admin/v1']] }
-    ]
-  },
-  'social-media-setup': {
-    badge: 'Starter',
-    title: 'Social Media Guided Setup',
-    intro: 'Use social pages as trust proof: real photos, accurate contact details, and a simple posting habit.',
-    apiNote: 'Meta APIs can manage some page and Instagram workflows after app review and permissions. Most new owners should set up pages manually first.',
-    steps: [
-      { title: 'Create main pages', summary: 'Start with Facebook; add Instagram if the business can post real photos.', details: ['Use the exact business name.', 'Use the business email and owner-controlled login.', 'Add the logo and service-area language.'], links: [['Create Facebook Page', 'https://www.facebook.com/pages/create'], ['Instagram business account', 'https://help.instagram.com/502981923235522']] },
-      { title: 'Match business details', summary: 'Keep NAP details consistent everywhere.', details: ['Name, address/service area, phone, website, hours, and service list should match the website and Google profile.'] },
-      { title: 'Publish starter proof', summary: 'Show the business is real before inviting customers.', details: ['Add logo, cover image, vehicle/tool photos, short description, and ten starter posts.'] },
-      { title: 'Create response templates', summary: 'Prepare fast replies for common messages.', details: ['Pricing requests, service area, after-hours, review thank-yous, and booking next steps.'] },
-      { title: 'Set weekly habit', summary: 'Post one real photo, one helpful tip, and one service reminder each week.', details: ['Avoid fake stock images as proof.', 'Use simple local trust content.'], links: [['Meta Marketing API docs', 'https://developers.facebook.com/docs/marketing-apis/']]
-      }
-    ]
-  },
-  'email-campaigns': {
-    badge: 'Intermediate',
-    title: 'Email Campaign Guided Setup',
-    intro: 'Create simple follow-up emails for reviews, unbooked quotes, repeat service, and commercial relationships.',
-    apiNote: 'Mailchimp and similar tools have APIs, but production use needs secure key storage, consent handling, and unsubscribe compliance.',
-    steps: [
-      { title: 'Choose email platform', summary: 'Create the account and connect the business sender address.', details: ['Use a reputable platform.', 'Do not send from a personal inbox for campaigns.', 'Authenticate the sending domain when available.'], links: [['Create Mailchimp account', 'https://mailchimp.com/help/create-an-account/'], ['Mailchimp API quick start', 'https://mailchimp.com/developer/marketing/guides/quick-start/']] },
-      { title: 'Create list fields', summary: 'Save useful customer context.', details: ['Name, email, phone, service type, service date, city, customer type, and review status.'] },
-      { title: 'Build review request email', summary: 'Send it after a real completed job.', details: ['Include a short thank-you and Google review link.', 'Do not pressure or reward reviews.'] },
-      { title: 'Build quote follow-up', summary: 'Follow up once when a quote does not book.', details: ['Restate the service area and phone number.', 'Give one clear next action.'] },
-      { title: 'Check compliance', summary: 'Use honest subjects, a real reply-to address, and unsubscribe where required.', details: ['Do not buy random email lists.', 'Keep consent and suppression lists clean.'], links: [['FTC CAN-SPAM guide', 'https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business'], ['Mailchimp Marketing API', 'https://mailchimp.com/developer/marketing/docs/integrations/']] }
-    ]
+    publishedReviews: 'Reseñas publicadas'
   }
 };
 
@@ -570,10 +283,8 @@ class MtkBiab {
     this.logoDesignerState = this._getDefaultLogoDesignerState();
     this.formState = this._getDefaultFormState();
     this.reviewState = this._getDefaultReviewState();
-    this.invoiceState = { records: [], loadedForUid: '', status: '' };
     this.reviewsLoadedForUid = '';
     this.formSteps = {};
-    this.guidedSetupState = this._loadGuidedSetupState();
 
     // Active state
     this.activeTabId    = null;
@@ -728,8 +439,8 @@ class MtkBiab {
             `).join('')}
           </nav>
           <div class="mtk-biab__lang-switch" aria-label="Language">
-            <button type="button" class="${this._getLang() === 'en' ? 'is-active' : ''}" data-action="set-lang" data-lang="en" aria-pressed="${this._getLang() === 'en'}">EN</button>
-            <button type="button" class="${this._getLang() === 'es' ? 'is-active' : ''}" data-action="set-lang" data-lang="es" aria-pressed="${this._getLang() === 'es'}">ES</button>
+            <button type="button" data-action="set-lang" data-lang="en">EN</button>
+            <button type="button" data-action="set-lang" data-lang="es">ES</button>
           </div>
         </div>
       </header>
@@ -798,8 +509,35 @@ class MtkBiab {
           id="mtk-biab-menu-items-${tab.id}-${menu.id}"
           role="list"
         >
-          ${menu.items.map(item => `
-            <li class="mtk-biab__sidebar-item" role="listitem">
+          ${menu.items.map(item => {
+            // Check if this item has a tool — if so, render sub-steps
+            const toolMatch = item.content && item.content.body && item.content.body.match(/data-biab-tool="([^"]+)"/);
+            const tool = toolMatch ? toolMatch[1] : null;
+            const steps = tool ? this._getToolSteps(tool) : [];
+
+            const subItems = steps.length ? `
+              <ul class="mtk-biab__sidebar-subitems" id="mtk-biab-subitems-${tab.id}-${item.id}" role="list">
+                ${steps.map((step, si) => `
+                  <li role="listitem">
+                    <button
+                      class="mtk-biab__sidebar-subitem-btn"
+                      data-action="select-step"
+                      data-tab-id="${tab.id}"
+                      data-menu-id="${menu.id}"
+                      data-item-id="${item.id}"
+                      data-tool="${tool}"
+                      data-step="${si}"
+                      aria-current="false"
+                    >
+                      <span class="mtk-biab__sidebar-step-num">${si + 1}</span>
+                      <span>${step.title}</span>
+                    </button>
+                  </li>
+                `).join('')}
+              </ul>` : '';
+
+            return `
+            <li class="mtk-biab__sidebar-item${steps.length ? ' has-subitems' : ''}" role="listitem">
               <button
                 class="mtk-biab__sidebar-item-btn"
                 data-action="select-item"
@@ -807,12 +545,15 @@ class MtkBiab {
                 data-menu-id="${menu.id}"
                 data-item-id="${item.id}"
                 aria-current="false"
+                aria-expanded="${steps.length ? 'false' : undefined}"
               >
                 <span class="material-icons" aria-hidden="true">${item.icon}</span>
                 <span>${item.label}</span>
+                ${steps.length ? '<span class="material-icons mtk-biab__sidebar-item-chevron">chevron_right</span>' : ''}
               </button>
-            </li>
-          `).join('')}
+              ${subItems}
+            </li>`;
+          }).join('')}
         </ul>
         ${mi < menus.length - 1 ? '<div class="mtk-biab__sidebar-divider" aria-hidden="true"></div>' : ''}
       </nav>
@@ -839,7 +580,7 @@ class MtkBiab {
             <h2 class="mtk-biab__content-title">${item.content.title}</h2>
             <p class="mtk-biab__content-subtitle">${menu.label} · ${tab.label}</p>
             <div class="mtk-biab__content-body">
-              ${this._buildItemContent(item)}
+              ${item.content.body}
             </div>
           </div>
         </article>
@@ -889,229 +630,6 @@ class MtkBiab {
     `;
   }
 
-  _buildItemContent(item) {
-    if (item && MTK_BIAB_GUIDED_SETUPS[item.id]) {
-      return this._buildGuidedSetup(item.id);
-    }
-    return item && item.content ? item.content.body : '';
-  }
-
-  _loadGuidedSetupState() {
-    try {
-      const saved = localStorage.getItem('nalaBiabGuidedSetupState');
-      return saved ? JSON.parse(saved) : {};
-    } catch (err) {
-      return {};
-    }
-  }
-
-  _saveGuidedSetupState() {
-    try {
-      localStorage.setItem('nalaBiabGuidedSetupState', JSON.stringify(this.guidedSetupState));
-    } catch (err) {
-      wc.warn('[mtk-biab] Could not save guided setup state', err);
-    }
-  }
-
-  _getGuideState(guideId) {
-    if (!this.guidedSetupState[guideId]) {
-      this.guidedSetupState[guideId] = { activeStep: 0, completed: {} };
-    }
-    return this.guidedSetupState[guideId];
-  }
-
-  _selectGuideStep(guideId, stepIndex) {
-    const guide = MTK_BIAB_GUIDED_SETUPS[guideId];
-    if (!guide) return;
-    const state = this._getGuideState(guideId);
-    state.activeStep = Math.max(0, Math.min(guide.steps.length - 1, stepIndex));
-    this._saveGuidedSetupState();
-    this._refreshGuide(guideId);
-  }
-
-  _completeGuideStep(guideId) {
-    const guide = MTK_BIAB_GUIDED_SETUPS[guideId];
-    if (!guide) return;
-    const state = this._getGuideState(guideId);
-    const current = Math.max(0, Math.min(guide.steps.length - 1, state.activeStep || 0));
-    state.completed[current] = true;
-    state.activeStep = Math.min(guide.steps.length - 1, current + 1);
-    this._saveGuidedSetupState();
-    this._refreshGuide(guideId);
-  }
-
-  _resetGuide(guideId) {
-    const guide = MTK_BIAB_GUIDED_SETUPS[guideId];
-    if (!guide) return;
-    this.guidedSetupState[guideId] = { activeStep: 0, completed: {} };
-    this._saveGuidedSetupState();
-    this._refreshGuide(guideId);
-  }
-
-  _refreshGuide(guideId) {
-    const mount = this.el.querySelector(`[data-guided-setup="${guideId}"]`);
-    if (mount) mount.outerHTML = this._buildGuidedSetup(guideId);
-    this._renderToolPanels();
-  }
-
-  _buildGuidedSetup(guideId) {
-    const guide = MTK_BIAB_GUIDED_SETUPS[guideId];
-    if (!guide) return '';
-
-    const state = this._getGuideState(guideId);
-    const steps = guide.steps || [];
-    const activeIndex = Math.max(0, Math.min(steps.length - 1, state.activeStep || 0));
-    const activeStep = steps[activeIndex] || steps[0];
-    const completedCount = steps.reduce((count, step, index) => count + (state.completed && state.completed[index] ? 1 : 0), 0);
-    const percent = steps.length ? Math.round((completedCount / steps.length) * 100) : 0;
-
-    return `
-      <section class="mtk-biab-guided-setup" data-guided-setup="${guideId}">
-        <header class="mtk-biab-guided-setup__header">
-          <div>
-            <span class="mtk-biab__logo-badge">${this._escapeHtml(guide.badge || 'Setup')}</span>
-            <h3>${this._escapeHtml(guide.title)}</h3>
-            <p>${this._escapeHtml(guide.intro)}</p>
-          </div>
-          <div class="mtk-biab-guided-setup__meter" aria-label="${completedCount} of ${steps.length} steps complete">
-            <strong>${completedCount}/${steps.length}</strong>
-            <span>complete</span>
-          </div>
-        </header>
-
-        <div class="mtk-biab-guided-setup__progress" aria-hidden="true">
-          <span style="width:${percent}%"></span>
-        </div>
-
-        <div class="mtk-biab-guided-setup__layout">
-          <ol class="mtk-biab-guided-setup__list">
-            ${steps.map((step, index) => this._buildGuideListItem(guideId, step, index, activeIndex, !!state.completed[index])).join('')}
-          </ol>
-
-          <article class="mtk-biab-guided-setup__detail">
-            <div class="mtk-biab-guided-setup__step-label">Step ${activeIndex + 1} of ${steps.length}</div>
-            <h4>${this._escapeHtml(activeStep.title)}</h4>
-            <p>${this._escapeHtml(activeStep.summary || '')}</p>
-            ${Array.isArray(activeStep.details) && activeStep.details.length ? `
-              <ul class="mtk-biab-guided-setup__details">
-                ${activeStep.details.map(detail => `<li>${this._escapeHtml(detail)}</li>`).join('')}
-              </ul>
-            ` : ''}
-            ${this._buildGuideLinks(activeStep.links)}
-            ${this._buildPrebuiltAssetsPanel(guideId)}
-            ${this._buildGuideEmbeddedTool(guideId)}
-            <div class="mtk-biab-guided-setup__actions">
-              <button type="button" class="mtk-biab__action-btn mtk-biab__action-btn--primary" data-action="guide-complete-step" data-guide-id="${guideId}">
-                ${activeIndex === steps.length - 1 ? 'Mark complete' : 'Mark complete and next'}
-              </button>
-              <button type="button" class="mtk-biab__action-btn" data-action="guide-reset" data-guide-id="${guideId}">Reset guide</button>
-            </div>
-          </article>
-        </div>
-      </section>
-    `;
-  }
-
-  _getGuideToolId(guideId) {
-    const map = {
-      'business-plan-template': 'business-plan',
-      'startup-checklist': 'startup-checklist'
-    };
-    return map[guideId] || '';
-  }
-
-  _buildGuideEmbeddedTool(guideId) {
-    const toolId = this._getGuideToolId(guideId);
-    if (!toolId) return '';
-    return `
-      <div class="mtk-biab-guided-setup__embedded-tool">
-        <div data-biab-tool="${toolId}"></div>
-      </div>
-    `;
-  }
-
-  _shouldShowPrebuiltAssets(guideId) {
-    return [
-      'business-plan-template',
-      'startup-checklist',
-      'google-business-profile',
-      'seo-setup',
-      'local-services-ads',
-      'google-ads',
-      'analytics-tracking',
-      'social-media-setup',
-      'email-campaigns'
-    ].includes(guideId);
-  }
-
-  _getPrebuiltWebsiteUrl() {
-    const base = document.querySelector('base[href]');
-    if (base && base.href) {
-      try {
-        return new URL('client/index.html', base.href).href;
-      } catch (err) {
-        // Fall through to origin-based URL.
-      }
-    }
-    const origin = window.location && window.location.origin ? window.location.origin : '';
-    return `${origin}/repo_deploy/client/index.html`;
-  }
-
-  _buildPrebuiltAssetsPanel(guideId) {
-    if (!this._shouldShowPrebuiltAssets(guideId)) return '';
-    const websiteUrl = this._getPrebuiltWebsiteUrl();
-    const logoMarkup = this._buildLogoMarkup(this.logoDesignerState, 'primary-light');
-    const businessName = this.logoDesignerState.businessName || 'Locksmith Business';
-    return `
-      <aside class="mtk-biab-guided-setup__assets">
-        <div class="mtk-biab-guided-setup__asset-logo" aria-label="${this._escapeHtml(businessName)} logo preview">
-          ${logoMarkup}
-        </div>
-        <div>
-          <strong>Prebuilt assets already started</strong>
-          <p>Use this website URL and logo wherever the guide asks for website, brand, or profile assets.</p>
-          <label>Website URL
-            <input type="text" readonly value="${this._escapeHtml(websiteUrl)}">
-          </label>
-          <div class="mtk-biab-guided-setup__links">
-            <a class="mtk-biab-guide__link" href="${this._escapeHtml(websiteUrl)}" target="_blank" rel="noopener">Open prebuilt website</a>
-            <button type="button" class="mtk-biab-guide__link mtk-biab-guided-setup__asset-button" data-action="logo-apply-to-client">Apply logo to Website Maker</button>
-          </div>
-        </div>
-      </aside>
-    `;
-  }
-
-  _buildGuideListItem(guideId, step, index, activeIndex, isComplete) {
-    return `
-      <li>
-        <button
-          type="button"
-          class="mtk-biab-guided-setup__list-btn${index === activeIndex ? ' is-active' : ''}${isComplete ? ' is-complete' : ''}"
-          data-action="guide-select-step"
-          data-guide-id="${guideId}"
-          data-guide-step="${index}"
-          aria-current="${index === activeIndex ? 'step' : 'false'}"
-        >
-          <span class="material-icons" aria-hidden="true">${isComplete ? 'check_circle' : 'radio_button_unchecked'}</span>
-          <span>
-            <strong>${this._escapeHtml(step.title)}</strong>
-            <small>${this._escapeHtml(step.summary || '')}</small>
-          </span>
-        </button>
-      </li>
-    `;
-  }
-
-  _buildGuideLinks(links) {
-    if (!Array.isArray(links) || !links.length) return '';
-    return `
-      <div class="mtk-biab-guided-setup__links">
-        ${links.map(([label, href]) => `<a class="mtk-biab-guide__link" href="${this._escapeHtml(href)}" target="_blank" rel="noopener">${this._escapeHtml(label)}</a>`).join('')}
-      </div>
-    `;
-  }
-
   // ── Bind Events ────────────────────────────────────────────────────────────
 
   _bindAll() {
@@ -1119,7 +637,6 @@ class MtkBiab {
     this.el.addEventListener('click', this._onClick.bind(this));
     this.el.addEventListener('keydown', this._onKeydown.bind(this));
     this.el.addEventListener('input', this._onInput.bind(this));
-    this.el.addEventListener('change', this._onInput.bind(this));
   }
 
   _onClick(e) {
@@ -1149,6 +666,10 @@ class MtkBiab {
         break;
       case 'select-item':
         this._handleItemClick(btn);
+        this._toggleSubitems(btn);
+        break;
+      case 'select-step':
+        this._handleStepClick(btn);
         break;
       case 'toggle-menu':
         this._handleMenuToggle(btn);
@@ -1180,9 +701,6 @@ class MtkBiab {
       case 'logo-upload':
         this._openLogoUpload();
         break;
-      case 'logo-download-set':
-        this._downloadLogoSet();
-        break;
       case 'set-lang':
         this._setLanguage(btn.dataset.lang);
         break;
@@ -1193,25 +711,10 @@ class MtkBiab {
         this._moveToolStep(btn.dataset.tool, 1);
         break;
       case 'tool-download':
-        this._handleToolDownload(btn.dataset.tool);
+        this._downloadToolDocument(btn.dataset.tool);
         break;
       case 'tool-email':
-        this._handleToolEmail(btn.dataset.tool);
-        break;
-      case 'guide-select-step':
-        this._selectGuideStep(btn.dataset.guideId, Number(btn.dataset.guideStep || 0));
-        break;
-      case 'guide-complete-step':
-        this._completeGuideStep(btn.dataset.guideId);
-        break;
-      case 'guide-reset':
-        this._resetGuide(btn.dataset.guideId);
-        break;
-      case 'invoice-save':
-        this._saveInvoiceRecord();
-        break;
-      case 'invoice-load':
-        this._loadInvoiceRecord(btn.dataset.invoiceId);
+        this._emailToolDocument(btn.dataset.tool);
         break;
       case 'review-send-request':
         this._sendReviewRequest();
@@ -1307,7 +810,50 @@ class MtkBiab {
     if (btn) btn.setAttribute('aria-expanded', 'false');
   }
 
-  _handleMenuToggle(btn) {
+  _toggleSubitems(btn) {
+    const subitems = btn.closest('li').querySelector('.mtk-biab__sidebar-subitems');
+    if (!subitems) return;
+    const isOpen = subitems.classList.contains('is-open');
+    subitems.classList.toggle('is-open', !isOpen);
+    btn.setAttribute('aria-expanded', String(!isOpen));
+    const chevron = btn.querySelector('.mtk-biab__sidebar-item-chevron');
+    if (chevron) chevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(90deg)';
+  }
+
+  _handleStepClick(btn) {
+    const { tabId, menuId, itemId, tool, step } = btn.dataset;
+    const stepIndex = parseInt(step, 10);
+
+    // First activate the parent item to show its content panel
+    const parentBtn = this.el.querySelector(
+      `[data-action="select-item"][data-tab-id="${tabId}"][data-item-id="${itemId}"]`
+    );
+    if (parentBtn) this._handleItemClick(parentBtn);
+
+    // Jump the wizard to this step
+    this.formSteps[tool] = stepIndex;
+
+    // Mark active sub-step in sidebar
+    this.el.querySelectorAll('.mtk-biab__sidebar-subitem-btn').forEach(b => {
+      b.classList.remove('is-active');
+      b.setAttribute('aria-current', 'false');
+    });
+    btn.classList.add('is-active');
+    btn.setAttribute('aria-current', 'step');
+
+    // Re-render the tool panel
+    const renderMap = {
+      'business-plan':    () => this._renderBusinessPlanTool(),
+      'startup-checklist':() => this._renderStartupTool(),
+      'invoice-setup':    () => this._renderInvoiceTool()
+    };
+    if (renderMap[tool]) renderMap[tool]();
+
+    wc.log('[biab] step selected →', tool, stepIndex);
+    wc.publish('mtk-biab:step-select', { tabId, menuId, itemId, tool, step: stepIndex });
+  }
+
+    _handleMenuToggle(btn) {
     const { tabId, menuId } = btn.dataset;
     const itemsEl = this.el.querySelector(`#mtk-biab-menu-items-${tabId}-${menuId}`);
     const isCollapsed = itemsEl.classList.toggle('is-collapsed');
@@ -1457,7 +1003,6 @@ class MtkBiab {
     this._renderLogoConceptsPanel();
     this._renderLogoGuidelinesPanel();
     this._renderLogoVariationsPanel();
-    this._renderLogoDownloadsPanel();
     this._renderStationeryPanels();
   }
 
@@ -1513,7 +1058,7 @@ class MtkBiab {
 
         <div class="mtk-biab__logo-controls">
           <div class="mtk-biab__logo-controls-grid">
-            <div class="mtk-biab__logo-control-group mtk-biab__logo-control-group--brand">
+            <div class="mtk-biab__logo-control-group">
               <h3>Brand text</h3>
               <label class="mtk-biab__logo-label">Business name
                 <input class="mtk-biab__logo-input" data-logo-field="businessName" type="text" maxlength="40" value="${this._escapeHtml(state.businessName)}">
@@ -1521,17 +1066,6 @@ class MtkBiab {
               <label class="mtk-biab__logo-label">Tagline
                 <input class="mtk-biab__logo-input" data-logo-field="tagline" type="text" maxlength="70" value="${this._escapeHtml(state.tagline)}">
               </label>
-              <div class="mtk-biab__logo-subcontrol">
-                <h4>Primary variation</h4>
-                <div class="mtk-biab__logo-pill-row">
-                  ${MTK_BIAB_LOGO_VARIATIONS.map(option => `
-                    <button type="button" role="radio" aria-checked="${option.key === state.variationKey}" class="mtk-biab__logo-pill${option.key === state.variationKey ? ' is-active' : ''}" data-action="logo-set-variation" data-logo-value="${option.key}">
-                      <span class="mtk-biab__logo-radio" aria-hidden="true"></span>
-                      <span>${option.label}</span>
-                    </button>
-                  `).join('')}
-                </div>
-              </div>
             </div>
 
             <div class="mtk-biab__logo-control-group">
@@ -1540,8 +1074,7 @@ class MtkBiab {
               ${state.customLogo ? '<p><strong>Custom logo uploaded.</strong> It will be used in previews and stationery until another logo is chosen.</p>' : ''}
               <div class="mtk-biab__logo-option-grid">
                 ${MTK_BIAB_LOGO_ICONS.map(option => `
-                  <button type="button" role="radio" aria-checked="${option.key === state.iconKey}" class="mtk-biab__logo-option-card${option.key === state.iconKey ? ' is-active' : ''}" data-action="logo-set-icon" data-logo-value="${option.key}">
-                    <span class="mtk-biab__logo-radio" aria-hidden="true"></span>
+                  <button type="button" class="mtk-biab__logo-option-card${option.key === state.iconKey ? ' is-active' : ''}" data-action="logo-set-icon" data-logo-value="${option.key}">
                     <span class="mtk-biab__logo-option-icon" style="--logo-option-color:${palette.primary};--logo-bg:${palette.surface};">${option.svg}</span>
                     <span class="mtk-biab__logo-option-title">${option.label}</span>
                   </button>
@@ -1554,8 +1087,7 @@ class MtkBiab {
               <p>Each scheme is built for contrast, vehicle readability, and a practical locksmith positioning.</p>
               <div class="mtk-biab__logo-option-grid">
                 ${MTK_BIAB_LOGO_PALETTES.map(option => `
-                  <button type="button" role="radio" aria-checked="${option.key === state.paletteKey}" class="mtk-biab__logo-swatch-card${option.key === state.paletteKey ? ' is-active' : ''}" data-action="logo-set-palette" data-logo-value="${option.key}">
-                    <span class="mtk-biab__logo-radio" aria-hidden="true"></span>
+                  <button type="button" class="mtk-biab__logo-swatch-card${option.key === state.paletteKey ? ' is-active' : ''}" data-action="logo-set-palette" data-logo-value="${option.key}">
                     <span class="mtk-biab__logo-swatch-row">
                       <span class="mtk-biab__logo-swatch" style="background:${option.surface};"></span>
                       <span class="mtk-biab__logo-swatch" style="background:${option.primary};"></span>
@@ -1571,8 +1103,7 @@ class MtkBiab {
               <h3>Font systems</h3>
               <div class="mtk-biab__logo-stack">
                 ${MTK_BIAB_LOGO_FONTS.map(option => `
-                  <button type="button" role="radio" aria-checked="${option.key === state.fontKey}" class="mtk-biab__logo-choice${option.key === state.fontKey ? ' is-active' : ''}" data-action="logo-set-font" data-logo-value="${option.key}">
-                    <span class="mtk-biab__logo-radio" aria-hidden="true"></span>
+                  <button type="button" class="mtk-biab__logo-choice${option.key === state.fontKey ? ' is-active' : ''}" data-action="logo-set-font" data-logo-value="${option.key}">
                     <strong style="font-family:${option.headline};">${option.label}</strong>
                     <span>${option.rationale}</span>
                   </button>
@@ -1584,11 +1115,19 @@ class MtkBiab {
               <h3>Template direction</h3>
               <div class="mtk-biab__logo-stack">
                 ${MTK_BIAB_LOGO_TEMPLATES.map(option => `
-                  <button type="button" role="radio" aria-checked="${option.key === state.templateKey}" class="mtk-biab__logo-choice${option.key === state.templateKey ? ' is-active' : ''}" data-action="logo-set-template" data-logo-value="${option.key}">
-                    <span class="mtk-biab__logo-radio" aria-hidden="true"></span>
+                  <button type="button" class="mtk-biab__logo-choice${option.key === state.templateKey ? ' is-active' : ''}" data-action="logo-set-template" data-logo-value="${option.key}">
                     <strong>${option.label}</strong>
                     <span>${option.description}</span>
                   </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="mtk-biab__logo-control-group">
+              <h3>Primary variation</h3>
+              <div class="mtk-biab__logo-pill-row">
+                ${MTK_BIAB_LOGO_VARIATIONS.map(option => `
+                  <button type="button" class="mtk-biab__logo-pill${option.key === state.variationKey ? ' is-active' : ''}" data-action="logo-set-variation" data-logo-value="${option.key}">${option.label}</button>
                 `).join('')}
               </div>
             </div>
@@ -1856,118 +1395,6 @@ class MtkBiab {
     return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
   }
 
-  _downloadLogoSet() {
-    const state = this.logoDesignerState;
-    const variants = [
-      ['primary-dark', 'primary-dark'],
-      ['primary-light', 'primary-light'],
-      ['social-icon', 'icon-only'],
-      ['one-color', 'mono']
-    ];
-
-    variants.forEach(([name, variant]) => {
-      this._downloadTextFile(
-        `${this._slugify(state.businessName)}-${name}.svg`,
-        this._buildExportLogoSvg(variant),
-        'image/svg+xml'
-      );
-    });
-
-    this._downloadTextFile(
-      `${this._slugify(state.businessName)}-brand-notes.txt`,
-      this._buildLogoBrandNotes(),
-      'text/plain'
-    );
-  }
-
-  _buildExportLogoSvg(variant) {
-    const state = this.logoDesignerState;
-    const palette = this._getLogoResource(MTK_BIAB_LOGO_PALETTES, state.paletteKey);
-    const font = this._getLogoResource(MTK_BIAB_LOGO_FONTS, state.fontKey);
-    const name = this._escapeXml(state.businessName || 'Your Locksmith Brand');
-    const tagline = this._escapeXml(state.tagline || 'Residential, commercial, automotive');
-    const initials = this._escapeXml((state.businessName || 'YLB').split(/\s+/).map(word => word.charAt(0)).join('').slice(0, 3).toUpperCase());
-    const isLight = variant === 'primary-light';
-    const isMono = variant === 'mono';
-    const isIcon = variant === 'icon-only';
-    const bg = isLight || isMono ? '#ffffff' : palette.surface;
-    const primary = isMono ? '#111827' : palette.primary;
-    const text = isLight || isMono ? palette.textOnLight : palette.textOnDark;
-    const accent = isMono ? '#111827' : palette.accent;
-    const width = isIcon ? 512 : 1440;
-    const height = isIcon ? 512 : 480;
-
-    if (isIcon) {
-      return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="${name} icon">
-  <rect width="${width}" height="${height}" rx="112" fill="${palette.surface}"/>
-  <circle cx="256" cy="256" r="142" fill="${primary}"/>
-  <text x="256" y="289" text-anchor="middle" font-family="Arial, sans-serif" font-size="112" font-weight="800" fill="${palette.surface}">${initials}</text>
-</svg>`;
-    }
-
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="${name} logo">
-  <rect width="${width}" height="${height}" rx="56" fill="${bg}"/>
-  <circle cx="220" cy="240" r="116" fill="${primary}"/>
-  <text x="220" y="274" text-anchor="middle" font-family="Arial, sans-serif" font-size="86" font-weight="800" fill="${bg}">${initials}</text>
-  <text x="390" y="218" font-family="${this._escapeXml(font.headline.replace(/'/g, ''))}" font-size="86" font-weight="800" fill="${text}">${name}</text>
-  <text x="394" y="292" font-family="${this._escapeXml(font.body.replace(/'/g, ''))}" font-size="40" fill="${accent}">${tagline}</text>
-</svg>`;
-  }
-
-  _buildLogoBrandNotes() {
-    const state = this.logoDesignerState;
-    const palette = this._getLogoResource(MTK_BIAB_LOGO_PALETTES, state.paletteKey);
-    const font = this._getLogoResource(MTK_BIAB_LOGO_FONTS, state.fontKey);
-    const template = this._getLogoResource(MTK_BIAB_LOGO_TEMPLATES, state.templateKey);
-    const variation = this._getLogoResource(MTK_BIAB_LOGO_VARIATIONS, state.variationKey);
-    return [
-      `${state.businessName || 'Your Locksmith Brand'} - Logo Package`,
-      '',
-      `Tagline: ${state.tagline || ''}`,
-      `Template: ${template.label}`,
-      `Primary variation: ${variation.label}`,
-      `Palette: ${palette.label}`,
-      `Base color: ${palette.surface}`,
-      `Primary color: ${palette.primary}`,
-      `Accent color: ${palette.accent}`,
-      `Headline font: ${font.label}`,
-      '',
-      'Included files:',
-      '- primary-dark.svg',
-      '- primary-light.svg',
-      '- social-icon.svg',
-      '- one-color.svg',
-      '',
-      'Production notes:',
-      '- Use SVG for websites, signs, print, and embroidery vendor handoff.',
-      '- Keep clear space around the logo equal to at least half the icon width.',
-      '- Do not stretch, outline, bevel, or add drop shadows to the mark.',
-      '- Replace prototype icons/fonts with licensed production assets before final commercial use.'
-    ].join('\n');
-  }
-
-  _downloadTextFile(filename, content, type) {
-    const blob = new Blob([content], { type });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = filename;
-    a.click();
-    URL.revokeObjectURL(a.href);
-  }
-
-  _slugify(value) {
-    return String(value || 'locksmith-logo').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'locksmith-logo';
-  }
-
-  _escapeXml(value) {
-    return String(value)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&apos;');
-  }
-
   _applyLogoToClient() {
     const logo = this._buildLogoDataUrl();
     const payload = {
@@ -2014,35 +1441,13 @@ class MtkBiab {
         launch: ''
       },
       'invoice-setup': {
-        id: '',
         businessName: 'Harbor Lock & Key',
-        dbaName: '',
-        businessAddress: '',
+        invoicePrefix: 'HLK',
         businessPhone: '',
         businessEmail: '',
-        businessWebsite: '',
-        licenseNumber: '',
-        invoiceNumber: 'HLK-0001',
-        invoiceDate: new Date().toISOString().slice(0, 10),
-        customerName: '',
-        customerEmail: '',
-        serviceAddress: '',
-        billingAddress: '',
-        workDescription: 'Opened front entry door using non-destructive methods where possible, rekeyed 2 cylinders, cut 4 keys, tested operation with customer, and confirmed proper latch and key function before leaving.',
-        serviceFeeDescription: 'Service call / trip fee',
-        serviceFeeAmount: '0.00',
-        laborDescription: 'Locksmith labor',
-        laborAmount: '0.00',
-        partsDescription: 'Parts / hardware',
-        partsAmount: '0.00',
-        taxAmount: '0.00',
         paymentTerms: 'Due on receipt',
-        paymentMethod: '',
-        paymentStatus: 'Unpaid',
-        technician: '',
-        authorizationNote: 'Authorization confirmed by customer before work began.',
-        warranty: 'Workmanship warranty applies to installed parts and labor unless otherwise stated.',
-        disclosureNote: 'No warranty on customer-supplied parts unless stated. Destructive entry and after-hours fees are disclosed before work begins.'
+        taxLine: 'Sales tax shown separately where applicable',
+        warranty: 'Workmanship warranty applies to installed parts and labor unless otherwise stated.'
       }
     };
   }
@@ -2084,10 +1489,9 @@ class MtkBiab {
         { title: this._t('operations'), fields: ['insurance', 'payments', 'launch'] }
       ],
       'invoice-setup': [
-        { title: 'Business and invoice details', fields: ['invoiceNumber', 'invoiceDate', 'businessName', 'dbaName', 'businessAddress', 'businessPhone', 'businessEmail', 'businessWebsite', 'licenseNumber'] },
-        { title: 'Customer and job details', fields: ['customerName', 'customerEmail', 'serviceAddress', 'billingAddress', 'technician', 'workDescription'] },
-        { title: 'Itemized charges', fields: ['serviceFeeDescription', 'serviceFeeAmount', 'laborDescription', 'laborAmount', 'partsDescription', 'partsAmount', 'taxAmount'] },
-        { title: 'Payment and disclosures', fields: ['paymentTerms', 'paymentMethod', 'paymentStatus', 'authorizationNote', 'warranty', 'disclosureNote'] }
+        { title: this._t('businessInfo'), fields: ['businessName', 'invoicePrefix'] },
+        { title: this._t('contactInfo'), fields: ['businessPhone', 'businessEmail'] },
+        { title: this._t('invoiceSetup'), fields: ['paymentTerms', 'taxLine', 'warranty'] }
       ]
     };
     return map[tool] || [];
@@ -2103,8 +1507,6 @@ class MtkBiab {
 
   _renderInvoiceTool() {
     this._renderWizardTool('invoice-setup', 'Invoice Setup Builder');
-    this._renderInvoiceRecords();
-    this._loadSavedInvoices();
   }
 
   _renderWizardTool(tool, heading) {
@@ -2114,7 +1516,6 @@ class MtkBiab {
     const stepIndex = this.formSteps[tool] || 0;
     const active = steps[stepIndex] || steps[0];
     const state = this.formState[tool] || {};
-    const isInvoice = tool === 'invoice-setup';
     mount.innerHTML = `
       <section class="mtk-biab-tool">
         <div class="mtk-biab-tool__head">
@@ -2124,7 +1525,6 @@ class MtkBiab {
             <p>${active.title}</p>
           </div>
           <div class="mtk-biab-tool__actions">
-            ${isInvoice ? `<button type="button" class="mtk-biab__action-btn mtk-biab__action-btn--primary" data-action="invoice-save">Save Invoice</button>` : ''}
             <button type="button" class="mtk-biab__action-btn" data-action="tool-download" data-tool="${tool}">${this._t('download')}</button>
             <button type="button" class="mtk-biab__action-btn" data-action="tool-email" data-tool="${tool}">${this._t('email')}</button>
           </div>
@@ -2140,50 +1540,6 @@ class MtkBiab {
           <article class="mtk-biab-tool__preview" data-tool-preview="${tool}">
             ${this._buildToolDocument(tool)}
           </article>
-        </div>
-        ${isInvoice ? '<div class="mtk-biab-invoice-records" data-invoice-records></div>' : ''}
-      </section>
-    `;
-  }
-
-  _renderLogoDownloadsPanel() {
-    const mount = this.el.querySelector('[data-logo-designer-panel="downloads"]');
-    if (!mount) return;
-
-    const state = this.logoDesignerState;
-    const palette = this._getLogoResource(MTK_BIAB_LOGO_PALETTES, state.paletteKey);
-    const font = this._getLogoResource(MTK_BIAB_LOGO_FONTS, state.fontKey);
-    const template = this._getLogoResource(MTK_BIAB_LOGO_TEMPLATES, state.templateKey);
-
-    mount.innerHTML = `
-      <section class="mtk-biab__logo-downloads">
-        <div class="mtk-biab__logo-note">
-          <strong>Step 4:</strong> download a professional starter logo set. The files are vector SVGs, so they can be used by a designer, printer, website builder, or sign shop.
-        </div>
-        <div class="mtk-biab__logo-download-grid">
-          <article class="mtk-biab__logo-download-card">
-            <span class="material-icons" aria-hidden="true">folder_zip</span>
-            <h3>Professional logo set</h3>
-            <p>Includes primary dark, primary light, social icon, one-color mark, and a brand notes file with colors, typography, and usage guidance.</p>
-            <button type="button" class="mtk-biab__action-btn mtk-biab__action-btn--primary" data-action="logo-download-set">Download logo set</button>
-          </article>
-          <article class="mtk-biab__logo-download-card">
-            <span class="material-icons" aria-hidden="true">fact_check</span>
-            <h3>Package summary</h3>
-            <ul>
-              <li><strong>Business:</strong> ${this._escapeHtml(state.businessName)}</li>
-              <li><strong>Template:</strong> ${template.label}</li>
-              <li><strong>Palette:</strong> ${palette.label}</li>
-              <li><strong>Font system:</strong> ${font.label}</li>
-              <li><strong>Format:</strong> SVG vector files plus brand notes</li>
-            </ul>
-          </article>
-        </div>
-        <div class="mtk-biab__logo-preview-grid">
-          ${this._buildLogoPreviewCard('Included: dark primary', this._buildLogoMarkup(state, 'primary-dark'), palette.surface, palette.textOnDark)}
-          ${this._buildLogoPreviewCard('Included: light primary', this._buildLogoMarkup(state, 'primary-light'), '#ffffff', palette.textOnLight, true)}
-          ${this._buildLogoPreviewCard('Included: icon mark', this._buildLogoMarkup(state, 'icon-only'), palette.surfaceSoft, palette.textOnDark)}
-          ${this._buildLogoPreviewCard('Included: one-color mark', this._buildLogoMarkup(state, 'mono'), '#f3f4f6', '#111827', true)}
         </div>
       </section>
     `;
@@ -2207,71 +1563,15 @@ class MtkBiab {
       payments: 'Payments and bookkeeping',
       launch: 'Launch-day checklist',
       invoicePrefix: 'Invoice prefix',
-      invoiceNumber: 'Invoice number',
-      invoiceDate: 'Invoice date',
-      dbaName: 'DBA name, if used',
-      businessAddress: 'Business address / mailing address',
       businessPhone: 'Business phone',
       businessEmail: 'Business email',
-      businessWebsite: 'Business website',
-      licenseNumber: 'License number, if required',
-      customerName: 'Customer name',
-      customerEmail: 'Customer email',
-      serviceAddress: 'Service address',
-      billingAddress: 'Billing address, if different',
-      workDescription: 'Clear description of work performed',
-      serviceFeeDescription: 'Service fee description',
-      serviceFeeAmount: 'Service fee amount',
-      laborDescription: 'Labor line item',
-      laborAmount: 'Labor amount',
-      partsDescription: 'Parts / hardware line item',
-      partsAmount: 'Parts / hardware amount',
-      taxAmount: 'Tax amount, if applicable',
       paymentTerms: 'Payment terms',
-      paymentMethod: 'Payment method',
-      paymentStatus: 'Payment status',
-      technician: 'Technician name or ID',
-      authorizationNote: 'Authorization note',
       taxLine: 'Tax line',
-      warranty: 'Warranty note',
-      disclosureNote: 'Other disclosures'
+      warranty: 'Warranty / disclosure'
     };
-    const fieldValue = this._escapeHtml(value || '');
-    const amountFields = new Set(['serviceFeeAmount', 'laborAmount', 'partsAmount', 'taxAmount']);
-    const longFields = new Set(['businessAddress', 'serviceAddress', 'billingAddress', 'workDescription', 'authorizationNote', 'warranty', 'disclosureNote']);
-    const inputTypes = {
-      invoiceDate: 'date',
-      businessEmail: 'email',
-      customerEmail: 'email',
-      businessWebsite: 'url',
-      businessPhone: 'tel'
-    };
-    if (field === 'paymentStatus') {
-      return `
-        <label class="mtk-biab-tool__field">${labels[field] || field}
-          <select data-tool="${tool}" data-tool-field="${field}">
-            ${['Unpaid', 'Paid', 'Partially paid'].map(option => `<option value="${option}" ${value === option ? 'selected' : ''}>${option}</option>`).join('')}
-          </select>
-        </label>
-      `;
-    }
-    if (amountFields.has(field)) {
-      return `
-        <label class="mtk-biab-tool__field">${labels[field] || field}
-          <input data-tool="${tool}" data-tool-field="${field}" type="number" min="0" step="0.01" value="${fieldValue}">
-        </label>
-      `;
-    }
-    if (longFields.has(field)) {
-      return `
-        <label class="mtk-biab-tool__field">${labels[field] || field}
-          <textarea data-tool="${tool}" data-tool-field="${field}" rows="3">${fieldValue}</textarea>
-        </label>
-      `;
-    }
     return `
       <label class="mtk-biab-tool__field">${labels[field] || field}
-        <input data-tool="${tool}" data-tool-field="${field}" type="${inputTypes[field] || 'text'}" value="${fieldValue}">
+        <textarea data-tool="${tool}" data-tool-field="${field}" rows="3">${this._escapeHtml(value || '')}</textarea>
       </label>
     `;
   }
@@ -2287,255 +1587,13 @@ class MtkBiab {
       return `<h3>${this._t('finalDocument')}</h3><ol><li>${this._escapeHtml(s.legal)}</li><li>${this._escapeHtml(s.phoneEmail)}</li><li>${this._escapeHtml(s.website)}</li><li>${this._escapeHtml(s.profile)}</li><li>${this._escapeHtml(s.insurance)}</li><li>${this._escapeHtml(s.payments)}</li><li>${this._escapeHtml(s.launch)}</li></ol>`;
     }
     if (tool === 'invoice-setup') {
-      return this._buildInvoiceDocument(s);
+      return `<h3>${s.businessName || 'Invoice Setup'}</h3><p><strong>Invoice numbering:</strong> ${this._escapeHtml(s.invoicePrefix)}-0001</p><p><strong>Phone:</strong> ${this._escapeHtml(s.businessPhone)}<br><strong>Email:</strong> ${this._escapeHtml(s.businessEmail)}</p><p><strong>Payment terms:</strong> ${this._escapeHtml(s.paymentTerms)}</p><p><strong>Tax:</strong> ${this._escapeHtml(s.taxLine)}</p><p><strong>Warranty:</strong> ${this._escapeHtml(s.warranty)}</p>`;
     }
     return `<h3>${this._escapeHtml(s.businessName || 'Business Plan')}</h3><p><strong>Owner:</strong> ${this._escapeHtml(s.ownerName)}</p><p><strong>Service area:</strong> ${this._escapeHtml(s.serviceArea)}</p><p><strong>Core services:</strong> ${this._escapeHtml(s.coreServices)}</p><p><strong>Customer focus:</strong> ${this._escapeHtml(s.customerFocus)}</p><p><strong>Launch goal:</strong> ${this._escapeHtml(s.launchGoal)}</p><p><strong>Pricing:</strong> ${this._escapeHtml(s.pricingPlan)}</p><p><strong>Marketing:</strong> ${this._escapeHtml(s.marketingPlan)}</p>`;
   }
 
-  _buildInvoiceDocument(s) {
-    const raw = value => Number(String(value || '0').replace(/[^0-9.-]/g, '')) || 0;
-    const money = value => '$' + raw(value).toFixed(2);
-    const subtotal = raw(s.serviceFeeAmount) + raw(s.laborAmount) + raw(s.partsAmount);
-    const tax = raw(s.taxAmount);
-    const total = subtotal + tax;
-
-    return `
-      <article class="mtk-biab-invoice">
-        <header class="mtk-biab-invoice__header">
-          <div>
-            <h3>${this._escapeHtml(s.businessName || 'Locksmith Business')}</h3>
-            ${s.dbaName ? `<p><strong>DBA:</strong> ${this._escapeHtml(s.dbaName)}</p>` : ''}
-            <p>${this._escapeHtml(s.businessAddress || 'Business address / mailing address')}</p>
-            <p>${this._escapeHtml(s.businessPhone || 'Business phone')} · ${this._escapeHtml(s.businessEmail || 'Business email')}</p>
-            ${s.businessWebsite ? `<p>${this._escapeHtml(s.businessWebsite)}</p>` : ''}
-            ${s.licenseNumber ? `<p><strong>License:</strong> ${this._escapeHtml(s.licenseNumber)}</p>` : ''}
-          </div>
-          <div class="mtk-biab-invoice__meta">
-            <h4>Invoice</h4>
-            <p><strong>No.</strong> ${this._escapeHtml(s.invoiceNumber || '')}</p>
-            <p><strong>Date:</strong> ${this._escapeHtml(s.invoiceDate || '')}</p>
-            <p><strong>Status:</strong> ${this._escapeHtml(s.paymentStatus || '')}</p>
-          </div>
-        </header>
-
-        <section class="mtk-biab-invoice__parties">
-          <div>
-            <h4>Bill To</h4>
-            <p>${this._escapeHtml(s.customerName || 'Customer name')}</p>
-            ${s.customerEmail ? `<p>${this._escapeHtml(s.customerEmail)}</p>` : ''}
-            <p>${this._escapeHtml(s.billingAddress || s.serviceAddress || 'Billing address')}</p>
-          </div>
-          <div>
-            <h4>Service Location</h4>
-            <p>${this._escapeHtml(s.serviceAddress || 'Service address')}</p>
-            ${s.technician ? `<p><strong>Technician:</strong> ${this._escapeHtml(s.technician)}</p>` : ''}
-          </div>
-        </section>
-
-        <section class="mtk-biab-invoice__work">
-          <h4>Work Performed</h4>
-          <p>${this._escapeHtml(s.workDescription || '')}</p>
-        </section>
-
-        <table class="mtk-biab-invoice__table">
-          <thead><tr><th>Description</th><th>Amount</th></tr></thead>
-          <tbody>
-            <tr><td>${this._escapeHtml(s.serviceFeeDescription || 'Service call / trip fee')}</td><td>${money(s.serviceFeeAmount)}</td></tr>
-            <tr><td>${this._escapeHtml(s.laborDescription || 'Labor')}</td><td>${money(s.laborAmount)}</td></tr>
-            <tr><td>${this._escapeHtml(s.partsDescription || 'Parts / hardware')}</td><td>${money(s.partsAmount)}</td></tr>
-          </tbody>
-          <tfoot>
-            <tr><th>Subtotal</th><td>${money(subtotal)}</td></tr>
-            <tr><th>Tax</th><td>${money(tax)}</td></tr>
-            <tr><th>Total</th><td>${money(total)}</td></tr>
-          </tfoot>
-        </table>
-
-        <section class="mtk-biab-invoice__terms">
-          <p><strong>Payment terms:</strong> ${this._escapeHtml(s.paymentTerms || '')}</p>
-          <p><strong>Payment method:</strong> ${this._escapeHtml(s.paymentMethod || 'Not recorded')}</p>
-          <p><strong>Authorization:</strong> ${this._escapeHtml(s.authorizationNote || '')}</p>
-          <p><strong>Warranty:</strong> ${this._escapeHtml(s.warranty || '')}</p>
-          <p><strong>Disclosures:</strong> ${this._escapeHtml(s.disclosureNote || '')}</p>
-        </section>
-      </article>
-    `;
-  }
-
-  _invoiceTotal(invoice = this.formState['invoice-setup'] || {}) {
-    const raw = value => Number(String(value || '0').replace(/[^0-9.-]/g, '')) || 0;
-    return raw(invoice.serviceFeeAmount) + raw(invoice.laborAmount) + raw(invoice.partsAmount) + raw(invoice.taxAmount);
-  }
-
-  _formatInvoiceMoney(value) {
-    return '$' + (Number(value || 0) || 0).toFixed(2);
-  }
-
-  _getInvoicePayload() {
-    return Object.assign({}, this.formState['invoice-setup'] || {}, {
-      total: this._invoiceTotal()
-    });
-  }
-
-  _renderInvoiceRecords() {
-    const mount = this.el.querySelector('[data-invoice-records]');
-    if (!mount) return;
-    const records = Array.isArray(this.invoiceState.records) ? this.invoiceState.records : [];
-    mount.innerHTML = `
-      <div class="mtk-biab-invoice-records__head">
-        <div>
-          <h4>Saved invoices</h4>
-          <p>Invoice records are saved for this Business in a Box page and can be loaded back into the builder.</p>
-        </div>
-        <span class="mtk-biab-invoice-records__status${this.invoiceState.statusIsError ? ' is-error' : ''}" aria-live="polite">${this._escapeHtml(this.invoiceState.status || '')}</span>
-      </div>
-      <div class="mtk-biab-invoice-records__list">
-        ${records.length ? records.map(record => this._buildInvoiceRecordCard(record)).join('') : '<p class="mtk-biab-invoice-records__empty">No invoices saved yet.</p>'}
-      </div>
-    `;
-  }
-
-  _buildInvoiceRecordCard(record) {
-    const invoice = record.invoice || {};
-    const id = this._escapeHtml(record.id || invoice.id || '');
-    const number = this._escapeHtml(record.invoiceNumber || invoice.invoiceNumber || 'Invoice');
-    const customer = this._escapeHtml(record.customerName || invoice.customerName || 'Customer not entered');
-    const date = this._escapeHtml(record.invoiceDate || invoice.invoiceDate || '');
-    const status = this._escapeHtml(record.paymentStatus || invoice.paymentStatus || '');
-    const updated = this._escapeHtml(record.updatedAt ? String(record.updatedAt).slice(0, 10) : '');
-    return `
-      <article class="mtk-biab-invoice-records__card">
-        <div>
-          <strong>${number}</strong>
-          <span>${customer}</span>
-          <small>${date}${updated ? ` · saved ${updated}` : ''}</small>
-        </div>
-        <div>
-          <strong>${this._formatInvoiceMoney(record.total !== undefined ? record.total : this._invoiceTotal(invoice))}</strong>
-          <span>${status}</span>
-          <button type="button" class="mtk-biab__action-btn" data-action="invoice-load" data-invoice-id="${id}">Load</button>
-        </div>
-      </article>
-    `;
-  }
-
-  _setInvoiceStatus(message, isError = false) {
-    this.invoiceState.status = message || '';
-    this.invoiceState.statusIsError = !!isError;
-    this._renderInvoiceRecords();
-  }
-
-  _apiUrl(path) {
-    const base = document.querySelector('base[href]');
-    if (base) {
-      try {
-        const baseUrl = new URL(base.href);
-        const basePath = baseUrl.pathname.replace(/\/$/, '');
-        if (basePath && basePath !== '/') return basePath + path;
-      } catch (err) {
-        // Fall back below.
-      }
-    }
-    const apiRoot = window.wc && wc.apiURL ? wc.apiURL.replace(/\/$/, '') : '';
-    if (apiRoot) return apiRoot + path;
-    return path;
-  }
-
-  _readJsonResponse(res, fallbackMessage) {
-    return res.text().then(text => {
-      let json = null;
-      try {
-        json = text ? JSON.parse(text) : {};
-      } catch (err) {
-        throw new Error(fallbackMessage);
-      }
-      if (!res.ok) {
-        throw new Error((json && (json.error || json.message)) || fallbackMessage);
-      }
-      return json;
-    });
-  }
-
-  _loadSavedInvoices() {
-    const uid = this._getReviewUid();
-    if (!uid || this.invoiceState.loadedForUid === uid || !window.fetch) return;
-    this.invoiceState.loadedForUid = uid;
-    fetch(this._apiUrl(`/api/business_in_a_box_invoices.php?nalaUID=${encodeURIComponent(uid)}`), {
-      credentials: 'include'
-    })
-      .then(res => this._readJsonResponse(res, 'Could not load invoice records.'))
-      .then(json => {
-        this.invoiceState.records = Array.isArray(json.invoices) ? json.invoices : [];
-        this._renderInvoiceRecords();
-      })
-      .catch(err => {
-        this.invoiceState.loadedForUid = '';
-        this._setInvoiceStatus(err && err.message ? err.message : 'Could not load invoices.', true);
-        if (window.wc && wc.warn) wc.warn('[mtk-biab] Could not load saved invoices', err);
-      });
-  }
-
-  _saveInvoiceRecord(options = {}) {
-    const uid = this._getReviewUid();
-    if (!window.fetch) {
-      if (!options.silent) this._setInvoiceStatus('This browser cannot save invoice records.', true);
-      return Promise.resolve(null);
-    }
-    const payload = {
-      nalaUID: uid,
-      invoice: this._getInvoicePayload()
-    };
-    if (!options.silent) this._setInvoiceStatus('Saving invoice...');
-    return fetch(this._apiUrl('/api/business_in_a_box_invoices.php'), {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    })
-      .then(res => this._readJsonResponse(res, 'Could not save invoice record.'))
-      .then(json => {
-        if (json && json.id) this.formState['invoice-setup'].id = json.id;
-        this.invoiceState.records = Array.isArray(json.invoices) ? json.invoices : this.invoiceState.records;
-        if (!options.silent) this._setInvoiceStatus('Invoice saved.');
-        else this._renderInvoiceRecords();
-        return json;
-      })
-      .catch(err => {
-        if (!options.silent) this._setInvoiceStatus(err && err.message ? err.message : 'Could not save invoice.', true);
-        throw err;
-      });
-  }
-
-  _loadInvoiceRecord(id) {
-    const record = (this.invoiceState.records || []).find(item => item.id === id);
-    if (!record || !record.invoice) return;
-    this.formState['invoice-setup'] = Object.assign({}, this.formState['invoice-setup'], record.invoice, { id: record.id });
-    this.formSteps['invoice-setup'] = 0;
-    this._renderInvoiceTool();
-    this._setInvoiceStatus('Invoice loaded.');
-  }
-
-  _handleToolDownload(tool) {
-    if (tool === 'invoice-setup') {
-      this._saveInvoiceRecord({ silent: true }).catch(() => null).finally(() => this._downloadToolDocument(tool));
-      return;
-    }
-    this._downloadToolDocument(tool);
-  }
-
-  _handleToolEmail(tool) {
-    if (tool === 'invoice-setup') {
-      this._saveInvoiceRecord({ silent: true }).catch(() => null).finally(() => this._emailToolDocument(tool));
-      return;
-    }
-    this._emailToolDocument(tool);
-  }
-
   _downloadToolDocument(tool) {
-    const invoiceStyles = tool === 'invoice-setup' ? `<style>
-      body{margin:24px;font-family:Arial,sans-serif;color:#202124;background:#f7f3eb}.mtk-biab-invoice{max-width:900px;margin:auto;border:1px solid #d9cda9;border-radius:10px;background:#fff;overflow:hidden}.mtk-biab-invoice__header,.mtk-biab-invoice__parties,.mtk-biab-invoice__work,.mtk-biab-invoice__terms{padding:18px}.mtk-biab-invoice__header{display:grid;grid-template-columns:minmax(0,1fr)190px;gap:18px;background:#fffaf0;border-bottom:1px solid #eadfca}.mtk-biab-invoice__header h3{margin:0 0 8px;font-size:24px}.mtk-biab-invoice p{margin:0 0 6px;line-height:1.55}.mtk-biab-invoice__meta{padding:14px;border-radius:8px;background:#202124;color:#fff}.mtk-biab-invoice__parties{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;border-bottom:1px solid #eadfca}.mtk-biab-invoice h4{margin:0 0 8px;color:#4a3a08;font-size:14px;text-transform:uppercase}.mtk-biab-invoice__work{border-bottom:1px solid #eadfca}.mtk-biab-invoice__table{width:100%;border-collapse:collapse;font-size:14px}.mtk-biab-invoice__table th,.mtk-biab-invoice__table td{padding:12px 18px;border-bottom:1px solid #eadfca;text-align:left}.mtk-biab-invoice__table th:last-child,.mtk-biab-invoice__table td:last-child{text-align:right;white-space:nowrap}.mtk-biab-invoice__table thead th{background:#fbf4e5;color:#4a3a08}.mtk-biab-invoice__table tfoot th,.mtk-biab-invoice__table tfoot td{font-weight:800}.mtk-biab-invoice__table tfoot tr:last-child th,.mtk-biab-invoice__table tfoot tr:last-child td{background:#202124;color:#fff;font-size:16px}.mtk-biab-invoice__terms{background:#fffdf8}@media(max-width:700px){.mtk-biab-invoice__header,.mtk-biab-invoice__parties{grid-template-columns:1fr}}
-    </style>` : '';
-    const html = `<!doctype html><html><head><meta charset="utf-8"><title>${tool}</title>${invoiceStyles}</head><body>${this._buildToolDocument(tool)}</body></html>`;
+    const html = `<!doctype html><html><head><meta charset="utf-8"><title>${tool}</title></head><body>${this._buildToolDocument(tool)}</body></html>`;
     const blob = new Blob([html], { type: 'text/html' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
@@ -2546,12 +1604,6 @@ class MtkBiab {
 
   _emailToolDocument(tool) {
     const text = this._buildToolDocument(tool).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-    if (tool === 'invoice-setup') {
-      const s = this.formState[tool] || {};
-      const subject = `Invoice ${s.invoiceNumber || ''} from ${s.businessName || 'Locksmith Business'}`.trim();
-      window.location.href = `mailto:${encodeURIComponent(s.customerEmail || '')}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
-      return;
-    }
     window.location.href = `mailto:?subject=${encodeURIComponent(tool.replace(/-/g, ' '))}&body=${encodeURIComponent(text)}`;
   }
 
@@ -2599,7 +1651,6 @@ class MtkBiab {
             <button type="button" class="mtk-biab__action-btn mtk-biab__action-btn--primary mtk-biab-reviews__send" data-action="review-send-request">
               ${this._t('sendReviewRequest')}
             </button>
-            <p class="mtk-biab-reviews__message" data-review-message aria-live="polite"></p>
           </form>
 
           <article class="mtk-biab-tool__preview">
@@ -2663,7 +1714,9 @@ class MtkBiab {
     };
 
     if (!payload.customerName || !payload.customerEmail) {
-      this._setReviewMessage(this._t('reviewValidation'), true);
+      if (window.MTKMsgs && typeof MTKMsgs.show === 'function') {
+        MTKMsgs.show({ type: 'error', icon: 'error', message: 'Add the customer name and email before sending.', closable: true, timer: 6 });
+      }
       return;
     }
 
@@ -2673,13 +1726,6 @@ class MtkBiab {
     }
     this.reviewState.request = { customerName: '', customerEmail: '', jobType: '' };
     this._renderReviewsTool();
-  }
-
-  _setReviewMessage(message, isError = false) {
-    const target = this.el.querySelector('[data-review-message]');
-    if (!target) return;
-    target.textContent = message;
-    target.classList.toggle('is-error', isError);
   }
 
   _createReviewToken() {
@@ -2694,9 +1740,12 @@ class MtkBiab {
     if (!uid || this.reviewsLoadedForUid === uid || !window.fetch) return;
     this.reviewsLoadedForUid = uid;
 
-    fetch(this._apiUrl(`/api/business_in_a_box_reviews.php?nalaUID=${encodeURIComponent(uid)}`), {
+    fetch((window.wc && wc.apiURL ? wc.apiURL : '') + `/api/business_in_a_box_reviews.php?nalaUID=${encodeURIComponent(uid)}`, {
       credentials: 'include'
-    }).then(res => this._readJsonResponse(res, 'Could not load reviews.')).then(json => {
+    }).then(res => res.json().then(json => {
+      if (!res.ok) throw new Error((json && (json.error || json.message)) || 'Could not load reviews.');
+      return json;
+    })).then(json => {
       if (Array.isArray(json.reviews) && json.reviews.length) {
         this.reviewState.reviews = json.reviews;
         this._renderReviewsTool();
@@ -2734,13 +1783,12 @@ class MtkBiab {
         <div class="mtk-biab-tool__head"><div><h3>Automation Readiness</h3><p>${this._t('automationIntro')}</p></div></div>
         <div class="mtk-biab-api-grid">
           ${[
-            ['Google Ads API', 'Possible after setup', 'Create campaign pieces, keywords, budgets, conversion actions, and reporting after OAuth, developer-token approval, billing, and conversion tracking are ready.', 'https://developers.google.com/google-ads/api/docs/start'],
-            ['Business Profile APIs', 'Limited onboarding automation', 'Manage existing locations, attributes, photos, and profile data after account authorization and API access. Verification and policy review still involve Google workflows.', 'https://developers.google.com/my-business/content/locations-setup'],
-            ['Search Console API', 'Good fit after verification', 'Submit sitemaps, inspect URLs, and read performance data for verified properties. Ownership verification must be completed first.', 'https://developers.google.com/webmaster-tools'],
-            ['Google Analytics Admin API', 'Possible after OAuth', 'Create and manage GA4 properties and data streams when authorized. Website event quality still depends on correct tagging.', 'https://developers.google.com/analytics/devguides/config/admin/v1'],
-            ['Local Services Ads', 'Mostly manual', 'Eligibility, screening, licenses, insurance, and background checks remain Google-controlled. API support is more limited than standard Search campaigns.', 'https://developers.google.com/google-ads/api/docs/campaigns/local-service-campaigns'],
-            ['Mailchimp Marketing API', 'Possible after consent setup', 'Sync customer lists and trigger review or follow-up emails when consent, unsubscribe handling, and secure API key storage are in place.', 'https://mailchimp.com/developer/marketing/docs/integrations/']
-          ].map(([name, status, detail, href]) => `<article class="mtk-biab-api-card"><span class="mtk-biab__logo-badge">${status}</span><h4>${name}</h4><p>${detail}</p><a class="mtk-biab-guide__link" href="${href}" target="_blank" rel="noopener">Open docs</a></article>`).join('')}
+            ['Google Ads API', 'Create accounts/campaign pieces, keywords, budgets, conversion actions after OAuth and developer-token approval.', 'https://developers.google.com/google-ads/api/docs/start'],
+            ['Business Profile APIs', 'Read and manage business locations, attributes, photos, and some profile data after account authorization.', 'https://developers.google.com/my-business'],
+            ['Search Console API', 'Add verified sites, inspect URLs, submit sitemaps, and read performance data.', 'https://developers.google.com/webmaster-tools'],
+            ['Google Analytics Admin API', 'Create/manage GA4 properties and data streams when authorized.', 'https://developers.google.com/analytics/devguides/config/admin/v1'],
+            ['Local Services Ads', 'API surface is limited compared with standard Google Ads; eligibility and screening still require Google workflows.', 'https://developers.google.com/google-ads/api/docs/campaigns/local-service-campaigns']
+          ].map(([name, detail, href]) => `<article class="mtk-biab-api-card"><h4>${name}</h4><p>${detail}</p><a class="mtk-biab-guide__link" href="${href}" target="_blank" rel="noopener">Open docs</a></article>`).join('')}
         </div>
       </section>
     `;
