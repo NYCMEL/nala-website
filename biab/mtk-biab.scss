@@ -53,6 +53,10 @@ mtk-biab.mtk-biab {
 .mtk-biab__sidebar-item-btn span:not(.material-icons) {
   min-width: 0;
   line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 13px;
 }
 
 .mtk-biab__lang-switch,
