@@ -369,7 +369,7 @@ const MTK_BIAB_CONFIG = {
           },
           {
             id: "zip-code-pricing",
-            label: "Per Zip Code Pricing",
+            label: "Region Pricing Guides",
             icon: "sell",
             items: [
               {
