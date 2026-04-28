@@ -601,6 +601,190 @@ mtk-biab.mtk-biab {
     margin: 0 0 8px;
     color: #202124; }
 
+.mtk-biab-guided-setup {
+  display: grid;
+  gap: 18px;
+  margin: 0 0 24px;
+  padding: 20px;
+  border: 1px solid #eadfca;
+  border-radius: 10px;
+  background: #fffaf0; }
+
+.mtk-biab-guided-setup__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start; }
+  .mtk-biab-guided-setup__header h3 {
+    margin: 8px 0 6px;
+    color: #202124;
+    font-size: 22px;
+    line-height: 1.2; }
+  .mtk-biab-guided-setup__header p {
+    max-width: 760px;
+    margin: 0;
+    color: #5f6368;
+    line-height: 1.6; }
+
+.mtk-biab-guided-setup__meter {
+  min-width: 118px;
+  padding: 14px;
+  border: 1px solid #e0d3ad;
+  border-radius: 8px;
+  background: #fff;
+  text-align: center; }
+  .mtk-biab-guided-setup__meter strong {
+    display: block;
+    color: #202124;
+    font-size: 28px;
+    line-height: 1; }
+  .mtk-biab-guided-setup__meter span {
+    display: block;
+    margin-top: 4px;
+    color: #5f6368;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase; }
+
+.mtk-biab-guided-setup__progress {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #eadfca; }
+  .mtk-biab-guided-setup__progress span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: #a98211;
+    transition: width 180ms ease; }
+
+.mtk-biab-guided-setup__layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.82fr) minmax(0, 1.18fr);
+  gap: 18px;
+  align-items: start; }
+
+.mtk-biab-guided-setup__list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+
+.mtk-biab-guided-setup__list-btn {
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  padding: 13px;
+  border: 1px solid #e3dac5;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #34302a;
+  text-align: left;
+  cursor: pointer; }
+  .mtk-biab-guided-setup__list-btn .material-icons {
+    color: #a89a7a;
+    font-size: 22px; }
+  .mtk-biab-guided-setup__list-btn strong,
+  .mtk-biab-guided-setup__list-btn small {
+    display: block;
+    min-width: 0;
+    overflow-wrap: anywhere; }
+  .mtk-biab-guided-setup__list-btn strong {
+    color: #202124;
+    font-size: 14px;
+    line-height: 1.3; }
+  .mtk-biab-guided-setup__list-btn small {
+    margin-top: 4px;
+    color: #5f6368;
+    font-size: 12px;
+    line-height: 1.45; }
+  .mtk-biab-guided-setup__list-btn:hover {
+    border-color: #c6952d;
+    background: #fff8e8; }
+  .mtk-biab-guided-setup__list-btn:focus-visible {
+    outline: 3px solid rgba(169, 130, 17, 0.32);
+    outline-offset: 2px; }
+  .mtk-biab-guided-setup__list-btn.is-active {
+    border-color: #a98211;
+    background: #fbf4e5;
+    box-shadow: inset 0 0 0 1px #a98211; }
+  .mtk-biab-guided-setup__list-btn.is-complete .material-icons {
+    color: #2e7d32; }
+
+.mtk-biab-guided-setup__detail {
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid #e3dac5;
+  border-radius: 8px;
+  background: #fff;
+  color: #34302a; }
+  .mtk-biab-guided-setup__detail h4 {
+    margin: 6px 0 8px;
+    color: #202124;
+    font-size: 20px;
+    line-height: 1.25; }
+  .mtk-biab-guided-setup__detail p {
+    margin: 0 0 14px;
+    color: #5f6368;
+    line-height: 1.65; }
+
+.mtk-biab-guided-setup__step-label {
+  color: #4a3a08;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase; }
+
+.mtk-biab-guided-setup__details {
+  display: grid;
+  gap: 9px;
+  margin: 0 0 14px;
+  padding-left: 20px; }
+  .mtk-biab-guided-setup__details li {
+    color: #34302a;
+    line-height: 1.55; }
+
+.mtk-biab-guided-setup__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 4px 0 16px; }
+
+.mtk-biab-guided-setup__api {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 12px;
+  margin: 16px 0;
+  padding: 14px;
+  border: 1px solid #d5e3f5;
+  border-radius: 8px;
+  background: #f3f8ff; }
+  .mtk-biab-guided-setup__api .material-icons {
+    color: #185abc;
+    font-size: 26px; }
+  .mtk-biab-guided-setup__api strong {
+    display: block;
+    color: #202124;
+    margin-bottom: 4px; }
+  .mtk-biab-guided-setup__api p {
+    margin: 0;
+    color: #3c4043;
+    line-height: 1.55; }
+
+.mtk-biab-guided-setup__actions,
+.mtk-biab-guided-setup__builder {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px; }
+
+.mtk-biab-guided-setup__builder {
+  display: block; }
+
 .mtk-biab-invoice {
   border: 1px solid #d9cda9;
   border-radius: 10px;
@@ -1163,6 +1347,8 @@ mtk-biab.mtk-biab {
 @media (max-width: 900px) {
   .mtk-biab-tool__head,
   .mtk-biab-tool__grid,
+  .mtk-biab-guided-setup__header,
+  .mtk-biab-guided-setup__layout,
   .mtk-biab-invoice__header,
   .mtk-biab-invoice__parties,
   .mtk-biab-invoice-records__head,

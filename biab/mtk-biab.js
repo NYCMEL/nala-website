@@ -272,6 +272,291 @@ const MTK_BIAB_I18N = {
   }
 };
 
+const MTK_BIAB_GUIDED_SETUPS = {
+  'business-plan-template': {
+    badge: 'Starter',
+    title: 'Business Plan Guided Setup',
+    intro: 'Turn the written business plan into a launch-ready operating plan. Complete each section, then use the Business Plan Builder output as the working document.',
+    apiNote: 'No public agency API can write a full business plan for the owner, but the steps below connect to the official systems that supply the facts used in the plan.',
+    steps: [
+      {
+        title: 'Choose the business basics',
+        summary: 'Decide the legal name, public brand name, owner, service area, and launch model.',
+        details: ['Write the exact business name you plan to use publicly.', 'Pick mobile, storefront, or hybrid.', 'List the cities, ZIP codes, or counties you can reach profitably.', 'Use the Business Plan Builder at the bottom of this page to capture the answers.'],
+        links: [
+          ['Check domain availability', 'https://domains.google/'],
+          ['SBA business plan guide', 'https://www.sba.gov/business-guide/plan-your-business/write-your-business-plan']
+        ]
+      },
+      {
+        title: 'Define launch services',
+        summary: 'Start with services you can perform reliably and profitably.',
+        details: ['Select 5 to 8 launch services.', 'Separate residential, commercial, and automotive work.', 'Delay advanced services until tools, training, insurance, and pricing are ready.'],
+        links: [['Use NALA course training as service proof', 'https://nalanetwork.com/']]
+      },
+      {
+        title: 'Build pricing assumptions',
+        summary: 'Write the pricing rules before you advertise.',
+        details: ['Set service call, labor, parts markup, emergency, and after-hours rules.', 'Use the region pricing guides as starter ranges.', 'Review pricing weekly once real jobs come in.']
+      },
+      {
+        title: 'Create the marketing plan',
+        summary: 'Pick the channels you can actually maintain.',
+        details: ['Start with Google Business Profile, website SEO, review requests, and one focused ad channel.', 'Do not open every channel unless someone will manage it.', 'Track calls, forms, booked jobs, and customer source.'],
+        links: [
+          ['Google Business Profile', 'https://business.google.com/add'],
+          ['Google Search Console', 'https://search.google.com/search-console/welcome']
+        ]
+      },
+      {
+        title: 'Finalize the first 90 days',
+        summary: 'Set simple measurable launch targets.',
+        details: ['Set targets for first jobs, first reviews, average ticket, ad spend, and referral partners.', 'Use the completed plan as the owner checklist during launch.', 'Download or email the Business Plan Builder document when finished.']
+      }
+    ]
+  },
+  'startup-checklist': {
+    badge: 'Starter',
+    title: 'Startup Checklist Guided Setup',
+    intro: 'Complete the launch setup in the order a new locksmith business usually needs it: entity, EIN, banking, licensing, phone, website, profile, insurance, payments, and launch workflow.',
+    apiNote: 'Most government startup tasks still require the owner to complete official forms manually. EIN is free through the IRS online assistant, but it is not an open API.',
+    steps: [
+      {
+        title: 'Register or confirm the business entity',
+        summary: 'Form the legal entity before applying for an EIN when an LLC, corporation, or partnership is being created.',
+        details: ['Choose sole proprietor, LLC, corporation, or partnership with a qualified professional if needed.', 'File with the state before the EIN if you are forming a legal entity.', 'Save the filing confirmation and legal name exactly as approved.'],
+        links: [
+          ['SBA registration overview', 'https://www.sba.gov/business-guide/launch-your-business/register-your-business'],
+          ['Find state requirements', 'https://www.sba.gov/business-guide/launch-your-business/apply-licenses-permits']
+        ]
+      },
+      {
+        title: 'Apply for the EIN',
+        summary: 'Use the official IRS application. It is free, must be completed in one session, and should be saved immediately.',
+        details: ['Open the IRS EIN assistant during its posted operating hours.', 'Select the correct entity type.', 'Enter the responsible party information.', 'Submit the application and download or print the confirmation letter.', 'Store the confirmation with business records.'],
+        links: [
+          ['Apply for EIN at IRS.gov', 'https://www.irs.gov/businesses/small-businesses-self-employed/apply-for-an-employer-identification-number-ein-online'],
+          ['IRS EIN information', 'https://www.irs.gov/businesses/employer-identification-number']
+        ]
+      },
+      {
+        title: 'Open banking and bookkeeping',
+        summary: 'Separate business money from personal money before the first job.',
+        details: ['Open an operating account.', 'Create a tax reserve bucket.', 'Choose bookkeeping software or a spreadsheet workflow.', 'Save receipts and match every payment to an invoice.']
+      },
+      {
+        title: 'Check locksmith licensing and insurance',
+        summary: 'Confirm state, county, city, and category-specific rules before advertising.',
+        details: ['Check locksmith licensing, local business licenses, contractor categories, sales tax registration, and access-control rules.', 'Get general liability, commercial auto, and tool coverage quotes.', 'Keep license and insurance proof available for Google and customers.'],
+        links: [['SBA licenses and permits guide', 'https://www.sba.gov/business-guide/launch-your-business/apply-licenses-permits']]
+      },
+      {
+        title: 'Set up phone, email, domain, and website',
+        summary: 'Make the business reachable and consistent everywhere.',
+        details: ['Buy the domain.', 'Create a business email.', 'Set up a dedicated phone line.', 'Publish the website with the same business name, phone, service area, and hours used elsewhere.']
+      },
+      {
+        title: 'Launch Google profile, payments, and reviews',
+        summary: 'Finish the public trust systems before spending on ads.',
+        details: ['Create or claim the Google Business Profile.', 'Set up invoicing and payment processing.', 'Prepare review request templates.', 'Test the full job workflow from call to invoice to review request.'],
+        links: [
+          ['Google Business Profile setup', 'https://business.google.com/add'],
+          ['Get Google review link', 'https://support.google.com/business/answer/3474122?hl=en']
+        ]
+      }
+    ]
+  },
+  'legal-guide': {
+    badge: 'Starter',
+    title: 'Legal Readiness Guided Setup',
+    intro: 'This is a practical launch checklist, not legal advice. Complete each item with local rules and professional help where needed.',
+    apiNote: 'Licensing and entity APIs vary by state and city. Treat automation as state-specific later work; the owner still needs to verify local rules.',
+    steps: [
+      {
+        title: 'Confirm business formation and permits',
+        summary: 'Make sure the business can legally operate in its location and service category.',
+        details: ['Confirm entity status, DBA if used, local business license, sales tax registration, and locksmith-specific licensing.', 'Document renewal dates.', 'Keep copies of approvals in one folder.'],
+        links: [['SBA licenses and permits guide', 'https://www.sba.gov/business-guide/launch-your-business/apply-licenses-permits']]
+      },
+      {
+        title: 'Document insurance',
+        summary: 'Carry coverage that matches the actual work offered.',
+        details: ['Get general liability, commercial auto, tools/inland marine, and workers compensation if applicable.', 'Ask the carrier about locksmith, access control, safe, and automotive exclusions.']
+      },
+      {
+        title: 'Create authorization rules',
+        summary: 'No unlock, rekey, or security hardware change should happen without authorization.',
+        details: ['Define what ID or proof is required.', 'Record who approved the work.', 'Document unusual circumstances.', 'Use a written destructive-entry approval when needed.']
+      },
+      {
+        title: 'Write customer policies',
+        summary: 'Make estimates, payment, warranty, cancellation, and customer-supplied-parts rules clear.',
+        details: ['Add policy language to invoices and estimates.', 'Use honest pricing and avoid fake low advertised prices.', 'Keep warranty terms narrow and specific.']
+      },
+      {
+        title: 'Protect records and customer data',
+        summary: 'Names, addresses, gate codes, photos, and job notes need controlled handling.',
+        details: ['Limit access to customer records.', 'Avoid storing sensitive codes in plain text when possible.', 'Keep invoices, photos, payments, and communications organized.']
+      }
+    ]
+  },
+  'financial-guide': {
+    badge: 'Starter',
+    title: 'Financial Setup Guide',
+    intro: 'Set up simple money systems so revenue, taxes, inventory, marketing, and owner pay do not get mixed together.',
+    apiNote: 'Bookkeeping tools have APIs, but bank feeds and payment data require OAuth and secure server-side credential storage before automation.',
+    steps: [
+      {
+        title: 'Create money buckets',
+        summary: 'Separate operating cash, tax reserve, owner pay, inventory, vehicle, and marketing.',
+        details: ['Open or label accounts for each bucket.', 'Move tax reserve money on a schedule.', 'Do not spend tax or inventory reserve as owner pay.']
+      },
+      {
+        title: 'Choose bookkeeping workflow',
+        summary: 'Pick software or a spreadsheet before jobs start.',
+        details: ['Record every invoice, payment, part, tool, fuel, ad charge, and refund.', 'Reconcile weekly.', 'Review profit and loss monthly.'],
+        links: [
+          ['QuickBooks developer docs', 'https://developer.intuit.com/app/developer/qbo/docs/get-started'],
+          ['Xero API docs', 'https://developer.xero.com/documentation/']
+        ]
+      },
+      {
+        title: 'Build pricing from cost',
+        summary: 'Every price should cover travel, labor, parts, fees, overhead, callbacks, taxes, and profit.',
+        details: ['Set target gross margin.', 'Track actual parts cost.', 'Compare expected job time to real job time.', 'Adjust prices after real data comes in.']
+      },
+      {
+        title: 'Track weekly KPIs',
+        summary: 'Use a small dashboard instead of guessing.',
+        details: ['Track calls, booked jobs, completed jobs, average ticket, ad spend, cost per booked job, reviews, unpaid invoices, and net cash.']
+      },
+      {
+        title: 'Prepare tax and reporting rhythm',
+        summary: 'Avoid surprise tax problems by setting a monthly routine.',
+        details: ['Save receipts.', 'Review taxable sales and labor rules with a professional.', 'Set reminders for estimated taxes, sales tax, payroll, and renewals where applicable.'],
+        links: [['IRS small business tax center', 'https://www.irs.gov/businesses/small-businesses-self-employed']]
+      }
+    ]
+  },
+  'google-business-profile': {
+    badge: 'Starter',
+    title: 'Google Business Profile Guided Setup',
+    intro: 'Create or claim the profile, verify it, and prepare it to receive real reviews.',
+    apiNote: 'Business Profile APIs can manage locations after OAuth and API access approval. New small businesses usually still complete setup and verification manually first.',
+    steps: [
+      {
+        title: 'Open the setup page',
+        summary: 'Use the business Google account that the owner will keep.',
+        details: ['Use a durable business login.', 'Do not build the profile under a temporary personal account.', 'Keep owner access documented.'],
+        links: [['Open Business Profile setup', 'https://business.google.com/add']]
+      },
+      {
+        title: 'Add or claim the business',
+        summary: 'Find the existing listing if one exists, or create a new one if it does not.',
+        details: ['Search for the business name and address/service area.', 'Claim the existing listing if present.', 'Avoid duplicate profiles.'],
+        links: [['Google add or claim guide', 'https://support.google.com/business/answer/2911778?hl=en']]
+      },
+      {
+        title: 'Set service-area details',
+        summary: 'Most mobile locksmiths should use service-area settings instead of showing a home address.',
+        details: ['Hide the address if customers do not visit a staffed storefront.', 'Add realistic service areas.', 'Use categories and services that match actual work.'],
+        links: [['Set service areas', 'https://support.google.com/business/answer/9157481?hl=en']]
+      },
+      {
+        title: 'Complete profile proof',
+        summary: 'Add fields, photos, hours, services, and verification material.',
+        details: ['Add phone, website, hours, services, description, logo, cover image, vehicle photos, and job photos.', 'Prepare business registration, insurance, or license proof when requested.'],
+        links: [['Verify the profile', 'https://support.google.com/business/answer/7107242?hl=en']]
+      },
+      {
+        title: 'Prepare reviews',
+        summary: 'Get the review link and use it after completed jobs.',
+        details: ['Send review requests after real jobs only.', 'Never buy reviews or review your own business.', 'Save the review link in Business in a Box.'],
+        links: [['Get review link', 'https://support.google.com/business/answer/3474122?hl=en']]
+      }
+    ]
+  },
+  'seo-setup': {
+    badge: 'Starter',
+    title: 'SEO and Search Console Guided Setup',
+    intro: 'Make the website understandable to Google and useful to local customers.',
+    apiNote: 'Search Console APIs can submit sitemaps and inspect URLs for verified properties. They cannot replace good service pages or verified ownership.',
+    steps: [
+      { title: 'Write the service area', summary: 'List real cities, neighborhoods, ZIP codes, and counties served.', details: ['Keep the list honest.', 'Do not create fake doorway pages.', 'Match the website, Google profile, and ads.'] },
+      { title: 'Create essential pages', summary: 'Cover the services customers search for.', details: ['Homepage, About, Contact, Residential, Commercial, Rekey, Lock Change, Lockout, and Auto Lockout if offered.', 'Use clear phone and service-area language.'] },
+      { title: 'Verify Search Console', summary: 'Add the live website and verify ownership.', details: ['Use domain property if possible.', 'Keep the verification method active.', 'Give the owner access.'], links: [['Open Search Console', 'https://search.google.com/search-console/welcome'], ['Verify ownership', 'https://support.google.com/webmasters/answer/9008080?hl=en']] },
+      { title: 'Submit sitemap', summary: 'Tell Google where the site pages are.', details: ['Submit the sitemap after verification.', 'Check indexing problems weekly.'], links: [['Submit a sitemap', 'https://support.google.com/webmasters/answer/183668?hl=en']] },
+      { title: 'Monitor indexing and queries', summary: 'Use Search Console to watch problems and opportunities.', details: ['Inspect important URLs.', 'Review top queries.', 'Fix mobile and indexing issues.'], links: [['URL Inspection API overview', 'https://developers.google.com/search/blog/2022/01/url-inspection-api']] }
+    ]
+  },
+  'local-services-ads': {
+    badge: 'Intermediate',
+    title: 'Local Services Ads Guided Setup',
+    intro: 'Prepare eligibility, documents, screening, service areas, and lead handling before spending.',
+    apiNote: 'Local Services Ads are tied to Google screening and verification. API support is limited compared with standard Google Ads campaign automation.',
+    steps: [
+      { title: 'Confirm eligibility', summary: 'Start with Google Local Services Ads and choose locksmith category.', details: ['Select country, state, and service category.', 'Check if locksmith screening is available in the area.'], links: [['Open Local Services Ads', 'https://ads.google.com/local-services-ads/'], ['Getting started guide', 'https://support.google.com/localservices/answer/6224841?co=GENIE.CountryCode%3DUS&hl=en']] },
+      { title: 'Prepare documents', summary: 'Gather verification information before applying.', details: ['Business registration, insurance, licenses, owner info, field worker info, and Google profile access.'], links: [['U.S. verification requirements', 'https://support.google.com/localservices/answer/12174778?co=GENIE.CountryCode%3DUS&hl=en']] },
+      { title: 'Complete screening', summary: 'Submit checks exactly as Google requests.', details: ['Do not advertise before approval.', 'Respond quickly to verification requests.', 'Keep documents current.'], links: [['Screening and verification', 'https://support.google.com/localservices/answer/6226575?hl=en']] },
+      { title: 'Set services and areas', summary: 'Only advertise work the business can answer and perform.', details: ['Use a tight service area at launch.', 'Turn on only profitable services.', 'Pause ads when nobody can answer calls.'] },
+      { title: 'Create lead handling rules', summary: 'Answer fast and review lead quality.', details: ['Listen to calls.', 'Mark bad leads.', 'Track booked jobs and real cost per booked job.'] }
+    ]
+  },
+  'google-ads': {
+    badge: 'Intermediate',
+    title: 'Google Search Ads Guided Setup',
+    intro: 'Launch one focused Search campaign only after the site, phone, profile, and tracking are ready.',
+    apiNote: 'Google Ads API can automate campaigns, keywords, budgets, and conversions after OAuth, developer-token approval, and secure backend setup.',
+    steps: [
+      { title: 'Open Google Ads', summary: 'Create the account with the business Google login.', details: ['Connect the Google Business Profile when prompted.', 'Use billing owned by the business.'], links: [['Open Google Ads', 'https://ads.google.com/home/'], ['Create a campaign', 'https://support.google.com/google-ads/answer/6324971?hl=en']] },
+      { title: 'Create one Search campaign', summary: 'Start with a tightly focused service cluster.', details: ['Separate emergency, rekey, lock change, and commercial work.', 'Avoid broad automated campaign types at launch.'], links: [['Create a Search campaign', 'https://support.google.com/google-ads/answer/9510373?hl=en']] },
+      { title: 'Set targeting and keywords', summary: 'Use exact and phrase intent terms in a small service area.', details: ['Use high-intent terms.', 'Set a realistic daily budget.', 'Send ads to matching landing pages.'] },
+      { title: 'Add negative keywords', summary: 'Block free, DIY, jobs, salary, training, wholesale, and template searches.', details: ['Review search terms twice per week.', 'Add negatives aggressively during launch.'], links: [['Negative keywords guide', 'https://support.google.com/google-ads/answer/2453972?hl=en']] },
+      { title: 'Connect conversion tracking', summary: 'Track calls and forms before increasing budget.', details: ['Test phone-click and form events.', 'Import or create conversions.', 'Review cost per booked job, not just cost per click.'], links: [['Google Ads API docs', 'https://developers.google.com/google-ads/api/docs/start']] }
+    ]
+  },
+  'analytics-tracking': {
+    badge: 'Intermediate',
+    title: 'Analytics and Tracking Guided Setup',
+    intro: 'Set up analytics so the owner can see which marketing channels produce calls, forms, and booked jobs.',
+    apiNote: 'Google Analytics Admin API can create and manage GA4 resources after OAuth. Event quality still depends on correct website tagging.',
+    steps: [
+      { title: 'Create GA4', summary: 'Create an Analytics account and property for the live website.', details: ['Use the owner business Google account.', 'Create a web data stream.', 'Copy the measurement ID.'], links: [['Open Google Analytics', 'https://analytics.google.com/'], ['Set up Analytics', 'https://support.google.com/analytics/answer/14183469?hl=en']] },
+      { title: 'Install the tag', summary: 'Add the Google tag or Google Tag Manager.', details: ['Use one tagging method.', 'Avoid duplicate tags.', 'Confirm data is received.'], links: [['Google Tag Manager setup', 'https://support.google.com/tagmanager/answer/6103696?hl=en']] },
+      { title: 'Track lead actions', summary: 'Track phone clicks, forms, quote requests, and important buttons.', details: ['Mark real lead events as conversions.', 'Test on mobile and desktop.', 'Document what each event means.'] },
+      { title: 'Link Google Ads', summary: 'Connect Analytics and Ads if ads are used.', details: ['Import conversion data when appropriate.', 'Check attribution and event names before spending.'], links: [['Link Ads and Analytics', 'https://support.google.com/analytics/answer/9379420?hl=en']] },
+      { title: 'Document the dashboard', summary: 'Create a weekly readout for the owner.', details: ['Review traffic source, calls, forms, booked jobs, and ad spend.', 'Use decisions, not vanity metrics.'], links: [['Analytics Admin API', 'https://developers.google.com/analytics/devguides/config/admin/v1']] }
+    ]
+  },
+  'social-media-setup': {
+    badge: 'Starter',
+    title: 'Social Media Guided Setup',
+    intro: 'Use social pages as trust proof: real photos, accurate contact details, and a simple posting habit.',
+    apiNote: 'Meta APIs can manage some page and Instagram workflows after app review and permissions. Most new owners should set up pages manually first.',
+    steps: [
+      { title: 'Create main pages', summary: 'Start with Facebook; add Instagram if the business can post real photos.', details: ['Use the exact business name.', 'Use the business email and owner-controlled login.', 'Add the logo and service-area language.'], links: [['Create Facebook Page', 'https://www.facebook.com/pages/create'], ['Instagram business account', 'https://help.instagram.com/502981923235522']] },
+      { title: 'Match business details', summary: 'Keep NAP details consistent everywhere.', details: ['Name, address/service area, phone, website, hours, and service list should match the website and Google profile.'] },
+      { title: 'Publish starter proof', summary: 'Show the business is real before inviting customers.', details: ['Add logo, cover image, vehicle/tool photos, short description, and ten starter posts.'] },
+      { title: 'Create response templates', summary: 'Prepare fast replies for common messages.', details: ['Pricing requests, service area, after-hours, review thank-yous, and booking next steps.'] },
+      { title: 'Set weekly habit', summary: 'Post one real photo, one helpful tip, and one service reminder each week.', details: ['Avoid fake stock images as proof.', 'Use simple local trust content.'], links: [['Meta Marketing API docs', 'https://developers.facebook.com/docs/marketing-apis/']]
+      }
+    ]
+  },
+  'email-campaigns': {
+    badge: 'Intermediate',
+    title: 'Email Campaign Guided Setup',
+    intro: 'Create simple follow-up emails for reviews, unbooked quotes, repeat service, and commercial relationships.',
+    apiNote: 'Mailchimp and similar tools have APIs, but production use needs secure key storage, consent handling, and unsubscribe compliance.',
+    steps: [
+      { title: 'Choose email platform', summary: 'Create the account and connect the business sender address.', details: ['Use a reputable platform.', 'Do not send from a personal inbox for campaigns.', 'Authenticate the sending domain when available.'], links: [['Create Mailchimp account', 'https://mailchimp.com/help/create-an-account/'], ['Mailchimp API quick start', 'https://mailchimp.com/developer/marketing/guides/quick-start/']] },
+      { title: 'Create list fields', summary: 'Save useful customer context.', details: ['Name, email, phone, service type, service date, city, customer type, and review status.'] },
+      { title: 'Build review request email', summary: 'Send it after a real completed job.', details: ['Include a short thank-you and Google review link.', 'Do not pressure or reward reviews.'] },
+      { title: 'Build quote follow-up', summary: 'Follow up once when a quote does not book.', details: ['Restate the service area and phone number.', 'Give one clear next action.'] },
+      { title: 'Check compliance', summary: 'Use honest subjects, a real reply-to address, and unsubscribe where required.', details: ['Do not buy random email lists.', 'Keep consent and suppression lists clean.'], links: [['FTC CAN-SPAM guide', 'https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business'], ['Mailchimp Marketing API', 'https://mailchimp.com/developer/marketing/docs/integrations/']] }
+    ]
+  }
+};
+
 class MtkBiab {
   /**
    * @param {HTMLElement} el  - The <mtk-biab> root element
@@ -288,6 +573,7 @@ class MtkBiab {
     this.invoiceState = { records: [], loadedForUid: '', status: '' };
     this.reviewsLoadedForUid = '';
     this.formSteps = {};
+    this.guidedSetupState = this._loadGuidedSetupState();
 
     // Active state
     this.activeTabId    = null;
@@ -553,7 +839,7 @@ class MtkBiab {
             <h2 class="mtk-biab__content-title">${item.content.title}</h2>
             <p class="mtk-biab__content-subtitle">${menu.label} · ${tab.label}</p>
             <div class="mtk-biab__content-body">
-              ${item.content.body}
+              ${this._buildItemContent(item)}
             </div>
           </div>
         </article>
@@ -599,6 +885,169 @@ class MtkBiab {
             </div>
           </div>
         </div>
+      </div>
+    `;
+  }
+
+  _buildItemContent(item) {
+    if (item && MTK_BIAB_GUIDED_SETUPS[item.id]) {
+      const originalTool = item.content && item.content.body && item.content.body.match(/<div data-biab-tool="([^"]+)"><\/div>/);
+      return `
+        ${this._buildGuidedSetup(item.id)}
+        ${originalTool ? `<div class="mtk-biab-guided-setup__builder">${originalTool[0]}</div>` : ''}
+      `;
+    }
+    return item && item.content ? item.content.body : '';
+  }
+
+  _loadGuidedSetupState() {
+    try {
+      const saved = localStorage.getItem('nalaBiabGuidedSetupState');
+      return saved ? JSON.parse(saved) : {};
+    } catch (err) {
+      return {};
+    }
+  }
+
+  _saveGuidedSetupState() {
+    try {
+      localStorage.setItem('nalaBiabGuidedSetupState', JSON.stringify(this.guidedSetupState));
+    } catch (err) {
+      wc.warn('[mtk-biab] Could not save guided setup state', err);
+    }
+  }
+
+  _getGuideState(guideId) {
+    if (!this.guidedSetupState[guideId]) {
+      this.guidedSetupState[guideId] = { activeStep: 0, completed: {} };
+    }
+    return this.guidedSetupState[guideId];
+  }
+
+  _selectGuideStep(guideId, stepIndex) {
+    const guide = MTK_BIAB_GUIDED_SETUPS[guideId];
+    if (!guide) return;
+    const state = this._getGuideState(guideId);
+    state.activeStep = Math.max(0, Math.min(guide.steps.length - 1, stepIndex));
+    this._saveGuidedSetupState();
+    this._refreshGuide(guideId);
+  }
+
+  _completeGuideStep(guideId) {
+    const guide = MTK_BIAB_GUIDED_SETUPS[guideId];
+    if (!guide) return;
+    const state = this._getGuideState(guideId);
+    const current = Math.max(0, Math.min(guide.steps.length - 1, state.activeStep || 0));
+    state.completed[current] = true;
+    state.activeStep = Math.min(guide.steps.length - 1, current + 1);
+    this._saveGuidedSetupState();
+    this._refreshGuide(guideId);
+  }
+
+  _resetGuide(guideId) {
+    const guide = MTK_BIAB_GUIDED_SETUPS[guideId];
+    if (!guide) return;
+    this.guidedSetupState[guideId] = { activeStep: 0, completed: {} };
+    this._saveGuidedSetupState();
+    this._refreshGuide(guideId);
+  }
+
+  _refreshGuide(guideId) {
+    const mount = this.el.querySelector(`[data-guided-setup="${guideId}"]`);
+    if (mount) mount.outerHTML = this._buildGuidedSetup(guideId);
+  }
+
+  _buildGuidedSetup(guideId) {
+    const guide = MTK_BIAB_GUIDED_SETUPS[guideId];
+    if (!guide) return '';
+
+    const state = this._getGuideState(guideId);
+    const steps = guide.steps || [];
+    const activeIndex = Math.max(0, Math.min(steps.length - 1, state.activeStep || 0));
+    const activeStep = steps[activeIndex] || steps[0];
+    const completedCount = steps.reduce((count, step, index) => count + (state.completed && state.completed[index] ? 1 : 0), 0);
+    const percent = steps.length ? Math.round((completedCount / steps.length) * 100) : 0;
+
+    return `
+      <section class="mtk-biab-guided-setup" data-guided-setup="${guideId}">
+        <header class="mtk-biab-guided-setup__header">
+          <div>
+            <span class="mtk-biab__logo-badge">${this._escapeHtml(guide.badge || 'Setup')}</span>
+            <h3>${this._escapeHtml(guide.title)}</h3>
+            <p>${this._escapeHtml(guide.intro)}</p>
+          </div>
+          <div class="mtk-biab-guided-setup__meter" aria-label="${completedCount} of ${steps.length} steps complete">
+            <strong>${completedCount}/${steps.length}</strong>
+            <span>complete</span>
+          </div>
+        </header>
+
+        <div class="mtk-biab-guided-setup__progress" aria-hidden="true">
+          <span style="width:${percent}%"></span>
+        </div>
+
+        <div class="mtk-biab-guided-setup__layout">
+          <ol class="mtk-biab-guided-setup__list">
+            ${steps.map((step, index) => this._buildGuideListItem(guideId, step, index, activeIndex, !!state.completed[index])).join('')}
+          </ol>
+
+          <article class="mtk-biab-guided-setup__detail">
+            <div class="mtk-biab-guided-setup__step-label">Step ${activeIndex + 1} of ${steps.length}</div>
+            <h4>${this._escapeHtml(activeStep.title)}</h4>
+            <p>${this._escapeHtml(activeStep.summary || '')}</p>
+            ${Array.isArray(activeStep.details) && activeStep.details.length ? `
+              <ul class="mtk-biab-guided-setup__details">
+                ${activeStep.details.map(detail => `<li>${this._escapeHtml(detail)}</li>`).join('')}
+              </ul>
+            ` : ''}
+            ${this._buildGuideLinks(activeStep.links)}
+            ${guide.apiNote ? `
+              <aside class="mtk-biab-guided-setup__api">
+                <span class="material-icons" aria-hidden="true">api</span>
+                <div>
+                  <strong>API readiness</strong>
+                  <p>${this._escapeHtml(guide.apiNote)}</p>
+                </div>
+              </aside>
+            ` : ''}
+            <div class="mtk-biab-guided-setup__actions">
+              <button type="button" class="mtk-biab__action-btn mtk-biab__action-btn--primary" data-action="guide-complete-step" data-guide-id="${guideId}">
+                ${activeIndex === steps.length - 1 ? 'Mark complete' : 'Mark complete and next'}
+              </button>
+              <button type="button" class="mtk-biab__action-btn" data-action="guide-reset" data-guide-id="${guideId}">Reset guide</button>
+            </div>
+          </article>
+        </div>
+      </section>
+    `;
+  }
+
+  _buildGuideListItem(guideId, step, index, activeIndex, isComplete) {
+    return `
+      <li>
+        <button
+          type="button"
+          class="mtk-biab-guided-setup__list-btn${index === activeIndex ? ' is-active' : ''}${isComplete ? ' is-complete' : ''}"
+          data-action="guide-select-step"
+          data-guide-id="${guideId}"
+          data-guide-step="${index}"
+          aria-current="${index === activeIndex ? 'step' : 'false'}"
+        >
+          <span class="material-icons" aria-hidden="true">${isComplete ? 'check_circle' : 'radio_button_unchecked'}</span>
+          <span>
+            <strong>${this._escapeHtml(step.title)}</strong>
+            <small>${this._escapeHtml(step.summary || '')}</small>
+          </span>
+        </button>
+      </li>
+    `;
+  }
+
+  _buildGuideLinks(links) {
+    if (!Array.isArray(links) || !links.length) return '';
+    return `
+      <div class="mtk-biab-guided-setup__links">
+        ${links.map(([label, href]) => `<a class="mtk-biab-guide__link" href="${this._escapeHtml(href)}" target="_blank" rel="noopener">${this._escapeHtml(label)}</a>`).join('')}
       </div>
     `;
   }
@@ -688,6 +1137,15 @@ class MtkBiab {
         break;
       case 'tool-email':
         this._handleToolEmail(btn.dataset.tool);
+        break;
+      case 'guide-select-step':
+        this._selectGuideStep(btn.dataset.guideId, Number(btn.dataset.guideStep || 0));
+        break;
+      case 'guide-complete-step':
+        this._completeGuideStep(btn.dataset.guideId);
+        break;
+      case 'guide-reset':
+        this._resetGuide(btn.dataset.guideId);
         break;
       case 'invoice-save':
         this._saveInvoiceRecord();
@@ -2216,12 +2674,13 @@ class MtkBiab {
         <div class="mtk-biab-tool__head"><div><h3>Automation Readiness</h3><p>${this._t('automationIntro')}</p></div></div>
         <div class="mtk-biab-api-grid">
           ${[
-            ['Google Ads API', 'Create accounts/campaign pieces, keywords, budgets, conversion actions after OAuth and developer-token approval.', 'https://developers.google.com/google-ads/api/docs/start'],
-            ['Business Profile APIs', 'Read and manage business locations, attributes, photos, and some profile data after account authorization.', 'https://developers.google.com/my-business'],
-            ['Search Console API', 'Add verified sites, inspect URLs, submit sitemaps, and read performance data.', 'https://developers.google.com/webmaster-tools'],
-            ['Google Analytics Admin API', 'Create/manage GA4 properties and data streams when authorized.', 'https://developers.google.com/analytics/devguides/config/admin/v1'],
-            ['Local Services Ads', 'API surface is limited compared with standard Google Ads; eligibility and screening still require Google workflows.', 'https://developers.google.com/google-ads/api/docs/campaigns/local-service-campaigns']
-          ].map(([name, detail, href]) => `<article class="mtk-biab-api-card"><h4>${name}</h4><p>${detail}</p><a class="mtk-biab-guide__link" href="${href}" target="_blank" rel="noopener">Open docs</a></article>`).join('')}
+            ['Google Ads API', 'Possible after setup', 'Create campaign pieces, keywords, budgets, conversion actions, and reporting after OAuth, developer-token approval, billing, and conversion tracking are ready.', 'https://developers.google.com/google-ads/api/docs/start'],
+            ['Business Profile APIs', 'Limited onboarding automation', 'Manage existing locations, attributes, photos, and profile data after account authorization and API access. Verification and policy review still involve Google workflows.', 'https://developers.google.com/my-business/content/locations-setup'],
+            ['Search Console API', 'Good fit after verification', 'Submit sitemaps, inspect URLs, and read performance data for verified properties. Ownership verification must be completed first.', 'https://developers.google.com/webmaster-tools'],
+            ['Google Analytics Admin API', 'Possible after OAuth', 'Create and manage GA4 properties and data streams when authorized. Website event quality still depends on correct tagging.', 'https://developers.google.com/analytics/devguides/config/admin/v1'],
+            ['Local Services Ads', 'Mostly manual', 'Eligibility, screening, licenses, insurance, and background checks remain Google-controlled. API support is more limited than standard Search campaigns.', 'https://developers.google.com/google-ads/api/docs/campaigns/local-service-campaigns'],
+            ['Mailchimp Marketing API', 'Possible after consent setup', 'Sync customer lists and trigger review or follow-up emails when consent, unsubscribe handling, and secure API key storage are in place.', 'https://mailchimp.com/developer/marketing/docs/integrations/']
+          ].map(([name, status, detail, href]) => `<article class="mtk-biab-api-card"><span class="mtk-biab__logo-badge">${status}</span><h4>${name}</h4><p>${detail}</p><a class="mtk-biab-guide__link" href="${href}" target="_blank" rel="noopener">Open docs</a></article>`).join('')}
         </div>
       </section>
     `;
