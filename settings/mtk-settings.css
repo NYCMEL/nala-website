@@ -34,7 +34,7 @@
   height: 300px; }
 
 .mtk-settings__btn--primary:focus-visible, .mtk-settings__btn--secondary:focus-visible, .mtk-settings__btn:focus-visible, .mtk-settings__btn--text:focus-visible {
-  outline: 3px solid rgba(25, 118, 210, 0.35);
+  outline: 3px solid rgba(169, 130, 18, 0.35);
   outline-offset: 2px; }
 
 .mtk-settings__btn--primary {
@@ -405,10 +405,10 @@ h1.title::after {
   text-transform: none; }
 
 .mtk-settings__btn--text:hover {
-  background-color: rgba(25, 118, 210, 0.08); }
+  background-color: rgba(169, 130, 18, 0.08); }
 
 .mtk-settings__btn--text:active {
-  background-color: rgba(25, 118, 210, 0.16); }
+  background-color: rgba(169, 130, 18, 0.16); }
 
 .mtk-settings__password-strength {
   margin-top: 8px;
@@ -485,4 +485,3 @@ h1.title::after {
   .mtk-settings__actions .mtk-settings__btn {
     width: 100%;
     justify-content: center; } }
-

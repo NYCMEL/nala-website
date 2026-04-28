@@ -42,7 +42,7 @@ mtk-gift .mtk-gift__btn--submit:active::before,
 mtk-gift .mtk-gift__btn--submit:focus-visible,
 .mtk-gift .mtk-gift__btn--submit:focus-visible, mtk-gift .mtk-gift__btn:focus-visible,
 .mtk-gift .mtk-gift__btn:focus-visible {
-  outline: 3px solid rgba(25, 118, 210, 0.35);
+  outline: 3px solid rgba(169, 130, 18, 0.35);
   outline-offset: 2px; }
 
 mtk-gift .mtk-gift__btn--submit,
@@ -566,12 +566,12 @@ mtk-gift .mtk-gift__btn.btn-link,
 
 mtk-gift .mtk-gift__btn.btn-link:hover,
 .mtk-gift .mtk-gift__btn.btn-link:hover {
-  background: rgba(25, 118, 210, 0.08);
+  background: rgba(169, 130, 18, 0.08);
   text-decoration-color: #a98212; }
 
 mtk-gift .mtk-gift__btn.btn-link:focus-visible,
 .mtk-gift .mtk-gift__btn.btn-link:focus-visible {
-  outline: 3px solid rgba(25, 118, 210, 0.35);
+  outline: 3px solid rgba(169, 130, 18, 0.35);
   outline-offset: 2px; }
 
 mtk-gift .mtk-gift__snackbar,
@@ -617,9 +617,9 @@ mtk-gift .mtk-gift__snackbar--error .material-icons,
 
 mtk-gift .mtk-gift__snackbar--info,
 .mtk-gift .mtk-gift__snackbar--info {
-  background: #e4f0fc;
+  background: #f7e7b8;
   color: #7a5e0c;
-  border: 1px solid #9bc7f3; }
+  border: 1px solid #f0ce6f; }
 
 mtk-gift .mtk-gift__snackbar--info .material-icons,
 .mtk-gift .mtk-gift__snackbar--info .material-icons {
@@ -627,7 +627,7 @@ mtk-gift .mtk-gift__snackbar--info .material-icons,
 
 mtk-gift *:focus-visible,
 .mtk-gift *:focus-visible {
-  outline: 3px solid rgba(25, 118, 210, 0.35);
+  outline: 3px solid rgba(169, 130, 18, 0.35);
   outline-offset: 2px; }
 
 @media (max-width: 480px) {

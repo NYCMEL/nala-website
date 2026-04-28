@@ -369,10 +369,10 @@ mtk-dialog.mtk-dialog {
   box-shadow: none; }
 
 .mtk-dialog__footer .btn-link:hover {
-  background-color: rgba(25, 118, 210, 0.08); }
+  background-color: rgba(169, 130, 18, 0.08); }
 
 .mtk-dialog__footer .btn-link:active {
-  background-color: rgba(25, 118, 210, 0.16); }
+  background-color: rgba(169, 130, 18, 0.16); }
 
 .mtk-dialog__divider {
   height: 1px;

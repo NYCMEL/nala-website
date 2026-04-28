@@ -213,7 +213,7 @@ h1.title::after {
 .mtk-carousel .mtk-carousel-viewport {
   overflow: hidden;
   width: 100%;
-  background: #fbf4e5; }
+  background: #dcb564; }
 
 .mtk-carousel .mtk-carousel-track {
   display: flex;
@@ -272,4 +272,3 @@ h1.title::after {
     width: 34px;
     height: 34px;
     font-size: 20px; } }
-
