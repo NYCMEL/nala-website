@@ -353,7 +353,7 @@ const MTK_BIAB_GUIDED_SETUPS = {
       {
         title: 'Set up phone, email, domain, and website',
         summary: 'Make the business reachable and consistent everywhere.',
-        details: ['Buy the domain.', 'Create a business email.', 'Set up a dedicated phone line.', 'Publish the website with the same business name, phone, service area, and hours used elsewhere.']
+        details: ['Use the prebuilt Website Maker URL shown in this guide as the starter website.', 'Apply or upload the logo from the Logo Designer before publishing.', 'Create a business email and dedicated phone line.', 'Keep the business name, phone, service area, and hours consistent everywhere.']
       },
       {
         title: 'Launch Google profile, payments, and reviews',
@@ -891,11 +891,7 @@ class MtkBiab {
 
   _buildItemContent(item) {
     if (item && MTK_BIAB_GUIDED_SETUPS[item.id]) {
-      const originalTool = item.content && item.content.body && item.content.body.match(/<div data-biab-tool="([^"]+)"><\/div>/);
-      return `
-        ${this._buildGuidedSetup(item.id)}
-        ${originalTool ? `<div class="mtk-biab-guided-setup__builder">${originalTool[0]}</div>` : ''}
-      `;
+      return this._buildGuidedSetup(item.id);
     }
     return item && item.content ? item.content.body : '';
   }
@@ -955,6 +951,7 @@ class MtkBiab {
   _refreshGuide(guideId) {
     const mount = this.el.querySelector(`[data-guided-setup="${guideId}"]`);
     if (mount) mount.outerHTML = this._buildGuidedSetup(guideId);
+    this._renderToolPanels();
   }
 
   _buildGuidedSetup(guideId) {
@@ -1001,15 +998,8 @@ class MtkBiab {
               </ul>
             ` : ''}
             ${this._buildGuideLinks(activeStep.links)}
-            ${guide.apiNote ? `
-              <aside class="mtk-biab-guided-setup__api">
-                <span class="material-icons" aria-hidden="true">api</span>
-                <div>
-                  <strong>API readiness</strong>
-                  <p>${this._escapeHtml(guide.apiNote)}</p>
-                </div>
-              </aside>
-            ` : ''}
+            ${this._buildPrebuiltAssetsPanel(guideId)}
+            ${this._buildGuideEmbeddedTool(guideId)}
             <div class="mtk-biab-guided-setup__actions">
               <button type="button" class="mtk-biab__action-btn mtk-biab__action-btn--primary" data-action="guide-complete-step" data-guide-id="${guideId}">
                 ${activeIndex === steps.length - 1 ? 'Mark complete' : 'Mark complete and next'}
@@ -1019,6 +1009,76 @@ class MtkBiab {
           </article>
         </div>
       </section>
+    `;
+  }
+
+  _getGuideToolId(guideId) {
+    const map = {
+      'business-plan-template': 'business-plan',
+      'startup-checklist': 'startup-checklist'
+    };
+    return map[guideId] || '';
+  }
+
+  _buildGuideEmbeddedTool(guideId) {
+    const toolId = this._getGuideToolId(guideId);
+    if (!toolId) return '';
+    return `
+      <div class="mtk-biab-guided-setup__embedded-tool">
+        <div data-biab-tool="${toolId}"></div>
+      </div>
+    `;
+  }
+
+  _shouldShowPrebuiltAssets(guideId) {
+    return [
+      'business-plan-template',
+      'startup-checklist',
+      'google-business-profile',
+      'seo-setup',
+      'local-services-ads',
+      'google-ads',
+      'analytics-tracking',
+      'social-media-setup',
+      'email-campaigns'
+    ].includes(guideId);
+  }
+
+  _getPrebuiltWebsiteUrl() {
+    const base = document.querySelector('base[href]');
+    if (base && base.href) {
+      try {
+        return new URL('client/index.html', base.href).href;
+      } catch (err) {
+        // Fall through to origin-based URL.
+      }
+    }
+    const origin = window.location && window.location.origin ? window.location.origin : '';
+    return `${origin}/repo_deploy/client/index.html`;
+  }
+
+  _buildPrebuiltAssetsPanel(guideId) {
+    if (!this._shouldShowPrebuiltAssets(guideId)) return '';
+    const websiteUrl = this._getPrebuiltWebsiteUrl();
+    const logoMarkup = this._buildLogoMarkup(this.logoDesignerState, 'primary-light');
+    const businessName = this.logoDesignerState.businessName || 'Locksmith Business';
+    return `
+      <aside class="mtk-biab-guided-setup__assets">
+        <div class="mtk-biab-guided-setup__asset-logo" aria-label="${this._escapeHtml(businessName)} logo preview">
+          ${logoMarkup}
+        </div>
+        <div>
+          <strong>Prebuilt assets already started</strong>
+          <p>Use this website URL and logo wherever the guide asks for website, brand, or profile assets.</p>
+          <label>Website URL
+            <input type="text" readonly value="${this._escapeHtml(websiteUrl)}">
+          </label>
+          <div class="mtk-biab-guided-setup__links">
+            <a class="mtk-biab-guide__link" href="${this._escapeHtml(websiteUrl)}" target="_blank" rel="noopener">Open prebuilt website</a>
+            <button type="button" class="mtk-biab-guide__link mtk-biab-guided-setup__asset-button" data-action="logo-apply-to-client">Apply logo to Website Maker</button>
+          </div>
+        </div>
+      </aside>
     `;
   }
 

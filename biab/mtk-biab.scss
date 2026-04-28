@@ -148,6 +148,7 @@ mtk-biab.mtk-biab {
   border: 1px solid #eadfca;
   border-radius: 10px;
   background: #fffaf0;
+  animation: mtk-biab-soft-pop 220ms ease-out;
 
   &__head {
     display: flex;
@@ -219,6 +220,16 @@ mtk-biab.mtk-biab {
   background: #fff;
 }
 
+.mtk-biab-api-card {
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+
+  &:hover {
+    border-color: #c6952d;
+    box-shadow: 0 8px 22px rgba(60, 64, 67, 0.11);
+    transform: translateY(-1px);
+  }
+}
+
 .mtk-biab-guided-setup {
   display: grid;
   gap: 18px;
@@ -227,6 +238,7 @@ mtk-biab.mtk-biab {
   border: 1px solid #eadfca;
   border-radius: 10px;
   background: #fffaf0;
+  animation: mtk-biab-rise-in 260ms ease-out;
 }
 
 .mtk-biab-guided-setup__header {
@@ -319,6 +331,7 @@ mtk-biab.mtk-biab {
   color: #34302a;
   text-align: left;
   cursor: pointer;
+  transition: border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 
   .material-icons {
     color: #a89a7a;
@@ -348,6 +361,7 @@ mtk-biab.mtk-biab {
   &:hover {
     border-color: #c6952d;
     background: #fff8e8;
+    transform: translateY(-1px);
   }
 
   &:focus-visible {
@@ -373,6 +387,7 @@ mtk-biab.mtk-biab {
   border-radius: 8px;
   background: #fff;
   color: #34302a;
+  animation: mtk-biab-soft-pop 220ms ease-out;
 
   h4 {
     margin: 6px 0 8px;
@@ -450,9 +465,116 @@ mtk-biab.mtk-biab {
   margin-top: 14px;
 }
 
-.mtk-biab-guided-setup__builder {
-  display: block;
-  margin-top: 14px;
+.mtk-biab-guided-setup__assets {
+  display: grid;
+  grid-template-columns: 118px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  margin: 16px 0;
+  padding: 14px;
+  border: 1px solid #d7ccb5;
+  border-radius: 8px;
+  background: #fffdf8;
+
+  strong {
+    display: block;
+    color: #202124;
+    margin-bottom: 4px;
+  }
+
+  p {
+    margin: 0 0 10px;
+    color: #5f6368;
+  }
+
+  label {
+    display: grid;
+    gap: 6px;
+    color: #202124;
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  input {
+    width: 100%;
+    min-height: 38px;
+    border: 1px solid #cfc5af;
+    border-radius: 8px;
+    padding: 8px 10px;
+    color: #34302a;
+    background: #fff;
+    font: inherit;
+    font-weight: 600;
+  }
+}
+
+.mtk-biab-guided-setup__asset-logo {
+  min-width: 0;
+  min-height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #eadfca;
+  border-radius: 8px;
+  background: #ffffff;
+  overflow: hidden;
+
+  .mtk-biab__logo-lockup {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .mtk-biab__logo-mark {
+    width: 42px;
+    height: 42px;
+  }
+
+  .mtk-biab__logo-name {
+    font-size: 14px;
+  }
+
+  .mtk-biab__logo-tagline {
+    display: none;
+  }
+}
+
+.mtk-biab-guided-setup__asset-button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.mtk-biab-guided-setup__embedded-tool {
+  margin: 18px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid #eadfca;
+
+  .mtk-biab-tool {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    animation: none;
+  }
+
+  .mtk-biab-tool__head {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .mtk-biab-tool__actions {
+    justify-content: flex-start;
+    margin-top: 0;
+  }
+
+  .mtk-biab-tool__grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .mtk-biab-tool__preview {
+    min-height: 0;
+  }
 }
 
 .mtk-biab-invoice {
@@ -1191,6 +1313,14 @@ mtk-biab.mtk-biab {
     align-items: stretch;
   }
 
+  .mtk-biab-guided-setup__assets {
+    grid-template-columns: 1fr;
+  }
+
+  .mtk-biab-guided-setup__asset-logo {
+    max-width: 220px;
+  }
+
   .mtk-biab-invoice-records__status,
   .mtk-biab-invoice-records__card div:last-child {
     justify-items: start;
@@ -1702,6 +1832,7 @@ mtk-biab.mtk-biab {
     padding: 28px 32px;
     box-shadow: $md-elevation-1;
     border: 1px solid $md-outline-variant;
+    animation: mtk-biab-rise-in 240ms ease-out;
   }
 
   &__content-title {
@@ -1878,6 +2009,39 @@ mtk-biab.mtk-biab {
     to {
       opacity: 1;
       transform: translateX(0);
+    }
+  }
+
+  @keyframes mtk-biab-rise-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes mtk-biab-soft-pop {
+    from {
+      opacity: 0;
+      transform: scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
     }
   }
 
