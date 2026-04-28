@@ -236,7 +236,8 @@ const MTK_BIAB_I18N = {
     visibleOnWebsite: 'Show on webpage',
     hiddenOnWebsite: 'Hidden from webpage',
     allRatingsCount: 'All ratings count',
-    publishedReviews: 'Published reviews'
+    publishedReviews: 'Published reviews',
+    reviewValidation: 'Add the customer name and email before sending.'
   },
   es: {
     selectOption: 'Selecciona una opción',
@@ -266,7 +267,8 @@ const MTK_BIAB_I18N = {
     visibleOnWebsite: 'Mostrar en la página',
     hiddenOnWebsite: 'Oculta en la página',
     allRatingsCount: 'Todas las calificaciones cuentan',
-    publishedReviews: 'Reseñas publicadas'
+    publishedReviews: 'Reseñas publicadas',
+    reviewValidation: 'Agrega el nombre y el correo del cliente antes de enviar.'
   }
 };
 
@@ -439,8 +441,8 @@ class MtkBiab {
             `).join('')}
           </nav>
           <div class="mtk-biab__lang-switch" aria-label="Language">
-            <button type="button" data-action="set-lang" data-lang="en">EN</button>
-            <button type="button" data-action="set-lang" data-lang="es">ES</button>
+            <button type="button" class="${this._getLang() === 'en' ? 'is-active' : ''}" data-action="set-lang" data-lang="en" aria-pressed="${this._getLang() === 'en'}">EN</button>
+            <button type="button" class="${this._getLang() === 'es' ? 'is-active' : ''}" data-action="set-lang" data-lang="es" aria-pressed="${this._getLang() === 'es'}">ES</button>
           </div>
         </div>
       </header>
@@ -1574,6 +1576,7 @@ class MtkBiab {
             <button type="button" class="mtk-biab__action-btn mtk-biab__action-btn--primary mtk-biab-reviews__send" data-action="review-send-request">
               ${this._t('sendReviewRequest')}
             </button>
+            <p class="mtk-biab-reviews__message" data-review-message aria-live="polite"></p>
           </form>
 
           <article class="mtk-biab-tool__preview">
@@ -1637,9 +1640,7 @@ class MtkBiab {
     };
 
     if (!payload.customerName || !payload.customerEmail) {
-      if (window.MTKMsgs && typeof MTKMsgs.show === 'function') {
-        MTKMsgs.show({ type: 'error', icon: 'error', message: 'Add the customer name and email before sending.', closable: true, timer: 6 });
-      }
+      this._setReviewMessage(this._t('reviewValidation'), true);
       return;
     }
 
@@ -1649,6 +1650,13 @@ class MtkBiab {
     }
     this.reviewState.request = { customerName: '', customerEmail: '', jobType: '' };
     this._renderReviewsTool();
+  }
+
+  _setReviewMessage(message, isError = false) {
+    const target = this.el.querySelector('[data-review-message]');
+    if (!target) return;
+    target.textContent = message;
+    target.classList.toggle('is-error', isError);
   }
 
   _createReviewToken() {

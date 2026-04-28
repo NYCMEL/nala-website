@@ -121,7 +121,9 @@ mtk-biab.mtk-biab {
 .mtk-biab__tabs-nav {
   display: flex;
   align-items: center;
+  flex: 1 1 auto;
   gap: 0;
+  min-width: 0;
   overflow-x: auto;
   scrollbar-width: none; }
   .mtk-biab__tabs-nav::-webkit-scrollbar {
@@ -451,22 +453,34 @@ mtk-biab.mtk-biab {
 .mtk-biab__lang-switch {
   display: inline-flex;
   gap: 4px;
-  margin-left: 12px; }
+  flex-shrink: 0;
+  margin-left: 12px;
+  padding: 3px;
+  border: 1px solid rgba(198, 149, 45, 0.55);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08); }
   .mtk-biab__lang-switch button {
-    border: 1px solid #c6952d;
-    background: #fff;
-    color: #4a3a08;
+    min-width: 34px;
+    border: none;
+    background: transparent;
+    color: #f8fafc;
     border-radius: 999px;
     padding: 5px 9px;
     font-size: 12px;
     font-weight: 800;
     cursor: pointer; }
+    .mtk-biab__lang-switch button.is-active {
+      background: #c6952d;
+      color: #1d1607; }
 
 .mtk-biab__action-btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
   min-height: 38px;
+  min-width: 112px;
   padding: 8px 14px;
   border-radius: 8px;
   border: 1px solid #c6952d;
@@ -475,7 +489,15 @@ mtk-biab.mtk-biab {
   font-size: 13px;
   font-weight: 800;
   cursor: pointer;
-  text-decoration: none; }
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  transform: none !important; }
+  .mtk-biab__action-btn .mtk-ripple-wave,
+  .mtk-biab__action-btn .mtk-ripple-surface {
+    display: none !important; }
   .mtk-biab__action-btn:disabled {
     opacity: 0.45;
     cursor: not-allowed; }
@@ -510,7 +532,7 @@ mtk-biab.mtk-biab {
       margin: 0; }
   .mtk-biab-tool__grid {
     display: grid;
-    grid-template-columns: minmax(260px, 0.9fr) minmax(300px, 1.1fr);
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
     gap: 18px; }
   .mtk-biab-tool__form {
     display: grid;
@@ -535,12 +557,14 @@ mtk-biab.mtk-biab {
     .mtk-biab-tool__field textarea {
       min-height: 82px; }
   .mtk-biab-tool__preview {
+    min-width: 0;
     min-height: 260px;
     padding: 22px;
     border-radius: 8px;
     border: 1px solid #e3dac5;
     background: #fff;
-    color: #34302a; }
+    color: #34302a;
+    overflow-wrap: anywhere; }
     .mtk-biab-tool__preview h3 {
       color: #202124; }
 
@@ -581,6 +605,15 @@ mtk-biab.mtk-biab {
 
 .mtk-biab-reviews__send {
   justify-self: start; }
+
+.mtk-biab-reviews__message {
+  min-height: 20px;
+  margin: -2px 0 0;
+  color: #28642d;
+  font-size: 13px;
+  font-weight: 700; }
+  .mtk-biab-reviews__message.is-error {
+    color: #b3261e; }
 
 .mtk-biab-reviews__list {
   display: grid;
@@ -632,12 +665,114 @@ mtk-biab.mtk-biab {
   height: 82px;
   object-fit: contain; }
 
+.mtk-biab__logo-preview-area {
+  display: grid;
+  gap: 18px; }
+
+.mtk-biab__logo-preview-area--hero {
+  grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.2fr);
+  align-items: start; }
+
+.mtk-biab__logo-preview-summary {
+  min-width: 0; }
+
+.mtk-biab__logo-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  min-width: 0; }
+
+.mtk-biab__logo-preview-card {
+  min-width: 0;
+  border: 1px solid #eadfca;
+  border-radius: 8px;
+  background: #fff;
+  overflow: hidden; }
+
+.mtk-biab__logo-preview-label {
+  padding: 8px 10px;
+  color: #5f6368;
+  font-size: 12px;
+  font-weight: 800; }
+
+.mtk-biab__logo-preview-canvas {
+  min-height: 132px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; }
+
+.mtk-biab__logo-preview-card--hero .mtk-biab__logo-preview-canvas {
+  min-height: 168px; }
+
+.mtk-biab__logo-lockup {
+  max-width: 100%;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 1.3vw, 14px); }
+
+.mtk-biab__logo-lockup--stacked,
+.mtk-biab__logo-lockup--badge {
+  flex-direction: column;
+  text-align: center; }
+
+.mtk-biab__logo-lockup--badge {
+  border: 2px solid currentColor;
+  border-radius: 999px;
+  padding: 12px 16px; }
+
+.mtk-biab__logo-mark {
+  width: clamp(42px, 7vw, 72px);
+  height: clamp(42px, 7vw, 72px);
+  flex: 0 0 auto;
+  display: inline-flex; }
+  .mtk-biab__logo-mark svg {
+    width: 100%;
+    height: 100%; }
+
+.mtk-biab__logo-copy {
+  min-width: 0;
+  max-width: 100%; }
+
+.mtk-biab__logo-name {
+  max-width: 100%;
+  font-family: var(--logo-heading-font);
+  font-size: clamp(18px, 2.2vw, 30px);
+  font-weight: 900;
+  line-height: 1.05;
+  overflow-wrap: anywhere; }
+
+.mtk-biab__logo-tagline {
+  max-width: 100%;
+  margin-top: 4px;
+  font-family: var(--logo-body-font);
+  font-size: clamp(10px, 1.1vw, 14px);
+  line-height: 1.25;
+  overflow-wrap: anywhere; }
+
+.mtk-biab__logo-lockup--horizontal .mtk-biab__logo-name,
+.mtk-biab__logo-lockup--horizontal .mtk-biab__logo-tagline {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden; }
+
+.mtk-biab__logo-lockup--horizontal .mtk-biab__logo-name {
+  -webkit-line-clamp: 2; }
+
+.mtk-biab__logo-lockup--horizontal .mtk-biab__logo-tagline {
+  -webkit-line-clamp: 1; }
+
 @media (max-width: 900px) {
   .mtk-biab-tool__head,
-  .mtk-biab-tool__grid {
+  .mtk-biab-tool__grid,
+  .mtk-biab__logo-preview-area--hero {
     grid-template-columns: 1fr;
     display: grid; }
-  .mtk-biab-api-grid {
+  .mtk-biab-api-grid,
+  .mtk-biab__logo-preview-grid {
     grid-template-columns: 1fr; } }
 
 .mtk-biab__content-empty {
