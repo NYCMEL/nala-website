@@ -584,9 +584,10 @@ class MtkBiab {
               const hasTool = item.content.body.includes('data-biab-tool=');
               const isPricing = item.id && item.id.startsWith('pricing-');
 
-              // Pricing items or items with NO tool: always expanded, no link
+              // Pricing items or items with NO tool: always expanded, no link, no badge
               if (isPricing || !hasTool) {
-                return `<div class="mtk-biab__content-body">${item.content.body}</div>`;
+                const cleanBody = item.content.body.replace(/<p[^>]*>\s*<span[^>]*border-radius:999px[^>]*>.*?<\/span>\s*<\/p>/gs, '');
+                return `<div class="mtk-biab__content-body">${cleanBody}</div>`;
               }
 
               // Items WITH a tool wizard: show tool immediately, collapse static guide below
