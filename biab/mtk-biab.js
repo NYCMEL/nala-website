@@ -683,6 +683,50 @@ class MtkBiab {
           if (body) {
             body.removeAttribute('hidden');
             body.classList.remove('mtk-biab__content-body--collapsed');
+
+            // Remove any existing close button before adding (prevent duplicates)
+            const existing = body.querySelector('.mtk-biab__guide-close');
+            if (existing) existing.remove();
+
+            // Find first h3 text to use as section heading (replace Starter badge row)
+            const firstH3 = body.querySelector('h3');
+            const heading = firstH3 ? firstH3.textContent.trim() : '';
+
+            // Hide the Starter/badge span
+            const badge = body.querySelector('p > span[style*="border-radius:999px"]');
+            if (badge) {
+              const badgeP = badge.closest('p');
+              if (badgeP) badgeP.style.display = 'none';
+            }
+
+            // Build header row: heading text + X button
+            const headerRow = document.createElement('div');
+            headerRow.className = 'mtk-biab__guide-header';
+            headerRow.innerHTML = heading
+              ? '<span class="mtk-biab__guide-heading">' + heading + '</span>'
+              : '';
+
+            const closeBtn = document.createElement('button');
+            closeBtn.type = 'button';
+            closeBtn.className = 'mtk-biab__guide-close';
+            closeBtn.setAttribute('aria-label', 'Close guide');
+            closeBtn.innerHTML = '<span class="material-icons">close</span>';
+            closeBtn.addEventListener('click', function() {
+              body.setAttribute('hidden', '');
+              body.classList.add('mtk-biab__content-body--collapsed');
+              headerRow.remove();
+              // Restore badge visibility
+              if (badge && badge.closest('p')) badge.closest('p').style.display = '';
+              // Restore Read More link
+              const link = document.createElement('a');
+              link.href = '#';
+              link.className = 'mtk-biab__read-more-link';
+              link.dataset.action = 'expand-body';
+              link.innerHTML = '<span class="material-icons">menu_book</span> Guides. Read More…';
+              body.insertAdjacentElement('afterend', link);
+            });
+            headerRow.appendChild(closeBtn);
+            body.insertAdjacentElement('beforebegin', headerRow);
           }
           anchor.remove();
         }
@@ -1028,16 +1072,14 @@ class MtkBiab {
       targetPanel.focus({ preventScroll: true });
 
       // Reset any previously expanded guide body back to collapsed
-      const expandedBody = targetPanel.querySelector(
-        '.mtk-biab__content-body:not(.mtk-biab__content-body--collapsed) ~ .mtk-biab__read-more-link'
-      );
-      // Re-hide body if it was expanded and no Read More link is present
-      const allBodies = targetPanel.querySelectorAll('.mtk-biab__content-body');
-      allBodies.forEach(b => {
-        // Only reset the static guide body (not tool bodies)
+      targetPanel.querySelectorAll('.mtk-biab__guide-header').forEach(h => h.remove());
+      targetPanel.querySelectorAll('.mtk-biab__content-body').forEach(b => {
         if (!b.querySelector('[data-biab-tool]') && !b.hasAttribute('hidden')) {
           b.setAttribute('hidden', '');
           b.classList.add('mtk-biab__content-body--collapsed');
+          // Restore hidden badge
+          const badge = b.querySelector('p > span[style*="border-radius:999px"]');
+          if (badge && badge.closest('p')) badge.closest('p').style.display = '';
           // Re-insert Read More link if missing
           if (!targetPanel.querySelector('.mtk-biab__read-more-link')) {
             const link = document.createElement('a');

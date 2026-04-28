@@ -676,6 +676,39 @@ mtk-biab.mtk-biab {
   color: #fff !important;
   font-size: 11px !important; }
 
+.mtk-biab__guide-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px; }
+
+.mtk-biab__guide-heading {
+  font-size: 15px;
+  font-weight: 700;
+  color: #4a3a08; }
+
+.mtk-biab__guide-close {
+  float: right;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 50%;
+  cursor: pointer;
+  color: #49454f;
+  transition: background 0.15s, color 0.15s;
+  margin-left: 8px; }
+
+.mtk-biab__guide-close .material-icons {
+  font-size: 16px; }
+
+.mtk-biab__guide-close:hover {
+  background: rgba(0, 0, 0, 0.12);
+  color: #1d192b; }
+
 .mtk-biab__read-more-link {
   display: inline-flex;
   align-items: center;

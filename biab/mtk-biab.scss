@@ -836,6 +836,44 @@ mtk-biab.mtk-biab {
     }
   }
 
+  // ── Guide Header Row (heading + X) ───────────────────────
+  &__guide-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  &__guide-heading {
+    font-size: 15px;
+    font-weight: 700;
+    color: #4a3a08;
+  }
+
+  // ── Guide Close Button ───────────────────────────────────
+  &__guide-close {
+    float: right;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 50%;
+    cursor: pointer;
+    color: #49454f;
+    transition: background 0.15s, color 0.15s;
+    margin-left: 8px;
+
+    .material-icons { font-size: 16px; }
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.12);
+      color: #1d192b;
+    }
+  }
+
   // ── Read More Link ───────────────────────────────────────
   &__read-more-link {
     display: inline-flex;
