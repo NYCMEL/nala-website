@@ -999,7 +999,8 @@ class MtkBiab {
               ${state.customLogo ? '<p><strong>Custom logo uploaded.</strong> It will be used in previews and stationery until another logo is chosen.</p>' : ''}
               <div class="mtk-biab__logo-option-grid">
                 ${MTK_BIAB_LOGO_ICONS.map(option => `
-                  <button type="button" class="mtk-biab__logo-option-card${option.key === state.iconKey ? ' is-active' : ''}" data-action="logo-set-icon" data-logo-value="${option.key}">
+                  <button type="button" role="radio" aria-checked="${option.key === state.iconKey}" class="mtk-biab__logo-option-card${option.key === state.iconKey ? ' is-active' : ''}" data-action="logo-set-icon" data-logo-value="${option.key}">
+                    <span class="mtk-biab__logo-radio" aria-hidden="true"></span>
                     <span class="mtk-biab__logo-option-icon" style="--logo-option-color:${palette.primary};--logo-bg:${palette.surface};">${option.svg}</span>
                     <span class="mtk-biab__logo-option-title">${option.label}</span>
                   </button>
@@ -1012,7 +1013,8 @@ class MtkBiab {
               <p>Each scheme is built for contrast, vehicle readability, and a practical locksmith positioning.</p>
               <div class="mtk-biab__logo-option-grid">
                 ${MTK_BIAB_LOGO_PALETTES.map(option => `
-                  <button type="button" class="mtk-biab__logo-swatch-card${option.key === state.paletteKey ? ' is-active' : ''}" data-action="logo-set-palette" data-logo-value="${option.key}">
+                  <button type="button" role="radio" aria-checked="${option.key === state.paletteKey}" class="mtk-biab__logo-swatch-card${option.key === state.paletteKey ? ' is-active' : ''}" data-action="logo-set-palette" data-logo-value="${option.key}">
+                    <span class="mtk-biab__logo-radio" aria-hidden="true"></span>
                     <span class="mtk-biab__logo-swatch-row">
                       <span class="mtk-biab__logo-swatch" style="background:${option.surface};"></span>
                       <span class="mtk-biab__logo-swatch" style="background:${option.primary};"></span>
@@ -1028,7 +1030,8 @@ class MtkBiab {
               <h3>Font systems</h3>
               <div class="mtk-biab__logo-stack">
                 ${MTK_BIAB_LOGO_FONTS.map(option => `
-                  <button type="button" class="mtk-biab__logo-choice${option.key === state.fontKey ? ' is-active' : ''}" data-action="logo-set-font" data-logo-value="${option.key}">
+                  <button type="button" role="radio" aria-checked="${option.key === state.fontKey}" class="mtk-biab__logo-choice${option.key === state.fontKey ? ' is-active' : ''}" data-action="logo-set-font" data-logo-value="${option.key}">
+                    <span class="mtk-biab__logo-radio" aria-hidden="true"></span>
                     <strong style="font-family:${option.headline};">${option.label}</strong>
                     <span>${option.rationale}</span>
                   </button>
@@ -1040,7 +1043,8 @@ class MtkBiab {
               <h3>Template direction</h3>
               <div class="mtk-biab__logo-stack">
                 ${MTK_BIAB_LOGO_TEMPLATES.map(option => `
-                  <button type="button" class="mtk-biab__logo-choice${option.key === state.templateKey ? ' is-active' : ''}" data-action="logo-set-template" data-logo-value="${option.key}">
+                  <button type="button" role="radio" aria-checked="${option.key === state.templateKey}" class="mtk-biab__logo-choice${option.key === state.templateKey ? ' is-active' : ''}" data-action="logo-set-template" data-logo-value="${option.key}">
+                    <span class="mtk-biab__logo-radio" aria-hidden="true"></span>
                     <strong>${option.label}</strong>
                     <span>${option.description}</span>
                   </button>
@@ -1052,7 +1056,10 @@ class MtkBiab {
               <h3>Primary variation</h3>
               <div class="mtk-biab__logo-pill-row">
                 ${MTK_BIAB_LOGO_VARIATIONS.map(option => `
-                  <button type="button" class="mtk-biab__logo-pill${option.key === state.variationKey ? ' is-active' : ''}" data-action="logo-set-variation" data-logo-value="${option.key}">${option.label}</button>
+                  <button type="button" role="radio" aria-checked="${option.key === state.variationKey}" class="mtk-biab__logo-pill${option.key === state.variationKey ? ' is-active' : ''}" data-action="logo-set-variation" data-logo-value="${option.key}">
+                    <span class="mtk-biab__logo-radio" aria-hidden="true"></span>
+                    <span>${option.label}</span>
+                  </button>
                 `).join('')}
               </div>
             </div>

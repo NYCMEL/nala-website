@@ -674,7 +674,11 @@ mtk-biab.mtk-biab {
   align-items: start; }
 
 .mtk-biab__logo-preview-summary {
-  min-width: 0; }
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid #eadfca;
+  border-radius: 10px;
+  background: #fffaf0; }
 
 .mtk-biab__logo-preview-grid {
   display: grid;
@@ -697,14 +701,187 @@ mtk-biab.mtk-biab {
 
 .mtk-biab__logo-preview-canvas {
   min-height: 132px;
-  padding: 14px;
+  padding: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden; }
 
 .mtk-biab__logo-preview-card--hero .mtk-biab__logo-preview-canvas {
-  min-height: 168px; }
+  min-height: 176px;
+  padding: 24px; }
+
+.mtk-biab__logo-controls {
+  margin-top: 22px; }
+
+.mtk-biab__logo-controls-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  align-items: start; }
+
+.mtk-biab__logo-control-group {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid #eadfca;
+  border-radius: 10px;
+  background: #ffffff; }
+  .mtk-biab__logo-control-group h3 {
+    margin: 0 0 8px;
+    color: #202124;
+    font-size: 17px; }
+  .mtk-biab__logo-control-group p {
+    margin: 0 0 14px;
+    color: #5f6368;
+    line-height: 1.55; }
+
+.mtk-biab__logo-label {
+  display: grid;
+  gap: 7px;
+  margin-top: 12px;
+  color: #202124;
+  font-size: 13px;
+  font-weight: 800; }
+
+.mtk-biab__logo-input {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid #cfc5af;
+  border-radius: 8px;
+  padding: 9px 11px;
+  color: #34302a;
+  font: inherit;
+  background: #fff; }
+
+.mtk-biab__logo-option-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px; }
+
+.mtk-biab__logo-stack {
+  display: grid;
+  gap: 10px; }
+
+.mtk-biab__logo-option-card,
+.mtk-biab__logo-swatch-card,
+.mtk-biab__logo-choice,
+.mtk-biab__logo-pill {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 74px;
+  display: grid;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #dfd2b5;
+  border-radius: 10px;
+  padding: 14px 14px 14px 44px;
+  background: #fffdf8;
+  color: #34302a;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease; }
+  .mtk-biab__logo-option-card:hover,
+  .mtk-biab__logo-swatch-card:hover,
+  .mtk-biab__logo-choice:hover,
+  .mtk-biab__logo-pill:hover {
+    border-color: #c6952d;
+    background: #fff8e8; }
+  .mtk-biab__logo-option-card:focus-visible,
+  .mtk-biab__logo-swatch-card:focus-visible,
+  .mtk-biab__logo-choice:focus-visible,
+  .mtk-biab__logo-pill:focus-visible {
+    outline: 3px solid rgba(169, 130, 17, 0.32);
+    outline-offset: 2px; }
+  .mtk-biab__logo-option-card.is-active,
+  .mtk-biab__logo-swatch-card.is-active,
+  .mtk-biab__logo-choice.is-active,
+  .mtk-biab__logo-pill.is-active {
+    border-color: #a98211;
+    background: #fbf4e5;
+    box-shadow: inset 0 0 0 1px #a98211, 0 6px 18px rgba(75, 55, 9, 0.08); }
+
+.mtk-biab__logo-radio {
+  position: absolute;
+  left: 14px;
+  top: 16px;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #a89a7a;
+  border-radius: 50%;
+  background: #ffffff; }
+  .is-active > .mtk-biab__logo-radio {
+    border-color: #a98211; }
+  .is-active > .mtk-biab__logo-radio::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: #a98211; }
+
+.mtk-biab__logo-option-icon {
+  width: 54px;
+  height: 54px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  padding: 8px;
+  border-radius: 12px;
+  background: var(--logo-bg, #202124);
+  color: var(--logo-option-color, #c6952d); }
+  .mtk-biab__logo-option-icon svg {
+    width: 100%;
+    height: 100%; }
+
+.mtk-biab__logo-option-title {
+  min-width: 0;
+  color: #202124;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.25;
+  overflow-wrap: anywhere; }
+
+.mtk-biab__logo-swatch-row {
+  display: flex;
+  gap: 6px;
+  align-items: center; }
+
+.mtk-biab__logo-swatch {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-radius: 50%; }
+
+.mtk-biab__logo-swatch--large {
+  width: 42px;
+  height: 42px; }
+
+.mtk-biab__logo-choice {
+  min-height: 88px; }
+  .mtk-biab__logo-choice strong {
+    display: block;
+    color: #202124;
+    font-size: 15px;
+    line-height: 1.25; }
+  .mtk-biab__logo-choice span:not(.mtk-biab__logo-radio) {
+    display: block;
+    color: #5f6368;
+    font-size: 13px;
+    line-height: 1.45; }
+
+.mtk-biab__logo-pill-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px; }
+
+.mtk-biab__logo-pill {
+  min-height: 48px;
+  padding-top: 12px;
+  padding-bottom: 12px; }
 
 .mtk-biab__logo-lockup {
   max-width: 100%;
@@ -772,6 +949,9 @@ mtk-biab.mtk-biab {
     grid-template-columns: 1fr;
     display: grid; }
   .mtk-biab-api-grid,
+  .mtk-biab__logo-controls-grid,
+  .mtk-biab__logo-option-grid,
+  .mtk-biab__logo-pill-row,
   .mtk-biab__logo-preview-grid {
     grid-template-columns: 1fr; } }
 
