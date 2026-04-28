@@ -671,6 +671,67 @@ mtk-biab.mtk-biab {
 .mtk-biab-invoice__terms {
   background: #fffdf8; }
 
+.mtk-biab-invoice-records {
+  margin-top: 18px;
+  padding: 16px;
+  border: 1px solid #e3dac5;
+  border-radius: 8px;
+  background: #fffdf8; }
+
+.mtk-biab-invoice-records__head,
+.mtk-biab-invoice-records__card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px; }
+
+.mtk-biab-invoice-records__head {
+  margin-bottom: 12px; }
+  .mtk-biab-invoice-records__head h4 {
+    margin: 0 0 4px;
+    color: #202124; }
+  .mtk-biab-invoice-records__head p {
+    margin: 0;
+    color: #5f6368;
+    line-height: 1.45; }
+
+.mtk-biab-invoice-records__status {
+  min-width: 120px;
+  color: #28642d;
+  font-size: 13px;
+  font-weight: 800;
+  text-align: right; }
+  .mtk-biab-invoice-records__status.is-error {
+    color: #b3261e; }
+
+.mtk-biab-invoice-records__list {
+  display: grid;
+  gap: 10px; }
+
+.mtk-biab-invoice-records__card {
+  padding: 12px;
+  border: 1px solid #eadfca;
+  border-radius: 8px;
+  background: #fff; }
+  .mtk-biab-invoice-records__card div {
+    display: grid;
+    gap: 4px;
+    min-width: 0; }
+  .mtk-biab-invoice-records__card div:last-child {
+    justify-items: end; }
+  .mtk-biab-invoice-records__card strong,
+  .mtk-biab-invoice-records__card span,
+  .mtk-biab-invoice-records__card small {
+    min-width: 0;
+    overflow-wrap: anywhere; }
+  .mtk-biab-invoice-records__card span,
+  .mtk-biab-invoice-records__card small {
+    color: #5f6368; }
+
+.mtk-biab-invoice-records__empty {
+  margin: 0;
+  color: #5f6368; }
+
 .mtk-biab-reviews__score {
   min-width: 160px;
   padding: 14px 16px;
@@ -1088,9 +1149,18 @@ mtk-biab.mtk-biab {
   .mtk-biab-tool__grid,
   .mtk-biab-invoice__header,
   .mtk-biab-invoice__parties,
+  .mtk-biab-invoice-records__head,
+  .mtk-biab-invoice-records__card,
   .mtk-biab__logo-preview-area--hero {
     grid-template-columns: 1fr;
     display: grid; }
+  .mtk-biab-invoice-records__head,
+  .mtk-biab-invoice-records__card {
+    align-items: stretch; }
+  .mtk-biab-invoice-records__status,
+  .mtk-biab-invoice-records__card div:last-child {
+    justify-items: start;
+    text-align: left; }
   .mtk-biab-api-grid,
   .mtk-biab__logo-controls-grid,
   .mtk-biab__logo-option-grid,

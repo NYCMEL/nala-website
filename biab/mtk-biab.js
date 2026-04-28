@@ -285,6 +285,7 @@ class MtkBiab {
     this.logoDesignerState = this._getDefaultLogoDesignerState();
     this.formState = this._getDefaultFormState();
     this.reviewState = this._getDefaultReviewState();
+    this.invoiceState = { records: [], loadedForUid: '', status: '' };
     this.reviewsLoadedForUid = '';
     this.formSteps = {};
 
@@ -683,10 +684,16 @@ class MtkBiab {
         this._moveToolStep(btn.dataset.tool, 1);
         break;
       case 'tool-download':
-        this._downloadToolDocument(btn.dataset.tool);
+        this._handleToolDownload(btn.dataset.tool);
         break;
       case 'tool-email':
-        this._emailToolDocument(btn.dataset.tool);
+        this._handleToolEmail(btn.dataset.tool);
+        break;
+      case 'invoice-save':
+        this._saveInvoiceRecord();
+        break;
+      case 'invoice-load':
+        this._loadInvoiceRecord(btn.dataset.invoiceId);
         break;
       case 'review-send-request':
         this._sendReviewRequest();
@@ -1489,6 +1496,7 @@ class MtkBiab {
         launch: ''
       },
       'invoice-setup': {
+        id: '',
         businessName: 'Harbor Lock & Key',
         dbaName: '',
         businessAddress: '',
@@ -1577,6 +1585,8 @@ class MtkBiab {
 
   _renderInvoiceTool() {
     this._renderWizardTool('invoice-setup', 'Invoice Setup Builder');
+    this._renderInvoiceRecords();
+    this._loadSavedInvoices();
   }
 
   _renderWizardTool(tool, heading) {
@@ -1586,6 +1596,7 @@ class MtkBiab {
     const stepIndex = this.formSteps[tool] || 0;
     const active = steps[stepIndex] || steps[0];
     const state = this.formState[tool] || {};
+    const isInvoice = tool === 'invoice-setup';
     mount.innerHTML = `
       <section class="mtk-biab-tool">
         <div class="mtk-biab-tool__head">
@@ -1595,6 +1606,7 @@ class MtkBiab {
             <p>${active.title}</p>
           </div>
           <div class="mtk-biab-tool__actions">
+            ${isInvoice ? `<button type="button" class="mtk-biab__action-btn mtk-biab__action-btn--primary" data-action="invoice-save">Save Invoice</button>` : ''}
             <button type="button" class="mtk-biab__action-btn" data-action="tool-download" data-tool="${tool}">${this._t('download')}</button>
             <button type="button" class="mtk-biab__action-btn" data-action="tool-email" data-tool="${tool}">${this._t('email')}</button>
           </div>
@@ -1611,6 +1623,7 @@ class MtkBiab {
             ${this._buildToolDocument(tool)}
           </article>
         </div>
+        ${isInvoice ? '<div class="mtk-biab-invoice-records" data-invoice-records></div>' : ''}
       </section>
     `;
   }
@@ -1829,6 +1842,150 @@ class MtkBiab {
         </section>
       </article>
     `;
+  }
+
+  _invoiceTotal(invoice = this.formState['invoice-setup'] || {}) {
+    const raw = value => Number(String(value || '0').replace(/[^0-9.-]/g, '')) || 0;
+    return raw(invoice.serviceFeeAmount) + raw(invoice.laborAmount) + raw(invoice.partsAmount) + raw(invoice.taxAmount);
+  }
+
+  _formatInvoiceMoney(value) {
+    return '$' + (Number(value || 0) || 0).toFixed(2);
+  }
+
+  _getInvoicePayload() {
+    return Object.assign({}, this.formState['invoice-setup'] || {}, {
+      total: this._invoiceTotal()
+    });
+  }
+
+  _renderInvoiceRecords() {
+    const mount = this.el.querySelector('[data-invoice-records]');
+    if (!mount) return;
+    const records = Array.isArray(this.invoiceState.records) ? this.invoiceState.records : [];
+    mount.innerHTML = `
+      <div class="mtk-biab-invoice-records__head">
+        <div>
+          <h4>Saved invoices</h4>
+          <p>Invoice records are saved for this Business in a Box page and can be loaded back into the builder.</p>
+        </div>
+        <span class="mtk-biab-invoice-records__status${this.invoiceState.statusIsError ? ' is-error' : ''}" aria-live="polite">${this._escapeHtml(this.invoiceState.status || '')}</span>
+      </div>
+      <div class="mtk-biab-invoice-records__list">
+        ${records.length ? records.map(record => this._buildInvoiceRecordCard(record)).join('') : '<p class="mtk-biab-invoice-records__empty">No invoices saved yet.</p>'}
+      </div>
+    `;
+  }
+
+  _buildInvoiceRecordCard(record) {
+    const invoice = record.invoice || {};
+    const id = this._escapeHtml(record.id || invoice.id || '');
+    const number = this._escapeHtml(record.invoiceNumber || invoice.invoiceNumber || 'Invoice');
+    const customer = this._escapeHtml(record.customerName || invoice.customerName || 'Customer not entered');
+    const date = this._escapeHtml(record.invoiceDate || invoice.invoiceDate || '');
+    const status = this._escapeHtml(record.paymentStatus || invoice.paymentStatus || '');
+    const updated = this._escapeHtml(record.updatedAt ? String(record.updatedAt).slice(0, 10) : '');
+    return `
+      <article class="mtk-biab-invoice-records__card">
+        <div>
+          <strong>${number}</strong>
+          <span>${customer}</span>
+          <small>${date}${updated ? ` · saved ${updated}` : ''}</small>
+        </div>
+        <div>
+          <strong>${this._formatInvoiceMoney(record.total !== undefined ? record.total : this._invoiceTotal(invoice))}</strong>
+          <span>${status}</span>
+          <button type="button" class="mtk-biab__action-btn" data-action="invoice-load" data-invoice-id="${id}">Load</button>
+        </div>
+      </article>
+    `;
+  }
+
+  _setInvoiceStatus(message, isError = false) {
+    this.invoiceState.status = message || '';
+    this.invoiceState.statusIsError = !!isError;
+    this._renderInvoiceRecords();
+  }
+
+  _loadSavedInvoices() {
+    const uid = this._getReviewUid();
+    if (!uid || this.invoiceState.loadedForUid === uid || !window.fetch) return;
+    this.invoiceState.loadedForUid = uid;
+    fetch((window.wc && wc.apiURL ? wc.apiURL : '') + `/api/business_in_a_box_invoices.php?nalaUID=${encodeURIComponent(uid)}`, {
+      credentials: 'include'
+    })
+      .then(res => res.json().then(json => {
+        if (!res.ok) throw new Error((json && (json.error || json.message)) || 'Could not load invoices.');
+        return json;
+      }))
+      .then(json => {
+        this.invoiceState.records = Array.isArray(json.invoices) ? json.invoices : [];
+        this._renderInvoiceRecords();
+      })
+      .catch(err => {
+        this.invoiceState.loadedForUid = '';
+        this._setInvoiceStatus(err && err.message ? err.message : 'Could not load invoices.', true);
+        if (window.wc && wc.warn) wc.warn('[mtk-biab] Could not load saved invoices', err);
+      });
+  }
+
+  _saveInvoiceRecord(options = {}) {
+    const uid = this._getReviewUid();
+    if (!window.fetch) {
+      if (!options.silent) this._setInvoiceStatus('This browser cannot save invoice records.', true);
+      return Promise.resolve(null);
+    }
+    const payload = {
+      nalaUID: uid,
+      invoice: this._getInvoicePayload()
+    };
+    if (!options.silent) this._setInvoiceStatus('Saving invoice...');
+    return fetch((window.wc && wc.apiURL ? wc.apiURL : '') + '/api/business_in_a_box_invoices.php', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(res => res.json().then(json => {
+        if (!res.ok) throw new Error((json && (json.error || json.message)) || 'Could not save invoice.');
+        return json;
+      }))
+      .then(json => {
+        if (json && json.id) this.formState['invoice-setup'].id = json.id;
+        this.invoiceState.records = Array.isArray(json.invoices) ? json.invoices : this.invoiceState.records;
+        if (!options.silent) this._setInvoiceStatus('Invoice saved.');
+        else this._renderInvoiceRecords();
+        return json;
+      })
+      .catch(err => {
+        if (!options.silent) this._setInvoiceStatus(err && err.message ? err.message : 'Could not save invoice.', true);
+        throw err;
+      });
+  }
+
+  _loadInvoiceRecord(id) {
+    const record = (this.invoiceState.records || []).find(item => item.id === id);
+    if (!record || !record.invoice) return;
+    this.formState['invoice-setup'] = Object.assign({}, this.formState['invoice-setup'], record.invoice, { id: record.id });
+    this.formSteps['invoice-setup'] = 0;
+    this._renderInvoiceTool();
+    this._setInvoiceStatus('Invoice loaded.');
+  }
+
+  _handleToolDownload(tool) {
+    if (tool === 'invoice-setup') {
+      this._saveInvoiceRecord({ silent: true }).catch(() => null).finally(() => this._downloadToolDocument(tool));
+      return;
+    }
+    this._downloadToolDocument(tool);
+  }
+
+  _handleToolEmail(tool) {
+    if (tool === 'invoice-setup') {
+      this._saveInvoiceRecord({ silent: true }).catch(() => null).finally(() => this._emailToolDocument(tool));
+      return;
+    }
+    this._emailToolDocument(tool);
   }
 
   _downloadToolDocument(tool) {

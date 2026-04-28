@@ -338,6 +338,88 @@ mtk-biab.mtk-biab {
   }
 }
 
+.mtk-biab-invoice-records {
+  margin-top: 18px;
+  padding: 16px;
+  border: 1px solid #e3dac5;
+  border-radius: 8px;
+  background: #fffdf8;
+}
+
+.mtk-biab-invoice-records__head,
+.mtk-biab-invoice-records__card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.mtk-biab-invoice-records__head {
+  margin-bottom: 12px;
+
+  h4 {
+    margin: 0 0 4px;
+    color: #202124;
+  }
+
+  p {
+    margin: 0;
+    color: #5f6368;
+    line-height: 1.45;
+  }
+}
+
+.mtk-biab-invoice-records__status {
+  min-width: 120px;
+  color: #28642d;
+  font-size: 13px;
+  font-weight: 800;
+  text-align: right;
+
+  &.is-error {
+    color: #b3261e;
+  }
+}
+
+.mtk-biab-invoice-records__list {
+  display: grid;
+  gap: 10px;
+}
+
+.mtk-biab-invoice-records__card {
+  padding: 12px;
+  border: 1px solid #eadfca;
+  border-radius: 8px;
+  background: #fff;
+
+  div {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  div:last-child {
+    justify-items: end;
+  }
+
+  strong,
+  span,
+  small {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  span,
+  small {
+    color: #5f6368;
+  }
+}
+
+.mtk-biab-invoice-records__empty {
+  margin: 0;
+  color: #5f6368;
+}
+
 .mtk-biab-reviews__score {
   min-width: 160px;
   padding: 14px 16px;
@@ -843,6 +925,8 @@ mtk-biab.mtk-biab {
   .mtk-biab-api-grid,
   .mtk-biab-invoice__header,
   .mtk-biab-invoice__parties,
+  .mtk-biab-invoice-records__head,
+  .mtk-biab-invoice-records__card,
   .mtk-biab__logo-controls-grid,
   .mtk-biab__logo-option-grid,
   .mtk-biab__logo-pill-row,
@@ -851,6 +935,17 @@ mtk-biab.mtk-biab {
   .mtk-biab__logo-preview-grid {
     display: grid;
     grid-template-columns: 1fr;
+  }
+
+  .mtk-biab-invoice-records__head,
+  .mtk-biab-invoice-records__card {
+    align-items: stretch;
+  }
+
+  .mtk-biab-invoice-records__status,
+  .mtk-biab-invoice-records__card div:last-child {
+    justify-items: start;
+    text-align: left;
   }
 
   .mtk-biab__logo-control-group,
