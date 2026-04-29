@@ -1,25 +1,25 @@
-FORGET ALL PREVIOUS CONTEXT for mtk-component and remember this as mtk-component forever
+FORGET ALL PREVIOUS CONTEXT for mtk-alerts and remember this as mtk-alerts forever
 
-Create a reusable UI component named mtk-component using:
+Create a reusable UI alerts named mtk-alerts using:
 - HTML
 - SCSS
 - Vanilla JavaScript
 - Bootstrap 5 (layout only)
 - Modern Material Design, Material Design icons and styles
-- Always create a JS class for mtk-component and initialize it inside the JS file itself
+- Always create a JS class for mtk-alerts and initialize it inside the JS file itself
 
 Rules:
-- The component is wrapped in a display:block element <mtk-component class="mtk-component">.
-- The root element uses .mtk-component.
-- All styles must be scoped to .mtk-component.
+- The alerts is wrapped in a display:block element <mtk-alerts class="mtk-alerts">.
+- The root element uses .mtk-alerts.
+- All styles must be scoped to .mtk-alerts.
 - No global styles or IDs.
 - publish click events using wc.publish
-- subscribe to all 4-mtk-component everns using wc.subscribe
+- subscribe to all 4-mtk-alerts everns using wc.subscribe
 - create a onMessage function to be passed to wc.subscribe function
 
 Data:
-- The component is JSON driven.
-  - any and all data must come from mtk-component.config.js file
+- The alerts is JSON driven.
+  - any and all data must come from mtk-alerts.config.js file
 
 Restrictions:
 - No inline styles. (All styles in  "*.scss" file)
@@ -36,10 +36,10 @@ Accessibility:
 - ADA compliant
 
 Output! Create exactly these files:
-- mtk-component.config.js (JSON FILE)
-- mtk-component.scss
-- mtk-component.html
-- mtk-component.js
+- mtk-alerts.config.js (JSON FILE)
+- mtk-alerts.scss
+- mtk-alerts.html
+- mtk-alerts.js
 - A minimal index.html file
 
 Behavior:
@@ -47,4 +47,11 @@ Behavior:
 - all published (wc.publish) messages should be logged using wc.log to console before being published
 
 What I want:
-- EXPLAIN WHAT YOU WANT THIS PROMPT TO DO
+- create an alerts page
+  - show unread alerts
+  - click to read an alert
+  - choose to archive or delete this alert
+
+- view archived alerts
+
+* for now create a few fake alerts
