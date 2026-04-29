@@ -1,0 +1,6 @@
+add "mtk-unread-count" to header.private.html "mtk-header-messages" icon top/right and change icon color to gold and clicking on the icon,
+should display alerts page and underline the icon.
+
+this page should also be added to pages. Table should have a 1200px max width use col-md-12 of bootstrap. 
+
+Also change "Unread" and "Archived" to tabs above the table, rather than buttons
