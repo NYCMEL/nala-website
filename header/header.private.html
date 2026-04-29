@@ -91,11 +91,21 @@
 <script src="header/header.js"></script>
 
 <script>
- // Badge is seeded by mtkAlertsBadgeUpdate() defined in index.html
- // Just re-run it after this header include settles
- if (typeof window.mtkAlertsBadgeUpdate === "function") {
-     window.mtkAlertsBadgeUpdate();
- }
+ // Badge — call global updater now that #mtk-unread-count is in the DOM
+ // Retry briefly in case MTKAlertsConfig is still loading
+ (function() {
+     var attempts = 0;
+     var iv = setInterval(function() {
+         attempts++;
+         if (typeof window.mtkAlertsBadgeUpdate === "function" &&
+             window.MTKAlertsConfig) {
+             window.mtkAlertsBadgeUpdate();
+             clearInterval(iv);
+         } else if (attempts >= 50) {
+             clearInterval(iv);
+         }
+     }, 100);
+ })();
 
  // Fallback: set first name if _wc.js hasn't run yet
  wc.timeout(function(){

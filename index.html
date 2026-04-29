@@ -61,25 +61,7 @@
 	    
 	    <script src="alerts/mtk-alerts.config.js"></script>
 	    <script>
-		// Global alert badge updater — called after header renders and after actions
-		window.mtkAlertsBadgeUpdate = function() {
-		    var el = document.getElementById('mtk-unread-count');
-		    if (!el) return;
-		    try {
-			var alerts = window.MTKAlertsConfig && MTKAlertsConfig.alerts;
-			if (!Array.isArray(alerts)) return;
-			var n = alerts.filter(function(a) { return !a.read && !a.archived; }).length;
-			el.textContent = n;
-			el.hidden = (n === 0);
-		    } catch(e) {}
-		};
-		// Re-run whenever a wc-include finishes (catches header injection)
-		document.addEventListener('include:loaded', function() {
-		    window.mtkAlertsBadgeUpdate();
-		});
-	    </script>
-	    <script>
-	    // Global badge sync — called by header and mtk-alerts whenever count changes
+	    // Global badge updater — single definition, called from anywhere
 	    window.mtkAlertsBadgeUpdate = function() {
 		try {
 		    var alerts = window.MTKAlertsConfig && MTKAlertsConfig.alerts;
@@ -90,7 +72,17 @@
 		    if (el) { el.textContent = n; el.hidden = (n === 0); }
 		} catch(e) {}
 	    };
-	    // Run once on include:loaded (after header injects)
+	    // Poll until #mtk-unread-count exists in DOM (header injects it async)
+	    (function pollBadge() {
+		var attempts = 0;
+		var iv = setInterval(function() {
+		    attempts++;
+		    var el = document.getElementById('mtk-unread-count');
+		    if (el) { window.mtkAlertsBadgeUpdate(); clearInterval(iv); }
+		    else if (attempts >= 100) { clearInterval(iv); }
+		}, 100);
+	    })();
+	    // Also re-run on every include:loaded (defensive)
 	    document.addEventListener('include:loaded', window.mtkAlertsBadgeUpdate);
 	    </script>
 	    <script src="pages/mtk-pages.config.js"></script>
