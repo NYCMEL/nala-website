@@ -59,6 +59,40 @@
 	<div>
 	    <wc-include href="pages/index.inc.html" />
 	    
+	    <script src="alerts/mtk-alerts.config.js"></script>
+	    <script>
+		// Global alert badge updater — called after header renders and after actions
+		window.mtkAlertsBadgeUpdate = function() {
+		    var el = document.getElementById('mtk-unread-count');
+		    if (!el) return;
+		    try {
+			var alerts = window.MTKAlertsConfig && MTKAlertsConfig.alerts;
+			if (!Array.isArray(alerts)) return;
+			var n = alerts.filter(function(a) { return !a.read && !a.archived; }).length;
+			el.textContent = n;
+			el.hidden = (n === 0);
+		    } catch(e) {}
+		};
+		// Re-run whenever a wc-include finishes (catches header injection)
+		document.addEventListener('include:loaded', function() {
+		    window.mtkAlertsBadgeUpdate();
+		});
+	    </script>
+	    <script>
+	    // Global badge sync — called by header and mtk-alerts whenever count changes
+	    window.mtkAlertsBadgeUpdate = function() {
+		try {
+		    var alerts = window.MTKAlertsConfig && MTKAlertsConfig.alerts;
+		    var n = Array.isArray(alerts)
+			? alerts.filter(function(a) { return !a.read && !a.archived; }).length
+			: 0;
+		    var el = document.getElementById('mtk-unread-count');
+		    if (el) { el.textContent = n; el.hidden = (n === 0); }
+		} catch(e) {}
+	    };
+	    // Run once on include:loaded (after header injects)
+	    document.addEventListener('include:loaded', window.mtkAlertsBadgeUpdate);
+	    </script>
 	    <script src="pages/mtk-pages.config.js"></script>
 	    <script src="pages/mtk-pages.js"></script>
 	    <script src="pages/mtk-pages.shell.js"></script>

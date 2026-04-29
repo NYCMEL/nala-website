@@ -254,7 +254,7 @@ h1.title::after {
   color: #a98212; }
 
 #mtk-header-messages .mtk-header-alerts-icon {
-  color: #a98212 !important;
+  color: #FFD700 !important;
   transition: transform 200ms ease; }
 
 #mtk-header-messages:hover .mtk-header-alerts-icon {

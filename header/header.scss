@@ -73,9 +73,9 @@
 }
 
 // ── Alerts Bell Icon ────────────────────────────────────────
-// Always gold — even when inactive — to draw attention
+// Always bright yellow — even when inactive — to draw attention
 #mtk-header-messages .mtk-header-alerts-icon {
-  color: $color-gold !important;
+  color: #FFD700 !important;
   transition: transform 200ms ease;
 }
 

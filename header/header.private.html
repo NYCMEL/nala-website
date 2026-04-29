@@ -91,29 +91,11 @@
 <script src="header/header.js"></script>
 
 <script>
- // Seed the header bell badge from MTKAlertsConfig immediately
- (function seedAlertsBadge() {
-     function count() {
-	 try {
-	     var alerts = (window.MTKAlertsConfig || window.MTKAlertsConfig) && MTKAlertsConfig.alerts;
-	     if (!Array.isArray(alerts)) return 0;
-	     return alerts.filter(function(a) { return !a.read && !a.archived; }).length;
-	 } catch(e) { return 0; }
-     }
-
-     function update() {
-	 var el = document.getElementById('mtk-unread-count');
-	 if (!el) return;
-	 var n = count();
-	 el.textContent = n;
-	 el.hidden = (n === 0);
-     }
-
-     // Run now and after includes settle
-     update();
-     document.addEventListener('include:loaded', update);
-     setTimeout(update, 500);
- })();
+ // Badge is seeded by mtkAlertsBadgeUpdate() defined in index.html
+ // Just re-run it after this header include settles
+ if (typeof window.mtkAlertsBadgeUpdate === "function") {
+     window.mtkAlertsBadgeUpdate();
+ }
 
  // Fallback: set first name if _wc.js hasn't run yet
  wc.timeout(function(){
