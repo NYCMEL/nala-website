@@ -439,11 +439,7 @@ class MtkBiab {
               </button>
             `).join('')}
           </nav>
-          <div class="mtk-biab__lang-switch" aria-label="Language">
-            <span class="mtk-biab__lang-slider"></span>
-            <button type="button" data-action="set-lang" data-lang="en" class="nala-lang-active">EN</button>
-            <button type="button" data-action="set-lang" data-lang="es">ES</button>
-          </div>
+
         </div>
       </header>
     `;
