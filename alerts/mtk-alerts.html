@@ -1,0 +1,114 @@
+<!-- ═══════════════════════════════════════════
+     MTK-ALERTS  ·  Alerts Component Template
+     ═══════════════════════════════════════════ -->
+<mtk-alerts class="mtk-alerts" role="region" aria-label="Alerts">
+
+  <div class="mtk-shell">
+
+    <!-- Header -->
+    <header class="mtk-header">
+      <div class="mtk-header__left">
+        <span class="material-icons mtk-header__icon" aria-hidden="true">notifications</span>
+        <h1 class="mtk-header__title">Alerts</h1>
+        <span class="mtk-badge" id="mtk-unread-count" aria-label="unread alerts" role="status">0</span>
+      </div>
+    </header>
+
+    <!-- List view (tabs + panels) -->
+    <div class="mtk-list-view" id="mtk-list-view">
+
+      <!-- Tab Bar -->
+      <div class="mtk-tabs" role="tablist" aria-label="Alert categories">
+        <button
+          class="mtk-tab"
+          role="tab"
+          id="tab-unread"
+          aria-controls="panel-unread"
+          aria-selected="true"
+          tabindex="0"
+          data-tab="unread">
+          <span class="material-icons" aria-hidden="true">mark_email_unread</span>
+          Unread
+        </button>
+        <button
+          class="mtk-tab"
+          role="tab"
+          id="tab-archived"
+          aria-controls="panel-archived"
+          aria-selected="false"
+          tabindex="-1"
+          data-tab="archived">
+          <span class="material-icons" aria-hidden="true">inventory_2</span>
+          Archived
+        </button>
+      </div>
+
+      <!-- Panel: Unread -->
+      <div
+        class="mtk-panel"
+        id="panel-unread"
+        role="tabpanel"
+        aria-labelledby="tab-unread"
+        aria-hidden="false">
+        <ul class="mtk-list" id="mtk-unread-list" aria-label="Unread alerts" aria-live="polite">
+          <!-- Populated by JS -->
+        </ul>
+        <div class="mtk-empty" id="mtk-empty-unread" hidden aria-live="polite">
+          <span class="material-icons" aria-hidden="true">done_all</span>
+          <p>No unread alerts — you're all caught up!</p>
+        </div>
+      </div>
+
+      <!-- Panel: Archived -->
+      <div
+        class="mtk-panel"
+        id="panel-archived"
+        role="tabpanel"
+        aria-labelledby="tab-archived"
+        aria-hidden="true">
+        <ul class="mtk-list" id="mtk-archived-list" aria-label="Archived alerts" aria-live="polite">
+          <!-- Populated by JS -->
+        </ul>
+        <div class="mtk-empty" id="mtk-empty-archived" hidden aria-live="polite">
+          <span class="material-icons" aria-hidden="true">inventory_2</span>
+          <p>Nothing archived yet.</p>
+        </div>
+      </div>
+
+    </div><!-- /mtk-list-view -->
+
+    <!-- Detail View -->
+    <div class="mtk-detail" id="mtk-detail-view" aria-hidden="true" role="article" aria-label="Alert detail">
+
+      <button class="mtk-detail__back" id="mtk-btn-back" aria-label="Back to alerts list">
+        <span class="material-icons" aria-hidden="true">arrow_back</span>
+        Back
+      </button>
+
+      <div class="mtk-detail__card" id="mtk-detail-card" data-type="">
+
+        <div class="mtk-detail__header">
+          <div class="mtk-detail__icon">
+            <span class="material-icons" id="mtk-detail-icon" aria-hidden="true">info</span>
+          </div>
+          <div class="mtk-detail__meta">
+            <span class="mtk-detail__type-chip" id="mtk-detail-type">Info</span>
+            <h2 class="mtk-detail__title" id="mtk-detail-title"></h2>
+            <time class="mtk-detail__time" id="mtk-detail-time" datetime=""></time>
+          </div>
+        </div>
+
+        <div class="mtk-detail__body">
+          <p class="mtk-detail__message" id="mtk-detail-message"></p>
+        </div>
+
+        <div class="mtk-detail__actions" id="mtk-detail-actions">
+          <!-- Populated by JS depending on alert state -->
+        </div>
+
+      </div>
+    </div><!-- /mtk-detail-view -->
+
+  </div><!-- /mtk-shell -->
+
+</mtk-alerts>
