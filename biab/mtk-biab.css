@@ -10,12 +10,10 @@ mtk-biab.mtk-biab {
   overflow-x: hidden; }
 
 .mtk-biab__sidebar-item-btn span:not(.material-icons) {
+  flex: 0 1 auto;
   min-width: 0;
   line-height: 1.25;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 13px; }
+  text-align: left !important; }
 
 .mtk-biab__lang-switch,
 .mtk-biab__logo-actions,
@@ -38,57 +36,47 @@ mtk-biab.mtk-biab {
   width: auto !important;
   height: auto !important; }
 
+.mtk-biab-tool__nav .mtk-biab__action-btn {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 118px;
+  max-width: 180px;
+  min-height: 40px;
+  height: auto;
+  align-self: flex-start;
+  padding: 10px 18px; }
+
 .mtk-biab__lang-switch {
+  flex-shrink: 0;
   margin-left: 12px;
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1.5px solid rgba(255, 255, 255, 0.35);
-  border-radius: 24px;
   padding: 3px;
-  height: 38px;
-  width: 84px;
-  overflow: hidden;
-  flex-shrink: 0; }
-
-.mtk-biab__lang-switch .mtk-biab__lang-slider {
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: calc(50% - 3px);
-  height: calc(100% - 6px);
-  background: #9a7625;
-  border-radius: 18px;
-  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1; }
-
-.mtk-biab__lang-switch .mtk-biab__lang-slider.is-es {
-  transform: translateX(calc(100% + 0px)); }
+  border: 1px solid rgba(198, 149, 45, 0.55);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08); }
 
 .mtk-biab__lang-switch button {
-  position: relative;
-  z-index: 2;
-  flex: 1;
+  min-width: 34px;
   border: none;
   background: transparent;
-  color: rgba(255, 255, 255, 0.55);
+  color: #f8fafc;
+  border-radius: 999px;
+  padding: 5px 9px;
   font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  cursor: pointer;
-  text-align: center;
-  padding: 0;
-  transition: color 0.22s; }
+  font-weight: 800;
+  cursor: pointer; }
 
-.mtk-biab__lang-switch button.nala-lang-active {
-  color: #fff; }
+.mtk-biab__lang-switch button.is-active {
+  background: #c6952d;
+  color: #1d1607; }
 
 .mtk-biab__action-btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
   min-height: 38px;
+  min-width: 112px;
   padding: 8px 14px;
   border-radius: 8px;
   border: 1px solid #c6952d;
@@ -97,7 +85,16 @@ mtk-biab.mtk-biab {
   font-size: 13px;
   font-weight: 800;
   cursor: pointer;
-  text-decoration: none; }
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  transform: none !important; }
+
+.mtk-biab__action-btn .mtk-ripple-wave,
+.mtk-biab__action-btn .mtk-ripple-surface {
+  display: none !important; }
 
 .mtk-biab__action-btn:disabled {
   opacity: 0.45;
@@ -112,7 +109,8 @@ mtk-biab.mtk-biab {
   padding: 20px;
   border: 1px solid #eadfca;
   border-radius: 10px;
-  background: #fffaf0; }
+  background: #fffaf0;
+  animation: mtk-biab-soft-pop 220ms ease-out; }
 
 .mtk-biab-tool__head {
   display: flex;
@@ -123,7 +121,7 @@ mtk-biab.mtk-biab {
 
 .mtk-biab-tool__grid {
   display: grid;
-  grid-template-columns: minmax(260px, 0.9fr) minmax(300px, 1.1fr);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   gap: 18px; }
 
 .mtk-biab-tool__form, .mtk-biab-tool__field {
@@ -136,7 +134,8 @@ mtk-biab.mtk-biab {
   font-weight: 800; }
 
 .mtk-biab-tool__field textarea,
-.mtk-biab-tool__field input {
+.mtk-biab-tool__field input,
+.mtk-biab-tool__field select {
   width: 100%;
   resize: vertical;
   border: 1px solid #cfc5af;
@@ -151,12 +150,14 @@ mtk-biab.mtk-biab {
   min-height: 82px; }
 
 .mtk-biab-tool__preview {
+  min-width: 0;
   min-height: 260px;
   padding: 22px;
   border-radius: 8px;
   border: 1px solid #e3dac5;
   background: #fff;
-  color: #34302a; }
+  color: #34302a;
+  overflow-wrap: anywhere; }
 
 .mtk-biab-api-grid {
   display: grid;
@@ -169,6 +170,489 @@ mtk-biab.mtk-biab {
   border-radius: 8px;
   border: 1px solid #eadfca;
   background: #fff; }
+
+.mtk-biab-api-card {
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease; }
+
+.mtk-biab-api-card:hover {
+  border-color: #c6952d;
+  box-shadow: 0 8px 22px rgba(60, 64, 67, 0.11);
+  transform: translateY(-1px); }
+
+.mtk-biab-guided-setup {
+  display: grid;
+  gap: 18px;
+  margin: 0 0 24px;
+  padding: 20px;
+  border: 1px solid #eadfca;
+  border-radius: 10px;
+  background: #fffaf0;
+  animation: mtk-biab-rise-in 260ms ease-out; }
+
+.mtk-biab-guided-setup__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start; }
+
+.mtk-biab-guided-setup__header h3 {
+  margin: 8px 0 6px;
+  color: #202124;
+  font-size: 22px;
+  line-height: 1.2; }
+
+.mtk-biab-guided-setup__header p {
+  max-width: 760px;
+  margin: 0;
+  color: #5f6368;
+  line-height: 1.6; }
+
+.mtk-biab-guided-setup__meter {
+  min-width: 118px;
+  padding: 14px;
+  border: 1px solid #e0d3ad;
+  border-radius: 8px;
+  background: #fff;
+  text-align: center; }
+
+.mtk-biab-guided-setup__meter strong {
+  display: block;
+  color: #202124;
+  font-size: 28px;
+  line-height: 1; }
+
+.mtk-biab-guided-setup__meter span {
+  display: block;
+  margin-top: 4px;
+  color: #5f6368;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase; }
+
+.mtk-biab-guided-setup__progress {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #eadfca; }
+
+.mtk-biab-guided-setup__progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #a98211;
+  transition: width 180ms ease; }
+
+.mtk-biab-guided-setup__layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.82fr) minmax(0, 1.18fr);
+  gap: 18px;
+  align-items: start; }
+
+.mtk-biab-guided-setup__list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+
+.mtk-biab-guided-setup__list-btn {
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  padding: 13px;
+  border: 1px solid #e3dac5;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #34302a;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease, transform 160ms ease; }
+
+.mtk-biab-guided-setup__list-btn .material-icons {
+  color: #a89a7a;
+  font-size: 22px; }
+
+.mtk-biab-guided-setup__list-btn strong,
+.mtk-biab-guided-setup__list-btn small {
+  display: block;
+  min-width: 0;
+  overflow-wrap: anywhere; }
+
+.mtk-biab-guided-setup__list-btn strong {
+  color: #202124;
+  font-size: 14px;
+  line-height: 1.3; }
+
+.mtk-biab-guided-setup__list-btn small {
+  margin-top: 4px;
+  color: #5f6368;
+  font-size: 12px;
+  line-height: 1.45; }
+
+.mtk-biab-guided-setup__list-btn:hover {
+  border-color: #c6952d;
+  background: #fff8e8;
+  transform: translateY(-1px); }
+
+.mtk-biab-guided-setup__list-btn:focus-visible {
+  outline: 3px solid rgba(169, 130, 17, 0.32);
+  outline-offset: 2px; }
+
+.mtk-biab-guided-setup__list-btn.is-active {
+  border-color: #a98211;
+  background: #fbf4e5;
+  box-shadow: inset 0 0 0 1px #a98211; }
+
+.mtk-biab-guided-setup__list-btn.is-complete .material-icons {
+  color: #2e7d32; }
+
+.mtk-biab-guided-setup__detail {
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid #e3dac5;
+  border-radius: 8px;
+  background: #fff;
+  color: #34302a;
+  animation: mtk-biab-soft-pop 220ms ease-out; }
+
+.mtk-biab-guided-setup__detail h4 {
+  margin: 6px 0 8px;
+  color: #202124;
+  font-size: 20px;
+  line-height: 1.25; }
+
+.mtk-biab-guided-setup__detail p {
+  margin: 0 0 14px;
+  color: #5f6368;
+  line-height: 1.65; }
+
+.mtk-biab-guided-setup__step-label {
+  color: #4a3a08;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase; }
+
+.mtk-biab-guided-setup__details {
+  display: grid;
+  gap: 9px;
+  margin: 0 0 14px;
+  padding-left: 20px; }
+
+.mtk-biab-guided-setup__details li {
+  color: #34302a;
+  line-height: 1.55; }
+
+.mtk-biab-guided-setup__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 4px 0 16px; }
+
+.mtk-biab-guided-setup__api {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 12px;
+  margin: 16px 0;
+  padding: 14px;
+  border: 1px solid #d5e3f5;
+  border-radius: 8px;
+  background: #f3f8ff; }
+
+.mtk-biab-guided-setup__api .material-icons {
+  color: #185abc;
+  font-size: 26px; }
+
+.mtk-biab-guided-setup__api strong {
+  display: block;
+  color: #202124;
+  margin-bottom: 4px; }
+
+.mtk-biab-guided-setup__api p {
+  margin: 0;
+  color: #3c4043;
+  line-height: 1.55; }
+
+.mtk-biab-guided-setup__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px; }
+
+.mtk-biab-guided-setup__assets {
+  display: grid;
+  grid-template-columns: 118px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  margin: 16px 0;
+  padding: 14px;
+  border: 1px solid #d7ccb5;
+  border-radius: 8px;
+  background: #fffdf8; }
+
+.mtk-biab-guided-setup__assets strong {
+  display: block;
+  color: #202124;
+  margin-bottom: 4px; }
+
+.mtk-biab-guided-setup__assets p {
+  margin: 0 0 10px;
+  color: #5f6368; }
+
+.mtk-biab-guided-setup__assets label {
+  display: grid;
+  gap: 6px;
+  color: #202124;
+  font-size: 12px;
+  font-weight: 800; }
+
+.mtk-biab-guided-setup__assets input {
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid #cfc5af;
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: #34302a;
+  background: #fff;
+  font: inherit;
+  font-weight: 600; }
+
+.mtk-biab-guided-setup__asset-logo {
+  min-width: 0;
+  min-height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #eadfca;
+  border-radius: 8px;
+  background: #ffffff;
+  overflow: hidden; }
+
+.mtk-biab-guided-setup__asset-logo .mtk-biab__logo-lockup {
+  width: 100%;
+  padding: 10px; }
+
+.mtk-biab-guided-setup__asset-logo .mtk-biab__logo-mark {
+  width: 42px;
+  height: 42px; }
+
+.mtk-biab-guided-setup__asset-logo .mtk-biab__logo-name {
+  font-size: 14px; }
+
+.mtk-biab-guided-setup__asset-logo .mtk-biab__logo-tagline {
+  display: none; }
+
+.mtk-biab-guided-setup__asset-button {
+  font-family: inherit;
+  cursor: pointer; }
+
+.mtk-biab-guided-setup__embedded-tool {
+  margin: 18px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid #eadfca; }
+
+.mtk-biab-guided-setup__embedded-tool .mtk-biab-tool {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  animation: none; }
+
+.mtk-biab-guided-setup__embedded-tool .mtk-biab-tool__head {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 14px; }
+
+.mtk-biab-guided-setup__embedded-tool .mtk-biab-tool__actions {
+  justify-content: flex-start;
+  margin-top: 0; }
+
+.mtk-biab-guided-setup__embedded-tool .mtk-biab-tool__grid {
+  grid-template-columns: 1fr;
+  gap: 14px; }
+
+.mtk-biab-guided-setup__embedded-tool .mtk-biab-tool__preview {
+  min-height: 0; }
+
+.mtk-biab-invoice {
+  border: 1px solid #d9cda9;
+  border-radius: 10px;
+  background: #fff;
+  color: #202124;
+  overflow: hidden; }
+
+.mtk-biab-invoice__header,
+.mtk-biab-invoice__parties,
+.mtk-biab-invoice__work,
+.mtk-biab-invoice__terms {
+  padding: 18px; }
+
+.mtk-biab-invoice__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 190px;
+  gap: 18px;
+  background: #fffaf0;
+  border-bottom: 1px solid #eadfca; }
+
+.mtk-biab-invoice__header h3 {
+  margin: 0 0 8px;
+  font-size: 24px; }
+
+.mtk-biab-invoice__header p {
+  margin: 0 0 4px;
+  color: #34302a; }
+
+.mtk-biab-invoice__meta {
+  padding: 14px;
+  border-radius: 8px;
+  background: #202124;
+  color: #fff; }
+
+.mtk-biab-invoice__meta h4,
+.mtk-biab-invoice__meta p {
+  margin: 0 0 6px;
+  color: inherit; }
+
+.mtk-biab-invoice__parties {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  border-bottom: 1px solid #eadfca; }
+
+.mtk-biab-invoice__parties h4 {
+  margin: 0 0 8px;
+  color: #4a3a08;
+  font-size: 14px;
+  text-transform: uppercase; }
+
+.mtk-biab-invoice__parties p {
+  margin: 0 0 6px;
+  color: #34302a;
+  line-height: 1.55; }
+
+.mtk-biab-invoice__work {
+  border-bottom: 1px solid #eadfca; }
+
+.mtk-biab-invoice__work h4 {
+  margin: 0 0 8px;
+  color: #4a3a08;
+  font-size: 14px;
+  text-transform: uppercase; }
+
+.mtk-biab-invoice__work p {
+  margin: 0 0 6px;
+  color: #34302a;
+  line-height: 1.55; }
+
+.mtk-biab-invoice__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px; }
+
+.mtk-biab-invoice__table th,
+.mtk-biab-invoice__table td {
+  padding: 12px 18px;
+  border-bottom: 1px solid #eadfca;
+  text-align: left; }
+
+.mtk-biab-invoice__table th:last-child,
+.mtk-biab-invoice__table td:last-child {
+  width: 140px;
+  text-align: right;
+  white-space: nowrap; }
+
+.mtk-biab-invoice__table thead th {
+  background: #fbf4e5;
+  color: #4a3a08; }
+
+.mtk-biab-invoice__table tfoot th,
+.mtk-biab-invoice__table tfoot td {
+  font-weight: 800; }
+
+.mtk-biab-invoice__table tfoot tr:last-child th,
+.mtk-biab-invoice__table tfoot tr:last-child td {
+  background: #202124;
+  color: #fff;
+  font-size: 16px; }
+
+.mtk-biab-invoice__terms {
+  background: #fffdf8; }
+
+.mtk-biab-invoice__terms p {
+  margin: 0 0 6px;
+  color: #34302a;
+  line-height: 1.55; }
+
+.mtk-biab-invoice-records {
+  margin-top: 18px;
+  padding: 16px;
+  border: 1px solid #e3dac5;
+  border-radius: 8px;
+  background: #fffdf8; }
+
+.mtk-biab-invoice-records__head,
+.mtk-biab-invoice-records__card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px; }
+
+.mtk-biab-invoice-records__head {
+  margin-bottom: 12px; }
+
+.mtk-biab-invoice-records__head h4 {
+  margin: 0 0 4px;
+  color: #202124; }
+
+.mtk-biab-invoice-records__head p {
+  margin: 0;
+  color: #5f6368;
+  line-height: 1.45; }
+
+.mtk-biab-invoice-records__status {
+  min-width: 120px;
+  color: #28642d;
+  font-size: 13px;
+  font-weight: 800;
+  text-align: right; }
+
+.mtk-biab-invoice-records__status.is-error {
+  color: #b3261e; }
+
+.mtk-biab-invoice-records__list {
+  display: grid;
+  gap: 10px; }
+
+.mtk-biab-invoice-records__card {
+  padding: 12px;
+  border: 1px solid #eadfca;
+  border-radius: 8px;
+  background: #fff; }
+
+.mtk-biab-invoice-records__card div {
+  display: grid;
+  gap: 4px;
+  min-width: 0; }
+
+.mtk-biab-invoice-records__card div:last-child {
+  justify-items: end; }
+
+.mtk-biab-invoice-records__card strong,
+.mtk-biab-invoice-records__card span,
+.mtk-biab-invoice-records__card small {
+  min-width: 0;
+  overflow-wrap: anywhere; }
+
+.mtk-biab-invoice-records__card span,
+.mtk-biab-invoice-records__card small {
+  color: #5f6368; }
+
+.mtk-biab-invoice-records__empty {
+  margin: 0;
+  color: #5f6368; }
 
 .mtk-biab-reviews__score {
   min-width: 160px;
@@ -196,6 +680,16 @@ mtk-biab.mtk-biab {
 
 .mtk-biab-reviews__send {
   justify-self: start; }
+
+.mtk-biab-reviews__message {
+  min-height: 20px;
+  margin: -2px 0 0;
+  color: #28642d;
+  font-size: 13px;
+  font-weight: 700; }
+
+.mtk-biab-reviews__message.is-error {
+  color: #b3261e; }
 
 .mtk-biab-reviews__list {
   display: grid;
@@ -246,12 +740,385 @@ mtk-biab.mtk-biab {
   height: 82px;
   object-fit: contain; }
 
+.mtk-biab__logo-preview-area {
+  display: grid;
+  gap: 18px; }
+
+.mtk-biab__logo-preview-area--hero {
+  grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.2fr);
+  align-items: start; }
+
+.mtk-biab__logo-preview-summary {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid #eadfca;
+  border-radius: 10px;
+  background: #fffaf0; }
+
+.mtk-biab__logo-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  min-width: 0; }
+
+.mtk-biab__logo-preview-card {
+  min-width: 0;
+  border: 1px solid #eadfca;
+  border-radius: 8px;
+  background: #fff;
+  overflow: hidden; }
+
+.mtk-biab__logo-preview-label {
+  padding: 8px 10px;
+  color: #5f6368;
+  font-size: 12px;
+  font-weight: 800; }
+
+.mtk-biab__logo-preview-canvas {
+  min-height: 132px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; }
+
+.mtk-biab__logo-preview-card--hero .mtk-biab__logo-preview-canvas {
+  min-height: 176px;
+  padding: 24px; }
+
+.mtk-biab__logo-controls {
+  margin-top: 22px; }
+
+.mtk-biab__logo-controls-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 18px;
+  align-items: start; }
+
+.mtk-biab__logo-control-group {
+  grid-column: span 6;
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid #eadfca;
+  border-radius: 10px;
+  background: #ffffff; }
+
+.mtk-biab__logo-control-group h3 {
+  margin: 0 0 8px;
+  color: #202124;
+  font-size: 17px; }
+
+.mtk-biab__logo-control-group p {
+  margin: 0 0 14px;
+  color: #5f6368;
+  line-height: 1.55; }
+
+.mtk-biab__logo-control-group--brand {
+  grid-column: span 5; }
+
+.mtk-biab__logo-control-group--brand + .mtk-biab__logo-control-group {
+  grid-column: span 7; }
+
+.mtk-biab__logo-subcontrol {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #eadfca; }
+
+.mtk-biab__logo-subcontrol h4 {
+  margin: 0 0 10px;
+  color: #202124;
+  font-size: 14px;
+  font-weight: 800; }
+
+.mtk-biab__logo-label {
+  display: grid;
+  gap: 7px;
+  margin-top: 12px;
+  color: #202124;
+  font-size: 13px;
+  font-weight: 800; }
+
+.mtk-biab__logo-input {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid #cfc5af;
+  border-radius: 8px;
+  padding: 9px 11px;
+  color: #34302a;
+  font: inherit;
+  background: #fff; }
+
+.mtk-biab__logo-option-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px; }
+
+.mtk-biab__logo-stack {
+  display: grid;
+  gap: 10px; }
+
+.mtk-biab__logo-option-card,
+.mtk-biab__logo-swatch-card,
+.mtk-biab__logo-choice,
+.mtk-biab__logo-pill {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 74px;
+  display: grid;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #dfd2b5;
+  border-radius: 10px;
+  padding: 14px 14px 14px 44px;
+  background: #fffdf8;
+  color: #34302a;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease; }
+
+.mtk-biab__logo-option-card:hover,
+.mtk-biab__logo-swatch-card:hover,
+.mtk-biab__logo-choice:hover,
+.mtk-biab__logo-pill:hover {
+  border-color: #c6952d;
+  background: #fff8e8; }
+
+.mtk-biab__logo-option-card:focus-visible,
+.mtk-biab__logo-swatch-card:focus-visible,
+.mtk-biab__logo-choice:focus-visible,
+.mtk-biab__logo-pill:focus-visible {
+  outline: 3px solid rgba(169, 130, 17, 0.32);
+  outline-offset: 2px; }
+
+.mtk-biab__logo-option-card.is-active,
+.mtk-biab__logo-swatch-card.is-active,
+.mtk-biab__logo-choice.is-active,
+.mtk-biab__logo-pill.is-active {
+  border-color: #a98211;
+  background: #fbf4e5;
+  box-shadow: inset 0 0 0 1px #a98211, 0 6px 18px rgba(75, 55, 9, 0.08); }
+
+.mtk-biab__logo-radio {
+  position: absolute;
+  left: 14px;
+  top: 16px;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #a89a7a;
+  border-radius: 50%;
+  background: #ffffff; }
+
+.is-active > .mtk-biab__logo-radio {
+  border-color: #a98211; }
+
+.is-active > .mtk-biab__logo-radio::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: #a98211; }
+
+.mtk-biab__logo-option-icon {
+  width: 54px;
+  height: 54px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  padding: 8px;
+  border-radius: 12px;
+  background: var(--logo-bg, #202124);
+  color: var(--logo-option-color, #c6952d); }
+
+.mtk-biab__logo-option-icon svg {
+  width: 100%;
+  height: 100%; }
+
+.mtk-biab__logo-option-title {
+  min-width: 0;
+  color: #202124;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.25;
+  overflow-wrap: anywhere; }
+
+.mtk-biab__logo-swatch-row {
+  display: flex;
+  gap: 6px;
+  align-items: center; }
+
+.mtk-biab__logo-swatch {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-radius: 50%; }
+
+.mtk-biab__logo-swatch--large {
+  width: 42px;
+  height: 42px; }
+
+.mtk-biab__logo-choice {
+  min-height: 88px; }
+
+.mtk-biab__logo-choice strong {
+  display: block;
+  color: #202124;
+  font-size: 15px;
+  line-height: 1.25; }
+
+.mtk-biab__logo-choice span:not(.mtk-biab__logo-radio) {
+  display: block;
+  color: #5f6368;
+  font-size: 13px;
+  line-height: 1.45; }
+
+.mtk-biab__logo-pill-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px; }
+
+.mtk-biab__logo-pill {
+  min-height: 48px;
+  padding-top: 12px;
+  padding-bottom: 12px; }
+
+.mtk-biab__logo-download-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.9fr) minmax(300px, 1.1fr);
+  gap: 16px;
+  margin: 18px 0; }
+
+.mtk-biab__logo-download-card {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid #eadfca;
+  border-radius: 10px;
+  background: #fffaf0;
+  color: #34302a; }
+
+.mtk-biab__logo-download-card .material-icons {
+  width: 46px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #a98211;
+  color: #fff;
+  margin-bottom: 12px; }
+
+.mtk-biab__logo-download-card h3 {
+  margin: 0 0 8px;
+  color: #202124; }
+
+.mtk-biab__logo-download-card p {
+  margin: 0 0 16px;
+  line-height: 1.6; }
+
+.mtk-biab__logo-download-card ul {
+  margin: 0;
+  padding-left: 18px; }
+
+.mtk-biab__logo-download-card li {
+  margin-bottom: 7px; }
+
+.mtk-biab__logo-lockup {
+  max-width: 100%;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 1.3vw, 14px); }
+
+.mtk-biab__logo-lockup--stacked,
+.mtk-biab__logo-lockup--badge {
+  flex-direction: column;
+  text-align: center; }
+
+.mtk-biab__logo-lockup--badge {
+  border: 2px solid currentColor;
+  border-radius: 999px;
+  padding: 12px 16px; }
+
+.mtk-biab__logo-mark {
+  width: clamp(42px, 7vw, 72px);
+  height: clamp(42px, 7vw, 72px);
+  flex: 0 0 auto;
+  display: inline-flex; }
+
+.mtk-biab__logo-mark svg {
+  width: 100%;
+  height: 100%; }
+
+.mtk-biab__logo-copy {
+  min-width: 0;
+  max-width: 100%; }
+
+.mtk-biab__logo-name {
+  max-width: 100%;
+  font-family: var(--logo-heading-font);
+  font-size: clamp(18px, 2.2vw, 30px);
+  font-weight: 900;
+  line-height: 1.05;
+  overflow-wrap: anywhere; }
+
+.mtk-biab__logo-tagline {
+  max-width: 100%;
+  margin-top: 4px;
+  font-family: var(--logo-body-font);
+  font-size: clamp(10px, 1.1vw, 14px);
+  line-height: 1.25;
+  overflow-wrap: anywhere; }
+
+.mtk-biab__logo-lockup--horizontal .mtk-biab__logo-name,
+.mtk-biab__logo-lockup--horizontal .mtk-biab__logo-tagline {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden; }
+
+.mtk-biab__logo-lockup--horizontal .mtk-biab__logo-name {
+  -webkit-line-clamp: 2; }
+
+.mtk-biab__logo-lockup--horizontal .mtk-biab__logo-tagline {
+  -webkit-line-clamp: 1; }
+
 @media (max-width: 900px) {
   .mtk-biab-tool__head,
   .mtk-biab-tool__grid,
-  .mtk-biab-api-grid {
+  .mtk-biab-guided-setup__header,
+  .mtk-biab-guided-setup__layout,
+  .mtk-biab-api-grid,
+  .mtk-biab-invoice__header,
+  .mtk-biab-invoice__parties,
+  .mtk-biab-invoice-records__head,
+  .mtk-biab-invoice-records__card,
+  .mtk-biab__logo-controls-grid,
+  .mtk-biab__logo-option-grid,
+  .mtk-biab__logo-pill-row,
+  .mtk-biab__logo-download-grid,
+  .mtk-biab__logo-preview-area--hero,
+  .mtk-biab__logo-preview-grid {
     display: grid;
-    grid-template-columns: 1fr; } }
+    grid-template-columns: 1fr; }
+  .mtk-biab-invoice-records__head,
+  .mtk-biab-invoice-records__card {
+    align-items: stretch; }
+  .mtk-biab-guided-setup__assets {
+    grid-template-columns: 1fr; }
+  .mtk-biab-guided-setup__asset-logo {
+    max-width: 220px; }
+  .mtk-biab-invoice-records__status,
+  .mtk-biab-invoice-records__card div:last-child {
+    justify-items: start;
+    text-align: left; }
+  .mtk-biab__logo-control-group,
+  .mtk-biab__logo-control-group--brand,
+  .mtk-biab__logo-control-group--brand + .mtk-biab__logo-control-group {
+    grid-column: 1 / -1; } }
 
 .mtk-biab *,
 .mtk-biab *::before,
@@ -503,6 +1370,7 @@ mtk-biab.mtk-biab {
 .mtk-biab__sidebar-menu-header {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 12px;
   width: 100%;
   padding: 14px 24px 10px;
@@ -559,18 +1427,14 @@ mtk-biab.mtk-biab {
   display: block;
   margin-bottom: 2px; }
 
-.mtk-biab__sidebar-item.has-subitems {
-  margin-bottom: 0; }
-
 .mtk-biab__sidebar-item-btn {
   position: relative;
   display: flex;
   align-items: center;
   gap: 12px;
   width: 100%;
-  min-height: 44px;
-  height: auto;
-  padding: 10px 16px;
+  height: 56px;
+  padding: 0 24px 0 16px;
   border: none;
   background: transparent;
   color: #49454f;
@@ -582,7 +1446,14 @@ mtk-biab.mtk-biab {
   cursor: pointer;
   border-radius: 28px;
   transition: background-color 150ms cubic-bezier(0.2, 0, 0, 1), color 150ms cubic-bezier(0.2, 0, 0, 1), box-shadow 150ms cubic-bezier(0.2, 0, 0, 1);
-  outline: none; }
+  outline: none;
+  overflow: hidden; }
+
+.mtk-biab__sidebar-item-btn > span:not(.material-icons) {
+  flex: 0 1 auto;
+  min-width: 0;
+  line-height: 1.25;
+  text-align: left !important; }
 
 .mtk-biab__sidebar-item-btn .material-icons {
   font-size: 24px;
@@ -634,6 +1505,58 @@ mtk-biab.mtk-biab {
   height: 1px;
   background: #cac4d0;
   margin: 12px 16px; }
+
+.mtk-biab__guide-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px; }
+
+.mtk-biab__guide-heading {
+  font-size: 15px;
+  font-weight: 700;
+  color: #4a3a08; }
+
+.mtk-biab__guide-close {
+  float: right;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 50%;
+  cursor: pointer;
+  color: #49454f;
+  transition: background 0.15s, color 0.15s;
+  margin-left: 8px; }
+
+.mtk-biab__guide-close .material-icons {
+  font-size: 16px; }
+
+.mtk-biab__guide-close:hover {
+  background: rgba(0, 0, 0, 0.12);
+  color: #1d192b; }
+
+.mtk-biab__read-more-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #a98211;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.15s; }
+
+.mtk-biab__read-more-link .material-icons {
+  font-size: 18px; }
+
+.mtk-biab__read-more-link:hover {
+  color: #7a5e0c;
+  text-decoration: none; }
 
 .mtk-biab__sidebar-item-chevron {
   margin-left: auto;
@@ -709,58 +1632,6 @@ mtk-biab.mtk-biab {
   color: #fff !important;
   font-size: 11px !important; }
 
-.mtk-biab__guide-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px; }
-
-.mtk-biab__guide-heading {
-  font-size: 15px;
-  font-weight: 700;
-  color: #4a3a08; }
-
-.mtk-biab__guide-close {
-  float: right;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border: none;
-  background: rgba(0, 0, 0, 0.06);
-  border-radius: 50%;
-  cursor: pointer;
-  color: #49454f;
-  transition: background 0.15s, color 0.15s;
-  margin-left: 8px; }
-
-.mtk-biab__guide-close .material-icons {
-  font-size: 16px; }
-
-.mtk-biab__guide-close:hover {
-  background: rgba(0, 0, 0, 0.12);
-  color: #1d192b; }
-
-.mtk-biab__read-more-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 16px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #a98211;
-  text-decoration: none;
-  cursor: pointer;
-  transition: color 0.15s; }
-
-.mtk-biab__read-more-link .material-icons {
-  font-size: 18px; }
-
-.mtk-biab__read-more-link:hover {
-  color: #7a5e0c;
-  text-decoration: none; }
-
 .mtk-biab__sidebar-content {
   flex: 1;
   padding: 28px 32px;
@@ -780,7 +1651,8 @@ mtk-biab.mtk-biab {
   border-radius: 12px;
   padding: 28px 32px;
   box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
-  border: 1px solid #e8eaed; }
+  border: 1px solid #e8eaed;
+  animation: mtk-biab-rise-in 240ms ease-out; }
 
 .mtk-biab__content-title {
   font-size: 22px;
@@ -928,6 +1800,31 @@ mtk-biab.mtk-biab {
   to {
     opacity: 1;
     transform: translateX(0); } }
+
+@keyframes mtk-biab-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px); }
+  to {
+    opacity: 1;
+    transform: translateY(0); } }
+
+@keyframes mtk-biab-soft-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.985); }
+  to {
+    opacity: 1;
+    transform: scale(1); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .mtk-biab *,
+  .mtk-biab *::before,
+  .mtk-biab *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important; } }
 
 @media (max-width: 1100px) {
   .mtk-biab__tab-btn {
