@@ -22,11 +22,11 @@ Data:
   - any and all data must come from mtk-component.config.js file
 
 Restrictions:
-- no inline styles
+- No inline styles
+- No inline Javascript
 - No frameworks.
 - No Bootstrap.
 - No external libraries.
-- no inline Javascript
 - Vanilla Javascript
 
 Accessibility:
