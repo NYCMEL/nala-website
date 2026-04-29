@@ -2,94 +2,96 @@
      MTK-ALERTS  ·  Alerts Component Template
      ═══════════════════════════════════════════ -->
 <mtk-alerts class="mtk-alerts" role="region" aria-label="Alerts">
-  <div class="mtk-shell">
 
-    <!-- ── Header ─────────────────────────── -->
-    <header class="mtk-header">
-      <span class="material-icons mtk-header__icon" aria-hidden="true">notifications</span>
-      <h1 class="mtk-header__title">Alerts</h1>
-      <span class="mtk-badge" id="mtk-unread-count" role="status" aria-label="unread alerts">0</span>
-    </header>
+  <!-- ── Header ──────────────────────────── -->
+  <header class="mtk-header">
+    <span class="material-icons mtk-header__icon" aria-hidden="true">notifications</span>
+    <h2 class="mtk-header__title">Alerts</h2>
+    <span class="mtk-badge" id="mtk-unread-count" role="status" aria-label="unread alerts">0</span>
+  </header>
 
-    <!-- ── Tab Bar ────────────────────────── -->
-    <div class="mtk-tabs" role="tablist" aria-label="Alert categories">
-      <button class="mtk-tab" role="tab" id="tab-unread"
-              aria-controls="panel-unread" aria-selected="true"
-              tabindex="0" data-tab="unread">
+  <!-- ── Nav Tabs ─────────────────────────── -->
+  <ul class="mtk-nav-tabs" role="tablist" aria-label="Alert categories">
+    <li role="presentation">
+      <button class="mtk-nav-tab" role="tab"
+              id="tab-unread" aria-controls="panel-unread"
+              aria-selected="true" tabindex="0" data-tab="unread">
         <span class="material-icons" aria-hidden="true">mark_email_unread</span>
         Unread
       </button>
-      <button class="mtk-tab" role="tab" id="tab-archived"
-              aria-controls="panel-archived" aria-selected="false"
-              tabindex="-1" data-tab="archived">
+    </li>
+    <li role="presentation">
+      <button class="mtk-nav-tab" role="tab"
+              id="tab-archived" aria-controls="panel-archived"
+              aria-selected="false" tabindex="-1" data-tab="archived">
         <span class="material-icons" aria-hidden="true">inventory_2</span>
         Archived
       </button>
+    </li>
+  </ul>
+
+  <!-- ── Panel: Unread ────────────────────── -->
+  <div class="mtk-panel" id="panel-unread"
+       role="tabpanel" aria-labelledby="tab-unread" aria-hidden="false">
+
+    <div class="mtk-table-wrap" id="mtk-unread-wrap">
+      <table class="mtk-table" aria-label="Unread alerts">
+        <colgroup>
+          <col class="col-icon" />
+          <col class="col-date" />
+          <col class="col-message" />
+          <col class="col-actions" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col" class="col-icon" aria-label="Type"></th>
+            <th scope="col" class="col-date">Date</th>
+            <th scope="col" class="col-message">Message</th>
+            <th scope="col" class="col-actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="mtk-unread-tbody" aria-live="polite">
+          <!-- Populated by JS -->
+        </tbody>
+      </table>
     </div>
 
-    <!-- ── Panel: Unread ──────────────────── -->
-    <div class="mtk-panel" id="panel-unread"
-         role="tabpanel" aria-labelledby="tab-unread" aria-hidden="false">
+    <div class="mtk-empty" id="mtk-empty-unread" hidden aria-live="polite">
+      <span class="material-icons" aria-hidden="true">done_all</span>
+      <p>No unread alerts — you're all caught up!</p>
+    </div>
+  </div>
 
-      <div class="mtk-table-wrap" id="mtk-unread-wrap">
-        <table class="mtk-table" aria-label="Unread alerts">
-          <colgroup>
-            <col class="col-icon" />
-            <col class="col-date" />
-            <col class="col-message" />
-            <col class="col-actions" />
-          </colgroup>
-          <thead>
-            <tr>
-              <th scope="col" class="col-icon" aria-label="Type"></th>
-              <th scope="col" class="col-date">Date</th>
-              <th scope="col" class="col-message">Message</th>
-              <th scope="col" class="col-actions">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="mtk-unread-tbody" aria-live="polite">
-            <!-- Populated by JS -->
-          </tbody>
-        </table>
-      </div>
+  <!-- ── Panel: Archived ──────────────────── -->
+  <div class="mtk-panel" id="panel-archived"
+       role="tabpanel" aria-labelledby="tab-archived" aria-hidden="true">
 
-      <div class="mtk-empty" id="mtk-empty-unread" hidden aria-live="polite">
-        <span class="material-icons" aria-hidden="true">done_all</span>
-        <p>No unread alerts — you're all caught up!</p>
-      </div>
+    <div class="mtk-table-wrap" id="mtk-archived-wrap">
+      <table class="mtk-table" aria-label="Archived alerts">
+        <colgroup>
+          <col class="col-icon" />
+          <col class="col-date" />
+          <col class="col-message" />
+          <col class="col-actions" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col" class="col-icon" aria-label="Type"></th>
+            <th scope="col" class="col-date">Date</th>
+            <th scope="col" class="col-message">Message</th>
+            <th scope="col" class="col-actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="mtk-archived-tbody" aria-live="polite">
+          <!-- Populated by JS -->
+        </tbody>
+      </table>
     </div>
 
-    <!-- ── Panel: Archived ────────────────── -->
-    <div class="mtk-panel" id="panel-archived"
-         role="tabpanel" aria-labelledby="tab-archived" aria-hidden="true">
-
-      <div class="mtk-table-wrap" id="mtk-archived-wrap">
-        <table class="mtk-table" aria-label="Archived alerts">
-          <colgroup>
-            <col class="col-icon" />
-            <col class="col-date" />
-            <col class="col-message" />
-            <col class="col-actions" />
-          </colgroup>
-          <thead>
-            <tr>
-              <th scope="col" class="col-icon" aria-label="Type"></th>
-              <th scope="col" class="col-date">Date</th>
-              <th scope="col" class="col-message">Message</th>
-              <th scope="col" class="col-actions">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="mtk-archived-tbody" aria-live="polite">
-            <!-- Populated by JS -->
-          </tbody>
-        </table>
-      </div>
-
-      <div class="mtk-empty" id="mtk-empty-archived" hidden aria-live="polite">
-        <span class="material-icons" aria-hidden="true">inventory_2</span>
-        <p>Nothing archived yet.</p>
-      </div>
+    <div class="mtk-empty" id="mtk-empty-archived" hidden aria-live="polite">
+      <span class="material-icons" aria-hidden="true">inventory_2</span>
+      <p>Nothing archived yet.</p>
     </div>
+  </div>
 
-  </div><!-- /mtk-shell -->
 </mtk-alerts>

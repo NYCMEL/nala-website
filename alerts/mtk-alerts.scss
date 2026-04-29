@@ -4,13 +4,13 @@
 
 // ── Tokens ──────────────────────────────────
 .mtk-alerts {
-  --mtk-font:          'Roboto', sans-serif;
-  --mtk-radius:        12px;
-  --mtk-radius-sm:     8px;
+  --mtk-font:          'Roboto', Arial, sans-serif;
+  --mtk-radius:        8px;
+  --mtk-radius-sm:     6px;
   --mtk-radius-pill:   999px;
 
   // Surface
-  --mtk-bg:            #f4f6fb;
+  --mtk-bg:            transparent;
   --mtk-surface:       #ffffff;
   --mtk-surface-2:     #f0f2f8;
   --mtk-border:        #e2e6f0;
@@ -20,7 +20,9 @@
   --mtk-text-secondary:#5a6075;
   --mtk-text-disabled: #adb5c7;
 
-  // Brand
+  // Brand / gold (matches nala $color-gold)
+  --mtk-gold:          #a98212;
+  --mtk-gold-light:    #fdf6e3;
   --mtk-primary:       #4361ee;
   --mtk-primary-light: #eef0fd;
 
@@ -39,7 +41,7 @@
 
   // Motion
   --mtk-ease:          cubic-bezier(.4,0,.2,1);
-  --mtk-dur:           200ms;
+  --mtk-dur:           180ms;
 }
 
 // ── Reset / Base ─────────────────────────────
@@ -47,35 +49,31 @@
   display:     block;
   font-family: var(--mtk-font);
   background:  var(--mtk-bg);
-  min-height:  100%;
   color:       var(--mtk-text-primary);
   box-sizing:  border-box;
+  max-width:   1200px;
+  margin:      0 auto;
+  padding:     24px 0 48px;
 
   *, *::before, *::after { box-sizing: inherit; }
-
-  // ── Shell ──────────────────────────────────
-  .mtk-shell {
-    max-width: 960px;
-    margin:    0 auto;
-    padding:   32px 24px 64px;
-  }
 
   // ── Header ─────────────────────────────────
   .mtk-header {
     display:     flex;
     align-items: center;
     gap:         10px;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
+    padding:     0 4px;
   }
 
   .mtk-header__icon {
-    font-size:   28px;
-    color:       var(--mtk-primary);
+    font-size:   26px;
+    color:       var(--mtk-gold);
     user-select: none;
   }
 
   .mtk-header__title {
-    font-size:      1.6rem;
+    font-size:      1.5rem;
     font-weight:    500;
     letter-spacing: .01em;
     margin:         0;
@@ -99,60 +97,65 @@
     &[hidden] { display: none; }
   }
 
-  // ── Tab Bar ────────────────────────────────
-  .mtk-tabs {
+  // ── Nav Tabs (Bootstrap-style, above table) ─
+  .mtk-nav-tabs {
     display:       flex;
-    gap:           4px;
-    background:    var(--mtk-surface);
-    border-radius: var(--mtk-radius);
-    padding:       4px;
-    box-shadow:    var(--mtk-shadow-sm);
-    margin-bottom: 20px;
-    border:        1px solid var(--mtk-border);
-    width:         fit-content;
+    border-bottom: 2px solid var(--mtk-border);
+    margin-bottom: 0;         // table-wrap connects flush below
+    padding:       0 4px;
+    gap:           0;
+    list-style:    none;
+    margin-left:   0;
+    padding-left:  0;
   }
 
-  .mtk-tab {
+  .mtk-nav-tab {
     display:       flex;
     align-items:   center;
-    gap:           6px;
-    padding:       8px 20px;
-    border:        none;
-    border-radius: var(--mtk-radius-sm);
-    background:    transparent;
+    gap:           7px;
+    padding:       10px 20px;
+    margin-bottom: -2px;      // overlap the border-bottom
+    border:        2px solid transparent;
+    border-bottom: 2px solid transparent;
+    border-radius: var(--mtk-radius) var(--mtk-radius) 0 0;
+    background:    none;
     font-family:   var(--mtk-font);
-    font-size:     .875rem;
+    font-size:     .9rem;
     font-weight:   500;
     color:         var(--mtk-text-secondary);
     cursor:        pointer;
     white-space:   nowrap;
-    transition:    background var(--mtk-dur) var(--mtk-ease),
-                   color      var(--mtk-dur) var(--mtk-ease),
-                   box-shadow var(--mtk-dur) var(--mtk-ease);
+    transition:    color var(--mtk-dur) var(--mtk-ease),
+                   border-color var(--mtk-dur) var(--mtk-ease),
+                   background var(--mtk-dur) var(--mtk-ease);
 
-    .material-icons { font-size: 18px; }
+    .material-icons { font-size: 17px; }
 
     &:focus-visible {
-      outline:        2px solid var(--mtk-primary);
+      outline:        2px solid var(--mtk-gold);
       outline-offset: 2px;
     }
 
-    &[aria-selected="true"] {
-      background: var(--mtk-primary);
-      color:      #fff;
-      box-shadow: 0 2px 8px rgba(67,97,238,.35);
+    &:hover:not([aria-selected="true"]) {
+      color:      var(--mtk-text-primary);
+      background: var(--mtk-surface-2);
     }
 
-    &:not([aria-selected="true"]):hover {
-      background: var(--mtk-primary-light);
-      color:      var(--mtk-primary);
+    &[aria-selected="true"] {
+      color:         var(--mtk-gold);
+      border-color:  var(--mtk-border) var(--mtk-border) #fff;
+      border-bottom-color: #fff;
+      background:    #fff;
+      font-weight:   600;
+
+      .material-icons { color: var(--mtk-gold); }
     }
   }
 
   // ── Panel ──────────────────────────────────
   .mtk-panel {
     display: none;
-    animation: mtk-fade-in 220ms var(--mtk-ease) both;
+    animation: mtk-fade-in 180ms var(--mtk-ease) both;
 
     &[aria-hidden="false"] { display: block; }
   }
@@ -177,8 +180,9 @@
   // ── Table Wrapper ───────────────────────────
   .mtk-table-wrap {
     background:    var(--mtk-surface);
-    border:        1px solid var(--mtk-border);
-    border-radius: var(--mtk-radius);
+    border:        2px solid var(--mtk-border);
+    border-top:    none;       // tabs sit directly on top
+    border-radius: 0 0 var(--mtk-radius) var(--mtk-radius);
     overflow:      hidden;
     box-shadow:    var(--mtk-shadow-sm);
   }
@@ -191,10 +195,9 @@
 
     col.col-icon    { width: 52px; }
     col.col-date    { width: 148px; }
-    col.col-actions { width: 120px; }
+    col.col-actions { width: 130px; }
     col.col-message { width: auto; }
 
-    // Head
     thead tr {
       border-bottom: 2px solid var(--mtk-border);
     }
@@ -213,18 +216,16 @@
       &.col-icon { text-align: center; padding-left: 0; padding-right: 0; }
     }
 
-    // Body rows
     tbody tr {
       border-bottom: 1px solid var(--mtk-border);
       transition:    background var(--mtk-dur) var(--mtk-ease);
 
       &:last-child { border-bottom: none; }
 
-      &:hover { background: var(--mtk-primary-light); }
+      &:hover { background: #fffdf0; }
 
-      // Unread
       &[data-read="false"] {
-        background: linear-gradient(90deg, rgba(67,97,238,.04) 0%, transparent 100%);
+        background: linear-gradient(90deg, rgba(169,130,18,.04) 0%, transparent 100%);
 
         .mtk-tbl-title { font-weight: 700; }
       }
@@ -238,7 +239,13 @@
       font-size:      .875rem;
       color:          var(--mtk-text-primary);
 
-      &.col-icon { text-align: center; padding-left: 0; padding-right: 0; vertical-align: top; padding-top: 16px; }
+      &.col-icon {
+        text-align:   center;
+        padding-left: 0;
+        padding-right: 0;
+        vertical-align: top;
+        padding-top:  17px;
+      }
     }
   }
 
@@ -268,21 +275,6 @@
   }
 
   // ── Table Cell: Message ──────────────────────
-  .mtk-tbl-message { }
-
-  // Unread dot
-  .mtk-table tr[data-read="false"] .mtk-tbl-title::before {
-    content:       '';
-    display:       inline-block;
-    width:         7px;
-    height:        7px;
-    border-radius: 50%;
-    background:    var(--mtk-primary);
-    margin-right:  8px;
-    vertical-align: middle;
-    flex-shrink:   0;
-  }
-
   .mtk-tbl-title {
     display:     block;
     font-size:   .9rem;
@@ -293,12 +285,25 @@
     text-align:  left;
   }
 
+  // Unread dot
+  .mtk-table tr[data-read="false"] .mtk-tbl-title::before {
+    content:        '';
+    display:        inline-block;
+    width:          7px;
+    height:         7px;
+    border-radius:  50%;
+    background:     var(--mtk-gold);
+    margin-right:   8px;
+    vertical-align: middle;
+    flex-shrink:    0;
+  }
+
   .mtk-tbl-body {
     display:     block;
     font-size:   .82rem;
     color:       var(--mtk-text-secondary);
     line-height: 1.6;
-    white-space: pre-wrap;   // honour \n line breaks in message text
+    white-space: pre-wrap;
     word-break:  break-word;
     text-align:  left;
     margin:      0;
@@ -312,12 +317,12 @@
     gap:            6px;
   }
 
-  // ── Icon Action Button ───────────────────────
+  // ── Inline Action Buttons ────────────────────
   .mtk-action-btn {
     display:       inline-flex;
     align-items:   center;
     gap:           4px;
-    padding:       4px 10px;
+    padding:       3px 10px;
     border:        1px solid var(--mtk-border);
     border-radius: var(--mtk-radius-pill);
     background:    transparent;
@@ -331,47 +336,37 @@
                    color      var(--mtk-dur) var(--mtk-ease),
                    border-color var(--mtk-dur) var(--mtk-ease);
 
-    .material-icons { font-size: 14px; }
+    .material-icons { font-size: 13px; }
 
     &:focus-visible {
-      outline:        2px solid var(--mtk-primary);
+      outline:        2px solid var(--mtk-gold);
       outline-offset: 2px;
     }
     &:active { transform: scale(.96); }
 
-    &.is-read {
-      &:hover { background: var(--mtk-primary-light); color: var(--mtk-primary); border-color: var(--mtk-primary); }
-    }
-
-    &.is-archive {
-      &:hover { background: var(--mtk-info-light); color: var(--mtk-info); border-color: var(--mtk-info); }
-    }
-
-    &.is-delete {
-      &:hover { background: var(--mtk-error-light); color: var(--mtk-error); border-color: var(--mtk-error); }
-    }
+    &.is-read    { &:hover { background: var(--mtk-gold-light);  color: var(--mtk-gold);    border-color: var(--mtk-gold);    } }
+    &.is-archive { &:hover { background: var(--mtk-info-light);  color: var(--mtk-info);    border-color: var(--mtk-info);    } }
+    &.is-delete  { &:hover { background: var(--mtk-error-light); color: var(--mtk-error);   border-color: var(--mtk-error);   } }
   }
 
   // ── Animations ───────────────────────────────
   @keyframes mtk-fade-in {
-    from { opacity: 0; transform: translateY(6px); }
+    from { opacity: 0; transform: translateY(4px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
   // ── Responsive ───────────────────────────────
   @media (max-width: 680px) {
-    .mtk-shell { padding: 20px 12px 48px; }
+    padding: 16px 0 32px;
 
-    .mtk-header__title { font-size: 1.3rem; }
-
-    // Collapse date on small screens
     .mtk-table col.col-date,
     .mtk-table th.col-date,
-    .mtk-table td.col-date { display: none; }
+    .mtk-table td.col-date  { display: none; }
 
-    // Stack actions below message
     .mtk-table col.col-actions,
     .mtk-table th.col-actions,
     .mtk-table td.col-actions { display: none; }
+
+    .mtk-nav-tab { padding: 8px 12px; font-size: .82rem; }
   }
 }

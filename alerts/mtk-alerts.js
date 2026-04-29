@@ -69,6 +69,7 @@ class MTKAlerts {
   _bindElements() {
     const q = sel => this.root.querySelector(sel);
     this.$ = {
+      // Component badge (inside component)
       unreadCount:   q('#mtk-unread-count'),
       unreadTbody:   q('#mtk-unread-tbody'),
       archivedTbody: q('#mtk-archived-tbody'),
@@ -76,7 +77,7 @@ class MTKAlerts {
       archivedWrap:  q('#mtk-archived-wrap'),
       emptyUnread:   q('#mtk-empty-unread'),
       emptyArchived: q('#mtk-empty-archived'),
-      tabs:          Array.from(this.root.querySelectorAll('.mtk-tab')),
+      tabs:          Array.from(this.root.querySelectorAll('.mtk-nav-tab')),
       panels:        Array.from(this.root.querySelectorAll('.mtk-panel')),
     };
   }
@@ -160,9 +161,9 @@ class MTKAlerts {
     const archived = this.alerts.filter(a =>  a.archived);
     const unreadN  = unread.filter(a => !a.read).length;
 
-    // Badge
-    this.$.unreadCount.textContent = unreadN;
-    this.$.unreadCount.hidden      = unreadN === 0;
+    // ── Sync both badges: inside component + header nav bell ──
+    this._syncBadge(this.$.unreadCount, unreadN);
+    this._syncBadge(document.getElementById('mtk-unread-count'), unreadN, true);
 
     // Unread table
     this.$.unreadTbody.innerHTML = '';
@@ -187,6 +188,15 @@ class MTKAlerts {
     }
   }
 
+  /* ── Sync a badge element ──────────────────────────────────── */
+  _syncBadge(el, count, skipIfSameRoot = false) {
+    if (!el) return;
+    // Avoid double-updating the component's own badge if it's also in the header
+    if (skipIfSameRoot && this.root.contains(el)) return;
+    el.textContent = count;
+    el.hidden      = count === 0;
+  }
+
   /* ── Build Table Row ───────────────────────────────────────── */
   _buildRow(alert) {
     const tr = document.createElement('tr');
@@ -195,57 +205,45 @@ class MTKAlerts {
     tr.setAttribute('data-read', String(alert.read));
     tr.setAttribute('aria-label', `${alert.read ? '' : 'Unread: '}${alert.title}`);
 
-    // ── Icon cell ──
+    // Icon cell
     const tdIcon = document.createElement('td');
     tdIcon.className = 'col-icon';
     tdIcon.setAttribute('aria-hidden', 'true');
-    tdIcon.innerHTML = `
-      <div class="mtk-tbl-icon">
-        <span class="material-icons">${this._esc(alert.icon)}</span>
-      </div>`;
+    tdIcon.innerHTML = `<div class="mtk-tbl-icon"><span class="material-icons">${this._esc(alert.icon)}</span></div>`;
 
-    // ── Date cell ──
+    // Date cell
     const tdDate = document.createElement('td');
     tdDate.className = 'col-date';
     tdDate.innerHTML = `<time class="mtk-tbl-date" datetime="${alert.timestamp}">${this._formatDate(alert.timestamp)}</time>`;
 
-    // ── Message cell — title + full multi-line body ──
+    // Message cell — title + full multi-line body
     const tdMsg = document.createElement('td');
     tdMsg.className = 'col-message';
-
     const title = document.createElement('span');
     title.className   = 'mtk-tbl-title';
     title.textContent = alert.title;
-
     const body = document.createElement('p');
     body.className   = 'mtk-tbl-body';
-    body.textContent = alert.message;   // textContent respects \n with white-space:pre-wrap
-
+    body.textContent = alert.message;
     tdMsg.appendChild(title);
     tdMsg.appendChild(body);
 
-    // ── Actions cell ──
+    // Actions cell
     const tdActions = document.createElement('td');
     tdActions.className = 'col-actions';
-
     const actWrap = document.createElement('div');
     actWrap.className = 'mtk-tbl-actions';
 
-    // Mark as read — only when unread
     if (!alert.read) {
       actWrap.appendChild(this._buildAction('is-read', 'done', 'Mark Read', () => {
         this._publish(this.events.alertRead, { id: alert.id, alert });
       }));
     }
-
-    // Archive — only when not yet archived
     if (!alert.archived) {
       actWrap.appendChild(this._buildAction('is-archive', 'inventory_2', 'Archive', () => {
         this._publish(this.events.alertArchive, { id: alert.id, alert });
       }));
     }
-
-    // Delete — always
     actWrap.appendChild(this._buildAction('is-delete', 'delete', 'Delete', () => {
       if (window.confirm(this.config.labels.confirmDelete)) {
         this._publish(this.events.alertDelete, { id: alert.id, alert });
@@ -262,7 +260,7 @@ class MTKAlerts {
     return tr;
   }
 
-  /* ── Build Inline Action Button ────────────────────────────── */
+  /* ── Inline Action Button ──────────────────────────────────── */
   _buildAction(modifier, icon, label, onClick) {
     const btn = document.createElement('button');
     btn.className = `mtk-action-btn ${modifier}`;
@@ -284,11 +282,9 @@ class MTKAlerts {
   _formatDate(iso) {
     const d       = new Date(iso);
     const now     = new Date();
-    const diffMs  = now - d;
-    const diffMin = Math.floor(diffMs / 60000);
+    const diffMin = Math.floor((now - d) / 60000);
     const diffH   = Math.floor(diffMin / 60);
     const diffD   = Math.floor(diffH   / 24);
-
     if (diffMin < 1)  return 'Just now';
     if (diffMin < 60) return `${diffMin}m ago`;
     if (diffH   < 24) return `${diffH}h ago`;

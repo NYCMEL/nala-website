@@ -5,6 +5,14 @@
     <div class="container">
 	<a class="navbar-brand" href="#" id="header-logo-private"><img src="img/logo-nala-association.webp" height="70"> </a>
 
+	<!-- Language toggle: right of logo, desktop only, vertically centered -->
+	<button type="button" class="nala-lang-toggle d-none d-lg-inline-flex align-self-center ms-2" aria-label="Switch language">
+	    <span class="nala-lang-inner">
+		<span class="nala-lang-option" data-lang="en">EN</span>
+		<span class="nala-lang-option" data-lang="es">ES</span>
+		<span class="nala-lang-slider"></span>
+	    </span>
+	</button>
 
 	<div class="d-flex align-items-center gap-2 ms-auto d-lg-none">
 	    <!-- Mobile: lang toggle + hamburger side by side -->
@@ -40,8 +48,15 @@
 			</a>
 		    </li>
 
+		    <!-- Alerts bell icon — gold, with unread badge -->
 		    <li class="nav-item">
-			<button type="button" class="btn btn-dark" id="mtk-header-messages" disabled><i class="fa fa-bell fa-lg"></i></button>
+			<a class="nav-link mtk-header-alerts-link" href="#" id="mtk-header-messages"
+			   aria-label="Alerts" role="button">
+			    <span class="mtk-header-alerts-wrap">
+				<i class="fa fa-bell fa-lg mtk-header-alerts-icon"></i>
+				<span class="mtk-header-alerts-badge" id="mtk-unread-count" role="status" aria-label="unread alerts" hidden>0</span>
+			    </span>
+			</a>
 		    </li>
 
 		    <!-- User dropdown (manual toggle, no Popper needed) -->
@@ -67,16 +82,6 @@
 				</a>
 			    </li>
 			</ul>
-		    </li>
-		    <!-- Desktop: language toggle (far right) -->
-		    <li class="nav-item d-none d-lg-flex align-items-center ms-2">
-			<button type="button" class="nala-lang-toggle" aria-label="Switch language">
-			    <span class="nala-lang-inner">
-				<span class="nala-lang-option" data-lang="en">EN</span>
-				<span class="nala-lang-option" data-lang="es">ES</span>
-				<span class="nala-lang-slider"></span>
-			    </span>
-			</button>
 		    </li>
 		</ul>
 	    </div>

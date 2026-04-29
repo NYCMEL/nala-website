@@ -77,6 +77,7 @@ var pageToHeaderId = {
     "login":     "mtk-header-login",
     "dashboard": "mtk-header-dashboard",
     "hierarchy": "mtk-header-hierarchy",
+    "alerts":    "mtk-header-messages",
     "settings":  "mtk-header-settings"
 };
 
@@ -97,11 +98,12 @@ function headerSelect(id) {
         "mtk-header-login",
         "mtk-header-dashboard",
         "mtk-header-hierarchy",
+        "mtk-header-messages",
         "mtk-header-settings"
     ];
 
     $(".nav-link, .navbar-brand, .btn").removeClass("active");
-    
+
     // FOLD HAMBURGER MENU
     $(".navbar-collapse.show").removeClass("show");
 
@@ -131,7 +133,6 @@ function toggleNavbar() {
         var attempts = 0;
         var interval = setInterval(function () {
             if (window.bootstrap) {
-		alert("AAAAAA");
                 clearInterval(interval);
                 doToggle();
             } else if (++attempts >= 30) {
@@ -230,6 +231,7 @@ function toggleNavbar() {
         'login':     'mtk-header-login',
         'dashboard': 'mtk-header-dashboard',
         'hierarchy': 'mtk-header-hierarchy',
+        'alerts':    'mtk-header-messages',
         'settings':  'mtk-header-settings'
     };
 

@@ -193,6 +193,7 @@ h1.title::after {
 .nav-link.active[id="mtk-header-login"],
 .nav-link.active[id="mtk-header-dashboard"],
 .nav-link.active[id="mtk-header-hierarchy"],
+.nav-link.active[id="mtk-header-messages"],
 .nav-link.active[id="mtk-header-settings"] {
   color: #a98212 !important; }
 
@@ -212,6 +213,7 @@ h1.title::after {
 .navbar-nav .nav-link.active[id="mtk-header-login"]:hover,
 .navbar-nav .nav-link.active[id="mtk-header-dashboard"]:hover,
 .navbar-nav .nav-link.active[id="mtk-header-hierarchy"]:hover,
+.navbar-nav .nav-link.active[id="mtk-header-messages"]:hover,
 .navbar-nav .nav-link.active[id="mtk-header-settings"]:hover {
   color: #a98212 !important; }
 
@@ -221,6 +223,7 @@ h1.title::after {
 .navbar-nav .nav-link.active[id="mtk-header-login"],
 .navbar-nav .nav-link.active[id="mtk-header-dashboard"],
 .navbar-nav .nav-link.active[id="mtk-header-hierarchy"],
+.navbar-nav .nav-link.active[id="mtk-header-messages"],
 .navbar-nav .nav-link.active[id="mtk-header-settings"] {
   border-bottom: 2px #a98212 solid !important; }
 
@@ -230,6 +233,7 @@ h1.title::after {
 .navbar-nav .nav-link.active[id="mtk-header-login"] i,
 .navbar-nav .nav-link.active[id="mtk-header-dashboard"] i,
 .navbar-nav .nav-link.active[id="mtk-header-hierarchy"] i,
+.navbar-nav .nav-link.active[id="mtk-header-messages"] i,
 .navbar-nav .nav-link.active[id="mtk-header-settings"] i,
 .navbar-nav .nav-link.active[id="mtk-header-home"] .fa,
 .navbar-nav .nav-link.active[id="mtk-header-news"] .fa,
@@ -237,6 +241,7 @@ h1.title::after {
 .navbar-nav .nav-link.active[id="mtk-header-login"] .fa,
 .navbar-nav .nav-link.active[id="mtk-header-dashboard"] .fa,
 .navbar-nav .nav-link.active[id="mtk-header-hierarchy"] .fa,
+.navbar-nav .nav-link.active[id="mtk-header-messages"] .fa,
 .navbar-nav .nav-link.active[id="mtk-header-settings"] .fa,
 .navbar-nav .nav-link.active[id="mtk-header-home"] .material-icons,
 .navbar-nav .nav-link.active[id="mtk-header-news"] .material-icons,
@@ -244,8 +249,41 @@ h1.title::after {
 .navbar-nav .nav-link.active[id="mtk-header-login"] .material-icons,
 .navbar-nav .nav-link.active[id="mtk-header-dashboard"] .material-icons,
 .navbar-nav .nav-link.active[id="mtk-header-hierarchy"] .material-icons,
+.navbar-nav .nav-link.active[id="mtk-header-messages"] .material-icons,
 .navbar-nav .nav-link.active[id="mtk-header-settings"] .material-icons {
   color: #a98212; }
+
+#mtk-header-messages .mtk-header-alerts-icon {
+  color: #a98212 !important;
+  transition: transform 200ms ease; }
+
+#mtk-header-messages:hover .mtk-header-alerts-icon {
+  transform: rotate(-12deg) scale(1.1); }
+
+.mtk-header-alerts-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center; }
+
+.mtk-header-alerts-badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #e53935;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 17px;
+  text-align: center;
+  pointer-events: none;
+  border: 2px solid #212529; }
+
+.mtk-header-alerts-badge[hidden] {
+  display: none !important; }
 
 .nala-lang-toggle {
   position: relative;
