@@ -55,6 +55,10 @@ mtk-biab.mtk-biab {
   min-width: 0;
   line-height: 1.25;
   text-align: left !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 13px;
 }
 
 .mtk-biab__lang-switch,
