@@ -61,28 +61,17 @@
 	    
 	    <script src="alerts/mtk-alerts.config.js"></script>
 	    <script>
-	    // Global badge updater — single definition, called from anywhere
 	    window.mtkAlertsBadgeUpdate = function() {
 		try {
-		    var alerts = window.MTKAlertsConfig && MTKAlertsConfig.alerts;
-		    var n = Array.isArray(alerts)
-			? alerts.filter(function(a) { return !a.read && !a.archived; }).length
-			: 0;
-		    var el = document.getElementById('mtk-unread-count');
-		    if (el) { el.textContent = n; el.hidden = (n === 0); }
+		    var cfg = window.MTKAlertsConfig;
+		    if (!cfg || !Array.isArray(cfg.alerts)) return;
+		    var n = cfg.alerts.filter(function(a) { return !a.read && !a.archived; }).length;
+		    var badge = document.getElementById('mtk-unread-count');
+		    var bell  = document.querySelector('#mtk-header-messages .mtk-header-alerts-icon');
+		    if (badge) { badge.textContent = n; badge.hidden = (n === 0); }
+		    if (bell)  { bell.style.color = n > 0 ? '#FFD700' : '#9e9e9e'; }
 		} catch(e) {}
 	    };
-	    // Poll until #mtk-unread-count exists in DOM (header injects it async)
-	    (function pollBadge() {
-		var attempts = 0;
-		var iv = setInterval(function() {
-		    attempts++;
-		    var el = document.getElementById('mtk-unread-count');
-		    if (el) { window.mtkAlertsBadgeUpdate(); clearInterval(iv); }
-		    else if (attempts >= 100) { clearInterval(iv); }
-		}, 100);
-	    })();
-	    // Also re-run on every include:loaded (defensive)
 	    document.addEventListener('include:loaded', window.mtkAlertsBadgeUpdate);
 	    </script>
 	    <script src="pages/mtk-pages.config.js"></script>

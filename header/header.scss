@@ -75,8 +75,8 @@
 // ── Alerts Bell Icon ────────────────────────────────────────
 // Always bright yellow — even when inactive — to draw attention
 #mtk-header-messages .mtk-header-alerts-icon {
-  color: #FFD700 !important;
-  transition: transform 200ms ease;
+  color: #9e9e9e;   // default gray — JS sets #FFD700 when unread alerts exist
+  transition: transform 200ms ease, color 300ms ease;
 }
 
 #mtk-header-messages:hover .mtk-header-alerts-icon {
