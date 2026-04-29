@@ -10,20 +10,6 @@
  *   #mtk-alerts-unread-count   → in-component badge (mtk-alerts.html)
  */
 
-/* ── Lightweight pub/sub bus (polyfill if wc is absent) ── */
-const wc = window.wc || (() => {
-  const _ch = {};
-  return {
-    publish(event, data) { (_ch[event] || []).forEach(fn => fn(data)); },
-    subscribe(event, fn) { if (!_ch[event]) _ch[event] = []; _ch[event].push(fn); },
-    log(label, data)     { console.log(`[wc] ${label}`, data); }
-  };
-})();
-window.wc = wc;
-
-/* ════════════════════════════════════════════
-   MTKAlerts Class
-   ════════════════════════════════════════════ */
 class MTKAlerts {
 
   constructor(root, config) {
@@ -38,15 +24,21 @@ class MTKAlerts {
   _waitForDOM(selector, config) {
     const tryMount = () => {
       const el = document.querySelector(selector);
-      if (el) { this._init(el, config); return true; }
-      return false;
+      if (!el) return false;
+      // Guard: skip if already mounted (cache:false re-injects same HTML)
+      if (el.dataset.mtkMounted === '1') return true;
+      el.dataset.mtkMounted = '1';
+      this._init(el, config);
+      return true;
     };
+
     const observe = () => {
       if (!tryMount()) {
         const obs = new MutationObserver(() => { if (tryMount()) obs.disconnect(); });
         obs.observe(document.body, { childList: true, subtree: true });
       }
     };
+
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', observe);
     } else {
@@ -60,7 +52,6 @@ class MTKAlerts {
     this.config = config;
     this.alerts = JSON.parse(JSON.stringify(config.alerts));
     this.events = config.events;
-
     this._activeTab = 'unread';
 
     this._bindElements();
@@ -73,7 +64,6 @@ class MTKAlerts {
   _bindElements() {
     const q = sel => this.root.querySelector(sel);
     this.$ = {
-      // in-component badge (different ID from header badge)
       componentBadge: q('#mtk-alerts-unread-count'),
       unreadTbody:    q('#mtk-unread-tbody'),
       archivedTbody:  q('#mtk-archived-tbody'),
@@ -95,10 +85,7 @@ class MTKAlerts {
         let next  = -1;
         if (e.key === 'ArrowRight') next = (idx + 1) % this.$.tabs.length;
         if (e.key === 'ArrowLeft')  next = (idx - 1 + this.$.tabs.length) % this.$.tabs.length;
-        if (next >= 0) {
-          this.$.tabs[next].focus();
-          this._switchTab(this.$.tabs[next].dataset.tab);
-        }
+        if (next >= 0) { this.$.tabs[next].focus(); this._switchTab(this.$.tabs[next].dataset.tab); }
       });
     });
   }
@@ -117,18 +104,19 @@ class MTKAlerts {
 
   /* ── pub/sub ───────────────────────────────────────────────── */
   _subscribeAll() {
-    wc.subscribe(this.events.alertRead,    data => this._onMessage(this.events.alertRead,    data));
-    wc.subscribe(this.events.alertArchive, data => this._onMessage(this.events.alertArchive, data));
-    wc.subscribe(this.events.alertDelete,  data => this._onMessage(this.events.alertDelete,  data));
-    wc.subscribe(this.events.alertView,    data => this._onMessage(this.events.alertView,    data));
+    const ev = this.events;
+    wc.subscribe(ev.alertRead,    data => this._onMessage(ev.alertRead,    data));
+    wc.subscribe(ev.alertArchive, data => this._onMessage(ev.alertArchive, data));
+    wc.subscribe(ev.alertDelete,  data => this._onMessage(ev.alertDelete,  data));
+    wc.subscribe(ev.alertView,    data => this._onMessage(ev.alertView,    data));
   }
 
   _onMessage(event, data) {
+    const ev = this.events;
     switch (event) {
-      case this.events.alertRead:    this._handleRead(data.id);    break;
-      case this.events.alertArchive: this._handleArchive(data.id); break;
-      case this.events.alertDelete:  this._handleDelete(data.id);  break;
-      case this.events.alertView:    /* no detail view */           break;
+      case ev.alertRead:    this._handleRead(data.id);    break;
+      case ev.alertArchive: this._handleArchive(data.id); break;
+      case ev.alertDelete:  this._handleDelete(data.id);  break;
     }
   }
 
@@ -139,17 +127,16 @@ class MTKAlerts {
 
   /* ── State Handlers ────────────────────────────────────────── */
   _handleRead(id) {
-    const alert = this._find(id);
-    if (!alert || alert.read) return;
-    alert.read = true;
+    const a = this._find(id);
+    if (!a || a.read) return;
+    a.read = true;
     this._render();
   }
 
   _handleArchive(id) {
-    const alert = this._find(id);
-    if (!alert) return;
-    alert.read     = true;
-    alert.archived = true;
+    const a = this._find(id);
+    if (!a) return;
+    a.read = true; a.archived = true;
     this._render();
     this._switchTab('archived');
   }
@@ -165,33 +152,23 @@ class MTKAlerts {
     const archived = this.alerts.filter(a =>  a.archived);
     const unreadN  = unread.filter(a => !a.read).length;
 
-    // Sync in-component badge
+    // Sync both badges
     this._setBadge(this.$.componentBadge, unreadN);
-
-    // Sync header bell badge (lives outside this component)
     this._setBadge(document.getElementById('mtk-unread-count'), unreadN);
 
     // Unread table
     this.$.unreadTbody.innerHTML = '';
-    if (unread.length === 0) {
-      this.$.unreadWrap.hidden  = true;
-      this.$.emptyUnread.hidden = false;
-    } else {
-      this.$.unreadWrap.hidden  = false;
-      this.$.emptyUnread.hidden = true;
-      unread.forEach(a => this.$.unreadTbody.appendChild(this._buildRow(a)));
-    }
+    const hasUnread = unread.length > 0;
+    this.$.unreadWrap.hidden  = !hasUnread;
+    this.$.emptyUnread.hidden =  hasUnread;
+    unread.forEach(a => this.$.unreadTbody.appendChild(this._buildRow(a)));
 
     // Archived table
     this.$.archivedTbody.innerHTML = '';
-    if (archived.length === 0) {
-      this.$.archivedWrap.hidden  = true;
-      this.$.emptyArchived.hidden = false;
-    } else {
-      this.$.archivedWrap.hidden  = false;
-      this.$.emptyArchived.hidden = true;
-      archived.forEach(a => this.$.archivedTbody.appendChild(this._buildRow(a)));
-    }
+    const hasArchived = archived.length > 0;
+    this.$.archivedWrap.hidden  = !hasArchived;
+    this.$.emptyArchived.hidden =  hasArchived;
+    archived.forEach(a => this.$.archivedTbody.appendChild(this._buildRow(a)));
   }
 
   _setBadge(el, count) {
@@ -208,93 +185,85 @@ class MTKAlerts {
     tr.setAttribute('data-read', String(alert.read));
     tr.setAttribute('aria-label', `${alert.read ? '' : 'Unread: '}${alert.title}`);
 
-    // Icon cell
+    // Icon
     const tdIcon = document.createElement('td');
     tdIcon.className = 'col-icon';
     tdIcon.setAttribute('aria-hidden', 'true');
     tdIcon.innerHTML = `<div class="mtk-tbl-icon"><span class="material-icons">${this._esc(alert.icon)}</span></div>`;
 
-    // Date cell
+    // Date
     const tdDate = document.createElement('td');
     tdDate.className = 'col-date';
     tdDate.innerHTML = `<time class="mtk-tbl-date" datetime="${alert.timestamp}">${this._formatDate(alert.timestamp)}</time>`;
 
-    // Message cell
-    const tdMsg = document.createElement('td');
+    // Message
+    const tdMsg   = document.createElement('td');
     tdMsg.className = 'col-message';
-    const title = document.createElement('span');
+    const title   = document.createElement('span');
     title.className   = 'mtk-tbl-title';
     title.textContent = alert.title;
-    const body = document.createElement('p');
+    const body    = document.createElement('p');
     body.className   = 'mtk-tbl-body';
     body.textContent = alert.message;
     tdMsg.appendChild(title);
     tdMsg.appendChild(body);
 
-    // Actions cell
-    const tdActions = document.createElement('td');
-    tdActions.className = 'col-actions';
-    const actWrap = document.createElement('div');
-    actWrap.className = 'mtk-tbl-actions';
+    // Actions
+    const tdAct  = document.createElement('td');
+    tdAct.className = 'col-actions';
+    const wrap   = document.createElement('div');
+    wrap.className  = 'mtk-tbl-actions';
 
     if (!alert.read) {
-      actWrap.appendChild(this._buildAction('is-read', 'done', 'Mark Read', () => {
-        this._publish(this.events.alertRead, { id: alert.id, alert });
-      }));
+      wrap.appendChild(this._buildAction('is-read', 'done', 'Mark Read', () =>
+        this._publish(this.events.alertRead, { id: alert.id, alert })
+      ));
     }
     if (!alert.archived) {
-      actWrap.appendChild(this._buildAction('is-archive', 'inventory_2', 'Archive', () => {
-        this._publish(this.events.alertArchive, { id: alert.id, alert });
-      }));
+      wrap.appendChild(this._buildAction('is-archive', 'inventory_2', 'Archive', () =>
+        this._publish(this.events.alertArchive, { id: alert.id, alert })
+      ));
     }
-    actWrap.appendChild(this._buildAction('is-delete', 'delete', 'Delete', () => {
+    wrap.appendChild(this._buildAction('is-delete', 'delete', 'Delete', () => {
       if (window.confirm(this.config.labels.confirmDelete)) {
         this._publish(this.events.alertDelete, { id: alert.id, alert });
       }
     }));
 
-    tdActions.appendChild(actWrap);
-
-    tr.appendChild(tdIcon);
-    tr.appendChild(tdDate);
-    tr.appendChild(tdMsg);
-    tr.appendChild(tdActions);
-
+    tdAct.appendChild(wrap);
+    tr.append(tdIcon, tdDate, tdMsg, tdAct);
     return tr;
   }
 
-  /* ── Inline Action Button ──────────────────────────────────── */
-  _buildAction(modifier, icon, label, onClick) {
+  _buildAction(mod, icon, label, fn) {
     const btn = document.createElement('button');
-    btn.className = `mtk-action-btn ${modifier}`;
+    btn.className = `mtk-action-btn ${mod}`;
     btn.setAttribute('aria-label', label);
     btn.innerHTML = `<span class="material-icons" aria-hidden="true">${icon}</span>${this._esc(label)}`;
-    btn.addEventListener('click', e => { e.stopPropagation(); onClick(); });
+    btn.addEventListener('click', e => { e.stopPropagation(); fn(); });
     return btn;
   }
 
   /* ── Helpers ───────────────────────────────────────────────── */
   _find(id) { return this.alerts.find(a => a.id === id) || null; }
 
-  _esc(str) {
-    return String(str)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  _esc(s) {
+    return String(s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
   _formatDate(iso) {
-    const d       = new Date(iso);
-    const now     = new Date();
-    const diffMin = Math.floor((now - d) / 60000);
-    const diffH   = Math.floor(diffMin / 60);
-    const diffD   = Math.floor(diffH   / 24);
-    if (diffMin < 1)  return 'Just now';
-    if (diffMin < 60) return `${diffMin}m ago`;
-    if (diffH   < 24) return `${diffH}h ago`;
-    if (diffD   <  7) return `${diffD}d ago`;
-    return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+    const d = new Date(iso), now = new Date();
+    const m = Math.floor((now - d) / 60000);
+    const h = Math.floor(m / 60), dd = Math.floor(h / 24);
+    if (m  <  1) return 'Just now';
+    if (m  < 60) return `${m}m ago`;
+    if (h  < 24) return `${h}h ago`;
+    if (dd <  7) return `${dd}d ago`;
+    return d.toLocaleDateString(undefined, { month:'short', day:'numeric', year:'numeric' });
   }
 }
 
-/* ── Auto-initialise ──────────────────────────────────────────── */
+/* ── Init ─────────────────────────────────────────────────────── */
 new MTKAlerts('mtk-alerts.mtk-alerts', MTKAlertsConfig);

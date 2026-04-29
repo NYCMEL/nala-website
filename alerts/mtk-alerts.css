@@ -69,45 +69,44 @@
     .mtk-alerts .mtk-badge[hidden] {
       display: none; }
   .mtk-alerts .mtk-nav-tabs {
-    display: flex;
-    border-bottom: 2px solid var(--mtk-border);
-    margin-bottom: 0;
-    padding: 0 4px;
+    display: inline-flex;
+    border-bottom: none;
+    margin-bottom: 16px;
     gap: 0;
     list-style: none;
     margin-left: 0;
-    padding-left: 0; }
+    padding: 3px;
+    background: var(--mtk-surface-2);
+    border: 1px solid var(--mtk-border);
+    border-radius: var(--mtk-radius-pill); }
   .mtk-alerts .mtk-nav-tab {
     display: flex;
     align-items: center;
-    gap: 7px;
-    padding: 10px 20px;
-    margin-bottom: -2px;
-    border: 2px solid transparent;
-    border-bottom: 2px solid transparent;
-    border-radius: var(--mtk-radius) var(--mtk-radius) 0 0;
-    background: none;
+    gap: 6px;
+    padding: 7px 22px;
+    margin-bottom: 0;
+    border: none;
+    border-radius: var(--mtk-radius-pill);
+    background: transparent;
     font-family: var(--mtk-font);
-    font-size: .9rem;
+    font-size: .875rem;
     font-weight: 500;
     color: var(--mtk-text-secondary);
     cursor: pointer;
     white-space: nowrap;
-    transition: color var(--mtk-dur) var(--mtk-ease), border-color var(--mtk-dur) var(--mtk-ease), background var(--mtk-dur) var(--mtk-ease); }
+    transition: color var(--mtk-dur) var(--mtk-ease), background var(--mtk-dur) var(--mtk-ease), box-shadow var(--mtk-dur) var(--mtk-ease); }
     .mtk-alerts .mtk-nav-tab .material-icons {
-      font-size: 17px; }
+      font-size: 16px; }
     .mtk-alerts .mtk-nav-tab:focus-visible {
       outline: 2px solid var(--mtk-gold);
       outline-offset: 2px; }
     .mtk-alerts .mtk-nav-tab:hover:not([aria-selected="true"]) {
-      color: var(--mtk-text-primary);
-      background: var(--mtk-surface-2); }
+      color: var(--mtk-text-primary); }
     .mtk-alerts .mtk-nav-tab[aria-selected="true"] {
+      background: var(--mtk-surface);
       color: var(--mtk-gold);
-      border-color: var(--mtk-border) var(--mtk-border) #fff;
-      border-bottom-color: #fff;
-      background: #fff;
-      font-weight: 600; }
+      font-weight: 600;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12); }
       .mtk-alerts .mtk-nav-tab[aria-selected="true"] .material-icons {
         color: var(--mtk-gold); }
   .mtk-alerts .mtk-panel {

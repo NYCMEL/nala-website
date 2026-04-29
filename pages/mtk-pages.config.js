@@ -69,7 +69,7 @@ window.app.pages = [
         "url":   "<wc-include href='login/index.inc.html' />"
     },
     {
-        "cache": "false",
+        "cache": "true",
         "page":  "alerts",
         "label": "Alerts",
         "url":   "<wc-include href='alerts/index.inc.html' />"

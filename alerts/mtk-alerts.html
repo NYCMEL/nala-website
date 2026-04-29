@@ -1,3 +1,5 @@
+<link href="alerts/mtk-alerts.css" rel="stylesheet">
+
 <!-- ═══════════════════════════════════════════
      MTK-ALERTS  ·  Alerts Component Template
      ═══════════════════════════════════════════ -->
@@ -7,7 +9,7 @@
   <header class="mtk-header">
     <span class="material-icons mtk-header__icon" aria-hidden="true">notifications</span>
     <h2 class="mtk-header__title">Alerts</h2>
-    <span class="mtk-badge" id="mtk-alerts-unread-count" role="status" aria-label="unread alerts">0</span>
+    <span class="mtk-badge" id="mtk-alerts-unread-count" role="status" aria-label="unread alerts" hidden>0</span>
   </header>
 
   <!-- ── Nav Tabs ─────────────────────────── -->
@@ -95,3 +97,6 @@
   </div>
 
 </mtk-alerts>
+
+<script src="alerts/mtk-alerts.config.js"></script>
+<script src="alerts/mtk-alerts.js"></script>
