@@ -440,7 +440,8 @@ class MtkBiab {
             `).join('')}
           </nav>
           <div class="mtk-biab__lang-switch" aria-label="Language">
-            <button type="button" data-action="set-lang" data-lang="en">EN</button>
+            <span class="mtk-biab__lang-slider"></span>
+            <button type="button" data-action="set-lang" data-lang="en" class="nala-lang-active">EN</button>
             <button type="button" data-action="set-lang" data-lang="es">ES</button>
           </div>
         </div>
@@ -1489,6 +1490,15 @@ class MtkBiab {
   }
 
   _setLanguage(lang) {
+    // Update slider and active state
+    const switchEl = this.el.querySelector('.mtk-biab__lang-switch');
+    if (switchEl) {
+      const slider = switchEl.querySelector('.mtk-biab__lang-slider');
+      if (slider) slider.classList.toggle('is-es', lang === 'es');
+      switchEl.querySelectorAll('button').forEach(b => {
+        b.classList.toggle('nala-lang-active', b.dataset.lang === lang);
+      });
+    }
     if (window.i18n && typeof window.i18n.setLang === 'function') {
       window.i18n.setLang(lang);
       return;
@@ -1706,7 +1716,6 @@ class MtkBiab {
         <div class="mtk-biab-tool__head">
           <div>
             <span class="mtk-biab__logo-badge">${this._t('step')} ${stepIndex + 1} / ${steps.length}</span>
-            <h3>${active.title}</h3>
           </div>
           <div class="mtk-biab-tool__actions">
             <button type="button" class="mtk-biab__action-btn" data-action="tool-download" data-tool="${tool}">${this._t('download')}</button>
