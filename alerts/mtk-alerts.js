@@ -4,6 +4,10 @@
  * ─────────────────────────────────────────────────────────────
  * Requires: mtk-alerts.config.js  (MTKAlertsConfig)
  * Uses:     wc.publish / wc.subscribe / wc.log
+ *
+ * Badge IDs:
+ *   #mtk-unread-count          → header bell badge (header.private.html)
+ *   #mtk-alerts-unread-count   → in-component badge (mtk-alerts.html)
  */
 
 /* ── Lightweight pub/sub bus (polyfill if wc is absent) ── */
@@ -69,16 +73,16 @@ class MTKAlerts {
   _bindElements() {
     const q = sel => this.root.querySelector(sel);
     this.$ = {
-      // Component badge (inside component)
-      unreadCount:   q('#mtk-unread-count'),
-      unreadTbody:   q('#mtk-unread-tbody'),
-      archivedTbody: q('#mtk-archived-tbody'),
-      unreadWrap:    q('#mtk-unread-wrap'),
-      archivedWrap:  q('#mtk-archived-wrap'),
-      emptyUnread:   q('#mtk-empty-unread'),
-      emptyArchived: q('#mtk-empty-archived'),
-      tabs:          Array.from(this.root.querySelectorAll('.mtk-nav-tab')),
-      panels:        Array.from(this.root.querySelectorAll('.mtk-panel')),
+      // in-component badge (different ID from header badge)
+      componentBadge: q('#mtk-alerts-unread-count'),
+      unreadTbody:    q('#mtk-unread-tbody'),
+      archivedTbody:  q('#mtk-archived-tbody'),
+      unreadWrap:     q('#mtk-unread-wrap'),
+      archivedWrap:   q('#mtk-archived-wrap'),
+      emptyUnread:    q('#mtk-empty-unread'),
+      emptyArchived:  q('#mtk-empty-archived'),
+      tabs:           Array.from(this.root.querySelectorAll('.mtk-nav-tab')),
+      panels:         Array.from(this.root.querySelectorAll('.mtk-panel')),
     };
   }
 
@@ -161,9 +165,11 @@ class MTKAlerts {
     const archived = this.alerts.filter(a =>  a.archived);
     const unreadN  = unread.filter(a => !a.read).length;
 
-    // ── Sync both badges: inside component + header nav bell ──
-    this._syncBadge(this.$.unreadCount, unreadN);
-    this._syncBadge(document.getElementById('mtk-unread-count'), unreadN, true);
+    // Sync in-component badge
+    this._setBadge(this.$.componentBadge, unreadN);
+
+    // Sync header bell badge (lives outside this component)
+    this._setBadge(document.getElementById('mtk-unread-count'), unreadN);
 
     // Unread table
     this.$.unreadTbody.innerHTML = '';
@@ -188,11 +194,8 @@ class MTKAlerts {
     }
   }
 
-  /* ── Sync a badge element ──────────────────────────────────── */
-  _syncBadge(el, count, skipIfSameRoot = false) {
+  _setBadge(el, count) {
     if (!el) return;
-    // Avoid double-updating the component's own badge if it's also in the header
-    if (skipIfSameRoot && this.root.contains(el)) return;
     el.textContent = count;
     el.hidden      = count === 0;
   }
@@ -216,7 +219,7 @@ class MTKAlerts {
     tdDate.className = 'col-date';
     tdDate.innerHTML = `<time class="mtk-tbl-date" datetime="${alert.timestamp}">${this._formatDate(alert.timestamp)}</time>`;
 
-    // Message cell — title + full multi-line body
+    // Message cell
     const tdMsg = document.createElement('td');
     tdMsg.className = 'col-message';
     const title = document.createElement('span');

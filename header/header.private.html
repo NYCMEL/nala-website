@@ -48,10 +48,9 @@
 			</a>
 		    </li>
 
-		    <!-- Alerts bell icon — gold, with unread badge -->
+		    <!-- Alerts bell — always gold, badge shows unread count -->
 		    <li class="nav-item">
-			<a class="nav-link mtk-header-alerts-link" href="#" id="mtk-header-messages"
-			   aria-label="Alerts" role="button">
+			<a class="nav-link" href="#" id="mtk-header-messages" aria-label="Alerts">
 			    <span class="mtk-header-alerts-wrap">
 				<i class="fa fa-bell fa-lg mtk-header-alerts-icon"></i>
 				<span class="mtk-header-alerts-badge" id="mtk-unread-count" role="status" aria-label="unread alerts" hidden>0</span>
@@ -59,7 +58,7 @@
 			</a>
 		    </li>
 
-		    <!-- User dropdown (manual toggle, no Popper needed) -->
+		    <!-- User dropdown -->
 		    <li class="nav-item" style="position:relative">
 			<a class="nav-link nala-user-menu" href="#" id="mtk-header-settings" style="white-space:nowrap">
 			    <i class="fa fa-user-circle"></i>&nbsp;<span id="uname"></span>&nbsp;<i class="fa fa-caret-down" style="font-size:11px;opacity:0.7"></i>
@@ -92,6 +91,30 @@
 <script src="header/header.js"></script>
 
 <script>
+ // Seed the header bell badge from MTKAlertsConfig immediately
+ (function seedAlertsBadge() {
+     function count() {
+	 try {
+	     var alerts = (window.MTKAlertsConfig || window.MTKAlertsConfig) && MTKAlertsConfig.alerts;
+	     if (!Array.isArray(alerts)) return 0;
+	     return alerts.filter(function(a) { return !a.read && !a.archived; }).length;
+	 } catch(e) { return 0; }
+     }
+
+     function update() {
+	 var el = document.getElementById('mtk-unread-count');
+	 if (!el) return;
+	 var n = count();
+	 el.textContent = n;
+	 el.hidden = (n === 0);
+     }
+
+     // Run now and after includes settle
+     update();
+     document.addEventListener('include:loaded', update);
+     setTimeout(update, 500);
+ })();
+
  // Fallback: set first name if _wc.js hasn't run yet
  wc.timeout(function(){
      try {

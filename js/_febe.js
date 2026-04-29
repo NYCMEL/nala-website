@@ -16,6 +16,7 @@ class _febe {
 	    "mtk-header-hierarchy",
 	    "mtk-header-register",
 	    "mtk-header-settings",
+	    "mtk-header-messages",
 	    "mtk-dashboard:continue",
 	    "mtk-login-forgot",
 	    "mtk-login-forgot-password",
@@ -75,6 +76,7 @@ class _febe {
 	    "mtk-header-logo": this.handleDashboard,
 	    "mtk-header-dashboard": this.handleHeaderDashboard,
 	    "mtk-header-settings": this.handleSettings,
+	    "mtk-header-messages": this.handleAlerts,
 	    "mtk-header-login": this.handleLogin,
 	    "mtk-header-logout": this.handleLogout,
 	    "mtk-header-register": this.handleRegister,
@@ -628,6 +630,10 @@ class _febe {
 
     handleSettings() {
 	wc.pages.show("settings");
+    }
+
+    handleAlerts() {
+	wc.pages.show("alerts");
     }
 
     handleLogin() {

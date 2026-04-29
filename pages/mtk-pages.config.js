@@ -68,4 +68,10 @@ window.app.pages = [
         "label": "Login",
         "url":   "<wc-include href='login/index.inc.html' />"
     },
+    {
+        "cache": "false",
+        "page":  "alerts",
+        "label": "Alerts",
+        "url":   "<wc-include href='alerts/index.inc.html' />"
+    },
 ];
