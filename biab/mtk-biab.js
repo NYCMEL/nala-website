@@ -632,6 +632,28 @@ class MtkBiab {
   }
 
   _buildSimplePanel(tab) {
+    const hasTool = tab.content.body.includes('data-biab-tool=');
+
+    // Extract tool div and static guide separately
+    let toolDiv = '';
+    let rest = tab.content.body;
+
+    if (hasTool) {
+      const toolMatch = tab.content.body.match(/(<div[^>]*data-biab-tool[^>]*>.*?<\/div>)/s);
+      toolDiv = toolMatch ? toolMatch[0] : '';
+      rest = tab.content.body.replace(toolDiv, '').trim();
+      // Strip Starter badge from rest
+      rest = rest.replace(/<p[^>]*>\s*<span[^>]*border-radius:999px[^>]*>.*?<\/span>\s*<\/p>/gs, '');
+    }
+
+    const guideSection = rest ? `
+      <div class="mtk-biab__content-body mtk-biab__content-body--collapsed" hidden>${rest}</div>
+      <a href="#" class="mtk-biab__read-more-link" data-action="expand-body">
+        <span class="material-icons">menu_book</span>
+        Guides. Read More…
+      </a>
+    ` : '';
+
     return `
       <div class="mtk-biab__simple-panel">
         <div class="mtk-biab__container">
@@ -639,9 +661,8 @@ class MtkBiab {
             <div class="col-md-12">
               <div class="mtk-biab__content-card">
                 <h2 class="mtk-biab__content-title">${tab.content.title}</h2>
-                <div class="mtk-biab__content-body">
-                  ${tab.content.body}
-                </div>
+                <div class="mtk-biab__content-body">${hasTool ? toolDiv : tab.content.body}</div>
+                ${guideSection}
               </div>
             </div>
           </div>
