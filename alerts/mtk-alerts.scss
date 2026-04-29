@@ -174,10 +174,10 @@
   .mtk-empty {
     display:         flex;
     flex-direction:  column;
-    align-items:     center;
+    align-items:     flex-start;
     gap:             12px;
     padding:         56px 24px;
-    text-align:      center;
+    text-align:      left;
     color:           var(--mtk-text-disabled);
 
     .material-icons { font-size: 48px; }
