@@ -207,11 +207,13 @@
     color: var(--mtk-info); }
   .mtk-alerts .mtk-card__body {
     flex: 1;
-    min-width: 0; }
+    min-width: 0;
+    text-align: left; }
   .mtk-alerts .mtk-card__title {
     font-size: .95rem;
     font-weight: 600;
     margin: 0 0 4px;
+    text-align: left;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; }
@@ -219,6 +221,7 @@
     font-size: .82rem;
     color: var(--mtk-text-secondary);
     margin: 0;
+    text-align: left;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; }
@@ -226,7 +229,8 @@
     font-size: .75rem;
     color: var(--mtk-text-disabled);
     margin-top: 6px;
-    display: block; }
+    display: block;
+    text-align: left; }
   .mtk-alerts .mtk-card__chevron {
     flex-shrink: 0;
     color: var(--mtk-text-disabled);
