@@ -36,8 +36,6 @@
 
   // Shadows
   --mtk-shadow-sm:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
-  --mtk-shadow:        0 4px 16px rgba(67,97,238,.10);
-  --mtk-shadow-hover:  0 8px 28px rgba(67,97,238,.16);
 
   // Motion
   --mtk-ease:          cubic-bezier(.4,0,.2,1);
@@ -46,51 +44,42 @@
 
 // ── Reset / Base ─────────────────────────────
 .mtk-alerts {
-  display:       block;
-  font-family:   var(--mtk-font);
-  background:    var(--mtk-bg);
-  min-height:    100%;
-  color:         var(--mtk-text-primary);
-  box-sizing:    border-box;
+  display:     block;
+  font-family: var(--mtk-font);
+  background:  var(--mtk-bg);
+  min-height:  100%;
+  color:       var(--mtk-text-primary);
+  box-sizing:  border-box;
 
-  *,
-  *::before,
-  *::after { box-sizing: inherit; }
+  *, *::before, *::after { box-sizing: inherit; }
 
   // ── Shell ──────────────────────────────────
   .mtk-shell {
-    max-width:  720px;
-    margin:     0 auto;
-    padding:    32px 16px 64px;
+    max-width: 960px;
+    margin:    0 auto;
+    padding:   32px 24px 64px;
   }
 
   // ── Header ─────────────────────────────────
   .mtk-header {
-    display:         flex;
-    align-items:     center;
-    justify-content: space-between;
-    margin-bottom:   28px;
-    gap:             12px;
-  }
-
-  .mtk-header__left {
     display:     flex;
     align-items: center;
     gap:         10px;
+    margin-bottom: 28px;
   }
 
   .mtk-header__icon {
-    font-size:  28px;
-    color:      var(--mtk-primary);
+    font-size:   28px;
+    color:       var(--mtk-primary);
     user-select: none;
   }
 
   .mtk-header__title {
-    font-size:   1.6rem;
-    font-weight: 500;
+    font-size:      1.6rem;
+    font-weight:    500;
     letter-spacing: .01em;
-    margin:      0;
-    color:       var(--mtk-text-primary);
+    margin:         0;
+    color:          var(--mtk-text-primary);
   }
 
   .mtk-badge {
@@ -106,42 +95,40 @@
     font-size:       .72rem;
     font-weight:     700;
     line-height:     1;
-    transition:      opacity var(--mtk-dur) var(--mtk-ease),
-                     transform var(--mtk-dur) var(--mtk-ease);
 
     &[hidden] { display: none; }
   }
 
   // ── Tab Bar ────────────────────────────────
   .mtk-tabs {
-    display:          flex;
-    gap:              4px;
-    background:       var(--mtk-surface);
-    border-radius:    var(--mtk-radius);
-    padding:          4px;
-    box-shadow:       var(--mtk-shadow-sm);
-    margin-bottom:    24px;
-    border:           1px solid var(--mtk-border);
+    display:       flex;
+    gap:           4px;
+    background:    var(--mtk-surface);
+    border-radius: var(--mtk-radius);
+    padding:       4px;
+    box-shadow:    var(--mtk-shadow-sm);
+    margin-bottom: 20px;
+    border:        1px solid var(--mtk-border);
+    width:         fit-content;
   }
 
   .mtk-tab {
-    flex:             1;
-    display:          flex;
-    align-items:      center;
-    justify-content:  center;
-    gap:              6px;
-    padding:          8px 16px;
-    border:           none;
-    border-radius:    var(--mtk-radius-sm);
-    background:       transparent;
-    font-family:      var(--mtk-font);
-    font-size:        .875rem;
-    font-weight:      500;
-    color:            var(--mtk-text-secondary);
-    cursor:           pointer;
-    transition:       background var(--mtk-dur) var(--mtk-ease),
-                      color var(--mtk-dur) var(--mtk-ease),
-                      box-shadow var(--mtk-dur) var(--mtk-ease);
+    display:       flex;
+    align-items:   center;
+    gap:           6px;
+    padding:       8px 20px;
+    border:        none;
+    border-radius: var(--mtk-radius-sm);
+    background:    transparent;
+    font-family:   var(--mtk-font);
+    font-size:     .875rem;
+    font-weight:   500;
+    color:         var(--mtk-text-secondary);
+    cursor:        pointer;
+    white-space:   nowrap;
+    transition:    background var(--mtk-dur) var(--mtk-ease),
+                   color      var(--mtk-dur) var(--mtk-ease),
+                   box-shadow var(--mtk-dur) var(--mtk-ease);
 
     .material-icons { font-size: 18px; }
 
@@ -151,14 +138,14 @@
     }
 
     &[aria-selected="true"] {
-      background:  var(--mtk-primary);
-      color:       #fff;
-      box-shadow:  0 2px 8px rgba(67,97,238,.35);
+      background: var(--mtk-primary);
+      color:      #fff;
+      box-shadow: 0 2px 8px rgba(67,97,238,.35);
     }
 
     &:not([aria-selected="true"]):hover {
-      background:  var(--mtk-primary-light);
-      color:       var(--mtk-primary);
+      background: var(--mtk-primary-light);
+      color:      var(--mtk-primary);
     }
   }
 
@@ -170,356 +157,221 @@
     &[aria-hidden="false"] { display: block; }
   }
 
-  // ── Empty State ────────────────────────────
+  // ── Empty State ─────────────────────────────
   .mtk-empty {
-    display:         flex;
-    flex-direction:  column;
-    align-items:     flex-start;
-    gap:             12px;
-    padding:         56px 24px;
-    text-align:      left;
-    color:           var(--mtk-text-disabled);
+    display:        flex;
+    flex-direction: column;
+    align-items:    flex-start;
+    gap:            10px;
+    padding:        48px 16px;
+    color:          var(--mtk-text-disabled);
 
-    .material-icons { font-size: 48px; }
+    .material-icons { font-size: 40px; }
 
     p {
-      margin:       0;
-      font-size:    .95rem;
+      margin:    0;
+      font-size: .95rem;
     }
   }
 
-  // ── Alert List ─────────────────────────────
-  .mtk-list {
-    display:       flex;
-    flex-direction: column;
-    gap:           10px;
-  }
-
-  // ── Alert Card ─────────────────────────────
-  .mtk-card {
-    display:       flex;
-    align-items:   flex-start;
-    gap:           14px;
-    padding:       18px 18px 18px 16px;
+  // ── Table Wrapper ───────────────────────────
+  .mtk-table-wrap {
     background:    var(--mtk-surface);
     border:        1px solid var(--mtk-border);
-    border-left:   4px solid var(--mtk-border);
     border-radius: var(--mtk-radius);
-    cursor:        pointer;
-    transition:    box-shadow var(--mtk-dur) var(--mtk-ease),
-                   transform  var(--mtk-dur) var(--mtk-ease),
-                   border-color var(--mtk-dur) var(--mtk-ease),
-                   background var(--mtk-dur) var(--mtk-ease);
+    overflow:      hidden;
+    box-shadow:    var(--mtk-shadow-sm);
+  }
 
-    &:hover {
-      box-shadow: var(--mtk-shadow-hover);
-      transform:  translateY(-2px);
+  // ── Alerts Table ────────────────────────────
+  .mtk-table {
+    width:           100%;
+    border-collapse: collapse;
+    table-layout:    fixed;
+
+    col.col-icon    { width: 52px; }
+    col.col-date    { width: 148px; }
+    col.col-actions { width: 120px; }
+    col.col-message { width: auto; }
+
+    // Head
+    thead tr {
+      border-bottom: 2px solid var(--mtk-border);
     }
 
-    &:focus-visible {
-      outline:        2px solid var(--mtk-primary);
-      outline-offset: 2px;
+    th {
+      padding:        10px 14px;
+      text-align:     left;
+      font-size:      .72rem;
+      font-weight:    700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color:          var(--mtk-text-disabled);
+      background:     var(--mtk-surface-2);
+      user-select:    none;
+
+      &.col-icon { text-align: center; padding-left: 0; padding-right: 0; }
     }
 
-    // unread dot
-    &[data-read="false"] {
-      background: linear-gradient(135deg, #fafbff 0%, #fff 100%);
-      border-left-color: var(--mtk-primary);
+    // Body rows
+    tbody tr {
+      border-bottom: 1px solid var(--mtk-border);
+      transition:    background var(--mtk-dur) var(--mtk-ease);
 
-      .mtk-card__title::after {
-        content:      '';
-        display:      inline-block;
-        width:        8px;
-        height:       8px;
-        border-radius: 50%;
-        background:   var(--mtk-primary);
-        margin-left:  8px;
-        vertical-align: middle;
+      &:last-child { border-bottom: none; }
+
+      &:hover { background: var(--mtk-primary-light); }
+
+      // Unread
+      &[data-read="false"] {
+        background: linear-gradient(90deg, rgba(67,97,238,.04) 0%, transparent 100%);
+
+        .mtk-tbl-title { font-weight: 700; }
       }
+
+      &[data-read="true"] { opacity: .72; }
     }
 
-    // type border colors
-    &[data-type="error"]   { border-left-color: var(--mtk-error); }
-    &[data-type="warning"] { border-left-color: var(--mtk-warning); }
-    &[data-type="success"] { border-left-color: var(--mtk-success); }
-    &[data-type="info"]    { border-left-color: var(--mtk-info); }
+    td {
+      padding:        14px 14px;
+      vertical-align: top;
+      font-size:      .875rem;
+      color:          var(--mtk-text-primary);
 
-    &[data-read="true"] {
-      opacity: .8;
-      &[data-type="error"]   { border-left-color: var(--mtk-error); }
-      &[data-type="warning"] { border-left-color: var(--mtk-warning); }
-      &[data-type="success"] { border-left-color: var(--mtk-success); }
-      &[data-type="info"]    { border-left-color: var(--mtk-info); }
+      &.col-icon { text-align: center; padding-left: 0; padding-right: 0; vertical-align: top; padding-top: 16px; }
     }
   }
 
-  .mtk-card__icon {
-    flex-shrink:     0;
-    width:           40px;
-    height:          40px;
+  // ── Table Cell: Icon ─────────────────────────
+  .mtk-tbl-icon {
+    width:           32px;
+    height:          32px;
     border-radius:   50%;
-    display:         flex;
+    display:         inline-flex;
     align-items:     center;
     justify-content: center;
 
-    .material-icons { font-size: 20px; }
+    .material-icons { font-size: 17px; }
   }
 
-  .mtk-card[data-type="error"]   .mtk-card__icon { background: var(--mtk-error-light);   color: var(--mtk-error);   }
-  .mtk-card[data-type="warning"] .mtk-card__icon { background: var(--mtk-warning-light); color: var(--mtk-warning); }
-  .mtk-card[data-type="success"] .mtk-card__icon { background: var(--mtk-success-light); color: var(--mtk-success); }
-  .mtk-card[data-type="info"]    .mtk-card__icon { background: var(--mtk-info-light);    color: var(--mtk-info);    }
+  .mtk-table tr[data-type="error"]   .mtk-tbl-icon { background: var(--mtk-error-light);   color: var(--mtk-error);   }
+  .mtk-table tr[data-type="warning"] .mtk-tbl-icon { background: var(--mtk-warning-light); color: var(--mtk-warning); }
+  .mtk-table tr[data-type="success"] .mtk-tbl-icon { background: var(--mtk-success-light); color: var(--mtk-success); }
+  .mtk-table tr[data-type="info"]    .mtk-tbl-icon { background: var(--mtk-info-light);    color: var(--mtk-info);    }
 
-  .mtk-card__body {
-    flex:       1;
-    min-width:  0;
-    text-align: left;
-  }
-
-  .mtk-card__title {
-    font-size:     .95rem;
-    font-weight:   600;
-    margin:        0 0 4px;
-    text-align:    left;
-    white-space:   nowrap;
-    overflow:      hidden;
-    text-overflow: ellipsis;
-  }
-
-  .mtk-card__preview {
-    font-size:     .82rem;
-    color:         var(--mtk-text-secondary);
-    margin:        0;
-    text-align:    left;
-    white-space:   nowrap;
-    overflow:      hidden;
-    text-overflow: ellipsis;
-  }
-
-  .mtk-card__time {
-    font-size:   .75rem;
+  // ── Table Cell: Date ─────────────────────────
+  .mtk-tbl-date {
+    font-size:   .8rem;
     color:       var(--mtk-text-disabled);
-    margin-top:  6px;
+    white-space: nowrap;
     display:     block;
+  }
+
+  // ── Table Cell: Message ──────────────────────
+  .mtk-tbl-message { }
+
+  // Unread dot
+  .mtk-table tr[data-read="false"] .mtk-tbl-title::before {
+    content:       '';
+    display:       inline-block;
+    width:         7px;
+    height:        7px;
+    border-radius: 50%;
+    background:    var(--mtk-primary);
+    margin-right:  8px;
+    vertical-align: middle;
+    flex-shrink:   0;
+  }
+
+  .mtk-tbl-title {
+    display:     block;
+    font-size:   .9rem;
+    font-weight: 500;
+    color:       var(--mtk-text-primary);
+    margin:      0 0 5px;
+    line-height: 1.3;
     text-align:  left;
   }
 
-  .mtk-card__chevron {
-    flex-shrink:  0;
-    color:        var(--mtk-text-disabled);
-    font-size:    20px;
-    align-self:   center;
-    transition:   transform var(--mtk-dur) var(--mtk-ease),
-                  color var(--mtk-dur) var(--mtk-ease);
-  }
-
-  .mtk-card:hover .mtk-card__chevron {
-    transform: translateX(3px);
-    color: var(--mtk-primary);
-  }
-
-  // ── Detail View ────────────────────────────
-  .mtk-detail {
-    display: none;
-    animation: mtk-slide-up 260ms var(--mtk-ease) both;
-
-    &[aria-hidden="false"] { display: block; }
-  }
-
-  .mtk-detail__back {
-    display:       inline-flex;
-    align-items:   center;
-    gap:           4px;
-    background:    none;
-    border:        none;
-    font-family:   var(--mtk-font);
-    font-size:     .875rem;
-    font-weight:   500;
-    color:         var(--mtk-primary);
-    cursor:        pointer;
-    padding:       6px 8px 6px 0;
-    border-radius: var(--mtk-radius-sm);
-    margin-bottom: 16px;
-    transition:    background var(--mtk-dur) var(--mtk-ease);
-
-    .material-icons { font-size: 18px; }
-
-    &:hover    { background: var(--mtk-primary-light); padding-left: 4px; }
-    &:focus-visible { outline: 2px solid var(--mtk-primary); outline-offset: 2px; }
-  }
-
-  .mtk-detail__card {
-    background:    var(--mtk-surface);
-    border:        1px solid var(--mtk-border);
-    border-radius: var(--mtk-radius);
-    overflow:      hidden;
-    box-shadow:    var(--mtk-shadow);
-  }
-
-  .mtk-detail__header {
-    padding:      20px 24px;
-    display:      flex;
-    align-items:  flex-start;
-    gap:          16px;
-    border-bottom: 1px solid var(--mtk-border);
-  }
-
-  .mtk-detail__icon {
-    flex-shrink:     0;
-    width:           48px;
-    height:          48px;
-    border-radius:   50%;
-    display:         flex;
-    align-items:     center;
-    justify-content: center;
-
-    .material-icons { font-size: 24px; }
-  }
-
-  .mtk-detail__card[data-type="error"]   .mtk-detail__icon { background: var(--mtk-error-light);   color: var(--mtk-error);   }
-  .mtk-detail__card[data-type="warning"] .mtk-detail__icon { background: var(--mtk-warning-light); color: var(--mtk-warning); }
-  .mtk-detail__card[data-type="success"] .mtk-detail__icon { background: var(--mtk-success-light); color: var(--mtk-success); }
-  .mtk-detail__card[data-type="info"]    .mtk-detail__icon { background: var(--mtk-info-light);    color: var(--mtk-info);    }
-
-  .mtk-detail__meta { flex: 1; }
-
-  .mtk-detail__type-chip {
-    display:       inline-flex;
-    align-items:   center;
-    gap:           4px;
-    padding:       2px 10px;
-    border-radius: var(--mtk-radius-pill);
-    font-size:     .72rem;
-    font-weight:   700;
-    text-transform: uppercase;
-    letter-spacing: .06em;
-    margin-bottom: 6px;
-  }
-
-  .mtk-detail__card[data-type="error"]   .mtk-detail__type-chip { background: var(--mtk-error-light);   color: var(--mtk-error);   }
-  .mtk-detail__card[data-type="warning"] .mtk-detail__type-chip { background: var(--mtk-warning-light); color: var(--mtk-warning); }
-  .mtk-detail__card[data-type="success"] .mtk-detail__type-chip { background: var(--mtk-success-light); color: var(--mtk-success); }
-  .mtk-detail__card[data-type="info"]    .mtk-detail__type-chip { background: var(--mtk-info-light);    color: var(--mtk-info);    }
-
-  .mtk-detail__title {
-    font-size:   1.1rem;
-    font-weight: 600;
-    margin:      0 0 4px;
-  }
-
-  .mtk-detail__time {
-    font-size: .8rem;
-    color:     var(--mtk-text-disabled);
-  }
-
-  .mtk-detail__body {
-    padding:     24px;
-    border-bottom: 1px solid var(--mtk-border);
-  }
-
-  .mtk-detail__message {
-    font-size:   .95rem;
-    line-height: 1.65;
+  .mtk-tbl-body {
+    display:     block;
+    font-size:   .82rem;
     color:       var(--mtk-text-secondary);
+    line-height: 1.6;
+    white-space: pre-wrap;   // honour \n line breaks in message text
+    word-break:  break-word;
+    text-align:  left;
     margin:      0;
   }
 
-  .mtk-detail__actions {
-    display:     flex;
-    align-items: center;
-    gap:         10px;
-    padding:     16px 24px;
-    flex-wrap:   wrap;
+  // ── Table Cell: Actions ──────────────────────
+  .mtk-tbl-actions {
+    display:        flex;
+    flex-direction: column;
+    align-items:    flex-start;
+    gap:            6px;
   }
 
-  // ── Buttons ────────────────────────────────
-  .mtk-btn {
+  // ── Icon Action Button ───────────────────────
+  .mtk-action-btn {
     display:       inline-flex;
     align-items:   center;
-    gap:           6px;
-    padding:       9px 20px;
-    border:        none;
-    border-radius: var(--mtk-radius-sm);
+    gap:           4px;
+    padding:       4px 10px;
+    border:        1px solid var(--mtk-border);
+    border-radius: var(--mtk-radius-pill);
+    background:    transparent;
     font-family:   var(--mtk-font);
-    font-size:     .875rem;
+    font-size:     .75rem;
     font-weight:   500;
+    color:         var(--mtk-text-secondary);
     cursor:        pointer;
+    white-space:   nowrap;
     transition:    background var(--mtk-dur) var(--mtk-ease),
-                   box-shadow var(--mtk-dur) var(--mtk-ease),
-                   transform  var(--mtk-dur) var(--mtk-ease);
+                   color      var(--mtk-dur) var(--mtk-ease),
+                   border-color var(--mtk-dur) var(--mtk-ease);
 
-    .material-icons { font-size: 18px; }
+    .material-icons { font-size: 14px; }
 
     &:focus-visible {
       outline:        2px solid var(--mtk-primary);
       outline-offset: 2px;
     }
+    &:active { transform: scale(.96); }
 
-    &:active { transform: scale(.97); }
+    &.is-read {
+      &:hover { background: var(--mtk-primary-light); color: var(--mtk-primary); border-color: var(--mtk-primary); }
+    }
+
+    &.is-archive {
+      &:hover { background: var(--mtk-info-light); color: var(--mtk-info); border-color: var(--mtk-info); }
+    }
+
+    &.is-delete {
+      &:hover { background: var(--mtk-error-light); color: var(--mtk-error); border-color: var(--mtk-error); }
+    }
   }
 
-  .mtk-btn--primary {
-    background: var(--mtk-primary);
-    color:      #fff;
-    box-shadow: 0 2px 8px rgba(67,97,238,.25);
-
-    &:hover { background: #3451d1; box-shadow: 0 4px 14px rgba(67,97,238,.35); }
-  }
-
-  .mtk-btn--secondary {
-    background: var(--mtk-surface-2);
-    color:      var(--mtk-text-primary);
-    border:     1px solid var(--mtk-border);
-
-    &:hover { background: var(--mtk-primary-light); color: var(--mtk-primary); border-color: var(--mtk-primary); }
-  }
-
-  .mtk-btn--danger {
-    background: var(--mtk-error-light);
-    color:      var(--mtk-error);
-    border:     1px solid transparent;
-
-    &:hover { background: var(--mtk-error); color: #fff; }
-  }
-
-  .mtk-btn--ghost {
-    background: transparent;
-    color:      var(--mtk-text-secondary);
-    border:     1px solid var(--mtk-border);
-
-    &:hover { background: var(--mtk-surface-2); }
-  }
-
-  // ── Divider ────────────────────────────────
-  .mtk-divider {
-    height:     1px;
-    background: var(--mtk-border);
-    border:     none;
-    margin:     0;
-  }
-
-  // ── Animations ─────────────────────────────
+  // ── Animations ───────────────────────────────
   @keyframes mtk-fade-in {
     from { opacity: 0; transform: translateY(6px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  @keyframes mtk-slide-up {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  // ── Responsive ─────────────────────────────
-  @media (max-width: 600px) {
+  // ── Responsive ───────────────────────────────
+  @media (max-width: 680px) {
     .mtk-shell { padding: 20px 12px 48px; }
 
     .mtk-header__title { font-size: 1.3rem; }
 
-    .mtk-detail__actions {
-      flex-direction: column;
-      align-items:    stretch;
-    }
+    // Collapse date on small screens
+    .mtk-table col.col-date,
+    .mtk-table th.col-date,
+    .mtk-table td.col-date { display: none; }
 
-    .mtk-btn { justify-content: center; width: 100%; }
+    // Stack actions below message
+    .mtk-table col.col-actions,
+    .mtk-table th.col-actions,
+    .mtk-table td.col-actions { display: none; }
   }
 }
