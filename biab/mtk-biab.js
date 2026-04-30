@@ -286,6 +286,8 @@ class MtkBiab {
     this.reviewsLoadedForUid = '';
     this.formSteps = {};
     this.completedSteps = {}; // { 'business-plan': Set([0,1,...]) }
+    this.guidedSetupSteps = {};
+    this.guidedSetupCompleted = {};
 
     // Active state
     this.activeTabId    = null;
@@ -831,6 +833,12 @@ class MtkBiab {
       case 'tool-email':
         this._emailToolDocument(btn.dataset.tool);
         break;
+      case 'guided-setup-step':
+        this._setGuidedSetupStep(btn.dataset.setupKey, parseInt(btn.dataset.step, 10));
+        break;
+      case 'guided-setup-complete':
+        this._toggleGuidedSetupComplete(btn.dataset.setupKey, parseInt(btn.dataset.step, 10));
+        break;
       case 'review-send-request':
         this._sendReviewRequest();
         break;
@@ -1176,6 +1184,7 @@ class MtkBiab {
     this._renderStartupTool();
     this._renderInvoiceTool();
     this._renderAutomationTool();
+    this._renderGuidedSetups();
     this._renderReviewsTool();
   }
 
@@ -1599,29 +1608,66 @@ class MtkBiab {
         businessName: 'Harbor Lock & Key',
         ownerName: '',
         serviceArea: '',
-        coreServices: 'Rekeys, lock changes, lockouts, deadbolt installation',
-        customerFocus: 'Homeowners, property managers, small businesses',
+        launchServices: 'House lockouts, rekeys, lock changes, deadbolt installation, mailbox/cabinet locks, car lockouts, basic commercial lock service',
+        futureServices: 'Master key systems, panic hardware, door closers, access control, safe work, automotive key programming',
+        customerFocus: 'Homeowners, drivers, property managers, small businesses, realtors, commercial offices',
+        differentiator: 'Clear pricing, professional arrival, clean work, ETA updates, detailed invoices, and review follow-up.',
+        startupNeeds: 'Business registration, EIN, bank account, insurance, phone, domain, website, Google Business Profile, email, logo, vehicle setup, tools, payment processor, invoicing, and bookkeeping.',
         launchGoal: 'Book the first 25 paid locksmith jobs and collect 10 reviews.',
         pricingPlan: 'Use fixed service call pricing plus itemized labor and parts.',
-        marketingPlan: 'Google Business Profile, local SEO, review requests, and tightly targeted ads.'
+        marketingPlan: 'Google Business Profile, local SEO, review requests, referral partners, social proof content, and tightly targeted ads.',
+        operationsPlan: 'Confirm the issue, quote clearly, send ETA updates, verify authorization, complete and test the work, collect payment, send the invoice, request a review, and save job notes.',
+        weeklyMetrics: 'Calls received, booked jobs, completed jobs, average ticket, gross revenue, ad spend, cost per booked job, review count, repeat customers, and net cash after expenses.'
       },
       'startup-checklist': {
         legal: '',
         phoneEmail: '',
         website: '',
         profile: '',
+        logoBrand: '',
         insurance: '',
         payments: '',
-        launch: ''
+        vehicleTools: '',
+        launch: '',
+        hoursArea: '',
+        callHandling: '',
+        authorizationPolicy: '',
+        paymentScheduling: '',
+        documentationPolicy: '',
+        followupPolicy: '',
+        inventoryReview: '',
+        financeReview: '',
+        marketingReview: '',
+        scheduleReview: ''
       },
       'invoice-setup': {
         businessName: 'Harbor Lock & Key',
         invoicePrefix: 'HLK',
+        invoiceDate: new Date().toISOString().slice(0, 10),
+        legalName: 'Harbor Lock & Key LLC',
+        dbaName: '',
+        businessAddress: '',
         businessPhone: '',
         businessEmail: '',
+        businessWebsite: '',
+        customerName: '',
+        serviceAddress: '',
+        billingAddress: '',
+        workDescription: 'Opened front entry door using non-destructive methods where possible, rekeyed 2 cylinders, cut 4 keys, tested operation with customer, and confirmed proper latch and key function before leaving.',
+        laborLine: 'Mobile service call and locksmith labor',
+        partsLine: 'Cylinders, keys, and hardware installed',
+        subtotal: '',
+        taxAmount: '',
+        totalAmount: '',
         paymentTerms: 'Due on receipt',
+        paymentMethod: '',
+        paymentStatus: 'Unpaid',
+        technician: '',
         taxLine: 'Sales tax shown separately where applicable',
-        warranty: 'Workmanship warranty applies to installed parts and labor unless otherwise stated.'
+        warranty: 'Workmanship warranty applies to installed parts and labor unless otherwise stated.',
+        licenseNumber: '',
+        authorizationNote: 'Customer authorization confirmed before work began.',
+        afterHoursDisclosure: ''
       }
     };
   }
@@ -1692,18 +1738,30 @@ class MtkBiab {
     const map = {
       'business-plan': [
         { title: this._t('businessInfo'), fields: ['businessName', 'ownerName', 'serviceArea'] },
-        { title: this._t('serviceSetup'), fields: ['coreServices', 'customerFocus'] },
-        { title: this._t('marketingSetup'), fields: ['launchGoal', 'pricingPlan', 'marketingPlan'] }
+        { title: 'Launch Services', fields: ['launchServices', 'futureServices'] },
+        { title: 'Customers & Positioning', fields: ['customerFocus', 'differentiator'] },
+        { title: 'Startup Needs', fields: ['startupNeeds'] },
+        { title: 'Pricing Strategy', fields: ['pricingPlan'] },
+        { title: this._t('marketingSetup'), fields: ['marketingPlan'] },
+        { title: this._t('operations'), fields: ['operationsPlan'] },
+        { title: 'Weekly Metrics', fields: ['weeklyMetrics'] },
+        { title: '90-Day Launch Goals', fields: ['launchGoal'] }
       ],
       'startup-checklist': [
-        { title: this._t('businessInfo'), fields: ['legal', 'phoneEmail'] },
-        { title: this._t('marketingSetup'), fields: ['website', 'profile'] },
-        { title: this._t('operations'), fields: ['insurance', 'payments', 'launch'] }
+        { title: 'Before Launch: Foundation', fields: ['legal', 'phoneEmail', 'website', 'profile'] },
+        { title: 'Before Launch: Business Assets', fields: ['logoBrand', 'insurance', 'payments', 'vehicleTools', 'launch'] },
+        { title: 'Before First Job: Readiness', fields: ['hoursArea', 'callHandling', 'authorizationPolicy'] },
+        { title: 'Before First Job: Workflow', fields: ['paymentScheduling', 'documentationPolicy', 'followupPolicy'] },
+        { title: 'Weekly Operating Review', fields: ['inventoryReview', 'financeReview', 'marketingReview', 'scheduleReview'] }
       ],
       'invoice-setup': [
-        { title: this._t('businessInfo'), fields: ['businessName', 'invoicePrefix'] },
-        { title: this._t('contactInfo'), fields: ['businessPhone', 'businessEmail'] },
-        { title: this._t('invoiceSetup'), fields: ['paymentTerms', 'taxLine', 'warranty'] }
+        { title: 'Invoice Identity', fields: ['businessName', 'invoicePrefix', 'invoiceDate'] },
+        { title: 'Business Details', fields: ['legalName', 'dbaName', 'businessAddress', 'licenseNumber'] },
+        { title: this._t('contactInfo'), fields: ['businessPhone', 'businessEmail', 'businessWebsite'] },
+        { title: 'Customer & Job', fields: ['customerName', 'serviceAddress', 'billingAddress', 'technician'] },
+        { title: 'Work Performed', fields: ['workDescription', 'laborLine', 'partsLine'] },
+        { title: 'Totals & Tax', fields: ['subtotal', 'taxLine', 'taxAmount', 'totalAmount'] },
+        { title: 'Payment & Disclosures', fields: ['paymentTerms', 'paymentMethod', 'paymentStatus', 'warranty', 'authorizationNote', 'afterHoursDisclosure'] }
       ]
     };
     return map[tool] || [];
@@ -1760,24 +1818,61 @@ class MtkBiab {
       businessName: 'Business name',
       ownerName: 'Owner name',
       serviceArea: 'Service area',
-      coreServices: 'Core services',
+      launchServices: 'Services offered at launch',
+      futureServices: 'Services to add later',
       customerFocus: 'Customer focus',
+      differentiator: 'What makes you different',
+      startupNeeds: 'Startup needs',
       launchGoal: 'Launch goal',
       pricingPlan: 'Pricing plan',
       marketingPlan: 'Marketing plan',
+      operationsPlan: 'Operations plan',
+      weeklyMetrics: 'Weekly metrics',
       legal: 'Registration / licensing steps',
       phoneEmail: 'Phone and email setup',
       website: 'Website setup',
       profile: 'Google Business Profile setup',
+      logoBrand: 'Logo and brand kit',
       insurance: 'Insurance / compliance',
       payments: 'Payments and bookkeeping',
+      vehicleTools: 'Vehicle, tools, and inventory',
       launch: 'Launch-day checklist',
+      hoursArea: 'Hours and service area',
+      callHandling: 'Call answering and ETA workflow',
+      authorizationPolicy: 'Authorization verification policy',
+      paymentScheduling: 'Payment and scheduling method',
+      documentationPolicy: 'Photo, notes, and invoice workflow',
+      followupPolicy: 'Cancellation and review follow-up workflow',
+      inventoryReview: 'Inventory and equipment review',
+      financeReview: 'Invoices, quotes, and profitability review',
+      marketingReview: 'Ad spend and review monitoring',
+      scheduleReview: 'Next-week schedule planning',
       invoicePrefix: 'Invoice prefix',
+      invoiceDate: 'Invoice date',
+      legalName: 'Business legal name',
+      dbaName: 'DBA if used',
+      businessAddress: 'Business address / mailing address',
       businessPhone: 'Business phone',
       businessEmail: 'Business email',
+      businessWebsite: 'Business website',
+      customerName: 'Customer name',
+      serviceAddress: 'Service address',
+      billingAddress: 'Billing address if different',
+      workDescription: 'Clear description of work performed',
+      laborLine: 'Itemized labor',
+      partsLine: 'Itemized parts / hardware',
+      subtotal: 'Subtotal',
       paymentTerms: 'Payment terms',
+      paymentMethod: 'Payment method',
+      paymentStatus: 'Payment status',
+      technician: 'Technician name or ID',
       taxLine: 'Tax line',
-      warranty: 'Warranty / disclosure'
+      taxAmount: 'Tax amount',
+      totalAmount: 'Total',
+      warranty: 'Warranty / disclosure',
+      licenseNumber: 'License number if required',
+      authorizationNote: 'Authorization note',
+      afterHoursDisclosure: 'After-hours fee disclosure'
     };
     return `
       <label class="mtk-biab-tool__field">${labels[field] || field}
@@ -1791,15 +1886,134 @@ class MtkBiab {
     if (target) target.innerHTML = this._buildToolDocument(tool);
   }
 
+  _buildToolSummarySection(title, rows) {
+    return `
+      <section class="mtk-biab-tool-doc__section">
+        <h4>${this._escapeHtml(title)}</h4>
+        ${rows.map(([label, value]) => `
+          <p><strong>${this._escapeHtml(label)}:</strong> ${this._escapeHtml(value || 'Not set')}</p>
+        `).join('')}
+      </section>
+    `;
+  }
+
   _buildToolDocument(tool) {
     const s = this.formState[tool] || {};
     if (tool === 'startup-checklist') {
-      return `<h3>${this._t('finalDocument')}</h3><ol><li>${this._escapeHtml(s.legal)}</li><li>${this._escapeHtml(s.phoneEmail)}</li><li>${this._escapeHtml(s.website)}</li><li>${this._escapeHtml(s.profile)}</li><li>${this._escapeHtml(s.insurance)}</li><li>${this._escapeHtml(s.payments)}</li><li>${this._escapeHtml(s.launch)}</li></ol>`;
+      return `
+        <div class="mtk-biab-tool-doc">
+          <h3>${this._t('finalDocument')}</h3>
+          ${this._buildToolSummarySection('Before Launch: Foundation', [
+            ['Registration / licensing', s.legal],
+            ['Phone and email', s.phoneEmail],
+            ['Website', s.website],
+            ['Google Business Profile', s.profile]
+          ])}
+          ${this._buildToolSummarySection('Before Launch: Business Assets', [
+            ['Logo and brand kit', s.logoBrand],
+            ['Insurance / compliance', s.insurance],
+            ['Payments and bookkeeping', s.payments],
+            ['Vehicle, tools, and inventory', s.vehicleTools],
+            ['Launch-day checklist', s.launch]
+          ])}
+          ${this._buildToolSummarySection('Before First Job', [
+            ['Hours and service area', s.hoursArea],
+            ['Call answering and ETA workflow', s.callHandling],
+            ['Authorization verification', s.authorizationPolicy],
+            ['Payment and scheduling', s.paymentScheduling],
+            ['Photo, notes, and invoice workflow', s.documentationPolicy],
+            ['Cancellation and review follow-up', s.followupPolicy]
+          ])}
+          ${this._buildToolSummarySection('Weekly Operating Review', [
+            ['Inventory and equipment', s.inventoryReview],
+            ['Invoices, quotes, and profitability', s.financeReview],
+            ['Ad spend and reviews', s.marketingReview],
+            ['Next-week schedule', s.scheduleReview]
+          ])}
+        </div>
+      `;
     }
     if (tool === 'invoice-setup') {
-      return `<h3>${s.businessName || 'Invoice Setup'}</h3><p><strong>Invoice numbering:</strong> ${this._escapeHtml(s.invoicePrefix)}-0001</p><p><strong>Phone:</strong> ${this._escapeHtml(s.businessPhone)}<br><strong>Email:</strong> ${this._escapeHtml(s.businessEmail)}</p><p><strong>Payment terms:</strong> ${this._escapeHtml(s.paymentTerms)}</p><p><strong>Tax:</strong> ${this._escapeHtml(s.taxLine)}</p><p><strong>Warranty:</strong> ${this._escapeHtml(s.warranty)}</p>`;
+      return `
+        <div class="mtk-biab-invoice">
+          <div class="mtk-biab-invoice__header">
+            <div>
+              <h3>${this._escapeHtml(s.businessName || 'Invoice Setup')}</h3>
+              <p>${this._escapeHtml(s.legalName || s.businessName || 'Business legal name')}</p>
+              ${s.dbaName ? `<p>DBA: ${this._escapeHtml(s.dbaName)}</p>` : ''}
+            </div>
+            <div class="mtk-biab-invoice__meta">
+              <h4>${this._escapeHtml(s.invoicePrefix || 'INV')}-0001</h4>
+              <p><strong>Date:</strong> ${this._escapeHtml(s.invoiceDate || 'Not set')}</p>
+              <p><strong>Status:</strong> ${this._escapeHtml(s.paymentStatus || 'Not set')}</p>
+            </div>
+          </div>
+          <div class="mtk-biab-invoice__parties">
+            <div>
+              <h4>Business</h4>
+              <p>${this._escapeHtml(s.businessAddress || 'Business address / mailing address')}</p>
+              <p>${this._escapeHtml(s.businessPhone || 'Business phone')}<br>${this._escapeHtml(s.businessEmail || 'Business email')}<br>${this._escapeHtml(s.businessWebsite || 'Business website')}</p>
+              <p><strong>License:</strong> ${this._escapeHtml(s.licenseNumber || 'If required in the area')}</p>
+            </div>
+            <div>
+              <h4>Customer</h4>
+              <p><strong>Name:</strong> ${this._escapeHtml(s.customerName || 'Customer name')}</p>
+              <p><strong>Service address:</strong> ${this._escapeHtml(s.serviceAddress || 'Service address')}</p>
+              <p><strong>Billing address:</strong> ${this._escapeHtml(s.billingAddress || 'Same as service address / not set')}</p>
+              <p><strong>Technician:</strong> ${this._escapeHtml(s.technician || 'Technician name or ID')}</p>
+            </div>
+          </div>
+          <div class="mtk-biab-invoice__work">
+            <h4>Work Performed</h4>
+            <p>${this._escapeHtml(s.workDescription || 'Clear description of work performed')}</p>
+          </div>
+          <table class="mtk-biab-invoice__table">
+            <thead><tr><th>Line item</th><th>Details</th></tr></thead>
+            <tbody>
+              <tr><td>Labor</td><td>${this._escapeHtml(s.laborLine || 'Itemized labor')}</td></tr>
+              <tr><td>Parts / hardware</td><td>${this._escapeHtml(s.partsLine || 'Itemized parts / hardware')}</td></tr>
+            </tbody>
+            <tfoot>
+              <tr><th>Subtotal</th><td>${this._escapeHtml(s.subtotal || 'Not set')}</td></tr>
+              <tr><th>Tax</th><td>${this._escapeHtml(s.taxAmount || s.taxLine || 'Shown separately where applicable')}</td></tr>
+              <tr><th>Total</th><td>${this._escapeHtml(s.totalAmount || 'Not set')}</td></tr>
+            </tfoot>
+          </table>
+          <div class="mtk-biab-invoice__terms">
+            <p><strong>Payment terms:</strong> ${this._escapeHtml(s.paymentTerms || 'Not set')}</p>
+            <p><strong>Payment method:</strong> ${this._escapeHtml(s.paymentMethod || 'Not set')}</p>
+            <p><strong>Warranty:</strong> ${this._escapeHtml(s.warranty || 'Not set')}</p>
+            <p><strong>Authorization:</strong> ${this._escapeHtml(s.authorizationNote || 'Not set')}</p>
+            <p><strong>After-hours fee:</strong> ${this._escapeHtml(s.afterHoursDisclosure || 'Not set')}</p>
+          </div>
+        </div>
+      `;
     }
-    return `<h3>${this._escapeHtml(s.businessName || 'Business Plan')}</h3><p><strong>Owner:</strong> ${this._escapeHtml(s.ownerName)}</p><p><strong>Service area:</strong> ${this._escapeHtml(s.serviceArea)}</p><p><strong>Core services:</strong> ${this._escapeHtml(s.coreServices)}</p><p><strong>Customer focus:</strong> ${this._escapeHtml(s.customerFocus)}</p><p><strong>Launch goal:</strong> ${this._escapeHtml(s.launchGoal)}</p><p><strong>Pricing:</strong> ${this._escapeHtml(s.pricingPlan)}</p><p><strong>Marketing:</strong> ${this._escapeHtml(s.marketingPlan)}</p>`;
+    return `
+      <div class="mtk-biab-tool-doc">
+        <h3>${this._escapeHtml(s.businessName || 'Business Plan')}</h3>
+        ${this._buildToolSummarySection('Business Info', [
+          ['Owner', s.ownerName],
+          ['Service area', s.serviceArea]
+        ])}
+        ${this._buildToolSummarySection('Services', [
+          ['Launch services', s.launchServices],
+          ['Services to add later', s.futureServices]
+        ])}
+        ${this._buildToolSummarySection('Customers & Positioning', [
+          ['Customer focus', s.customerFocus],
+          ['What makes you different', s.differentiator]
+        ])}
+        ${this._buildToolSummarySection('Operating Plan', [
+          ['Startup needs', s.startupNeeds],
+          ['Pricing strategy', s.pricingPlan],
+          ['Marketing plan', s.marketingPlan],
+          ['Operations plan', s.operationsPlan],
+          ['Weekly metrics', s.weeklyMetrics],
+          ['90-day launch goals', s.launchGoal]
+        ])}
+      </div>
+    `;
   }
 
   _downloadToolDocument(tool) {
@@ -1815,6 +2029,115 @@ class MtkBiab {
   _emailToolDocument(tool) {
     const text = this._buildToolDocument(tool).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
     window.location.href = `mailto:?subject=${encodeURIComponent(tool.replace(/-/g, ' '))}&body=${encodeURIComponent(text)}`;
+  }
+
+  _renderGuidedSetups() {
+    const mounts = this.el.querySelectorAll('[data-biab-guided-setup]');
+    mounts.forEach(mount => this._renderGuidedSetup(mount.dataset.biabGuidedSetup));
+  }
+
+  _renderGuidedSetup(setupKey) {
+    const mount = this.el.querySelector(`[data-biab-guided-setup="${setupKey}"]`);
+    const setup = this.cfg.guidedSetups && this.cfg.guidedSetups[setupKey];
+    if (!mount || !setup || !Array.isArray(setup.steps) || !setup.steps.length) return;
+
+    const steps = setup.steps;
+    const activeIndex = Math.max(0, Math.min(steps.length - 1, this.guidedSetupSteps[setupKey] || 0));
+    const active = steps[activeIndex];
+    const completed = this.guidedSetupCompleted[setupKey] || new Set();
+    const completeCount = completed.size;
+    const percent = Math.round((completeCount / steps.length) * 100);
+    const isComplete = completed.has(activeIndex);
+
+    mount.innerHTML = `
+      <section class="mtk-biab-guided-setup" aria-label="${this._escapeHtml(setup.title)}">
+        <div class="mtk-biab-guided-setup__header">
+          <div>
+            <span class="mtk-biab__logo-badge">${this._escapeHtml(setup.badge || 'Starter')}</span>
+            <h3>${this._escapeHtml(setup.title)}</h3>
+            <p>${this._escapeHtml(setup.intro || '')}</p>
+          </div>
+          <div class="mtk-biab-guided-setup__meter" aria-label="${completeCount} of ${steps.length} steps complete">
+            <strong>${completeCount}/${steps.length}</strong>
+            <span>complete</span>
+          </div>
+        </div>
+        <div class="mtk-biab-guided-setup__progress" role="progressbar" aria-valuemin="0" aria-valuemax="${steps.length}" aria-valuenow="${completeCount}">
+          <span style="width:${percent}%"></span>
+        </div>
+        <div class="mtk-biab-guided-setup__layout">
+          <ol class="mtk-biab-guided-setup__list">
+            ${steps.map((step, index) => `
+              <li>
+                <button
+                  type="button"
+                  class="mtk-biab-guided-setup__list-btn${index === activeIndex ? ' is-active' : ''}${completed.has(index) ? ' is-complete' : ''}"
+                  data-action="guided-setup-step"
+                  data-setup-key="${this._escapeHtml(setupKey)}"
+                  data-step="${index}"
+                  aria-current="${index === activeIndex ? 'step' : 'false'}"
+                >
+                  <span class="material-icons" aria-hidden="true">${completed.has(index) ? 'check_circle' : this._escapeHtml(step.icon || 'radio_button_unchecked')}</span>
+                  <span>
+                    <strong>${this._escapeHtml(step.title)}</strong>
+                    <small>${this._escapeHtml(step.summary || '')}</small>
+                  </span>
+                </button>
+              </li>
+            `).join('')}
+          </ol>
+          <article class="mtk-biab-guided-setup__detail">
+            <span class="mtk-biab-guided-setup__step-label">Step ${activeIndex + 1} of ${steps.length}</span>
+            <h4>${this._escapeHtml(active.title)}</h4>
+            <p>${this._escapeHtml(active.summary || '')}</p>
+            ${this._buildGuidedSetupDetails(active)}
+            ${this._buildGuidedSetupLinks(active)}
+            <div class="mtk-biab-guided-setup__actions">
+              <button
+                type="button"
+                class="mtk-biab__action-btn${isComplete ? '' : ' mtk-biab__action-btn--primary'}"
+                data-action="guided-setup-complete"
+                data-setup-key="${this._escapeHtml(setupKey)}"
+                data-step="${activeIndex}"
+              >${isComplete ? 'Completed' : 'Mark complete'}</button>
+            </div>
+            <p class="mtk-biab-guided-setup__done"><strong>Done means:</strong> ${this._escapeHtml(setup.done || '')}</p>
+          </article>
+        </div>
+      </section>
+    `;
+  }
+
+  _buildGuidedSetupDetails(step) {
+    if (!Array.isArray(step.details) || !step.details.length) return '';
+    return `<ul class="mtk-biab-guided-setup__details">${step.details.map(item => `<li>${this._escapeHtml(item)}</li>`).join('')}</ul>`;
+  }
+
+  _buildGuidedSetupLinks(step) {
+    if (!Array.isArray(step.links) || !step.links.length) return '';
+    return `
+      <div class="mtk-biab-guided-setup__links">
+        ${step.links.map(link => `<a class="mtk-biab-guide__link" href="${this._escapeHtml(link.href)}" target="_blank" rel="noopener">${this._escapeHtml(link.label)}</a>`).join('')}
+      </div>
+    `;
+  }
+
+  _setGuidedSetupStep(setupKey, stepIndex) {
+    if (!setupKey || Number.isNaN(stepIndex)) return;
+    this.guidedSetupSteps[setupKey] = stepIndex;
+    this._renderGuidedSetup(setupKey);
+  }
+
+  _toggleGuidedSetupComplete(setupKey, stepIndex) {
+    if (!setupKey || Number.isNaN(stepIndex)) return;
+    if (!this.guidedSetupCompleted[setupKey]) this.guidedSetupCompleted[setupKey] = new Set();
+    const completed = this.guidedSetupCompleted[setupKey];
+    if (completed.has(stepIndex)) {
+      completed.delete(stepIndex);
+    } else {
+      completed.add(stepIndex);
+    }
+    this._renderGuidedSetup(setupKey);
   }
 
   _renderReviewsTool() {

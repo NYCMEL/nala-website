@@ -10,13 +10,13 @@ mtk-biab.mtk-biab {
   overflow-x: hidden; }
 
 .mtk-biab__sidebar-item-btn span:not(.material-icons) {
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   min-width: 0;
   line-height: 1.25;
   text-align: left !important;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow: visible;
+  overflow-wrap: anywhere;
   font-size: 13px; }
 
 .mtk-biab__lang-switch,
@@ -385,6 +385,37 @@ mtk-biab.mtk-biab {
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 14px; }
+
+.mtk-biab-guided-setup__done {
+  margin: 14px 0 0 !important;
+  padding-top: 12px;
+  border-top: 1px solid #eadfca; }
+
+.mtk-biab-tool-doc {
+  display: grid;
+  gap: 16px; }
+
+.mtk-biab-tool-doc h3 {
+  margin: 0;
+  color: #202124;
+  font-size: 20px;
+  line-height: 1.25; }
+
+.mtk-biab-tool-doc__section {
+  padding-top: 14px;
+  border-top: 1px solid #eadfca; }
+
+.mtk-biab-tool-doc__section h4 {
+  margin: 0 0 8px;
+  color: #4a3a08;
+  font-size: 14px;
+  font-weight: 900;
+  text-transform: uppercase; }
+
+.mtk-biab-tool-doc__section p {
+  margin: 0 0 7px;
+  color: #34302a;
+  line-height: 1.5; }
 
 .mtk-biab-guided-setup__assets {
   display: grid;
@@ -1437,8 +1468,9 @@ mtk-biab.mtk-biab {
   align-items: center;
   gap: 12px;
   width: 100%;
-  height: 56px;
-  padding: 0 24px 0 16px;
+  min-height: 56px;
+  height: auto;
+  padding: 10px 24px 10px 16px;
   border: none;
   background: transparent;
   color: #49454f;
@@ -1454,10 +1486,12 @@ mtk-biab.mtk-biab {
   overflow: hidden; }
 
 .mtk-biab__sidebar-item-btn > span:not(.material-icons) {
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   min-width: 0;
   line-height: 1.25;
-  text-align: left !important; }
+  text-align: left !important;
+  white-space: normal;
+  overflow-wrap: anywhere; }
 
 .mtk-biab__sidebar-item-btn .material-icons {
   font-size: 24px;

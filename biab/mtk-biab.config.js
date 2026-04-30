@@ -226,72 +226,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "gavel",
                 content: {
                   title: "Legal Guide",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fff4e5;color:#8a4b00;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
-<h3>Important Note</h3>
-<p>This guide is practical and professional, but it is not legal advice. Locksmith rules vary by state, county, and city. Before operating, check your local requirements and talk to a qualified attorney or CPA when needed.</p>
-
-<h3>1. Form the Business Properly</h3>
-<p>Choose and register the legal structure you will actually use. Keep business and personal finances separate from day one.</p>
-
-<h3>2. Check Licensing and Registration Rules</h3>
-<p>Before advertising or taking jobs, confirm whether you need a locksmith license, local business license, contractor registration for certain installation work, sales tax registration, alarm or low-voltage licensing for access control work, or any other category-specific approval.</p>
-
-<h3>3. Carry Insurance</h3>
-<ul>
-  <li>General liability</li>
-  <li>Commercial auto</li>
-  <li>Tools / inland marine coverage</li>
-  <li>Workers’ compensation if applicable</li>
-  <li>Any other coverage your professional recommends</li>
-</ul>
-
-<h3>4. Verify Authorization Before Entry</h3>
-<p>Never unlock, rekey, or modify security hardware without verifying that the customer is authorized to request the work.</p>
-<ul>
-  <li>Ask for ID when appropriate</li>
-  <li>Confirm address or vehicle connection</li>
-  <li>Document who approved the work</li>
-  <li>Record any unusual circumstances</li>
-</ul>
-
-<h3>5. Use Written Policies</h3>
-<ul>
-  <li>Estimate / service authorization wording</li>
-  <li>Payment terms</li>
-  <li>Warranty terms</li>
-  <li>Cancellation policy</li>
-  <li>Destructive-entry authorization wording</li>
-  <li>Customer-supplied-parts disclaimer where appropriate</li>
-</ul>
-
-<h3>6. Keep Good Records</h3>
-<p>Keep estimates, invoices, payments, photos, customer communications, tax records, and service notes in an organized system.</p>
-
-<h3>7. Use Honest Advertising</h3>
-<p>Do not advertise fake low prices, fake reviews, fake licensing, fake emergency times, or services you do not actually provide.</p>
-
-<h3>8. Understand Tax Responsibilities</h3>
-<p>Sales tax and service tax treatment can vary by state and by the mix of labor and goods on the invoice. Confirm the rules that apply in your state.</p>
-
-<h3>9. Protect Customer Data</h3>
-<p>Names, addresses, phone numbers, gate codes, job notes, and other customer data should be handled carefully and only shared when necessary for business operations.</p>
-
-<h3>10. Know When to Escalate</h3>
-<p>For contracts, claims, employment issues, tax disputes, chargebacks, licensing problems, or major customer conflicts, talk to a qualified attorney or CPA.</p>
-
-<h3>10 Commandments for Locksmiths</h3>
-<ol>
-  <li>Verify authorization before you touch the lock.</li>
-  <li>Choose non-destructive entry before destructive entry whenever reasonably possible.</li>
-  <li>Quote honestly; never bait customers with fake low prices.</li>
-  <li>Arrive professional: clean vehicle, clean clothes, clear communication.</li>
-  <li>Protect the customer’s door, trim, hardware, vehicle, and property while you work.</li>
-  <li>Test everything before you leave.</li>
-  <li>Clean up every time and leave the site better than you found it.</li>
-  <li>Document the job clearly: what was requested, what was done, and what was charged.</li>
-  <li>Never fake expertise. If you are out of your depth, stop before you damage something.</li>
-  <li>Guard your reputation like a master key. Trust is one of your most valuable tools.</li>
-</ol>`
+                  body: `<div data-biab-guided-setup="legal-guide"></div>`
                 }
               },
               {
@@ -300,69 +235,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "account_balance",
                 content: {
                   title: "Financial Planning Guide",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
-<h3>Core Rule</h3>
-<p>Revenue is not profit, and cash in the account is not all yours to spend.</p>
-
-<h3>Accounts and Buckets to Set Up</h3>
-<ul>
-  <li>Operating account</li>
-  <li>Tax reserve account</li>
-  <li>Owner pay account</li>
-  <li>Emergency reserve</li>
-  <li>Inventory and vehicle reserve</li>
-  <li>Marketing budget</li>
-</ul>
-
-<h3>Numbers to Track Every Week</h3>
-<ul>
-  <li>Gross revenue</li>
-  <li>Completed jobs</li>
-  <li>Average ticket</li>
-  <li>Parts cost</li>
-  <li>Gross margin</li>
-  <li>Ad spend</li>
-  <li>Cost per lead</li>
-  <li>Cost per booked job</li>
-  <li>Fuel and travel cost</li>
-  <li>Chargebacks / refunds / callbacks</li>
-  <li>Net cash flow</li>
-</ul>
-
-<h3>Build Pricing from Real Costs</h3>
-<p>Each job price should account for labor, travel, fuel, parts, payment processing, overhead, customer acquisition cost, and profit.</p>
-
-<h3>Weekly Discipline</h3>
-<ul>
-  <li>Reconcile payments</li>
-  <li>Review unpaid invoices</li>
-  <li>Record all expenses</li>
-  <li>Review advertising results</li>
-  <li>Compare actual ticket size to target</li>
-</ul>
-
-<h3>Monthly Discipline</h3>
-<ul>
-  <li>Review profit and loss</li>
-  <li>Move money into tax reserve</li>
-  <li>Review parts reorder needs</li>
-  <li>Review vehicle costs</li>
-  <li>Review ad channels</li>
-  <li>List your most profitable job types</li>
-  <li>List your least profitable job types</li>
-</ul>
-
-<h3>Simple KPI Dashboard</h3>
-<ul>
-  <li>Booked jobs</li>
-  <li>Completed jobs</li>
-  <li>Revenue by service type</li>
-  <li>Average invoice by service type</li>
-  <li>Margin by service type</li>
-  <li>Cost per lead by channel</li>
-  <li>Repeat customer count</li>
-  <li>Review count</li>
-</ul>`
+                  body: `<div data-biab-guided-setup="financial-guide"></div>`
                 }
               }
             ]
@@ -753,18 +626,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "storefront",
                 content: {
                   title: "Google Business Profile Setup",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
-<p>Do this before ads. A complete Google Business Profile helps customers find the locksmith on Google Search and Maps, and it is also required for many Local Services Ads setups.</p>
-<div class="mtk-biab-guide">
-  <div class="mtk-biab-guide__step"><strong>1. Open the setup page.</strong><p>Use the business Google account, not a personal account that will be lost later.</p><a class="mtk-biab-guide__link" href="https://business.google.com/add" target="_blank" rel="noopener">Open Google Business Profile setup</a></div>
-  <div class="mtk-biab-guide__step"><strong>2. Add or claim the business.</strong><p>If the business already appears on Google, claim it. If it does not exist yet, add it as a new business.</p><a class="mtk-biab-guide__link" href="https://support.google.com/business/answer/2911778?hl=en" target="_blank" rel="noopener">Read Google's add or claim guide</a></div>
-  <div class="mtk-biab-guide__step"><strong>3. Choose the correct business type.</strong><p>Most new locksmiths are service-area businesses. If customers do not visit a staffed storefront with signage, hide the address and list service areas instead.</p><a class="mtk-biab-guide__link" href="https://support.google.com/business/answer/9157481?hl=en" target="_blank" rel="noopener">Set service areas correctly</a></div>
-  <div class="mtk-biab-guide__step"><strong>4. Fill in every core field.</strong><p>Add business name, phone, website, hours, service categories, service descriptions, opening date, and a plain-language business description.</p></div>
-  <div class="mtk-biab-guide__step"><strong>5. Upload proof and photos.</strong><p>Add logo, cover image, vehicle photos, tools, team photos, and real job photos. Do not use fake stock photos as the main proof.</p></div>
-  <div class="mtk-biab-guide__step"><strong>6. Verify the profile.</strong><p>Follow the verification option Google gives you. Video verification is common; record slowly and show business proof clearly.</p><a class="mtk-biab-guide__link" href="https://support.google.com/business/answer/7107242?hl=en" target="_blank" rel="noopener">Open Google's verification help</a></div>
-  <div class="mtk-biab-guide__step"><strong>7. Ask for the first real reviews.</strong><p>After each completed job, send the review link the same day. Never buy reviews or review your own business.</p><a class="mtk-biab-guide__link" href="https://support.google.com/business/answer/3474122?hl=en" target="_blank" rel="noopener">Get your Google review link</a></div>
-</div>
-<p><strong>Done means:</strong> the profile is verified, service areas are accurate, the phone and website are correct, photos are live, and the business can receive reviews.</p>`
+                  body: `<div data-biab-guided-setup="google-business-profile"></div>`
                 }
               },
               {
@@ -773,18 +635,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "search",
                 content: {
                   title: "SEO & Search Console Setup",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
-<p>The goal is to make the locksmith website understandable to Google and useful to local customers. Do not make fake city pages or copy the same page twenty times.</p>
-<div class="mtk-biab-guide">
-  <div class="mtk-biab-guide__step"><strong>1. Write the service-area list.</strong><p>List the exact cities, neighborhoods, ZIP codes, or counties the locksmith can actually reach. Keep it honest and practical.</p></div>
-  <div class="mtk-biab-guide__step"><strong>2. Create the essential pages.</strong><p>Homepage, About, Contact, Residential Locksmith, Commercial Locksmith, Rekey, Lock Change, Lockout, and Auto Lockout if offered.</p></div>
-  <div class="mtk-biab-guide__step"><strong>3. Put the phone number high on every page.</strong><p>The number should be clickable on mobile and match the Google Business Profile phone number.</p></div>
-  <div class="mtk-biab-guide__step"><strong>4. Add Search Console.</strong><p>Add the live website as a property and verify ownership. If possible, use the domain property method.</p><a class="mtk-biab-guide__link" href="https://search.google.com/search-console/welcome" target="_blank" rel="noopener">Open Search Console</a><a class="mtk-biab-guide__link" href="https://support.google.com/webmasters/answer/9008080?hl=en" target="_blank" rel="noopener">Verify site ownership</a></div>
-  <div class="mtk-biab-guide__step"><strong>5. Submit the sitemap.</strong><p>After verification, submit the website sitemap so Google can discover the pages faster.</p><a class="mtk-biab-guide__link" href="https://support.google.com/webmasters/answer/183668?hl=en" target="_blank" rel="noopener">Submit a sitemap</a></div>
-  <div class="mtk-biab-guide__step"><strong>6. Add local trust content.</strong><p>Use real photos, service descriptions, FAQs, reviews, licensing information when applicable, and clear service-area language.</p></div>
-  <div class="mtk-biab-guide__step"><strong>7. Check indexing once per week.</strong><p>In Search Console, look for coverage/indexing problems, manual actions, mobile usability issues, and top search queries.</p></div>
-</div>
-<p><strong>Done means:</strong> Google Search Console is verified, the sitemap is submitted, the site has service pages, and the business name, phone, and website match everywhere.</p>`
+                  body: `<div data-biab-guided-setup="seo-setup"></div>`
                 }
               },
               {
@@ -793,17 +644,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "verified",
                 content: {
                   title: "Local Services Ads Setup",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fff4e5;color:#8a4b00;font-size:12px;font-weight:700;text-transform:uppercase;">Intermediate</span></p>
-<p>Local Services Ads can be strong for locksmith leads, but Google may require screening, licenses, insurance, background checks, and a verified Google Business Profile.</p>
-<div class="mtk-biab-guide">
-  <div class="mtk-biab-guide__step"><strong>1. Confirm eligibility.</strong><p>Start with Google's Local Services Ads onboarding and choose the correct country, state, and locksmith category.</p><a class="mtk-biab-guide__link" href="https://ads.google.com/local-services-ads/" target="_blank" rel="noopener">Open Local Services Ads</a><a class="mtk-biab-guide__link" href="https://support.google.com/localservices/answer/6224841?co=GENIE.CountryCode%3DUS&amp;hl=en" target="_blank" rel="noopener">Read Google's getting started guide</a></div>
-  <div class="mtk-biab-guide__step"><strong>2. Prepare business documents.</strong><p>Gather business registration, insurance, licensing, owner information, field worker information, and the Google Business Profile login.</p><a class="mtk-biab-guide__link" href="https://support.google.com/localservices/answer/12174778?co=GENIE.CountryCode%3DUS&amp;hl=en" target="_blank" rel="noopener">Review U.S. verification requirements</a></div>
-  <div class="mtk-biab-guide__step"><strong>3. Connect the Google Business Profile.</strong><p>The person setting up ads should be an owner or manager of the verified profile.</p></div>
-  <div class="mtk-biab-guide__step"><strong>4. Complete screening.</strong><p>Submit the requested checks exactly as Google asks. Do not launch before verification is complete.</p><a class="mtk-biab-guide__link" href="https://support.google.com/localservices/answer/6226575?hl=en" target="_blank" rel="noopener">Understand screening and verification</a></div>
-  <div class="mtk-biab-guide__step"><strong>5. Choose services and service areas.</strong><p>Turn on only services the locksmith can actually perform and answer quickly. Keep the area tight at launch.</p></div>
-  <div class="mtk-biab-guide__step"><strong>6. Set lead handling rules.</strong><p>Answer calls fast, mark bad leads, listen to calls, and pause ads if nobody can answer.</p></div>
-</div>
-<p><strong>Done means:</strong> the profile is verified, required checks are approved, services and service areas are accurate, and someone is ready to answer every lead.</p>`
+                  body: `<div data-biab-guided-setup="local-services-ads"></div>`
                 }
               },
               {
@@ -812,19 +653,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "ads_click",
                 content: {
                   title: "Google Search Ads Setup",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fff4e5;color:#8a4b00;font-size:12px;font-weight:700;text-transform:uppercase;">Intermediate</span></p>
-<p>Use standard Search campaigns only after the website, phone number, service area, and tracking are ready. Start small and target buying intent.</p>
-<div class="mtk-biab-guide">
-  <div class="mtk-biab-guide__step"><strong>1. Open Google Ads.</strong><p>Create the account with the business Google login and connect the Google Business Profile when prompted.</p><a class="mtk-biab-guide__link" href="https://ads.google.com/home/" target="_blank" rel="noopener">Open Google Ads</a><a class="mtk-biab-guide__link" href="https://support.google.com/google-ads/answer/6324971?hl=en" target="_blank" rel="noopener">Create a campaign</a></div>
-  <div class="mtk-biab-guide__step"><strong>2. Create one Search campaign.</strong><p>Choose Leads or Website traffic, then select Search. Do not start with broad automated campaign types for a brand-new locksmith account.</p><a class="mtk-biab-guide__link" href="https://support.google.com/google-ads/answer/9510373?hl=en" target="_blank" rel="noopener">Create a Search campaign</a></div>
-  <div class="mtk-biab-guide__step"><strong>3. Use one service cluster.</strong><p>Example: one campaign for Rekey and Lock Change, or one campaign for Lockout. Keep emergency, rekey, and commercial work separate.</p></div>
-  <div class="mtk-biab-guide__step"><strong>4. Set a tight service area.</strong><p>Advertise only where the business can arrive reliably and profitably.</p></div>
-  <div class="mtk-biab-guide__step"><strong>5. Use high-intent keywords.</strong><p>Start with phrase and exact match terms like "locksmith near me", "rekey locks", "lock change", and "house lockout".</p></div>
-  <div class="mtk-biab-guide__step"><strong>6. Add negative keywords on day one.</strong><p>Add free, DIY, job, salary, training, course, wholesale, key blank, template, and how to.</p><a class="mtk-biab-guide__link" href="https://support.google.com/google-ads/answer/2453972?hl=en" target="_blank" rel="noopener">Set negative keywords</a></div>
-  <div class="mtk-biab-guide__step"><strong>7. Send each ad to the matching page.</strong><p>Rekey ads go to the rekey page. Lockout ads go to the lockout page. Do not send everything to the homepage.</p></div>
-  <div class="mtk-biab-guide__step"><strong>8. Check search terms twice per week.</strong><p>Pause bad keywords, add negatives, and keep the budget where the calls are profitable.</p></div>
-</div>
-<p><strong>Done means:</strong> one focused Search campaign is live, conversion tracking is ready, negative keywords are added, and the landing page matches the ad.</p>`
+                  body: `<div data-biab-guided-setup="google-ads"></div>`
                 }
               },
               {
@@ -833,17 +662,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "monitoring",
                 content: {
                   title: "Analytics & Tracking Setup",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fff4e5;color:#8a4b00;font-size:12px;font-weight:700;text-transform:uppercase;">Intermediate</span></p>
-<p>Tracking tells the owner which marketing creates real calls and forms. Without it, ads become guessing.</p>
-<div class="mtk-biab-guide">
-  <div class="mtk-biab-guide__step"><strong>1. Create Google Analytics 4.</strong><p>Create an Analytics account and GA4 property for the locksmith website.</p><a class="mtk-biab-guide__link" href="https://analytics.google.com/" target="_blank" rel="noopener">Open Google Analytics</a><a class="mtk-biab-guide__link" href="https://support.google.com/analytics/answer/14183469?hl=en" target="_blank" rel="noopener">Set up Analytics for a website</a></div>
-  <div class="mtk-biab-guide__step"><strong>2. Add a web data stream.</strong><p>Enter the live website URL and copy the measurement ID.</p></div>
-  <div class="mtk-biab-guide__step"><strong>3. Install the tag.</strong><p>Add the Google tag to the website or use Google Tag Manager if the business is ready for that.</p><a class="mtk-biab-guide__link" href="https://support.google.com/tagmanager/answer/6103696?hl=en" target="_blank" rel="noopener">Set up Google Tag Manager</a></div>
-  <div class="mtk-biab-guide__step"><strong>4. Track important actions.</strong><p>Track phone button clicks, contact form submissions, quote requests, and clicks from the Google Business Profile when possible.</p></div>
-  <div class="mtk-biab-guide__step"><strong>5. Link Google Ads.</strong><p>Connect Google Ads and Analytics so campaigns can use conversion data.</p><a class="mtk-biab-guide__link" href="https://support.google.com/analytics/answer/9379420?hl=en" target="_blank" rel="noopener">Link Google Ads and Analytics</a></div>
-  <div class="mtk-biab-guide__step"><strong>6. Test before spending.</strong><p>Click the phone link and send a test form. Confirm the events show up before increasing ad budget.</p></div>
-</div>
-<p><strong>Done means:</strong> GA4 is installed, events are tested, Google Ads is linked if used, and the owner can see which channels produce leads.</p>`
+                  body: `<div data-biab-guided-setup="analytics-tracking"></div>`
                 }
               },
               {
@@ -861,17 +680,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "share",
                 content: {
                   title: "Social Media Setup",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
-<p>Social media is trust support for a locksmith. It should prove the business is real, active, and reachable.</p>
-<div class="mtk-biab-guide">
-  <div class="mtk-biab-guide__step"><strong>1. Create the main pages.</strong><p>Start with Facebook Business Page. Add Instagram only if the business can post photos consistently.</p><a class="mtk-biab-guide__link" href="https://www.facebook.com/pages/create" target="_blank" rel="noopener">Create a Facebook Page</a><a class="mtk-biab-guide__link" href="https://help.instagram.com/502981923235522" target="_blank" rel="noopener">Set up an Instagram business account</a></div>
-  <div class="mtk-biab-guide__step"><strong>2. Match business details exactly.</strong><p>Use the same business name, phone, website, service area, and hours as the website and Google Business Profile.</p></div>
-  <div class="mtk-biab-guide__step"><strong>3. Upload brand assets.</strong><p>Add logo, cover image, short description, service list, and clickable contact buttons.</p></div>
-  <div class="mtk-biab-guide__step"><strong>4. Publish ten starter posts.</strong><p>Use rekey tips, lockout tips, deadbolt education, commercial hardware examples, service-area posts, and review highlights.</p></div>
-  <div class="mtk-biab-guide__step"><strong>5. Create a simple weekly habit.</strong><p>Post one real photo, one tip, and one service reminder every week. Keep it practical.</p></div>
-  <div class="mtk-biab-guide__step"><strong>6. Save responses.</strong><p>Prepare short replies for pricing requests, service-area questions, after-hours calls, and review thank-yous.</p></div>
-</div>
-<p><strong>Done means:</strong> the pages look real, contact details match, starter posts are published, and someone can respond to messages.</p>`
+                  body: `<div data-biab-guided-setup="social-media-setup"></div>`
                 }
               },
               {
@@ -880,17 +689,7 @@ const MTK_BIAB_CONFIG = {
                 icon: "send",
                 content: {
                   title: "Email Campaigns",
-                  body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fff4e5;color:#8a4b00;font-size:12px;font-weight:700;text-transform:uppercase;">Intermediate</span></p>
-<p>Email should help with follow-up, review requests, repeat service, and commercial relationships. Keep it simple and useful.</p>
-<div class="mtk-biab-guide">
-  <div class="mtk-biab-guide__step"><strong>1. Choose an email platform.</strong><p>Use a reputable tool and connect the business email address before sending campaigns.</p><a class="mtk-biab-guide__link" href="https://mailchimp.com/help/create-an-account/" target="_blank" rel="noopener">Create a Mailchimp account</a><a class="mtk-biab-guide__link" href="https://help.klaviyo.com/hc/en-us/articles/115005255728" target="_blank" rel="noopener">Create a Klaviyo account</a></div>
-  <div class="mtk-biab-guide__step"><strong>2. Create the customer list fields.</strong><p>Save name, email, phone, service type, service date, city, and whether the customer is residential or commercial.</p></div>
-  <div class="mtk-biab-guide__step"><strong>3. Build the review request email.</strong><p>Send it one day after a completed job. Include the Google review link and a short thank-you.</p></div>
-  <div class="mtk-biab-guide__step"><strong>4. Build the quote follow-up email.</strong><p>If a customer asks for a quote but does not book, follow up once with the phone number and clear next step.</p></div>
-  <div class="mtk-biab-guide__step"><strong>5. Build the commercial follow-up.</strong><p>For property managers, offices, realtors, and small businesses, send a helpful reminder every few months.</p></div>
-  <div class="mtk-biab-guide__step"><strong>6. Stay compliant.</strong><p>Use honest subject lines, a real reply-to address, and an unsubscribe option where required. Do not buy random email lists.</p><a class="mtk-biab-guide__link" href="https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business" target="_blank" rel="noopener">Read CAN-SPAM rules</a></div>
-</div>
-<p><strong>Done means:</strong> the owner can send a review request, follow up on quotes, and contact past customers without guessing what to write.</p>`
+                  body: `<div data-biab-guided-setup="email-campaigns"></div>`
                 }
               }
             ]
@@ -981,6 +780,216 @@ const MTK_BIAB_CONFIG = {
       }
     }
   ],
+
+  guidedSetups: {
+    "legal-guide": {
+      badge: "Starter",
+      title: "Legal Operating Setup",
+      intro: "This is practical setup guidance, not legal advice. Locksmith rules vary by state, county, and city, so local requirements must be confirmed before launch.",
+      done: "The business is formed, rules are checked, insurance is active, customer authorization is documented, and written policies are ready.",
+      steps: [
+        {
+          icon: "business",
+          title: "Form the business properly",
+          summary: "Choose and register the legal structure the owner will actually use.",
+          details: ["Register the business as advised by a qualified professional.", "Keep business and personal finances separate from day one.", "Use the same legal name consistently across banking, taxes, invoices, and ads."]
+        },
+        {
+          icon: "fact_check",
+          title: "Check licensing and registrations",
+          summary: "Confirm the rules before advertising or taking jobs.",
+          details: ["Check locksmith license requirements.", "Check local business license and contractor registration rules.", "Confirm whether access control work triggers alarm or low-voltage licensing.", "Register for sales tax where required."]
+        },
+        {
+          icon: "verified_user",
+          title: "Carry insurance",
+          summary: "Protect the company before field work begins.",
+          details: ["General liability.", "Commercial auto.", "Tools or inland marine coverage.", "Workers compensation if applicable.", "Any other coverage the owner's professional recommends."]
+        },
+        {
+          icon: "badge",
+          title: "Verify authorization before entry",
+          summary: "Never unlock, rekey, or modify security hardware without confirming authorization.",
+          details: ["Ask for ID when appropriate.", "Confirm the address, vehicle, or property connection.", "Document who approved the work.", "Record unusual circumstances in the job notes."]
+        },
+        {
+          icon: "description",
+          title: "Use written policies",
+          summary: "Make the rules clear before there is a dispute.",
+          details: ["Estimate and service authorization wording.", "Payment terms.", "Warranty terms.", "Cancellation policy.", "Destructive-entry authorization.", "Customer-supplied-parts disclaimer when appropriate."]
+        },
+        {
+          icon: "folder",
+          title: "Keep good records",
+          summary: "The business needs organized proof of work, payment, and customer communication.",
+          details: ["Save estimates, invoices, payments, photos, customer communications, tax records, and service notes.", "Match invoice details to payment and job notes.", "Protect names, addresses, phone numbers, gate codes, and other customer data."]
+        },
+        {
+          icon: "campaign",
+          title: "Advertise honestly",
+          summary: "Trust is the business asset that protects the launch.",
+          details: ["Do not advertise fake low prices.", "Do not use fake reviews or fake licensing claims.", "Do not promise emergency arrival times that cannot be met.", "Do not advertise services the locksmith cannot actually provide."]
+        },
+        {
+          icon: "support_agent",
+          title: "Know when to escalate",
+          summary: "Some issues need a qualified attorney or CPA.",
+          details: ["Escalate contracts, claims, employment issues, tax disputes, chargebacks, licensing problems, and major customer conflicts.", "Document facts before asking for professional guidance."]
+        }
+      ]
+    },
+    "financial-guide": {
+      badge: "Starter",
+      title: "Financial Operating Setup",
+      intro: "Revenue is not profit, and cash in the account is not all available to spend. This setup turns the written guide into a weekly operating routine.",
+      done: "Accounts are separated, weekly numbers are tracked, pricing is based on real costs, and the owner has a simple KPI dashboard.",
+      steps: [
+        {
+          icon: "account_balance",
+          title: "Set up money buckets",
+          summary: "Create a simple structure before money starts moving.",
+          details: ["Operating account.", "Tax reserve account.", "Owner pay account.", "Emergency reserve.", "Inventory and vehicle reserve.", "Marketing budget."]
+        },
+        {
+          icon: "query_stats",
+          title: "Track weekly numbers",
+          summary: "The owner should know whether jobs are profitable each week.",
+          details: ["Gross revenue.", "Completed jobs.", "Average ticket.", "Parts cost.", "Gross margin.", "Ad spend.", "Cost per lead.", "Cost per booked job.", "Fuel and travel cost.", "Chargebacks, refunds, callbacks, and net cash flow."]
+        },
+        {
+          icon: "sell",
+          title: "Build pricing from real costs",
+          summary: "Each price should cover the work, not just sound competitive.",
+          details: ["Include labor, travel, fuel, parts, payment processing, overhead, customer acquisition cost, and profit.", "Separate service call, labor, and parts when it helps clarity.", "Review pricing after real jobs show actual costs."]
+        },
+        {
+          icon: "event_repeat",
+          title: "Run the weekly finance routine",
+          summary: "A small weekly rhythm prevents messy books.",
+          details: ["Reconcile payments.", "Review unpaid invoices.", "Record all expenses.", "Review advertising results.", "Compare actual ticket size to target."]
+        },
+        {
+          icon: "calendar_month",
+          title: "Run the monthly review",
+          summary: "Use monthly patterns to adjust the business.",
+          details: ["Review profit and loss.", "Move money into tax reserve.", "Review parts reorder needs.", "Review vehicle costs.", "Review ad channels.", "List the most and least profitable job types."]
+        },
+        {
+          icon: "dashboard",
+          title: "Build the KPI dashboard",
+          summary: "Keep the dashboard small enough to actually use.",
+          details: ["Booked jobs.", "Completed jobs.", "Revenue by service type.", "Average invoice by service type.", "Margin by service type.", "Cost per lead by channel.", "Repeat customer count.", "Review count."]
+        }
+      ]
+    },
+    "google-business-profile": {
+      badge: "Starter",
+      title: "Google Business Profile Setup",
+      intro: "Do this before ads. A complete profile helps customers find the locksmith on Google Search and Maps and supports many Local Services Ads setups.",
+      done: "The profile is verified, service areas are accurate, the phone and website are correct, photos are live, and reviews can be collected.",
+      steps: [
+        { icon: "open_in_new", title: "Open the setup page", summary: "Use the business Google account, not a personal account that may be lost later.", details: ["Start the profile with the login the business will keep."], links: [{ label: "Open Google Business Profile setup", href: "https://business.google.com/add" }] },
+        { icon: "add_business", title: "Add or claim the business", summary: "Claim an existing profile or create a new one.", details: ["If the business already appears on Google, claim it.", "If it does not exist yet, add it as a new business."], links: [{ label: "Read Google's add or claim guide", href: "https://support.google.com/business/answer/2911778?hl=en" }] },
+        { icon: "map", title: "Choose the correct business type", summary: "Most new locksmiths are service-area businesses.", details: ["Hide the address unless customers visit a staffed storefront with signage.", "List only practical service areas."], links: [{ label: "Set service areas correctly", href: "https://support.google.com/business/answer/9157481?hl=en" }] },
+        { icon: "edit_note", title: "Fill in every core field", summary: "Complete the data customers and Google need.", details: ["Business name.", "Phone.", "Website.", "Hours.", "Service categories.", "Service descriptions.", "Opening date.", "Plain-language business description."] },
+        { icon: "photo_camera", title: "Upload proof and photos", summary: "Make the business look real and local.", details: ["Add logo, cover image, vehicle photos, tools, team photos, and real job photos.", "Do not use fake stock photos as the main proof."] },
+        { icon: "verified", title: "Verify the profile", summary: "Follow the verification option Google gives you.", details: ["Video verification is common.", "Record slowly and show business proof clearly."], links: [{ label: "Open Google's verification help", href: "https://support.google.com/business/answer/7107242?hl=en" }] },
+        { icon: "rate_review", title: "Ask for the first real reviews", summary: "Send the review link after completed jobs.", details: ["Send the request the same day.", "Never buy reviews or review your own business."], links: [{ label: "Get your Google review link", href: "https://support.google.com/business/answer/3474122?hl=en" }] }
+      ]
+    },
+    "seo-setup": {
+      badge: "Starter",
+      title: "SEO & Search Console Setup",
+      intro: "Make the locksmith website understandable to Google and useful to local customers. Do not create fake city pages or duplicate pages.",
+      done: "Search Console is verified, the sitemap is submitted, service pages exist, and the business name, phone, and website match everywhere.",
+      steps: [
+        { icon: "map", title: "Write the service-area list", summary: "List only places the locksmith can actually reach.", details: ["Use exact cities, neighborhoods, ZIP codes, or counties.", "Keep it honest and practical."] },
+        { icon: "web", title: "Create essential pages", summary: "Build the pages buyers expect.", details: ["Homepage.", "About.", "Contact.", "Residential Locksmith.", "Commercial Locksmith.", "Rekey.", "Lock Change.", "Lockout.", "Auto Lockout if offered."] },
+        { icon: "call", title: "Put the phone number high", summary: "The phone number should be easy to tap.", details: ["Make it clickable on mobile.", "Match the Google Business Profile phone number."] },
+        { icon: "search", title: "Add Search Console", summary: "Verify the live website.", details: ["Use the domain property method if possible."], links: [{ label: "Open Search Console", href: "https://search.google.com/search-console/welcome" }, { label: "Verify site ownership", href: "https://support.google.com/webmasters/answer/9008080?hl=en" }] },
+        { icon: "upload_file", title: "Submit the sitemap", summary: "Help Google discover pages faster.", details: ["Submit the website sitemap after verification."], links: [{ label: "Submit a sitemap", href: "https://support.google.com/webmasters/answer/183668?hl=en" }] },
+        { icon: "verified_user", title: "Add local trust content", summary: "Prove the business is real.", details: ["Use real photos.", "Add service descriptions, FAQs, reviews, licensing information when applicable, and clear service-area language."] },
+        { icon: "event_repeat", title: "Check indexing weekly", summary: "Use Search Console as an operating habit.", details: ["Review indexing problems.", "Check manual actions and mobile usability issues.", "Review top search queries."] }
+      ]
+    },
+    "local-services-ads": {
+      badge: "Intermediate",
+      title: "Local Services Ads Setup",
+      intro: "Local Services Ads can be strong for locksmith leads, but eligibility, screening, insurance, licensing, and profile verification still matter.",
+      done: "The profile is verified, required checks are approved, services and service areas are accurate, and someone is ready to answer every lead.",
+      steps: [
+        { icon: "verified", title: "Confirm eligibility", summary: "Start with Google's Local Services Ads onboarding.", details: ["Choose the correct country, state, and locksmith category."], links: [{ label: "Open Local Services Ads", href: "https://ads.google.com/local-services-ads/" }, { label: "Read Google's getting started guide", href: "https://support.google.com/localservices/answer/6224841?co=GENIE.CountryCode%3DUS&hl=en" }] },
+        { icon: "folder",
+          title: "Prepare business documents",
+          summary: "Gather proof before starting verification.",
+          details: ["Business registration.", "Insurance.", "Licensing.", "Owner information.", "Field worker information.", "Google Business Profile login."],
+          links: [{ label: "Review U.S. verification requirements", href: "https://support.google.com/localservices/answer/12174778?co=GENIE.CountryCode%3DUS&hl=en" }]
+        },
+        { icon: "storefront", title: "Connect the Google profile", summary: "Use an owner or manager login.", details: ["The person setting up ads should be an owner or manager of the verified Google Business Profile."] },
+        { icon: "security", title: "Complete screening", summary: "Submit exactly what Google asks for.", details: ["Do not launch before verification is complete."], links: [{ label: "Understand screening and verification", href: "https://support.google.com/localservices/answer/6226575?hl=en" }] },
+        { icon: "build", title: "Choose services and service areas", summary: "Advertise only what the business can perform and answer quickly.", details: ["Keep the area tight at launch.", "Turn on only services the locksmith can actually provide."] },
+        { icon: "support_agent", title: "Set lead handling rules", summary: "Ads only work when leads are handled quickly.", details: ["Answer calls fast.", "Mark bad leads.", "Listen to calls.", "Pause ads if nobody can answer."] }
+      ]
+    },
+    "google-ads": {
+      badge: "Intermediate",
+      title: "Google Search Ads Setup",
+      intro: "Use standard Search campaigns only after the website, phone number, service area, and tracking are ready. Start small and target buying intent.",
+      done: "One focused Search campaign is live, conversion tracking is ready, negative keywords are added, and the landing page matches the ad.",
+      steps: [
+        { icon: "ads_click", title: "Open Google Ads", summary: "Create the account with the business Google login.", details: ["Connect the Google Business Profile when prompted."], links: [{ label: "Open Google Ads", href: "https://ads.google.com/home/" }, { label: "Create a campaign", href: "https://support.google.com/google-ads/answer/6324971?hl=en" }] },
+        { icon: "search", title: "Create one Search campaign", summary: "Start narrow.", details: ["Choose Leads or Website traffic.", "Select Search.", "Do not start with broad automated campaign types for a brand-new locksmith account."], links: [{ label: "Create a Search campaign", href: "https://support.google.com/google-ads/answer/9510373?hl=en" }] },
+        { icon: "category", title: "Use one service cluster", summary: "Keep intent clean.", details: ["Example: one campaign for Rekey and Lock Change, or one campaign for Lockout.", "Keep emergency, rekey, and commercial work separate."] },
+        { icon: "location_on", title: "Set a tight service area", summary: "Spend where the business can arrive profitably.", details: ["Advertise only where the locksmith can arrive reliably and profitably."] },
+        { icon: "key", title: "Use high-intent keywords", summary: "Focus on buyers, not browsers.", details: ["Start with phrase and exact match terms like locksmith near me, rekey locks, lock change, and house lockout."] },
+        { icon: "block", title: "Add negative keywords", summary: "Prevent wasted spend from day one.", details: ["Add free, DIY, job, salary, training, course, wholesale, key blank, template, and how to."], links: [{ label: "Set negative keywords", href: "https://support.google.com/google-ads/answer/2453972?hl=en" }] },
+        { icon: "link", title: "Match ads to landing pages", summary: "Send each ad to the matching page.", details: ["Rekey ads go to the rekey page.", "Lockout ads go to the lockout page.", "Do not send everything to the homepage."] },
+        { icon: "manage_search", title: "Check search terms twice weekly", summary: "Keep the budget where calls are profitable.", details: ["Pause bad keywords.", "Add negatives.", "Move spend toward booked jobs."] }
+      ]
+    },
+    "analytics-tracking": {
+      badge: "Intermediate",
+      title: "Analytics & Tracking Setup",
+      intro: "Tracking tells the owner which marketing creates real calls and forms. Without it, ads become guessing.",
+      done: "GA4 is installed, events are tested, Google Ads is linked if used, and the owner can see which channels produce leads.",
+      steps: [
+        { icon: "monitoring", title: "Create Google Analytics 4", summary: "Create an Analytics account and GA4 property for the locksmith website.", details: ["Use the business Google account."], links: [{ label: "Open Google Analytics", href: "https://analytics.google.com/" }, { label: "Set up Analytics for a website", href: "https://support.google.com/analytics/answer/14183469?hl=en" }] },
+        { icon: "language", title: "Add a web data stream", summary: "Connect the live website URL.", details: ["Enter the live website URL.", "Copy the measurement ID."] },
+        { icon: "code", title: "Install the tag", summary: "Add the Google tag or use Tag Manager.", details: ["Use Google Tag Manager if the business is ready for that."], links: [{ label: "Set up Google Tag Manager", href: "https://support.google.com/tagmanager/answer/6103696?hl=en" }] },
+        { icon: "touch_app", title: "Track important actions", summary: "Track the actions that create leads.", details: ["Phone button clicks.", "Contact form submissions.", "Quote requests.", "Clicks from the Google Business Profile when possible."] },
+        { icon: "sync_alt", title: "Link Google Ads", summary: "Let campaigns use conversion data.", details: ["Connect Google Ads and Analytics when Google Ads is used."], links: [{ label: "Link Google Ads and Analytics", href: "https://support.google.com/analytics/answer/9379420?hl=en" }] },
+        { icon: "science", title: "Test before spending", summary: "Do not increase budget until events are working.", details: ["Click the phone link.", "Send a test form.", "Confirm the events show up."] }
+      ]
+    },
+    "social-media-setup": {
+      badge: "Starter",
+      title: "Social Media Setup",
+      intro: "Social media is trust support for a locksmith. It should prove the business is real, active, and reachable.",
+      done: "The pages look real, contact details match, starter posts are published, and someone can respond to messages.",
+      steps: [
+        { icon: "share", title: "Create the main pages", summary: "Start with Facebook. Add Instagram only if the business can post photos consistently.", details: ["Use business-owned logins."], links: [{ label: "Create a Facebook Page", href: "https://www.facebook.com/pages/create" }, { label: "Set up an Instagram business account", href: "https://help.instagram.com/502981923235522" }] },
+        { icon: "sync", title: "Match business details exactly", summary: "Make every profile match the website and Google profile.", details: ["Business name.", "Phone.", "Website.", "Service area.", "Hours."] },
+        { icon: "image", title: "Upload brand assets", summary: "Make the page look finished.", details: ["Logo.", "Cover image.", "Short description.", "Service list.", "Clickable contact buttons."] },
+        { icon: "post_add", title: "Publish ten starter posts", summary: "Show that the business is active.", details: ["Rekey tips.", "Lockout tips.", "Deadbolt education.", "Commercial hardware examples.", "Service-area posts.", "Review highlights."] },
+        { icon: "event_repeat", title: "Create a weekly habit", summary: "Keep posting simple enough to sustain.", details: ["Post one real photo.", "Post one tip.", "Post one service reminder every week."] },
+        { icon: "quickreply", title: "Save responses", summary: "Prepare replies before messages arrive.", details: ["Pricing requests.", "Service-area questions.", "After-hours calls.", "Review thank-yous."] }
+      ]
+    },
+    "email-campaigns": {
+      badge: "Intermediate",
+      title: "Email Campaign Setup",
+      intro: "Email should help with follow-up, review requests, repeat service, and commercial relationships. Keep it simple and useful.",
+      done: "The owner can send a review request, follow up on quotes, and contact past customers without guessing what to write.",
+      steps: [
+        { icon: "alternate_email", title: "Choose an email platform", summary: "Connect the business email before sending campaigns.", details: ["Use a reputable tool.", "Use the real reply-to address."], links: [{ label: "Create a Mailchimp account", href: "https://mailchimp.com/help/create-an-account/" }, { label: "Create a Klaviyo account", href: "https://help.klaviyo.com/hc/en-us/articles/115005255728" }] },
+        { icon: "table_chart", title: "Create customer fields", summary: "Save the data needed for follow-up.", details: ["Name.", "Email.", "Phone.", "Service type.", "Service date.", "City.", "Residential or commercial customer type."] },
+        { icon: "rate_review", title: "Build the review request email", summary: "Send it one day after a completed job.", details: ["Include the Google review link.", "Use a short thank-you."] },
+        { icon: "mark_email_unread", title: "Build quote follow-up", summary: "Follow up once when a quote does not book.", details: ["Include the phone number.", "Give a clear next step."] },
+        { icon: "business_center", title: "Build commercial follow-up", summary: "Stay visible to recurring B2B customers.", details: ["Send useful reminders to property managers, offices, realtors, and small businesses every few months."] },
+        { icon: "policy", title: "Stay compliant", summary: "Do not turn follow-up into spam.", details: ["Use honest subject lines.", "Use a real reply-to address.", "Include unsubscribe where required.", "Do not buy random email lists."], links: [{ label: "Read CAN-SPAM rules", href: "https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business" }] }
+      ]
+    }
+  },
 
   events: {
     publish: {
