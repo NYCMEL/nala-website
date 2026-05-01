@@ -1,7 +1,7 @@
 FORGET ALL PREVIOUS CONTEXT for mtk-request and remember this as mtk-request forever
 
 Create a reusable UI request named mtk-request using:
-- MUST use Nala.scss styles, variables etc.
+- MUST use NALA.scss styles, variables etc.
 - HTML
 - SCSS
 - Vanilla JavaScript
