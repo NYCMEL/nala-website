@@ -6,6 +6,10 @@
   --biab-line: #dadce0;
   --biab-bg: #f7f8fa;
   --biab-panel: #ffffff;
+  --biab-motion-fast: 160ms cubic-bezier(0.2, 0, 0, 1);
+  --biab-motion-standard: 220ms cubic-bezier(0.2, 0, 0, 1);
+  --biab-hover-lift: -2px;
+  --biab-hover-shadow: 0 10px 24px rgba(60, 64, 67, 0.12);
   display: block;
   min-height: 100vh;
   color: var(--biab-ink);
@@ -108,6 +112,7 @@
   height: 100%;
   background: linear-gradient(90deg, var(--biab-gold-dark), #c6952d);
   border-radius: inherit;
+  transition: width var(--biab-motion-standard);
 }
 
 .mtk-biab-setup__icon-btn,
@@ -120,6 +125,19 @@
   min-height: 42px;
   font-weight: 700;
   cursor: pointer;
+  transition: background-color var(--biab-motion-fast), border-color var(--biab-motion-fast), color var(--biab-motion-fast), box-shadow var(--biab-motion-fast), transform var(--biab-motion-fast);
+}
+
+.mtk-biab-setup__icon-btn:hover,
+.mtk-biab-setup__btn:not(:disabled):hover {
+  transform: translateY(var(--biab-hover-lift));
+  box-shadow: var(--biab-hover-shadow);
+}
+
+.mtk-biab-setup__icon-btn:active,
+.mtk-biab-setup__btn:not(:disabled):active {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 .mtk-biab-setup__icon-btn {
@@ -189,6 +207,12 @@
   text-align: left;
   cursor: pointer;
   min-width: max-content;
+  transition: background-color var(--biab-motion-fast), color var(--biab-motion-fast), transform var(--biab-motion-fast);
+}
+
+.mtk-biab-setup__stepper button:hover {
+  background: #fffaf0;
+  transform: translateY(-1px);
 }
 
 .mtk-biab-setup__stepper button.is-current {
@@ -266,6 +290,14 @@
   color: var(--biab-ink);
   text-decoration: none;
   background: #fff;
+  transition: border-color var(--biab-motion-fast), box-shadow var(--biab-motion-fast), transform var(--biab-motion-fast);
+}
+
+.mtk-biab-setup__intro-grid div:hover,
+.mtk-biab-setup__tool-card:hover {
+  border-color: #d8c18a;
+  box-shadow: var(--biab-hover-shadow);
+  transform: translateY(var(--biab-hover-lift));
 }
 
 .mtk-biab-setup__video-placeholder,
@@ -312,6 +344,14 @@
   padding: 8px 12px;
   font-weight: 700;
   text-decoration: none;
+  transition: background-color var(--biab-motion-fast), border-color var(--biab-motion-fast), box-shadow var(--biab-motion-fast), transform var(--biab-motion-fast);
+}
+
+.mtk-biab-setup__links a:hover {
+  background: #fff4d8;
+  border-color: var(--biab-gold);
+  box-shadow: 0 8px 18px rgba(169, 130, 18, 0.13);
+  transform: translateY(-1px);
 }
 
 .mtk-biab-setup__form {
@@ -438,6 +478,13 @@
   border-radius: 6px;
   padding: 12px;
   cursor: pointer;
+  transition: border-color var(--biab-motion-fast), box-shadow var(--biab-motion-fast), transform var(--biab-motion-fast), background-color var(--biab-motion-fast);
+}
+
+.mtk-biab-setup__palette-grid label:hover {
+  border-color: #d8c18a;
+  box-shadow: var(--biab-hover-shadow);
+  transform: translateY(var(--biab-hover-lift));
 }
 
 .mtk-biab-setup__palette-grid label.is-selected {
@@ -594,11 +641,18 @@
   background: #fff;
   text-align: left;
   cursor: pointer;
+  transition: border-color var(--biab-motion-fast), box-shadow var(--biab-motion-fast), transform var(--biab-motion-fast), background-color var(--biab-motion-fast);
 }
 
 .mtk-biab-setup__logo-choices button.is-active {
   border-color: var(--biab-gold);
   box-shadow: inset 0 0 0 1px var(--biab-gold);
+}
+
+.mtk-biab-setup__logo-choices button:hover {
+  border-color: #d8c18a;
+  box-shadow: var(--biab-hover-shadow);
+  transform: translateY(var(--biab-hover-lift));
 }
 
 .mtk-biab-setup__logo-choice-icon {
@@ -661,6 +715,12 @@
   border-radius: 6px;
   overflow: hidden;
   background: #fff;
+  transition: box-shadow var(--biab-motion-fast), transform var(--biab-motion-fast);
+}
+
+.mtk-biab-setup__logo-preview-card:hover {
+  box-shadow: var(--biab-hover-shadow);
+  transform: translateY(-1px);
 }
 
 .mtk-biab-setup__logo-preview-card > span {
@@ -1002,5 +1062,28 @@
   .mtk-biab-setup__logo-lockup {
     flex-direction: column;
     text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mtk-biab-setup *,
+  .mtk-biab-setup *::before,
+  .mtk-biab-setup *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .mtk-biab-setup__icon-btn:hover,
+  .mtk-biab-setup__btn:not(:disabled):hover,
+  .mtk-biab-setup__stepper button:hover,
+  .mtk-biab-setup__intro-grid div:hover,
+  .mtk-biab-setup__tool-card:hover,
+  .mtk-biab-setup__links a:hover,
+  .mtk-biab-setup__palette-grid label:hover,
+  .mtk-biab-setup__logo-choices button:hover,
+  .mtk-biab-setup__logo-preview-card:hover {
+    transform: none;
   }
 }

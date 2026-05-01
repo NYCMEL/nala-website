@@ -48,6 +48,10 @@ mtk-biab.mtk-biab {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  --biab-motion-fast: 160ms cubic-bezier(0.2, 0, 0, 1);
+  --biab-motion-standard: 220ms cubic-bezier(0.2, 0, 0, 1);
+  --biab-hover-lift: -2px;
+  --biab-hover-shadow: 0 10px 24px rgba(60, 64, 67, 0.12);
 }
 
 .mtk-biab__sidebar-item-btn span:not(.material-icons) {
@@ -107,6 +111,12 @@ mtk-biab.mtk-biab {
     font-size: 12px;
     font-weight: 800;
     cursor: pointer;
+    transition: background-color var(--biab-motion-fast), color var(--biab-motion-fast), transform var(--biab-motion-fast);
+
+    &:hover {
+      background: rgba(198, 149, 45, 0.22);
+      transform: translateY(-1px);
+    }
 
     &.is-active {
       background: #c6952d;
@@ -137,6 +147,16 @@ mtk-biab.mtk-biab {
   white-space: nowrap;
   overflow: hidden;
   transform: none !important;
+  transition: background-color var(--biab-motion-fast), border-color var(--biab-motion-fast), box-shadow var(--biab-motion-fast), color var(--biab-motion-fast), transform var(--biab-motion-fast);
+
+  &:not(:disabled):hover {
+    box-shadow: var(--biab-hover-shadow);
+    transform: translateY(var(--biab-hover-lift)) !important;
+  }
+
+  &:not(:disabled):active {
+    transform: translateY(0) !important;
+  }
 
   .mtk-ripple-wave,
   .mtk-ripple-surface {
@@ -237,12 +257,12 @@ mtk-biab.mtk-biab {
 }
 
 .mtk-biab-api-card {
-  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+  transition: border-color var(--biab-motion-fast), box-shadow var(--biab-motion-fast), transform var(--biab-motion-fast);
 
   &:hover {
     border-color: #c6952d;
-    box-shadow: 0 8px 22px rgba(60, 64, 67, 0.11);
-    transform: translateY(-1px);
+    box-shadow: var(--biab-hover-shadow);
+    transform: translateY(var(--biab-hover-lift));
   }
 }
 
@@ -813,6 +833,13 @@ mtk-biab.mtk-biab {
   border: 1px solid #eadfca;
   border-radius: 8px;
   background: #fff;
+  transition: border-color var(--biab-motion-fast), box-shadow var(--biab-motion-fast), transform var(--biab-motion-fast);
+
+  &:hover {
+    border-color: #c6952d;
+    box-shadow: var(--biab-hover-shadow);
+    transform: translateY(var(--biab-hover-lift));
+  }
 
   div {
     display: grid;
@@ -896,6 +923,13 @@ mtk-biab.mtk-biab {
   border-radius: 8px;
   padding: 14px;
   background: #fbf8f1;
+  transition: border-color var(--biab-motion-fast), box-shadow var(--biab-motion-fast), transform var(--biab-motion-fast);
+
+  &:hover {
+    border-color: #c6952d;
+    box-shadow: var(--biab-hover-shadow);
+    transform: translateY(var(--biab-hover-lift));
+  }
 
   &.is-published {
     background: #fff;
@@ -1103,11 +1137,12 @@ mtk-biab.mtk-biab {
   text-align: left;
   cursor: pointer;
   overflow: hidden;
-  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+  transition: border-color var(--biab-motion-fast), box-shadow var(--biab-motion-fast), background-color var(--biab-motion-fast), transform var(--biab-motion-fast);
 
   &:hover {
     border-color: #c6952d;
     background: #fff8e8;
+    transform: translateY(var(--biab-hover-lift));
   }
 
   &:focus-visible {
@@ -2023,6 +2058,12 @@ mtk-biab.mtk-biab {
     box-shadow: $md-elevation-1;
     border: 1px solid $md-outline-variant;
     animation: mtk-biab-rise-in 240ms ease-out;
+    transition: box-shadow var(--biab-motion-standard), transform var(--biab-motion-standard);
+
+    &:hover {
+      box-shadow: var(--biab-hover-shadow);
+      transform: translateY(var(--biab-hover-lift));
+    }
   }
 
   &__content-title {
@@ -2232,6 +2273,20 @@ mtk-biab.mtk-biab {
       animation-iteration-count: 1 !important;
       scroll-behavior: auto !important;
       transition-duration: 0.01ms !important;
+    }
+
+    &__lang-switch button:hover,
+    &__action-btn:not(:disabled):hover,
+    &-api-card:hover,
+    &-guided-setup__list-btn:hover,
+    &-invoice-records__card:hover,
+    &-reviews__card:hover,
+    &__logo-option-card:hover,
+    &__logo-swatch-card:hover,
+    &__logo-choice:hover,
+    &__logo-pill:hover,
+    &__content-card:hover {
+      transform: none !important;
     }
   }
 

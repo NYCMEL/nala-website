@@ -11,6 +11,10 @@ body {
   line-height: $line-height-loose;
   margin: 0;
   padding: 0;
+  --client-motion-fast: 160ms cubic-bezier(0.2, 0, 0, 1);
+  --client-motion-standard: 220ms cubic-bezier(0.2, 0, 0, 1);
+  --client-hover-lift: -2px;
+  --client-hover-shadow: 0 10px 24px rgba(60, 64, 67, 0.12);
 }
 
 .client-container {
@@ -134,9 +138,15 @@ body {
   font-size: $font-size-base;
   font-weight: $font-weight-medium;
   cursor: pointer;
-  transition: $transition-default;
+  transition: background-color var(--client-motion-fast), border-color var(--client-motion-fast), box-shadow var(--client-motion-fast), transform var(--client-motion-fast);
 
-  &:hover { background-color: $color-bg-light; box-shadow: $shadow-sm; }
+  &:hover {
+    background-color: $color-bg-light;
+    box-shadow: var(--client-hover-shadow);
+    transform: translateY(var(--client-hover-lift));
+  }
+
+  &:active { transform: translateY(0); }
   .material-icons { font-size: $font-size-2xl; }
 }
 
@@ -172,10 +182,10 @@ body {
     font-weight: $font-weight-medium;
     cursor: pointer;
     border-bottom: 3px solid transparent;
-    transition: $transition-fast;
+    transition: color var(--client-motion-fast), border-color var(--client-motion-fast), transform var(--client-motion-fast);
     white-space: nowrap;
 
-    &:hover { color: $color-text-primary; }
+    &:hover { color: $color-text-primary; transform: translateY(-1px); }
     &.active { color: $color-client-primary; border-bottom-color: $color-client-primary; }
   }
 }
@@ -207,6 +217,13 @@ body {
   border-radius: $radius-sm;
   padding: $font-size-lg;
   background: #fffdf8;
+  transition: border-color var(--client-motion-fast), box-shadow var(--client-motion-fast), transform var(--client-motion-fast);
+
+  &:hover {
+    border-color: #c6952d;
+    box-shadow: var(--client-hover-shadow);
+    transform: translateY(var(--client-hover-lift));
+  }
 
   &__head {
     display: flex;
@@ -292,12 +309,14 @@ body {
     span {
       font-size: 34px;
       color: #c7c0ac;
+      transition: color var(--client-motion-fast), transform var(--client-motion-fast);
     }
 
     input:checked ~ span,
     label:hover span,
     label:hover ~ label span {
       color: $color-client-primary;
+      transform: scale(1.04);
     }
   }
 }
@@ -324,7 +343,13 @@ body {
       justify-content: center;
       color: $color-white;
       box-shadow: $shadow-md;
+      transition: box-shadow var(--client-motion-fast), transform var(--client-motion-fast);
       .material-icons { font-size: 32px; }
+    }
+
+    &:hover .badge-icon {
+      box-shadow: var(--client-hover-shadow);
+      transform: translateY(var(--client-hover-lift));
     }
 
     .badge-year { font-size: $font-size-base; color: $color-text-secondary; font-weight: $font-weight-medium; }
@@ -337,8 +362,11 @@ body {
   padding: $spacing-xl;
   box-shadow: $shadow-md;
   margin-bottom: $spacing-xl;
-  transition: $transition-default;
-  &:hover { box-shadow: $shadow-hover; }
+  transition: box-shadow var(--client-motion-standard), transform var(--client-motion-standard);
+  &:hover {
+    box-shadow: $shadow-hover;
+    transform: translateY(var(--client-hover-lift));
+  }
 }
 
 .contact-card {
@@ -358,7 +386,8 @@ body {
     text-decoration: none;
     font-size: $font-size-base;
     margin-bottom: $font-size-lg;
-    &:hover { text-decoration: underline; }
+    transition: color var(--client-motion-fast), transform var(--client-motion-fast);
+    &:hover { text-decoration: underline; transform: translateX(2px); }
   }
 
   .btn-estimate { width: 100%; margin-bottom: $font-size-lg; }
@@ -416,10 +445,10 @@ body {
   font-size: $font-size-lg;
   font-weight: $font-weight-medium;
   cursor: pointer;
-  transition: $transition-default;
+  transition: background-color var(--client-motion-fast), box-shadow var(--client-motion-fast), transform var(--client-motion-fast);
   box-shadow: $shadow-sm;
 
-  &:hover  { background-color: $color-client-hover; box-shadow: $shadow-md; transform: translateY(-1px); }
+  &:hover  { background-color: $color-client-hover; box-shadow: var(--client-hover-shadow); transform: translateY(var(--client-hover-lift)); }
   &:active { transform: translateY(0); }
 }
 
@@ -442,3 +471,27 @@ body {
 .edtable-mode .stat-suffix,
 .edtable-mode .stat-text  { color: $color-text-secondary; }
 .edtable-mode .stat-num   { color: $color-text-primary; font-weight: $font-weight-medium; }
+
+@media (prefers-reduced-motion: reduce) {
+  body *,
+  body *::before,
+  body *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .btn-share:hover,
+  .client-tabs .tab:hover,
+  .client-review-card:hover,
+  .client-review-form__stars input:checked ~ span,
+  .client-review-form__stars label:hover span,
+  .client-review-form__stars label:hover ~ label span,
+  .top-pro-badges .pro-badge:hover .badge-icon,
+  .card:hover,
+  .contact-card .link-details:hover,
+  .btn-primary:hover {
+    transform: none;
+  }
+}

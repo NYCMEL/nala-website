@@ -7,7 +7,11 @@ mtk-biab.mtk-biab {
   color: #202124;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden; }
+  overflow-x: hidden;
+  --biab-motion-fast: 160ms cubic-bezier(0.2, 0, 0, 1);
+  --biab-motion-standard: 220ms cubic-bezier(0.2, 0, 0, 1);
+  --biab-hover-lift: -2px;
+  --biab-hover-shadow: 0 10px 24px rgba(60, 64, 67, 0.12); }
 
 .mtk-biab__sidebar-item-btn span:not(.material-icons) {
   flex: 1 1 auto;
@@ -67,7 +71,12 @@ mtk-biab.mtk-biab {
   padding: 5px 9px;
   font-size: 12px;
   font-weight: 800;
-  cursor: pointer; }
+  cursor: pointer;
+  transition: background-color var(--biab-motion-fast), color var(--biab-motion-fast), transform var(--biab-motion-fast); }
+
+.mtk-biab__lang-switch button:hover {
+  background: rgba(198, 149, 45, 0.22);
+  transform: translateY(-1px); }
 
 .mtk-biab__lang-switch button.is-active {
   background: #c6952d;
@@ -94,7 +103,15 @@ mtk-biab.mtk-biab {
   text-decoration: none;
   white-space: nowrap;
   overflow: hidden;
-  transform: none !important; }
+  transform: none !important;
+  transition: background-color var(--biab-motion-fast), border-color var(--biab-motion-fast), box-shadow var(--biab-motion-fast), color var(--biab-motion-fast), transform var(--biab-motion-fast); }
+
+.mtk-biab__action-btn:not(:disabled):hover {
+  box-shadow: var(--biab-hover-shadow);
+  transform: translateY(var(--biab-hover-lift)) !important; }
+
+.mtk-biab__action-btn:not(:disabled):active {
+  transform: translateY(0) !important; }
 
 .mtk-biab__action-btn .mtk-ripple-wave,
 .mtk-biab__action-btn .mtk-ripple-surface {
@@ -180,12 +197,12 @@ mtk-biab.mtk-biab {
   background: #fff; }
 
 .mtk-biab-api-card {
-  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease; }
+  transition: border-color var(--biab-motion-fast), box-shadow var(--biab-motion-fast), transform var(--biab-motion-fast); }
 
 .mtk-biab-api-card:hover {
   border-color: #c6952d;
-  box-shadow: 0 8px 22px rgba(60, 64, 67, 0.11);
-  transform: translateY(-1px); }
+  box-shadow: var(--biab-hover-shadow);
+  transform: translateY(var(--biab-hover-lift)); }
 
 .mtk-biab-guided-setup {
   display: grid;
@@ -669,7 +686,13 @@ mtk-biab.mtk-biab {
   padding: 12px;
   border: 1px solid #eadfca;
   border-radius: 8px;
-  background: #fff; }
+  background: #fff;
+  transition: border-color var(--biab-motion-fast), box-shadow var(--biab-motion-fast), transform var(--biab-motion-fast); }
+
+.mtk-biab-invoice-records__card:hover {
+  border-color: #c6952d;
+  box-shadow: var(--biab-hover-shadow);
+  transform: translateY(var(--biab-hover-lift)); }
 
 .mtk-biab-invoice-records__card div {
   display: grid;
@@ -738,7 +761,13 @@ mtk-biab.mtk-biab {
   border: 1px solid #e3dac5;
   border-radius: 8px;
   padding: 14px;
-  background: #fbf8f1; }
+  background: #fbf8f1;
+  transition: border-color var(--biab-motion-fast), box-shadow var(--biab-motion-fast), transform var(--biab-motion-fast); }
+
+.mtk-biab-reviews__card:hover {
+  border-color: #c6952d;
+  box-shadow: var(--biab-hover-shadow);
+  transform: translateY(var(--biab-hover-lift)); }
 
 .mtk-biab-reviews__card.is-published {
   background: #fff;
@@ -916,14 +945,15 @@ mtk-biab.mtk-biab {
   text-align: left;
   cursor: pointer;
   overflow: hidden;
-  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease; }
+  transition: border-color var(--biab-motion-fast), box-shadow var(--biab-motion-fast), background-color var(--biab-motion-fast), transform var(--biab-motion-fast); }
 
 .mtk-biab__logo-option-card:hover,
 .mtk-biab__logo-swatch-card:hover,
 .mtk-biab__logo-choice:hover,
 .mtk-biab__logo-pill:hover {
   border-color: #c6952d;
-  background: #fff8e8; }
+  background: #fff8e8;
+  transform: translateY(var(--biab-hover-lift)); }
 
 .mtk-biab__logo-option-card:focus-visible,
 .mtk-biab__logo-swatch-card:focus-visible,
@@ -1694,7 +1724,12 @@ mtk-biab.mtk-biab {
   padding: 28px 32px;
   box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
   border: 1px solid #e8eaed;
-  animation: mtk-biab-rise-in 240ms ease-out; }
+  animation: mtk-biab-rise-in 240ms ease-out;
+  transition: box-shadow var(--biab-motion-standard), transform var(--biab-motion-standard); }
+
+.mtk-biab__content-card:hover {
+  box-shadow: var(--biab-hover-shadow);
+  transform: translateY(var(--biab-hover-lift)); }
 
 .mtk-biab__content-title {
   font-size: 22px;
@@ -1866,7 +1901,19 @@ mtk-biab.mtk-biab {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important; } }
+    transition-duration: 0.01ms !important; }
+  .mtk-biab__lang-switch button:hover,
+  .mtk-biab__action-btn:not(:disabled):hover,
+  .mtk-biab-api-card:hover,
+  .mtk-biab-guided-setup__list-btn:hover,
+  .mtk-biab-invoice-records__card:hover,
+  .mtk-biab-reviews__card:hover,
+  .mtk-biab__logo-option-card:hover,
+  .mtk-biab__logo-swatch-card:hover,
+  .mtk-biab__logo-choice:hover,
+  .mtk-biab__logo-pill:hover,
+  .mtk-biab__content-card:hover {
+    transform: none !important; } }
 
 @media (max-width: 1100px) {
   .mtk-biab__tab-btn {
