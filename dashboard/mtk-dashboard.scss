@@ -141,6 +141,34 @@
     margin: 0;
   }
 
+  &__business-tools {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: $spacing-sm;
+    margin-top: $font-size-lg;
+  }
+
+  &__business-tool {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid #d8c18a;
+    border-radius: 6px;
+    padding: 8px 10px;
+    color: #4a3a08;
+    background: #fffaf0;
+    font-size: 13px;
+    font-weight: $font-weight-bold;
+    text-decoration: none;
+
+    &:hover {
+      background: #fbf4e5;
+      text-decoration: none;
+    }
+
+    .material-icons { font-size: 18px; }
+  }
+
   &__message-card {
     background: $color-bg-lighter;
     border: 1px solid $color-border;

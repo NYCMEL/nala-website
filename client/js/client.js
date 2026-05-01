@@ -56,6 +56,58 @@ class ClientProfile {
 	if (this.data && this.data.business && this.data.business.name) {
 	    document.title = this.data.business.name
 	}
+	this.updateSeoMetadata()
+    }
+
+    updateSeoMetadata() {
+	const business = this.data.business || {}
+	const about = this.data.about || {}
+	const hours = this.data.businessHours || {}
+	const contact = this.data.contact || {}
+	const name = business.name || 'Locksmith'
+	const description = about.description || `${name} locksmith service.`
+
+	document.title = name
+	this.upsertMeta('description', description)
+
+	const schema = {
+	    '@context': 'https://schema.org',
+	    '@type': 'Locksmith',
+	    name: name,
+	    description: description,
+	    url: window.location.href,
+	    image: business.logo || '',
+	    telephone: business.phone || contact.phone || '',
+	    openingHours: hours.text || '',
+	    aggregateRating: business.rating ? {
+		'@type': 'AggregateRating',
+		ratingValue: Number(business.rating),
+		reviewCount: Number(business.reviewCount || 0)
+	    } : undefined
+	}
+
+	Object.keys(schema).forEach(key => {
+	    if (schema[key] === '' || schema[key] === undefined || schema[key] === null) delete schema[key]
+	})
+
+	let script = document.getElementById('clientLocalBusinessSchema')
+	if (!script) {
+	    script = document.createElement('script')
+	    script.type = 'application/ld+json'
+	    script.id = 'clientLocalBusinessSchema'
+	    document.head.appendChild(script)
+	}
+	script.textContent = JSON.stringify(schema)
+    }
+
+    upsertMeta(name, content) {
+	let meta = document.querySelector(`meta[name="${name}"]`)
+	if (!meta) {
+	    meta = document.createElement('meta')
+	    meta.setAttribute('name', name)
+	    document.head.appendChild(meta)
+	}
+	meta.setAttribute('content', content || '')
     }
 
     applyExternalLogo() {
@@ -78,7 +130,7 @@ class ClientProfile {
 	    this.data.business.logo = event.data.payload.logo
 	    if (event.data.payload.businessName) this.data.business.name = event.data.payload.businessName
 	    this.renderHeader()
-	    document.title = this.data.business.name
+	    this.updateSeoMetadata()
 	})
     }
 
@@ -101,6 +153,7 @@ class ClientProfile {
 		self.data.business.reviewCount = Number(json.reviewCount || self.data.business.reviewCount)
 		self.renderHeader()
 		self.renderReviews()
+		self.updateSeoMetadata()
 	    }
 	}).catch(function(err) {
 	    wc.warn('[client] Could not load saved reviews', err)

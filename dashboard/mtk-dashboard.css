@@ -331,6 +331,32 @@ h1.title::after {
   color: #a98212;
   margin: 0; }
 
+.mtk-dashboard__business-tools {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+  margin-top: 16px; }
+
+.mtk-dashboard__business-tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #d8c18a;
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: #4a3a08;
+  background: #fffaf0;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none; }
+
+.mtk-dashboard__business-tool:hover {
+  background: #fbf4e5;
+  text-decoration: none; }
+
+.mtk-dashboard__business-tool .material-icons {
+  font-size: 18px; }
+
 .mtk-dashboard__message-card {
   background: #ffffff;
   border: 1px solid #e0e0e0;

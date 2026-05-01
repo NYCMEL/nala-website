@@ -246,6 +246,11 @@
             card.appendChild(description);
             card.appendChild(price);
 
+            if ((option.id || '') === 'active-business-in-a-box') {
+                const tools = this.createBusinessToolActions();
+                card.appendChild(tools);
+            }
+
             if (isActive) {
                 // Active cards always clickable — navigate to BIAB
                 card.setAttribute('role', 'button');
@@ -274,6 +279,34 @@
             }
 
             return card;
+        }
+
+        createBusinessToolActions() {
+            const actions = document.createElement('div');
+            actions.className = 'mtk-dashboard__business-tools';
+
+            const tools = [
+                { label: 'Edit setup', href: 'biab/index.html', icon: 'tune' },
+                { label: 'Website', href: 'client/index.html', icon: 'language' },
+                { label: 'Invoices', href: 'biab/index.html?tool=invoices', icon: 'receipt_long' },
+                { label: 'Reviews', href: 'biab/index.html?tool=reviews', icon: 'reviews' },
+                { label: 'Business Plan', href: 'biab/index.html?tool=business-plan', icon: 'article' },
+                { label: 'Brand Kit', href: 'biab/index.html?tool=brand', icon: 'palette' },
+                { label: 'Marketing', href: 'biab/index.html?tool=marketing', icon: 'campaign' }
+            ];
+
+            tools.forEach((tool) => {
+                const link = document.createElement('a');
+                link.className = 'mtk-dashboard__business-tool';
+                link.href = tool.href;
+                link.innerHTML = `<span class="material-icons" aria-hidden="true">${tool.icon}</span><span>${tool.label}</span>`;
+                link.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                });
+                actions.appendChild(link);
+            });
+
+            return actions;
         }
 
         createMessageCard(option) {
