@@ -12,6 +12,16 @@
         #personalUrlText { overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:52vw;color:#7a5e0c;font-weight:600 }
         #copyPersonalUrlBtn { border:1px solid #c8b37a;background:#fff;color:#4a3a08;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:700;cursor:pointer }
         #editModeControls { display:flex;align-items:center;justify-content:flex-end;gap:0;flex-shrink:0 }
+        #clientDashboardReturn { display:inline-flex;align-items:center;gap:5px;border:1px solid #c8b37a;background:#fff;color:#4a3a08;border-radius:8px;padding:5px 10px;font-size:12px;font-weight:800;text-decoration:none;white-space:nowrap;transition:background-color 160ms cubic-bezier(0.2,0,0,1),box-shadow 160ms cubic-bezier(0.2,0,0,1),transform 160ms cubic-bezier(0.2,0,0,1) }
+        #clientDashboardReturn:hover { background:#fffaf0;box-shadow:0 8px 18px rgba(169,130,18,0.13);transform:translateY(-1px) }
+        #clientDashboardReturn .material-icons { font-size:16px;line-height:1 }
+        @media (max-width: 700px) {
+            #editModeBar .bar-inner { align-items:flex-start;flex-direction:column;padding:10px 12px }
+            #personalUrlBar { width:100%;flex-wrap:wrap }
+            #personalUrlText { max-width:100%;flex:1 1 180px }
+            #editModeControls { width:100%;justify-content:space-between;gap:8px;flex-wrap:wrap }
+            #saveChangesBtn { margin-right:0 !important }
+        }
     </style>
     <div id="editModeBar" style="display:none;background:#ebebeb;">
         <div class="bar-inner">
@@ -21,6 +31,10 @@
                 <button type="button" id="copyPersonalUrlBtn">Copy</button>
             </div>
             <div id="editModeControls">
+                <a id="clientDashboardReturn" href="pages/index.html#dashboard" aria-label="Back to dashboard">
+                    <span class="material-icons" aria-hidden="true">arrow_back</span>
+                    Dashboard
+                </a>
                 <button id="saveChangesBtn" style="display:none"
                     onmouseover="this.style.background='#a98212'"
                     onmouseout="this.style.background='#7a5e0c'">

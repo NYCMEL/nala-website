@@ -173,7 +173,7 @@
       return `
         <header class="mtk-biab-setup__header">
           <div>
-            <a class="mtk-biab-setup__brand" href="dashboard/index.html" aria-label="Back to dashboard">
+            <a class="mtk-biab-setup__brand" href="pages/index.html#dashboard" aria-label="Back to dashboard">
               <img src="img/logo-nala-association.webp" alt="NALA" />
               <span>Business in a Box Setup</span>
             </a>
@@ -188,6 +188,10 @@
               <span class="material-icons" aria-hidden="true">help_outline</span>
               <span>Help</span>
             </button>
+            <a class="mtk-biab-setup__icon-btn mtk-biab-setup__dashboard-link" href="pages/index.html#dashboard">
+              <span class="material-icons" aria-hidden="true">arrow_back</span>
+              <span>Dashboard</span>
+            </a>
           </div>
         </header>
       `;

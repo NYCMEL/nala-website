@@ -133,11 +133,13 @@
   min-height: 42px;
   font-weight: 700;
   cursor: pointer;
+  text-decoration: none;
   transition: background-color var(--biab-motion-fast), border-color var(--biab-motion-fast), color var(--biab-motion-fast), box-shadow var(--biab-motion-fast), transform var(--biab-motion-fast);
 }
 
 .mtk-biab-setup__icon-btn:hover,
 .mtk-biab-setup__btn:not(:disabled):hover {
+  color: var(--biab-ink);
   transform: translateY(var(--biab-hover-lift));
   box-shadow: var(--biab-hover-shadow);
 }
@@ -152,6 +154,12 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
+}
+
+.mtk-biab-setup__dashboard-link {
+  border-color: #d8c18a;
+  color: #4a3a08;
+  background: #fffaf0;
 }
 
 .mtk-biab-setup__btn--primary {
