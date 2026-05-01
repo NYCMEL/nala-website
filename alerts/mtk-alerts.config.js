@@ -19,7 +19,7 @@ const MTKAlertsConfig = {
 	    type:      "info",
 	    icon:      "system_update",
 	    title:     "System Update Available — v4.0.0",
-	    message:   "Welcome to Nala. Your unread messages appear here",
+	    message:   "Welcome to NALA. Your unread messages appear here",
 	    timestamp: "2025-04-27T09:00:00Z",
 	    read:      false,
 	    archived:  false
@@ -28,7 +28,7 @@ const MTKAlertsConfig = {
 	    id:        "alert-006",
 	    type:      "info",
 	    icon:      "system_update",
-	    title:     "Nala Unboarding...",
+	    title:     "NALA Unboarding...",
 	    message:   "A major system update (v4.0.0) is ready to install.\n\nHighlights:\n• Redesigned dashboard with customizable widgets\n• New role-based access control (RBAC) engine\n• Native dark mode support\n• 40% reduction in bundle size via tree-shaking\n\nThis update requires a 5-minute restart. Schedule it during a low-traffic period. Full release notes are available in the changelog.",
 	    timestamp: "2025-04-27T09:00:00Z",
 	    read:      true,
