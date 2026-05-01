@@ -63,13 +63,23 @@
     }
 
     function showRegister() {
+	const pagesShell = document.getElementById('mtk-pages') || document.querySelector('mtk-pages');
+	if (pagesShell && typeof pagesShell.show === 'function') {
+	    pagesShell.show('register');
+	    return;
+	}
+
+	if (window.wc && wc.pages && typeof wc.pages.show === 'function') {
+	    wc.pages.show('register');
+	    return;
+	}
+
 	if (typeof window.nalaShowRegister === 'function') {
 	    window.nalaShowRegister();
-	} else if (window.wc && wc.pages && typeof wc.pages.show === 'function') {
-	    wc.pages.show('register');
-	} else if (window.wc && typeof wc.publish === 'function') {
-	    wc.publish('mtk-ready:click');
+	    return;
 	}
+
+	window.location.hash = 'register';
     }
 
     function renderHeroImageCarousel(heroData) {
