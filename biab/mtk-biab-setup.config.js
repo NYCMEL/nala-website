@@ -119,7 +119,7 @@ window.MTK_BIAB_SETUP_CONFIG = {
       navLabel: "Legal",
       title: "Legal operating setup",
       eyebrow: "Guided setup, not legal advice",
-      summary: "Use official resources to register the business, confirm licensing, apply for an EIN, record insurance, and document operating policies.",
+      summary: "Use official resources to register your business, confirm licensing, apply for an EIN, record insurance, and document operating policies.",
       sourceNote: "External instructions are based on official IRS and SBA guidance checked before implementation. Locksmith licensing varies by state, county, and city.",
       fields: [
         { id: "entityType", label: "Business structure chosen", type: "select", required: true, options: ["Not decided", "Sole proprietor", "LLC", "Corporation", "Partnership"] },
@@ -135,7 +135,7 @@ window.MTK_BIAB_SETUP_CONFIG = {
         { label: "SBA launch your business", href: "https://www.sba.gov/business-guide/launch-your-business" }
       ],
       instructions: [
-        "Confirm the business structure before applying for an EIN if the business is forming an LLC, corporation, partnership, or other state-created entity.",
+        "Confirm your business structure before applying for an EIN if you are forming an LLC, corporation, partnership, or other state-created entity.",
         "Open the IRS EIN tool only when the responsible party is ready to finish in one session.",
         "Use the legal business name and responsible party information from the Business Background step.",
         "Save the EIN confirmation letter, then enter the EIN here.",
@@ -147,7 +147,7 @@ window.MTK_BIAB_SETUP_CONFIG = {
       navLabel: "Financial",
       title: "Financial operating setup",
       eyebrow: "Cash, payments, and records",
-      summary: "Set up the money side of the locksmith business: bank account, payment processor, bookkeeping habit, pricing assumptions, and weekly metrics.",
+      summary: "Set up your money operations: bank account, payment processor, bookkeeping habit, pricing assumptions, and weekly metrics.",
       fields: [
         { id: "bankStatus", label: "Business bank account status", type: "select", required: true, incompleteValues: ["Not started", "Appointment scheduled"], options: ["Not started", "Appointment scheduled", "Account open", "Using existing account"] },
         { id: "paymentProcessor", label: "Payment processor", type: "select", required: true, options: ["Not selected", "Stripe", "Square", "QuickBooks Payments", "PayPal Business", "Wave Payments", "Other"] },
@@ -160,7 +160,7 @@ window.MTK_BIAB_SETUP_CONFIG = {
       ],
       instructions: [
         "Use the EIN and legal business name from Legal Setup when opening a bank account.",
-        "Choose a payment processor that supports the way the locksmith will collect payment in the field.",
+        "Choose a payment processor that supports the way you will collect payment in the field.",
         "Record the processor reference here after activation.",
         "Write down the starting pricing rules before the first paid job."
       ]
@@ -225,9 +225,9 @@ window.MTK_BIAB_SETUP_CONFIG = {
         { label: "Verify your business", href: "https://support.google.com/business/answer/7107242" }
       ],
       instructions: [
-        "Open Google Business Profile with the business Google account.",
+        "Open Google Business Profile with your business Google account.",
         "Add a new business if no profile exists, or claim the existing profile if Google already shows it.",
-        "Use the business name from Business Background.",
+        "Use your business name from Business Background.",
         "Choose Locksmith as the category when available.",
         "If customers do not visit a staffed storefront, set it up as a service-area business and remove/hide the address when Google asks.",
         "Enter only practical service areas. Google documents that up to 20 service areas can be selected.",
@@ -265,7 +265,7 @@ window.MTK_BIAB_SETUP_CONFIG = {
       navLabel: "Invoices",
       title: "Invoice setup",
       eyebrow: "Field closeout tool",
-      summary: "Configure the standalone invoice generator. The locksmith can use it on-site without going through the website flow.",
+      summary: "Once setup is complete, you can generate invoices from the standalone invoice generator on-site without going through the website flow.",
       fields: [
         { id: "invoicePrefix", label: "Invoice prefix", type: "text", placeholder: "HLK", required: true },
         { id: "invoiceEmail", label: "Invoice sender email", type: "email", placeholder: "billing@example.com", required: true },
@@ -278,7 +278,7 @@ window.MTK_BIAB_SETUP_CONFIG = {
       navLabel: "Reviews",
       title: "Review workflow setup",
       eyebrow: "Close the job with reputation",
-      summary: "Set the review request habit. Invoices can include a checkbox to automatically send a review request to the customer email.",
+      summary: "Set your review request habit. Your invoices can include a checkbox to automatically send a review request to your customer's email.",
       fields: [
         { id: "reviewEmailFrom", label: "Review request reply-to email", type: "email", placeholder: "service@example.com", required: true },
         { id: "reviewMessage", label: "Default review request message", type: "textarea", placeholder: "Thank you for choosing us. If you were happy with the service, please leave a review.", required: true },
@@ -291,7 +291,7 @@ window.MTK_BIAB_SETUP_CONFIG = {
         "Use review requests for customers who received completed service.",
         "Keep the message short and honest.",
         "Use a real reply-to email and keep business contact information accurate.",
-        "When sending an invoice, leave 'Ask for a review' checked when the customer email is correct."
+        "When sending an invoice, leave 'Ask for a review' checked when your customer's email is correct."
       ]
     },
     {
