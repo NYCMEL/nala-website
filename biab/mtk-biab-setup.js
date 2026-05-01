@@ -213,7 +213,7 @@
           <p>${this.escape(step.summary)}</p>
           <div class="mtk-biab-setup__intro-grid">
             ${["Business background", "Legal reminders", "Financial setup", "Brand system", "Actual website", "Google profile", "Invoices", "Reviews", "Launch review"].map(item => `
-              <div><span class="material-icons" aria-hidden="true">task_alt</span>${item}</div>
+              <div><span class="material-icons" aria-hidden="true">arrow_forward</span>${item}</div>
             `).join("")}
           </div>
           <div class="mtk-biab-setup__video-placeholder">
