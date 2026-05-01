@@ -41,6 +41,11 @@ window.app = {
                                 "description": "Lesson 1 - The tools needed in your toolbag",
                                 "url": "https://vimeo.com/827172768",
                                 "type": "video"
+                            },
+                            {
+                                "description": "Lesson 1 toolbag checklist",
+                                "url": "hierarchy/lesson-1-toolbag-checklist.svg",
+                                "type": "photo"
                             }
                         ]
                     },

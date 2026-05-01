@@ -318,6 +318,8 @@
       if (step?.id === "financial") {
         const processorLink = this.processorSetupLink();
         if (processorLink) links.push(processorLink);
+        const bookkeepingLink = this.bookkeepingSetupLink();
+        if (bookkeepingLink) links.push(bookkeepingLink);
       }
       return links;
     }
@@ -331,6 +333,16 @@
         "Wave Payments": { label: "Wave online payments setup", href: "https://support.waveapps.com/hc/en-us/articles/214268023-Set-up-online-payments" }
       };
       return links[this.val("paymentProcessor")] || null;
+    }
+
+    bookkeepingSetupLink() {
+      const links = {
+        Spreadsheet: { label: "IRS recordkeeping basics", href: "https://www.irs.gov/businesses/small-businesses-self-employed/recordkeeping" },
+        QuickBooks: { label: "QuickBooks bookkeeping setup", href: "https://quickbooks.intuit.com/learn-support/en-us/help-article/product-setup/get-started-adjust-settings-sign-quickbooks-online/L3uA1fibV_US_en_US" },
+        Wave: { label: "Wave bookkeeping setup", href: "https://support.waveapps.com/hc/en-us/articles/32449161224852-Create-a-Wave-account" },
+        Other: { label: "IRS small business recordkeeping", href: "https://www.irs.gov/businesses/small-businesses-self-employed/what-kind-of-records-should-i-keep" }
+      };
+      return links[this.val("bookkeepingStatus")] || null;
     }
 
     renderFields(step) {
@@ -677,7 +689,7 @@
       }
       this.syncCurrentStepCompletion();
       this.saveState();
-      if (target.closest(".mtk-biab-setup__palettes") || String(field).indexOf("logo") === 0 || field === "paymentProcessor") this.render();
+      if (target.closest(".mtk-biab-setup__palettes") || String(field).indexOf("logo") === 0 || field === "paymentProcessor" || field === "bookkeepingStatus") this.render();
     }
 
     setLogoChoice(field, value) {
