@@ -291,7 +291,8 @@
       const described = field.helper ? ` aria-describedby="${inputId}-help"` : "";
 
       if (field.type === "textarea") {
-        return `<label class="mtk-biab-setup__field" for="${inputId}"><span>${this.escape(field.label)}${field.required ? " *" : ""}</span><textarea id="${inputId}" data-field="${field.id}" rows="4" placeholder="${this.escape(field.placeholder || "")}"${required}${described}>${this.escape(value || "")}</textarea>${helper}</label>`;
+        const fullClass = field.full ? " mtk-biab-setup__field--full" : "";
+        return `<label class="mtk-biab-setup__field${fullClass}" for="${inputId}"><span>${this.escape(field.label)}${field.required ? " *" : ""}</span><textarea id="${inputId}" data-field="${field.id}" rows="${Number(field.rows || 4)}" placeholder="${this.escape(field.placeholder || "")}"${required}${described}>${this.escape(value || "")}</textarea>${helper}</label>`;
       }
 
       if (field.type === "select") {
@@ -396,7 +397,9 @@
       }
 
       if (mode === "business-plan") {
-        return `<article class="mtk-biab-setup__document-preview"><h2>${this.escape(this.val("businessName") || "Your Locksmith Business")}</h2><p><strong>Service area:</strong> ${this.escape(this.val("serviceArea") || "Not set")}</p><p><strong>Launch services:</strong> ${this.escape((this.val("services") || []).join(", ") || "Not set")}</p><p><strong>Differentiator:</strong> clear pricing, professional arrival, clean work, ETA updates, detailed invoices, and review follow-up.</p></article>`;
+        const serviceList = (this.val("services") || []).join(", ");
+        const extraServices = this.val("additionalLaunchServices") || "";
+        return `<article class="mtk-biab-setup__document-preview"><h2>${this.escape(this.val("businessName") || "Your Locksmith Business")}</h2><p><strong>Service area:</strong> ${this.escape(this.val("serviceArea") || "Not set")}</p><p><strong>Launch services:</strong> ${this.escape(serviceList || "Not set")}</p>${extraServices ? `<p><strong>Additional services:</strong> ${this.escape(extraServices)}</p>` : ""}<p><strong>Differentiator:</strong> clear pricing, professional arrival, clean work, ETA updates, detailed invoices, and review follow-up.</p></article>`;
       }
 
       return `<p>This area is available after setup. Use <a href="biab/index.html">Edit setup</a> to continue guided configuration.</p>`;

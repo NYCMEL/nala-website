@@ -71,10 +71,11 @@ window.MTK_BIAB_SETUP_CONFIG = {
         { id: "ownerName", label: "Owner or responsible party name", type: "text", placeholder: "Owner name" },
         { id: "businessPhone", label: "Business phone", type: "tel", placeholder: "(555) 123-4567", required: true },
         { id: "businessEmail", label: "Business email", type: "email", placeholder: "service@example.com", required: true },
-        { id: "serviceArea", label: "Service area", type: "textarea", placeholder: "Brooklyn, Queens, Manhattan", required: true },
         { id: "hours", label: "Business hours", type: "text", placeholder: "Mon-Fri 8am-6pm; emergency calls by appointment" },
+        { id: "serviceArea", label: "Service area", type: "textarea", placeholder: "Brooklyn, Queens, Manhattan", required: true, rows: 2, full: true },
         { id: "services", label: "Launch services", type: "checks", options: ["House lockouts", "Rekeys", "Lock changes", "Deadbolt installation", "Mailbox / cabinet locks", "Car lockouts", "Basic commercial lock service"] },
-        { id: "businessDescription", label: "Short business description", type: "textarea", placeholder: "Mobile locksmith service focused on clear pricing, fast response, and clean work." }
+        { id: "additionalLaunchServices", label: "Additional launch services", type: "textarea", placeholder: "Add any other services you want to offer at launch.", rows: 3, full: true },
+        { id: "businessDescription", label: "Short business description", type: "textarea", placeholder: "Mobile locksmith service focused on clear pricing, fast response, and clean work.", rows: 3, full: true }
       ]
     },
     {
