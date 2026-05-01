@@ -11,7 +11,10 @@ mtk-biab.mtk-biab {
   --biab-motion-fast: 160ms cubic-bezier(0.2, 0, 0, 1);
   --biab-motion-standard: 220ms cubic-bezier(0.2, 0, 0, 1);
   --biab-hover-lift: -2px;
-  --biab-hover-shadow: 0 10px 24px rgba(60, 64, 67, 0.12); }
+  --biab-hover-shadow: 0 10px 24px rgba(60, 64, 67, 0.12);
+  --biab-surface-shadow: 0 8px 22px rgba(60, 64, 67, 0.1);
+  --biab-section-shadow: 0 14px 34px rgba(60, 64, 67, 0.12);
+  --biab-soft-surface: #fffdf8; }
 
 .mtk-biab__sidebar-item-btn span:not(.material-icons) {
   flex: 1 1 auto;
@@ -130,7 +133,8 @@ mtk-biab.mtk-biab {
   padding: 20px;
   border: 1px solid #eadfca;
   border-radius: 10px;
-  background: #fffaf0;
+  background: linear-gradient(135deg, #fffaf0 0%, #ffffff 100%);
+  box-shadow: var(--biab-surface-shadow);
   animation: mtk-biab-soft-pop 220ms ease-out; }
 
 .mtk-biab-tool__head {
@@ -181,6 +185,7 @@ mtk-biab.mtk-biab {
   border-radius: 8px;
   border: 1px solid #e3dac5;
   background: #fff;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.65), 0 1px 2px rgba(60, 64, 67, 0.08);
   color: #34302a;
   overflow-wrap: anywhere; }
 
@@ -194,7 +199,8 @@ mtk-biab.mtk-biab {
   padding: 16px;
   border-radius: 8px;
   border: 1px solid #eadfca;
-  background: #fff; }
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(60, 64, 67, 0.08); }
 
 .mtk-biab-api-card {
   transition: border-color var(--biab-motion-fast), box-shadow var(--biab-motion-fast), transform var(--biab-motion-fast); }
@@ -211,7 +217,8 @@ mtk-biab.mtk-biab {
   padding: 20px;
   border: 1px solid #eadfca;
   border-radius: 10px;
-  background: #fffaf0;
+  background: linear-gradient(135deg, #fffaf0 0%, #ffffff 100%);
+  box-shadow: var(--biab-section-shadow);
   animation: mtk-biab-rise-in 260ms ease-out; }
 
 .mtk-biab-guided-setup__header {
@@ -238,6 +245,7 @@ mtk-biab.mtk-biab {
   border: 1px solid #e0d3ad;
   border-radius: 8px;
   background: #fff;
+  box-shadow: 0 1px 2px rgba(60, 64, 67, 0.08);
   text-align: center; }
 
 .mtk-biab-guided-setup__meter strong {
@@ -340,6 +348,7 @@ mtk-biab.mtk-biab {
   border: 1px solid #e3dac5;
   border-radius: 8px;
   background: #fff;
+  box-shadow: var(--biab-surface-shadow);
   color: #34302a;
   animation: mtk-biab-soft-pop 220ms ease-out; }
 
@@ -385,7 +394,8 @@ mtk-biab.mtk-biab {
   padding: 14px;
   border: 1px solid #d5e3f5;
   border-radius: 8px;
-  background: #f3f8ff; }
+  background: linear-gradient(135deg, #f3f8ff 0%, #ffffff 100%);
+  box-shadow: inset 3px 0 0 rgba(24, 90, 188, 0.18), 0 1px 2px rgba(60, 64, 67, 0.08); }
 
 .mtk-biab-guided-setup__api .material-icons {
   color: #185abc;
@@ -447,7 +457,8 @@ mtk-biab.mtk-biab {
   padding: 14px;
   border: 1px solid #d7ccb5;
   border-radius: 8px;
-  background: #fffdf8; }
+  background: var(--biab-soft-surface);
+  box-shadow: inset 3px 0 0 rgba(169, 130, 17, 0.18), 0 1px 2px rgba(60, 64, 67, 0.08); }
 
 .mtk-biab-guided-setup__assets strong {
   display: block;
@@ -536,7 +547,8 @@ mtk-biab.mtk-biab {
 .mtk-biab-invoice {
   border: 1px solid #d9cda9;
   border-radius: 10px;
-  background: #fff;
+  background: linear-gradient(135deg, #ffffff 0%, #fffaf0 100%);
+  box-shadow: var(--biab-section-shadow);
   color: #202124;
   overflow: hidden; }
 
@@ -565,6 +577,7 @@ mtk-biab.mtk-biab {
   padding: 14px;
   border-radius: 8px;
   background: #202124;
+  box-shadow: 0 8px 18px rgba(32, 33, 36, 0.2);
   color: #fff; }
 
 .mtk-biab-invoice__meta h4,
@@ -647,7 +660,8 @@ mtk-biab.mtk-biab {
   padding: 16px;
   border: 1px solid #e3dac5;
   border-radius: 8px;
-  background: #fffdf8; }
+  background: var(--biab-soft-surface);
+  box-shadow: var(--biab-surface-shadow); }
 
 .mtk-biab-invoice-records__head,
 .mtk-biab-invoice-records__card {
@@ -687,6 +701,7 @@ mtk-biab.mtk-biab {
   border: 1px solid #eadfca;
   border-radius: 8px;
   background: #fff;
+  box-shadow: 0 1px 2px rgba(60, 64, 67, 0.08);
   transition: border-color var(--biab-motion-fast), box-shadow var(--biab-motion-fast), transform var(--biab-motion-fast); }
 
 .mtk-biab-invoice-records__card:hover {
@@ -722,6 +737,7 @@ mtk-biab.mtk-biab {
   border-radius: 8px;
   border: 1px solid #e0d3ad;
   background: #fffaf0;
+  box-shadow: var(--biab-surface-shadow);
   text-align: right; }
 
 .mtk-biab-reviews__score strong {
@@ -762,6 +778,7 @@ mtk-biab.mtk-biab {
   border-radius: 8px;
   padding: 14px;
   background: #fbf8f1;
+  box-shadow: 0 1px 2px rgba(60, 64, 67, 0.08);
   transition: border-color var(--biab-motion-fast), box-shadow var(--biab-motion-fast), transform var(--biab-motion-fast); }
 
 .mtk-biab-reviews__card:hover {
@@ -1708,7 +1725,9 @@ mtk-biab.mtk-biab {
   flex: 1;
   padding: 28px 32px;
   overflow-y: auto;
-  background: #ffffff; }
+  background:
+    linear-gradient(180deg, rgba(255, 250, 240, 0.45) 0, rgba(255, 255, 255, 0) 240px),
+    #ffffff; }
 
 .mtk-biab__content-panel {
   display: none;
@@ -1719,10 +1738,10 @@ mtk-biab.mtk-biab {
   display: block; }
 
 .mtk-biab__content-card {
-  background: #ffffff;
+  background: linear-gradient(135deg, #ffffff 0%, #fffdf8 100%);
   border-radius: 12px;
   padding: 28px 32px;
-  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+  box-shadow: var(--biab-section-shadow);
   border: 1px solid #e8eaed;
   animation: mtk-biab-rise-in 240ms ease-out;
   transition: box-shadow var(--biab-motion-standard), transform var(--biab-motion-standard); }
