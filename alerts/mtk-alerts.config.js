@@ -52,3 +52,5 @@ const MTKAlertsConfig = {
 	alertView:    "mtk-alerts:view"
     }
 };
+
+window.MTKAlertsConfig = MTKAlertsConfig;

@@ -38,7 +38,8 @@ class _febe {
 	    "client:save",
 	    "mtk-request:submit",
 	    "mtk-biab:review-request",
-	    "mtk-biab:reviews-save"
+	    "mtk-biab:reviews-save",
+	    "mtk-biab:invoice-sent"
 	];
 
 	// create handlers mapping
@@ -91,6 +92,7 @@ class _febe {
 	    "mtk-request:submit": this.handleRequestSubmit,
 	    "mtk-biab:review-request": this.handleBiabReviewRequest,
 	    "mtk-biab:reviews-save": this.handleBiabReviewsSave,
+	    "mtk-biab:invoice-sent": this.handleBiabInvoiceSent,
 
 	};
     }
@@ -252,6 +254,30 @@ class _febe {
 	return this.postBiabJson("/api/business_in_a_box_review_request.php", data || {}, "Review request email sent.", "Could not send review request email.");
     }
 
+    handleBiabInvoiceSent(data) {
+	const invoice = data || {};
+	const customer = invoice.customerName || "Customer";
+	const total = Number(invoice.total || 0);
+
+	return fetch((wc && wc.apiURL ? wc.apiURL : "") + "/api/alerts.php", {
+	    method: "POST",
+	    credentials: "include",
+	    headers: { "Content-Type": "application/json" },
+	    body: JSON.stringify({
+	    action: "create",
+	    eventKey: invoice.id ? "invoice_sent:" + invoice.id : "",
+	    type: "success",
+	    icon: "receipt_long",
+	    title: "Invoice sent",
+	    message: "Invoice " + (invoice.id || "") + " was sent to " + customer + (total ? " for $" + total.toFixed(2) : "") + ".",
+	    actionUrl: "/repo_deploy/biab/index.html?tool=invoices",
+	    sourceType: "business_in_a_box_invoice",
+	    sourceId: invoice.id || "",
+	    payload: invoice
+	    })
+	}).catch(err => wc.warn("Could not save invoice alert", err));
+    }
+
     handleBiabReviewsSave(data) {
 	const instance = window._clientProfileInstance;
 	if (instance && instance.data && data) {
@@ -312,7 +338,7 @@ class _febe {
 	}).then(res => {
 	    return this.readBiabJsonResponse(res, errorMessage);
 	}).then(json => {
-	    if (window.MTKMsgs && typeof MTKMsgs.show === "function") {
+	    if (successMessage && window.MTKMsgs && typeof MTKMsgs.show === "function") {
 		MTKMsgs.show({
 		    type: "success",
 		    icon: "success",

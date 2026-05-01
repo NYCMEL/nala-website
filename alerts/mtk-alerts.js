@@ -42,6 +42,7 @@ class MTKAlerts {
     this._bindSwitch();
     this._subscribeAll();
     this._render();
+    this._loadRemoteAlerts();
   }
 
   _bindElements() {
@@ -86,10 +87,10 @@ class MTKAlerts {
 
   _subscribeAll() {
     const ev = this.events;
-    wc.subscribe(ev.alertRead,    d => this._onMessage(ev.alertRead,    d));
-    wc.subscribe(ev.alertArchive, d => this._onMessage(ev.alertArchive, d));
-    wc.subscribe(ev.alertDelete,  d => this._onMessage(ev.alertDelete,  d));
-    wc.subscribe(ev.alertView,    d => this._onMessage(ev.alertView,    d));
+    wc.subscribe(ev.alertRead,    (msg, d) => this._onMessage(ev.alertRead,    d));
+    wc.subscribe(ev.alertArchive, (msg, d) => this._onMessage(ev.alertArchive, d));
+    wc.subscribe(ev.alertDelete,  (msg, d) => this._onMessage(ev.alertDelete,  d));
+    wc.subscribe(ev.alertView,    (msg, d) => this._onMessage(ev.alertView,    d));
   }
 
   _onMessage(event, data) {
@@ -106,6 +107,7 @@ class MTKAlerts {
     if (!a || a.read) return;
     a.read = true;
     this._render();
+    this._persistAction('read', id);
   }
 
   _handleArchive(id) {
@@ -114,11 +116,13 @@ class MTKAlerts {
     a.read = true; a.archived = true;
     this._render();
     this._switchTab('archived');
+    this._persistAction('archive', id);
   }
 
   _handleDelete(id) {
     this.alerts = this.alerts.filter(a => a.id !== id);
     this._render();
+    this._persistAction('delete', id);
   }
 
   _render() {
@@ -127,7 +131,7 @@ class MTKAlerts {
     const unreadN  = unread.filter(a => !a.read).length;
 
     this._setBadge(this.$.componentBadge, unreadN);
-    this._setBadge(document.getElementById('mtk-unread-count'), unreadN);
+    MTKAlerts.setGlobalBadge(unreadN);
 
     this.$.unreadTbody.innerHTML   = '';
     this.$.unreadWrap.hidden       = unread.length === 0;
@@ -144,6 +148,41 @@ class MTKAlerts {
     if (!el) return;
     el.textContent = n;
     el.hidden      = n === 0;
+  }
+
+  _apiUrl() {
+    const root = (window.wc && wc.apiURL) ? String(wc.apiURL).replace(/\/$/, '') : '';
+    return root + '/api/alerts.php';
+  }
+
+  _loadRemoteAlerts() {
+    if (!window.fetch) return;
+
+    fetch(this._apiUrl(), {
+      method: 'GET',
+      credentials: 'include',
+      cache: 'no-store'
+    }).then(res => res.json().then(json => ({ ok: res.ok, json })))
+      .then(({ ok, json }) => {
+        if (!ok || !json || !Array.isArray(json.alerts)) return;
+        this.alerts = json.alerts;
+        this._render();
+      }).catch(err => {
+        if (window.wc && typeof wc.warn === 'function') wc.warn('Could not load alerts', err);
+      });
+  }
+
+  _persistAction(action, id) {
+    if (!window.fetch) return;
+
+    fetch(this._apiUrl(), {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action, id })
+    }).catch(err => {
+      if (window.wc && typeof wc.warn === 'function') wc.warn('Could not save alert action', err);
+    });
   }
 
   _buildRow(alert) {
@@ -221,6 +260,39 @@ class MTKAlerts {
     if (dd <  7) return `${dd}d ago`;
     return d.toLocaleDateString(undefined, { month:'short', day:'numeric', year:'numeric' });
   }
+
+  static setGlobalBadge(n) {
+    const badge = document.getElementById('mtk-unread-count');
+    if (badge) {
+      badge.textContent = n;
+      badge.hidden = n === 0;
+    }
+
+    const icon = document.querySelector('#mtk-header-messages .mtk-header-alerts-icon');
+    if (icon) {
+      icon.style.color = n > 0 ? '#FFD700' : '';
+    }
+  }
 }
 
 new MTKAlerts('mtk-alerts.mtk-alerts', MTKAlertsConfig);
+
+window.mtkAlertsBadgeUpdate = function() {
+  if (!window.fetch) {
+    MTKAlerts.setGlobalBadge(0);
+    return;
+  }
+
+  const root = (window.wc && wc.apiURL) ? String(wc.apiURL).replace(/\/$/, '') : '';
+  fetch(root + '/api/alerts.php', {
+    method: 'GET',
+    credentials: 'include',
+    cache: 'no-store'
+  }).then(res => res.json())
+    .then(json => {
+      const unread = json && Number.isFinite(Number(json.unread)) ? Number(json.unread) : 0;
+      MTKAlerts.setGlobalBadge(unread);
+    }).catch(() => MTKAlerts.setGlobalBadge(0));
+};
+
+window.mtkAlertsBadgeUpdate();

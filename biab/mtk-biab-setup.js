@@ -736,6 +736,9 @@
       };
       this.state.invoices = this.state.invoices || [];
       this.state.invoices.unshift(record);
+      if (window.wc && typeof wc.publish === "function") {
+        wc.publish("mtk-biab:invoice-sent", record);
+      }
 
       if (this.invoiceDraft.askReview && this.invoiceDraft.customerEmail) {
         const request = {
