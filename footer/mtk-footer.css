@@ -212,11 +212,16 @@ h1.title::after {
     text-align: center; } }
 
 .mtk-footer__logo {
-  max-width: 120px;
+  max-width: 150px;
   height: auto;
+  padding: 6px 8px;
   margin-bottom: 16px;
   display: block;
-  transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+  background: #1f2428;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 6px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(169, 130, 18, 0.12);
+  transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1); }
 
 .mtk-footer__logo:hover {
   opacity: 0.87; }

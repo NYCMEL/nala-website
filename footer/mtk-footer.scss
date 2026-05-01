@@ -21,11 +21,17 @@
 }
 
 .mtk-footer__logo {
-  max-width: 120px;
+  max-width: 150px;
   height: auto;
+  padding: 6px 8px;
   margin-bottom: $font-size-lg;
   display: block;
-  transition: opacity $duration-short $ease-standard;
+  background: #1f2428;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 6px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(169, 130, 18, 0.12);
+  transition: opacity $duration-short $ease-standard,
+    box-shadow $duration-short $ease-standard;
 
   &:hover { opacity: 0.87; }
 

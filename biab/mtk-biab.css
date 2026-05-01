@@ -1275,9 +1275,15 @@ mtk-biab.mtk-biab {
 
 .mtk-biab__logo-icon {
   height: 70px;
+  width: 194px;
+  max-width: 38vw;
   object-fit: contain;
   flex-shrink: 0;
-  display: block; }
+  display: block;
+  background: #1f2428;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 5px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(169, 130, 18, 0.18); }
 
 .mtk-biab__logo-text {
   font-size: 18px;

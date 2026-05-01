@@ -496,7 +496,7 @@
         <header class="mtk-biab-setup__header">
           <div>
             <a class="mtk-biab-setup__brand" href="pages/index.html#dashboard" aria-label="Back to dashboard">
-              <img src="img/logo-nala-association.webp" alt="NALA" />
+              <img src="img/footer-logo.png" alt="NALA" />
               <span>Business in a Box Setup</span>
             </a>
             <p>Your guided setup/editing space. Daily tools live from the main dashboard after setup.</p>
