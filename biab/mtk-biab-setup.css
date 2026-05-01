@@ -381,38 +381,42 @@
   padding: 0 6px;
 }
 
-.mtk-biab-setup__checks {
+.mtk-biab-setup__checks-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   gap: 10px;
+  margin-top: 8px;
 }
 
-.mtk-biab-setup__checks label {
+.mtk-biab-setup__checks-grid label {
   display: flex;
   gap: 8px;
   align-items: center;
 }
 
-.mtk-biab-setup__palettes {
+.mtk-biab-setup__palette-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
+  margin-top: 8px;
 }
 
-.mtk-biab-setup__palettes label,
+.mtk-biab-setup__palette-grid label,
 .mtk-biab-setup__tool-card {
   align-items: flex-start;
   flex-direction: column;
 }
 
-.mtk-biab-setup__palettes label {
+.mtk-biab-setup__palette-grid label {
+  display: flex;
+  gap: 8px;
   border: 1px solid var(--biab-line);
   border-radius: 6px;
   padding: 12px;
   cursor: pointer;
 }
 
-.mtk-biab-setup__palettes label.is-selected {
+.mtk-biab-setup__palette-grid label.is-selected {
   border-color: var(--biab-gold);
   box-shadow: inset 0 0 0 1px var(--biab-gold);
 }
@@ -629,6 +633,10 @@
   .mtk-biab-setup__form {
     grid-template-columns: 1fr;
   }
+
+  .mtk-biab-setup__palette-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 560px) {
@@ -651,6 +659,10 @@
   }
 
   .mtk-biab-setup__line-items div {
+    grid-template-columns: 1fr;
+  }
+
+  .mtk-biab-setup__palette-grid {
     grid-template-columns: 1fr;
   }
 }

@@ -307,19 +307,19 @@
 
       if (field.type === "checks") {
         const selected = Array.isArray(value) ? value : [];
-        return `<fieldset class="mtk-biab-setup__checks"><legend>${this.escape(field.label)}${field.required ? " *" : ""}</legend>${(field.options || []).map(option => `<label><input data-field="${field.id}" type="checkbox" value="${this.escape(option)}" ${selected.includes(option) ? "checked" : ""}> <span>${this.escape(option)}</span></label>`).join("")}</fieldset>`;
+        return `<fieldset class="mtk-biab-setup__checks"><legend>${this.escape(field.label)}${field.required ? " *" : ""}</legend><div class="mtk-biab-setup__checks-grid">${(field.options || []).map(option => `<label><input data-field="${field.id}" type="checkbox" value="${this.escape(option)}" ${selected.includes(option) ? "checked" : ""}> <span>${this.escape(option)}</span></label>`).join("")}</div></fieldset>`;
       }
 
       if (field.type === "palette") {
         const selected = value || this.cfg.palettes[0].id;
-        return `<fieldset class="mtk-biab-setup__palettes"><legend>${this.escape(field.label)}${field.required ? " *" : ""}</legend>${this.cfg.palettes.map(palette => `
+        return `<fieldset class="mtk-biab-setup__palettes"><legend>${this.escape(field.label)}${field.required ? " *" : ""}</legend><div class="mtk-biab-setup__palette-grid">${this.cfg.palettes.map(palette => `
           <label class="${selected === palette.id ? "is-selected" : ""}">
             <input data-field="${field.id}" type="radio" name="${field.id}" value="${this.escape(palette.id)}" ${selected === palette.id ? "checked" : ""}>
             <span class="mtk-biab-setup__swatches">${palette.colors.map(color => `<i style="background:${this.escape(color)}"></i>`).join("")}</span>
             <strong>${this.escape(palette.name)}</strong>
             <small>${this.escape(palette.position)}</small>
           </label>
-        `).join("")}</fieldset>`;
+        `).join("")}</div></fieldset>`;
       }
 
       return `<label class="mtk-biab-setup__field" for="${inputId}"><span>${this.escape(field.label)}${field.required ? " *" : ""}</span><input id="${inputId}" data-field="${field.id}" type="${this.escape(field.type || "text")}" value="${this.escape(value || "")}" placeholder="${this.escape(field.placeholder || "")}"${required}${described}>${helper}</label>`;
