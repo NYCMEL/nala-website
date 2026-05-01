@@ -8,7 +8,7 @@ var config = {
 
     business: {
 	name:        "Your Company Name",
-	logo:        "img/clients/x.webp",
+	logo:        "img/home/client-face-d.jpg",
 	rating:      4.6,
 	ratingText:  "Excellent",
 	reviewCount: 612,

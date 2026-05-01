@@ -2,7 +2,7 @@ const clientData = {
     breadcrumb: [],
     business: {
 	name: "Mel the Locksmith",
-	logo: "img/mel.co.png",
+	logo: "img/home/client-face-d.jpg",
 	rating: 4.6,
 	ratingText: "Excellent",
 	reviewCount: 612,

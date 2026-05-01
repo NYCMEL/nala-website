@@ -62,6 +62,43 @@
 	}
     }
 
+    function showRegister() {
+	if (typeof window.nalaShowRegister === 'function') {
+	    window.nalaShowRegister();
+	} else if (window.wc && wc.pages && typeof wc.pages.show === 'function') {
+	    wc.pages.show('register');
+	} else if (window.wc && typeof wc.publish === 'function') {
+	    wc.publish('mtk-ready:click');
+	}
+    }
+
+    function renderHeroImageCarousel(heroData) {
+	const rhs = document.querySelector("#MTK-hero .MTK-hero-rhs");
+	if (!rhs || !Array.isArray(heroData.images) || !heroData.images.length) return;
+
+	rhs.innerHTML = `
+	    <button class="MTK-hero-carousel" type="button" aria-label="Register for NALA">
+		${heroData.images.map(function(image, index) {
+		    return `<img class="MTK-hero-carousel__image${index === 0 ? ' is-active' : ''}" src="${image.src}" alt="${image.alt || 'NALA training'}">`;
+		}).join('')}
+		<span class="MTK-hero-carousel__hint">Register Now</span>
+	    </button>
+	`;
+
+	const carousel = rhs.querySelector(".MTK-hero-carousel");
+	const images = Array.from(rhs.querySelectorAll(".MTK-hero-carousel__image"));
+	let activeIndex = 0;
+
+	carousel.addEventListener("click", showRegister);
+
+	if (images.length < 2) return;
+	window.setInterval(function() {
+	    images[activeIndex].classList.remove("is-active");
+	    activeIndex = (activeIndex + 1) % images.length;
+	    images[activeIndex].classList.add("is-active");
+	}, heroData.carouselInterval || 3600);
+    }
+
     // Populate hero content and trigger animation
     function initHero(heroData) {
 	wc.log("hero: initHero...")
@@ -73,6 +110,7 @@
 	if (lhsTitle) lhsTitle.textContent = heroData.title;
 	if (lhsDesc) lhsDesc.textContent = heroData.description;
 	if (rhsImg) rhsImg.src = heroData.image;
+	renderHeroImageCarousel(heroData);
 
 	// Animate after elements exist
 	const elements = document.querySelectorAll("#MTK-hero .animate-fade-up");

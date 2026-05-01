@@ -2,7 +2,6 @@
 <div class="news-page about-page">
 
     <link href="news/news.css" rel="stylesheet">
-    <script src="https://player.vimeo.com/api/player.js"></script>
 
     <style>
         .about-page {
@@ -13,25 +12,18 @@
             max-width: 1180px;
         }
 
-        .about-layout {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-            gap: 28px;
-            align-items: stretch;
-        }
-
-        .about-panel {
+        .about-section {
             background: #ffffff;
             border: 1px solid #e5dfd2;
             border-radius: 8px;
             box-shadow: 0 14px 34px rgba(33, 33, 33, 0.08);
             padding: 22px;
-            min-width: 0;
+            margin-bottom: 28px;
         }
 
-        .about-panel__header {
+        .about-section__header {
             display: flex;
-            align-items: flex-start;
+            align-items: flex-end;
             justify-content: space-between;
             gap: 16px;
             margin-bottom: 18px;
@@ -39,67 +31,40 @@
             border-bottom: 1px solid #eadfca;
         }
 
-        .about-panel__title {
+        .about-section__title {
             font-size: 22px;
             font-weight: 700;
             color: #202124;
             margin: 0 0 4px;
         }
 
-        .about-panel__subtitle {
+        .about-section__subtitle {
             font-size: 14px;
             color: #666;
             margin: 0;
         }
 
-        .about-carousel-controls {
-            display: flex;
-            gap: 8px;
-            flex-shrink: 0;
+        .about-video-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
         }
 
-        .about-carousel-btn {
-            width: 40px;
-            height: 40px;
-            border: 1px solid #a98211;
-            border-radius: 50%;
-            background: #ffffff;
-            color: #7a5e0c;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+        .about-video-card {
+            min-width: 0;
         }
 
-        .about-carousel-btn:hover,
-        .about-carousel-btn:focus {
-            background: #a98211;
-            color: #ffffff;
-            outline: none;
-            transform: translateY(-1px);
-        }
-
-        .about-video-stage,
-        .about-article-stage {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .about-video-slide,
-        .about-article-slide {
-            display: none;
-            animation: mtk-fade-in 220ms ease;
-        }
-
-        .about-video-slide.is-active,
-        .about-article-slide.is-active {
-            display: block;
+        .about-video-card h3 {
+            font-size: 15px;
+            line-height: 1.35;
+            margin: 0 0 10px;
+            color: #202124;
+            min-height: 42px;
         }
 
         .about-video-frame {
-            padding: 56.25% 0 0;
             position: relative;
+            aspect-ratio: 16 / 9;
             overflow: hidden;
             border-radius: 8px;
             background: #111;
@@ -108,79 +73,50 @@
 
         .about-video-frame iframe {
             position: absolute;
-            top: 0;
-            left: 0;
+            inset: 0;
             width: 100%;
             height: 100%;
             border: none;
         }
 
-        .about-video-caption {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 14px;
-            color: #3c4043;
-        }
-
-        .about-video-caption strong {
-            font-size: 17px;
-            color: #202124;
-        }
-
         .about-video-cta {
-            margin-top: 16px;
-            text-align: center;
+            margin-top: 12px;
         }
 
         .about-video-cta .btn {
-            min-width: 180px;
-            padding-left: 28px;
-            padding-right: 28px;
+            width: 100%;
+            min-height: 38px;
+            font-size: 13px;
+            font-weight: 700;
         }
 
-        .about-count {
-            font-size: 12px;
-            color: #7a5e0c;
-            background: #fbf4e5;
-            border: 1px solid #ead9b5;
-            border-radius: 999px;
-            padding: 3px 10px;
-            white-space: nowrap;
+        .about-news-section .news-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
         }
 
-        .about-article-stage .news-card {
-            height: 420px;
-            margin-bottom: 0;
-            box-shadow: none;
-        }
-
-        .about-hidden-grid {
-            position: absolute;
-            visibility: hidden;
-            height: 0;
-            overflow: hidden;
-        }
-
-        @media (max-width: 900px) {
-            .about-layout {
-                grid-template-columns: 1fr;
+        @media (max-width: 1100px) {
+            .about-video-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
 
-        @media (max-width: 520px) {
-            .about-panel {
+        @media (max-width: 700px) {
+            .about-section {
                 padding: 16px;
             }
 
-            .about-panel__header {
+            .about-section__header {
+                align-items: flex-start;
                 flex-direction: column;
             }
 
-            .about-carousel-controls {
-                width: 100%;
-                justify-content: space-between;
+            .about-video-grid,
+            .about-news-section .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-video-card h3 {
+                min-height: 0;
             }
         }
     </style>
@@ -191,274 +127,81 @@
             <p class="news-subtitle" data-i18n="aboutPage.subtitle">Videos, news, and articles from NALA</p>
         </div>
 
-        <div class="about-layout">
-            <section class="about-panel" aria-labelledby="aboutVideosTitle">
-                <div class="about-panel__header">
-                    <div>
-                        <h2 class="about-panel__title" id="aboutVideosTitle" data-i18n="aboutPage.videos.title">Videos</h2>
-                        <p class="about-panel__subtitle" data-i18n="aboutPage.videos.subtitle">Watch the latest program videos.</p>
-                    </div>
-                    <div class="about-carousel-controls" aria-label="Video carousel controls">
-                        <button class="about-carousel-btn" type="button" id="aboutVideoPrev" aria-label="Previous video" data-i18n-aria="aboutPage.video.prev">
-                            <i class="fa fa-arrow-up" aria-hidden="true"></i>
-                        </button>
-                        <button class="about-carousel-btn" type="button" id="aboutVideoNext" aria-label="Next video" data-i18n-aria="aboutPage.video.next">
-                            <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                        </button>
-                    </div>
+        <section class="about-section" aria-labelledby="aboutVideosTitle">
+            <div class="about-section__header">
+                <div>
+                    <h2 class="about-section__title" id="aboutVideosTitle" data-i18n="aboutPage.videos.title">Videos</h2>
+                    <p class="about-section__subtitle" data-i18n="aboutPage.videos.subtitle">Watch the latest program videos.</p>
                 </div>
+            </div>
 
-                <div class="about-video-stage" id="aboutVideoStage">
-                    <article class="about-video-slide is-active" data-video-title="Master Safe Lockout Skills">
-                        <div class="about-video-caption">
-                            <strong data-i18n="aboutPage.video.safe">Master Safe Lockout Skills</strong>
-                            <span class="about-count" data-video-count>1 of 4</span>
-                        </div>
-                        <div class="about-video-frame">
-                            <iframe src="https://player.vimeo.com/video/1106503990?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                                referrerpolicy="strict-origin-when-cross-origin"
-                                title="Master Safe Lockout Skills" data-i18n-title="aboutPage.video.safe"></iframe>
-                        </div>
-                        <div class="about-video-cta">
-                            <button type="button" class="btn btn-primary" data-i18n="aboutPage.video.cta" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } else { wc.publish('mtk-ready:click'); } return false;">Get Started</button>
-                        </div>
-                    </article>
-
-                    <article class="about-video-slide" data-video-title="Build Your Locksmith Career Online">
-                        <div class="about-video-caption">
-                            <strong data-i18n="aboutPage.video.career">Build Your Locksmith Career Online</strong>
-                            <span class="about-count" data-video-count>2 of 4</span>
-                        </div>
-                        <div class="about-video-frame">
-                            <iframe src="https://player.vimeo.com/video/1106503753?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                                referrerpolicy="strict-origin-when-cross-origin"
-                                title="Build Your Locksmith Career Online" data-i18n-title="aboutPage.video.career"></iframe>
-                        </div>
-                        <div class="about-video-cta">
-                            <button type="button" class="btn btn-primary" data-i18n="aboutPage.video.cta" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } else { wc.publish('mtk-ready:click'); } return false;">Get Started</button>
-                        </div>
-                    </article>
-
-                    <article class="about-video-slide" data-video-title="Learn at Your Own Pace">
-                        <div class="about-video-caption">
-                            <strong data-i18n="aboutPage.video.pace">Learn at Your Own Pace</strong>
-                            <span class="about-count" data-video-count>3 of 4</span>
-                        </div>
-                        <div class="about-video-frame">
-                            <iframe src="https://player.vimeo.com/video/1106503424?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                                referrerpolicy="strict-origin-when-cross-origin"
-                                title="Learn at Your Own Pace" data-i18n-title="aboutPage.video.pace"></iframe>
-                        </div>
-                        <div class="about-video-cta">
-                            <button type="button" class="btn btn-primary" data-i18n="aboutPage.video.cta" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } else { wc.publish('mtk-ready:click'); } return false;">Get Started</button>
-                        </div>
-                    </article>
-
-                    <article class="about-video-slide" data-video-title="Train for Real Locksmith Work">
-                        <div class="about-video-caption">
-                            <strong data-i18n="aboutPage.video.work">Train for Real Locksmith Work</strong>
-                            <span class="about-count" data-video-count>4 of 4</span>
-                        </div>
-                        <div class="about-video-frame">
-                            <iframe src="https://player.vimeo.com/video/1106503213?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                                referrerpolicy="strict-origin-when-cross-origin"
-                                title="Train for Real Locksmith Work" data-i18n-title="aboutPage.video.work"></iframe>
-                        </div>
-                        <div class="about-video-cta">
-                            <button type="button" class="btn btn-primary" data-i18n="aboutPage.video.cta" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } else { wc.publish('mtk-ready:click'); } return false;">Get Started</button>
-                        </div>
-                    </article>
-                </div>
-            </section>
-
-            <section class="about-panel" aria-labelledby="aboutArticlesTitle">
-                <div class="about-panel__header">
-                    <div>
-                        <h2 class="about-panel__title" id="aboutArticlesTitle" data-i18n="aboutPage.articles.title">News &amp; Articles</h2>
-                        <p class="about-panel__subtitle" data-i18n="aboutPage.articles.subtitle">Browse recent updates and industry notes.</p>
+            <div class="about-video-grid">
+                <article class="about-video-card">
+                    <h3 data-i18n="aboutPage.video.safe">Master Safe Lockout Skills</h3>
+                    <div class="about-video-frame">
+                        <iframe src="https://player.vimeo.com/video/1106503990?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            title="Master Safe Lockout Skills" data-i18n-title="aboutPage.video.safe"></iframe>
                     </div>
-                    <div class="about-carousel-controls" aria-label="Article carousel controls">
-                        <button class="about-carousel-btn" type="button" id="aboutArticlePrev" aria-label="Previous article" data-i18n-aria="aboutPage.article.prev">
-                            <i class="fa fa-arrow-left" aria-hidden="true"></i>
-                        </button>
-                        <button class="about-carousel-btn" type="button" id="aboutArticleNext" aria-label="Next article" data-i18n-aria="aboutPage.article.next">
-                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                        </button>
+                    <div class="about-video-cta">
+                        <button type="button" class="btn btn-primary" data-i18n="aboutPage.video.cta" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } else { wc.publish('mtk-ready:click'); } return false;">Get Started</button>
                     </div>
-                </div>
+                </article>
 
-                <div class="about-article-stage" id="aboutArticleStage"></div>
-            </section>
-        </div>
+                <article class="about-video-card">
+                    <h3 data-i18n="aboutPage.video.career">Build Your Locksmith Career Online</h3>
+                    <div class="about-video-frame">
+                        <iframe src="https://player.vimeo.com/video/1106503753?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            title="Build Your Locksmith Career Online" data-i18n-title="aboutPage.video.career"></iframe>
+                    </div>
+                    <div class="about-video-cta">
+                        <button type="button" class="btn btn-primary" data-i18n="aboutPage.video.cta" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } else { wc.publish('mtk-ready:click'); } return false;">Get Started</button>
+                    </div>
+                </article>
+
+                <article class="about-video-card">
+                    <h3 data-i18n="aboutPage.video.pace">Learn at Your Own Pace</h3>
+                    <div class="about-video-frame">
+                        <iframe src="https://player.vimeo.com/video/1106503424?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            title="Learn at Your Own Pace" data-i18n-title="aboutPage.video.pace"></iframe>
+                    </div>
+                    <div class="about-video-cta">
+                        <button type="button" class="btn btn-primary" data-i18n="aboutPage.video.cta" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } else { wc.publish('mtk-ready:click'); } return false;">Get Started</button>
+                    </div>
+                </article>
+
+                <article class="about-video-card">
+                    <h3 data-i18n="aboutPage.video.work">Train for Real Locksmith Work</h3>
+                    <div class="about-video-frame">
+                        <iframe src="https://player.vimeo.com/video/1106503213?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            title="Train for Real Locksmith Work" data-i18n-title="aboutPage.video.work"></iframe>
+                    </div>
+                    <div class="about-video-cta">
+                        <button type="button" class="btn btn-primary" data-i18n="aboutPage.video.cta" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } else { wc.publish('mtk-ready:click'); } return false;">Get Started</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="about-section about-news-section" aria-labelledby="aboutArticlesTitle">
+            <div class="about-section__header">
+                <div>
+                    <h2 class="about-section__title" id="aboutArticlesTitle" data-i18n="aboutPage.articles.title">News &amp; Articles</h2>
+                    <p class="about-section__subtitle" data-i18n="aboutPage.articles.subtitle">Browse recent updates and industry notes.</p>
+                </div>
+            </div>
+
+            <div class="news-grid" id="newsGrid"></div>
+        </section>
     </div>
-
-    <div class="about-hidden-grid">
-        <div class="news-grid" id="newsGrid"></div>
-    </div>
-
-</div><!-- /.news-page -->
-
-<script>
-(function() {
-    function getLang() {
-        return (window.i18n && typeof window.i18n.getLang === 'function') ? window.i18n.getLang() : 'en';
-    }
-
-    function formatCount(index, total) {
-        return getLang() === 'es'
-            ? (index + 1) + ' de ' + total
-            : (index + 1) + ' of ' + total;
-    }
-
-    function translateArea(root) {
-        if (window.i18n && typeof window.i18n.applyDOM === 'function') {
-            window.i18n.applyDOM(root || document);
-        }
-    }
-
-    function resetButton(button) {
-        var fresh = button.cloneNode(true);
-        button.parentNode.replaceChild(fresh, button);
-        return fresh;
-    }
-
-    function setupVideoCarousel() {
-        var slides = Array.from(document.querySelectorAll('#aboutVideoStage .about-video-slide'));
-        var prev = document.getElementById('aboutVideoPrev');
-        var next = document.getElementById('aboutVideoNext');
-        var activeIndex = 0;
-
-        if (!slides.length || !prev || !next) return;
-        prev = resetButton(prev);
-        next = resetButton(next);
-        translateArea(prev.parentNode);
-
-        function updateVideoCounts() {
-            slides.forEach(function(slide, i) {
-                var count = slide.querySelector('[data-video-count]');
-                if (count) count.textContent = formatCount(i, slides.length);
-            });
-        }
-
-        function pauseInactiveVideos() {
-            slides.forEach(function(slide, i) {
-                if (i === activeIndex) return;
-
-                var iframe = slide.querySelector('iframe');
-                if (!iframe) return;
-
-                if (window.Vimeo && window.Vimeo.Player) {
-                    new window.Vimeo.Player(iframe).pause().catch(function() {});
-                } else {
-                    iframe.src = iframe.src;
-                }
-            });
-        }
-
-        function showVideo(index) {
-            activeIndex = (index + slides.length) % slides.length;
-            slides.forEach(function(slide, i) {
-                slide.classList.toggle('is-active', i === activeIndex);
-            });
-            pauseInactiveVideos();
-        }
-
-        translateArea(document.getElementById('aboutVideoStage'));
-        updateVideoCounts();
-        prev.addEventListener('click', function() { showVideo(activeIndex - 1); });
-        next.addEventListener('click', function() { showVideo(activeIndex + 1); });
-    }
-
-    function setupArticleCarousel() {
-        var grid = document.getElementById('newsGrid');
-        var stage = document.getElementById('aboutArticleStage');
-        var prev = document.getElementById('aboutArticlePrev');
-        var next = document.getElementById('aboutArticleNext');
-
-        if (!grid || !stage || !prev || !next) return;
-
-        var cards = Array.from(grid.querySelectorAll('.news-card'));
-        if (!cards.length) return;
-        prev = resetButton(prev);
-        next = resetButton(next);
-
-        stage.innerHTML = '';
-        cards.forEach(function(card, i) {
-            var slide = document.createElement('div');
-            slide.className = 'about-article-slide' + (i === 0 ? ' is-active' : '');
-            slide.dataset.articleIndex = String(i);
-
-            var clone = card.cloneNode(true);
-            var count = document.createElement('span');
-            count.className = 'about-count';
-            count.textContent = formatCount(i, cards.length);
-            clone.querySelector('.news-card__meta').appendChild(count);
-
-            slide.appendChild(clone);
-            stage.appendChild(slide);
-        });
-
-        var slides = Array.from(stage.querySelectorAll('.about-article-slide'));
-        var activeIndex = 0;
-
-        function showArticle(index) {
-            activeIndex = (index + slides.length) % slides.length;
-            slides.forEach(function(slide, i) {
-                slide.classList.toggle('is-active', i === activeIndex);
-            });
-        }
-
-        stage.querySelectorAll('.news-card__link').forEach(function(link) {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                var original = grid.querySelector('[data-article-id="' + link.dataset.articleId + '"].news-card__link');
-                if (original) {
-                    original.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
-                }
-            });
-        });
-
-        prev.addEventListener('click', function() { showArticle(activeIndex - 1); });
-        next.addEventListener('click', function() { showArticle(activeIndex + 1); });
-        translateArea(stage);
-    }
-
-    function subscribeToNewsGrid() {
-        if (typeof wc !== 'undefined' && wc.subscribe) {
-            wc.subscribe('news:grid-rendered', function() {
-                setTimeout(function() {
-                    setupVideoCarousel();
-                    setupArticleCarousel();
-                }, 50);
-            });
-            wc.subscribe('news:grid-restored', function() {
-                setTimeout(function() {
-                    setupVideoCarousel();
-                    setupArticleCarousel();
-                }, 50);
-            });
-            return true;
-        }
-        return false;
-    }
-
-    setupVideoCarousel();
-
-    if (!subscribeToNewsGrid()) {
-        var poll = setInterval(function() {
-            if (subscribeToNewsGrid()) clearInterval(poll);
-        }, 100);
-    }
-
-    setTimeout(setupArticleCarousel, 1000);
-})();
-</script>
+</div>
 
 <script src="news/news.config.js"></script>
 <script src="news/news.js"></script>
