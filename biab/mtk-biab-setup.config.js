@@ -152,14 +152,15 @@ window.MTK_BIAB_SETUP_CONFIG = {
       sourceNote: "Logo guidance follows common branding practice: keep it simple, scalable, readable at small sizes, and usable in full-color, one-color, and reversed versions.",
       fields: [
         { id: "logoSource", label: "Logo path", type: "select", required: true, options: ["Create logo here", "Upload existing icon/logo"] },
-        { id: "logoIcon", label: "Placeholder icon", type: "select", required: true, requiredWhen: { field: "logoSource", equals: "Create logo here" }, options: ["key", "shield", "lock", "vpn_key", "home_repair_service", "location_on", "badge"] },
+        { id: "logoIcon", label: "Placeholder icon", type: "logo-icons", required: true, requiredWhen: { field: "logoSource", equals: "Create logo here" } },
         { id: "logoLetters", label: "Letter(s) or initials", type: "text", placeholder: "HLK", required: true, requiredWhen: { field: "logoSource", equals: "Create logo here" } },
-        { id: "logoShape", label: "Background shape", type: "select", required: true, requiredWhen: { field: "logoSource", equals: "Create logo here" }, options: ["Circle", "Shield", "Rounded square", "Hexagon", "No background"] },
-        { id: "logoTypeStyle", label: "Placeholder font style", type: "select", required: true, requiredWhen: { field: "logoSource", equals: "Create logo here" }, options: ["Strong sans", "Classic serif", "Condensed service", "Rounded friendly"] },
-        { id: "logoLayout", label: "Logo layout", type: "select", required: true, requiredWhen: { field: "logoSource", equals: "Create logo here" }, options: ["Icon left + wordmark", "Icon above wordmark", "Badge / emblem", "Letters only"] },
+        { id: "logoTemplate", label: "Template direction", type: "logo-templates", required: true, requiredWhen: { field: "logoSource", equals: "Create logo here" } },
+        { id: "logoTypeStyle", label: "Placeholder font system", type: "logo-fonts", required: true, requiredWhen: { field: "logoSource", equals: "Create logo here" } },
+        { id: "logoVariation", label: "Primary variation", type: "logo-variations", required: true, requiredWhen: { field: "logoSource", equals: "Create logo here" } },
         { id: "logoUpload", label: "Upload existing icon/logo", type: "file", required: true, requiredWhen: { field: "logoSource", equals: "Upload existing icon/logo" }, helper: "Placeholder upload field for now. Production should store SVG/PNG assets and generate logo kit variants." },
         { id: "logoNotes", label: "Logo notes", type: "textarea", placeholder: "Avoid tiny details, use 2-3 colors, check small-size readability, prepare icon-only and full lockup versions.", rows: 3, full: true },
-        { id: "logoPreview", label: "Logo preview", type: "logo-preview" }
+        { id: "logoPreview", label: "Logo preview", type: "logo-preview" },
+        { id: "logoHandoff", label: "Logo handoff", type: "logo-handoff" }
       ],
       instructions: [
         "Choose whether to create a logo direction here or upload an existing icon/logo.",

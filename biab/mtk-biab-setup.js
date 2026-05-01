@@ -1,4 +1,33 @@
 (function () {
+  const LOGO_ICONS = [
+    { id: "precision-key", label: "Precision Key", svg: `<svg viewBox="0 0 96 96" aria-hidden="true"><circle cx="28" cy="48" r="16" fill="currentColor"></circle><circle cx="28" cy="48" r="7" fill="var(--logo-bg, #ffffff)"></circle><rect x="42" y="43" width="34" height="10" rx="5" fill="currentColor"></rect><rect x="68" y="43" width="6" height="18" rx="2" fill="currentColor"></rect><rect x="58" y="43" width="6" height="14" rx="2" fill="currentColor"></rect></svg>` },
+    { id: "shield-lock", label: "Shield Lock", svg: `<svg viewBox="0 0 96 96" aria-hidden="true"><path d="M48 12l24 8v18c0 20-10 34-24 42C34 72 24 58 24 38V20l24-8z" fill="currentColor"></path><rect x="37" y="43" width="22" height="19" rx="4" fill="var(--logo-bg, #ffffff)"></rect><path d="M40 43v-5c0-5 3-10 8-10s8 5 8 10v5" fill="none" stroke="var(--logo-bg, #ffffff)" stroke-width="6" stroke-linecap="round"></path></svg>` },
+    { id: "modern-keyhole", label: "Modern Keyhole", svg: `<svg viewBox="0 0 96 96" aria-hidden="true"><circle cx="48" cy="36" r="18" fill="currentColor"></circle><path d="M48 44l10 24H38l10-24z" fill="currentColor"></path><circle cx="48" cy="36" r="7" fill="var(--logo-bg, #ffffff)"></circle></svg>` },
+    { id: "entry-lock", label: "Entry Lock", svg: `<svg viewBox="0 0 96 96" aria-hidden="true"><rect x="26" y="38" width="44" height="34" rx="8" fill="currentColor"></rect><path d="M34 38V30c0-8 6-14 14-14s14 6 14 14v8" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"></path><circle cx="48" cy="54" r="5" fill="var(--logo-bg, #ffffff)"></circle><rect x="46" y="54" width="4" height="10" rx="2" fill="var(--logo-bg, #ffffff)"></rect></svg>` },
+    { id: "garage-key", label: "Garage Key", svg: `<svg viewBox="0 0 96 96" aria-hidden="true"><path d="M19 55l20-20 11 11 19-19 8 8-19 19 11 11-20 20-30-30z" fill="currentColor"></path><circle cx="33" cy="40" r="6" fill="var(--logo-bg, #ffffff)"></circle></svg>` },
+    { id: "monogram", label: "Monogram", svg: "" }
+  ];
+
+  const LOGO_FONTS = [
+    { id: "outfit-manrope", label: "Outfit + Manrope", headline: "'Outfit', 'Segoe UI', sans-serif", body: "'Manrope', 'Segoe UI', sans-serif", summary: "Modern geometric pairing for web, vans, and social readability." },
+    { id: "archivo-manrope", label: "Archivo Black + Manrope", headline: "'Arial Black', 'Arial', sans-serif", body: "'Manrope', 'Segoe UI', sans-serif", summary: "Bold signage-first style for roadside visibility." },
+    { id: "space-libre", label: "Space Grotesk + Libre Baskerville", headline: "'Segoe UI', sans-serif", body: "Georgia, serif", summary: "Premium mix for established, trust-forward locksmith brands." }
+  ];
+
+  const LOGO_TEMPLATES = [
+    { id: "service-wordmark", label: "Service Wordmark", summary: "Horizontal lockup for vehicle wraps, Google profile art, and website headers." },
+    { id: "trusted-shield", label: "Trusted Shield", summary: "Security-forward badge direction for rekeys, property managers, and commercial accounts." },
+    { id: "modern-stack", label: "Modern Stack", summary: "Clean stacked layout for websites, proposals, and social assets." },
+    { id: "monogram-seal", label: "Monogram Seal", summary: "Compact emblem suited to invoices, stationery, and premium service brands." }
+  ];
+
+  const LOGO_VARIATIONS = [
+    { id: "horizontal", label: "Horizontal", summary: "Primary website and van lockup." },
+    { id: "stacked", label: "Stacked", summary: "Square ads and flyers." },
+    { id: "badge", label: "Badge", summary: "Uniforms, decals, and favicons." },
+    { id: "icon-only", label: "Icon only", summary: "Small social avatar and favicon." }
+  ];
+
   class MTKBIABSetup {
     constructor(config) {
       this.cfg = config || {};
@@ -94,6 +123,9 @@
         if (action === "invoice-add-line") this.addInvoiceLine();
         if (action === "invoice-remove-line") this.removeInvoiceLine(Number(btn.dataset.index));
         if (action === "reset-demo") this.resetDemoState();
+        if (action === "logo-choice") this.setLogoChoice(btn.dataset.field, btn.dataset.value);
+        if (action === "logo-apply") this.applyLogoToWebsite();
+        if (action === "logo-download") this.downloadLogoSvg();
       });
 
       this.el.addEventListener("input", (event) => {
@@ -329,34 +361,134 @@
         return `<label class="mtk-biab-setup__field mtk-biab-setup__field--full" for="${inputId}"><span>${this.escape(field.label)}${requiredMark}</span><input id="${inputId}" data-field="${field.id}" type="file" accept=".svg,.png,.jpg,.jpeg,.webp"${required}${described}>${fileName}</label>`;
       }
 
+      if (field.type === "logo-icons") {
+        return this.renderLogoChoiceGroup(field, LOGO_ICONS, "logoIcon", "icons");
+      }
+
+      if (field.type === "logo-fonts") {
+        return this.renderLogoChoiceGroup(field, LOGO_FONTS, "logoTypeStyle", "fonts");
+      }
+
+      if (field.type === "logo-templates") {
+        return this.renderLogoChoiceGroup(field, LOGO_TEMPLATES, "logoTemplate", "templates");
+      }
+
+      if (field.type === "logo-variations") {
+        return this.renderLogoChoiceGroup(field, LOGO_VARIATIONS, "logoVariation", "variations");
+      }
+
       if (field.type === "logo-preview") {
         return this.renderLogoPreview(field);
+      }
+
+      if (field.type === "logo-handoff") {
+        return this.renderLogoHandoff();
       }
 
       return `<label class="mtk-biab-setup__field" for="${inputId}"><span>${this.escape(field.label)}${requiredMark}</span><input id="${inputId}" data-field="${field.id}" type="${this.escape(field.type || "text")}" value="${this.escape(value || "")}" placeholder="${this.escape(field.placeholder || "")}"${required}${described}>${helper}</label>`;
     }
 
-    renderLogoPreview(field) {
-      const palette = this.cfg.palettes.find(item => item.id === this.val("palette")) || this.cfg.palettes[0] || { colors: ["#0f172a", "#c6952d", "#fff"] };
-      const shape = this.val("logoShape") || "Circle";
-      const layout = this.val("logoLayout") || "Icon left + wordmark";
-      const source = this.val("logoSource") || "Create logo here";
-      const letters = (this.val("logoLetters") || this.initialsFromName()).slice(0, 4).toUpperCase();
-      const icon = this.val("logoIcon") || "key";
-      const uploaded = this.val("logoUpload");
-      const shapeClass = shape.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+    renderLogoChoiceGroup(field, options, fieldId, modifier) {
+      const selected = this.logoValue(fieldId);
       return `
-        <section class="mtk-biab-setup__logo-preview mtk-biab-setup__logo-preview--${this.escape(shapeClass)} mtk-biab-setup__logo-preview--${layout === "Icon above wordmark" ? "stacked" : layout === "Badge / emblem" ? "badge" : ""}">
-          <div class="mtk-biab-setup__logo-mark" style="--logo-primary:${this.escape(palette.colors[0])};--logo-accent:${this.escape(palette.colors[1] || palette.colors[0])};--logo-bg:${this.escape(palette.colors[2] || "#ffffff")}">
-            <span class="material-icons" aria-hidden="true">${this.escape(source === "Upload existing icon/logo" && uploaded ? "image" : icon)}</span>
-            <strong>${this.escape(letters)}</strong>
+        <fieldset class="mtk-biab-setup__logo-choices mtk-biab-setup__logo-choices--${this.escape(modifier)}">
+          <legend>${this.escape(field.label)}${this.fieldIsRequired(field) ? " *" : ""}</legend>
+          <div>
+            ${options.map(option => {
+              const active = selected === option.id;
+              const iconMarkup = modifier === "icons"
+                ? `<span class="mtk-biab-setup__logo-choice-icon">${option.id === "monogram" ? this.escape(this.logoLetters()) : option.svg}</span>`
+                : "";
+              const fontStyle = modifier === "fonts" ? ` style="font-family:${this.escape(option.headline)}"` : "";
+              return `
+                <button type="button" class="${active ? "is-active" : ""}" data-biab-action="logo-choice" data-field="${this.escape(fieldId)}" data-value="${this.escape(option.id)}">
+                  ${iconMarkup}
+                  <strong${fontStyle}>${this.escape(option.label)}</strong>
+                  ${option.summary ? `<small>${this.escape(option.summary)}</small>` : ""}
+                </button>
+              `;
+            }).join("")}
           </div>
-          <div class="mtk-biab-setup__logo-wordmark">
+        </fieldset>
+      `;
+    }
+
+    renderLogoPreview(field) {
+      const source = this.val("logoSource") || "Create logo here";
+      const template = this.logoResource(LOGO_TEMPLATES, "logoTemplate");
+      const uploaded = this.val("logoUploadData");
+      return `
+        <section class="mtk-biab-setup__logo-designer">
+          <div class="mtk-biab-setup__logo-summary">
+            <span>Research-based starter direction</span>
+            <h2>${this.escape(template.label)}</h2>
+            <p>${this.escape(source === "Upload existing icon/logo" ? "Uploaded artwork will replace the generated placeholder in previews and the website handoff." : template.summary)}</p>
+          </div>
+          <div class="mtk-biab-setup__logo-preview-grid">
+            ${this.renderLogoPreviewCard("Primary concept", "primary-dark")}
+            ${this.renderLogoPreviewCard("Light background", "primary-light")}
+            ${this.renderLogoPreviewCard("Social / favicon", "icon-only")}
+            ${this.renderLogoPreviewCard("Vehicle banner", "horizontal")}
+          </div>
+        </section>
+      `;
+    }
+
+    renderLogoPreviewCard(label, variant) {
+      const palette = this.logoPalette();
+      const dark = variant === "primary-dark" || variant === "horizontal" || variant === "icon-only";
+      const bg = dark ? palette.surface : "#ffffff";
+      const color = dark ? palette.textOnDark : palette.textOnLight;
+      return `
+        <article class="mtk-biab-setup__logo-preview-card">
+          <span>${this.escape(label)}</span>
+          <div style="background:${this.escape(bg)};color:${this.escape(color)}">
+            ${this.buildLogoMarkup(variant)}
+          </div>
+        </article>
+      `;
+    }
+
+    renderLogoHandoff() {
+      return `
+        <section class="mtk-biab-setup__logo-handoff">
+          <h2>Production handoff</h2>
+          <ul>
+            <li>Replace placeholder icons and fonts with licensed production assets.</li>
+            <li>Export SVG, transparent PNG, one-color, reversed, favicon, and vehicle/banner versions.</li>
+            <li>Test the logo on the website header, Google profile, invoice, shirt, and vehicle mockup.</li>
+          </ul>
+          <div>
+            <button type="button" class="mtk-biab-setup__btn" data-biab-action="logo-download">Download SVG draft</button>
+            <button type="button" class="mtk-biab-setup__btn mtk-biab-setup__btn--primary" data-biab-action="logo-apply">Apply to website</button>
+          </div>
+        </section>
+      `;
+    }
+
+    buildLogoMarkup(variant = "primary-dark") {
+      const palette = this.logoPalette();
+      const font = this.logoResource(LOGO_FONTS, "logoTypeStyle");
+      const template = this.logoResource(LOGO_TEMPLATES, "logoTemplate");
+      const source = this.val("logoSource") || "Create logo here";
+      const uploaded = this.val("logoUploadData");
+      const resolved = variant === "primary-dark" || variant === "primary-light" ? this.logoValue("logoVariation") : variant;
+      const isStacked = resolved === "stacked" || template.id === "modern-stack";
+      const isBadge = resolved === "badge" || template.id === "trusted-shield" || template.id === "monogram-seal";
+      const isIconOnly = resolved === "icon-only";
+      const icon = source === "Upload existing icon/logo" && uploaded
+        ? `<span class="mtk-biab-setup__logo-mark mtk-biab-setup__logo-mark--custom"><img src="${this.escape(uploaded)}" alt=""></span>`
+        : `<span class="mtk-biab-setup__logo-mark" style="color:${this.escape(palette.primary)};--logo-bg:${this.escape(variant === "primary-light" ? "#ffffff" : palette.surface)};">${this.logoIconMarkup()}</span>`;
+      if (isIconOnly) return `<div class="mtk-biab-setup__logo-lockup mtk-biab-setup__logo-lockup--icon-only">${icon}</div>`;
+      const cls = isBadge ? "badge" : isStacked ? "stacked" : "horizontal";
+      return `
+        <div class="mtk-biab-setup__logo-lockup mtk-biab-setup__logo-lockup--${cls}" style="--logo-heading-font:${this.escape(font.headline)};--logo-body-font:${this.escape(font.body)};">
+          ${icon}
+          <div class="mtk-biab-setup__logo-copy">
             <strong>${this.escape(this.val("businessName") || "Your Locksmith")}</strong>
             <span>${this.escape(this.val("tagline") || "Mobile Locksmith Service")}</span>
           </div>
-          <p>${source === "Upload existing icon/logo" ? "Uploaded artwork will replace the placeholder mark in production." : "Placeholder logo direction. Production should replace icons/fonts with licensed assets and export full, icon-only, one-color, and reversed versions."}</p>
-        </section>
+        </div>
       `;
     }
 
@@ -481,7 +613,20 @@
     updateField(target) {
       const field = target.dataset.field;
       if (target.type === "file") {
-        this.state.values[field] = target.files && target.files[0] ? target.files[0].name : "";
+        const file = target.files && target.files[0];
+        this.state.values[field] = file ? file.name : "";
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            this.state.values.logoUploadData = event.target.result;
+            this.syncCurrentStepCompletion();
+            this.saveState();
+            this.render();
+          };
+          reader.readAsDataURL(file);
+        } else {
+          delete this.state.values.logoUploadData;
+        }
       } else if (target.type === "checkbox" && target.value && target.closest("fieldset")) {
         const selected = Array.from(this.el.querySelectorAll(`[data-field="${field}"]:checked`)).map(input => input.value);
         this.state.values[field] = selected;
@@ -493,6 +638,14 @@
       this.syncCurrentStepCompletion();
       this.saveState();
       if (target.closest(".mtk-biab-setup__palettes") || String(field).indexOf("logo") === 0) this.render();
+    }
+
+    setLogoChoice(field, value) {
+      if (!field) return;
+      this.state.values[field] = value;
+      this.syncCurrentStepCompletion();
+      this.saveState();
+      this.render();
     }
 
     updateInvoiceField(target) {
@@ -655,6 +808,8 @@
       if (field.type === "checks") return Array.isArray(value) && value.length > 0;
       if (field.type === "palette") return !!(value || this.cfg.palettes[0]?.id);
       if (field.type === "select") return this.selectValueIsComplete(field, value || field.options?.[0]);
+      if (field.type === "file") return !!this.state.values.logoUploadData;
+      if (String(field.type || "").indexOf("logo-") === 0) return !!this.logoValue(field.id);
       return String(value || "").trim().length > 0;
     }
 
@@ -685,6 +840,82 @@
 
     val(key) {
       return this.state.values[key];
+    }
+
+    logoValue(key) {
+      const defaults = {
+        logoIcon: "precision-key",
+        logoTemplate: "service-wordmark",
+        logoTypeStyle: "outfit-manrope",
+        logoVariation: "horizontal"
+      };
+      return this.state.values[key] || defaults[key] || "";
+    }
+
+    logoResource(collection, key) {
+      const selected = this.logoValue(key);
+      return collection.find(item => item.id === selected) || collection[0];
+    }
+
+    logoPalette() {
+      const selected = this.cfg.palettes.find(item => item.id === this.val("palette")) || this.cfg.palettes[0] || {};
+      return {
+        surface: selected.colors?.[0] || "#0f172a",
+        primary: selected.colors?.[1] || "#c6952d",
+        accent: selected.colors?.[2] || "#f8fafc",
+        textOnDark: "#ffffff",
+        textOnLight: selected.colors?.[0] || "#0f172a"
+      };
+    }
+
+    logoLetters() {
+      return (this.val("logoLetters") || this.initialsFromName()).slice(0, 4).toUpperCase();
+    }
+
+    logoIconMarkup() {
+      const icon = this.logoResource(LOGO_ICONS, "logoIcon");
+      if (icon.id === "monogram") {
+        return `<svg viewBox="0 0 96 96" aria-hidden="true"><rect x="18" y="18" width="60" height="60" rx="18" fill="currentColor"></rect><text x="48" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="800" fill="var(--logo-bg, #ffffff)">${this.escape(this.logoLetters())}</text></svg>`;
+      }
+      return icon.svg;
+    }
+
+    buildLogoSvg() {
+      const palette = this.logoPalette();
+      const name = this.escape(this.val("businessName") || "Your Locksmith");
+      const tagline = this.escape(this.val("tagline") || "Mobile Locksmith Service");
+      const initials = this.escape(this.logoLetters());
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="720" height="240" viewBox="0 0 720 240"><rect width="720" height="240" rx="28" fill="${palette.surface}"/><circle cx="108" cy="120" r="58" fill="${palette.primary}"/><text x="108" y="137" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" font-weight="800" fill="${palette.surface}">${initials}</text><text x="194" y="108" font-family="Arial, sans-serif" font-size="42" font-weight="800" fill="${palette.textOnDark}">${name}</text><text x="196" y="151" font-family="Arial, sans-serif" font-size="22" fill="${palette.accent}">${tagline}</text></svg>`;
+    }
+
+    buildLogoDataUrl() {
+      if (this.val("logoSource") === "Upload existing icon/logo" && this.val("logoUploadData")) return this.val("logoUploadData");
+      return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(this.buildLogoSvg());
+    }
+
+    applyLogoToWebsite() {
+      const payload = {
+        logo: this.buildLogoDataUrl(),
+        businessName: this.val("businessName") || "Your Locksmith",
+        tagline: this.val("tagline") || "Mobile Locksmith Service"
+      };
+      try {
+        localStorage.setItem("nalaBiabLogo", JSON.stringify(payload));
+      } catch (err) {
+        console.warn("[mtk-biab-setup] Could not save logo", err);
+      }
+      if (window.wc && typeof wc.publish === "function") wc.publish("mtk-biab:logo-applied", payload);
+      this.notice = "Logo draft applied to the website preview.";
+      this.render();
+    }
+
+    downloadLogoSvg() {
+      const blob = new Blob([this.buildLogoSvg()], { type: "image/svg+xml" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "locksmith-logo-draft.svg";
+      link.click();
+      URL.revokeObjectURL(link.href);
     }
 
     initialsFromName() {

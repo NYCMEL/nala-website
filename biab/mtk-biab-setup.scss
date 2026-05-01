@@ -539,6 +539,194 @@
   height: 112px;
 }
 
+.mtk-biab-setup__logo-choices {
+  grid-column: 1 / -1;
+  border: 1px solid var(--biab-line);
+  border-radius: 6px;
+  padding: 14px;
+}
+
+.mtk-biab-setup__logo-choices legend {
+  font-weight: 800;
+  padding: 0 6px;
+}
+
+.mtk-biab-setup__logo-choices > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.mtk-biab-setup__logo-choices button {
+  min-width: 0;
+  display: grid;
+  gap: 8px;
+  align-items: center;
+  border: 1px solid var(--biab-line);
+  border-radius: 6px;
+  padding: 12px;
+  color: var(--biab-ink);
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mtk-biab-setup__logo-choices button.is-active {
+  border-color: var(--biab-gold);
+  box-shadow: inset 0 0 0 1px var(--biab-gold);
+}
+
+.mtk-biab-setup__logo-choice-icon {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  color: var(--biab-gold);
+  background: var(--biab-ink);
+}
+
+.mtk-biab-setup__logo-choice-icon svg {
+  width: 44px;
+  height: 44px;
+}
+
+.mtk-biab-setup__logo-choices small {
+  color: var(--biab-muted);
+  line-height: 1.35;
+}
+
+.mtk-biab-setup__logo-designer,
+.mtk-biab-setup__logo-handoff {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 16px;
+}
+
+.mtk-biab-setup__logo-summary,
+.mtk-biab-setup__logo-handoff {
+  border: 1px solid var(--biab-line);
+  border-radius: 6px;
+  padding: 16px;
+  background: #fffaf0;
+}
+
+.mtk-biab-setup__logo-summary span {
+  color: var(--biab-gold);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.mtk-biab-setup__logo-summary h2,
+.mtk-biab-setup__logo-handoff h2 {
+  margin: 4px 0 6px;
+  font-size: 20px;
+}
+
+.mtk-biab-setup__logo-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.mtk-biab-setup__logo-preview-card {
+  min-width: 0;
+  border: 1px solid var(--biab-line);
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.mtk-biab-setup__logo-preview-card > span {
+  display: block;
+  padding: 8px 10px;
+  color: var(--biab-muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.mtk-biab-setup__logo-preview-card > div {
+  min-height: 136px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.mtk-biab-setup__logo-lockup {
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.mtk-biab-setup__logo-lockup--stacked,
+.mtk-biab-setup__logo-lockup--badge {
+  flex-direction: column;
+  text-align: center;
+}
+
+.mtk-biab-setup__logo-lockup--badge {
+  border: 2px solid currentColor;
+  border-radius: 999px;
+  padding: 12px 16px;
+}
+
+.mtk-biab-setup__logo-lockup .mtk-biab-setup__logo-mark {
+  width: 64px;
+  height: 64px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--biab-gold);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+.mtk-biab-setup__logo-lockup .mtk-biab-setup__logo-mark svg,
+.mtk-biab-setup__logo-lockup .mtk-biab-setup__logo-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.mtk-biab-setup__logo-copy {
+  min-width: 0;
+}
+
+.mtk-biab-setup__logo-copy strong {
+  display: block;
+  font-family: var(--logo-heading-font);
+  font-size: 28px;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+}
+
+.mtk-biab-setup__logo-copy span {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--logo-body-font);
+  font-size: 13px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.mtk-biab-setup__logo-handoff ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.mtk-biab-setup__logo-handoff div {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .mtk-biab-setup__footer {
   border-top: 1px solid var(--biab-line);
   margin-top: 28px;
@@ -780,5 +968,15 @@
 
   .mtk-biab-setup__logo-wordmark strong {
     font-size: 24px;
+  }
+
+  .mtk-biab-setup__logo-choices > div,
+  .mtk-biab-setup__logo-preview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mtk-biab-setup__logo-lockup {
+    flex-direction: column;
+    text-align: center;
   }
 }
