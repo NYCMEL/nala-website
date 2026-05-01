@@ -8,7 +8,7 @@ wc.testing   = false;  /* = true SHOULD USE ALL LOCAL CONFIG FILES and others */
 
 // Message storage
 wc.emsgs = [
-    { id: 1000, text: "Wrong 'Email' or 'Password' combination" },
+    { id: 1000, text: "Unable to sign in with those credentials." },
     { id: 1001, text: "Create user failed" },
     { id: 1002, text: "No questions found for module" },
     { id: 1003, text: "Registeration Failed!" },
@@ -1080,7 +1080,17 @@ wc.login = async function (email, passwd) {
         return true;
     } catch (err) {
         wc.error("Login failed:", err);
-        alert("2) Login failed: " + (err && err.message ? err.message : String(err)));
+        if (window.MTKMsgs && typeof MTKMsgs.show === "function") {
+            MTKMsgs.show({
+                type: "error",
+                icon: "error",
+                message: wc.emsg(1000),
+                closable: true,
+                timer: 7
+            });
+        } else {
+            alert(wc.emsg(1000));
+        }
         return false;
     } finally {
     }

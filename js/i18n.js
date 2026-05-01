@@ -716,9 +716,9 @@
     'login.forgot':              { en: 'Forgot Password?',        es: '¿Olvidaste tu contraseña?' },
     'login.register':            { en: "Don't have an account? Register", es: '¿No tienes cuenta? Regístrate' },
     'login.forgot.title':        { en: 'Reset Your Password',     es: 'Restablecer tu Contraseña' },
-    'login.forgot.emailLabel':   { en: 'Please provide email used to login with NALA', es: 'Ingresa el correo con el que te registraste en NALA' },
+    'login.forgot.emailLabel':   { en: 'Enter your email address', es: 'Ingresa tu correo electrónico' },
     'login.forgot.placeholder':  { en: 'Enter your email',        es: 'Ingresa tu correo' },
-    'login.forgot.helpText':     { en: 'After submitting your email, we will send you a link to update/reset your password', es: 'Al enviar tu correo, te enviaremos un enlace para actualizar/restablecer tu contraseña' },
+    'login.forgot.helpText':     { en: 'If an account matches that email, we will send password reset instructions.', es: 'Si una cuenta coincide con ese correo, enviaremos instrucciones para restablecer la contraseña.' },
     'login.forgot.submit':       { en: 'Submit',                  es: 'Enviar' },
     'login.forgot.cancel':       { en: 'Cancel',                  es: 'Cancelar' },
 
@@ -746,9 +746,9 @@
     'register.error.email.mismatch': { en: 'Emails do not match',       es: 'Los correos no coinciden' },
     'register.error.phone.invalid': { en: 'Enter a valid phone number',  es: 'Ingresa un número de teléfono válido' },
     'register.error.requiredFields': { en: 'Please fill in all required fields.', es: 'Por favor completa todos los campos obligatorios.' },
-    'register.error.exists':      { en: 'An account with that email already exists.', es: 'Ya existe una cuenta con ese correo.' },
+    'register.error.exists':      { en: 'Registration could not be completed. Please check your information and try again.', es: 'No se pudo completar el registro. Revisa tu información e inténtalo de nuevo.' },
     'register.error.server':      { en: 'Registration failed. Please try again.', es: 'El registro falló. Inténtalo de nuevo.' },
-    'register.success':           { en: 'Registration submitted. Check your email to set your password.', es: 'Registro enviado. Revisa tu correo para establecer tu contraseña.' },
+    'register.success':           { en: 'If registration can be completed, we will email the next steps.', es: 'Si el registro se puede completar, enviaremos los próximos pasos por correo.' },
 
     // ── DASHBOARD ─────────────────────────────────────────────────
     'dashboard.continue':        { en: 'Continue with Program',         es: 'Continuar con el programa' },
@@ -801,9 +801,9 @@
     'settings.error.uppercase':  { en: 'Must contain uppercase letter', es: 'Debe contener una letra mayúscula' },
     'settings.error.lowercase':  { en: 'Must contain lowercase letter', es: 'Debe contener una letra minúscula' },
     'settings.error.number':     { en: 'Must contain number',           es: 'Debe contener un número' },
-    'settings.error.currentPassword': { en: 'Current password incorrect', es: 'La contraseña actual es incorrecta' },
+    'settings.error.currentPassword': { en: 'Could not update password. Check the fields and try again.', es: 'No se pudo actualizar la contraseña. Revisa los campos e inténtalo de nuevo.' },
     'settings.error.passwordMismatch': { en: 'Passwords do not match',  es: 'Las contraseñas no coinciden' },
-    'settings.error.noEmail':    { en: 'No account email found for password reset.', es: 'No se encontró correo de cuenta para restablecer la contraseña.' },
+    'settings.error.noEmail':    { en: 'Could not start password reset from this session.', es: 'No se pudo iniciar el restablecimiento de contraseña desde esta sesión.' },
     'settings.success.reset':    { en: 'Password reset email sent. Please check your inbox.', es: 'Correo de restablecimiento enviado. Por favor revisa tu bandeja de entrada.' },
     'settings.error.resetFail':  { en: 'Could not send reset link.',    es: 'No se pudo enviar el enlace de restablecimiento.' },
 

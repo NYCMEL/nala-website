@@ -69,6 +69,12 @@ class MtkRequest {
 
     this.el.querySelector('form').addEventListener('submit', (e) => {
       e.preventDefault();
+      const form = e.currentTarget;
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
 
       const data = {
         name: this.el.querySelector('.name').value,

@@ -237,7 +237,7 @@ if (typeof MtkSettings === 'undefined') {
             const confirm = this.elements.confirmPassword.value;
 
             if (current !== this.config.user.currentPassword) {
-		alert(this.t('settings.error.currentPassword', 'Current password incorrect'));
+		alert(this.t('settings.error.currentPassword', 'Could not update password. Check the fields and try again.'));
 		return;
             }
 

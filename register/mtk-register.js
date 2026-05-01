@@ -67,6 +67,18 @@
 	phoneError.classList.add("error");
     }
 
+    function showFormMessage(message) {
+	if (window.MTKMsgs && typeof MTKMsgs.show === "function") {
+	    MTKMsgs.show({
+		type: "error",
+		icon: "error",
+		message,
+		closable: true,
+		timer: 8
+	    });
+	}
+    }
+
     function clearPhoneError() {
 	phone.classList.remove("error");
 	phoneError.textContent = t("register.phone.helper", "Phone Number");
@@ -108,6 +120,10 @@
 	for (let i = 0; i < fields.length; i++) {
 	    const input = document.getElementById(fields[i]);
 	    if (!input.value.trim()) {
+		const missingMessage = t("register.error.requiredFields", "Please fill in all required fields.");
+		if (fields[i] === "name") showNameError(missingMessage);
+		if (fields[i] === "email" || fields[i] === "email2") showEmailError(missingMessage);
+		if (fields[i] === "phone") showPhoneError(missingMessage);
 		input.focus();
 		return;
 	    }
@@ -143,12 +159,14 @@
 	if (!agreePrivacy || !agreePrivacy.checked) {
 	    agreePrivacy && agreePrivacy.focus();
 	    agreePrivacy && agreePrivacy.closest(".md-checkbox").classList.add("checkbox-error");
+	    showFormMessage(t("register.error.requiredFields", "Please fill in all required fields."));
 	    return;
 	}
 
 	if (!agreeTerms || !agreeTerms.checked) {
 	    agreeTerms && agreeTerms.focus();
 	    agreeTerms && agreeTerms.closest(".md-checkbox").classList.add("checkbox-error");
+	    showFormMessage(t("register.error.requiredFields", "Please fill in all required fields."));
 	    return;
 	}
 

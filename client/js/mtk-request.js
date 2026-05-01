@@ -173,12 +173,17 @@ class MtkRequest {
       const helpInput  = this.el.querySelector('.help');
 
       // Helper: highlight a field red and clear styling on next input
-      const flagField = (input) => {
+      const flagField = (input, message) => {
         input.parentElement.classList.add('active');
         input.focus();
+        if (message && typeof input.setCustomValidity === 'function') {
+          input.setCustomValidity(message);
+          input.reportValidity();
+        }
         input.style.borderBottomColor = '#dc3545';
         input.parentElement.querySelector('label').style.color = '#dc3545';
         input.addEventListener('input', function onFix() {
+          if (typeof input.setCustomValidity === 'function') input.setCustomValidity('');
           input.style.borderBottomColor = '';
           input.parentElement.querySelector('label').style.color = '';
           input.removeEventListener('input', onFix);
@@ -188,7 +193,7 @@ class MtkRequest {
       // 1. Name — always required
       if (!nameInput.value.trim()) {
         wc.log('[mtk-request] Validation failed — name is required');
-        flagField(nameInput);
+        flagField(nameInput, 'Please enter your name.');
         return;
       }
 
@@ -198,40 +203,40 @@ class MtkRequest {
       // 2. Contact method drives which field is required + format validation
       if (contactType === 'phone' && !phoneInput.value.trim()) {
         wc.log('[mtk-request] Validation failed — phone required when contact by phone selected');
-        flagField(phoneInput);
+        flagField(phoneInput, 'Please enter your phone number.');
         return;
       }
 
       if (contactType === 'email' && !emailInput.value.trim()) {
         wc.log('[mtk-request] Validation failed — email required when contact by email selected');
-        flagField(emailInput);
+        flagField(emailInput, 'Please enter your email address.');
         return;
       }
 
       // 3. Neither filled — require at least one
       if (!emailInput.value.trim() && !phoneInput.value.trim()) {
         wc.log('[mtk-request] Validation failed — email or phone required');
-        flagField(emailInput);
+        flagField(emailInput, 'Please enter an email address or phone number.');
         return;
       }
 
       // 4. Format validation — only validate if the field has a value
       if (emailInput.value.trim() && !EMAIL_REGEX.test(emailInput.value.trim())) {
         wc.log('[mtk-request] Validation failed — invalid email format');
-        flagField(emailInput);
+        flagField(emailInput, 'Please enter a valid email address.');
         return;
       }
 
       if (phoneInput.value.trim() && !PHONE_REGEX.test(phoneInput.value.trim())) {
         wc.log('[mtk-request] Validation failed — invalid phone format');
-        flagField(phoneInput);
+        flagField(phoneInput, 'Please enter a valid phone number.');
         return;
       }
 
       // 5. Help — required
       if (!helpInput.value.trim()) {
         wc.log('[mtk-request] Validation failed — help description is required');
-        flagField(helpInput);
+        flagField(helpInput, 'Please describe what you need help with.');
         return;
       }
 

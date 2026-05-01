@@ -542,8 +542,8 @@ class _febe {
 	const translateRegisterMessage = (message, fallbackKey) => {
 	    const dict = {
 		"Please fill in all required fields.": "register.error.requiredFields",
-		"An account with that email already exists.": "register.error.exists",
 		"server_error": "register.error.server",
+		"If registration can be completed, we will email the next steps.": "register.success",
 		"Registration submitted. Check your email to set your password.": "register.success"
 	    };
 	    const key = dict[message] || fallbackKey;
