@@ -15,38 +15,74 @@ window.MTK_BIAB_SETUP_CONFIG = {
     {
       id: "midnight-brass",
       name: "Trust Navy + Brass",
-      position: "Premium residential and commercial locksmith",
+      position: "Confident, established, and polished",
       colors: ["#0f172a", "#c6952d", "#f8fafc", "#d9dee8"]
     },
     {
       id: "professional-steel",
       name: "Professional Blue + Steel",
-      position: "Broad local-service trust and clean credibility",
+      position: "Crisp, clear, and highly credible",
       colors: ["#123a63", "#4f7fa8", "#f7f9fb", "#b9c4cf"]
     },
     {
       id: "charcoal-signal",
       name: "Charcoal + Safety Yellow",
-      position: "Emergency, mobile, and 24/7 positioning",
+      position: "Visible, direct, and action-oriented",
       colors: ["#20242a", "#f2c94c", "#ffffff", "#6b7280"]
     },
     {
       id: "forest-slate",
       name: "Forest Green + Slate",
-      position: "Dependable neighborhood locksmith service",
+      position: "Calm, grounded, and dependable",
       colors: ["#163126", "#7dbb8b", "#f7fbf8", "#475569"]
     },
     {
       id: "security-metal",
       name: "Black + Brushed Metal + Amber",
-      position: "High-security and commercial access work",
+      position: "Precise, technical, and premium",
       colors: ["#111111", "#9ca3af", "#f59e0b", "#ffffff"]
     },
     {
       id: "heritage-burgundy",
       name: "Burgundy + Charcoal + Cream",
-      position: "Established family-owned service brand",
+      position: "Warm, traditional, and memorable",
       colors: ["#6d1f2f", "#2f3033", "#fff8ea", "#b89662"]
+    },
+    {
+      id: "coastal-teal",
+      name: "Coastal Teal + Graphite",
+      position: "Modern, calm, and approachable",
+      colors: ["#0f3f46", "#2fb7a8", "#f5fbfa", "#334155"]
+    },
+    {
+      id: "graphite-copper",
+      name: "Graphite + Copper",
+      position: "Strong, crafted, and refined",
+      colors: ["#24272d", "#b66a38", "#f7f2ec", "#6b7280"]
+    },
+    {
+      id: "royal-lime",
+      name: "Royal Blue + Fresh Lime",
+      position: "Energetic, friendly, and easy to notice",
+      colors: ["#173d8f", "#a3d635", "#f8fafc", "#1f2937"]
+    },
+    {
+      id: "evergreen-gold",
+      name: "Evergreen + Soft Gold",
+      position: "Stable, respectful, and trustworthy",
+      colors: ["#12352f", "#d6b35a", "#fbfaf4", "#4b5563"]
+    },
+    {
+      id: "black-red",
+      name: "Black + White + Signal Red",
+      position: "Bold, simple, and memorable",
+      colors: ["#0b0b0c", "#d62828", "#ffffff", "#7b8794"]
+    },
+    {
+      id: "sky-slate",
+      name: "Sky Blue + Slate",
+      position: "Open, clean, and reassuring",
+      colors: ["#075985", "#38bdf8", "#f8fafc", "#475569"]
     }
   ],
   steps: [
@@ -114,14 +150,13 @@ window.MTK_BIAB_SETUP_CONFIG = {
       summary: "Set up the money side of the locksmith business: bank account, payment processor, bookkeeping habit, pricing assumptions, and weekly metrics.",
       fields: [
         { id: "bankStatus", label: "Business bank account status", type: "select", required: true, incompleteValues: ["Not started", "Appointment scheduled"], options: ["Not started", "Appointment scheduled", "Account open", "Using existing account"] },
-        { id: "paymentProcessor", label: "Payment processor", type: "select", required: true, options: ["Not selected", "Stripe", "Square", "QuickBooks Payments", "Other"] },
+        { id: "paymentProcessor", label: "Payment processor", type: "select", required: true, options: ["Not selected", "Stripe", "Square", "QuickBooks Payments", "PayPal Business", "Wave Payments", "Other"] },
         { id: "processorAccountId", label: "Processor account/reference ID", type: "text", placeholder: "Optional" },
         { id: "bookkeepingStatus", label: "Bookkeeping setup", type: "select", required: true, options: ["Not started", "Spreadsheet", "QuickBooks", "Wave", "Other"] },
         { id: "pricingNotes", label: "Pricing notes", type: "textarea", placeholder: "Trip fee, lockout rate, rekey per cylinder, after-hours policy...", required: true }
       ],
       links: [
-        { label: "SBA open a business bank account", href: "https://www.sba.gov/business-guide/launch-your-business/open-business-bank-account" },
-        { label: "Stripe account setup", href: "https://docs.stripe.com/get-started/account" }
+        { label: "SBA open a business bank account", href: "https://www.sba.gov/business-guide/launch-your-business/open-business-bank-account" }
       ],
       instructions: [
         "Use the EIN and legal business name from Legal Setup when opening a bank account.",
@@ -138,7 +173,8 @@ window.MTK_BIAB_SETUP_CONFIG = {
       summary: "Choose a brand direction that can carry through the actual website, logo, invoices, review emails, stationery, ads, and other marketing.",
       fields: [
         { id: "palette", label: "Color scheme", type: "palette", required: true },
-        { id: "brandTone", label: "Brand tone", type: "select", required: true, options: ["Premium security", "Fast emergency service", "Neighborhood trust", "Commercial access control", "Family-owned established"] },
+        { id: "brandToneExplainer", label: "Color scheme vs. brand tone", type: "info", text: "Color scheme controls the visual look across the website, logo, invoices, and marketing. Brand tone controls the wording style: how direct, warm, polished, or reassuring the business sounds." },
+        { id: "brandTone", label: "Brand tone", type: "select", required: true, options: ["Clear and professional", "Warm and neighborly", "Direct and practical", "Polished and premium", "Security-focused and reassuring"] },
         { id: "tagline", label: "Tagline", type: "text", placeholder: "Mobile Locksmith Service", required: true },
         { id: "logoStatus", label: "Logo status", type: "select", required: true, options: ["Create in logo step", "Upload existing logo", "Production logo needed later"] }
       ]
@@ -206,10 +242,10 @@ window.MTK_BIAB_SETUP_CONFIG = {
       summary: "Prepare the actual locksmith website for search engines and connect Search Console after the live URL/domain is ready.",
       sourceNote: "Instructions are based on Google Search Console and Search Central documentation checked before implementation.",
       fields: [
-        { id: "websiteUrl", label: "Actual website URL", type: "url", placeholder: "https://example.com", required: true },
+        { id: "websiteUrl", label: "BIAB website URL", type: "computed-url", source: "website", required: true, helper: "This is the actual website generated by Business in a Box." },
         { id: "searchConsoleStatus", label: "Search Console status", type: "select", required: true, incompleteValues: ["Not started", "Property added", "Needs attention"], options: ["Not started", "Property added", "Ownership verified", "Sitemap submitted", "Needs attention"] },
-        { id: "sitemapUrl", label: "Sitemap URL", type: "url", placeholder: "https://example.com/sitemap.xml", required: true },
-        { id: "primaryKeywords", label: "Primary local search terms", type: "textarea", placeholder: "locksmith near me, rekey locks, house lockout, lock change...", required: true }
+        { id: "sitemapUrl", label: "Sitemap URL", type: "computed-url", source: "sitemap", required: true, helper: "Submit this sitemap URL in Search Console when the site is live." },
+        { id: "primaryKeywords", label: "Primary local search terms", type: "seo-keywords", placeholder: "locksmith near me, rekey locks, house lockout, lock change...", required: true, helper: "Suggested from the launch services and service area entered earlier. Edit before saving if needed." }
       ],
       links: [
         { label: "Search Console", href: "https://search.google.com/search-console/welcome" },
@@ -220,7 +256,7 @@ window.MTK_BIAB_SETUP_CONFIG = {
         "Open Search Console and add the actual website property.",
         "Choose an available verification method and follow Google's instructions.",
         "Record the verified status here after Search Console accepts the property.",
-        "Submit the sitemap after verification if the live website provides one.",
+        "Submit the sitemap URL shown here after verification.",
         "Use honest local service terms and avoid fake city pages."
       ]
     },

@@ -333,6 +333,25 @@
   grid-column: 1 / -1;
 }
 
+.mtk-biab-setup__info {
+  grid-column: 1 / -1;
+  border: 1px solid #d7dde6;
+  border-radius: 6px;
+  background: #f8fafc;
+  padding: 12px 14px;
+}
+
+.mtk-biab-setup__info strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.mtk-biab-setup__info p {
+  margin: 0;
+  color: var(--biab-muted);
+  line-height: 1.5;
+}
+
 .mtk-biab-setup__field textarea,
 .mtk-biab-setup__field input,
 .mtk-biab-setup__field select {
@@ -342,6 +361,11 @@
   min-height: 42px;
   color: var(--biab-ink);
   background: #fff;
+}
+
+.mtk-biab-setup__field--readonly input {
+  background: #f8fafc;
+  color: #334155;
 }
 
 .mtk-biab-setup__field textarea {
@@ -396,7 +420,7 @@
 
 .mtk-biab-setup__palette-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
   margin-top: 8px;
 }

@@ -297,15 +297,36 @@
     }
 
     renderLinks(step) {
-      if (!Array.isArray(step.links) || !step.links.length) return "";
+      const links = this.getStepLinks(step);
+      if (!links.length) return "";
       return `
         <section class="mtk-biab-setup__links" aria-label="Official links">
           <h2>Official links</h2>
           <div>
-            ${step.links.map(link => `<a href="${this.escape(link.href)}" target="_blank" rel="noopener">${this.escape(link.label)} <span aria-hidden="true">↗</span></a>`).join("")}
+            ${links.map(link => `<a href="${this.escape(link.href)}" target="_blank" rel="noopener">${this.escape(link.label)} <span aria-hidden="true">↗</span></a>`).join("")}
           </div>
         </section>
       `;
+    }
+
+    getStepLinks(step) {
+      const links = Array.isArray(step.links) ? [...step.links] : [];
+      if (step?.id === "financial") {
+        const processorLink = this.processorSetupLink();
+        if (processorLink) links.push(processorLink);
+      }
+      return links;
+    }
+
+    processorSetupLink() {
+      const links = {
+        Stripe: { label: "Stripe account setup", href: "https://docs.stripe.com/get-started" },
+        Square: { label: "Square account setup", href: "https://squareup.com/help/us/en/article/5123-square-get-started-guide" },
+        "QuickBooks Payments": { label: "QuickBooks Payments setup", href: "https://quickbooks.intuit.com/sign-in/payments/" },
+        "PayPal Business": { label: "PayPal Business account setup", href: "https://www.paypal.com/us/business/open-business-account" },
+        "Wave Payments": { label: "Wave online payments setup", href: "https://support.waveapps.com/hc/en-us/articles/214268023-Set-up-online-payments" }
+      };
+      return links[this.val("paymentProcessor")] || null;
     }
 
     renderFields(step) {
@@ -325,6 +346,21 @@
       const required = isRequired ? " required" : "";
       const requiredMark = isRequired ? " *" : "";
       const described = field.helper ? ` aria-describedby="${inputId}-help"` : "";
+
+      if (field.type === "info") {
+        return `<section class="mtk-biab-setup__info" aria-label="${this.escape(field.label)}"><strong>${this.escape(field.label)}</strong><p>${this.escape(field.text || "")}</p></section>`;
+      }
+
+      if (field.type === "computed-url") {
+        const computed = this.computedUrl(field);
+        return `<label class="mtk-biab-setup__field mtk-biab-setup__field--full mtk-biab-setup__field--readonly" for="${inputId}"><span>${this.escape(field.label)}${requiredMark}</span><input id="${inputId}" data-field="${field.id}" type="url" value="${this.escape(computed)}" readonly${required}${described}>${helper}</label>`;
+      }
+
+      if (field.type === "seo-keywords") {
+        const generated = this.generatedSeoKeywords();
+        const displayValue = value || generated;
+        return `<label class="mtk-biab-setup__field mtk-biab-setup__field--full" for="${inputId}"><span>${this.escape(field.label)}${requiredMark}</span><textarea id="${inputId}" data-field="${field.id}" rows="${Number(field.rows || 5)}" placeholder="${this.escape(field.placeholder || "")}"${required}${described}>${this.escape(displayValue)}</textarea>${helper}${generated ? `<small>Suggested terms: ${this.escape(generated)}</small>` : ""}</label>`;
+      }
 
       if (field.type === "textarea") {
         const fullClass = field.full ? " mtk-biab-setup__field--full" : "";
@@ -637,7 +673,7 @@
       }
       this.syncCurrentStepCompletion();
       this.saveState();
-      if (target.closest(".mtk-biab-setup__palettes") || String(field).indexOf("logo") === 0) this.render();
+      if (target.closest(".mtk-biab-setup__palettes") || String(field).indexOf("logo") === 0 || field === "paymentProcessor") this.render();
     }
 
     setLogoChoice(field, value) {
@@ -807,6 +843,8 @@
       if (field.type === "checkbox") return value === true;
       if (field.type === "checks") return Array.isArray(value) && value.length > 0;
       if (field.type === "palette") return !!(value || this.cfg.palettes[0]?.id);
+      if (field.type === "computed-url") return !!this.computedUrl(field);
+      if (field.type === "seo-keywords") return !!String(value || this.generatedSeoKeywords()).trim();
       if (field.type === "select") return this.selectValueIsComplete(field, value || field.options?.[0]);
       if (field.type === "file") return !!this.state.values.logoUploadData;
       if (String(field.type || "").indexOf("logo-") === 0) return !!this.logoValue(field.id);
@@ -828,6 +866,8 @@
       if (field.type === "checkbox") return value === true;
       if (field.type === "checks") return Array.isArray(value) && value.length > 0;
       if (field.type === "palette") return !!value;
+      if (field.type === "computed-url") return false;
+      if (field.type === "seo-keywords") return !!String(value || "").trim();
       if (field.type === "select") return this.selectValueIsComplete(field, value || field.options?.[0]);
       return String(value || "").trim().length > 0;
     }
@@ -840,6 +880,46 @@
 
     val(key) {
       return this.state.values[key];
+    }
+
+    computedUrl(field) {
+      const relative = field.source === "sitemap" ? "../client/sitemap.xml" : "../client/index.html";
+      try {
+        return new URL(relative, window.location.href).href;
+      } catch (error) {
+        return relative;
+      }
+    }
+
+    generatedSeoKeywords() {
+      const rawServices = Array.isArray(this.val("services")) ? this.val("services") : [];
+      const extra = String(this.val("additionalLaunchServices") || "")
+        .split(/[\n,]+/)
+        .map(item => item.trim())
+        .filter(Boolean);
+      const services = [...rawServices, ...extra]
+        .map(item => item.toLowerCase().replace(/\s*\/\s*/g, " ").trim())
+        .filter(Boolean);
+      const areas = String(this.val("serviceArea") || "")
+        .split(/[\n,;]+/)
+        .map(item => item.trim())
+        .filter(Boolean);
+      const primaryArea = areas[0] || "your service area";
+      const terms = [
+        `locksmith ${primaryArea}`,
+        `${primaryArea} locksmith`,
+        `mobile locksmith ${primaryArea}`,
+        `locksmith near me`
+      ];
+      services.slice(0, 8).forEach(service => {
+        terms.push(`${service} ${primaryArea}`);
+        terms.push(`${service} near me`);
+      });
+      areas.slice(1, 4).forEach(area => {
+        terms.push(`locksmith ${area}`);
+        terms.push(`mobile locksmith ${area}`);
+      });
+      return [...new Set(terms)].join(", ");
     }
 
     logoValue(key) {
