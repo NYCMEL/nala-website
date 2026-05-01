@@ -42,12 +42,34 @@
 	    <div class="col-lg-5">
 		<div class="biab-home-copy">
 		    <p class="biab-home-eyebrow" data-i18n="home.biab.eyebrow">Launch toolkit</p>
-		    <h2 data-i18n="home.biab.heading">Set up the business side while you train.</h2>
-		    <p data-i18n="home.biab.body">Business in a Box gives you a guided setup path for the details a locksmith needs before launch: business background, legal reminders, financial setup, branding, the actual website, invoicing, reviews, and marketing preparation.</p>
+		    <h2 data-i18n="home.biab.heading">Launch with free business tools while you train.</h2>
+		    <p data-i18n="home.biab.body">Business in a Box includes a free website, free custom logo, free invoice creator, and a guided setup path for the business details you need before launch.</p>
+		    <div class="biab-home-benefits" aria-label="Business in a Box included tools">
+			<div>
+			    <span class="material-icons" aria-hidden="true">language</span>
+			    <strong data-i18n="home.biab.benefitWebsiteTitle">Free website</strong>
+			    <small data-i18n="home.biab.benefitWebsiteBody">Your actual business website, built from your setup information.</small>
+			</div>
+			<div>
+			    <span class="material-icons" aria-hidden="true">auto_awesome</span>
+			    <strong data-i18n="home.biab.benefitLogoTitle">Free custom logo</strong>
+			    <small data-i18n="home.biab.benefitLogoBody">Create a brand mark with guided choices for icons, letters, colors, and shape.</small>
+			</div>
+			<div>
+			    <span class="material-icons" aria-hidden="true">receipt_long</span>
+			    <strong data-i18n="home.biab.benefitInvoiceTitle">Free invoice creator</strong>
+			    <small data-i18n="home.biab.benefitInvoiceBody">Send locksmith invoices on-site with optional review requests.</small>
+			</div>
+			<div>
+			    <span class="material-icons" aria-hidden="true">checklist</span>
+			    <strong data-i18n="home.biab.benefitSetupTitle">Guided business setup</strong>
+			    <small data-i18n="home.biab.benefitSetupBody">Step through legal, financial, branding, SEO, and marketing setup.</small>
+			</div>
+		    </div>
 		    <ul>
 			<li data-i18n="home.biab.point1">Enter business information once and reuse it across tools.</li>
 			<li data-i18n="home.biab.point2">Follow a linear setup with progress tracking and official links.</li>
-			<li data-i18n="home.biab.point3">Use the standalone invoice and review workflow after setup.</li>
+			<li data-i18n="home.biab.point3">Use your website, logo, invoices, and review workflow after setup.</li>
 		    </ul>
 		    <button class="btn btn-primary" data-i18n="home.biab.cta" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } return false;">Make it your own</button>
 		</div>
@@ -105,7 +127,7 @@
 
  .biab-home-copy ul {
      padding-left: 20px;
-     margin-bottom: 22px;
+     margin: 0 0 22px;
      color: #34302a;
  }
 
@@ -124,6 +146,62 @@
      font-weight: 800;
      text-transform: uppercase;
      letter-spacing: 0.06em;
+ }
+
+ .biab-home-benefits {
+     display: grid;
+     grid-template-columns: repeat(2, minmax(0, 1fr));
+     gap: 10px;
+     margin: 18px 0 18px;
+ }
+
+ .biab-home-benefits div {
+     display: grid;
+     grid-template-columns: 28px minmax(0, 1fr);
+     grid-template-areas:
+	 "icon title"
+	 "icon body";
+     column-gap: 10px;
+     row-gap: 2px;
+     align-items: start;
+     padding: 12px;
+     border: 1px solid #eadfca;
+     border-radius: 8px;
+     background: #fffaf0;
+     box-shadow: 0 8px 18px rgba(33, 33, 33, 0.06);
+ }
+
+ .biab-home-benefits .material-icons {
+     grid-area: icon;
+     width: 28px;
+     height: 28px;
+     border-radius: 50%;
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     background: #1f2428;
+     color: #f2c75c;
+     font-size: 17px;
+ }
+
+ .biab-home-benefits strong {
+     grid-area: title;
+     color: #202124;
+     font-size: 14px;
+     line-height: 1.25;
+ }
+
+ .biab-home-benefits small {
+     grid-area: body;
+     color: #5f6368;
+     font-size: 12px;
+     line-height: 1.35;
+ }
+
+ @media (max-width: 520px) {
+     .biab-home-benefits {
+	 grid-template-columns: 1fr;
+     }
  }
 
  .biab-home-sample {

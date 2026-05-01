@@ -245,12 +245,44 @@
       es: 'Kit de lanzamiento'
     },
     'home.biab.heading': {
-      en: 'Set up the business side while you train.',
-      es: 'Configura el lado comercial mientras te capacitas.'
+      en: 'Launch with free business tools while you train.',
+      es: 'Lanza con herramientas comerciales gratis mientras te capacitas.'
     },
     'home.biab.body': {
-      en: 'Business in a Box gives you a guided setup path for the details a locksmith needs before launch: business background, legal reminders, financial setup, branding, the actual website, invoicing, reviews, and marketing preparation.',
-      es: 'Negocio en una Caja te da una ruta guiada para preparar los detalles que necesitas antes del lanzamiento: información del negocio, recordatorios legales, configuración financiera, marca, sitio web real, facturas, reseñas y preparación de marketing.'
+      en: 'Business in a Box includes a free website, free custom logo, free invoice creator, and a guided setup path for the business details you need before launch.',
+      es: 'Negocio en una Caja incluye un sitio web gratis, un logo personalizado gratis, un creador de facturas gratis y una ruta guiada para los detalles comerciales que necesitas antes del lanzamiento.'
+    },
+    'home.biab.benefitWebsiteTitle': {
+      en: 'Free website',
+      es: 'Sitio web gratis'
+    },
+    'home.biab.benefitWebsiteBody': {
+      en: 'Your actual business website, built from your setup information.',
+      es: 'Tu sitio web comercial real, creado con la información de tu configuración.'
+    },
+    'home.biab.benefitLogoTitle': {
+      en: 'Free custom logo',
+      es: 'Logo personalizado gratis'
+    },
+    'home.biab.benefitLogoBody': {
+      en: 'Create a brand mark with guided choices for icons, letters, colors, and shape.',
+      es: 'Crea una marca con opciones guiadas de íconos, letras, colores y forma.'
+    },
+    'home.biab.benefitInvoiceTitle': {
+      en: 'Free invoice creator',
+      es: 'Creador de facturas gratis'
+    },
+    'home.biab.benefitInvoiceBody': {
+      en: 'Send locksmith invoices on-site with optional review requests.',
+      es: 'Envía facturas de cerrajería en el sitio con solicitudes de reseña opcionales.'
+    },
+    'home.biab.benefitSetupTitle': {
+      en: 'Guided business setup',
+      es: 'Configuración comercial guiada'
+    },
+    'home.biab.benefitSetupBody': {
+      en: 'Step through legal, financial, branding, SEO, and marketing setup.',
+      es: 'Avanza por la configuración legal, financiera, de marca, SEO y marketing.'
     },
     'home.biab.point1': {
       en: 'Enter business information once and reuse it across tools.',
@@ -261,8 +293,8 @@
       es: 'Sigue una configuración lineal con progreso visible y enlaces oficiales.'
     },
     'home.biab.point3': {
-      en: 'Use the standalone invoice and review workflow after setup.',
-      es: 'Usa el flujo independiente de facturas y reseñas después de la configuración.'
+      en: 'Use your website, logo, invoices, and review workflow after setup.',
+      es: 'Usa tu sitio web, logo, facturas y flujo de reseñas después de la configuración.'
     },
     'home.biab.cta': {
       en: 'Make it your own',
