@@ -214,7 +214,7 @@
           <h1 id="biab-step-title">${this.escape(step.title)}</h1>
           <p>${this.escape(step.summary)}</p>
           <div class="mtk-biab-setup__intro-grid">
-            ${["Business background", "Legal reminders", "Financial setup", "Brand system", "Actual website", "Google profile", "Invoices", "Reviews", "Launch review"].map(item => `
+            ${["Business background", "Legal reminders", "Financial setup", "Brand system", "Logo creation", "Actual website", "Google profile", "Invoices", "Reviews", "Launch review"].map(item => `
               <div><span class="material-icons" aria-hidden="true">arrow_forward</span>${item}</div>
             `).join("")}
           </div>
@@ -289,30 +289,32 @@
       const value = this.state.values[field.id];
       const inputId = `biab-field-${field.id}`;
       const helper = field.helper ? `<small id="${inputId}-help">${this.escape(field.helper)}</small>` : "";
-      const required = field.required ? " required" : "";
+      const isRequired = this.fieldIsRequired(field);
+      const required = isRequired ? " required" : "";
+      const requiredMark = isRequired ? " *" : "";
       const described = field.helper ? ` aria-describedby="${inputId}-help"` : "";
 
       if (field.type === "textarea") {
         const fullClass = field.full ? " mtk-biab-setup__field--full" : "";
-        return `<label class="mtk-biab-setup__field${fullClass}" for="${inputId}"><span>${this.escape(field.label)}${field.required ? " *" : ""}</span><textarea id="${inputId}" data-field="${field.id}" rows="${Number(field.rows || 4)}" placeholder="${this.escape(field.placeholder || "")}"${required}${described}>${this.escape(value || "")}</textarea>${helper}</label>`;
+        return `<label class="mtk-biab-setup__field${fullClass}" for="${inputId}"><span>${this.escape(field.label)}${requiredMark}</span><textarea id="${inputId}" data-field="${field.id}" rows="${Number(field.rows || 4)}" placeholder="${this.escape(field.placeholder || "")}"${required}${described}>${this.escape(value || "")}</textarea>${helper}</label>`;
       }
 
       if (field.type === "select") {
-        return `<label class="mtk-biab-setup__field" for="${inputId}"><span>${this.escape(field.label)}${field.required ? " *" : ""}</span><select id="${inputId}" data-field="${field.id}"${required}>${(field.options || []).map(option => `<option value="${this.escape(option)}" ${value === option ? "selected" : ""}>${this.escape(option)}</option>`).join("")}</select>${helper}</label>`;
+        return `<label class="mtk-biab-setup__field" for="${inputId}"><span>${this.escape(field.label)}${requiredMark}</span><select id="${inputId}" data-field="${field.id}"${required}>${(field.options || []).map(option => `<option value="${this.escape(option)}" ${value === option ? "selected" : ""}>${this.escape(option)}</option>`).join("")}</select>${helper}</label>`;
       }
 
       if (field.type === "checkbox") {
-        return `<label class="mtk-biab-setup__check"><input id="${inputId}" data-field="${field.id}" type="checkbox" ${value ? "checked" : ""}${required}> <span>${this.escape(field.label)}${field.required ? " *" : ""}</span></label>`;
+        return `<label class="mtk-biab-setup__check"><input id="${inputId}" data-field="${field.id}" type="checkbox" ${value ? "checked" : ""}${required}> <span>${this.escape(field.label)}${requiredMark}</span></label>`;
       }
 
       if (field.type === "checks") {
         const selected = Array.isArray(value) ? value : [];
-        return `<fieldset class="mtk-biab-setup__checks"><legend>${this.escape(field.label)}${field.required ? " *" : ""}</legend><div class="mtk-biab-setup__checks-grid">${(field.options || []).map(option => `<label><input data-field="${field.id}" type="checkbox" value="${this.escape(option)}" ${selected.includes(option) ? "checked" : ""}> <span>${this.escape(option)}</span></label>`).join("")}</div></fieldset>`;
+        return `<fieldset class="mtk-biab-setup__checks"><legend>${this.escape(field.label)}${requiredMark}</legend><div class="mtk-biab-setup__checks-grid">${(field.options || []).map(option => `<label><input data-field="${field.id}" type="checkbox" value="${this.escape(option)}" ${selected.includes(option) ? "checked" : ""}> <span>${this.escape(option)}</span></label>`).join("")}</div></fieldset>`;
       }
 
       if (field.type === "palette") {
         const selected = value || this.cfg.palettes[0].id;
-        return `<fieldset class="mtk-biab-setup__palettes"><legend>${this.escape(field.label)}${field.required ? " *" : ""}</legend><div class="mtk-biab-setup__palette-grid">${this.cfg.palettes.map(palette => `
+        return `<fieldset class="mtk-biab-setup__palettes"><legend>${this.escape(field.label)}${requiredMark}</legend><div class="mtk-biab-setup__palette-grid">${this.cfg.palettes.map(palette => `
           <label class="${selected === palette.id ? "is-selected" : ""}">
             <input data-field="${field.id}" type="radio" name="${field.id}" value="${this.escape(palette.id)}" ${selected === palette.id ? "checked" : ""}>
             <span class="mtk-biab-setup__swatches">${palette.colors.map(color => `<i style="background:${this.escape(color)}"></i>`).join("")}</span>
@@ -322,7 +324,40 @@
         `).join("")}</div></fieldset>`;
       }
 
-      return `<label class="mtk-biab-setup__field" for="${inputId}"><span>${this.escape(field.label)}${field.required ? " *" : ""}</span><input id="${inputId}" data-field="${field.id}" type="${this.escape(field.type || "text")}" value="${this.escape(value || "")}" placeholder="${this.escape(field.placeholder || "")}"${required}${described}>${helper}</label>`;
+      if (field.type === "file") {
+        const fileName = value ? `<small>Selected: ${this.escape(value)}</small>` : helper;
+        return `<label class="mtk-biab-setup__field mtk-biab-setup__field--full" for="${inputId}"><span>${this.escape(field.label)}${requiredMark}</span><input id="${inputId}" data-field="${field.id}" type="file" accept=".svg,.png,.jpg,.jpeg,.webp"${required}${described}>${fileName}</label>`;
+      }
+
+      if (field.type === "logo-preview") {
+        return this.renderLogoPreview(field);
+      }
+
+      return `<label class="mtk-biab-setup__field" for="${inputId}"><span>${this.escape(field.label)}${requiredMark}</span><input id="${inputId}" data-field="${field.id}" type="${this.escape(field.type || "text")}" value="${this.escape(value || "")}" placeholder="${this.escape(field.placeholder || "")}"${required}${described}>${helper}</label>`;
+    }
+
+    renderLogoPreview(field) {
+      const palette = this.cfg.palettes.find(item => item.id === this.val("palette")) || this.cfg.palettes[0] || { colors: ["#0f172a", "#c6952d", "#fff"] };
+      const shape = this.val("logoShape") || "Circle";
+      const layout = this.val("logoLayout") || "Icon left + wordmark";
+      const source = this.val("logoSource") || "Create logo here";
+      const letters = (this.val("logoLetters") || this.initialsFromName()).slice(0, 4).toUpperCase();
+      const icon = this.val("logoIcon") || "key";
+      const uploaded = this.val("logoUpload");
+      const shapeClass = shape.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      return `
+        <section class="mtk-biab-setup__logo-preview mtk-biab-setup__logo-preview--${this.escape(shapeClass)} mtk-biab-setup__logo-preview--${layout === "Icon above wordmark" ? "stacked" : layout === "Badge / emblem" ? "badge" : ""}">
+          <div class="mtk-biab-setup__logo-mark" style="--logo-primary:${this.escape(palette.colors[0])};--logo-accent:${this.escape(palette.colors[1] || palette.colors[0])};--logo-bg:${this.escape(palette.colors[2] || "#ffffff")}">
+            <span class="material-icons" aria-hidden="true">${this.escape(source === "Upload existing icon/logo" && uploaded ? "image" : icon)}</span>
+            <strong>${this.escape(letters)}</strong>
+          </div>
+          <div class="mtk-biab-setup__logo-wordmark">
+            <strong>${this.escape(this.val("businessName") || "Your Locksmith")}</strong>
+            <span>${this.escape(this.val("tagline") || "Mobile Locksmith Service")}</span>
+          </div>
+          <p>${source === "Upload existing icon/logo" ? "Uploaded artwork will replace the placeholder mark in production." : "Placeholder logo direction. Production should replace icons/fonts with licensed assets and export full, icon-only, one-color, and reversed versions."}</p>
+        </section>
+      `;
     }
 
     renderFooter(step, nextText) {
@@ -445,7 +480,9 @@
 
     updateField(target) {
       const field = target.dataset.field;
-      if (target.type === "checkbox" && target.value && target.closest("fieldset")) {
+      if (target.type === "file") {
+        this.state.values[field] = target.files && target.files[0] ? target.files[0].name : "";
+      } else if (target.type === "checkbox" && target.value && target.closest("fieldset")) {
         const selected = Array.from(this.el.querySelectorAll(`[data-field="${field}"]:checked`)).map(input => input.value);
         this.state.values[field] = selected;
       } else if (target.type === "checkbox") {
@@ -455,7 +492,7 @@
       }
       this.syncCurrentStepCompletion();
       this.saveState();
-      if (target.closest(".mtk-biab-setup__palettes")) this.render();
+      if (target.closest(".mtk-biab-setup__palettes") || String(field).indexOf("logo") === 0) this.render();
     }
 
     updateInvoiceField(target) {
@@ -603,7 +640,7 @@
     stepCanComplete(step) {
       if (!step) return false;
       if (step.kind === "intro") return true;
-      const requiredFields = (step.fields || []).filter(field => field.required);
+      const requiredFields = (step.fields || []).filter(field => this.fieldIsRequired(field));
       if (!requiredFields.length) return true;
       return requiredFields.every(field => this.fieldIsComplete(field));
     }
@@ -617,8 +654,18 @@
       if (field.type === "checkbox") return value === true;
       if (field.type === "checks") return Array.isArray(value) && value.length > 0;
       if (field.type === "palette") return !!(value || this.cfg.palettes[0]?.id);
-      if (field.type === "select") return this.selectValueIsComplete(field, value);
+      if (field.type === "select") return this.selectValueIsComplete(field, value || field.options?.[0]);
       return String(value || "").trim().length > 0;
+    }
+
+    fieldIsRequired(field) {
+      if (!field.required) return false;
+      if (!field.requiredWhen) return true;
+      const actual = this.state.values[field.requiredWhen.field];
+      if (Object.prototype.hasOwnProperty.call(field.requiredWhen, "equals")) {
+        return actual === field.requiredWhen.equals || (!actual && field.requiredWhen.equals === "Create logo here");
+      }
+      return true;
     }
 
     fieldHasProgress(field) {
@@ -626,7 +673,7 @@
       if (field.type === "checkbox") return value === true;
       if (field.type === "checks") return Array.isArray(value) && value.length > 0;
       if (field.type === "palette") return !!value;
-      if (field.type === "select") return this.selectValueIsComplete(field, value);
+      if (field.type === "select") return this.selectValueIsComplete(field, value || field.options?.[0]);
       return String(value || "").trim().length > 0;
     }
 
@@ -638,6 +685,15 @@
 
     val(key) {
       return this.state.values[key];
+    }
+
+    initialsFromName() {
+      return String(this.val("businessName") || "YL")
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 3)
+        .map(part => part.charAt(0))
+        .join("") || "YL";
     }
 
     fill(text) {

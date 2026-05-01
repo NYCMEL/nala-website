@@ -140,7 +140,33 @@ window.MTK_BIAB_SETUP_CONFIG = {
         { id: "palette", label: "Color scheme", type: "palette", required: true },
         { id: "brandTone", label: "Brand tone", type: "select", required: true, options: ["Premium security", "Fast emergency service", "Neighborhood trust", "Commercial access control", "Family-owned established"] },
         { id: "tagline", label: "Tagline", type: "text", placeholder: "Mobile Locksmith Service", required: true },
-        { id: "logoStatus", label: "Logo status", type: "select", required: true, options: ["Use generated placeholder", "Upload existing logo", "Production logo needed later"] }
+        { id: "logoStatus", label: "Logo status", type: "select", required: true, options: ["Create in logo step", "Upload existing logo", "Production logo needed later"] }
+      ]
+    },
+    {
+      id: "logo",
+      navLabel: "Logo",
+      title: "Logo and icon creation",
+      eyebrow: "Placeholder builder, production assets later",
+      summary: "Create a simple locksmith logo direction using placeholder icons, letters, background shapes, and the selected brand colors, or upload an existing icon/logo instead.",
+      sourceNote: "Logo guidance follows common branding practice: keep it simple, scalable, readable at small sizes, and usable in full-color, one-color, and reversed versions.",
+      fields: [
+        { id: "logoSource", label: "Logo path", type: "select", required: true, options: ["Create logo here", "Upload existing icon/logo"] },
+        { id: "logoIcon", label: "Placeholder icon", type: "select", required: true, requiredWhen: { field: "logoSource", equals: "Create logo here" }, options: ["key", "shield", "lock", "vpn_key", "home_repair_service", "location_on", "badge"] },
+        { id: "logoLetters", label: "Letter(s) or initials", type: "text", placeholder: "HLK", required: true, requiredWhen: { field: "logoSource", equals: "Create logo here" } },
+        { id: "logoShape", label: "Background shape", type: "select", required: true, requiredWhen: { field: "logoSource", equals: "Create logo here" }, options: ["Circle", "Shield", "Rounded square", "Hexagon", "No background"] },
+        { id: "logoTypeStyle", label: "Placeholder font style", type: "select", required: true, requiredWhen: { field: "logoSource", equals: "Create logo here" }, options: ["Strong sans", "Classic serif", "Condensed service", "Rounded friendly"] },
+        { id: "logoLayout", label: "Logo layout", type: "select", required: true, requiredWhen: { field: "logoSource", equals: "Create logo here" }, options: ["Icon left + wordmark", "Icon above wordmark", "Badge / emblem", "Letters only"] },
+        { id: "logoUpload", label: "Upload existing icon/logo", type: "file", required: true, requiredWhen: { field: "logoSource", equals: "Upload existing icon/logo" }, helper: "Placeholder upload field for now. Production should store SVG/PNG assets and generate logo kit variants." },
+        { id: "logoNotes", label: "Logo notes", type: "textarea", placeholder: "Avoid tiny details, use 2-3 colors, check small-size readability, prepare icon-only and full lockup versions.", rows: 3, full: true },
+        { id: "logoPreview", label: "Logo preview", type: "logo-preview" }
+      ],
+      instructions: [
+        "Choose whether to create a logo direction here or upload an existing icon/logo.",
+        "If creating here, pick one clear symbol or initials. Avoid combining too many icons.",
+        "Choose a simple background shape that still works at favicon, invoice, shirt, van, and Google profile sizes.",
+        "Use the brand color scheme from the previous step and keep the mark readable in one color.",
+        "Treat the generated icon/font choices as placeholders until production licensed assets are purchased."
       ]
     },
     {
