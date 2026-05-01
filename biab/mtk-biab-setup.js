@@ -169,8 +169,9 @@
               const current = step.id === activeStep.id;
               const complete = !!this.state.completed[step.id];
               const skipped = !!this.state.skipped[step.id];
-              const status = complete ? "Complete" : skipped ? "Skipped" : current ? "Current" : "Not started";
-              const icon = complete ? "check_circle" : skipped ? "remove_circle_outline" : current ? "radio_button_checked" : "radio_button_unchecked";
+              const inProgress = !complete && !skipped && this.stepHasProgress(step);
+              const status = complete ? "Complete" : skipped ? "Skipped" : current ? "Current" : inProgress ? "In progress" : "Not started";
+              const icon = complete ? "check_circle" : skipped ? "remove_circle_outline" : current ? "radio_button_checked" : inProgress ? "pending" : "radio_button_unchecked";
               return `
                 <li>
                   <button type="button" class="${current ? "is-current" : ""}" data-biab-action="goto" data-step-id="${step.id}" aria-current="${current ? "step" : "false"}">
@@ -197,6 +198,7 @@
             <p>${this.escape(step.summary || "")}</p>
           </div>
           ${step.sourceNote ? `<p class="mtk-biab-setup__source-note">${this.escape(step.sourceNote)}</p>` : ""}
+          ${this.notice ? `<div class="mtk-biab-setup__notice" role="status">${this.escape(this.notice)}</div>` : ""}
           ${this.renderInstructions(step)}
           ${this.renderLinks(step)}
           ${this.renderFields(step)}
@@ -296,21 +298,21 @@
       }
 
       if (field.type === "select") {
-        return `<label class="mtk-biab-setup__field" for="${inputId}"><span>${this.escape(field.label)}</span><select id="${inputId}" data-field="${field.id}">${(field.options || []).map(option => `<option value="${this.escape(option)}" ${value === option ? "selected" : ""}>${this.escape(option)}</option>`).join("")}</select>${helper}</label>`;
+        return `<label class="mtk-biab-setup__field" for="${inputId}"><span>${this.escape(field.label)}${field.required ? " *" : ""}</span><select id="${inputId}" data-field="${field.id}"${required}>${(field.options || []).map(option => `<option value="${this.escape(option)}" ${value === option ? "selected" : ""}>${this.escape(option)}</option>`).join("")}</select>${helper}</label>`;
       }
 
       if (field.type === "checkbox") {
-        return `<label class="mtk-biab-setup__check"><input id="${inputId}" data-field="${field.id}" type="checkbox" ${value ? "checked" : ""}> <span>${this.escape(field.label)}</span></label>`;
+        return `<label class="mtk-biab-setup__check"><input id="${inputId}" data-field="${field.id}" type="checkbox" ${value ? "checked" : ""}${required}> <span>${this.escape(field.label)}${field.required ? " *" : ""}</span></label>`;
       }
 
       if (field.type === "checks") {
         const selected = Array.isArray(value) ? value : [];
-        return `<fieldset class="mtk-biab-setup__checks"><legend>${this.escape(field.label)}</legend>${(field.options || []).map(option => `<label><input data-field="${field.id}" type="checkbox" value="${this.escape(option)}" ${selected.includes(option) ? "checked" : ""}> <span>${this.escape(option)}</span></label>`).join("")}</fieldset>`;
+        return `<fieldset class="mtk-biab-setup__checks"><legend>${this.escape(field.label)}${field.required ? " *" : ""}</legend>${(field.options || []).map(option => `<label><input data-field="${field.id}" type="checkbox" value="${this.escape(option)}" ${selected.includes(option) ? "checked" : ""}> <span>${this.escape(option)}</span></label>`).join("")}</fieldset>`;
       }
 
       if (field.type === "palette") {
         const selected = value || this.cfg.palettes[0].id;
-        return `<fieldset class="mtk-biab-setup__palettes"><legend>${this.escape(field.label)}</legend>${this.cfg.palettes.map(palette => `
+        return `<fieldset class="mtk-biab-setup__palettes"><legend>${this.escape(field.label)}${field.required ? " *" : ""}</legend>${this.cfg.palettes.map(palette => `
           <label class="${selected === palette.id ? "is-selected" : ""}">
             <input data-field="${field.id}" type="radio" name="${field.id}" value="${this.escape(palette.id)}" ${selected === palette.id ? "checked" : ""}>
             <span class="mtk-biab-setup__swatches">${palette.colors.map(color => `<i style="background:${this.escape(color)}"></i>`).join("")}</span>
@@ -451,6 +453,7 @@
       } else {
         this.state.values[field] = target.value;
       }
+      this.syncCurrentStepCompletion();
       this.saveState();
       if (target.closest(".mtk-biab-setup__palettes")) this.render();
     }
@@ -540,8 +543,14 @@
 
     completeStep(render = true) {
       const step = this.cfg.steps[this.currentStep];
-      this.state.completed[step.id] = true;
-      delete this.state.skipped[step.id];
+      if (this.stepCanComplete(step)) {
+        this.state.completed[step.id] = true;
+        delete this.state.skipped[step.id];
+        this.notice = "";
+      } else {
+        delete this.state.completed[step.id];
+        this.notice = "Saved. Complete the required items before this step is marked complete.";
+      }
       this.saveState();
       if (render) this.render();
     }
@@ -583,6 +592,48 @@
       const countable = this.cfg.steps.filter(step => step.id !== "intro");
       const done = countable.filter(step => this.state.completed[step.id]).length;
       return Math.round((done / Math.max(1, countable.length)) * 100);
+    }
+
+    syncCurrentStepCompletion() {
+      const step = this.cfg.steps[this.currentStep];
+      if (!step || !this.state.completed[step.id]) return;
+      if (!this.stepCanComplete(step)) delete this.state.completed[step.id];
+    }
+
+    stepCanComplete(step) {
+      if (!step) return false;
+      if (step.kind === "intro") return true;
+      const requiredFields = (step.fields || []).filter(field => field.required);
+      if (!requiredFields.length) return true;
+      return requiredFields.every(field => this.fieldIsComplete(field));
+    }
+
+    stepHasProgress(step) {
+      return (step.fields || []).some(field => this.fieldHasProgress(field));
+    }
+
+    fieldIsComplete(field) {
+      const value = this.state.values[field.id];
+      if (field.type === "checkbox") return value === true;
+      if (field.type === "checks") return Array.isArray(value) && value.length > 0;
+      if (field.type === "palette") return !!(value || this.cfg.palettes[0]?.id);
+      if (field.type === "select") return this.selectValueIsComplete(field, value);
+      return String(value || "").trim().length > 0;
+    }
+
+    fieldHasProgress(field) {
+      const value = this.state.values[field.id];
+      if (field.type === "checkbox") return value === true;
+      if (field.type === "checks") return Array.isArray(value) && value.length > 0;
+      if (field.type === "palette") return !!value;
+      if (field.type === "select") return this.selectValueIsComplete(field, value);
+      return String(value || "").trim().length > 0;
+    }
+
+    selectValueIsComplete(field, value) {
+      if (!value) return false;
+      const incomplete = field.incompleteValues || ["Not started", "Not selected", "Not decided", "Not offered yet", "Needs attention"];
+      return !incomplete.includes(value);
     }
 
     val(key) {

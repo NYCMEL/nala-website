@@ -73,9 +73,9 @@ window.MTK_BIAB_SETUP_CONFIG = {
         { id: "businessEmail", label: "Business email", type: "email", placeholder: "service@example.com", required: true },
         { id: "hours", label: "Business hours", type: "text", placeholder: "Mon-Fri 8am-6pm; emergency calls by appointment" },
         { id: "serviceArea", label: "Service area", type: "textarea", placeholder: "Brooklyn, Queens, Manhattan", required: true, rows: 2, full: true },
-        { id: "services", label: "Launch services", type: "checks", options: ["House lockouts", "Rekeys", "Lock changes", "Deadbolt installation", "Mailbox / cabinet locks", "Car lockouts", "Basic commercial lock service"] },
+        { id: "services", label: "Launch services", type: "checks", required: true, options: ["House lockouts", "Rekeys", "Lock changes", "Deadbolt installation", "Mailbox / cabinet locks", "Car lockouts", "Basic commercial lock service"] },
         { id: "additionalLaunchServices", label: "Additional launch services", type: "textarea", placeholder: "Add any other services you want to offer at launch.", rows: 3, full: true },
-        { id: "businessDescription", label: "Short business description", type: "textarea", placeholder: "Mobile locksmith service focused on clear pricing, fast response, and clean work.", rows: 3, full: true }
+        { id: "businessDescription", label: "Short business description", type: "textarea", placeholder: "Mobile locksmith service focused on clear pricing, fast response, and clean work.", required: true, rows: 3, full: true }
       ]
     },
     {
@@ -86,12 +86,12 @@ window.MTK_BIAB_SETUP_CONFIG = {
       summary: "Use official resources to register the business, confirm licensing, apply for an EIN, record insurance, and document operating policies.",
       sourceNote: "External instructions are based on official IRS and SBA guidance checked before implementation. Locksmith licensing varies by state, county, and city.",
       fields: [
-        { id: "entityType", label: "Business structure chosen", type: "select", options: ["Not decided", "Sole proprietor", "LLC", "Corporation", "Partnership"] },
-        { id: "stateRegistration", label: "State registration status", type: "select", options: ["Not started", "In progress", "Completed", "Not required / verified"] },
-        { id: "ein", label: "EIN", type: "text", placeholder: "__-_______", helper: "The IRS says the online EIN application is free, completed in one session, and generally issues the EIN immediately when approved." },
-        { id: "licenseNotes", label: "License and local registration notes", type: "textarea", placeholder: "State license checked; city business license application submitted..." },
-        { id: "insuranceStatus", label: "Insurance status", type: "select", options: ["Not started", "Quotes requested", "Policy active", "Not required / verified"] },
-        { id: "authorizationPolicy", label: "Authorization before entry policy", type: "textarea", placeholder: "Verify customer identity and authorization before opening, rekeying, or changing locks." }
+        { id: "entityType", label: "Business structure chosen", type: "select", required: true, options: ["Not decided", "Sole proprietor", "LLC", "Corporation", "Partnership"] },
+        { id: "stateRegistration", label: "State registration status", type: "select", required: true, incompleteValues: ["Not started", "In progress"], options: ["Not started", "In progress", "Completed", "Not required / verified"] },
+        { id: "ein", label: "EIN", type: "text", placeholder: "__-_______", required: true, helper: "The IRS says the online EIN application is free, completed in one session, and generally issues the EIN immediately when approved." },
+        { id: "licenseNotes", label: "License and local registration notes", type: "textarea", placeholder: "State license checked; city business license application submitted...", required: true },
+        { id: "insuranceStatus", label: "Insurance status", type: "select", required: true, incompleteValues: ["Not started", "Quotes requested"], options: ["Not started", "Quotes requested", "Policy active", "Not required / verified"] },
+        { id: "authorizationPolicy", label: "Authorization before entry policy", type: "textarea", placeholder: "Verify customer identity and authorization before opening, rekeying, or changing locks.", required: true }
       ],
       links: [
         { label: "IRS EIN information", href: "https://www.irs.gov/businesses/employer-identification-number" },
@@ -113,11 +113,11 @@ window.MTK_BIAB_SETUP_CONFIG = {
       eyebrow: "Cash, payments, and records",
       summary: "Set up the money side of the locksmith business: bank account, payment processor, bookkeeping habit, pricing assumptions, and weekly metrics.",
       fields: [
-        { id: "bankStatus", label: "Business bank account status", type: "select", options: ["Not started", "Appointment scheduled", "Account open", "Using existing account"] },
-        { id: "paymentProcessor", label: "Payment processor", type: "select", options: ["Not selected", "Stripe", "Square", "QuickBooks Payments", "Other"] },
+        { id: "bankStatus", label: "Business bank account status", type: "select", required: true, incompleteValues: ["Not started", "Appointment scheduled"], options: ["Not started", "Appointment scheduled", "Account open", "Using existing account"] },
+        { id: "paymentProcessor", label: "Payment processor", type: "select", required: true, options: ["Not selected", "Stripe", "Square", "QuickBooks Payments", "Other"] },
         { id: "processorAccountId", label: "Processor account/reference ID", type: "text", placeholder: "Optional" },
-        { id: "bookkeepingStatus", label: "Bookkeeping setup", type: "select", options: ["Not started", "Spreadsheet", "QuickBooks", "Wave", "Other"] },
-        { id: "pricingNotes", label: "Pricing notes", type: "textarea", placeholder: "Trip fee, lockout rate, rekey per cylinder, after-hours policy..." }
+        { id: "bookkeepingStatus", label: "Bookkeeping setup", type: "select", required: true, options: ["Not started", "Spreadsheet", "QuickBooks", "Wave", "Other"] },
+        { id: "pricingNotes", label: "Pricing notes", type: "textarea", placeholder: "Trip fee, lockout rate, rekey per cylinder, after-hours policy...", required: true }
       ],
       links: [
         { label: "SBA open a business bank account", href: "https://www.sba.gov/business-guide/launch-your-business/open-business-bank-account" },
@@ -137,10 +137,10 @@ window.MTK_BIAB_SETUP_CONFIG = {
       eyebrow: "Production fonts and icons later",
       summary: "Choose a brand direction that can carry through the actual website, logo, invoices, review emails, stationery, ads, and other marketing.",
       fields: [
-        { id: "palette", label: "Color scheme", type: "palette" },
-        { id: "brandTone", label: "Brand tone", type: "select", options: ["Premium security", "Fast emergency service", "Neighborhood trust", "Commercial access control", "Family-owned established"] },
-        { id: "tagline", label: "Tagline", type: "text", placeholder: "Mobile Locksmith Service" },
-        { id: "logoStatus", label: "Logo status", type: "select", options: ["Use generated placeholder", "Upload existing logo", "Production logo needed later"] }
+        { id: "palette", label: "Color scheme", type: "palette", required: true },
+        { id: "brandTone", label: "Brand tone", type: "select", required: true, options: ["Premium security", "Fast emergency service", "Neighborhood trust", "Commercial access control", "Family-owned established"] },
+        { id: "tagline", label: "Tagline", type: "text", placeholder: "Mobile Locksmith Service", required: true },
+        { id: "logoStatus", label: "Logo status", type: "select", required: true, options: ["Use generated placeholder", "Upload existing logo", "Production logo needed later"] }
       ]
     },
     {
@@ -151,10 +151,10 @@ window.MTK_BIAB_SETUP_CONFIG = {
       summary: "Create or claim the Google Business Profile, set the right business type/service area, complete core fields, and record profile status.",
       sourceNote: "Instructions are based on current Google Business Profile help pages checked before implementation.",
       fields: [
-        { id: "googleProfileStatus", label: "Google Business Profile status", type: "select", options: ["Not started", "Added / claimed", "Verification in progress", "Verified", "Needs attention"] },
-        { id: "googleProfileUrl", label: "Google profile URL", type: "url", placeholder: "https://..." },
-        { id: "googleVerificationMethod", label: "Verification method offered by Google", type: "select", options: ["Not offered yet", "Video recording", "Phone or SMS", "Email", "Postcard", "Instant / Search Console", "Other"] },
-        { id: "serviceAreaConfirmed", label: "Service-area setup confirmed", type: "checkbox" }
+        { id: "googleProfileStatus", label: "Google Business Profile status", type: "select", required: true, incompleteValues: ["Not started", "Added / claimed", "Verification in progress", "Needs attention"], options: ["Not started", "Added / claimed", "Verification in progress", "Verified", "Needs attention"] },
+        { id: "googleProfileUrl", label: "Google profile URL", type: "url", placeholder: "https://...", required: true },
+        { id: "googleVerificationMethod", label: "Verification method offered by Google", type: "select", required: true, options: ["Not offered yet", "Video recording", "Phone or SMS", "Email", "Postcard", "Instant / Search Console", "Other"] },
+        { id: "serviceAreaConfirmed", label: "Service-area setup confirmed", type: "checkbox", required: true }
       ],
       links: [
         { label: "Add or claim Business Profile", href: "https://support.google.com/business/answer/2911778" },
@@ -179,10 +179,10 @@ window.MTK_BIAB_SETUP_CONFIG = {
       summary: "Prepare the actual locksmith website for search engines and connect Search Console after the live URL/domain is ready.",
       sourceNote: "Instructions are based on Google Search Console and Search Central documentation checked before implementation.",
       fields: [
-        { id: "websiteUrl", label: "Actual website URL", type: "url", placeholder: "https://example.com" },
-        { id: "searchConsoleStatus", label: "Search Console status", type: "select", options: ["Not started", "Property added", "Ownership verified", "Sitemap submitted", "Needs attention"] },
-        { id: "sitemapUrl", label: "Sitemap URL", type: "url", placeholder: "https://example.com/sitemap.xml" },
-        { id: "primaryKeywords", label: "Primary local search terms", type: "textarea", placeholder: "locksmith near me, rekey locks, house lockout, lock change..." }
+        { id: "websiteUrl", label: "Actual website URL", type: "url", placeholder: "https://example.com", required: true },
+        { id: "searchConsoleStatus", label: "Search Console status", type: "select", required: true, incompleteValues: ["Not started", "Property added", "Needs attention"], options: ["Not started", "Property added", "Ownership verified", "Sitemap submitted", "Needs attention"] },
+        { id: "sitemapUrl", label: "Sitemap URL", type: "url", placeholder: "https://example.com/sitemap.xml", required: true },
+        { id: "primaryKeywords", label: "Primary local search terms", type: "textarea", placeholder: "locksmith near me, rekey locks, house lockout, lock change...", required: true }
       ],
       links: [
         { label: "Search Console", href: "https://search.google.com/search-console/welcome" },
@@ -204,9 +204,9 @@ window.MTK_BIAB_SETUP_CONFIG = {
       eyebrow: "Field closeout tool",
       summary: "Configure the standalone invoice generator. The locksmith can use it on-site without going through the website flow.",
       fields: [
-        { id: "invoicePrefix", label: "Invoice prefix", type: "text", placeholder: "HLK" },
-        { id: "invoiceEmail", label: "Invoice sender email", type: "email", placeholder: "billing@example.com" },
-        { id: "invoiceTerms", label: "Payment terms", type: "textarea", placeholder: "Payment due upon completion unless otherwise agreed." },
+        { id: "invoicePrefix", label: "Invoice prefix", type: "text", placeholder: "HLK", required: true },
+        { id: "invoiceEmail", label: "Invoice sender email", type: "email", placeholder: "billing@example.com", required: true },
+        { id: "invoiceTerms", label: "Payment terms", type: "textarea", placeholder: "Payment due upon completion unless otherwise agreed.", required: true },
         { id: "askReviewDefault", label: "Ask for a review by default after sending an invoice", type: "checkbox" }
       ]
     },
@@ -217,9 +217,9 @@ window.MTK_BIAB_SETUP_CONFIG = {
       eyebrow: "Close the job with reputation",
       summary: "Set the review request habit. Invoices can include a checkbox to automatically send a review request to the customer email.",
       fields: [
-        { id: "reviewEmailFrom", label: "Review request reply-to email", type: "email", placeholder: "service@example.com" },
-        { id: "reviewMessage", label: "Default review request message", type: "textarea", placeholder: "Thank you for choosing us. If you were happy with the service, please leave a review." },
-        { id: "reviewPublicUrl", label: "Public review page URL", type: "url", placeholder: "Generated or connected later" }
+        { id: "reviewEmailFrom", label: "Review request reply-to email", type: "email", placeholder: "service@example.com", required: true },
+        { id: "reviewMessage", label: "Default review request message", type: "textarea", placeholder: "Thank you for choosing us. If you were happy with the service, please leave a review.", required: true },
+        { id: "reviewPublicUrl", label: "Public review page URL", type: "url", placeholder: "Generated or connected later", required: true }
       ],
       links: [
         { label: "FTC CAN-SPAM business guide", href: "https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business" }
@@ -239,7 +239,7 @@ window.MTK_BIAB_SETUP_CONFIG = {
       kind: "launch",
       summary: "Review the business setup, actual website readiness, invoice workflow, and review workflow before treating the launch as complete.",
       fields: [
-        { id: "launchApproved", label: "I reviewed the setup and am ready to use Business in a Box tools", type: "checkbox" }
+        { id: "launchApproved", label: "I reviewed the setup and am ready to use Business in a Box tools", type: "checkbox", required: true }
       ]
     }
   ]
