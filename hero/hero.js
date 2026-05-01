@@ -85,13 +85,15 @@
     function renderHeroImageCarousel(heroData) {
 	const rhs = document.querySelector("#MTK-hero .MTK-hero-rhs");
 	if (!rhs || !Array.isArray(heroData.images) || !heroData.images.length) return;
+	const registerLabel = window.i18n ? i18n.t("hero.registerAria") : "Register for NALA";
+	const registerHint = window.i18n ? i18n.t("hero.registerNow") : "Register Now";
 
 	rhs.innerHTML = `
-	    <button class="MTK-hero-carousel" type="button" aria-label="Register for NALA">
+	    <button class="MTK-hero-carousel" type="button" aria-label="${registerLabel}">
 		${heroData.images.map(function(image, index) {
 		    return `<img class="MTK-hero-carousel__image${index === 0 ? ' is-active' : ''}" src="${image.src}" alt="${image.alt || 'NALA training'}">`;
 		}).join('')}
-		<span class="MTK-hero-carousel__hint">Register Now</span>
+		<span class="MTK-hero-carousel__hint">${registerHint}</span>
 	    </button>
 	`;
 

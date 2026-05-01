@@ -9,6 +9,7 @@
  * 2. Add  data-i18n="key"           to any element whose textContent to translate.
  *    Add  data-i18n-placeholder="key" to translate placeholder attributes.
  *    Add  data-i18n-aria="key"       to translate aria-label attributes.
+ *    Add  data-i18n-alt="key"        to translate image alt attributes.
  * 3. Call  i18n.setLang('es')  /  i18n.setLang('en')  at any time.
  * 4. Component config objects are patched automatically via  i18n.applyConfig()
  *    — each config key is looked up in the dictionary and overwritten if found.
@@ -225,6 +226,55 @@
     'hero.cta': {
       en: 'Get Started',
       es: 'Comenzar'
+    },
+    'hero.registerNow': {
+      en: 'Register Now',
+      es: 'Regístrate ahora'
+    },
+    'hero.registerAria': {
+      en: 'Register for NALA',
+      es: 'Registrarse en NALA'
+    },
+
+    'home.biab.title': {
+      en: 'Your Business in a Box',
+      es: 'Tu Negocio en una Caja'
+    },
+    'home.biab.eyebrow': {
+      en: 'Launch toolkit',
+      es: 'Kit de lanzamiento'
+    },
+    'home.biab.heading': {
+      en: 'Set up the business side while you train.',
+      es: 'Configura el lado comercial mientras te capacitas.'
+    },
+    'home.biab.body': {
+      en: 'Business in a Box gives you a guided setup path for the details a locksmith needs before launch: business background, legal reminders, financial setup, branding, the actual website, invoicing, reviews, and marketing preparation.',
+      es: 'Negocio en una Caja te da una ruta guiada para preparar los detalles que necesitas antes del lanzamiento: información del negocio, recordatorios legales, configuración financiera, marca, sitio web real, facturas, reseñas y preparación de marketing.'
+    },
+    'home.biab.point1': {
+      en: 'Enter business information once and reuse it across tools.',
+      es: 'Ingresa la información del negocio una vez y reutilízala en todas las herramientas.'
+    },
+    'home.biab.point2': {
+      en: 'Follow a linear setup with progress tracking and official links.',
+      es: 'Sigue una configuración lineal con progreso visible y enlaces oficiales.'
+    },
+    'home.biab.point3': {
+      en: 'Use the standalone invoice and review workflow after setup.',
+      es: 'Usa el flujo independiente de facturas y reseñas después de la configuración.'
+    },
+    'home.biab.cta': {
+      en: 'Make it your own',
+      es: 'Hazlo tuyo'
+    },
+    'home.biab.caption': {
+      en: 'Actual Business in a Box setup screen.',
+      es: 'Pantalla real de configuración de Negocio en una Caja.'
+    },
+    'home.biab.imageAlt': {
+      en: 'Business in a Box guided setup sample',
+      es: 'Muestra de configuración guiada de Negocio en una Caja'
     },
 
     // ── STATS ─────────────────────────────────────────────────────
@@ -1029,6 +1079,13 @@
       var val = t(key);
       if (val !== key) el.setAttribute('title', val);
     });
+
+    // alt attribute
+    ctx.querySelectorAll('[data-i18n-alt]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n-alt');
+      var val = t(key);
+      if (val !== key) el.setAttribute('alt', val);
+    });
   }
 
   /**
@@ -1371,12 +1428,13 @@
               node.hasAttribute('data-i18n') ||
               node.hasAttribute('data-i18n-placeholder') ||
               node.hasAttribute('data-i18n-aria') ||
-              node.hasAttribute('data-i18n-title')
+              node.hasAttribute('data-i18n-title') ||
+              node.hasAttribute('data-i18n-alt')
           )) {
             applyDOM(node.parentElement || node);
           } else if (node.querySelector) {
             var hasSubs = node.querySelector(
-              '[data-i18n],[data-i18n-placeholder],[data-i18n-aria],[data-i18n-title]'
+              '[data-i18n],[data-i18n-placeholder],[data-i18n-aria],[data-i18n-title],[data-i18n-alt]'
             );
             if (hasSubs) applyDOM(node);
           }

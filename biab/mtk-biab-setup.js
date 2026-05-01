@@ -28,6 +28,289 @@
     { id: "icon-only", label: "Icon only", summary: "Small social avatar and favicon." }
   ];
 
+  const BIAB_ES = {
+    "Back to dashboard": "Volver al panel",
+    "Business in a Box Setup": "Configuración de Negocio en una Caja",
+    "Your guided setup/editing space. Daily tools live from the main dashboard after setup.": "Tu espacio guiado de configuración y edición. Las herramientas diarias estarán disponibles desde el panel principal después de la configuración.",
+    "Help": "Ayuda",
+    "Dashboard": "Panel",
+    "Setup steps": "Pasos de configuración",
+    "complete": "completo",
+    "done": "listo",
+    "Complete": "Completado",
+    "Skipped": "Omitido",
+    "Current": "Actual",
+    "In progress": "En progreso",
+    "Not started": "No iniciado",
+    "Intro": "Inicio",
+    "Background": "Información",
+    "Legal": "Legal",
+    "Financial": "Finanzas",
+    "Brand": "Marca",
+    "Logo": "Logo",
+    "Local": "Local",
+    "SEO": "SEO",
+    "Website": "Sitio web",
+    "Invoices": "Facturas",
+    "Reviews": "Reseñas",
+    "Launch": "Lanzamiento",
+    "Start here": "Comienza aquí",
+    "Business in a Box setup": "Configuración de Negocio en una Caja",
+    "A guided setup for the business profile, legal reminders, finances, brand, actual website, local presence, invoices, reviews, and launch readiness.": "Una configuración guiada para el perfil del negocio, recordatorios legales, finanzas, marca, sitio web real, presencia local, facturas, reseñas y preparación para el lanzamiento.",
+    "Business background": "Información del negocio",
+    "Legal reminders": "Recordatorios legales",
+    "Financial setup": "Configuración financiera",
+    "Brand system": "Sistema de marca",
+    "Logo creation": "Creación de logo",
+    "Actual website": "Sitio web real",
+    "Google profile": "Perfil de Google",
+    "Launch review": "Revisión de lanzamiento",
+    "Video walkthrough": "Video guía",
+    "Marked for later: setup walkthrough and Business in a Box services overview.": "Marcado para más adelante: video guía de la configuración y resumen de los servicios de Negocio en una Caja.",
+    "Previous": "Anterior",
+    "Start setup": "Comenzar configuración",
+    "Save & Continue": "Guardar y continuar",
+    "Skip for now": "Omitir por ahora",
+    "Finish setup": "Finalizar configuración",
+    "Readiness summary": "Resumen de preparación",
+    "All guided setup areas are marked complete.": "Todas las áreas guiadas están marcadas como completadas.",
+    "Guided instructions": "Instrucciones guiadas",
+    "Step-by-step instructions": "Instrucciones paso a paso",
+    "Official links": "Enlaces oficiales",
+    "Close help": "Cerrar ayuda",
+    "Business in a Box guides you step by step through creating and configuring your locksmith business tools.": "Negocio en una Caja te guía paso a paso para crear y configurar tus herramientas de negocio de cerrajería.",
+    "Your answers are reused across the actual website, invoice generator, review workflow, business plan, brand kit, and marketing setup.": "Tus respuestas se reutilizan en el sitio web real, generador de facturas, flujo de reseñas, plan de negocio, kit de marca y configuración de marketing.",
+    "Current step": "Paso actual",
+    "General issues": "Problemas generales",
+    "Coming later.": "Próximamente.",
+    "Business in a Box tools": "Herramientas de Negocio en una Caja",
+    "Business in a Box tool": "Herramienta de Negocio en una Caja",
+    "Edit setup": "Editar configuración",
+    "Invoice Generator": "Generador de facturas",
+    "Business Plan": "Plan de negocio",
+    "Brand Kit": "Kit de marca",
+    "Marketing Setup": "Configuración de marketing",
+    "Customer name": "Nombre del cliente",
+    "Customer email": "Correo del cliente",
+    "Customer phone": "Teléfono del cliente",
+    "Service type": "Tipo de servicio",
+    "Rekey service": "Servicio de rekey",
+    "House lockout": "Apertura residencial",
+    "Lock change": "Cambio de cerradura",
+    "Deadbolt installation": "Instalación de cerrojo",
+    "Commercial service": "Servicio comercial",
+    "Job notes": "Notas del trabajo",
+    "Line items": "Partidas",
+    "Line item": "Partida",
+    "Line item label": "Etiqueta de partida",
+    "Line item amount": "Importe de partida",
+    "Remove line item": "Eliminar partida",
+    "Add line": "Agregar línea",
+    "Ask for a review after sending this invoice": "Pedir una reseña después de enviar esta factura",
+    "Review request email": "Correo para solicitud de reseña",
+    "Send Invoice": "Enviar factura",
+    "Your Locksmith Business": "Tu negocio de cerrajería",
+    "Business phone": "Teléfono del negocio",
+    "Business email": "Correo del negocio",
+    "Invoice:": "Factura:",
+    "Customer:": "Cliente:",
+    "Service fee": "Cargo de servicio",
+    "Labor": "Mano de obra",
+    "Parts": "Piezas",
+    "No invoice review requests have been sent yet.": "Aún no se han enviado solicitudes de reseña desde facturas.",
+    "review requests sent from invoices": "solicitudes de reseña enviadas desde facturas",
+    "review request sent from invoices": "solicitud de reseña enviada desde facturas",
+    "Customer": "Cliente",
+    "Source:": "Origen:",
+    "Invoice": "Factura",
+    "Production icons and fonts are placeholders for now and should be replaced with licensed assets later.": "Los iconos y fuentes de producción son marcadores temporales por ahora y deben reemplazarse más adelante por recursos con licencia.",
+    "Service area:": "Área de servicio:",
+    "Launch services:": "Servicios de lanzamiento:",
+    "clear pricing, professional arrival, clean work, ETA updates, detailed invoices, and review follow-up.": "precios claros, llegada profesional, trabajo limpio, actualizaciones de ETA, facturas detalladas y seguimiento de reseñas.",
+    "Jane Customer": "Cliente de ejemplo",
+    "Select an option": "Selecciona una opción",
+    "Upload existing icon/logo": "Subir icono/logo existente",
+    "Create logo here": "Crear logo aquí",
+    "Create in logo step": "Crear en el paso de logo",
+    "Upload existing logo": "Subir logo existente",
+    "Production logo needed later": "Logo de producción necesario más adelante",
+    "Not selected": "No seleccionado",
+    "Not decided": "No decidido",
+    "Completed": "Completado",
+    "Not required / verified": "No requerido / verificado",
+    "Quotes requested": "Cotizaciones solicitadas",
+    "Policy active": "Póliza activa",
+    "Account open": "Cuenta abierta",
+    "Using existing account": "Usando cuenta existente",
+    "Appointment scheduled": "Cita programada",
+    "Property added": "Propiedad agregada",
+    "Ownership verified": "Propiedad verificada",
+    "Sitemap submitted": "Sitemap enviado",
+    "Needs attention": "Requiere atención",
+    "Added / claimed": "Agregado / reclamado",
+    "Verification in progress": "Verificación en progreso",
+    "Verified": "Verificado",
+    "Video recording": "Grabación de video",
+    "Phone or SMS": "Teléfono o SMS",
+    "Email": "Correo",
+    "Postcard": "Postal",
+    "Instant / Search Console": "Instantáneo / Search Console",
+    "Other": "Otro"
+  };
+
+  Object.assign(BIAB_ES, {
+    "Shared business profile": "Perfil compartido del negocio",
+    "Enter the core business information once. These answers feed the website, invoices, business plan, Google setup, reviews, and marketing materials.": "Ingresa la información principal del negocio una sola vez. Estas respuestas alimentan el sitio web, facturas, plan de negocio, configuración de Google, reseñas y materiales de marketing.",
+    "Customer-facing business name *": "Nombre comercial visible al cliente *",
+    "Legal business name": "Nombre legal del negocio",
+    "Owner or responsible party name": "Nombre del dueño o responsable",
+    "Business phone *": "Teléfono del negocio *",
+    "Business email *": "Correo del negocio *",
+    "Business hours": "Horario del negocio",
+    "Service area *": "Área de servicio *",
+    "Launch services *": "Servicios de lanzamiento *",
+    "Basic commercial lock service": "Servicio comercial básico de cerraduras",
+    "Additional launch services": "Servicios adicionales de lanzamiento",
+    "Short business description *": "Descripción breve del negocio *",
+    "Legal operating setup": "Configuración legal operativa",
+    "Guided setup, not legal advice": "Configuración guiada, no asesoría legal",
+    "Use official resources to register your business, confirm licensing, apply for an EIN, record insurance, and document operating policies.": "Usa recursos oficiales para registrar tu negocio, confirmar licencias, solicitar un EIN, registrar seguro y documentar políticas operativas.",
+    "External instructions are based on official IRS and SBA guidance checked before implementation. Locksmith licensing varies by state, county, and city.": "Las instrucciones externas se basan en guías oficiales del IRS y la SBA revisadas antes de la implementación. Las licencias de cerrajería varían por estado, condado y ciudad.",
+    "Saved. Complete the required items before this step is marked complete.": "Guardado. Completa los elementos requeridos antes de marcar este paso como completado.",
+    "Confirm your business structure before applying for an EIN if you are forming an LLC, corporation, partnership, or other state-created entity.": "Confirma la estructura de tu negocio antes de solicitar un EIN si estás formando una LLC, corporación, sociedad u otra entidad creada por el estado.",
+    "Open the IRS EIN tool only when the responsible party is ready to finish in one session.": "Abre la herramienta de EIN del IRS solo cuando la persona responsable esté lista para terminar en una sola sesión.",
+    "Use the legal business name and responsible party information from the Business Background step.": "Usa el nombre legal del negocio y la información de la persona responsable del paso Información del negocio.",
+    "Save the EIN confirmation letter, then enter the EIN here.": "Guarda la carta de confirmación del EIN y luego ingresa el EIN aquí.",
+    "Check state, county, and city locksmith/business licensing rules and record the result in the notes field.": "Revisa las reglas estatales, del condado y de la ciudad sobre licencias de cerrajería/negocio y registra el resultado en el campo de notas.",
+    "SBA launch your business": "SBA: lanza tu negocio",
+    "Business structure chosen *": "Estructura de negocio elegida *",
+    "State registration status *": "Estado del registro estatal *",
+    "The IRS says the online EIN application is free, completed in one session, and generally issues the EIN immediately when approved.": "El IRS indica que la solicitud de EIN en línea es gratuita, se completa en una sola sesión y generalmente emite el EIN de inmediato cuando se aprueba.",
+    "License and local registration notes *": "Notas de licencia y registro local *",
+    "Insurance status *": "Estado del seguro *",
+    "Authorization before entry policy *": "Política de autorización antes de abrir/entrar *",
+    "Financial operating setup": "Configuración financiera operativa",
+    "Cash, payments, and records": "Efectivo, pagos y registros",
+    "Set up your money operations: bank account, payment processor, bookkeeping habit, pricing assumptions, and weekly metrics.": "Configura tus operaciones de dinero: cuenta bancaria, procesador de pagos, hábito de contabilidad, supuestos de precios y métricas semanales.",
+    "Use the EIN and legal business name from Legal Setup when opening a bank account.": "Usa el EIN y el nombre legal del negocio del paso Legal al abrir una cuenta bancaria.",
+    "Choose a payment processor that supports the way you will collect payment in the field.": "Elige un procesador de pagos que soporte la forma en que cobrarás en el campo.",
+    "Record the processor reference here after activation.": "Registra aquí la referencia del procesador después de activarlo.",
+    "Write down the starting pricing rules before the first paid job.": "Escribe las reglas iniciales de precios antes del primer trabajo pagado.",
+    "SBA open a business bank account": "SBA: abre una cuenta bancaria comercial",
+    "Business bank account status *": "Estado de la cuenta bancaria comercial *",
+    "Payment processor *": "Procesador de pagos *",
+    "PayPal Business": "PayPal Business",
+    "Bookkeeping setup *": "Configuración de contabilidad *",
+    "Production fonts and icons later": "Fuentes e iconos de producción más adelante",
+    "Choose a brand direction that can carry through the actual website, logo, invoices, review emails, stationery, ads, and other marketing.": "Elige una dirección de marca que funcione en el sitio web real, logo, facturas, correos de reseñas, papelería, anuncios y otros materiales de marketing.",
+    "Confident, established, and polished": "Confiable, establecido y pulido",
+    "Crisp, clear, and highly credible": "Nítido, claro y muy creíble",
+    "Visible, direct, and action-oriented": "Visible, directo y orientado a la acción",
+    "Calm, grounded, and dependable": "Calmado, sólido y confiable",
+    "Precise, technical, and premium": "Preciso, técnico y premium",
+    "Warm, traditional, and memorable": "Cálido, tradicional y memorable",
+    "Modern, calm, and approachable": "Moderno, calmado y accesible",
+    "Strong, crafted, and refined": "Fuerte, trabajado y refinado",
+    "Energetic, friendly, and easy to notice": "Energético, amable y fácil de notar",
+    "Stable, respectful, and trustworthy": "Estable, respetuoso y confiable",
+    "Bold, simple, and memorable": "Audaz, simple y memorable",
+    "Open, clean, and reassuring": "Abierto, limpio y tranquilizador",
+    "Color scheme vs. brand tone": "Esquema de color vs. tono de marca",
+    "Color scheme controls the visual look across the website, logo, invoices, and marketing. Brand tone controls the wording style: how direct, warm, polished, or reassuring the business sounds.": "El esquema de color controla el aspecto visual del sitio web, logo, facturas y marketing. El tono de marca controla el estilo del texto: qué tan directo, cálido, pulido o tranquilizador suena el negocio.",
+    "Brand tone *": "Tono de marca *",
+    "Clear and professional": "Claro y profesional",
+    "Warm and neighborly": "Cálido y cercano",
+    "Direct and practical": "Directo y práctico",
+    "Polished and premium": "Pulido y premium",
+    "Security-focused and reassuring": "Enfocado en seguridad y confianza",
+    "Logo status *": "Estado del logo *",
+    "Logo and icon creation": "Creación de logo e icono",
+    "Create a simple locksmith logo direction using placeholder icons, letters, background shapes, and the selected brand colors, or upload an existing icon/logo instead.": "Crea una dirección simple de logo de cerrajería usando iconos, letras, formas de fondo y colores de marca temporales, o sube un icono/logo existente.",
+    "Logo guidance follows common branding practice: keep it simple, scalable, readable at small sizes, and usable in full-color, one-color, and reversed versions.": "La guía de logo sigue prácticas comunes de marca: mantenlo simple, escalable, legible en tamaños pequeños y usable en versiones a color, de un color e invertidas.",
+    "Choose whether to create a logo direction here or upload an existing icon/logo.": "Elige si quieres crear una dirección de logo aquí o subir un icono/logo existente.",
+    "Choose a simple background shape that still works at favicon, invoice, shirt, van, and Google profile sizes.": "Elige una forma de fondo simple que funcione como favicon, en facturas, camisetas, vehículo y perfil de Google.",
+    "Use the brand color scheme from the previous step and keep the mark readable in one color.": "Usa el esquema de color de marca del paso anterior y mantén la marca legible en un solo color.",
+    "Treat the generated icon/font choices as placeholders until production licensed assets are purchased.": "Trata los iconos y fuentes generados como temporales hasta comprar recursos con licencia para producción.",
+    "Logo path *": "Ruta del logo *",
+    "Service Wordmark": "Marca denominativa de servicio",
+    "Horizontal lockup for vehicle wraps, Google profile art, and website headers.": "Composición horizontal para rotulación de vehículo, arte del perfil de Google y encabezados del sitio.",
+    "Security-forward badge direction for rekeys, property managers, and commercial accounts.": "Dirección tipo insignia centrada en seguridad para rekeys, administradores de propiedades y cuentas comerciales.",
+    "Clean stacked layout for websites, proposals, and social assets.": "Diseño apilado y limpio para sitios web, propuestas y redes sociales.",
+    "Compact emblem suited to invoices, stationery, and premium service brands.": "Emblema compacto adecuado para facturas, papelería y marcas de servicio premium.",
+    "Modern geometric pairing for web, vans, and social readability.": "Combinación geométrica moderna para web, vehículos y legibilidad social.",
+    "Primary website and van lockup.": "Composición principal para sitio web y vehículo.",
+    "Square ads and flyers.": "Anuncios cuadrados y volantes.",
+    "Uniforms, decals, and favicons.": "Uniformes, calcomanías y favicons.",
+    "Small social avatar and favicon.": "Avatar social pequeño y favicon.",
+    "Placeholder upload field for now. Production should store SVG/PNG assets and generate logo kit variants.": "Campo de carga temporal por ahora. Producción debe guardar recursos SVG/PNG y generar variantes del kit de logo.",
+    "Logo notes": "Notas del logo",
+    "Your Locksmith": "Tu cerrajero",
+    "Mobile Locksmith Service": "Servicio móvil de cerrajería",
+    "Light background": "Fondo claro",
+    "Replace placeholder icons and fonts with licensed production assets.": "Reemplaza los iconos y fuentes temporales por recursos de producción con licencia.",
+    "Export SVG, transparent PNG, one-color, reversed, favicon, and vehicle/banner versions.": "Exporta versiones SVG, PNG transparente, un color, invertida, favicon y vehículo/banner.",
+    "Test the logo on the website header, Google profile, invoice, shirt, and vehicle mockup.": "Prueba el logo en el encabezado del sitio, perfil de Google, factura, camiseta y mockup de vehículo.",
+    "Download SVG draft": "Descargar borrador SVG",
+    "Apply to website": "Aplicar al sitio web",
+    "Google Business Profile setup": "Configuración del Perfil de Empresa de Google",
+    "Assisted external setup": "Configuración externa asistida",
+    "Create or claim the Google Business Profile, set the right business type/service area, complete core fields, and record profile status.": "Crea o reclama el Perfil de Empresa de Google, configura el tipo de negocio/área de servicio correcta, completa los campos principales y registra el estado del perfil.",
+    "Instructions are based on current Google Business Profile help pages checked before implementation.": "Las instrucciones se basan en páginas actuales de ayuda de Perfil de Empresa de Google revisadas antes de la implementación.",
+    "Open Google Business Profile with your business Google account.": "Abre Perfil de Empresa de Google con la cuenta de Google de tu negocio.",
+    "Add a new business if no profile exists, or claim the existing profile if Google already shows it.": "Agrega un negocio nuevo si no existe un perfil, o reclama el perfil existente si Google ya lo muestra.",
+    "Use your business name \"from Business Background\".": "Usa el nombre de tu negocio del paso Información del negocio.",
+    "Choose Locksmith as the category when available.": "Elige Cerrajero como categoría cuando esté disponible.",
+    "If customers do not visit a staffed storefront, set it up as a service-area business and remove/hide the address when Google asks.": "Si los clientes no visitan un local atendido, configúralo como negocio de área de servicio y elimina/oculta la dirección cuando Google lo solicite.",
+    "Enter only practical service areas. Google documents that up to 20 service areas can be selected.": "Ingresa solo áreas de servicio prácticas. Google documenta que se pueden seleccionar hasta 20 áreas de servicio.",
+    "Choose the verification option Google offers and return here to record the method and status.": "Elige la opción de verificación que ofrece Google y vuelve aquí para registrar el método y el estado.",
+    "Add or claim Business Profile": "Agregar o reclamar Perfil de Empresa",
+    "Manage service areas": "Administrar áreas de servicio",
+    "Verify your business": "Verificar tu negocio",
+    "Google Business Profile status *": "Estado del Perfil de Empresa de Google *",
+    "Google profile URL *": "URL del perfil de Google *",
+    "Verification method offered by Google *": "Método de verificación ofrecido por Google *",
+    "Service-area setup confirmed *": "Configuración de área de servicio confirmada *",
+    "SEO and Search Console setup": "Configuración de SEO y Search Console",
+    "Actual website visibility": "Visibilidad del sitio web real",
+    "Prepare the actual locksmith website for search engines and connect Search Console after the live URL/domain is ready.": "Prepara el sitio web real de cerrajería para los motores de búsqueda y conecta Search Console cuando la URL/dominio esté listo.",
+    "Instructions are based on Google Search Console and Search Central documentation checked before implementation.": "Las instrucciones se basan en documentación de Google Search Console y Search Central revisada antes de la implementación.",
+    "Open Search Console and add the actual website property.": "Abre Search Console y agrega la propiedad del sitio web real.",
+    "Choose an available verification method and follow Google's instructions.": "Elige un método de verificación disponible y sigue las instrucciones de Google.",
+    "Record the verified status here after Search Console accepts the property.": "Registra aquí el estado verificado después de que Search Console acepte la propiedad.",
+    "Submit the sitemap URL shown here after verification.": "Envía la URL del sitemap que se muestra aquí después de la verificación.",
+    "Use honest local service terms and avoid fake city pages.": "Usa términos honestos de servicio local y evita páginas falsas por ciudad.",
+    "Google SEO starter guide": "Guía inicial de SEO de Google",
+    "BIAB website URL *": "URL del sitio web BIAB *",
+    "This is the actual website generated by Business in a Box.": "Este es el sitio web real generado por Negocio en una Caja.",
+    "Search Console status *": "Estado de Search Console *",
+    "Submit this sitemap URL in Search Console when the site is live.": "Envía esta URL de sitemap en Search Console cuando el sitio esté activo.",
+    "Primary local search terms *": "Términos principales de búsqueda local *",
+    "locksmith your service area, your service area locksmith, mobile locksmith your service area, locksmith near me": "cerrajero tu área de servicio, cerrajero en tu área de servicio, cerrajero móvil tu área de servicio, cerrajero cerca de mí",
+    "Suggested from the launch services and service area entered earlier. Edit before saving if needed.": "Sugerido según los servicios de lanzamiento y el área de servicio ingresados antes. Edita antes de guardar si hace falta.",
+    "Suggested terms: locksmith your service area, your service area locksmith, mobile locksmith your service area, locksmith near me": "Términos sugeridos: cerrajero tu área de servicio, cerrajero en tu área de servicio, cerrajero móvil tu área de servicio, cerrajero cerca de mí",
+    "Invoice setup": "Configuración de facturas",
+    "Field closeout tool": "Herramienta de cierre en campo",
+    "Once setup is complete, you can generate invoices from the standalone invoice generator on-site without going through the website flow.": "Cuando la configuración esté completa, puedes generar facturas en sitio desde el generador independiente sin pasar por el flujo del sitio web.",
+    "Invoice prefix *": "Prefijo de factura *",
+    "Invoice sender email *": "Correo remitente de factura *",
+    "Payment terms *": "Términos de pago *",
+    "Ask for a review by default after sending an invoice": "Pedir una reseña por defecto después de enviar una factura",
+    "Review workflow setup": "Configuración del flujo de reseñas",
+    "Close the job with reputation": "Cierra el trabajo construyendo reputación",
+    "Set your review request habit. Your invoices can include a checkbox to automatically send a review request to your customer's email.": "Configura tu hábito de solicitud de reseñas. Tus facturas pueden incluir una casilla para enviar automáticamente una solicitud de reseña al correo de tu cliente.",
+    "Use review requests for customers who received completed service.": "Usa solicitudes de reseña para clientes que recibieron un servicio completado.",
+    "Keep the message short and honest.": "Mantén el mensaje breve y honesto.",
+    "Use a real reply-to email and keep business contact information accurate.": "Usa un correo real de respuesta y mantén precisa la información de contacto del negocio.",
+    "When sending an invoice, leave 'Ask for a review' checked when your customer's email is correct.": "Al enviar una factura, deja marcada la opción 'Pedir una reseña' cuando el correo del cliente sea correcto.",
+    "FTC CAN-SPAM business guide": "Guía comercial CAN-SPAM de la FTC",
+    "Review request reply-to email *": "Correo de respuesta para solicitudes de reseña *",
+    "Default review request message *": "Mensaje predeterminado de solicitud de reseña *",
+    "Public review page URL *": "URL pública de la página de reseñas *",
+    "Ready to operate": "Listo para operar",
+    "Review the business setup, actual website readiness, invoice workflow, and review workflow before treating the launch as complete.": "Revisa la configuración del negocio, la preparación del sitio web real, el flujo de facturas y el flujo de reseñas antes de considerar completo el lanzamiento.",
+    "I reviewed the setup and am ready to use Business in a Box tools *": "Revisé la configuración y estoy listo para usar las herramientas de Negocio en una Caja *"
+  });
+
   class MTKBIABSetup {
     constructor(config) {
       this.cfg = config || {};
@@ -42,9 +325,9 @@
         serviceType: "Rekey service",
         notes: "",
         lineItems: [
-          { label: "Labor", amount: "125" },
-          { label: "Parts", amount: "35" },
-          { label: "Service fee", amount: "25" }
+          { label: this.tr("Labor"), amount: "125" },
+          { label: this.tr("Parts"), amount: "35" },
+          { label: this.tr("Service fee"), amount: "25" }
         ],
         askReview: true
       };
@@ -167,6 +450,45 @@
           </div>
         </div>
       `;
+      this.applyTranslations();
+    }
+
+    lang() {
+      return window.i18n && typeof i18n.getLang === "function" ? i18n.getLang() : "en";
+    }
+
+    tr(text) {
+      if (this.lang() !== "es" || text === null || text === undefined) return String(text || "");
+      const raw = String(text);
+      const normalized = raw.replace(/\s+/g, " ").trim();
+      if (!normalized) return raw;
+      const translated = BIAB_ES[normalized];
+      if (translated) return raw.replace(normalized, translated);
+      return raw
+        .replace(/(\d+)% complete/g, "$1% completo")
+        .replace(/(\d+)% done/g, "$1% listo")
+        .replace(/(\d+) setup areas still need attention\./g, "$1 áreas de configuración aún requieren atención.")
+        .replace(/(\d+) setup area still need attention\./g, "$1 área de configuración aún requiere atención.")
+        .replace(/review requests sent from invoices/g, "solicitudes de reseña enviadas desde facturas")
+        .replace(/review request sent from invoices/g, "solicitud de reseña enviada desde facturas");
+    }
+
+    applyTranslations() {
+      if (!this.el || this.lang() !== "es") return;
+      const walker = document.createTreeWalker(this.el, NodeFilter.SHOW_TEXT, {
+        acceptNode: (node) => node.nodeValue.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT
+      });
+      const nodes = [];
+      let node;
+      while ((node = walker.nextNode())) nodes.push(node);
+      nodes.forEach((textNode) => {
+        textNode.nodeValue = this.tr(textNode.nodeValue);
+      });
+      this.el.querySelectorAll("[aria-label], [placeholder], [title], [alt]").forEach((el) => {
+        ["aria-label", "placeholder", "title", "alt"].forEach((attr) => {
+          if (el.hasAttribute(attr)) el.setAttribute(attr, this.tr(el.getAttribute(attr)));
+        });
+      });
     }
 
     renderHeader(pct) {
@@ -602,6 +924,7 @@
           </main>
         </div>
       `;
+      this.applyTranslations();
     }
 
     renderSimpleTool(mode) {
@@ -636,7 +959,7 @@
             <label class="mtk-biab-setup__field"><span>Customer name</span><input data-invoice-field="customerName" value="${this.escape(this.invoiceDraft.customerName)}" placeholder="Jane Customer"></label>
             <label class="mtk-biab-setup__field"><span>Customer email</span><input data-invoice-field="customerEmail" type="email" value="${this.escape(this.invoiceDraft.customerEmail)}" placeholder="jane@example.com"></label>
             <label class="mtk-biab-setup__field"><span>Customer phone</span><input data-invoice-field="customerPhone" type="tel" value="${this.escape(this.invoiceDraft.customerPhone)}" placeholder="(555) 123-4567"></label>
-            <label class="mtk-biab-setup__field"><span>Service type</span><select data-invoice-field="serviceType">${["Rekey service", "House lockout", "Lock change", "Deadbolt installation", "Commercial service"].map(item => `<option ${this.invoiceDraft.serviceType === item ? "selected" : ""}>${item}</option>`).join("")}</select></label>
+            <label class="mtk-biab-setup__field"><span>Service type</span><select data-invoice-field="serviceType">${["Rekey service", "House lockout", "Lock change", "Deadbolt installation", "Commercial service"].map(item => `<option value="${this.escape(item)}" ${this.invoiceDraft.serviceType === item ? "selected" : ""}>${this.escape(this.tr(item))}</option>`).join("")}</select></label>
             <label class="mtk-biab-setup__field"><span>Job notes</span><textarea data-invoice-field="notes" rows="3">${this.escape(this.invoiceDraft.notes)}</textarea></label>
             <fieldset class="mtk-biab-setup__line-items"><legend>Line items</legend>
               ${this.invoiceDraft.lineItems.map((item, index) => `<div><input aria-label="Line item ${index + 1} label" data-invoice-field="lineLabel:${index}" value="${this.escape(item.label)}"><input aria-label="Line item ${index + 1} amount" data-invoice-field="lineAmount:${index}" type="number" min="0" step="0.01" value="${this.escape(item.amount)}"><button type="button" data-biab-action="invoice-remove-line" data-index="${index}" aria-label="Remove line item"><span class="material-icons" aria-hidden="true">delete</span></button></div>`).join("")}
@@ -726,7 +1049,7 @@
     }
 
     addInvoiceLine() {
-      this.invoiceDraft.lineItems.push({ label: "Line item", amount: "0" });
+      this.invoiceDraft.lineItems.push({ label: this.tr("Line item"), amount: "0" });
       this.renderTool("invoices");
     }
 
