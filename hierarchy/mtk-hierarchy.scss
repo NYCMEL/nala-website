@@ -184,23 +184,23 @@
     @include flex-vcenter;
     padding: 0.875rem 1rem;
     margin-top: 0.5rem;
-    background: linear-gradient(135deg, var(--mtk-accent) 0%, $color-accent-dark 100%);
+    background: linear-gradient(135deg, $color-primary 0%, $color-primary-dark 100%);
     color: $color-white;
     cursor: pointer;
     transition: var(--mtk-transition);
     border-radius: $radius-xs;
     font-weight: $font-weight-medium;
 
-    &:hover  { background: linear-gradient(135deg, $color-accent-dark 0%, $color-accent-darker 100%); box-shadow: var(--mtk-shadow-2); }
+    &:hover  { background: linear-gradient(135deg, $color-primary-dark 0%, $color-primary-darker 100%); box-shadow: var(--mtk-shadow-2); }
     &:focus  { outline: none; }
     &:focus-visible { outline: 2px solid $color-gold; outline-offset: 2px; }
 
-    &.mtk-quiz--active   { background: linear-gradient(135deg, $color-accent-darker 0%, #880e4f 100%); box-shadow: var(--mtk-shadow-2); }
+    &.mtk-quiz--active   { background: linear-gradient(135deg, $color-primary-darker 0%, #2f2505 100%); box-shadow: var(--mtk-shadow-2); }
     &.mtk-quiz--disabled {
       opacity: 0.5;
       cursor: not-allowed;
-      background: linear-gradient(135deg, var(--mtk-accent) 0%, $color-accent-dark 100%);
-      &:hover { background: linear-gradient(135deg, var(--mtk-accent) 0%, $color-accent-dark 100%); box-shadow: none; }
+      background: linear-gradient(135deg, $color-primary-light 0%, $color-primary 100%);
+      &:hover { background: linear-gradient(135deg, $color-primary-light 0%, $color-primary 100%); box-shadow: none; }
     }
   }
 
@@ -215,7 +215,7 @@
     align-items: center;
     gap: 0.5rem;
     padding: 1rem 2rem;
-    background: linear-gradient(135deg, var(--mtk-accent) 0%, $color-accent-dark 100%);
+    background: linear-gradient(135deg, $color-primary 0%, $color-primary-dark 100%);
     color: $color-white;
     border: none;
     border-radius: $radius-xs;
@@ -225,7 +225,7 @@
     transition: var(--mtk-transition);
     box-shadow: var(--mtk-shadow-1);
 
-    &:hover  { background: linear-gradient(135deg, $color-accent-dark 0%, $color-accent-darker 100%); box-shadow: var(--mtk-shadow-2); transform: translateY(-2px); }
+    &:hover  { background: linear-gradient(135deg, $color-primary-dark 0%, $color-primary-darker 100%); box-shadow: var(--mtk-shadow-2); transform: translateY(-2px); }
     &:active { transform: translateY(0); }
 
     .material-icons { font-size: $font-size-3xl; }
