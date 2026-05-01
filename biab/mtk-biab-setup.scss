@@ -167,9 +167,13 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  display: grid;
-  grid-template-columns: repeat(10, minmax(96px, 1fr));
+  display: flex;
   gap: 6px;
+  overflow-x: auto;
+}
+
+.mtk-biab-setup__stepper li {
+  flex: 0 0 auto;
 }
 
 .mtk-biab-setup__stepper button {
@@ -184,6 +188,7 @@
   color: var(--biab-ink);
   text-align: left;
   cursor: pointer;
+  min-width: max-content;
 }
 
 .mtk-biab-setup__stepper button.is-current {
@@ -618,7 +623,7 @@
   }
 
   .mtk-biab-setup__stepper ol {
-    grid-template-columns: repeat(10, 132px);
+    display: flex;
   }
 
   .mtk-biab-setup__form {
