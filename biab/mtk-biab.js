@@ -1608,6 +1608,7 @@ class MtkBiab {
         businessName: 'Harbor Lock & Key',
         ownerName: '',
         serviceArea: '',
+        businessWebsite: this._getPrebuiltWebsiteUrl(),
         launchServices: 'House lockouts, rekeys, lock changes, deadbolt installation, mailbox/cabinet locks, car lockouts, basic commercial lock service',
         futureServices: 'Master key systems, panic hardware, door closers, access control, safe work, automotive key programming',
         customerFocus: 'Homeowners, drivers, property managers, small businesses, realtors, commercial offices',
@@ -1622,7 +1623,7 @@ class MtkBiab {
       'startup-checklist': {
         legal: '',
         phoneEmail: '',
-        website: '',
+        website: this._getPrebuiltWebsiteUrl(),
         profile: '',
         logoBrand: '',
         insurance: '',
@@ -1649,7 +1650,7 @@ class MtkBiab {
         businessAddress: '',
         businessPhone: '',
         businessEmail: '',
-        businessWebsite: '',
+        businessWebsite: this._getPrebuiltWebsiteUrl(),
         customerName: '',
         serviceAddress: '',
         billingAddress: '',
@@ -1681,6 +1682,33 @@ class MtkBiab {
       },
       reviews: []
     };
+  }
+
+  _getPrebuiltWebsiteUrl() {
+    const origin = window.location.origin || 'https://nala-test.com';
+    const uid = this._getReviewUid ? this._getReviewUid() : 'U12345';
+    const query = uid ? '?nalaUID=' + encodeURIComponent(uid) : '';
+    return `${origin}/repo_deploy/client/index.html${query}`;
+  }
+
+  _isGeneratedPrebuiltWebsiteUrl(value) {
+    return /^https?:\/\/[^/]+\/repo_deploy\/client\/index\.html(?:\?nalaUID=[A-Za-z0-9_-]+)?$/.test(String(value || '').trim());
+  }
+
+  _syncPrebuiltWebsiteLink() {
+    const url = this._getPrebuiltWebsiteUrl();
+    [
+      ['business-plan', 'businessWebsite'],
+      ['startup-checklist', 'website'],
+      ['invoice-setup', 'businessWebsite']
+    ].forEach(([tool, field]) => {
+      const state = this.formState[tool];
+      if (!state) return;
+      const current = state[field];
+      if (!current || this._isGeneratedPrebuiltWebsiteUrl(current)) {
+        state[field] = url;
+      }
+    });
   }
 
   _moveToolStep(tool, direction) {
@@ -1737,7 +1765,7 @@ class MtkBiab {
   _getToolSteps(tool) {
     const map = {
       'business-plan': [
-        { title: this._t('businessInfo'), fields: ['businessName', 'ownerName', 'serviceArea'] },
+        { title: this._t('businessInfo'), fields: ['businessName', 'ownerName', 'serviceArea', 'businessWebsite'] },
         { title: 'Launch Services', fields: ['launchServices', 'futureServices'] },
         { title: 'Customers & Positioning', fields: ['customerFocus', 'differentiator'] },
         { title: 'Startup Needs', fields: ['startupNeeds'] },
@@ -1782,6 +1810,7 @@ class MtkBiab {
   _renderWizardTool(tool, heading) {
     const mount = this.el.querySelector(`[data-biab-tool="${tool}"]`);
     if (!mount) return;
+    this._syncPrebuiltWebsiteLink();
     const steps = this._getToolSteps(tool);
     const stepIndex = this.formSteps[tool] || 0;
     const active = steps[stepIndex] || steps[0];
@@ -1854,7 +1883,7 @@ class MtkBiab {
       businessAddress: 'Business address / mailing address',
       businessPhone: 'Business phone',
       businessEmail: 'Business email',
-      businessWebsite: 'Business website',
+      businessWebsite: 'Prebuilt website link',
       customerName: 'Customer name',
       serviceAddress: 'Service address',
       billingAddress: 'Billing address if different',
@@ -1994,7 +2023,8 @@ class MtkBiab {
         <h3>${this._escapeHtml(s.businessName || 'Business Plan')}</h3>
         ${this._buildToolSummarySection('Business Info', [
           ['Owner', s.ownerName],
-          ['Service area', s.serviceArea]
+          ['Service area', s.serviceArea],
+          ['Prebuilt website link', s.businessWebsite]
         ])}
         ${this._buildToolSummarySection('Services', [
           ['Launch services', s.launchServices],

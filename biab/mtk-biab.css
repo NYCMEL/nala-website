@@ -126,11 +126,15 @@ mtk-biab.mtk-biab {
 .mtk-biab-tool__grid {
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: 18px; }
+  gap: 14px; }
 
-.mtk-biab-tool__form, .mtk-biab-tool__field {
+.mtk-biab-tool__form {
   display: grid;
-  gap: 12px; }
+  gap: 8px; }
+
+.mtk-biab-tool__field {
+  display: grid;
+  gap: 5px; }
 
 .mtk-biab-tool__field {
   color: #202124;
@@ -151,7 +155,7 @@ mtk-biab.mtk-biab {
   background: #fff; }
 
 .mtk-biab-tool__field textarea {
-  min-height: 82px; }
+  min-height: 64px; }
 
 .mtk-biab-tool__preview {
   min-width: 0;

@@ -173,13 +173,17 @@ mtk-biab.mtk-biab {
   &__grid {
     display: grid;
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-    gap: 18px;
+    gap: 14px;
   }
 
-  &__form,
+  &__form {
+    display: grid;
+    gap: 8px;
+  }
+
   &__field {
     display: grid;
-    gap: 12px;
+    gap: 5px;
   }
 
   &__field {
@@ -202,7 +206,7 @@ mtk-biab.mtk-biab {
     }
 
     textarea {
-      min-height: 82px;
+      min-height: 64px;
     }
   }
 
