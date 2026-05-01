@@ -7,11 +7,11 @@ window.app.hero = [
 	cta:         (window.i18n ? window.i18n.t('hero.cta')         : 'Get Started'),
 	image: "./img/hero.png",
 	images: [
-	    { src: "img/home/hero-i-banner-preview.jpg", alt: "NALA locksmith training banner" },
-	    { src: "img/home/hero-h-practical.jpg", alt: "Practical locksmith lesson preview" },
-	    { src: "img/home/hero-g-course.jpg", alt: "NALA course preview" },
-	    { src: "img/home/hero-o-locksmith.jpeg", alt: "Locksmith at work" },
-	    { src: "img/home/hero-n-automotive.jpeg", alt: "Automotive locksmith training" }
+	    { src: "img/home/hero-i-banner-preview.jpg", alt: "NALA locksmith training banner", position: "right center" },
+	    { src: "img/home/hero-h-bright-lock-closeup.jpg", alt: "Practical locksmith lock training", position: "center center" },
+	    { src: "img/home/hero-g-bright-entry.jpg", alt: "Locksmith service training at a doorway", position: "center center" },
+	    { src: "img/home/hero-o-locksmith.jpeg", alt: "Locksmith at work", position: "center center" },
+	    { src: "img/home/hero-n-automotive.jpeg", alt: "Automotive locksmith training", position: "center center" }
 	],
 
 	lhsCol: "5", // Bootstrap col-md-5

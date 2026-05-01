@@ -90,7 +90,8 @@
 	rhs.innerHTML = `
 	    <button class="MTK-hero-carousel" type="button" aria-label="${registerLabel}">
 		${heroData.images.map(function(image, index) {
-		    return `<img class="MTK-hero-carousel__image${index === 0 ? ' is-active' : ''}" src="${image.src}" alt="${image.alt || 'NALA training'}">`;
+		    const position = image.position || "center center";
+		    return `<img class="MTK-hero-carousel__image${index === 0 ? ' is-active' : ''}" src="${image.src}" alt="${image.alt || 'NALA training'}" style="object-position: ${position};">`;
 		}).join('')}
 	    </button>
 	`;
