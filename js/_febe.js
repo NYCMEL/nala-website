@@ -704,60 +704,58 @@ class _febe {
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
     handleQuizSubmitted(data) {
-	const self = this;
-	wc.submitQuiz(data.quiz_session_id, data.module_id, data.answers, function (err, response) {
-	    if (err) {
-		alert(window.wc && typeof wc.customerMessage === "function"
-		    ? wc.customerMessage(err, self.t("quiz.error.submit", "Could not submit quiz. Please try again."))
-		    : self.t("quiz.error.submit", "Could not submit quiz. Please try again."));
-		return;
-	    }
-	    
-	    wc.log("_febe.handleQuizSubmitted > Server response:", response);
+	const response = data && data.response ? data.response : data;
+	if (!response || typeof response !== "object") {
+	    wc.warn("_febe.handleQuizSubmitted > missing response payload", data);
+	    return;
+	}
 
-	    if (response.passed) {
-		mtkDialog.open({
-		    id      : 'success',
-		    title   : 'You passed the quiz',
-		    message : 'You have successfully completed this quiz.',
-		    icon    : 'check_circle',
-		    iconColor: 'green',
-		    maxWidth: '700px',
-		    closeOnBackdrop: false,
-		    closeOnEscape  : false,
-		    buttons: [
-			{ label: 'Save & Continue',  action: 'TBD', classes: 'btn btn-primary' }
-		    ]
-		});
+	wc.log("_febe.handleQuizSubmitted > Server response:", response);
+
+	if (response.passed) {
+	    mtkDialog.open({
+		id      : 'success',
+		title   : 'You passed the quiz',
+		message : 'You have successfully completed this quiz.',
+		icon    : 'check_circle',
+		iconColor: 'green',
+		maxWidth: '700px',
+		closeOnBackdrop: false,
+		closeOnEscape  : false,
+		buttons: [
+		    { label: 'Save & Continue',  action: 'TBD', classes: 'btn btn-primary' }
+		]
+	    });
 		
-		MTKMsgs.show({
-		    type: 'success',
-		    icon: 'success',
-		    message: wc.emsg(1004),
-		    closable: false,
-		    timer: 5
-		});
+	    MTKMsgs.show({
+		type: 'success',
+		icon: 'success',
+		message: wc.emsg(1004),
+		closable: false,
+		timer: 5
+	    });
 
-		// ENABLE NEXT MODULE
+	    // ENABLE NEXT MODULE
+	    if (window.MTKHierarchy && typeof window.MTKHierarchy.enableNextModule === "function") {
 		window.MTKHierarchy.enableNextModule();
-
-		wc.log("Congratulations! You passed.");
-	    } else {
-		mtkDialog.open({
-		    id      : 'failed',
-		    title   : 'You did not pass the quiz',
-		    message : 'We recommend retaking the quiz for a better result.',
-		    icon    : 'warning',
-		    iconColor: 'red',
-		    maxWidth: '700px',
-		    closeOnBackdrop: false,
-		    closeOnEscape  : false,
-		    buttons: [
-			{ label: 'Retake the quiz',  action: 'cancel', classes: 'btn btn-warning' }
-		    ]
-		});
 	    }
-	});
+
+	    wc.log("Congratulations! You passed.");
+	} else {
+	    mtkDialog.open({
+		id      : 'failed',
+		title   : 'You did not pass the quiz',
+		message : 'We recommend retaking the quiz for a better result.',
+		icon    : 'warning',
+		iconColor: 'red',
+		maxWidth: '700px',
+		closeOnBackdrop: false,
+		closeOnEscape  : false,
+		buttons: [
+		    { label: 'Retake the quiz',  action: 'cancel', classes: 'btn btn-warning' }
+		]
+	    });
+	}
     }
 
     //////////////////////////////////////////////////////////////////
