@@ -223,7 +223,10 @@
         finishSuccess();
       }).catch((err) => {
         console.error('[MTKGift] delivery request failed', err);
-        this._showSnackbar('error', err.message || 'Could not submit gift request.', 'error_outline');
+        const message = window.wc && typeof wc.customerMessage === 'function'
+          ? wc.customerMessage(err, 'Could not submit gift request. Please try again.')
+          : 'Could not submit gift request. Please try again.';
+        this._showSnackbar('error', message, 'error_outline');
       });
     }
 

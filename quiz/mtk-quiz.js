@@ -380,15 +380,18 @@
 
 			    if (err) {
 				wc.error('❌ Quiz submission failed:', err);
+				const friendlyError = window.wc && typeof wc.customerMessage === 'function'
+				    ? wc.customerMessage(err, 'Quiz submission failed. Please try again.')
+				    : 'Quiz submission failed. Please try again.';
 				this.clearGlobalMessageBanner();
 				this.showGlobalMessage({
 				    type: 'error',
 				    icon: 'error',
-				    message: err.message || 'Quiz submission failed.',
+				    message: friendlyError,
 				    closable: true,
 				    timer: 10
 				});
-				this.showMessage('error', err.message || 'Quiz submission failed.');
+				this.showMessage('error', friendlyError);
 				return;
 			    }
 
@@ -481,15 +484,18 @@
 			this.elements.submitBtn.disabled = false;
 		    }
 		    wc.error('❌ Quiz submit handler crashed:', error);
+		    const friendlyError = window.wc && typeof wc.customerMessage === 'function'
+			? wc.customerMessage(error, 'Could not submit quiz. Please try again.')
+			: 'Could not submit quiz. Please try again.';
 		    this.clearGlobalMessageBanner();
 		    this.showGlobalMessage({
 			type: 'error',
 			icon: 'error',
-			message: error && error.message ? error.message : 'Quiz submission crashed before reaching the server.',
+			message: friendlyError,
 			closable: true,
 			timer: 12
 		    });
-		    this.showMessage('error', error && error.message ? error.message : 'Quiz submission crashed before reaching the server.');
+		    this.showMessage('error', friendlyError);
 		}
 	    }
 
@@ -956,7 +962,9 @@
 	    
 	    wc.getQuiz(wc.quizModule, function(err, data) {
 		if (err) {
-		    alert(err.message);
+		    alert(window.wc && typeof wc.customerMessage === 'function'
+			? wc.customerMessage(err, 'Could not load quiz. Please try again.')
+			: 'Could not load quiz. Please try again.');
 
 		    // TAKE ME BACK TO COURSES
 		    wc.pages.show('hierarchy');

@@ -55,7 +55,7 @@
 
                 const data = await res.json().catch(function () { return {}; });
                 if (!res.ok || !data.ok) {
-                    showError(data.error || "Could not set password.");
+                    showError("Could not set password. Please check the fields and try again.");
                     return;
                 }
 

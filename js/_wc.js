@@ -9,18 +9,51 @@ wc.testing   = false;  /* = true SHOULD USE ALL LOCAL CONFIG FILES and others */
 // Message storage
 wc.emsgs = [
     { id: 1000, text: "Unable to sign in with those credentials." },
-    { id: 1001, text: "Create user failed" },
+    { id: 1001, text: "Could not create the account. Please try again." },
     { id: 1002, text: "No questions found for module" },
-    { id: 1003, text: "Registeration Failed!" },
-    { id: 1004, text: 'You have Successfully completed this set of tests' },
+    { id: 1003, text: "Registration failed. Please try again." },
+    { id: 1004, text: 'You have successfully completed this quiz.' },
 ];
 
 wc.emsg = function (id) {
     const msg = this.emsgs.find(m => m.id === id);
-    if (!msg) return `Error(${id}): Message not found`;
-    return `Error(${id}): ${msg.text}`;
+    if (!msg) return "Something went wrong. Please try again.";
+    return msg.text;
 };
 // let msg = wc.emsg(1000);
+
+wc.customerMessage = function (err, fallback) {
+    const message = String(
+        err && err.message ? err.message :
+        err && err.error ? err.error :
+        err || ""
+    ).trim();
+
+    if (!message) return fallback || "Something went wrong. Please try again.";
+
+    const lower = message.toLowerCase();
+    const technical =
+        /^error\(?\d*\)?/i.test(message) ||
+        /^http\s*\d+/i.test(message) ||
+        lower.includes("server returned") ||
+        lower.includes("non-json") ||
+        lower.includes("sql") ||
+        lower.includes("pdo") ||
+        lower.includes("exception") ||
+        lower.includes("stack") ||
+        lower.includes("trace") ||
+        lower.includes("failed to fetch") ||
+        lower.includes("networkerror") ||
+        lower.includes("server_error") ||
+        lower.includes("create user failed") ||
+        lower.includes("forgot_password failed") ||
+        lower.includes("login.php") ||
+        lower.includes("checkout_session") ||
+        lower.includes("api/");
+
+    if (technical) return fallback || "Something went wrong. Please try again.";
+    return message;
+};
 
 /************************************************************
  * CONFIG INACTIVITY TIMER
@@ -1042,14 +1075,10 @@ wc.login = async function (email, passwd) {
             data = JSON.parse(text);
         } catch (e) {
             wc.error("login.php returned non-JSON:", text);
-            throw new Error("Server returned non-JSON from login.php (see console). First 300 chars: " + text.slice(0, 300));
+            throw new Error("login_response_error");
         }
 
         if (!res.ok) {
-            // If backend provides an error message, show it; else show a generic one
-            const msg = (data && (data.error || data.message)) ? (data.error || data.message) : 'combination of email and password';
-            //alert('1) Login Failed: ' + msg);
-
 	    MTKMsgs.show({
 		type: 'error',
 		icon: 'error',

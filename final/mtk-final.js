@@ -440,7 +440,9 @@ class MtkFinal {
 
             return result;
         } catch (err) {
-            alert(err.message || 'Could not send certificate');
+            alert(window.wc && typeof wc.customerMessage === 'function'
+                ? wc.customerMessage(err, 'Could not send certificate. Please try again.')
+                : 'Could not send certificate. Please try again.');
             return null;
         } finally {
             if (btn) btn.classList.remove('mtk-final__submit--loading');

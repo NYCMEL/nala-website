@@ -106,8 +106,17 @@ class _febe {
 	    handler.call(this, data);
 	} else {
 	    wc.error("_febe: DO NOT HAVE:" + msg);
-	    alert("_febe: DO NOT HAVE:" + msg);
 	}
+    }
+
+    //////////////////////////////////////////////////////////////////
+    ///// HANDLERS
+    //////////////////////////////////////////////////////////////////
+    customerMessage(err, fallback) {
+	if (window.wc && typeof wc.customerMessage === "function") {
+	    return wc.customerMessage(err, fallback);
+	}
+	return fallback || "Something went wrong. Please try again.";
     }
 
     //////////////////////////////////////////////////////////////////
@@ -195,12 +204,12 @@ class _febe {
 		MTKMsgs.show({
 		    type: "error",
 		    icon: "error",
-		    message: err && err.message ? err.message : "Could not save Business in a Box changes.",
+		    message: this.customerMessage(err, "Could not save Business in a Box changes. Please try again."),
 		    closable: true,
 		    timer: 10
 		});
 	    } else {
-		alert(err && err.message ? err.message : "Could not save Business in a Box changes.");
+		alert(this.customerMessage(err, "Could not save Business in a Box changes. Please try again."));
 	    }
 	});
     }
@@ -240,12 +249,12 @@ class _febe {
 		MTKMsgs.show({
 		    type: "error",
 		    icon: "error",
-		    message: err && err.message ? err.message : "Could not submit request.",
+		    message: this.customerMessage(err, "Could not submit request. Please try again."),
 		    closable: true,
 		    timer: 10
 		});
 	    } else {
-		alert(err && err.message ? err.message : "Could not submit request.");
+		alert(this.customerMessage(err, "Could not submit request. Please try again."));
 	    }
 	});
     }
@@ -354,12 +363,12 @@ class _febe {
 		MTKMsgs.show({
 		    type: "error",
 		    icon: "error",
-		    message: err && err.message ? err.message : errorMessage,
+		    message: this.customerMessage(err, errorMessage || "Could not complete that request. Please try again."),
 		    closable: true,
 		    timer: 10
 		});
 	    } else {
-		alert(err && err.message ? err.message : errorMessage);
+		alert(this.customerMessage(err, errorMessage || "Could not complete that request. Please try again."));
 	    }
 	});
     }
@@ -514,7 +523,7 @@ class _febe {
 			MTKMsgs.show({
 			    type: "error",
 			    icon: "error",
-			    message: (json && (json.error || json.message)) ? (json.error || json.message) : "Could not process password reset.",
+			    message: "If this email exists, a reset link will be emailed to you.",
 			    closable: true,
 			    timer: 10
 			});
@@ -577,7 +586,10 @@ class _febe {
 			MTKMsgs.show({
 			    type: 'error',
 			    icon: 'error',
-			    message: translateRegisterMessage(message, "register.error.server"),
+			    message: this.customerMessage(
+				translateRegisterMessage(message, "register.error.server"),
+				window.i18n && typeof window.i18n.t === "function" ? window.i18n.t("register.error.server") : "Registration failed. Please try again."
+			    ),
 			    closable: true,
 			    timer: 10
 			});
@@ -623,12 +635,12 @@ class _febe {
 		MTKMsgs.show({
 		    type: "error",
 		    icon: "error",
-		    message: err && err.message ? err.message : String(err),
+		    message: this.customerMessage(err, wc.emsg ? wc.emsg(1000) : "Unable to sign in with those credentials."),
 		    closable: true,
 		    timer: 10
 		});
 	    } else {
-		alert(err);
+		alert(this.customerMessage(err, wc.emsg ? wc.emsg(1000) : "Unable to sign in with those credentials."));
 	    }
 	});
     }
@@ -683,7 +695,9 @@ class _febe {
     handleQuizSubmitted(data) {
 	wc.submitQuiz(data.quiz_session_id, data.module_id, data.answers, function (err, response) {
 	    if (err) {
-		alert("_febe.handleQuizSubmitted > Error submitting quiz.");
+		alert(window.wc && typeof wc.customerMessage === "function"
+		    ? wc.customerMessage(err, "Could not submit quiz. Please try again.")
+		    : "Could not submit quiz. Please try again.");
 		return;
 	    }
 	    

@@ -40,7 +40,9 @@
 	    form.reset();
 	    setStatus('Thank you. Your rating has been submitted.', false);
 	}).catch(function(err) {
-	    setStatus(err && err.message ? err.message : 'Could not submit review.', true);
+	    setStatus(window.wc && typeof wc.customerMessage === 'function'
+		? wc.customerMessage(err, 'Could not submit review. Please try again.')
+		: 'Could not submit review. Please try again.', true);
 	});
     });
 

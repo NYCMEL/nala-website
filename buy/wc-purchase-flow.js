@@ -65,6 +65,13 @@
         alert(message);
     }
 
+    function customerMessage(err, fallback) {
+        if (window.wc && typeof wc.customerMessage === "function") {
+            return wc.customerMessage(err, fallback);
+        }
+        return fallback || t("purchase.checkoutFailed", "Unable to start checkout.");
+    }
+
     function getUser() {
         return (window.wc && wc.session && wc.session.user) ? wc.session.user : null;
     }
@@ -220,7 +227,7 @@
                 return;
             }
 
-            showMsg("error", (err && err.message) || t("purchase.checkoutFailed", "Unable to start checkout."), {
+            showMsg("error", customerMessage(err, t("purchase.checkoutFailed", "Unable to start checkout.")), {
                 icon: "error",
                 timer: 10
             });
