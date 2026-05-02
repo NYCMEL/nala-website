@@ -549,7 +549,7 @@
 		    return;
 		}
 
-		window.location.href = '../hierarchy/index.html';
+		window.location.href = 'hierarchy/index.html';
 	    }
 
 	    handleCancel() {
@@ -986,7 +986,7 @@
 		    if (window.wc && wc.pages && typeof wc.pages.show === 'function') {
 			wc.pages.show('hierarchy');
 		    } else {
-			window.location.href = '../hierarchy/index.html';
+			window.location.href = 'hierarchy/index.html';
 		    }
 		    return;
 		}
