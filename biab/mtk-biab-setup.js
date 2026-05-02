@@ -1321,11 +1321,13 @@
     logoPalette() {
       const selected = this.cfg.palettes.find(item => item.id === this.val("palette")) || this.cfg.palettes[0] || {};
       return {
+        id: selected.id || "midnight-brass",
         surface: selected.colors?.[0] || "#0f172a",
         primary: selected.colors?.[1] || "#c6952d",
         accent: selected.colors?.[2] || "#f8fafc",
         textOnDark: "#ffffff",
-        textOnLight: selected.colors?.[0] || "#0f172a"
+        textOnLight: selected.colors?.[0] || "#0f172a",
+        muted: selected.colors?.[3] || "#64748b"
       };
     }
 
@@ -1355,13 +1357,17 @@
     }
 
     applyLogoToWebsite() {
+      const theme = this.logoPalette();
       const payload = {
         logo: this.buildLogoDataUrl(),
         businessName: this.val("businessName") || "Your Locksmith",
-        tagline: this.val("tagline") || "Mobile Locksmith Service"
+        tagline: this.val("tagline") || "Mobile Locksmith Service",
+        logoKind: "artwork",
+        theme: theme
       };
       try {
         localStorage.setItem("nalaBiabLogo", JSON.stringify(payload));
+        localStorage.setItem("nalaBiabBrand", JSON.stringify({ theme: theme }));
       } catch (err) {
         console.warn("[mtk-biab-setup] Could not save logo", err);
       }

@@ -236,6 +236,50 @@ h1.title::after {
   margin-left: 0.25rem;
   display: block; }
 
+.mtk-path .total-price {
+  display: block;
+  margin-top: 6px;
+  color: #5f6368;
+  font-size: 0.95rem;
+  font-weight: 600; }
+
+.mtk-path .included-bonus {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  margin: 14px 0 6px;
+  padding: 12px;
+  border: 1px solid #eadfc6;
+  border-radius: 8px;
+  background: #fffaf0;
+  color: #2f2816; }
+
+.mtk-path .included-bonus .material-icons {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #a98212;
+  color: #ffffff;
+  font-size: 19px; }
+
+.mtk-path .included-bonus strong {
+  display: block;
+  font-size: 0.84rem;
+  line-height: 1.2;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #7a5e0c; }
+
+.mtk-path .included-bonus span {
+  display: block;
+  font-size: 0.92rem;
+  line-height: 1.45; }
+
 .mtk-path ul {
   padding-left: 0;
   list-style: none;

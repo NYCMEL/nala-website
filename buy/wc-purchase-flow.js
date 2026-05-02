@@ -205,7 +205,7 @@
                     plan: plan,
                     title: plan === "business" ? t("purchase.shippingTitle", "Lockout Kit Shipping Details") : undefined,
                     intro: plan === "business"
-                        ? t("purchase.shippingIntroBusiness", "Business in a Box includes Premium and the lockout kit, so we need the shipping address before opening Stripe Checkout.")
+                        ? t("purchase.shippingIntroBusiness", "Business in a Box includes Premium, the car lockout kit, and the lock pick tool set, so we need the shipping address before opening Stripe Checkout.")
                         : undefined
                 })
                 : { plan: plan };

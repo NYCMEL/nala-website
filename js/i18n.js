@@ -589,8 +589,20 @@
     'path.trial.f4': { en: 'Upgrade anytime',                 es: 'Mejora en cualquier momento' },
     'path.premium.title':       { en: 'Premium', es: 'Premium' },
     'path.premium.period': {
-      en: 'One-time payment · financing up to 24 months available via Klarna',
-      es: 'Pago único · financiamiento hasta 24 meses disponible a través de Klarna'
+      en: 'per month for 24 months with Klarna',
+      es: 'por mes durante 24 meses con Klarna'
+    },
+    'path.totalPrice': {
+      en: 'Total price {price}',
+      es: 'Precio total {price}'
+    },
+    'path.bonusLabel': {
+      en: 'Included bonus',
+      es: 'Bono incluido'
+    },
+    'path.premium.bonus': {
+      en: 'A car lockout kit is included with your course purchase.',
+      es: 'Un kit de apertura de autos está incluido con la compra del curso.'
     },
     'path.premium.description': {
       en: 'Full program access with a certificate of completion.',
@@ -600,11 +612,15 @@
     'path.premium.f2': { en: 'Full access included',               es: 'Acceso total incluido' },
     'path.premium.f3': { en: 'Certificate of completion',          es: 'Certificado de finalización' },
     'path.premium.f4': { en: 'Learn at your own pace',             es: 'Aprende a tu propio ritmo' },
-    'path.premium.f5': { en: 'Free lockout kit gift included',     es: 'Kit de lockout de regalo incluido' },
+    'path.premium.f5': { en: 'Car lockout kit included',           es: 'Kit de apertura de autos incluido' },
     'path.business.title':       { en: 'Business-in-a-Box',       es: 'Negocio en una caja' },
     'path.business.period': {
-      en: 'One-time payment · financing up to 24 months available via Klarna',
-      es: 'Pago único · financiamiento hasta 24 meses disponible a través de Klarna'
+      en: 'per month for 24 months with Klarna',
+      es: 'por mes durante 24 meses con Klarna'
+    },
+    'path.business.bonus': {
+      en: 'A lock pick tool set is included with your Business in a Box purchase.',
+      es: 'Un juego de herramientas de ganzúas está incluido con la compra de Negocio en una Caja.'
     },
     'path.business.description': {
       en: 'Premium plus the Business in a Box add-on to help you launch your locksmith business.',
@@ -614,7 +630,7 @@
     'path.business.f2': { en: 'Pre-built locksmith website',           es: 'Sitio web de cerrajería listo para usar' },
     'path.business.f3': { en: 'Business card and branding templates',  es: 'Plantillas de tarjetas de presentación y marca' },
     'path.business.f4': { en: 'Service pricing starter framework',     es: 'Marco inicial de precios de servicios' },
-    'path.business.f5': { en: 'Marketing launch checklist',            es: 'Lista de verificación de lanzamiento de marketing' },
+    'path.business.f5': { en: 'Lock pick tool set included',           es: 'Juego de herramientas de ganzúas incluido' },
     'path.badgePopular': { en: 'Most Popular', es: 'Más popular' },
     'path.cta': { en: 'Get Started', es: 'Comenzar' },
 
@@ -847,9 +863,9 @@
     'purchase.loginRequired':    { en: 'Please log in before purchasing.', es: 'Por favor inicia sesión antes de comprar.' },
     'purchase.notAvailable':     { en: 'That purchase option is not available for your current account.', es: 'Esa opción de compra no está disponible para tu cuenta actual.' },
     'purchase.shippingTitle':    { en: 'Lockout Kit Shipping Details', es: 'Detalles de envío del kit de apertura' },
-    'purchase.shippingIntroBusiness': { en: 'Business in a Box includes Premium and the lockout kit, so we need the shipping address before opening Stripe Checkout.', es: 'Negocio en una Caja incluye Premium y el kit de apertura, así que necesitamos la dirección de envío antes de abrir Stripe Checkout.' },
+    'purchase.shippingIntroBusiness': { en: 'Business in a Box includes Premium, the car lockout kit, and the lock pick tool set, so we need the shipping address before opening Stripe Checkout.', es: 'Negocio en una Caja incluye Premium, el kit de apertura de autos y el juego de herramientas de ganzúas, así que necesitamos la dirección de envío antes de abrir Stripe Checkout.' },
     'purchase.premiumShippingTitle': { en: 'Premium Shipping Details', es: 'Detalles de envío de Premium' },
-    'purchase.premiumShippingIntro': { en: 'Premium includes the lockout kit, so we need the shipping address before opening Stripe Checkout.', es: 'Premium incluye el kit de apertura, así que necesitamos la dirección de envío antes de abrir Stripe Checkout.' },
+    'purchase.premiumShippingIntro': { en: 'Premium includes the car lockout kit, so we need the shipping address before opening Stripe Checkout.', es: 'Premium incluye el kit de apertura de autos, así que necesitamos la dirección de envío antes de abrir Stripe Checkout.' },
     'purchase.recipientName':    { en: 'Recipient Name', es: 'Nombre del destinatario' },
     'purchase.recipientName.short': { en: 'recipient name', es: 'nombre del destinatario' },
     'purchase.address1':         { en: 'Address Line 1', es: 'Dirección línea 1' },

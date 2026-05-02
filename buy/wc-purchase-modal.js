@@ -84,7 +84,7 @@
         return new Promise(function (resolve, reject) {
             const prefill = getShippingPrefill(user);
             const title = options.title || t("purchase.premiumShippingTitle", "Premium Shipping Details");
-            const intro = options.intro || t("purchase.premiumShippingIntro", "Premium includes the lockout kit, so we need the shipping address before opening Stripe Checkout.");
+            const intro = options.intro || t("purchase.premiumShippingIntro", "Premium includes the car lockout kit, so we need the shipping address before opening Stripe Checkout.");
             const plan = options.plan || "premium";
             const modal = document.createElement("div");
             modal.className = "wc-purchase-modal";

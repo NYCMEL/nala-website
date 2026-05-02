@@ -113,11 +113,42 @@
         period.textContent = plan.period || "";
         priceWrap.appendChild(period);
 
+        if (plan.totalPrice) {
+            var totalPrice = document.createElement("span");
+            totalPrice.className = "total-price";
+            totalPrice.textContent = plan.totalPrice;
+            priceWrap.appendChild(totalPrice);
+        }
+
         card.appendChild(priceWrap);
 
         var desc = document.createElement("p");
         desc.textContent = plan.description || "";
         card.appendChild(desc);
+
+        if (plan.bonusText) {
+            var bonus = document.createElement("div");
+            bonus.className = "included-bonus";
+
+            var icon = document.createElement("span");
+            icon.className = "material-icons";
+            icon.setAttribute("aria-hidden", "true");
+            icon.textContent = "redeem";
+            bonus.appendChild(icon);
+
+            var copy = document.createElement("div");
+            if (plan.bonusLabel) {
+                var label = document.createElement("strong");
+                label.textContent = plan.bonusLabel;
+                copy.appendChild(label);
+            }
+
+            var text = document.createElement("span");
+            text.textContent = plan.bonusText;
+            copy.appendChild(text);
+            bonus.appendChild(copy);
+            card.appendChild(bonus);
+        }
 
         card.appendChild(buildFeatureList(plan.features));
         card.appendChild(buildCTA(plan));
