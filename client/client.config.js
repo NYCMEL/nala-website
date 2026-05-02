@@ -17,13 +17,13 @@ const clientData = {
 	{ icon: "schedule", text: "5 years in business", type: "experience" },
     ],
     contact: {
-	priceText: "Contact for price",
+	priceText: "Contact for estimate",
 	ctaButton: "Request estimate",
 	viewDetailsLink: "",
     },
     guarantee: {
 	title: "Mel the Locksmith Guarantee",
-	text: "Will guarantee the work, or your money back",
+	text: "Work is guaranteed, or your money back.",
 	learnMoreLink: "",
     },
 
@@ -31,7 +31,7 @@ const clientData = {
 
     about: {
 	description:
-	"Your neighborhood Locksmith inc. has been in business for 17 years. We have 17 years experience in this field. We have a great response time, and affordable prices for all customers.",
+	"Your neighborhood locksmith has been serving customers for 17 years, with fast response times and straightforward pricing.",
 	readMoreLink: "",
     },
     businessHours: {
@@ -41,7 +41,7 @@ const clientData = {
     paymentMethods: {
 	title: "Payment methods",
 	methods:
-	"This pro accepts payments via Apple Pay, Cash, Check, Credit card, PayPal, Square cash app, Venmo, and Zelle.",
+	"This business accepts payments via Apple Pay, cash, check, credit card, PayPal, Cash App, Venmo, and Zelle.",
     },
     socialMedia: {
 	title: "Social media",

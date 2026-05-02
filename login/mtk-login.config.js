@@ -1,7 +1,7 @@
 window.app = window.app || {};
 
 window.app['mtk-login'] = {
-    title: "Welcome Back",
+    title: "Welcome back",
     email: {
 	label: "Email",
 	placeholder: "Enter your email",
@@ -13,17 +13,17 @@ window.app['mtk-login'] = {
 	required: true
     },
     submit: {
-	label: "Login"
+	label: "Log in"
     },
     links: {
-	forgotPassword: "Forgot Password?",
+	forgotPassword: "Forgot password?",
 	register: "Don't have an account? Register"
     },
     forgotPassword: {
-	title: "Reset Your Password",
-	emailLabel: "Please provide email used to login with NALA",
+	title: "Reset your password",
+	emailLabel: "Enter the email address you use for NALA",
 	emailPlaceholder: "Enter your email",
-	helpText: "After submitting your email, we will send you a link to update/reset your password",
+	helpText: "After you submit your email, we will send you a link to reset your password.",
 	submitLabel: "Submit",
 	cancelLabel: "Cancel"
     },

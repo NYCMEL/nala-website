@@ -359,7 +359,16 @@ body {
     &:hover { text-decoration: underline; }
   }
 
-  .btn-estimate { width: 100%; margin-bottom: $font-size-lg; }
+  .btn-estimate {
+    width: 100%;
+    margin-bottom: $font-size-lg;
+    background-color: var(--client-surface);
+    color: var(--client-accent);
+  }
+
+  .btn-estimate:hover {
+    background-color: color-mix(in srgb, var(--client-surface), #ffffff 12%);
+  }
 
   .online-status {
     display: flex;
@@ -419,6 +428,17 @@ body {
 
   &:hover  { background-color: $color-client-hover; box-shadow: $shadow-md; transform: translateY(-1px); }
   &:active { transform: translateY(0); }
+}
+
+.client-sidebar .contact-card .btn-primary.btn-estimate {
+  background: var(--client-surface) !important;
+  background-color: var(--client-surface) !important;
+  color: var(--client-accent) !important;
+
+  &:hover {
+    background: color-mix(in srgb, var(--client-surface), #ffffff 12%) !important;
+    background-color: color-mix(in srgb, var(--client-surface), #ffffff 12%) !important;
+  }
 }
 
 @media (max-width: $bp-md) {

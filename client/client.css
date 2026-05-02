@@ -574,7 +574,12 @@ body {
 
 .contact-card .btn-estimate {
   width: 100%;
-  margin-bottom: 16px; }
+  margin-bottom: 16px;
+  background-color: var(--client-surface);
+  color: var(--client-accent); }
+
+.contact-card .btn-estimate:hover {
+  background-color: color-mix(in srgb, var(--client-surface), #ffffff 12%); }
 
 .contact-card .online-status {
   display: flex;
@@ -647,6 +652,15 @@ body {
 
 .btn-primary:active {
   transform: translateY(0); }
+
+.client-sidebar .contact-card .btn-primary.btn-estimate {
+  background: var(--client-surface) !important;
+  background-color: var(--client-surface) !important;
+  color: var(--client-accent) !important; }
+
+.client-sidebar .contact-card .btn-primary.btn-estimate:hover {
+  background: color-mix(in srgb, var(--client-surface), #ffffff 12%) !important;
+  background-color: color-mix(in srgb, var(--client-surface), #ffffff 12%) !important; }
 
 @media (max-width: 768px) {
   .client-header {

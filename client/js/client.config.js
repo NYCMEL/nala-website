@@ -23,8 +23,8 @@ var config = {
 	{ icon: "schedule",      text: "5 years in business",  type: "experience"   },
     ],
     contact: {
-	priceText:       "Contact me for Estimate",
-	ctaButton:       "Need a Hand?",
+	priceText:       "Contact for estimate",
+	ctaButton:       "Request estimate",
 	viewDetailsLink: "View project details",
     },
     guarantee: {
@@ -46,7 +46,7 @@ var config = {
     },
     paymentMethods: {
 	title:   "Payment methods",
-	methods: "This pro accepts payments via Apple Pay, Cash, Check, Credit card, PayPal, Square cash app, Venmo, and Zelle.",
+	methods: "This business accepts payments via Apple Pay, cash, check, credit card, PayPal, Cash App, Venmo, and Zelle.",
     },
     socialMedia: {
 	title: "Social media",

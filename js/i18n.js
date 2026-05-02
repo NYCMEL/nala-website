@@ -176,8 +176,8 @@
       es: 'Registrarse'
     },
     'nav.login': {
-      en: 'Login',
-      es: 'Iniciar Sesión'
+      en: 'Log in',
+      es: 'Iniciar sesión'
     },
     'nav.news': {
       en: 'About',
@@ -575,8 +575,8 @@
       es: 'Elige Tu Paquete de Entrenamiento'
     },
     'path.subheading': {
-      en: 'Pick the option that fits your goals—start free, upgrade anytime, or launch with Business-in-a-Box.',
-      es: 'Selecciona la opción que mejor se adapte a tus metas: comienza gratis, mejora en cualquier momento o despega con Negocio en una caja.'
+      en: 'Pick the option that fits your goals—start free, upgrade anytime, or launch with Business in a Box.',
+      es: 'Selecciona la opción que mejor se adapte a tus metas: comienza gratis, mejora en cualquier momento o despega con Negocio en una Caja.'
     },
     'path.trial.title':       { en: 'Trial',              es: 'Prueba Gratuita' },
     'path.trial.description': {
@@ -613,7 +613,7 @@
     'path.premium.f3': { en: 'Certificate of completion',          es: 'Certificado de finalización' },
     'path.premium.f4': { en: 'Learn at your own pace',             es: 'Aprende a tu propio ritmo' },
     'path.premium.f5': { en: 'Car lockout kit included',           es: 'Kit de apertura de autos incluido' },
-    'path.business.title':       { en: 'Business-in-a-Box',       es: 'Negocio en una caja' },
+    'path.business.title':       { en: 'Business in a Box',       es: 'Negocio en una Caja' },
     'path.business.period': {
       en: 'per month for 24 months with Klarna',
       es: 'por mes durante 24 meses con Klarna'
@@ -759,15 +759,15 @@
     },
 
     // ── LOGIN ─────────────────────────────────────────────────────
-    'login.title':               { en: 'Welcome Back',            es: 'Bienvenido de nuevo' },
+    'login.title':               { en: 'Welcome back',            es: 'Bienvenido de nuevo' },
     'login.email.label':         { en: 'Email',                   es: 'Correo electrónico' },
     'login.email.placeholder':   { en: 'Enter your email',        es: 'Ingresa tu correo' },
     'login.password.label':      { en: 'Password',                es: 'Contraseña' },
     'login.password.placeholder':{ en: 'Enter your password',     es: 'Ingresa tu contraseña' },
-    'login.submit':              { en: 'Login',                   es: 'Iniciar Sesión' },
-    'login.forgot':              { en: 'Forgot Password?',        es: '¿Olvidaste tu contraseña?' },
+    'login.submit':              { en: 'Log in',                  es: 'Iniciar sesión' },
+    'login.forgot':              { en: 'Forgot password?',        es: '¿Olvidaste tu contraseña?' },
     'login.register':            { en: "Don't have an account? Register", es: '¿No tienes cuenta? Regístrate' },
-    'login.forgot.title':        { en: 'Reset Your Password',     es: 'Restablecer tu Contraseña' },
+    'login.forgot.title':        { en: 'Reset your password',     es: 'Restablecer tu contraseña' },
     'login.forgot.emailLabel':   { en: 'Enter your email address', es: 'Ingresa tu correo electrónico' },
     'login.forgot.placeholder':  { en: 'Enter your email',        es: 'Ingresa tu correo' },
     'login.forgot.helpText':     { en: 'If an account matches that email, we will send password reset instructions.', es: 'Si una cuenta coincide con ese correo, enviaremos instrucciones para restablecer la contraseña.' },

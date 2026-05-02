@@ -515,7 +515,7 @@ class _febe {
 	    MTKMsgs.show({
 		type: "error",
 		icon: "error",
-		message: "Enter your email first, then click Forgot Password.",
+		message: "Enter your email first, then click Forgot password.",
 		closable: true,
 		timer: 8
 	    });
@@ -718,8 +718,8 @@ class _febe {
 	    if (response.passed) {
 		mtkDialog.open({
 		    id      : 'success',
-		    title   : 'You passed the Quiz',
-		    message : 'You have Successfully completed this set of tests',
+		    title   : 'You passed the quiz',
+		    message : 'You have successfully completed this quiz.',
 		    icon    : 'check_circle',
 		    iconColor: 'green',
 		    maxWidth: '700px',
@@ -745,15 +745,15 @@ class _febe {
 	    } else {
 		mtkDialog.open({
 		    id      : 'failed',
-		    title   : 'You did not pass the Quiz',
-		    message : 'We recommand that you re-take the test for better result',
+		    title   : 'You did not pass the quiz',
+		    message : 'We recommend retaking the quiz for a better result.',
 		    icon    : 'warning',
 		    iconColor: 'red',
 		    maxWidth: '700px',
 		    closeOnBackdrop: false,
 		    closeOnEscape  : false,
 		    buttons: [
-			{ label: 'Re-take the test',  action: 'cancel', classes: 'btn btn-warning' }
+			{ label: 'Retake the quiz',  action: 'cancel', classes: 'btn btn-warning' }
 		    ]
 		});
 	    }
