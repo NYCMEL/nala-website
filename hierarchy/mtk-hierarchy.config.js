@@ -117,7 +117,7 @@ window.app = {
                         },
                         "resources": [
                             {
-                                "description": "Lesson 5 - A cursory of the different residential and commercial doors",
+                                "description": "Lesson 5 - An overview of residential and commercial doors",
                                 "url": "https://vimeo.com/827172818",
                                 "type": "video"
                             },
@@ -319,7 +319,7 @@ window.app = {
                         },
                         "resources": [
                             {
-                                "description": "Lesson 7 - Introduction to the Kik Cylinder",
+                                "description": "Lesson 7 - Introduction to the KIK cylinder",
                                 "url": "https://vimeo.com/827172887",
                                 "type": "video"
                             },
@@ -579,7 +579,7 @@ window.app = {
                         },
                         "resources": [
                             {
-                                "description": "Lesson 13 - Introduction to the kwikset smart key technology",
+                                "description": "Lesson 13 - Introduction to Kwikset SmartKey technology",
                                 "url": "https://vimeo.com/827173033",
                                 "type": "video"
                             },
@@ -794,7 +794,7 @@ window.app = {
                         },
                         "resources": [
                             {
-                                "description": "Lesson 19 - Introduction to High Security Locks",
+                                "description": "Lesson 19 - Introduction to high-security locks",
                                 "url": "https://vimeo.com/827173205",
                                 "type": "video"
                             },
@@ -812,7 +812,7 @@ window.app = {
                     },
                     {
                         "lesson_no": 20,
-                        "title": "A cursory into panic bars and exit devices",
+                        "title": "An overview of panic bars and exit devices",
                         "access": false,
                         "badge": {
                             "text": "Unlocked",
@@ -820,7 +820,7 @@ window.app = {
                         },
                         "resources": [
                             {
-                                "description": "Lesson 20 - A Cursory into Panic Bars and exit devices",
+                                "description": "Lesson 20 - An overview of panic bars and exit devices",
                                 "url": "https://vimeo.com/827173229",
                                 "type": "video"
                             },
@@ -1447,7 +1447,7 @@ window.app = {
                         },
                         "resources": [
                             {
-                                "description": "Lesson 40 - How to locate the Code on a Toyota",
+                                "description": "Lesson 40 - How to locate the code on a Toyota",
                                 "url": "https://vimeo.com/827173679",
                                 "type": "video"
                             }
@@ -1487,7 +1487,7 @@ window.app = {
                     },
                     {
                         "lesson_no": 43,
-                        "title": "How to program a Nissan 20 pincode using the Auto Propad",
+                        "title": "How to program a Nissan 20 PIN code using the AutoProPAD",
                         "access": false,
                         "badge": {
                             "text": "Unlocked",
@@ -1495,7 +1495,7 @@ window.app = {
                         },
                         "resources": [
                             {
-                                "description": "Lesson 43 - How to Program a Nissan 20 Pincode using the Auto Propad",
+                                "description": "Lesson 43 - How to program a Nissan 20 PIN code using the AutoProPAD",
                                 "url": "https://vimeo.com/827173770",
                                 "type": "video"
                             }
@@ -1576,3 +1576,4 @@ window.app = {
     }
 ]
 };
+

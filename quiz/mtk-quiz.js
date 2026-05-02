@@ -543,9 +543,18 @@
 		}
 	    }
 
+	    goToHierarchy() {
+		if (window.wc && wc.pages && typeof wc.pages.show === 'function') {
+		    wc.pages.show('hierarchy');
+		    return;
+		}
+
+		window.location.href = '../hierarchy/index.html';
+	    }
+
 	    handleCancel() {
 		this.clearGlobalMessageBanner();
-		wc.pages.show('hierarchy');
+		this.goToHierarchy();
 	    }
 
 	    handleTest() {
@@ -974,7 +983,11 @@
 			: quizLoadFallback);
 
 		    // TAKE ME BACK TO COURSES
-		    wc.pages.show('hierarchy');
+		    if (window.wc && wc.pages && typeof wc.pages.show === 'function') {
+			wc.pages.show('hierarchy');
+		    } else {
+			window.location.href = '../hierarchy/index.html';
+		    }
 		    return;
 		}
 

@@ -141,7 +141,7 @@
       40: { title: 'Cómo localizar el código en un Toyota', description: 'Lección 40 - Cómo localizar el código en un Toyota' },
       41: { title: 'Cómo localizar el código en un Honda', description: 'Lección 41 - Cómo localizar el código en un Honda' },
       42: { title: 'Decodificación de wafers Toyota', description: 'Lección 42 - Decodificación de wafers Toyota' },
-      43: { title: 'Cómo programar un código PIN 20 de Nissan con el Auto Propad', description: 'Lección 43 - Cómo programar un código PIN 20 de Nissan con el Auto Propad' },
+      43: { title: 'Cómo programar un código PIN 20 de Nissan con el AutoProPAD', description: 'Lección 43 - Cómo programar un código PIN 20 de Nissan con el AutoProPAD' },
       44: { title: 'Cómo y dónde empezar a anunciarte como cerrajero', description: 'Lección 44 - Cómo y dónde empezar a anunciarte como cerrajero' },
       101: { title: 'Examen del módulo: Fundamentos de la cerrajería', description: 'Examen del módulo: Fundamentos de la cerrajería' },
       102: { title: 'Examen del módulo: Cilindros de cerraduras residenciales', description: 'Examen del módulo: Cilindros de cerraduras residenciales' },
@@ -1569,3 +1569,4 @@
   };
 
 }(typeof globalThis !== 'undefined' ? globalThis : window));
+

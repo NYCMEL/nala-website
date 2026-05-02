@@ -827,7 +827,7 @@ const MTK_BIAB_CONFIG = {
           icon: "campaign",
           title: "Advertise honestly",
           summary: "Trust is the business asset that protects the launch.",
-          details: ["Do not advertise fake low prices.", "Do not use fake reviews or fake licensing claims.", "Do not promise emergency arrival times that cannot be met.", "Do not advertise services the locksmith cannot actually provide."]
+          details: ["Do not advertise fake low prices.", "Do not use fake reviews or fake licensing claims.", "Do not promise emergency arrival times that cannot be met.", "Do not advertise services you cannot actually provide."]
         },
         {
           icon: "support_agent",
@@ -884,7 +884,7 @@ const MTK_BIAB_CONFIG = {
     "google-business-profile": {
       badge: "Starter",
       title: "Google Business Profile Setup",
-      intro: "Do this before ads. A complete profile helps customers find the locksmith on Google Search and Maps and supports many Local Services Ads setups.",
+      intro: "Do this before ads. A complete profile helps customers find you on Google Search and Maps and supports many Local Services Ads setups.",
       done: "The profile is verified, service areas are accurate, the phone and website are correct, photos are live, and reviews can be collected.",
       steps: [
         { icon: "open_in_new", title: "Open the setup page", summary: "Use the business Google account, not a personal account that may be lost later.", details: ["Start the profile with the login the business will keep."], links: [{ label: "Open Google Business Profile setup", href: "https://business.google.com/add" }] },
@@ -899,10 +899,10 @@ const MTK_BIAB_CONFIG = {
     "seo-setup": {
       badge: "Starter",
       title: "SEO & Search Console Setup",
-      intro: "Make the locksmith website understandable to Google and useful to local customers. Do not create fake city pages or duplicate pages.",
+      intro: "Make your website understandable to Google and useful to local customers. Do not create fake city pages or duplicate pages.",
       done: "Search Console is verified, the sitemap is submitted, service pages exist, and the business name, phone, and website match everywhere.",
       steps: [
-        { icon: "map", title: "Write the service-area list", summary: "List only places the locksmith can actually reach.", details: ["Use exact cities, neighborhoods, ZIP codes, or counties.", "Keep it honest and practical."] },
+        { icon: "map", title: "Write the service-area list", summary: "List only places you can actually reach.", details: ["Use exact cities, neighborhoods, ZIP codes, or counties.", "Keep it honest and practical."] },
         { icon: "web", title: "Create essential pages", summary: "Build the pages buyers expect.", details: ["Homepage.", "About.", "Contact.", "Residential Locksmith.", "Commercial Locksmith.", "Rekey.", "Lock Change.", "Lockout.", "Auto Lockout if offered."] },
         { icon: "call", title: "Put the phone number high", summary: "The phone number should be easy to tap.", details: ["Make it clickable on mobile.", "Match the Google Business Profile phone number."] },
         { icon: "search", title: "Add Search Console", summary: "Verify the live website.", details: ["Use the domain property method if possible."], links: [{ label: "Open Search Console", href: "https://search.google.com/search-console/welcome" }, { label: "Verify site ownership", href: "https://support.google.com/webmasters/answer/9008080?hl=en" }] },
@@ -926,7 +926,7 @@ const MTK_BIAB_CONFIG = {
         },
         { icon: "storefront", title: "Connect the Google profile", summary: "Use an owner or manager login.", details: ["The person setting up ads should be an owner or manager of the verified Google Business Profile."] },
         { icon: "security", title: "Complete screening", summary: "Submit exactly what Google asks for.", details: ["Do not launch before verification is complete."], links: [{ label: "Understand screening and verification", href: "https://support.google.com/localservices/answer/6226575?hl=en" }] },
-        { icon: "build", title: "Choose services and service areas", summary: "Advertise only what the business can perform and answer quickly.", details: ["Keep the area tight at launch.", "Turn on only services the locksmith can actually provide."] },
+        { icon: "build", title: "Choose services and service areas", summary: "Advertise only what the business can perform and answer quickly.", details: ["Keep the area tight at launch.", "Turn on only services you can actually provide."] },
         { icon: "support_agent", title: "Set lead handling rules", summary: "Ads only work when leads are handled quickly.", details: ["Answer calls fast.", "Mark bad leads.", "Listen to calls.", "Pause ads if nobody can answer."] }
       ]
     },
@@ -939,7 +939,7 @@ const MTK_BIAB_CONFIG = {
         { icon: "ads_click", title: "Open Google Ads", summary: "Create the account with the business Google login.", details: ["Connect the Google Business Profile when prompted."], links: [{ label: "Open Google Ads", href: "https://ads.google.com/home/" }, { label: "Create a campaign", href: "https://support.google.com/google-ads/answer/6324971?hl=en" }] },
         { icon: "search", title: "Create one Search campaign", summary: "Start narrow.", details: ["Choose Leads or Website traffic.", "Select Search.", "Do not start with broad automated campaign types for a brand-new locksmith account."], links: [{ label: "Create a Search campaign", href: "https://support.google.com/google-ads/answer/9510373?hl=en" }] },
         { icon: "category", title: "Use one service cluster", summary: "Keep intent clean.", details: ["Example: one campaign for Rekey and Lock Change, or one campaign for Lockout.", "Keep emergency, rekey, and commercial work separate."] },
-        { icon: "location_on", title: "Set a tight service area", summary: "Spend where the business can arrive profitably.", details: ["Advertise only where the locksmith can arrive reliably and profitably."] },
+        { icon: "location_on", title: "Set a tight service area", summary: "Spend where the business can arrive profitably.", details: ["Advertise only where you can arrive reliably and profitably."] },
         { icon: "key", title: "Use high-intent keywords", summary: "Focus on buyers, not browsers.", details: ["Start with phrase and exact match terms like locksmith near me, rekey locks, lock change, and house lockout."] },
         { icon: "block", title: "Add negative keywords", summary: "Prevent wasted spend from day one.", details: ["Add free, DIY, job, salary, training, course, wholesale, key blank, template, and how to."], links: [{ label: "Set negative keywords", href: "https://support.google.com/google-ads/answer/2453972?hl=en" }] },
         { icon: "link", title: "Match ads to landing pages", summary: "Send each ad to the matching page.", details: ["Rekey ads go to the rekey page.", "Lockout ads go to the lockout page.", "Do not send everything to the homepage."] },
@@ -952,7 +952,7 @@ const MTK_BIAB_CONFIG = {
       intro: "Tracking tells the owner which marketing creates real calls and forms. Without it, ads become guessing.",
       done: "GA4 is installed, events are tested, Google Ads is linked if used, and the owner can see which channels produce leads.",
       steps: [
-        { icon: "monitoring", title: "Create Google Analytics 4", summary: "Create an Analytics account and GA4 property for the locksmith website.", details: ["Use the business Google account."], links: [{ label: "Open Google Analytics", href: "https://analytics.google.com/" }, { label: "Set up Analytics for a website", href: "https://support.google.com/analytics/answer/14183469?hl=en" }] },
+        { icon: "monitoring", title: "Create Google Analytics 4", summary: "Create an Analytics account and GA4 property for your website.", details: ["Use the business Google account."], links: [{ label: "Open Google Analytics", href: "https://analytics.google.com/" }, { label: "Set up Analytics for a website", href: "https://support.google.com/analytics/answer/14183469?hl=en" }] },
         { icon: "language", title: "Add a web data stream", summary: "Connect the live website URL.", details: ["Enter the live website URL.", "Copy the measurement ID."] },
         { icon: "code", title: "Install the tag", summary: "Add the Google tag or use Tag Manager.", details: ["Use Google Tag Manager if the business is ready for that."], links: [{ label: "Set up Google Tag Manager", href: "https://support.google.com/tagmanager/answer/6103696?hl=en" }] },
         { icon: "touch_app", title: "Track important actions", summary: "Track the actions that create leads.", details: ["Phone button clicks.", "Contact form submissions.", "Quote requests.", "Clicks from the Google Business Profile when possible."] },

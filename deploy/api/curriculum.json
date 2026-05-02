@@ -100,7 +100,7 @@
                             "access": false,
                             "resources": [
                                 {
-                                    "description": "Lesson 5 - A cursory of the different residential and commercial doors",
+                                    "description": "Lesson 5 - An overview of residential and commercial doors",
                                     "url": "https://player.vimeo.com/video/827172818?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479",
                                     "type": "video",
                                     "access": false
@@ -349,7 +349,7 @@
                             "access": false,
                             "resources": [
                                 {
-                                    "description": "Lesson 7 - Introduction to the Kik Cylinder",
+                                    "description": "Lesson 7 - Introduction to the KIK cylinder",
                                     "url": "https://player.vimeo.com/video/827172887?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479",
                                     "type": "video",
                                     "access": false
@@ -644,7 +644,7 @@
                             "access": false,
                             "resources": [
                                 {
-                                    "description": "Lesson 13 - Introduction to the kwikset smart key technology",
+                                    "description": "Lesson 13 - Introduction to Kwikset SmartKey technology",
                                     "url": "https://player.vimeo.com/video/827173033?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479",
                                     "type": "video",
                                     "access": false
@@ -876,7 +876,7 @@
                             "access": false,
                             "resources": [
                                 {
-                                    "description": "Lesson 19 - Introduction to High Security Locks",
+                                    "description": "Lesson 19 - Introduction to high-security locks",
                                     "url": "https://player.vimeo.com/video/827173205?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479",
                                     "type": "video",
                                     "access": false
@@ -899,11 +899,11 @@
                         },
                         {
                             "lesson_no": 20,
-                            "title": "A cursory into panic bars and exit devices",
+                            "title": "An overview of panic bars and exit devices",
                             "access": false,
                             "resources": [
                                 {
-                                    "description": "Lesson 20 - A Cursory into Panic Bars and exit devices",
+                                    "description": "Lesson 20 - An overview of panic bars and exit devices",
                                     "url": "https://player.vimeo.com/video/827173229?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479",
                                     "type": "video",
                                     "access": false
@@ -1510,7 +1510,7 @@
                             "access": false,
                             "resources": [
                                 {
-                                    "description": "Lesson 40 - How to locate the Code on a Toyota",
+                                    "description": "Lesson 40 - How to locate the code on a Toyota",
                                     "url": "https://player.vimeo.com/video/827173679?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479",
                                     "type": "video",
                                     "access": false
@@ -1545,11 +1545,11 @@
                         },
                         {
                             "lesson_no": 43,
-                            "title": "How to program a Nissan 20 pincode using the Auto Propad",
+                            "title": "How to program a Nissan 20 PIN code using the AutoProPAD",
                             "access": false,
                             "resources": [
                                 {
-                                    "description": "Lesson 43 - How to Program a Nissan 20 Pincode using the Auto Propad",
+                                    "description": "Lesson 43 - How to program a Nissan 20 PIN code using the AutoProPAD",
                                     "url": "https://player.vimeo.com/video/827173770?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479",
                                     "type": "video",
                                     "access": false
@@ -1624,3 +1624,4 @@
         }
     ]
 }
+
