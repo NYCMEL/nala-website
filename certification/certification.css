@@ -205,6 +205,122 @@ h1.title::after {
   content: "✓";
   color: #a98212;
   margin-right: 8px; }
-  content: "✓";
-      color: #a98212;
-      margin-right: 8px; }
+
+.mtk-certification--path {
+  border: 1px solid rgba(169, 130, 18, 0.18);
+  box-shadow: 0 18px 45px rgba(23, 31, 42, 0.08);
+  overflow: hidden; }
+
+.mtk-certification__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center; }
+
+.mtk-certification__copy {
+  max-width: 640px; }
+
+.mtk-certification__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0 12px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #fbf4e5;
+  color: #7a5e0c;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase; }
+
+.mtk-certification--path .title {
+  text-align: left;
+  color: #1a2433;
+  line-height: 1.08;
+  padding-bottom: 0;
+  margin-bottom: 16px !important; }
+
+.mtk-certification--path .title::after {
+  display: none; }
+
+.mtk-certification__lead {
+  color: #4f5b6b;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 24px; }
+
+.mtk-certification__steps {
+  display: grid;
+  gap: 14px; }
+
+.mtk-certification__step {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding: 14px;
+  border: 1px solid #eadfc6;
+  border-radius: 8px;
+  background: #fffaf0; }
+
+.mtk-certification__step .material-icons {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #a98212;
+  color: #ffffff;
+  font-size: 22px; }
+
+.mtk-certification__step strong {
+  display: block;
+  color: #1a2433;
+  font-size: 1rem;
+  margin-bottom: 4px; }
+
+.mtk-certification__step p {
+  color: #5f6368;
+  line-height: 1.55;
+  margin: 0; }
+
+.mtk-certification__sample {
+  margin: 0; }
+
+.mtk-certification__sample img {
+  display: block;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid rgba(26, 36, 51, 0.12);
+  box-shadow: 0 20px 45px rgba(26, 36, 51, 0.16); }
+
+.mtk-certification__sample figcaption {
+  color: #5f6368;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  margin-top: 12px;
+  text-align: center; }
+
+@media (max-width: 900px) {
+  .mtk-certification__grid {
+    grid-template-columns: 1fr; }
+
+  .mtk-certification__copy {
+    max-width: none; }
+}
+
+@media (max-width: 560px) {
+  .mtk-certification--path {
+    padding-left: 18px !important;
+    padding-right: 18px !important; }
+
+  .mtk-certification__step {
+    grid-template-columns: 36px minmax(0, 1fr);
+    padding: 12px; }
+
+  .mtk-certification__step .material-icons {
+    width: 36px;
+    height: 36px;
+    font-size: 20px; }
+}

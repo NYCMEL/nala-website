@@ -631,13 +631,49 @@
       en: 'The NALA Certification recognizes successful completion of a structured, skills-focused locksmith training program designed to prepare students for real-world professional work. This certification confirms that the holder has demonstrated competency across core locksmith disciplines, including residential, commercial, and automotive services. Unlike purely theoretical credentials, the NALA Certification emphasizes practical understanding, industry terminology, and correct professional procedures. Graduates complete guided instruction, applied exercises, and assessments that reflect the standards expected in the field. Earning this certification signals commitment to professional development and readiness to operate with confidence, safety, and technical accuracy. It serves as a meaningful milestone for individuals entering the locksmith trade or advancing their existing skills.',
       es: 'La Certificación NALA reconoce la finalización exitosa de un programa de entrenamiento en cerrajería estructurado y orientado a las habilidades, diseñado para preparar a los estudiantes para el trabajo profesional en el mundo real. Esta certificación confirma que el titular ha demostrado competencia en las principales disciplinas de cerrajería, incluyendo servicios residenciales, comerciales y automotrices. A diferencia de las credenciales puramente teóricas, la Certificación NALA enfatiza la comprensión práctica, la terminología de la industria y los procedimientos profesionales correctos. Los graduados completan instrucción guiada, ejercicios aplicados y evaluaciones que reflejan los estándares esperados en el campo. Obtener esta certificación es una señal de compromiso con el desarrollo profesional y de estar preparado para operar con confianza, seguridad y precisión técnica. Sirve como un hito significativo para las personas que ingresan al oficio de cerrajero o que están avanzando en sus habilidades existentes.'
     },
-    'cert.locked.title': {
-      en: 'Certification locked',
-      es: 'Certificación bloqueada'
+    'cert.path.eyebrow': {
+      en: 'Certification included',
+      es: 'Certificación incluida'
     },
-    'cert.locked.body': {
-      en: 'Certification is available after you complete the program.',
-      es: 'La certificación estará disponible después de completar el programa.'
+    'cert.path.title': {
+      en: 'How you earn your NALA certification',
+      es: 'Cómo obtienes tu certificación NALA'
+    },
+    'cert.path.lead': {
+      en: 'Your certification is earned by completing the training path, passing the required lesson checks, and finishing the final certification step inside your student dashboard.',
+      es: 'Obtienes tu certificación al completar la ruta de entrenamiento, aprobar las evaluaciones requeridas de las lecciones y finalizar el paso de certificación dentro de tu panel de estudiante.'
+    },
+    'cert.path.step1.title': {
+      en: 'Complete the program',
+      es: 'Completa el programa'
+    },
+    'cert.path.step1.body': {
+      en: 'Work through the locksmith lessons, practice material, and required quizzes at your own pace.',
+      es: 'Avanza por las lecciones de cerrajería, el material de práctica y los cuestionarios requeridos a tu propio ritmo.'
+    },
+    'cert.path.step2.title': {
+      en: 'Confirm your completion details',
+      es: 'Confirma tus datos de finalización'
+    },
+    'cert.path.step2.body': {
+      en: 'At the end, choose the email address where you want your certificate sent.',
+      es: 'Al final, elige la dirección de correo electrónico a la que quieres que se envíe tu certificado.'
+    },
+    'cert.path.step3.title': {
+      en: 'Receive your certificate',
+      es: 'Recibe tu certificado'
+    },
+    'cert.path.step3.body': {
+      en: 'NALA sends your certificate of completion so you can keep it for your records and present it professionally.',
+      es: 'NALA envía tu certificado de finalización para que puedas guardarlo en tus registros y presentarlo profesionalmente.'
+    },
+    'cert.path.sampleAlt': {
+      en: 'Sample NALA certificate of completion',
+      es: 'Muestra de certificado de finalización de NALA'
+    },
+    'cert.path.sampleCaption': {
+      en: 'Sample certificate shown for preview. Your certificate is issued after successful completion.',
+      es: 'Certificado de muestra para vista previa. Tu certificado se emite después de completar el programa correctamente.'
     },
     'cert.cards.title': {
       en: 'Industry-Recognized Certifications',

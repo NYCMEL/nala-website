@@ -30,11 +30,45 @@
     </div>
 </section>
 
-<section id="mtk-certification-locked" class="mtk-certification mtk-certification--locked container py-5 border mt-5" hidden>
-    <h1 align="center" class="title mb-4 fb" data-i18n="cert.locked.title">Certification locked</h1>
-    <p class="text-center" data-i18n="cert.locked.body">
-        Certification is available after you complete the program.
-    </p>
+<section id="mtk-certification-locked" class="mtk-certification mtk-certification--path container py-5 mt-5" hidden>
+    <div class="mtk-certification__grid">
+	<div class="mtk-certification__copy">
+	    <p class="mtk-certification__eyebrow" data-i18n="cert.path.eyebrow">Certification included</p>
+	    <h1 class="title mb-4 fb" data-i18n="cert.path.title">How you earn your NALA certification</h1>
+	    <p class="mtk-certification__lead" data-i18n="cert.path.lead">
+		Your certification is earned by completing the training path, passing the required lesson checks, and finishing the final certification step inside your student dashboard.
+	    </p>
+
+	    <div class="mtk-certification__steps" aria-label="Certification steps">
+		<div class="mtk-certification__step">
+		    <span class="material-icons" aria-hidden="true">school</span>
+		    <div>
+			<strong data-i18n="cert.path.step1.title">Complete the program</strong>
+			<p data-i18n="cert.path.step1.body">Work through the locksmith lessons, practice material, and required quizzes at your own pace.</p>
+		    </div>
+		</div>
+		<div class="mtk-certification__step">
+		    <span class="material-icons" aria-hidden="true">task_alt</span>
+		    <div>
+			<strong data-i18n="cert.path.step2.title">Confirm your completion details</strong>
+			<p data-i18n="cert.path.step2.body">At the end, choose the email address where you want your certificate sent.</p>
+		    </div>
+		</div>
+		<div class="mtk-certification__step">
+		    <span class="material-icons" aria-hidden="true">workspace_premium</span>
+		    <div>
+			<strong data-i18n="cert.path.step3.title">Receive your certificate</strong>
+			<p data-i18n="cert.path.step3.body">NALA sends your certificate of completion so you can keep it for your records and present it professionally.</p>
+		    </div>
+		</div>
+	    </div>
+	</div>
+
+	<figure class="mtk-certification__sample">
+	    <img src="img/certificate.jpeg" alt="Sample NALA certificate of completion" data-i18n-alt="cert.path.sampleAlt">
+	    <figcaption data-i18n="cert.path.sampleCaption">Sample certificate shown for preview. Your certificate is issued after successful completion.</figcaption>
+	</figure>
+    </div>
 </section>
 
 <script src="certification/certification.config.js"></script>
