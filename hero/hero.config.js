@@ -8,8 +8,13 @@ window.app.hero = [
 	image: "./img/hero.png",
 	images: [
 	    { src: "img/home/hero-i-banner-preview.jpg", alt: "NALA locksmith training banner", position: "right center" },
+	    { src: "img/home/hero-a-door-hardware.jpg", alt: "Locksmith working on bright door hardware", position: "center center" },
+	    { src: "img/home/hero-b-key-wall-student.jpg", alt: "Locksmith student learning with key blanks", position: "center center" },
+	    { src: "img/home/hero-c-service-interior.jpg", alt: "Locksmith service call training indoors", position: "center center" },
 	    { src: "img/home/hero-h-bright-lock-closeup.jpg", alt: "Practical locksmith lock training", position: "center center" },
-	    { src: "img/home/hero-g-bright-entry.jpg", alt: "Locksmith service training at a doorway", position: "center center" }
+	    { src: "img/home/hero-g-bright-entry.jpg", alt: "Locksmith service training at a doorway", position: "center center" },
+	    { src: "img/home/hero-f-automotive-tools.jpg", alt: "Automotive locksmith tool practice", position: "center center" },
+	    { src: "img/home/hero-g-training-hands-on.jpg", alt: "Hands-on locksmith training with a door lock", position: "center center" }
 	],
 
 	lhsCol: "5", // Bootstrap col-md-5
