@@ -27,6 +27,13 @@
 	}
     }
 
+    function getRequestedPage() {
+        const params = new URLSearchParams(window.location.search);
+        const queryPage = params.get("page") || "";
+        const hashPage = (window.location.hash || "").replace(/^#\/?/, "");
+        return queryPage || hashPage || "";
+    }
+
     function bootstrapInitialPage() {
         if (!window.wc || typeof wc.getSession !== "function") return;
 
@@ -35,10 +42,11 @@
 
             const pagesRef = getPagesRef();
             if (!pagesRef) return;
+            const requestedPage = getRequestedPage();
 
             if (loggedIn) {
                 wc.timeout(function () {
-                    pagesRef.show("dashboard");
+                    pagesRef.show(requestedPage || "dashboard");
                     syncHeader(true);
                 }, 300, 1);
                 wc.log("IS LOGGED IN");
@@ -48,6 +56,8 @@
             wc.log("IS NOT LOGGED IN");
             if (window.__nalaRequestedPublicPage === "register") {
                 showRegisterPage();
+            } else if (requestedPage === "dashboard") {
+                pagesRef.show("login", { replaceHistory: true });
             }
             syncHeader(false);
         });

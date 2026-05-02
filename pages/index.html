@@ -66,14 +66,22 @@
 	</div>
 
 	<script>
+	 function getRequestedPage() {
+	     var params = new URLSearchParams(window.location.search);
+	     var queryPage = params.get('page') || '';
+	     var hashPage = (window.location.hash || '').replace(/^#\/?/, '');
+	     return queryPage || hashPage || '';
+	 }
+
 	 // INITIAL PAGE
 	 wc.getSession(function (loggedIn, session, err) {
 	     if (err) return;
+	     var requestedPage = getRequestedPage();
 	     
 	     if (loggedIn) {
 		 try {
 		     wc.timeout(function(){
-			 wc.pages.show('dashboard');
+			 wc.pages.show(requestedPage || 'dashboard');
 
 			 // SHOW PUBLIC HEADER
 			 $(".app-header").hide(function() {
@@ -87,7 +95,7 @@
 		 }
 	     } else {
 		 wc.log('IS NOT LOGGED IN');
-		 wc.pages.show('home');
+		 wc.pages.show(requestedPage === 'register' ? 'register' : (requestedPage === 'dashboard' ? 'login' : 'home'));
 		 
 		 // SHOW PUBLIC HEADER
 		 $(".app-header").hide(function() {

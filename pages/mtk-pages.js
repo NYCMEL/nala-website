@@ -84,11 +84,12 @@ class Pages extends HTMLElement {
 
         // SHOW DEFAULT PAGE FROM ATTRIBUTE OR FIRST IN LIST
         const defaultPage = this.getAttribute("page") || data[0].page;
+        const requestedPage = this._pageFromUrl();
 
         // On first load, seed history.state so popstate always has mtkPage.
         // replaceState (not pushState) so pressing Back from page 1 exits the
         // app cleanly rather than looping back to itself.
-        const restoredPage = (history.state && history.state.mtkPage) || defaultPage;
+        const restoredPage = requestedPage || (history.state && history.state.mtkPage) || defaultPage;
         history.replaceState({ mtkPage: restoredPage }, "", this._pageUrl(restoredPage));
 
         // Show without pushing a new entry — replaceState above already owns this slot
@@ -121,6 +122,20 @@ class Pages extends HTMLElement {
             return u.pathname + u.search;
         }
         return "#" + page; // default: hash
+    };
+
+    /**
+     * Read the requested page from ?page=dashboard or #dashboard.
+     * @private
+     */
+    _pageFromUrl() {
+        const validPages = Array.isArray(this.data) ? this.data.map((item) => item.page) : [];
+        const params = new URLSearchParams(window.location.search);
+        const queryPage = params.get("page") || "";
+        const hashPage = (window.location.hash || "").replace(/^#\/?/, "");
+        const requested = queryPage || hashPage;
+
+        return validPages.includes(requested) ? requested : "";
     };
 
     /**
