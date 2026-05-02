@@ -40,9 +40,12 @@
 	    form.reset();
 	    setStatus('Thank you. Your rating has been submitted.', false);
 	}).catch(function(err) {
+	    const fallback = window.wc && typeof wc.t === 'function'
+		? wc.t('client.review.submitError', 'Could not submit review. Please try again.')
+		: 'Could not submit review. Please try again.';
 	    setStatus(window.wc && typeof wc.customerMessage === 'function'
-		? wc.customerMessage(err, 'Could not submit review. Please try again.')
-		: 'Could not submit review. Please try again.', true);
+		? wc.customerMessage(err, fallback)
+		: fallback, true);
 	});
     });
 

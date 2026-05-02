@@ -10,6 +10,14 @@
         const pw2 = document.getElementById("password2");
         const token = new URLSearchParams(window.location.search).get("token") || "";
 
+        function t(key, fallback) {
+            if (window.i18n && typeof window.i18n.t === "function") {
+                const value = window.i18n.t(key);
+                if (value && value !== key) return value;
+            }
+            return fallback;
+        }
+
         function showError(text) {
             msg.className = "set-password-msg error";
             msg.textContent = text;
@@ -55,7 +63,7 @@
 
                 const data = await res.json().catch(function () { return {}; });
                 if (!res.ok || !data.ok) {
-                    showError("Could not set password. Please check the fields and try again.");
+                    showError(t("setPassword.error.generic", "Could not set password. Please check the fields and try again."));
                     return;
                 }
 

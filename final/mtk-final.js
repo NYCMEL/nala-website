@@ -440,9 +440,12 @@ class MtkFinal {
 
             return result;
         } catch (err) {
+            const fallback = window.wc && typeof wc.t === 'function'
+                ? wc.t('final.error.certificate', 'Could not send certificate. Please try again.')
+                : 'Could not send certificate. Please try again.';
             alert(window.wc && typeof wc.customerMessage === 'function'
-                ? wc.customerMessage(err, 'Could not send certificate. Please try again.')
-                : 'Could not send certificate. Please try again.');
+                ? wc.customerMessage(err, fallback)
+                : fallback);
             return null;
         } finally {
             if (btn) btn.classList.remove('mtk-final__submit--loading');

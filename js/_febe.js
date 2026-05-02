@@ -119,6 +119,17 @@ class _febe {
 	return fallback || "Something went wrong. Please try again.";
     }
 
+    t(key, fallback) {
+	if (window.wc && typeof wc.t === "function") {
+	    return wc.t(key, fallback);
+	}
+	if (window.i18n && typeof window.i18n.t === "function") {
+	    const value = window.i18n.t(key);
+	    if (value && value !== key) return value;
+	}
+	return fallback;
+    }
+
     //////////////////////////////////////////////////////////////////
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
@@ -204,12 +215,12 @@ class _febe {
 		MTKMsgs.show({
 		    type: "error",
 		    icon: "error",
-		    message: this.customerMessage(err, "Could not save Business in a Box changes. Please try again."),
+		    message: this.customerMessage(err, this.t("biab.error.save", "Could not save Business in a Box changes. Please try again.")),
 		    closable: true,
 		    timer: 10
 		});
 	    } else {
-		alert(this.customerMessage(err, "Could not save Business in a Box changes. Please try again."));
+		alert(this.customerMessage(err, this.t("biab.error.save", "Could not save Business in a Box changes. Please try again.")));
 	    }
 	});
     }
@@ -249,18 +260,18 @@ class _febe {
 		MTKMsgs.show({
 		    type: "error",
 		    icon: "error",
-		    message: this.customerMessage(err, "Could not submit request. Please try again."),
+		    message: this.customerMessage(err, this.t("biab.error.request", "Could not submit request. Please try again.")),
 		    closable: true,
 		    timer: 10
 		});
 	    } else {
-		alert(this.customerMessage(err, "Could not submit request. Please try again."));
+		alert(this.customerMessage(err, this.t("biab.error.request", "Could not submit request. Please try again.")));
 	    }
 	});
     }
 
     handleBiabReviewRequest(data) {
-	return this.postBiabJson("/api/business_in_a_box_review_request.php", data || {}, "Review request email sent.", "Could not send review request email.");
+	return this.postBiabJson("/api/business_in_a_box_review_request.php", data || {}, "Review request email sent.", this.t("biab.error.reviewRequest", "Could not send review request email."));
     }
 
     handleBiabInvoiceSent(data) {
@@ -298,7 +309,7 @@ class _febe {
 	    instance.renderReviews();
 	}
 
-	return this.postBiabJson("/api/business_in_a_box_reviews.php", data || {}, "Review display settings saved.", "Could not save review display settings.");
+	return this.postBiabJson("/api/business_in_a_box_reviews.php", data || {}, "Review display settings saved.", this.t("biab.error.reviewsSave", "Could not save review display settings."));
     }
 
     getBiabApiUrl(path) {
@@ -363,12 +374,12 @@ class _febe {
 		MTKMsgs.show({
 		    type: "error",
 		    icon: "error",
-		    message: this.customerMessage(err, errorMessage || "Could not complete that request. Please try again."),
+		    message: this.customerMessage(err, errorMessage || this.t("biab.error.generic", "Could not complete that request. Please try again.")),
 		    closable: true,
 		    timer: 10
 		});
 	    } else {
-		alert(this.customerMessage(err, errorMessage || "Could not complete that request. Please try again."));
+		alert(this.customerMessage(err, errorMessage || this.t("biab.error.generic", "Could not complete that request. Please try again.")));
 	    }
 	});
     }
@@ -523,7 +534,7 @@ class _febe {
 			MTKMsgs.show({
 			    type: "error",
 			    icon: "error",
-			    message: "If this email exists, a reset link will be emailed to you.",
+			    message: this.t("login.reset.sentGeneric", "If this email exists, a reset link will be emailed to you."),
 			    closable: true,
 			    timer: 10
 			});
@@ -535,7 +546,7 @@ class _febe {
 		MTKMsgs.show({
 		    type: "success",
 		    icon: "success",
-		    message: "If this email exists, a reset link will be emailed to you.",
+		    message: this.t("login.reset.sentGeneric", "If this email exists, a reset link will be emailed to you."),
 		    closable: true,
 		    timer: 10
 		});
@@ -588,7 +599,7 @@ class _febe {
 			    icon: 'error',
 			    message: this.customerMessage(
 				translateRegisterMessage(message, "register.error.server"),
-				window.i18n && typeof window.i18n.t === "function" ? window.i18n.t("register.error.server") : "Registration failed. Please try again."
+				this.t("register.error.server", "Registration failed. Please try again.")
 			    ),
 			    closable: true,
 			    timer: 10
@@ -693,11 +704,12 @@ class _febe {
     ///// HANDLERS
     //////////////////////////////////////////////////////////////////
     handleQuizSubmitted(data) {
+	const self = this;
 	wc.submitQuiz(data.quiz_session_id, data.module_id, data.answers, function (err, response) {
 	    if (err) {
 		alert(window.wc && typeof wc.customerMessage === "function"
-		    ? wc.customerMessage(err, "Could not submit quiz. Please try again.")
-		    : "Could not submit quiz. Please try again.");
+		    ? wc.customerMessage(err, self.t("quiz.error.submit", "Could not submit quiz. Please try again."))
+		    : self.t("quiz.error.submit", "Could not submit quiz. Please try again."));
 		return;
 	    }
 	    

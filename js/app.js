@@ -12,15 +12,23 @@ app.quizSize = 20;
 
 // Message storage
 app.emsgs = [
-    { id: 1000, text: "Unable to sign in with those credentials." },
-    { id: 1001, text: "Could not create the account. Please try again." },
+    { id: 1000, text: "Unable to sign in with those credentials.", key: "login.error.credentials" },
+    { id: 1001, text: "Could not create the account. Please try again.", key: "account.error.create" },
     { id: 1002, text: "No questions found for module" },
-    { id: 1003, text: "Registration failed. Please try again." },
+    { id: 1003, text: "Registration failed. Please try again.", key: "register.error.server" },
 ];
 
 app.emsg = function (id) {
     const msg = this.emsgs.find(m => m.id === id);
-    if (!msg) return "Something went wrong. Please try again.";
+    if (!msg) {
+        return window.i18n && typeof window.i18n.t === "function"
+            ? window.i18n.t("error.generic")
+            : "Something went wrong. Please try again.";
+    }
+    if (msg.key && window.i18n && typeof window.i18n.t === "function") {
+        const value = window.i18n.t(msg.key);
+        if (value && value !== msg.key) return value;
+    }
     return msg.text;
 };
 // let msg = app.emsg(1000);

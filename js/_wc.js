@@ -8,17 +8,25 @@ wc.testing   = false;  /* = true SHOULD USE ALL LOCAL CONFIG FILES and others */
 
 // Message storage
 wc.emsgs = [
-    { id: 1000, text: "Unable to sign in with those credentials." },
-    { id: 1001, text: "Could not create the account. Please try again." },
+    { id: 1000, text: "Unable to sign in with those credentials.", key: "login.error.credentials" },
+    { id: 1001, text: "Could not create the account. Please try again.", key: "account.error.create" },
     { id: 1002, text: "No questions found for module" },
-    { id: 1003, text: "Registration failed. Please try again." },
+    { id: 1003, text: "Registration failed. Please try again.", key: "register.error.server" },
     { id: 1004, text: 'You have successfully completed this quiz.' },
 ];
 
+wc.t = function (key, fallback) {
+    if (window.i18n && typeof window.i18n.t === "function") {
+        const value = window.i18n.t(key);
+        if (value && value !== key) return value;
+    }
+    return fallback;
+};
+
 wc.emsg = function (id) {
     const msg = this.emsgs.find(m => m.id === id);
-    if (!msg) return "Something went wrong. Please try again.";
-    return msg.text;
+    if (!msg) return wc.t("error.generic", "Something went wrong. Please try again.");
+    return msg.key ? wc.t(msg.key, msg.text) : msg.text;
 };
 // let msg = wc.emsg(1000);
 
@@ -29,7 +37,8 @@ wc.customerMessage = function (err, fallback) {
         err || ""
     ).trim();
 
-    if (!message) return fallback || "Something went wrong. Please try again.";
+    const generic = wc.t("error.generic", "Something went wrong. Please try again.");
+    if (!message) return fallback || generic;
 
     const lower = message.toLowerCase();
     const technical =
@@ -51,7 +60,7 @@ wc.customerMessage = function (err, fallback) {
         lower.includes("checkout_session") ||
         lower.includes("api/");
 
-    if (technical) return fallback || "Something went wrong. Please try again.";
+    if (technical) return fallback || generic;
     return message;
 };
 

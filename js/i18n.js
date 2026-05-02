@@ -778,6 +778,10 @@
     'login.error.email.required': { en: 'Email is required',     es: 'El correo es obligatorio' },
     'login.error.email.invalid':  { en: 'Invalid email format',  es: 'Formato de correo inválido' },
     'login.error.password.required': { en: 'Password is required', es: 'La contraseña es obligatoria' },
+    'login.error.credentials': { en: 'Unable to sign in with those credentials.', es: 'No se pudo iniciar sesión con esas credenciales.' },
+    'login.reset.sentGeneric': { en: 'If this email exists, a reset link will be emailed to you.', es: 'Si este correo existe, enviaremos un enlace de restablecimiento por correo.' },
+    'error.generic': { en: 'Something went wrong. Please try again.', es: 'Algo salió mal. Inténtalo de nuevo.' },
+    'account.error.create': { en: 'Could not create the account. Please try again.', es: 'No se pudo crear la cuenta. Inténtalo de nuevo.' },
 
     // ── REGISTER ──────────────────────────────────────────────────
     'register.title':          { en: 'NALA Registration Form',         es: 'Formulario de Registro NALA' },
@@ -884,11 +888,17 @@
     'purchase.completeFields':   { en: 'Please complete:', es: 'Por favor completa:' },
     'purchase.checkoutMissing':  { en: 'Stripe checkout URL was not returned.', es: 'No se devolvió la URL de pago de Stripe.' },
     'purchase.checkoutFailed':   { en: 'Unable to start checkout.', es: 'No se pudo iniciar el pago.' },
+    'biab.error.save':           { en: 'Could not save Business in a Box changes. Please try again.', es: 'No se pudieron guardar los cambios de Negocio en una Caja. Inténtalo de nuevo.' },
+    'biab.error.request':        { en: 'Could not submit request. Please try again.', es: 'No se pudo enviar la solicitud. Inténtalo de nuevo.' },
+    'biab.error.generic':        { en: 'Could not complete that request. Please try again.', es: 'No se pudo completar esa solicitud. Inténtalo de nuevo.' },
+    'biab.error.reviewRequest':  { en: 'Could not send review request email.', es: 'No se pudo enviar el correo de solicitud de reseña.' },
+    'biab.error.reviewsSave':    { en: 'Could not save review display settings.', es: 'No se pudo guardar la configuración de reseñas.' },
 
     // ── CLIENT ───────────────────────────────────────────────────
     'client.locked.title':       { en: 'Business in a Box', es: 'Negocio en una Caja' },
     'client.locked.accessTitle': { en: 'Business in a Box Access', es: 'Acceso a Negocio en una Caja' },
     'client.profile.loadError':  { en: 'Could not load Business in a Box profile.', es: 'No se pudo cargar el perfil de Negocio en una Caja.' },
+    'client.review.submitError': { en: 'Could not submit review. Please try again.', es: 'No se pudo enviar la reseña. Inténtalo de nuevo.' },
 
     // ── HIERARCHY ────────────────────────────────────────────────
     'hierarchy.empty':           { en: 'Select a resource to view its content', es: 'Selecciona un recurso para ver su contenido' },
@@ -909,6 +919,7 @@
     'final.invalidEmailError':   { en: 'Please enter a valid email address.', es: 'Por favor ingresa una dirección de correo válida.' },
     'final.mismatchError':       { en: 'Email addresses do not match.', es: 'Las direcciones de correo no coinciden.' },
     'final.matchConfirmed':      { en: 'Emails match!',                 es: '¡Los correos coinciden!' },
+    'final.error.certificate':   { en: 'Could not send certificate. Please try again.', es: 'No se pudo enviar el certificado. Inténtalo de nuevo.' },
 
     // ── QUIZ ──────────────────────────────────────────────────────
     'quiz.title':     { en: 'Quiz',     es: 'Examen' },
@@ -925,6 +936,9 @@
     'quiz.clearAll':  { en: 'Clear All', es: 'Borrar Todo' },
     'quiz.testFirst': { en: 'Test (Select First)', es: 'Probar (Seleccionar Primero)' },
     'quiz.submit':    { en: 'Submit Quiz', es: 'Enviar Examen' },
+    'quiz.error.submit': { en: 'Could not submit quiz. Please try again.', es: 'No se pudo enviar el examen. Inténtalo de nuevo.' },
+    'quiz.error.submissionFailed': { en: 'Quiz submission failed. Please try again.', es: 'Falló el envío del examen. Inténtalo de nuevo.' },
+    'quiz.error.load': { en: 'Could not load quiz. Please try again.', es: 'No se pudo cargar el examen. Inténtalo de nuevo.' },
 
     // ── DIALOG ────────────────────────────────────────────────────
     'dialog.title':   { en: 'Confirm Action', es: 'Confirmar Acción' },
@@ -950,7 +964,11 @@
     'gift.cancel':         { en: 'Cancel',                         es: 'Cancelar' },
     'gift.success':        { en: 'Your free Lockout Kit is on the way! 🎁', es: '¡Tu kit gratuito de apertura ya va en camino! 🎁' },
     'gift.error':          { en: 'Please fill in all required fields.', es: 'Por favor completa todos los campos requeridos.' },
+    'gift.error.submit':   { en: 'Could not submit gift request. Please try again.', es: 'No se pudo enviar la solicitud del kit. Inténtalo de nuevo.' },
     'gift.cancelled':      { en: 'Request cancelled.',             es: 'Solicitud cancelada.' },
+
+    // ── SET PASSWORD ──────────────────────────────────────────────
+    'setPassword.error.generic': { en: 'Could not set password. Please check the fields and try again.', es: 'No se pudo configurar la contraseña. Revisa los campos e inténtalo de nuevo.' },
 
     // ── MSGS / SYSTEM MESSAGES ────────────────────────────────────
     'msg.info':      { en: 'This is an informational message',           es: 'Este es un mensaje informativo' },

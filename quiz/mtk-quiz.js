@@ -380,9 +380,12 @@
 
 			    if (err) {
 				wc.error('❌ Quiz submission failed:', err);
-				const friendlyError = window.wc && typeof wc.customerMessage === 'function'
-				    ? wc.customerMessage(err, 'Quiz submission failed. Please try again.')
+				const quizSubmissionFallback = window.wc && typeof wc.t === 'function'
+				    ? wc.t('quiz.error.submissionFailed', 'Quiz submission failed. Please try again.')
 				    : 'Quiz submission failed. Please try again.';
+				const friendlyError = window.wc && typeof wc.customerMessage === 'function'
+				    ? wc.customerMessage(err, quizSubmissionFallback)
+				    : quizSubmissionFallback;
 				this.clearGlobalMessageBanner();
 				this.showGlobalMessage({
 				    type: 'error',
@@ -484,9 +487,12 @@
 			this.elements.submitBtn.disabled = false;
 		    }
 		    wc.error('❌ Quiz submit handler crashed:', error);
-		    const friendlyError = window.wc && typeof wc.customerMessage === 'function'
-			? wc.customerMessage(error, 'Could not submit quiz. Please try again.')
+		    const quizSubmitFallback = window.wc && typeof wc.t === 'function'
+			? wc.t('quiz.error.submit', 'Could not submit quiz. Please try again.')
 			: 'Could not submit quiz. Please try again.';
+		    const friendlyError = window.wc && typeof wc.customerMessage === 'function'
+			? wc.customerMessage(error, quizSubmitFallback)
+			: quizSubmitFallback;
 		    this.clearGlobalMessageBanner();
 		    this.showGlobalMessage({
 			type: 'error',
@@ -962,9 +968,12 @@
 	    
 	    wc.getQuiz(wc.quizModule, function(err, data) {
 		if (err) {
+		    const quizLoadFallback = window.wc && typeof wc.t === 'function'
+			? wc.t('quiz.error.load', 'Could not load quiz. Please try again.')
+			: 'Could not load quiz. Please try again.';
 		    alert(window.wc && typeof wc.customerMessage === 'function'
-			? wc.customerMessage(err, 'Could not load quiz. Please try again.')
-			: 'Could not load quiz. Please try again.');
+			? wc.customerMessage(err, quizLoadFallback)
+			: quizLoadFallback);
 
 		    // TAKE ME BACK TO COURSES
 		    wc.pages.show('hierarchy');
