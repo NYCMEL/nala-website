@@ -1594,7 +1594,11 @@ class MTKHierarchy {
 
                 if (module.quiz && typeof module.quiz === 'object') {
                     const quizLessonNo = Number(module.quiz.lesson_no);
-                    const quizHasAccess = Number.isFinite(quizLessonNo) ? quizLessonNo <= effectiveCurrent : !!module.quiz.access;
+                    const moduleLastLessonNo = this.getModuleLastStandardLessonNumber(module);
+                    const quizUsesPlaceholderNo = Number.isFinite(quizLessonNo) && quizLessonNo >= 100;
+                    const quizHasAccess = quizUsesPlaceholderNo && Number.isFinite(moduleLastLessonNo)
+                        ? effectiveCurrent > moduleLastLessonNo
+                        : Number.isFinite(quizLessonNo) ? quizLessonNo <= effectiveCurrent : !!module.quiz.access;
                     module.quiz.access = quizHasAccess;
                     if (quizHasAccess) {
                         moduleHasAccess = true;
@@ -1604,6 +1608,31 @@ class MTKHierarchy {
                 module.access = moduleHasAccess;
             });
         });
+    }
+
+    getModuleLastStandardLessonNumber(module) {
+        if (!module || !Array.isArray(module.lessons)) {
+            return null;
+        }
+
+        let maxLessonNo = null;
+
+        module.lessons.forEach(lesson => {
+            if (this.isCertificationLesson(lesson)) {
+                return;
+            }
+
+            const lessonNo = Number(lesson.lesson_no);
+            if (!Number.isFinite(lessonNo)) {
+                return;
+            }
+
+            if (maxLessonNo === null || lessonNo > maxLessonNo) {
+                maxLessonNo = lessonNo;
+            }
+        });
+
+        return maxLessonNo;
     }
 
     getLastStandardLessonNumber() {
