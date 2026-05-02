@@ -104,12 +104,10 @@
 		const titleEl = this.element.querySelector('#quizTitle');
 		const moduleEl = this.element.querySelector('#moduleId');
 		const countEl = this.element.querySelector('#questionCount');
-		const sessionEl = this.element.querySelector('#sessionId');
 
 		if (titleEl) titleEl.textContent = 'Locksmith Knowledge Quiz';
 		if (moduleEl) moduleEl.textContent = this.config.module_id || '--';
 		if (countEl) countEl.textContent = this.config.count || this.config.questions.length;
-		if (sessionEl) sessionEl.textContent = this.config.quiz_session_id || '--';
 	    }
 
 	    renderQuestions() {
