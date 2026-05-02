@@ -1094,6 +1094,7 @@ class MTKHierarchy {
             contentHTML += '</div>';
 
             this.elements.rhs.innerHTML = contentHTML;
+            this.bindPhotoGalleryEvents();
 
             if (firstVideo && Number.isFinite(Number(lesson.lesson_no))) {
                 this.attachVideoCompletionTracking(Number(lesson.lesson_no), moduleId, lessonId);
@@ -1156,6 +1157,7 @@ class MTKHierarchy {
         contentHTML += '</div>';
 
         this.elements.rhs.innerHTML = contentHTML;
+        this.bindPhotoGalleryEvents();
 
         const lessonContext = this.findLessonContextForResource(resource.id);
         if (firstVideo && lessonContext && Number.isFinite(Number(lessonContext.lessonNo))) {
@@ -1170,7 +1172,6 @@ class MTKHierarchy {
       <section class="mtk-images-section" aria-label="Reference photos">
         <div class="mtk-images-section__header">
           <h3 class="mtk-images-section__title">Reference Photos</h3>
-          <span class="mtk-images-section__count">${photos.length}</span>
         </div>
         <div class="mtk-images-gallery">
     `;
@@ -1178,19 +1179,21 @@ class MTKHierarchy {
         photos.forEach((photo, index) => {
             const caption = this.normalizePhotoCaption(photo.description, index);
             const altText = this.buildPhotoAltText(caption, contextTitle, index);
+            const imageUrl = this.sanitizeUrl(photo.url);
+            const escapedImageUrl = this.escapeHtml(imageUrl);
 
             galleryHTML += `
-          <figure class="mtk-image-item">
-            <div class="mtk-image-item__media">
-              <img src="${this.sanitizeUrl(photo.url)}"
+          <button type="button"
+                  class="mtk-image-item"
+                  data-full-src="${escapedImageUrl}"
+                  data-alt="${this.escapeHtml(altText)}"
+                  aria-label="Enlarge reference photo ${index + 1}">
+            <span class="mtk-image-item__media">
+              <img src="${escapedImageUrl}"
                    alt="${this.escapeHtml(altText)}"
                    loading="lazy">
-            </div>
-            <figcaption class="mtk-image-item__caption">
-              <span class="mtk-image-item__label">Photo ${index + 1}</span>
-              <span class="mtk-image-item__text">${this.escapeHtml(caption)}</span>
-            </figcaption>
-          </figure>
+            </span>
+          </button>
         `;
         });
 
@@ -1216,6 +1219,63 @@ class MTKHierarchy {
             return `${cleanContext} - ${caption}`;
         }
         return `Lesson reference photo ${index + 1}: ${caption}`;
+    }
+
+    bindPhotoGalleryEvents() {
+        if (!this.elements || !this.elements.rhs) return;
+
+        const buttons = this.elements.rhs.querySelectorAll('.mtk-image-item[data-full-src]');
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                this.openPhotoLightbox(button.dataset.fullSrc, button.dataset.alt || 'Reference photo');
+            });
+        });
+    }
+
+    openPhotoLightbox(src, altText) {
+        if (!src) return;
+
+        this.closePhotoLightbox();
+
+        const lightbox = document.createElement('div');
+        lightbox.className = 'mtk-photo-lightbox';
+        lightbox.setAttribute('role', 'dialog');
+        lightbox.setAttribute('aria-modal', 'true');
+        lightbox.setAttribute('aria-label', 'Reference photo preview');
+        lightbox.innerHTML = `
+          <button type="button" class="mtk-photo-lightbox__close" aria-label="Close preview">
+            <span class="material-icons">close</span>
+          </button>
+          <img class="mtk-photo-lightbox__image"
+               src="${this.sanitizeUrl(src)}"
+               alt="${this.escapeHtml(altText || 'Reference photo')}">
+        `;
+
+        const close = () => this.closePhotoLightbox();
+        lightbox.addEventListener('click', event => {
+            if (event.target === lightbox) close();
+        });
+
+        const closeButton = lightbox.querySelector('.mtk-photo-lightbox__close');
+        if (closeButton) closeButton.addEventListener('click', close);
+
+        this._photoLightboxKeyHandler = event => {
+            if (event.key === 'Escape') close();
+        };
+        document.addEventListener('keydown', this._photoLightboxKeyHandler);
+
+        (this.element || document.body).appendChild(lightbox);
+        if (closeButton) closeButton.focus();
+    }
+
+    closePhotoLightbox() {
+        const existing = document.querySelector('.mtk-photo-lightbox');
+        if (existing) existing.remove();
+
+        if (this._photoLightboxKeyHandler) {
+            document.removeEventListener('keydown', this._photoLightboxKeyHandler);
+            this._photoLightboxKeyHandler = null;
+        }
     }
 
     /**

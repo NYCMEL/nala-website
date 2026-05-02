@@ -591,32 +591,84 @@ h1.title::after {
 
 .mtk-hierarchy .mtk-images-gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 1rem;
-  margin-top: 1.5rem; }
+  margin-top: 1rem;
+  align-items: stretch; }
 
 .mtk-hierarchy .mtk-image-item {
   position: relative;
+  display: block;
+  width: 100%;
+  min-height: 190px;
+  padding: 0;
+  border: 1px solid var(--mtk-border);
   border-radius: 4px;
   overflow: hidden;
   box-shadow: var(--mtk-shadow-1);
   transition: var(--mtk-transition);
-  background-color: var(--mtk-surface); }
+  background-color: var(--mtk-surface);
+  cursor: zoom-in;
+  appearance: none; }
 
 .mtk-hierarchy .mtk-image-item:hover {
   box-shadow: var(--mtk-shadow-2);
   transform: translateY(-2px); }
 
+.mtk-hierarchy .mtk-image-item:focus-visible {
+  outline: 3px solid var(--mtk-primary);
+  outline-offset: 3px; }
+
+.mtk-hierarchy .mtk-image-item .mtk-image-item__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 190px;
+  background: #fff; }
+
 .mtk-hierarchy .mtk-image-item img {
   width: 100%;
-  height: auto;
-  display: block; }
+  height: 100%;
+  max-height: 230px;
+  object-fit: contain;
+  display: block;
+  padding: 0.5rem; }
 
-.mtk-hierarchy .mtk-image-item .mtk-image-item__caption {
-  padding: 0.75rem;
-  font-size: 0.813rem;
-  color: var(--mtk-text-secondary);
-  background-color: var(--mtk-surface); }
+.mtk-hierarchy .mtk-photo-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: rgba(17, 24, 39, 0.82); }
+
+.mtk-hierarchy .mtk-photo-lightbox__image {
+  max-width: min(1100px, 94vw);
+  max-height: 86vh;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: var(--mtk-shadow-3); }
+
+.mtk-hierarchy .mtk-photo-lightbox__close {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--mtk-text-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--mtk-shadow-2); }
 
 .mtk-hierarchy.mtk-hierarchy--loading {
   opacity: 0.6;
