@@ -1179,7 +1179,7 @@ class MTKHierarchy {
         photos.forEach((photo, index) => {
             const caption = this.normalizePhotoCaption(photo.description, index);
             const altText = this.buildPhotoAltText(caption, contextTitle, index);
-            const imageUrl = this.sanitizeUrl(photo.url);
+            const imageUrl = this.resolvePhotoUrl(photo.url);
             const escapedImageUrl = this.escapeHtml(imageUrl);
 
             galleryHTML += `
@@ -1211,6 +1211,15 @@ class MTKHierarchy {
             return `Reference photo ${index + 1}`;
         }
         return raw;
+    }
+
+    resolvePhotoUrl(url) {
+        const cleanUrl = this.sanitizeUrl(url);
+        if (!cleanUrl) return '';
+        if (/^(?:https?:|data:|\/|\.\/|\.\.\/)/i.test(cleanUrl)) {
+            return cleanUrl;
+        }
+        return `../media/${cleanUrl}`;
     }
 
     buildPhotoAltText(caption, contextTitle, index) {
