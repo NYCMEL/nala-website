@@ -44,6 +44,37 @@
             margin: 0;
         }
 
+        .about-featured-video {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .about-featured-video__frame {
+            position: relative;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            border-radius: 8px;
+            background: #111;
+            box-shadow: 0 16px 38px rgba(33, 33, 33, 0.16);
+        }
+
+        .about-featured-video__frame iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .about-featured-video__caption {
+            margin: 0;
+            color: #202124;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
         .about-video-grid {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -62,21 +93,53 @@
             min-height: 42px;
         }
 
-        .about-video-frame {
+        .about-video-thumb {
             position: relative;
+            display: block;
+            width: 100%;
+            padding: 0;
+            border: 0;
             aspect-ratio: 16 / 9;
             overflow: hidden;
             border-radius: 8px;
             background: #111;
+            cursor: pointer;
             box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+            transition: box-shadow 180ms ease, transform 180ms ease;
         }
 
-        .about-video-frame iframe {
+        .about-video-thumb img {
             position: absolute;
             inset: 0;
             width: 100%;
             height: 100%;
-            border: none;
+            object-fit: cover;
+        }
+
+        .about-video-thumb::after {
+            content: "play_arrow";
+            font-family: "Material Icons";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 54px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.72);
+            color: #ffffff;
+            font-size: 32px;
+            transform: translate(-50%, -50%);
+        }
+
+        .about-video-thumb:hover,
+        .about-video-thumb:focus-visible,
+        .about-video-thumb.is-active {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(33, 33, 33, 0.18), 0 0 0 3px rgba(169, 130, 18, 0.3);
+            outline: none;
         }
 
         .about-video-cta {
@@ -135,57 +198,45 @@
                 </div>
             </div>
 
+            <div class="about-featured-video" aria-live="polite">
+                <div class="about-featured-video__frame">
+                    <iframe id="aboutFeaturedVideo"
+                        src="https://player.vimeo.com/video/1106503990?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;fullscreen=1&amp;player_id=about-featured-video&amp;app_id=58479"
+                        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                        allowfullscreen
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        title="Master Safe Lockout Skills"></iframe>
+                </div>
+                <p class="about-featured-video__caption" id="aboutFeaturedVideoTitle" data-i18n="aboutPage.video.safe">Master Safe Lockout Skills</p>
+            </div>
+
             <div class="about-video-grid">
                 <article class="about-video-card">
                     <h3 data-i18n="aboutPage.video.safe">Master Safe Lockout Skills</h3>
-                    <div class="about-video-frame">
-                        <iframe src="https://player.vimeo.com/video/1106503990?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin"
-                            title="Master Safe Lockout Skills" data-i18n-title="aboutPage.video.safe"></iframe>
-                    </div>
-                    <div class="about-video-cta">
-                        <button type="button" class="btn btn-primary" data-i18n="aboutPage.video.cta" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } else { wc.publish('mtk-ready:click'); } return false;">Get Started</button>
-                    </div>
+                    <button type="button" class="about-video-thumb is-active" data-video-id="1106503990" aria-label="Play Master Safe Lockout Skills">
+                        <img src="img/about-videos/safe.png" alt="Master Safe Lockout Skills video preview" loading="lazy">
+                    </button>
                 </article>
 
                 <article class="about-video-card">
                     <h3 data-i18n="aboutPage.video.career">Build Your Locksmith Career Online</h3>
-                    <div class="about-video-frame">
-                        <iframe src="https://player.vimeo.com/video/1106503753?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin"
-                            title="Build Your Locksmith Career Online" data-i18n-title="aboutPage.video.career"></iframe>
-                    </div>
-                    <div class="about-video-cta">
-                        <button type="button" class="btn btn-primary" data-i18n="aboutPage.video.cta" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } else { wc.publish('mtk-ready:click'); } return false;">Get Started</button>
-                    </div>
+                    <button type="button" class="about-video-thumb" data-video-id="1106503753" aria-label="Play Build Your Locksmith Career Online">
+                        <img src="img/about-videos/career.png" alt="Build Your Locksmith Career Online video preview" loading="lazy">
+                    </button>
                 </article>
 
                 <article class="about-video-card">
                     <h3 data-i18n="aboutPage.video.pace">Learn at Your Own Pace</h3>
-                    <div class="about-video-frame">
-                        <iframe src="https://player.vimeo.com/video/1106503424?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin"
-                            title="Learn at Your Own Pace" data-i18n-title="aboutPage.video.pace"></iframe>
-                    </div>
-                    <div class="about-video-cta">
-                        <button type="button" class="btn btn-primary" data-i18n="aboutPage.video.cta" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } else { wc.publish('mtk-ready:click'); } return false;">Get Started</button>
-                    </div>
+                    <button type="button" class="about-video-thumb" data-video-id="1106503424" aria-label="Play Learn at Your Own Pace">
+                        <img src="img/about-videos/pace.png" alt="Learn at Your Own Pace video preview" loading="lazy">
+                    </button>
                 </article>
 
                 <article class="about-video-card">
                     <h3 data-i18n="aboutPage.video.work">Train for Real Locksmith Work</h3>
-                    <div class="about-video-frame">
-                        <iframe src="https://player.vimeo.com/video/1106503213?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin"
-                            title="Train for Real Locksmith Work" data-i18n-title="aboutPage.video.work"></iframe>
-                    </div>
-                    <div class="about-video-cta">
-                        <button type="button" class="btn btn-primary" data-i18n="aboutPage.video.cta" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } else { wc.publish('mtk-ready:click'); } return false;">Get Started</button>
-                    </div>
+                    <button type="button" class="about-video-thumb" data-video-id="1106503213" aria-label="Play Train for Real Locksmith Work">
+                        <img src="img/about-videos/work.png" alt="Train for Real Locksmith Work video preview" loading="lazy">
+                    </button>
                 </article>
             </div>
         </section>
@@ -205,3 +256,38 @@
 
 <script src="news/news.config.js"></script>
 <script src="news/news.js"></script>
+<script>
+    (function () {
+        function initAboutVideoGallery() {
+            var iframe = document.getElementById("aboutFeaturedVideo");
+            var caption = document.getElementById("aboutFeaturedVideoTitle");
+            var thumbs = Array.prototype.slice.call(document.querySelectorAll(".about-video-thumb"));
+            if (!iframe || !caption || !thumbs.length) return;
+
+            thumbs.forEach(function (thumb) {
+                thumb.addEventListener("click", function () {
+                    var videoId = thumb.getAttribute("data-video-id");
+                    var title = "";
+                    var card = thumb.closest(".about-video-card");
+                    var heading = card ? card.querySelector("h3") : null;
+                    if (heading) title = heading.textContent.trim();
+                    if (!videoId) return;
+
+                    thumbs.forEach(function (item) {
+                        item.classList.toggle("is-active", item === thumb);
+                    });
+
+                    iframe.src = "https://player.vimeo.com/video/" + encodeURIComponent(videoId) + "?title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=1&fullscreen=1&player_id=about-featured-video&app_id=58479";
+                    iframe.title = title || "NALA video";
+                    caption.textContent = title || "";
+                });
+            });
+        }
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", initAboutVideoGallery);
+        } else {
+            initAboutVideoGallery();
+        }
+    }());
+</script>
