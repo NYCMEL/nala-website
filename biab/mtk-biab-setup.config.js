@@ -169,41 +169,41 @@ window.MTK_BIAB_SETUP_CONFIG = {
       id: "brand",
       navLabel: "Brand",
       title: "Brand system",
-      eyebrow: "Production fonts and icons later",
+      eyebrow: "Brand choices",
       summary: "Choose a brand direction that can carry through the actual website, logo, invoices, review emails, stationery, ads, and other marketing.",
       fields: [
         { id: "palette", label: "Color scheme", type: "palette", required: true },
         { id: "brandToneExplainer", label: "Color scheme vs. brand tone", type: "info", text: "Color scheme controls the visual look across the website, logo, invoices, and marketing. Brand tone controls the wording style: how direct, warm, polished, or reassuring the business sounds." },
         { id: "brandTone", label: "Brand tone", type: "select", required: true, options: ["Clear and professional", "Warm and neighborly", "Direct and practical", "Polished and premium", "Security-focused and reassuring"] },
         { id: "tagline", label: "Tagline", type: "text", placeholder: "Mobile Locksmith Service", required: true },
-        { id: "logoStatus", label: "Logo status", type: "select", required: true, options: ["Create in logo step", "Upload existing logo", "Production logo needed later"] }
+        { id: "logoStatus", label: "Logo status", type: "select", required: true, options: ["Create in logo step", "Upload existing logo", "Finish logo later"] }
       ]
     },
     {
       id: "logo",
       navLabel: "Logo",
       title: "Logo and icon creation",
-      eyebrow: "Placeholder builder, production assets later",
-      summary: "Create a simple locksmith logo direction using placeholder icons, letters, background shapes, and the selected brand colors, or upload an existing icon/logo instead.",
+      eyebrow: "Logo builder",
+      summary: "Create a clean locksmith logo using an icon, initials, layout, type style, and the selected brand colors, or upload an existing logo instead.",
       sourceNote: "Logo guidance follows common branding practice: keep it simple, scalable, readable at small sizes, and usable in full-color, one-color, and reversed versions.",
       fields: [
         { id: "logoSource", label: "Logo path", type: "select", required: true, options: ["Create logo here", "Upload existing icon/logo"] },
-        { id: "logoIcon", label: "Placeholder icon", type: "logo-icons", required: true, requiredWhen: { field: "logoSource", equals: "Create logo here" } },
+        { id: "logoIcon", label: "Icon style", type: "logo-icons", required: true, requiredWhen: { field: "logoSource", equals: "Create logo here" } },
         { id: "logoLetters", label: "Letter(s) or initials", type: "text", placeholder: "HLK", required: true, requiredWhen: { field: "logoSource", equals: "Create logo here" } },
         { id: "logoTemplate", label: "Template direction", type: "logo-templates", required: true, requiredWhen: { field: "logoSource", equals: "Create logo here" } },
-        { id: "logoTypeStyle", label: "Placeholder font system", type: "logo-fonts", required: true, requiredWhen: { field: "logoSource", equals: "Create logo here" } },
+        { id: "logoTypeStyle", label: "Type style", type: "logo-fonts", required: true, requiredWhen: { field: "logoSource", equals: "Create logo here" } },
         { id: "logoVariation", label: "Primary variation", type: "logo-variations", required: true, requiredWhen: { field: "logoSource", equals: "Create logo here" } },
-        { id: "logoUpload", label: "Upload existing icon/logo", type: "file", required: true, requiredWhen: { field: "logoSource", equals: "Upload existing icon/logo" }, helper: "Placeholder upload field for now. Production should store SVG/PNG assets and generate logo kit variants." },
-        { id: "logoNotes", label: "Logo notes", type: "textarea", placeholder: "Avoid tiny details, use 2-3 colors, check small-size readability, prepare icon-only and full lockup versions.", rows: 3, full: true },
+        { id: "logoUpload", label: "Upload existing icon/logo", type: "file", required: true, requiredWhen: { field: "logoSource", equals: "Upload existing icon/logo" }, helper: "Upload an SVG, PNG, JPG, or WebP logo. The preview will use the uploaded artwork." },
+        { id: "logoGuidance", label: "Logo quality checklist", type: "logo-guidance" },
         { id: "logoPreview", label: "Logo preview", type: "logo-preview" },
-        { id: "logoHandoff", label: "Logo handoff", type: "logo-handoff" }
+        { id: "logoHandoff", label: "Logo kit", type: "logo-handoff" }
       ],
       instructions: [
         "Choose whether to create a logo direction here or upload an existing icon/logo.",
-        "If creating here, pick one clear symbol or initials. Avoid combining too many icons.",
-        "Choose a simple background shape that still works at favicon, invoice, shirt, van, and Google profile sizes.",
+        "If creating here, pick one clear symbol or a short set of initials.",
+        "Choose a simple layout that still works at favicon, invoice, shirt, van, and Google profile sizes.",
         "Use the brand color scheme from the previous step and keep the mark readable in one color.",
-        "Treat the generated icon/font choices as placeholders until production licensed assets are purchased."
+        "Review the logo previews before applying the logo to the website."
       ]
     },
     {

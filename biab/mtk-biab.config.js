@@ -458,16 +458,16 @@ const MTK_BIAB_CONFIG = {
                 content: {
                   title: "Business Card Designer",
                   body: `<div data-stationery-designer-panel="business-card"></div><p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
-<h3>Recommended Implementation</h3>
-<p>The fastest useful version is a template-based designer. Let the locksmith enter their business name, phone, email, website, city, logo, colors, and tagline. Then place that data into a small set of locked, professional layouts.</p>
+<h3>How this tool works</h3>
+<p>Enter your business name, phone, email, website, city, logo, colors, and tagline once. The designer places those details into clean card layouts that are easy to read and ready to review.</p>
 
-<h3>Best MVP Approach</h3>
+<h3>Choose and review</h3>
 <ol>
-  <li>Offer 3 to 6 card templates.</li>
-  <li>Let the user upload a logo or use a simple text logo.</li>
-  <li>Let the user choose colors and font pairing from safe presets.</li>
-  <li>Show a live front/back preview.</li>
-  <li>Export print-ready PDF and PNG.</li>
+  <li>Choose a card template.</li>
+  <li>Use your uploaded logo or a simple text logo.</li>
+  <li>Choose colors and a font pairing that match your brand.</li>
+  <li>Review the front and back preview.</li>
+  <li>Download the PDF or PNG when it looks right.</li>
 </ol>
 
 <h3>Fields to Include</h3>
@@ -491,8 +491,7 @@ const MTK_BIAB_CONFIG = {
   <li>No fake claims or unnecessary badges</li>
 </ul>
 
-<h3>Recommended Future Upgrade</h3>
-<p>Add a “Use in Canva” button later so users can move the design into a richer editor without replacing the in-site starter designer.</p>`
+<p>Keep the card focused on contact and trust. A clean card is easier for customers to use later.</p>`
                 }
               },
               {
@@ -502,8 +501,8 @@ const MTK_BIAB_CONFIG = {
                 content: {
                   title: "Letterhead Designer",
                   body: `<div data-stationery-designer-panel="letterhead"></div><p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
-<h3>Recommended Implementation</h3>
-<p>Use the same template-based system as the business cards. The user should enter their brand details once and have them populate automatically across all stationery products.</p>
+<h3>How this tool works</h3>
+<p>Your brand details from setup fill the letterhead automatically, so quotes, proposals, and business paperwork stay consistent.</p>
 
 <h3>Include These Fields</h3>
 <ul>
@@ -541,8 +540,8 @@ const MTK_BIAB_CONFIG = {
                 content: {
                   title: "Envelope Designer",
                   body: `<div data-stationery-designer-panel="envelope"></div><p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
-<h3>Recommended Implementation</h3>
-<p>Use simple templates. This is not the place for heavy design. The goal is a clean, branded envelope that feels professional.</p>
+<h3>How this tool works</h3>
+<p>Choose a simple branded envelope layout. The goal is a clean professional return area that prints clearly and keeps postal space open.</p>
 
 <h3>Recommended Fields</h3>
 <ul>
@@ -576,7 +575,7 @@ const MTK_BIAB_CONFIG = {
                 content: {
                   title: "Logo Concepts",
                   body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fbf4e5;color:#4a3a08;font-size:12px;font-weight:700;text-transform:uppercase;">Starter</span></p>
-<p>This prototype uses free Google Fonts and temporary in-house SVG icons so the workflow can be tested now. <strong>Before production, buy a premium locksmith icon pack and a licensed production font set.</strong></p>
+<p>Choose a simple logo direction that works on your website, invoices, Google profile, shirts, and vehicle graphics. Strong logos stay readable at small sizes and avoid extra detail.</p>
 <div data-logo-designer-panel="concepts"></div>`
                 }
               },
@@ -587,7 +586,7 @@ const MTK_BIAB_CONFIG = {
                 content: {
                   title: "Brand Guidelines",
                   body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fff4e5;color:#8a4b00;font-size:12px;font-weight:700;text-transform:uppercase;">Intermediate</span></p>
-<p>These guidelines are generated from the user’s live logo selections so the output feels like a real starter brand system instead of static advice.</p>
+<p>These guidelines are generated from your logo selections, colors, and business details so the brand kit stays consistent across your materials.</p>
 <div data-logo-designer-panel="guidelines"></div>`
                 }
               },
@@ -598,7 +597,7 @@ const MTK_BIAB_CONFIG = {
                 content: {
                   title: "Logo Variations",
                   body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fff4e5;color:#8a4b00;font-size:12px;font-weight:700;text-transform:uppercase;">Intermediate</span></p>
-<p>The variation pack below shows the same logo system adapted for light, dark, social, favicon, and one-color use so buyers understand what a production handoff should include.</p>
+<p>The variation pack below shows your logo adapted for light, dark, social, favicon, and one-color use.</p>
 <div data-logo-designer-panel="variations"></div>`
                 }
               },
@@ -609,7 +608,7 @@ const MTK_BIAB_CONFIG = {
                 content: {
                   title: "Logo Downloads",
                   body: `<p><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#fff4e5;color:#8a4b00;font-size:12px;font-weight:700;text-transform:uppercase;">Professional</span></p>
-<p>Download a production starter package with SVG logo files, color notes, and usage guidance for web, invoices, social profiles, and print handoff.</p>
+<p>Download SVG logo files, color notes, and usage guidance for your website, invoices, social profiles, and print materials.</p>
 <div data-logo-designer-panel="downloads"></div>`
                 }
               }

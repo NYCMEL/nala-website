@@ -1244,7 +1244,7 @@ class MtkBiab {
 
             <div class="mtk-biab__logo-control-group">
               <h3>Icon library</h3>
-              <p>Starter test icons for locksmith brands. These are intentionally simple so they remain readable on vans, invoices, and social avatars.</p>
+              <p>Choose one clear symbol for your logo. Simple icons stay readable on vans, invoices, and social avatars.</p>
               ${state.customLogo ? '<p><strong>Custom logo uploaded.</strong> It will be used in previews and stationery until another logo is chosen.</p>' : ''}
               <div class="mtk-biab__logo-option-grid">
                 ${MTK_BIAB_LOGO_ICONS.map(option => `
@@ -1258,7 +1258,7 @@ class MtkBiab {
 
             <div class="mtk-biab__logo-control-group">
               <h3>Color schemes</h3>
-              <p>Each scheme is built for contrast, vehicle readability, and a practical locksmith positioning.</p>
+              <p>Each scheme is built for contrast, visibility, and a professional locksmith brand feel.</p>
               <div class="mtk-biab__logo-option-grid">
                 ${MTK_BIAB_LOGO_PALETTES.map(option => `
                   <button type="button" class="mtk-biab__logo-swatch-card${option.key === state.paletteKey ? ' is-active' : ''}" data-action="logo-set-palette" data-logo-value="${option.key}">
@@ -1378,12 +1378,12 @@ class MtkBiab {
           </div>
 
           <div class="mtk-biab__logo-guideline-card">
-            <h4>Production checklist</h4>
+            <h4>Logo quality checklist</h4>
             <ul>
-              <li>Replace test icons with a premium locksmith icon pack.</li>
-              <li>Replace free prototype fonts with the licensed production set you choose.</li>
-              <li>Export SVG, transparent PNG, PDF, and one-color embroidery-safe files.</li>
-              <li>Test on a white invoice, dark website header, and a van mockup before final approval.</li>
+              <li>Keep the icon simple enough to recognize at small sizes.</li>
+              <li>Keep the business name readable without stretching or outlining the type.</li>
+              <li>Use the same colors across the website, invoices, Google profile, and print materials.</li>
+              <li>Check the logo on a white invoice, dark website header, shirt, and vehicle graphic.</li>
             </ul>
           </div>
         </div>
@@ -1401,7 +1401,7 @@ class MtkBiab {
     mount.innerHTML = `
       <section class="mtk-biab__logo-variations">
         <div class="mtk-biab__logo-note">
-          <strong>Step 3:</strong> inspect the production variations. A real handoff should include dark, light, social, favicon, one-color, and vehicle/banner versions.
+          <strong>Step 3:</strong> review the logo versions you can use across the website, social profiles, favicon, invoices, and vehicle graphics.
         </div>
 
         <div class="mtk-biab__logo-preview-area mtk-biab__logo-preview-area--hero">

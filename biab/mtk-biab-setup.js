@@ -123,7 +123,7 @@
     "Customer": "Cliente",
     "Source:": "Origen:",
     "Invoice": "Factura",
-    "Production icons and fonts are placeholders for now and should be replaced with licensed assets later.": "Los iconos y fuentes de producción son marcadores temporales por ahora y deben reemplazarse más adelante por recursos con licencia.",
+    "Your brand kit uses your selected color scheme across the website, logo, invoices, and marketing materials.": "Tu kit de marca usa el esquema de color seleccionado en el sitio web, logo, facturas y materiales de marketing.",
     "Service area:": "Área de servicio:",
     "Launch services:": "Servicios de lanzamiento:",
     "clear pricing, professional arrival, clean work, ETA updates, detailed invoices, and review follow-up.": "precios claros, llegada profesional, trabajo limpio, actualizaciones de ETA, facturas detalladas y seguimiento de reseñas.",
@@ -133,7 +133,7 @@
     "Create logo here": "Crear logo aquí",
     "Create in logo step": "Crear en el paso de logo",
     "Upload existing logo": "Subir logo existente",
-    "Production logo needed later": "Logo de producción necesario más adelante",
+    "Finish logo later": "Terminar logo más adelante",
     "Not selected": "No seleccionado",
     "Not decided": "No decidido",
     "Completed": "Completado",
@@ -201,7 +201,7 @@
     "Payment processor *": "Procesador de pagos *",
     "PayPal Business": "PayPal Business",
     "Bookkeeping setup *": "Configuración de contabilidad *",
-    "Production fonts and icons later": "Fuentes e iconos de producción más adelante",
+    "Brand choices": "Opciones de marca",
     "Choose a brand direction that can carry through the actual website, logo, invoices, review emails, stationery, ads, and other marketing.": "Elige una dirección de marca que funcione en el sitio web real, logo, facturas, correos de reseñas, papelería, anuncios y otros materiales de marketing.",
     "Confident, established, and polished": "Confiable, establecido y pulido",
     "Crisp, clear, and highly credible": "Nítido, claro y muy creíble",
@@ -225,13 +225,17 @@
     "Security-focused and reassuring": "Enfocado en seguridad y confianza",
     "Logo status *": "Estado del logo *",
     "Logo and icon creation": "Creación de logo e icono",
-    "Create a simple locksmith logo direction using placeholder icons, letters, background shapes, and the selected brand colors, or upload an existing icon/logo instead.": "Crea una dirección simple de logo de cerrajería usando iconos, letras, formas de fondo y colores de marca temporales, o sube un icono/logo existente.",
+    "Create a clean locksmith logo using an icon, initials, layout, type style, and the selected brand colors, or upload an existing logo instead.": "Crea un logo limpio de cerrajería usando un icono, iniciales, diseño, estilo tipográfico y los colores de marca seleccionados, o sube un logo existente.",
     "Logo guidance follows common branding practice: keep it simple, scalable, readable at small sizes, and usable in full-color, one-color, and reversed versions.": "La guía de logo sigue prácticas comunes de marca: mantenlo simple, escalable, legible en tamaños pequeños y usable en versiones a color, de un color e invertidas.",
     "Choose whether to create a logo direction here or upload an existing icon/logo.": "Elige si quieres crear una dirección de logo aquí o subir un icono/logo existente.",
     "Choose a simple background shape that still works at favicon, invoice, shirt, van, and Google profile sizes.": "Elige una forma de fondo simple que funcione como favicon, en facturas, camisetas, vehículo y perfil de Google.",
     "Use the brand color scheme from the previous step and keep the mark readable in one color.": "Usa el esquema de color de marca del paso anterior y mantén la marca legible en un solo color.",
-    "Treat the generated icon/font choices as placeholders until production licensed assets are purchased.": "Trata los iconos y fuentes generados como temporales hasta comprar recursos con licencia para producción.",
+    "Review the logo previews before applying the logo to the website.": "Revisa las vistas previas del logo antes de aplicarlo al sitio web.",
     "Logo path *": "Ruta del logo *",
+    "Icon style *": "Estilo de icono *",
+    "Template direction *": "Dirección de plantilla *",
+    "Type style *": "Estilo tipográfico *",
+    "Primary variation *": "Variación principal *",
     "Service Wordmark": "Marca denominativa de servicio",
     "Horizontal lockup for vehicle wraps, Google profile art, and website headers.": "Composición horizontal para rotulación de vehículo, arte del perfil de Google y encabezados del sitio.",
     "Security-forward badge direction for rekeys, property managers, and commercial accounts.": "Dirección tipo insignia centrada en seguridad para rekeys, administradores de propiedades y cuentas comerciales.",
@@ -242,14 +246,23 @@
     "Square ads and flyers.": "Anuncios cuadrados y volantes.",
     "Uniforms, decals, and favicons.": "Uniformes, calcomanías y favicons.",
     "Small social avatar and favicon.": "Avatar social pequeño y favicon.",
-    "Placeholder upload field for now. Production should store SVG/PNG assets and generate logo kit variants.": "Campo de carga temporal por ahora. Producción debe guardar recursos SVG/PNG y generar variantes del kit de logo.",
-    "Logo notes": "Notas del logo",
+    "Upload an SVG, PNG, JPG, or WebP logo. The preview will use the uploaded artwork.": "Sube un logo SVG, PNG, JPG o WebP. La vista previa usará el arte subido.",
+    "Logo quality checklist": "Lista de calidad del logo",
     "Your Locksmith": "Tu cerrajero",
     "Mobile Locksmith Service": "Servicio móvil de cerrajería",
+    "Starter logo preview": "Vista previa inicial del logo",
+    "Uploaded artwork will appear in the preview cards below.": "El arte subido aparecerá en las tarjetas de vista previa de abajo.",
+    "Readable": "Legible",
+    "Simple": "Simple",
+    "Flexible": "Adaptable",
     "Light background": "Fondo claro",
-    "Replace placeholder icons and fonts with licensed production assets.": "Reemplaza los iconos y fuentes temporales por recursos de producción con licencia.",
-    "Export SVG, transparent PNG, one-color, reversed, favicon, and vehicle/banner versions.": "Exporta versiones SVG, PNG transparente, un color, invertida, favicon y vehículo/banner.",
-    "Test the logo on the website header, Google profile, invoice, shirt, and vehicle mockup.": "Prueba el logo en el encabezado del sitio, perfil de Google, factura, camiseta y mockup de vehículo.",
+    "Keep your business name readable at small sizes.": "Mantén el nombre del negocio legible en tamaños pequeños.",
+    "Use one strong icon or initials instead of combining several ideas.": "Usa un icono fuerte o iniciales en lugar de combinar muchas ideas.",
+    "Check the light, dark, square, and horizontal previews before applying the logo.": "Revisa las vistas clara, oscura, cuadrada y horizontal antes de aplicar el logo.",
+    "Logo kit": "Kit de logo",
+    "Use these versions across your website, invoices, Google profile, social accounts, shirts, and vehicle graphics.": "Usa estas versiones en tu sitio web, facturas, Perfil de Google, redes sociales, camisetas y gráficos de vehículo.",
+    "Download the SVG draft for records or outside design work.": "Descarga el borrador SVG para tus archivos o para trabajo de diseño externo.",
+    "Apply the selected logo to the website when the preview looks right.": "Aplica el logo seleccionado al sitio web cuando la vista previa se vea correcta.",
     "Download SVG draft": "Descargar borrador SVG",
     "Apply to website": "Aplicar al sitio web",
     "Google Business Profile setup": "Configuración del Perfil de Empresa de Google",
@@ -751,6 +764,10 @@
         return this.renderLogoChoiceGroup(field, LOGO_VARIATIONS, "logoVariation", "variations");
       }
 
+      if (field.type === "logo-guidance") {
+        return this.renderLogoGuidance();
+      }
+
       if (field.type === "logo-preview") {
         return this.renderLogoPreview(field);
       }
@@ -794,15 +811,37 @@
       return `
         <section class="mtk-biab-setup__logo-designer">
           <div class="mtk-biab-setup__logo-summary">
-            <span>Research-based starter direction</span>
+            <span>Starter logo preview</span>
             <h2>${this.escape(template.label)}</h2>
-            <p>${this.escape(source === "Upload existing icon/logo" ? "Uploaded artwork will replace the generated placeholder in previews and the website handoff." : template.summary)}</p>
+            <p>${this.escape(source === "Upload existing icon/logo" ? "Uploaded artwork will appear in the preview cards below." : template.summary)}</p>
           </div>
           <div class="mtk-biab-setup__logo-preview-grid">
             ${this.renderLogoPreviewCard("Primary concept", "primary-dark")}
             ${this.renderLogoPreviewCard("Light background", "primary-light")}
             ${this.renderLogoPreviewCard("Social / favicon", "icon-only")}
             ${this.renderLogoPreviewCard("Vehicle banner", "horizontal")}
+          </div>
+        </section>
+      `;
+    }
+
+    renderLogoGuidance() {
+      const tips = [
+        { icon: "visibility", title: "Readable", text: "Keep your business name readable at small sizes." },
+        { icon: "filter_1", title: "Simple", text: "Use one strong icon or initials instead of combining several ideas." },
+        { icon: "contrast", title: "Flexible", text: "Check the light, dark, square, and horizontal previews before applying the logo." }
+      ];
+      return `
+        <section class="mtk-biab-setup__logo-guidance" aria-label="Logo quality checklist">
+          <h2>Logo quality checklist</h2>
+          <div>
+            ${tips.map(tip => `
+              <article>
+                <span class="material-icons" aria-hidden="true">${this.escape(tip.icon)}</span>
+                <strong>${this.escape(tip.title)}</strong>
+                <p>${this.escape(tip.text)}</p>
+              </article>
+            `).join("")}
           </div>
         </section>
       `;
@@ -826,11 +865,11 @@
     renderLogoHandoff() {
       return `
         <section class="mtk-biab-setup__logo-handoff">
-          <h2>Production handoff</h2>
+          <h2>Logo kit</h2>
           <ul>
-            <li>Replace placeholder icons and fonts with licensed production assets.</li>
-            <li>Export SVG, transparent PNG, one-color, reversed, favicon, and vehicle/banner versions.</li>
-            <li>Test the logo on the website header, Google profile, invoice, shirt, and vehicle mockup.</li>
+            <li>Use these versions across your website, invoices, Google profile, social accounts, shirts, and vehicle graphics.</li>
+            <li>Download the SVG draft for records or outside design work.</li>
+            <li>Apply the selected logo to the website when the preview looks right.</li>
           </ul>
           <div>
             <button type="button" class="mtk-biab-setup__btn" data-biab-action="logo-download">Download SVG draft</button>
@@ -937,7 +976,7 @@
       }
 
       if (mode === "brand") {
-        return `<div class="mtk-biab-setup__tool-grid">${this.cfg.palettes.map(palette => `<article class="mtk-biab-setup__tool-card"><span class="mtk-biab-setup__swatches">${palette.colors.map(color => `<i style="background:${this.escape(color)}"></i>`).join("")}</span><h2>${this.escape(palette.name)}</h2><p>${this.escape(palette.position)}</p></article>`).join("")}</div><p class="mtk-biab-setup__source-note">Production icons and fonts are placeholders for now and should be replaced with licensed assets later.</p>`;
+        return `<div class="mtk-biab-setup__tool-grid">${this.cfg.palettes.map(palette => `<article class="mtk-biab-setup__tool-card"><span class="mtk-biab-setup__swatches">${palette.colors.map(color => `<i style="background:${this.escape(color)}"></i>`).join("")}</span><h2>${this.escape(palette.name)}</h2><p>${this.escape(palette.position)}</p></article>`).join("")}</div><p class="mtk-biab-setup__source-note">Your brand kit uses your selected color scheme across the website, logo, invoices, and marketing materials.</p>`;
       }
 
       if (mode === "business-plan") {

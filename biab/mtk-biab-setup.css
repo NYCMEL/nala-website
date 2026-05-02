@@ -717,6 +717,7 @@
 }
 
 .mtk-biab-setup__logo-designer,
+.mtk-biab-setup__logo-guidance,
 .mtk-biab-setup__logo-handoff {
   grid-column: 1 / -1;
   display: grid;
@@ -724,6 +725,7 @@
 }
 
 .mtk-biab-setup__logo-summary,
+.mtk-biab-setup__logo-guidance,
 .mtk-biab-setup__logo-handoff {
   border: 1px solid var(--biab-line);
   border-radius: 6px;
@@ -740,9 +742,53 @@
 }
 
 .mtk-biab-setup__logo-summary h2,
+.mtk-biab-setup__logo-guidance h2,
 .mtk-biab-setup__logo-handoff h2 {
   margin: 4px 0 6px;
   font-size: 20px;
+}
+
+.mtk-biab-setup__logo-guidance {
+  background: #ffffff;
+}
+
+.mtk-biab-setup__logo-guidance > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.mtk-biab-setup__logo-guidance article {
+  min-width: 0;
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  border: 1px solid var(--biab-line);
+  border-radius: 6px;
+  padding: 12px;
+  background: var(--biab-panel-soft);
+}
+
+.mtk-biab-setup__logo-guidance .material-icons {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  color: var(--biab-ink);
+  background: #f2dfad;
+  font-size: 20px;
+}
+
+.mtk-biab-setup__logo-guidance strong {
+  font-size: 14px;
+}
+
+.mtk-biab-setup__logo-guidance p {
+  margin: 0;
+  color: var(--biab-muted);
+  font-size: 13px;
+  line-height: 1.45;
 }
 
 .mtk-biab-setup__logo-preview-grid {
@@ -1098,6 +1144,7 @@
   }
 
   .mtk-biab-setup__logo-choices > div,
+  .mtk-biab-setup__logo-guidance > div,
   .mtk-biab-setup__logo-preview-grid {
     grid-template-columns: 1fr;
   }
