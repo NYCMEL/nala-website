@@ -87,7 +87,6 @@
                     price:       monthlyPrice(premiumTotal),
                     period:      t('path.premium.period'),
                     totalPrice:  t('path.totalPrice').replace('{price}', premiumTotal),
-                    discountNote: t('path.premium.addOnNote'),
                     bonusLabel:  t('path.bonusLabel'),
                     bonusText:   t('path.premium.bonus'),
                     description: t('path.premium.description'),
