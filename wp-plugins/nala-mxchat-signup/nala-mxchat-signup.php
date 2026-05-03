@@ -953,7 +953,7 @@ function nala_mxchat_signup_text(string $key, array $state): string
 
     $strings = [
         'en' => [
-            'ask_name' => 'I can help you create your free NALA account here. Please send your full name.',
+            'ask_name' => 'Great - I can help you create your free NALA account so you can start the lessons. Please send your full name.',
             'ask_email' => 'Thanks. What email should we use for your account?',
             'confirm_email' => 'Please confirm this email: ' . $email . '. Reply yes to continue, or send the correct email.',
             'invalid_email' => 'That email does not look valid. Please send the email you want to use for your account.',
@@ -965,7 +965,7 @@ function nala_mxchat_signup_text(string $key, array $state): string
             'cancelled' => 'No problem. I stopped the chat signup. You can still use the [Register page](' . $register_link . ') whenever you are ready.',
         ],
         'es' => [
-            'ask_name' => 'Puedo ayudarte a crear tu cuenta gratis de NALA aqui. Envia tu nombre completo.',
+            'ask_name' => 'Excelente - puedo ayudarte a crear tu cuenta gratis de NALA para que empieces las lecciones. Envia tu nombre completo.',
             'ask_email' => 'Gracias. Que correo electronico debemos usar para tu cuenta?',
             'confirm_email' => 'Confirma este correo: ' . $email . '. Responde si para continuar, o envia el correo correcto.',
             'invalid_email' => 'Ese correo no parece valido. Envia el correo que quieres usar para tu cuenta.',
