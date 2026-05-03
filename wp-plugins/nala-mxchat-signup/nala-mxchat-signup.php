@@ -238,7 +238,9 @@ function nala_mxchat_signup_detect_language(string $message, string $fallback = 
         'certificacion', 'estudiantes', 'anos', 'negocio en una caja',
         'privacidad', 'politica', 'politicas', 'terminos', 'condiciones',
         'reembolso', 'devolucion', 'cuanto dura', 'duracion', 'lecciones',
-        'modulos', 'envio', 'entrega', 'ganzuas', 'herramientas'
+        'modulos', 'envio', 'entrega', 'ganzuas', 'herramientas',
+        'sin dinero', 'no tengo dinero', 'estoy quebrado', 'estoy quebrada',
+        'no puedo pagar', 'no me alcanza'
     ];
 
     foreach ($spanish_terms as $term) {
@@ -296,8 +298,10 @@ function nala_mxchat_signup_personal_context(string $normalized): array
         ]),
         'price_sensitive' => nala_mxchat_signup_contains_any($normalized, [
             'too expensive', 'expensive', 'cant afford', 'cannot afford', 'budget',
-            'cheap', 'discount', 'payment plan', 'klarna', 'costs too much',
+            'broke', 'no money', 'money is tight', 'tight on money', 'strapped',
+            'cash is tight', 'cheap', 'discount', 'payment plan', 'klarna', 'costs too much',
             'muy caro', 'demasiado caro', 'no puedo pagar', 'presupuesto',
+            'sin dinero', 'estoy quebrado', 'estoy quebrada', 'no tengo dinero',
             'descuento', 'plan de pago'
         ]),
         'job_goal' => nala_mxchat_signup_contains_any($normalized, [
@@ -491,8 +495,11 @@ function nala_mxchat_signup_fast_answer(string $message): string
     ]);
     $asks_price_objection = nala_mxchat_signup_contains_any($normalized, [
         'too expensive', 'expensive', 'cant afford', 'cannot afford',
-        'not affordable', 'costs too much', 'cost too much',
-        'muy caro', 'demasiado caro', 'no puedo pagar', 'no me alcanza'
+        'not affordable', 'costs too much', 'cost too much', 'broke',
+        'no money', 'money is tight', 'tight on money', 'strapped',
+        'cash is tight',
+        'muy caro', 'demasiado caro', 'no puedo pagar', 'no me alcanza',
+        'sin dinero', 'estoy quebrado', 'estoy quebrada', 'no tengo dinero'
     ]);
     $asks_think_or_family = nala_mxchat_signup_contains_any($normalized, [
         'need to think', 'think about it', 'talk to my wife', 'talk to my husband',
@@ -555,10 +562,10 @@ function nala_mxchat_signup_fast_answer(string $message): string
 
     if ($asks_price_objection) {
         if ($lang === 'es') {
-            return 'Tiene sentido revisar el valor antes de comprar. NALA te deja empezar gratis primero; si el entrenamiento te convence, Premium agrega el curso completo, certificacion y kit, y Business in a Box agrega herramientas para lanzar el negocio.' . $personal('price') . ' Puedes [empezar con las lecciones gratis](' . $register_link . ') y actualizar cuando estes listo.';
+            return 'Lo entiendo. Si el dinero esta apretado, no tienes que comprar hoy: empieza gratis y prueba si el entrenamiento te motiva. La razon por la que Premium puede valer la pena es que no estas comprando solo informacion; estas construyendo una habilidad practica que puede abrir trabajos pagados. No se garantizan ingresos, pero unos pocos servicios reales pueden ayudar a recuperar la inversion con el tiempo.' . nala_mxchat_signup_klarna_payment_phrase($lang) . ' Empieza aqui: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
         }
 
-        return 'It makes sense to look at the value before buying. NALA lets you start free first; if the training feels right, Premium adds the full course, certification path, and kit, while Business in a Box adds the tools to launch the business.' . $personal('price') . ' You can [start with the free lessons](' . $register_link . ') and upgrade when you are ready.';
+        return 'I understand. If money is tight, you do not have to buy today: start free and see if the training feels right. The reason Premium can still make sense is that you are not just buying information; you are building a practical skill that can lead to paid locksmith work. Income is not guaranteed, but a few real jobs can help the training pay for itself over time.' . nala_mxchat_signup_klarna_payment_phrase($lang) . ' Start here: [Start free lessons / Register](' . $register_link . ').';
     }
 
     if ($asks_think_or_family) {
@@ -699,6 +706,26 @@ function nala_mxchat_signup_message_asks_pricing(string $message): bool
         'price', 'pricing', 'cost', 'klarna', 'payment plan', 'how much',
         'cuanto cuesta', 'precio', 'costo', 'plan de pago'
     ]);
+}
+
+function nala_mxchat_signup_klarna_payment_phrase(string $lang): string
+{
+    $prices = nala_mxchat_signup_pricing_data();
+    $premium = nala_mxchat_signup_format_plan_price($prices['premium'] ?? []);
+
+    if ($lang === 'es') {
+        if ($premium) {
+            return ' Cuando estes listo, Klarna puede mostrar Premium como ' . $premium['monthly'] . ' por mes durante 24 meses en checkout, sujeto a aprobacion.';
+        }
+
+        return ' Cuando estes listo, Klarna puede ayudar a dividir el pago durante 24 meses en checkout, sujeto a aprobacion.';
+    }
+
+    if ($premium) {
+        return ' When you are ready, Klarna may show Premium as ' . $premium['monthly'] . ' per month for 24 months at checkout, subject to approval.';
+    }
+
+    return ' When you are ready, Klarna may help spread the payment over 24 months at checkout, subject to approval.';
 }
 
 function nala_mxchat_signup_current_request_message(): string
