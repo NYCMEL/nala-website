@@ -321,34 +321,34 @@ function nala_mxchat_signup_fast_answer(string $message): string
 
     if ($asks_course_length) {
         if ($lang === 'es') {
-            return 'El programa es a tu propio ritmo. La pagina del plan de estudios indica una duracion estimada de 6 a 12 meses, y el curriculo actual del panel esta organizado en 6 partes, 12 modulos, 45 lecciones y un paso final de certificacion.';
+            return 'El programa es a tu propio ritmo, asi que puedes avanzar segun tu horario. Planifica aproximadamente 6 a 12 meses. Incluye 6 partes, 12 modulos, 45 lecciones y un paso final de certificacion. Esa estructura te ayuda a repetir lecciones, practicar y ganar confianza real en cerrajeria. Puedes [empezar con las lecciones gratis](' . $register_link . ').';
         }
 
-        return 'The program is self-paced. The curriculum page lists an estimated 6-12 month duration, and the current student curriculum is organized into 6 parts, 12 modules, 45 lessons, and a final certification step.';
+        return 'The program is self-paced, so you can move through it around your schedule. Plan for about 6-12 months. It includes 6 parts, 12 modules, 45 lessons, and a final certification step. That structure gives you time to replay lessons, practice, and build real locksmith confidence. You can [start with the free lessons](' . $register_link . ').';
     }
 
     if ($asks_price_objection) {
         if ($lang === 'es') {
-            return 'Tiene sentido mirar el valor antes de comprar. Puedes empezar con las lecciones gratis primero y decidir despues. Premium incluye el entrenamiento completo, el camino de certificacion y el kit de apertura de autos; Business in a Box agrega sitio web, logo, facturas, flujo de resenas y un set de herramientas de lockpick. Cuando Klarna esta disponible, divide el total en 24 meses.';
+            return 'Tiene sentido mirar el valor antes de comprar. Lo bueno de NALA es que puedes empezar gratis y ver el estilo del programa primero. Premium agrega el entrenamiento completo, camino de certificacion y kit de apertura de autos; Business in a Box suma sitio web, logo, facturas, resenas y herramientas para lanzar el negocio. Puedes [empezar con las lecciones gratis](' . $register_link . ') y actualizar cuando estes listo.';
         }
 
-        return 'It makes sense to weigh the value before buying. You can start with the free lessons first and decide later. Premium includes full training, the certification path, and a car lockout kit; Business in a Box adds the website, logo, invoice tool, review workflow, and a lock pick tool set. When Klarna is available, it divides the total over 24 months.';
+        return 'It makes sense to weigh the value before buying. The good part is that NALA lets you start free and see the training style first. Premium adds full training, the certification path, and a car lockout kit; Business in a Box adds the website, logo, invoice tool, review workflow, and business launch tools. You can [start with the free lessons](' . $register_link . ') and upgrade when you are ready.';
     }
 
     if ($asks_think_or_family) {
         if ($lang === 'es') {
-            return 'Claro. Una buena forma de decidir sin presion es empezar con las lecciones gratis o compartir la pagina de registro con quien quieras consultarlo. Puedes ver el programa primero y actualizar despues si te conviene.';
+            return 'Claro. Una buena forma de decidir sin presion es empezar con las lecciones gratis y ver si el estilo de NALA te motiva. El programa esta hecho para avanzar paso a paso, repetir lecciones y construir habilidades reales. Puedes compartir la [pagina de registro](' . $register_link . ') y volver cuando estes listo.';
         }
 
-        return 'Of course. A good no-pressure next step is to start the free lessons or share the registration page with whoever you want to discuss it with. You can preview the program first and upgrade later if it fits.';
+        return 'Of course. A smart no-pressure next step is to start the free lessons and see whether NALA feels like the right fit. The program is built step by step, with replayable lessons and practical skills you can grow into. You can share the [registration page](' . $register_link . ') and come back when you are ready.';
     }
 
     if ($asks_success) {
         if ($lang === 'es') {
-            return 'El programa esta disenado para principiantes: es a tu propio ritmo, puedes repetir lecciones y avanzas con practica, materiales y quizzes. No puedo garantizar resultados, empleo o ingresos, pero el camino esta pensado para ayudarte a construir habilidades reales de cerrajeria.';
+            return 'Si. NALA esta disenado para principiantes motivados: es a tu propio ritmo, puedes repetir lecciones y avanzas con practica, materiales y quizzes. No se garantizan empleo o ingresos, pero el camino te ayuda a construir habilidades reales y prepararte con mas confianza. Puedes [empezar gratis](' . $register_link . ') y ver el ritmo.';
         }
 
-        return 'The program is built for beginners: it is self-paced, lessons are replayable, and you progress through practice, materials, and quizzes. I cannot guarantee results, jobs, or income, but the path is designed to help you build real locksmith skills.';
+        return 'Yes. NALA is built for motivated beginners: it is self-paced, lessons are replayable, and you progress through practice, materials, and quizzes. Jobs or income are not guaranteed, but the path is designed to help you build real locksmith skills and confidence. You can [start free](' . $register_link . ') and get a feel for it.';
     }
 
     if ($asks_price) {
@@ -357,61 +357,61 @@ function nala_mxchat_signup_fast_answer(string $message): string
 
     if ($asks_kit) {
         if ($lang === 'es') {
-            return 'Premium incluye un kit de apertura de autos con la compra. Business in a Box incluye un set de herramientas de lockpick con la compra. Los contenidos exactos y el tiempo de envio aun se estan finalizando; se espera que los kits se obtengan internacionalmente y se envien a EE. UU. Se pueden enviar a cualquier lugar de EE. UU.';
+            return 'Premium incluye un kit de apertura de autos con la compra, lo cual ayuda a conectar el entrenamiento con herramientas reales. Business in a Box incluye un set de herramientas de lockpick con la compra. Los contenidos exactos y el tiempo de envio aun se estan finalizando, pero se pueden enviar a cualquier lugar de EE. UU. Puedes [registrarte y empezar gratis](' . $register_link . ') antes de actualizar.';
         }
 
-        return 'Premium includes a car lockout kit with purchase. Business in a Box includes a lock pick tool set with purchase. Exact contents and shipping timing are still being finalized; the kits are expected to be sourced internationally and shipped to the U.S. They can be sent anywhere in the U.S.';
+        return 'Premium includes a car lockout kit with purchase, which helps connect the training to real tools. Business in a Box includes a lock pick tool set with purchase. Exact contents and shipping timing are still being finalized, but kits can be sent anywhere in the U.S. You can [register and start free](' . $register_link . ') before upgrading.';
     }
 
     if ($asks_refund) {
         if ($lang === 'es') {
-            return 'NALA tiene una politica estricta de no reembolsos una vez que se emite el acceso a la cuenta y al contenido del curso. Revisa los [Terminos y Condiciones](docs/Terms%20and%20Conditions.pdf) antes de comprar, y contacta ' . $support_link . ' si necesitas ayuda general.';
+            return 'NALA tiene una politica estricta de no reembolsos una vez que se emite el acceso a la cuenta y al contenido del curso. Por eso conviene empezar con las lecciones gratis, revisar los [Terminos y Condiciones](docs/Terms%20and%20Conditions.pdf), y comprar cuando estes listo para comprometerte con el entrenamiento.';
         }
 
-        return 'NALA has a strict no-refunds policy once account access to the course platform is issued. Please review the [Terms and Conditions](docs/Terms%20and%20Conditions.pdf) before purchase, and contact ' . $support_link . ' if you need general help.';
+        return 'NALA has a strict no-refunds policy once account access to the course platform is issued. That is why it is smart to start with the free lessons, review the [Terms and Conditions](docs/Terms%20and%20Conditions.pdf), and purchase when you are ready to commit to the training.';
     }
 
     if ($asks_privacy) {
         if ($lang === 'es') {
-            return 'La [Politica de Privacidad](docs/Privacy%20Policy.pdf) explica que NALA puede recopilar datos de cuenta, curso, compra, uso del sitio y cookies para operar y mejorar los servicios. Los datos sensibles de tarjeta se manejan por procesadores de pago, no por el chat.';
+            return 'NALA usa datos de cuenta, curso, compra, uso del sitio y cookies para operar y mejorar el programa. Los datos sensibles de tarjeta los manejan procesadores de pago, no el chat. Puedes revisar la [Politica de Privacidad](docs/Privacy%20Policy.pdf) antes de registrarte y luego [empezar las lecciones gratis](' . $register_link . ').';
         }
 
-        return 'The [Privacy Policy](docs/Privacy%20Policy.pdf) explains that NALA may collect account, course, purchase, site-use, and cookie data to operate and improve the services. Sensitive card details are handled by payment processors, not by the chat.';
+        return 'NALA uses account, course, purchase, site-use, and cookie data to operate and improve the program. Sensitive card details are handled by payment processors, not by chat. You can review the [Privacy Policy](docs/Privacy%20Policy.pdf) before registering, then [start the free lessons](' . $register_link . ').';
     }
 
     if ($asks_terms) {
         if ($lang === 'es') {
-            return 'Los [Terminos y Condiciones](docs/Terms%20and%20Conditions.pdf) cubren elegibilidad, cuentas, acceso al curso, pagos, la politica de no reembolsos, reglas de conducta y limites legales. Tambien debes verificar los requisitos de licencia de tu estado o ciudad.';
+            return 'Los [Terminos y Condiciones](docs/Terms%20and%20Conditions.pdf) cubren elegibilidad, cuentas, acceso al curso, pagos, no reembolsos, reglas de conducta y limites legales. Tambien debes verificar requisitos de licencia locales. Es una buena lectura antes de comprar; despues puedes [empezar gratis](' . $register_link . ') y ver el programa.';
         }
 
-        return 'The [Terms and Conditions](docs/Terms%20and%20Conditions.pdf) cover eligibility, accounts, course access, payments, the no-refunds policy, conduct rules, and legal limits. You should also verify licensing requirements in your own state or city.';
+        return 'The [Terms and Conditions](docs/Terms%20and%20Conditions.pdf) cover eligibility, accounts, course access, payments, no refunds, conduct rules, and legal limits. You should also verify local licensing requirements. It is a smart read before buying; then you can [start free](' . $register_link . ') and preview the program.';
     }
 
     if ($asks_placement) {
         if ($lang === 'es') {
-            return 'NALA actualmente destaca un 95% de colocacion laboral. Eso no es una garantia de empleo, ingresos, licencia o aprobacion; el programa esta disenado para ayudarte a desarrollar habilidades, seguir el camino de certificacion y prepararte para oportunidades reales.';
+            return 'NALA destaca un 95% de colocacion laboral. Eso no garantiza empleo, ingresos, licencia o aprobacion, pero muestra el enfoque practico del programa: habilidades reales, camino de certificacion y preparacion para oportunidades. Puedes [empezar con las lecciones gratis](' . $register_link . ') y ver si es el camino para ti.';
         }
 
-        return 'NALA currently highlights 95% job placement. That is not a guarantee of employment, income, licensing, or approval; the program is designed to help you build skills, follow the certification path, and prepare for real opportunities.';
+        return 'NALA highlights 95% job placement. That is not a guarantee of employment, income, licensing, or approval, but it reflects the practical focus of the program: real skills, a certification path, and preparation for opportunities. You can [start with the free lessons](' . $register_link . ') and see if it fits your goals.';
     }
 
     if ($asks_origin) {
         if ($lang === 'es') {
-            return 'NALA es un programa internacional de capacitacion en cerrajeria que ahora se esta expandiendo en EE. UU. No tengo aqui la fecha exacta de fundacion, pero NALA destaca mas de 10 anos de experiencia y mas de 20K estudiantes capacitados.';
+            return 'NALA es un programa internacional de capacitacion en cerrajeria que ahora se expande en EE. UU. Tiene mas de 10 anos de experiencia y mas de 20K estudiantes capacitados. Es una base fuerte si quieres aprender una habilidad practica con camino de certificacion. Puedes [empezar gratis](' . $register_link . ').';
         }
 
-        return 'NALA is an international locksmith training program now expanding in the U.S. I do not have the exact founding date here, but NALA highlights 10+ years of experience and 20K+ students trained.';
+        return 'NALA is an international locksmith training program now expanding in the U.S. It has 10+ years of experience and 20K+ students trained. That is a strong foundation if you want practical skills and a certification path. You can [start free](' . $register_link . ').';
     }
 
     if ($asks_identity || $asks_history || $asks_students) {
         if ($lang === 'es') {
-            return 'NALA es la North American Locksmith Association. Ofrece capacitacion online de cerrajeria enfocada en habilidades practicas y profesionales para trabajo automotriz, residencial, comercial, puertas y cajas fuertes.' . "\n\n"
+            return 'NALA es la North American Locksmith Association. Ofrece capacitacion online de cerrajeria enfocada en habilidades practicas para trabajo automotriz, residencial, comercial, puertas y cajas fuertes. Es una forma emocionante de aprender una habilidad real desde casa, a tu propio ritmo.' . "\n\n"
                 . '- Experiencia: mas de 10 anos' . "\n"
                 . '- Estudiantes capacitados: mas de 20K' . "\n\n"
                 . 'Puedes [empezar las lecciones gratis](' . $register_link . ').';
         }
 
-        return 'NALA is the North American Locksmith Association. It offers online locksmith training focused on practical, professional skills for automotive, residential, commercial, door, and safe-related work.' . "\n\n"
+        return 'NALA is the North American Locksmith Association. It offers online locksmith training focused on practical skills for automotive, residential, commercial, door, and safe-related work. It is an exciting way to build a real-world trade skill from home, at your own pace.' . "\n\n"
             . '- Experience: 10+ years' . "\n"
             . '- Students trained: 20K+' . "\n\n"
             . 'You can [start free lessons](' . $register_link . ').';
@@ -419,18 +419,18 @@ function nala_mxchat_signup_fast_answer(string $message): string
 
     if (nala_mxchat_signup_contains_any($normalized, ['business in a box', 'bib', 'business-in-a-box', 'negocio en una caja'])) {
         if ($lang === 'es') {
-            return 'Business in a Box te guia paso a paso para preparar partes clave de tu negocio de cerrajeria, incluyendo tu sitio web gratis, logo personalizado gratis, generador de facturas gratis, configuracion de pagos, fundamentos de SEO y materiales de lanzamiento. Tambien incluye un set de herramientas de lockpick con la compra de Business in a Box.';
+            return 'Business in a Box es el lado de lanzamiento del negocio: te guia paso a paso con sitio web gratis, logo personalizado gratis, generador de facturas gratis, pagos, SEO/local, resenas y materiales de lanzamiento. Tambien incluye un set de herramientas de lockpick con la compra. Si quieres convertir el entrenamiento en un negocio, es el upgrade mas completo.';
         }
 
-        return 'Business in a Box guides you step by step through key parts of launching your locksmith business, including your free website, free custom logo, free invoice creator, payment setup, SEO basics, and launch materials. It also includes a set of lockpick tools with the Business in a Box purchase.';
+        return 'Business in a Box is the business-launch side of NALA: it guides you step by step with a free website, free custom logo, free invoice creator, payment setup, SEO/local setup, reviews, and launch materials. It also includes a lock pick tool set with purchase. If you want to turn training into a business, it is the most complete upgrade.';
     }
 
     if (nala_mxchat_signup_contains_any($normalized, ['certification', 'certificate', 'certified', 'certificacion', 'certificado'])) {
         if ($lang === 'es') {
-            return 'Puedes obtener la certificacion de NALA completando el camino de entrenamiento requerido en tu panel de estudiante y terminando el paso final de certificacion. Tu panel muestra el progreso y las lecciones que faltan.';
+            return 'Puedes obtener la certificacion de NALA completando el camino de entrenamiento requerido y el paso final de certificacion en tu panel. Es una meta clara para avanzar con estructura y mostrar que completaste el programa. Puedes [empezar gratis](' . $register_link . ') y ver el camino.';
         }
 
-        return 'You can earn NALA certification by completing the required training path in your student dashboard and finishing the final certification step. Your dashboard shows your progress and remaining lessons.';
+        return 'You can earn NALA certification by completing the required training path and final certification step in your dashboard. It gives you a clear goal to work toward and a structured way to show you completed the program. You can [start free](' . $register_link . ') and see the path.';
     }
 
     if (nala_mxchat_signup_contains_any($normalized, ['support', 'contact', 'help with my account', 'login problem', 'cant log in', 'cannot log in', 'soporte', 'contacto', 'problema con mi cuenta', 'no puedo entrar'])) {
@@ -484,38 +484,38 @@ function nala_mxchat_signup_pricing_answer(string $lang, string $register_link):
 
     if (!$premium && !$business) {
         if ($lang === 'es') {
-            return 'Los precios actuales se muestran en el sitio y se actualizan desde el checkout. Cuando Klarna esta disponible, el pago mensual es el precio total dividido entre 24 meses. Puedes empezar con las [lecciones gratis](' . $register_link . ') antes de comprar.';
+            return 'NALA te deja empezar con lecciones gratis y actualizar cuando estes listo. Cuando Klarna esta disponible, el pago mensual se calcula sobre 24 meses. Premium desbloquea el entrenamiento completo, certificacion y kit; Business in a Box agrega herramientas para lanzar el negocio. Puedes [empezar gratis](' . $register_link . ') y ver las opciones de compra.';
         }
 
-        return 'Current pricing is shown on the site and updates from checkout pricing. When Klarna is available, the monthly payment is the total price divided over 24 months. You can start with the [free lessons](' . $register_link . ') before buying.';
+        return 'NALA lets you start with free lessons and upgrade when you are ready. When Klarna is available, monthly pricing is calculated over 24 months. Premium unlocks the full training, certification path, and kit; Business in a Box adds tools to launch the business. You can [start free](' . $register_link . ') and see the purchase options.';
     }
 
     if ($lang === 'es') {
-        $lines = ['Los precios actuales son:'];
+        $lines = ['NALA te deja empezar gratis y actualizar cuando estes listo. Las opciones son:'];
         if ($premium) {
-            $lines[] = '- Premium: ' . $premium['monthly'] . ' por mes durante 24 meses con Klarna. Precio total: ' . $premium['total'] . '.';
+            $lines[] = '- Premium: ' . $premium['monthly'] . ' por mes durante 24 meses con Klarna. Total: ' . $premium['total'] . '. Incluye entrenamiento completo, certificacion y kit de apertura de autos.';
         }
         if ($business) {
-            $lines[] = '- Premium + Business in a Box: ' . $business['monthly'] . ' por mes durante 24 meses con Klarna. Precio total: ' . $business['total'] . ' despues del descuento de paquete de ' . $business['discount'] . ' (total regular ' . $business['regular'] . '). Esto aplica si lo compras junto desde el inicio o agregas Negocio en una Caja durante el pago de Premium.';
+            $lines[] = '- Premium + Business in a Box: ' . $business['monthly'] . ' por mes durante 24 meses con Klarna. Total: ' . $business['total'] . ' despues del descuento de paquete de ' . $business['discount'] . ' (regular ' . $business['regular'] . '). Agrega sitio web, logo, facturas, resenas y herramientas de lanzamiento.';
         }
         if ($business_addon) {
-            $lines[] = '- Business in a Box despues de comprar Premium por separado: precio total ' . $business_addon['total'] . '.';
+            $lines[] = '- Business in a Box despues de comprar Premium por separado: total ' . $business_addon['total'] . '.';
         }
-        $lines[] = 'La disponibilidad y aprobacion de Klarna se confirman en checkout. Tambien puedes empezar con las [lecciones gratis](' . $register_link . ').';
+        $lines[] = 'Puedes [empezar con las lecciones gratis](' . $register_link . ') y actualizar cuando veas que NALA es el camino correcto para ti.';
         return implode("\n", $lines);
     }
 
-    $lines = ['Current pricing is:'];
+    $lines = ['NALA lets you start free and upgrade when you are ready. The options are:'];
     if ($premium) {
-        $lines[] = '- Premium: ' . $premium['monthly'] . ' per month for 24 months with Klarna. Total price: ' . $premium['total'] . '.';
+        $lines[] = '- Premium: ' . $premium['monthly'] . ' per month for 24 months with Klarna. Total: ' . $premium['total'] . '. Includes full training, certification path, and car lockout kit.';
     }
     if ($business) {
-        $lines[] = '- Premium + Business in a Box: ' . $business['monthly'] . ' per month for 24 months with Klarna. Total price: ' . $business['total'] . ' after the ' . $business['discount'] . ' bundle discount (regular total ' . $business['regular'] . '). This applies if you buy it together up front or add Business in a Box during Premium checkout.';
+        $lines[] = '- Premium + Business in a Box: ' . $business['monthly'] . ' per month for 24 months with Klarna. Total: ' . $business['total'] . ' after the ' . $business['discount'] . ' bundle discount (regular ' . $business['regular'] . '). Adds website, logo, invoices, reviews, and launch tools.';
     }
     if ($business_addon) {
-        $lines[] = '- Business in a Box after buying Premium separately: total price ' . $business_addon['total'] . '.';
+        $lines[] = '- Business in a Box after buying Premium separately: total ' . $business_addon['total'] . '.';
     }
-    $lines[] = 'Klarna availability and approval are confirmed at checkout. You can also start with the [free lessons](' . $register_link . ').';
+    $lines[] = 'You can [start with the free lessons](' . $register_link . ') and upgrade once you see NALA is the right path for you.';
     return implode("\n", $lines);
 }
 
