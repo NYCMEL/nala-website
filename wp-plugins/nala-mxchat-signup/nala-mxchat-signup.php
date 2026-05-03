@@ -267,6 +267,15 @@ function nala_mxchat_signup_fast_answer(string $message): string
         nala_mxchat_signup_contains_any($normalized, ['course', 'program', 'training', 'finish', 'complete', 'take', 'takes'])
     );
     $asks_price = nala_mxchat_signup_message_asks_pricing($message);
+    $asks_start = nala_mxchat_signup_contains_any($normalized, [
+        'how do i start', 'how to start', 'start learning', 'start the course',
+        'how can i start', 'where do i start',
+        'como empiezo', 'como empezar', 'como puedo empezar'
+    ]);
+    $asks_premium = str_contains($normalized, 'premium') && nala_mxchat_signup_contains_any($normalized, [
+        'included', 'include', 'comes with', 'what do i get', 'benefits',
+        'incluye', 'incluido', 'que incluye', 'beneficios'
+    ]);
     $asks_kit = nala_mxchat_signup_contains_any($normalized, [
         'kit', 'lockout kit', 'lock pick', 'lockpick', 'tools included',
         'shipping', 'ship', 'delivery', 'deliver', 'mail the kit',
@@ -330,6 +339,22 @@ function nala_mxchat_signup_fast_answer(string $message): string
         }
 
         return 'You can finish as fast or as slowly as you need - the course is fully self-paced. Students can complete core lessons in a few weeks with intensive study, or finish in two or three months at a more relaxed pace. Certification requires finishing the lessons, passing quizzes/checks, and completing the final certification step in your dashboard. If you want to try the lessons now, register here: [Start free lessons / Register](' . $register_link . ').';
+    }
+
+    if ($asks_start) {
+        if ($lang === 'es') {
+            return 'Puedes empezar con las lecciones gratis ahora. Crea tu cuenta, prueba el estilo de entrenamiento y luego actualiza a Premium cuando quieras el curso completo, el camino de certificacion y el kit de apertura de autos. Registrate aqui: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
+        }
+
+        return 'You can start with the free lessons right now. Create your account, try the training style, and then upgrade to Premium when you want the full course, certification path, and car lockout kit. Register here: [Start free lessons / Register](' . $register_link . ').';
+    }
+
+    if ($asks_premium) {
+        if ($lang === 'es') {
+            return 'Premium incluye acceso completo al entrenamiento, el camino de certificacion y un kit de apertura de autos con la compra. Es la mejor opcion si quieres pasar de probar NALA a entrenar en serio y avanzar hacia la certificacion. Puedes [empezar gratis](' . $register_link . ') y actualizar cuando estes listo.';
+        }
+
+        return 'Premium includes full training access, the certification path, and a car lockout kit with purchase. It is the best step when you are ready to move from trying NALA to serious training toward certification. You can [start free](' . $register_link . ') and upgrade when you are ready.';
     }
 
     if ($asks_price_objection) {
