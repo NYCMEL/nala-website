@@ -4,6 +4,14 @@
     var attempts = 0;
 
     var css = [
+        ".nala-chat-active.mxchat-chatbot-wrapper,",
+        ".nala-chat-active.mxchat-chatbot,",
+        ".chat-container.nala-chat-active {",
+        "  height: auto !important;",
+        "  min-height: 0 !important;",
+        "  max-height: calc(100vh - 24px) !important;",
+        "  flex: 0 0 auto !important;",
+        "}",
         ".chat-container.nala-compact-popular .chat-box {",
         "  flex: 0 0 auto !important;",
         "  height: auto !important;",
@@ -21,6 +29,25 @@
         "}",
         ".chat-container.nala-compact-popular .mxchat-popular-questions-container {",
         "  max-height: 270px !important;",
+        "}",
+        ".chat-container.nala-chat-active .chat-box {",
+        "  flex: 0 0 auto !important;",
+        "  height: auto !important;",
+        "  min-height: 0 !important;",
+        "  max-height: min(52vh, 360px) !important;",
+        "  padding-bottom: 8px !important;",
+        "}",
+        ".chat-container.nala-chat-active .mxchat-popular-questions {",
+        "  display: none !important;",
+        "  height: 0 !important;",
+        "  min-height: 0 !important;",
+        "  margin: 0 !important;",
+        "  padding: 0 !important;",
+        "  overflow: hidden !important;",
+        "}",
+        ".chat-container.nala-chat-active .input-container {",
+        "  margin-top: 8px !important;",
+        "  margin-bottom: 10px !important;",
         "}"
     ].join("\n");
 
@@ -33,12 +60,19 @@
 
     function syncCompactState(root) {
         var container = root.querySelector(".chat-container");
+        var wrapper = root.querySelector(".mxchat-chatbot-wrapper");
+        var chatbot = root.querySelector(".mxchat-chatbot");
+        var hasUserMessages = !!(container && container.querySelector(".user-message"));
         var popular = root.querySelector(".mxchat-popular-questions");
         var hasQuestions = !!(popular && popular.querySelector(".mxchat-popular-question"));
 
         if (container) {
-            container.classList.toggle("nala-compact-popular", hasQuestions && isVisible(popular));
+            container.classList.toggle("nala-chat-active", hasUserMessages);
+            container.classList.toggle("nala-compact-popular", !hasUserMessages && hasQuestions && isVisible(popular));
         }
+
+        if (wrapper) wrapper.classList.toggle("nala-chat-active", hasUserMessages);
+        if (chatbot) chatbot.classList.toggle("nala-chat-active", hasUserMessages);
     }
 
     function applyOverrides() {
