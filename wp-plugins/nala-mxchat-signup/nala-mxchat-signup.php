@@ -13,6 +13,7 @@ if (!defined('ABSPATH')) {
 const NALA_MXCHAT_SIGNUP_ENDPOINT_OPTION = 'nala_mxchat_signup_endpoint';
 const NALA_MXCHAT_SIGNUP_REGISTER_LINK_OPTION = 'nala_mxchat_signup_register_link';
 const NALA_MXCHAT_SIGNUP_TTL = 1800;
+const NALA_MXCHAT_SIGNUP_PRICING_TTL = 600;
 
 add_filter('mxchat_pre_process_message', 'nala_mxchat_signup_pre_process', 10, 3);
 add_filter('mxchat_system_instructions', 'nala_mxchat_signup_system_instructions', 10, 3);
@@ -104,6 +105,14 @@ function nala_mxchat_signup_sanitize_link($value): string
 function nala_mxchat_signup_system_instructions($instructions, $bot_id, $session_id): string
 {
     $extra = "\n\nNALA direct signup: If a visitor wants to sign up, register, create an account, enroll, join NALA, start free lessons, or get started, you may tell them they can complete signup directly in the chat or use the Register page. Do not ask for passwords, payment details, Social Security numbers, or private financial information in chat. The direct signup flow only collects full name, email, and phone, then NALA emails the next steps. Use generic privacy-safe wording and never reveal whether an email, phone, or personal detail already exists in the system.";
+
+    if (nala_mxchat_signup_message_asks_pricing(nala_mxchat_signup_current_request_message())) {
+        $pricing_context = nala_mxchat_signup_pricing_context();
+        if ($pricing_context !== '') {
+            $extra .= "\n\nCurrent pricing context from NALA checkout pricing:\n" . $pricing_context;
+        }
+    }
+
     return (string) $instructions . $extra;
 }
 
@@ -215,7 +224,10 @@ function nala_mxchat_signup_detect_language(string $message, string $fallback = 
         'registrarme', 'registrar', 'inscribirme', 'inscripcion', 'crear cuenta',
         'cuenta gratis', 'empezar', 'clases gratis', 'correo', 'telefono', 'nombre',
         'me llamo', 'mi nombre', 'que es nala', 'cuanto cuesta', 'precio',
-        'certificacion', 'estudiantes', 'anos', 'negocio en una caja'
+        'certificacion', 'estudiantes', 'anos', 'negocio en una caja',
+        'privacidad', 'politica', 'politicas', 'terminos', 'condiciones',
+        'reembolso', 'devolucion', 'cuanto dura', 'duracion', 'lecciones',
+        'modulos', 'envio', 'entrega', 'ganzuas', 'herramientas'
     ];
 
     foreach ($spanish_terms as $term) {
@@ -239,6 +251,61 @@ function nala_mxchat_signup_fast_answer(string $message): string
     $support_link = '[support@nalanetwork.com](mailto:support@nalanetwork.com)';
 
     $has_nala = str_contains($normalized, 'nala') || str_contains($normalized, 'north american locksmith association');
+    $asks_course_length = nala_mxchat_signup_contains_any($normalized, [
+        'course length', 'program length', 'course duration', 'program duration',
+        'completion time', 'how long to complete', 'how long to finish',
+        'how many lessons', 'lesson count', 'how many modules', 'module count',
+        'cuanto dura', 'duracion', 'cuantas lecciones', 'cuantos modulos',
+    ]) || (
+        str_contains($normalized, 'how long') &&
+        nala_mxchat_signup_contains_any($normalized, ['course', 'program', 'training', 'finish', 'complete'])
+    );
+    $asks_price = nala_mxchat_signup_message_asks_pricing($message);
+    $asks_kit = nala_mxchat_signup_contains_any($normalized, [
+        'kit', 'lockout kit', 'lock pick', 'lockpick', 'tools included',
+        'shipping', 'ship', 'delivery', 'deliver', 'mail the kit',
+        'herramientas', 'envio', 'enviar', 'entrega', 'kit de apertura', 'ganzuas'
+    ]);
+    $asks_refund = nala_mxchat_signup_contains_any($normalized, [
+        'refund', 'refundable', 'cancel after purchase', 'cancellation', 'money back',
+        'reembolso', 'devolucion', 'cancelar despues', 'devolver dinero'
+    ]);
+    $asks_privacy = nala_mxchat_signup_contains_any($normalized, [
+        'privacy', 'personal information', 'data', 'cookies', 'payment information',
+        'privacidad', 'informacion personal', 'datos', 'cookies'
+    ]);
+    $asks_terms = nala_mxchat_signup_contains_any($normalized, [
+        'terms', 'terms and conditions', 'policy', 'policies', 'legal terms',
+        'terminos', 'condiciones', 'politicas'
+    ]);
+    $asks_origin = $has_nala && nala_mxchat_signup_contains_any($normalized, [
+        'where did nala start', 'where did it start', 'where is nala from',
+        'origin', 'started', 'founded', 'founding', 'history',
+        'origen', 'donde empezo', 'historia', 'fundada'
+    ]);
+    $asks_placement = nala_mxchat_signup_contains_any($normalized, [
+        'job placement', 'placement', 'find me a job', 'will i get a job',
+        'employment', 'income', 'make money', 'career outcome',
+        'colocacion', 'trabajo', 'empleo', 'ingresos'
+    ]);
+    $asks_price_objection = nala_mxchat_signup_contains_any($normalized, [
+        'too expensive', 'expensive', 'cant afford', 'cannot afford',
+        'not affordable', 'costs too much', 'cost too much',
+        'muy caro', 'demasiado caro', 'no puedo pagar', 'no me alcanza'
+    ]);
+    $asks_think_or_family = nala_mxchat_signup_contains_any($normalized, [
+        'need to think', 'think about it', 'talk to my wife', 'talk to my husband',
+        'talk to my spouse', 'talk to my partner', 'discuss with my family',
+        'consult my wife', 'consult my husband', 'consult my spouse',
+        'pensarlo', 'pensar', 'hablar con mi esposa', 'hablar con mi esposo',
+        'hablar con mi pareja', 'consultar con mi familia'
+    ]);
+    $asks_success = nala_mxchat_signup_contains_any($normalized, [
+        'will i succeed', 'can i succeed', 'will i pass', 'can i pass',
+        'is it hard', 'too hard', 'is the course hard',
+        'voy a tener exito', 'puedo lograrlo', 'voy a pasar', 'puedo pasar',
+        'es dificil', 'muy dificil'
+    ]);
     $asks_identity = $has_nala && nala_mxchat_signup_contains_any($normalized, [
         'what is', 'who is', 'tell me about', 'about nala', 'que es', 'quien es', 'hablame de'
     ]);
@@ -250,6 +317,90 @@ function nala_mxchat_signup_fast_answer(string $message): string
         'students', 'student count', 'how many people', 'how many trained',
         'estudiantes', 'alumnos', 'cuantos'
     ]);
+
+    if ($asks_course_length) {
+        if ($lang === 'es') {
+            return 'El programa es a tu propio ritmo. La pagina del plan de estudios indica una duracion estimada de 6 a 12 meses, y el curriculo actual del panel esta organizado en 6 partes, 12 modulos, 45 lecciones y un paso final de certificacion.';
+        }
+
+        return 'The program is self-paced. The curriculum page lists an estimated 6-12 month duration, and the current student curriculum is organized into 6 parts, 12 modules, 45 lessons, and a final certification step.';
+    }
+
+    if ($asks_price_objection) {
+        if ($lang === 'es') {
+            return 'Tiene sentido mirar el valor antes de comprar. Puedes empezar con las lecciones gratis primero y decidir despues. Premium incluye el entrenamiento completo, el camino de certificacion y el kit de apertura de autos; Business in a Box agrega sitio web, logo, facturas, flujo de resenas y un set de herramientas de lockpick. Cuando Klarna esta disponible, divide el total en 24 meses.';
+        }
+
+        return 'It makes sense to weigh the value before buying. You can start with the free lessons first and decide later. Premium includes full training, the certification path, and a car lockout kit; Business in a Box adds the website, logo, invoice tool, review workflow, and a lock pick tool set. When Klarna is available, it divides the total over 24 months.';
+    }
+
+    if ($asks_think_or_family) {
+        if ($lang === 'es') {
+            return 'Claro. Una buena forma de decidir sin presion es empezar con las lecciones gratis o compartir la pagina de registro con quien quieras consultarlo. Puedes ver el programa primero y actualizar despues si te conviene.';
+        }
+
+        return 'Of course. A good no-pressure next step is to start the free lessons or share the registration page with whoever you want to discuss it with. You can preview the program first and upgrade later if it fits.';
+    }
+
+    if ($asks_success) {
+        if ($lang === 'es') {
+            return 'El programa esta disenado para principiantes: es a tu propio ritmo, puedes repetir lecciones y avanzas con practica, materiales y quizzes. No puedo garantizar resultados, empleo o ingresos, pero el camino esta pensado para ayudarte a construir habilidades reales de cerrajeria.';
+        }
+
+        return 'The program is built for beginners: it is self-paced, lessons are replayable, and you progress through practice, materials, and quizzes. I cannot guarantee results, jobs, or income, but the path is designed to help you build real locksmith skills.';
+    }
+
+    if ($asks_price) {
+        return nala_mxchat_signup_pricing_answer($lang, $register_link);
+    }
+
+    if ($asks_kit) {
+        if ($lang === 'es') {
+            return 'Premium incluye un kit de apertura de autos con la compra. Business in a Box incluye un set de herramientas de lockpick con la compra. Los contenidos exactos y el tiempo de envio aun se estan finalizando; se espera que los kits se obtengan internacionalmente y se envien a EE. UU. Se pueden enviar a cualquier lugar de EE. UU.';
+        }
+
+        return 'Premium includes a car lockout kit with purchase. Business in a Box includes a lock pick tool set with purchase. Exact contents and shipping timing are still being finalized; the kits are expected to be sourced internationally and shipped to the U.S. They can be sent anywhere in the U.S.';
+    }
+
+    if ($asks_refund) {
+        if ($lang === 'es') {
+            return 'NALA tiene una politica estricta de no reembolsos una vez que se emite el acceso a la cuenta y al contenido del curso. Revisa los [Terminos y Condiciones](docs/Terms%20and%20Conditions.pdf) antes de comprar, y contacta ' . $support_link . ' si necesitas ayuda general.';
+        }
+
+        return 'NALA has a strict no-refunds policy once account access to the course platform is issued. Please review the [Terms and Conditions](docs/Terms%20and%20Conditions.pdf) before purchase, and contact ' . $support_link . ' if you need general help.';
+    }
+
+    if ($asks_privacy) {
+        if ($lang === 'es') {
+            return 'La [Politica de Privacidad](docs/Privacy%20Policy.pdf) explica que NALA puede recopilar datos de cuenta, curso, compra, uso del sitio y cookies para operar y mejorar los servicios. Los datos sensibles de tarjeta se manejan por procesadores de pago, no por el chat.';
+        }
+
+        return 'The [Privacy Policy](docs/Privacy%20Policy.pdf) explains that NALA may collect account, course, purchase, site-use, and cookie data to operate and improve the services. Sensitive card details are handled by payment processors, not by the chat.';
+    }
+
+    if ($asks_terms) {
+        if ($lang === 'es') {
+            return 'Los [Terminos y Condiciones](docs/Terms%20and%20Conditions.pdf) cubren elegibilidad, cuentas, acceso al curso, pagos, la politica de no reembolsos, reglas de conducta y limites legales. Tambien debes verificar los requisitos de licencia de tu estado o ciudad.';
+        }
+
+        return 'The [Terms and Conditions](docs/Terms%20and%20Conditions.pdf) cover eligibility, accounts, course access, payments, the no-refunds policy, conduct rules, and legal limits. You should also verify licensing requirements in your own state or city.';
+    }
+
+    if ($asks_placement) {
+        if ($lang === 'es') {
+            return 'NALA actualmente destaca un 95% de colocacion laboral. Eso no es una garantia de empleo, ingresos, licencia o aprobacion; el programa esta disenado para ayudarte a desarrollar habilidades, seguir el camino de certificacion y prepararte para oportunidades reales.';
+        }
+
+        return 'NALA currently highlights 95% job placement. That is not a guarantee of employment, income, licensing, or approval; the program is designed to help you build skills, follow the certification path, and prepare for real opportunities.';
+    }
+
+    if ($asks_origin) {
+        if ($lang === 'es') {
+            return 'NALA es un programa internacional de capacitacion en cerrajeria que ahora se esta expandiendo en EE. UU. No tengo aqui la fecha exacta de fundacion, pero NALA destaca mas de 10 anos de experiencia y mas de 20K estudiantes capacitados.';
+        }
+
+        return 'NALA is an international locksmith training program now expanding in the U.S. I do not have the exact founding date here, but NALA highlights 10+ years of experience and 20K+ students trained.';
+    }
 
     if ($asks_identity || $asks_history || $asks_students) {
         if ($lang === 'es') {
@@ -281,14 +432,6 @@ function nala_mxchat_signup_fast_answer(string $message): string
         return 'You can earn NALA certification by completing the required training path in your student dashboard and finishing the final certification step. Your dashboard shows your progress and remaining lessons.';
     }
 
-    if (nala_mxchat_signup_contains_any($normalized, ['price', 'pricing', 'cost', 'klarna', 'payment plan', 'cuanto cuesta', 'precio', 'costo', 'plan de pago'])) {
-        if ($lang === 'es') {
-            return 'Los precios actuales aparecen en la pagina principal. Cuando hay una opcion de Klarna, la pagina muestra el pago mensual y el precio total debajo. Puedes empezar con las [lecciones gratis](' . $register_link . ') antes de comprar.';
-        }
-
-        return 'Current pricing is shown on the homepage. When a Klarna option is available, the page shows the monthly payment and the total price underneath. You can start with the [free lessons](' . $register_link . ') before buying.';
-    }
-
     if (nala_mxchat_signup_contains_any($normalized, ['support', 'contact', 'help with my account', 'login problem', 'cant log in', 'cannot log in', 'soporte', 'contacto', 'problema con mi cuenta', 'no puedo entrar'])) {
         if ($lang === 'es') {
             return 'Para ayuda general o preguntas sobre tu cuenta, contacta ' . $support_link . '. Si ya tienes cuenta, tambien puedes usar el enlace de iniciar sesion en el sitio.';
@@ -309,6 +452,197 @@ function nala_mxchat_signup_contains_any(string $haystack, array $needles): bool
     }
 
     return false;
+}
+
+function nala_mxchat_signup_message_asks_pricing(string $message): bool
+{
+    $normalized = nala_mxchat_signup_normalize($message);
+    return nala_mxchat_signup_contains_any($normalized, [
+        'price', 'pricing', 'cost', 'klarna', 'payment plan', 'how much',
+        'cuanto cuesta', 'precio', 'costo', 'plan de pago'
+    ]);
+}
+
+function nala_mxchat_signup_current_request_message(): string
+{
+    foreach (['message', 'user_message', 'input'] as $key) {
+        if (isset($_POST[$key])) {
+            return nala_mxchat_signup_clean_message((string) $_POST[$key]);
+        }
+    }
+
+    return '';
+}
+
+function nala_mxchat_signup_pricing_answer(string $lang, string $register_link): string
+{
+    $prices = nala_mxchat_signup_pricing_data();
+    $premium = nala_mxchat_signup_format_plan_price($prices['premium'] ?? []);
+    $business = nala_mxchat_signup_format_plan_price($prices['business_full'] ?? []);
+
+    if (!$premium && !$business) {
+        if ($lang === 'es') {
+            return 'Los precios actuales se muestran en el sitio y se actualizan desde el checkout. Cuando Klarna esta disponible, el pago mensual es el precio total dividido entre 24 meses. Puedes empezar con las [lecciones gratis](' . $register_link . ') antes de comprar.';
+        }
+
+        return 'Current pricing is shown on the site and updates from checkout pricing. When Klarna is available, the monthly payment is the total price divided over 24 months. You can start with the [free lessons](' . $register_link . ') before buying.';
+    }
+
+    if ($lang === 'es') {
+        $lines = ['Los precios actuales son:'];
+        if ($premium) {
+            $lines[] = '- Premium: ' . $premium['monthly'] . ' por mes durante 24 meses con Klarna. Precio total: ' . $premium['total'] . '.';
+        }
+        if ($business) {
+            $lines[] = '- Business in a Box: ' . $business['monthly'] . ' por mes durante 24 meses con Klarna. Precio total: ' . $business['total'] . '.';
+        }
+        $lines[] = 'La disponibilidad y aprobacion de Klarna se confirman en checkout. Tambien puedes empezar con las [lecciones gratis](' . $register_link . ').';
+        return implode("\n", $lines);
+    }
+
+    $lines = ['Current pricing is:'];
+    if ($premium) {
+        $lines[] = '- Premium: ' . $premium['monthly'] . ' per month for 24 months with Klarna. Total price: ' . $premium['total'] . '.';
+    }
+    if ($business) {
+        $lines[] = '- Business in a Box: ' . $business['monthly'] . ' per month for 24 months with Klarna. Total price: ' . $business['total'] . '.';
+    }
+    $lines[] = 'Klarna availability and approval are confirmed at checkout. You can also start with the [free lessons](' . $register_link . ').';
+    return implode("\n", $lines);
+}
+
+function nala_mxchat_signup_pricing_context(): string
+{
+    $prices = nala_mxchat_signup_pricing_data();
+    if (!$prices) {
+        return '';
+    }
+
+    $plans = [
+        'Premium' => nala_mxchat_signup_format_plan_price($prices['premium'] ?? []),
+        'Business in a Box' => nala_mxchat_signup_format_plan_price($prices['business_full'] ?? []),
+        'Business in a Box add-on' => nala_mxchat_signup_format_plan_price($prices['business_addon'] ?? []),
+    ];
+
+    $lines = [];
+    foreach ($plans as $name => $plan) {
+        if (!$plan) {
+            continue;
+        }
+
+        $lines[] = '- ' . $name . ': ' . $plan['monthly'] . ' per month for 24 months with Klarna; total price ' . $plan['total'] . '.';
+    }
+
+    if (!$lines) {
+        return '';
+    }
+
+    $lines[] = '- Trial/free preview: $0.';
+    $lines[] = '- Klarna monthly amount is the total price divided by 24; approval is handled at checkout.';
+    return implode("\n", $lines);
+}
+
+function nala_mxchat_signup_pricing_data(): array
+{
+    $endpoint = nala_mxchat_signup_pricing_endpoint();
+    if ($endpoint === '') {
+        return [];
+    }
+
+    $cache_key = 'nala_mxchat_pricing_' . md5($endpoint);
+    $cached = get_transient($cache_key);
+    if (is_array($cached)) {
+        return $cached;
+    }
+
+    $response = wp_remote_get($endpoint, [
+        'timeout' => 6,
+        'redirection' => 2,
+        'headers' => [
+            'Accept' => 'application/json',
+        ],
+    ]);
+
+    if (is_wp_error($response)) {
+        return [];
+    }
+
+    $status = (int) wp_remote_retrieve_response_code($response);
+    if ($status < 200 || $status >= 300) {
+        return [];
+    }
+
+    $body = wp_remote_retrieve_body($response);
+    $json = json_decode((string) $body, true);
+    if (!is_array($json) || empty($json['prices']) || !is_array($json['prices'])) {
+        return [];
+    }
+
+    set_transient($cache_key, $json['prices'], NALA_MXCHAT_SIGNUP_PRICING_TTL);
+    return $json['prices'];
+}
+
+function nala_mxchat_signup_pricing_endpoint(): string
+{
+    $page_url = nala_mxchat_signup_current_page_url();
+    $host = $page_url !== '' ? (string) parse_url($page_url, PHP_URL_HOST) : '';
+    $scheme = $page_url !== '' ? (string) parse_url($page_url, PHP_URL_SCHEME) : 'https';
+
+    if ($host !== '') {
+        $host = strtolower($host);
+        if (nala_mxchat_signup_is_allowed_host($host)) {
+            return ($scheme === 'http' ? 'http' : 'https') . '://' . $host . '/api/pricing.php';
+        }
+    }
+
+    return 'https://nala-test.com/api/pricing.php';
+}
+
+function nala_mxchat_signup_format_plan_price($entry): array
+{
+    if (!is_array($entry) || !$entry) {
+        return [];
+    }
+
+    $amount = null;
+    if (isset($entry['unit_amount']) && is_numeric($entry['unit_amount'])) {
+        $amount = ((float) $entry['unit_amount']) / 100;
+    } elseif (isset($entry['amount']) && is_numeric($entry['amount'])) {
+        $amount = (float) $entry['amount'];
+        if ($amount > 10000) {
+            $amount = $amount / 100;
+        }
+    } elseif (isset($entry['display'])) {
+        $amount = nala_mxchat_signup_display_amount((string) $entry['display']);
+    }
+
+    if ($amount === null || $amount <= 0) {
+        return [];
+    }
+
+    $total = isset($entry['display']) && trim((string) $entry['display']) !== ''
+        ? trim((string) $entry['display'])
+        : nala_mxchat_signup_money($amount, 0);
+
+    return [
+        'total' => $total,
+        'monthly' => nala_mxchat_signup_money($amount / 24, 2),
+    ];
+}
+
+function nala_mxchat_signup_display_amount(string $display): ?float
+{
+    $number = preg_replace('/[^0-9.]+/', '', $display);
+    if ($number === '' || !is_numeric($number)) {
+        return null;
+    }
+
+    return (float) $number;
+}
+
+function nala_mxchat_signup_money(float $amount, int $decimals): string
+{
+    return '$' . number_format($amount, $decimals, '.', ',');
 }
 
 function nala_mxchat_signup_is_trigger(string $message): bool
@@ -625,22 +959,43 @@ function nala_mxchat_signup_endpoint(): string
         return esc_url_raw($configured);
     }
 
-    $page_url = '';
-    if (isset($_POST['current_page_url'])) {
-        $page_url = esc_url_raw(wp_unslash((string) $_POST['current_page_url']));
-    } elseif (isset($_SERVER['HTTP_REFERER'])) {
-        $page_url = esc_url_raw(wp_unslash((string) $_SERVER['HTTP_REFERER']));
-    }
-
+    $page_url = nala_mxchat_signup_current_page_url();
     $host = $page_url !== '' ? (string) parse_url($page_url, PHP_URL_HOST) : '';
     $scheme = $page_url !== '' ? (string) parse_url($page_url, PHP_URL_SCHEME) : 'https';
 
     if ($host !== '') {
         $host = strtolower($host);
-        if (str_ends_with($host, 'nala-test.com') || str_ends_with($host, 'nalanetwork.com')) {
-            return $scheme . '://' . $host . '/api/register.php';
+        if (nala_mxchat_signup_is_allowed_host($host)) {
+            return ($scheme === 'http' ? 'http' : 'https') . '://' . $host . '/api/register.php';
         }
     }
 
     return 'https://nala-test.com/api/register.php';
+}
+
+function nala_mxchat_signup_current_page_url(): string
+{
+    foreach (['current_page_url', 'page_url'] as $key) {
+        if (isset($_POST[$key])) {
+            $url = esc_url_raw(wp_unslash((string) $_POST[$key]));
+            if ($url !== '') {
+                return $url;
+            }
+        }
+    }
+
+    if (isset($_SERVER['HTTP_REFERER'])) {
+        return esc_url_raw(wp_unslash((string) $_SERVER['HTTP_REFERER']));
+    }
+
+    return '';
+}
+
+function nala_mxchat_signup_is_allowed_host(string $host): bool
+{
+    $host = strtolower($host);
+    return $host === 'nala-test.com'
+        || str_ends_with($host, '.nala-test.com')
+        || $host === 'nalanetwork.com'
+        || str_ends_with($host, '.nalanetwork.com');
 }
