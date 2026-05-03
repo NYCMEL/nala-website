@@ -115,6 +115,13 @@ function nala_mxchat_signup_pre_process($message, $user_id, $session_id)
     $state = get_transient($state_key);
     $is_active = is_array($state);
 
+    if (!$is_active) {
+        $fast_answer = nala_mxchat_signup_fast_answer($message);
+        if ($fast_answer !== '') {
+            return nala_mxchat_signup_response($fast_answer);
+        }
+    }
+
     if (!$is_active && !nala_mxchat_signup_is_trigger($message)) {
         return $message;
     }
@@ -207,7 +214,8 @@ function nala_mxchat_signup_detect_language(string $message, string $fallback = 
     $spanish_terms = [
         'registrarme', 'registrar', 'inscribirme', 'inscripcion', 'crear cuenta',
         'cuenta gratis', 'empezar', 'clases gratis', 'correo', 'telefono', 'nombre',
-        'me llamo', 'mi nombre'
+        'me llamo', 'mi nombre', 'que es nala', 'cuanto cuesta', 'precio',
+        'certificacion', 'estudiantes', 'anos', 'negocio en una caja'
     ];
 
     foreach ($spanish_terms as $term) {
@@ -217,6 +225,90 @@ function nala_mxchat_signup_detect_language(string $message, string $fallback = 
     }
 
     return $fallback === 'es' ? 'es' : 'en';
+}
+
+function nala_mxchat_signup_fast_answer(string $message): string
+{
+    $normalized = nala_mxchat_signup_normalize($message);
+    if ($normalized === '') {
+        return '';
+    }
+
+    $lang = nala_mxchat_signup_detect_language($message);
+    $register_link = nala_mxchat_signup_register_link();
+    $support_link = '[support@nalanetwork.com](mailto:support@nalanetwork.com)';
+
+    $has_nala = str_contains($normalized, 'nala') || str_contains($normalized, 'north american locksmith association');
+    $asks_identity = $has_nala && nala_mxchat_signup_contains_any($normalized, [
+        'what is', 'who is', 'tell me about', 'about nala', 'que es', 'quien es', 'hablame de'
+    ]);
+    $asks_history = $has_nala && nala_mxchat_signup_contains_any($normalized, [
+        'how long', 'years', 'around', 'founded', 'founding', 'history',
+        'cuanto tiempo', 'anos', 'fundada', 'historia'
+    ]);
+    $asks_students = $has_nala && nala_mxchat_signup_contains_any($normalized, [
+        'students', 'student count', 'how many people', 'how many trained',
+        'estudiantes', 'alumnos', 'cuantos'
+    ]);
+
+    if ($asks_identity || $asks_history || $asks_students) {
+        if ($lang === 'es') {
+            return 'NALA es la North American Locksmith Association. Ofrece capacitacion online de cerrajeria enfocada en habilidades practicas y profesionales para trabajo automotriz, residencial, comercial, puertas y cajas fuertes.' . "\n\n"
+                . '- Experiencia: mas de 10 anos' . "\n"
+                . '- Estudiantes capacitados: mas de 20K' . "\n\n"
+                . 'Puedes [empezar las lecciones gratis](' . $register_link . ').';
+        }
+
+        return 'NALA is the North American Locksmith Association. It offers online locksmith training focused on practical, professional skills for automotive, residential, commercial, door, and safe-related work.' . "\n\n"
+            . '- Experience: 10+ years' . "\n"
+            . '- Students trained: 20K+' . "\n\n"
+            . 'You can [start free lessons](' . $register_link . ').';
+    }
+
+    if (nala_mxchat_signup_contains_any($normalized, ['business in a box', 'bib', 'business-in-a-box', 'negocio en una caja'])) {
+        if ($lang === 'es') {
+            return 'Business in a Box te guia paso a paso para preparar partes clave de tu negocio de cerrajeria, incluyendo tu sitio web gratis, logo personalizado gratis, generador de facturas gratis, configuracion de pagos, fundamentos de SEO y materiales de lanzamiento. Tambien incluye un set de herramientas de lockpick con la compra de Business in a Box.';
+        }
+
+        return 'Business in a Box guides you step by step through key parts of launching your locksmith business, including your free website, free custom logo, free invoice creator, payment setup, SEO basics, and launch materials. It also includes a set of lockpick tools with the Business in a Box purchase.';
+    }
+
+    if (nala_mxchat_signup_contains_any($normalized, ['certification', 'certificate', 'certified', 'certificacion', 'certificado'])) {
+        if ($lang === 'es') {
+            return 'Puedes obtener la certificacion de NALA completando el camino de entrenamiento requerido en tu panel de estudiante y terminando el paso final de certificacion. Tu panel muestra el progreso y las lecciones que faltan.';
+        }
+
+        return 'You can earn NALA certification by completing the required training path in your student dashboard and finishing the final certification step. Your dashboard shows your progress and remaining lessons.';
+    }
+
+    if (nala_mxchat_signup_contains_any($normalized, ['price', 'pricing', 'cost', 'klarna', 'payment plan', 'cuanto cuesta', 'precio', 'costo', 'plan de pago'])) {
+        if ($lang === 'es') {
+            return 'Los precios actuales aparecen en la pagina principal. Cuando hay una opcion de Klarna, la pagina muestra el pago mensual y el precio total debajo. Puedes empezar con las [lecciones gratis](' . $register_link . ') antes de comprar.';
+        }
+
+        return 'Current pricing is shown on the homepage. When a Klarna option is available, the page shows the monthly payment and the total price underneath. You can start with the [free lessons](' . $register_link . ') before buying.';
+    }
+
+    if (nala_mxchat_signup_contains_any($normalized, ['support', 'contact', 'help with my account', 'login problem', 'cant log in', 'cannot log in', 'soporte', 'contacto', 'problema con mi cuenta', 'no puedo entrar'])) {
+        if ($lang === 'es') {
+            return 'Para ayuda general o preguntas sobre tu cuenta, contacta ' . $support_link . '. Si ya tienes cuenta, tambien puedes usar el enlace de iniciar sesion en el sitio.';
+        }
+
+        return 'For general help or account questions, contact ' . $support_link . '. If you already have an account, you can also use the login link on the site.';
+    }
+
+    return '';
+}
+
+function nala_mxchat_signup_contains_any(string $haystack, array $needles): bool
+{
+    foreach ($needles as $needle) {
+        if ($needle !== '' && str_contains($haystack, $needle)) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 function nala_mxchat_signup_is_trigger(string $message): bool
