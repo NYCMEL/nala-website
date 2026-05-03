@@ -91,7 +91,9 @@
 	    <button class="MTK-hero-carousel" type="button" aria-label="${registerLabel}">
 		${heroData.images.map(function(image, index) {
 		    const position = image.position || "center center";
-		    return `<img class="MTK-hero-carousel__image${index === 0 ? ' is-active' : ''}" src="${image.src}" alt="${image.alt || 'NALA training'}" style="object-position: ${position};">`;
+		    const fit = image.fit || "cover";
+		    const background = image.background ? `background-color: ${image.background};` : "";
+		    return `<img class="MTK-hero-carousel__image${index === 0 ? ' is-active' : ''}" src="${image.src}" alt="${image.alt || 'NALA training'}" style="object-position: ${position}; object-fit: ${fit}; ${background}">`;
 		}).join('')}
 	    </button>
 	`;

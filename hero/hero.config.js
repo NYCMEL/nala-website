@@ -7,7 +7,7 @@ window.app.hero = [
 	cta:         (window.i18n ? window.i18n.t('hero.cta')         : 'Get Started'),
 	image: "./img/hero.png",
 	images: [
-	    { src: "img/home/hero-i-banner-preview.jpg", alt: "NALA locksmith training banner", position: "right center" },
+	    { src: "img/home/hero-i-banner-preview.jpg", alt: "NALA locksmith training banner", position: "center center", fit: "contain", background: "#e7e3e1" },
 	    { src: "img/home/hero-a-door-hardware.jpg", alt: "Locksmith working on bright door hardware", position: "center center" },
 	    { src: "img/home/hero-b-key-wall-student.jpg", alt: "Locksmith student learning with key blanks", position: "center center" },
 	    { src: "img/home/hero-c-service-interior.jpg", alt: "Locksmith service call training indoors", position: "center center" },
