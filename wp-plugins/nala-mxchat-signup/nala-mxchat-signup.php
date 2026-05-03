@@ -321,6 +321,16 @@ function nala_mxchat_signup_fast_answer(string $message): string
         'voy a tener exito', 'puedo lograrlo', 'voy a pasar', 'puedo pasar',
         'es dificil', 'muy dificil'
     ]);
+    $asks_age_objection = nala_mxchat_signup_contains_any($normalized, [
+        'too old', 'am i too old', 'is 55 too old', 'older', 'older people',
+        'retired', 'retiree', 'retirement', 'career change', 'career changer',
+        'late in life', 'too late', 'age limit', 'physical ability',
+        'demasiado mayor', 'muy mayor', 'jubilado', 'jubilada', 'jubilacion',
+        'cambio de carrera', 'demasiado tarde', 'limite de edad'
+    ]) || (
+        (bool) preg_match('/\\b(?:4[5-9]|5[0-9]|6[0-9]|7[0-9])\\b/', $normalized) &&
+        nala_mxchat_signup_contains_any($normalized, ['old', 'age', 'course', 'program', 'locksmith', 'learn', 'start'])
+    );
     $asks_identity = $has_nala && nala_mxchat_signup_contains_any($normalized, [
         'what is', 'who is', 'tell me about', 'about nala', 'que es', 'quien es', 'hablame de'
     ]);
@@ -379,6 +389,14 @@ function nala_mxchat_signup_fast_answer(string $message): string
         }
 
         return 'Yes, if you stay consistent and practice. NALA is built for motivated beginners: it is self-paced, lessons are replayable, and you move forward with quizzes and practical training. Jobs or income are not guaranteed, but the course is designed to help you build real locksmith skills. You can [start free](' . $register_link . ') and get a feel for it.';
+    }
+
+    if ($asks_age_objection) {
+        if ($lang === 'es') {
+            return 'Para nada: una edad madura puede ser una ventaja para aprender cerrajeria. NALA funciona bien para estudiantes mayores porque las lecciones son online, repetibles y a tu propio ritmo, asi que puedes entrenar alrededor del trabajo, la familia o la jubilacion sin apuro. Tu experiencia de vida tambien ayuda: los clientes valoran paciencia, criterio, confianza y profesionalismo. Si quieres probar si es para ti, empieza aqui: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
+        }
+
+        return 'Not at all - 55 can actually be a strong age to learn locksmithing. NALA works well for older learners because the lessons are online, replayable, and fully self-paced, so you can train around work, family, or retirement without rushing. Your life experience can help too: customers value patience, reliability, judgment, and professionalism. If you want to test the fit, start here: [Start free lessons / Register](' . $register_link . ').';
     }
 
     if ($asks_price) {
