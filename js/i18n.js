@@ -284,6 +284,14 @@
       en: 'Step through legal, financial, branding, SEO, and marketing setup.',
       es: 'Avanza por la configuración legal, financiera, de marca, SEO y marketing.'
     },
+    'home.biab.benefitLockpickTitle': {
+      en: 'Lockpick kit included',
+      es: 'Kit de ganzúas incluido'
+    },
+    'home.biab.benefitLockpickBody': {
+      en: 'Get a lockpick tool set with your Business in a Box purchase.',
+      es: 'Recibe un set de herramientas de ganzúas con tu compra de Negocio en una Caja.'
+    },
     'home.biab.point1': {
       en: 'Enter business information once and reuse it across tools.',
       es: 'Ingresa la información del negocio una vez y reutilízala en todas las herramientas.'
