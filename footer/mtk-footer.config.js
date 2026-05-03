@@ -51,6 +51,6 @@ window.app.footer = {
 	]
     },
     copyright: {
-	text: _footerT('footer.copyright', '2026 NALA - North America Locksmith Association')
+	text: _footerT('footer.copyright', '2026 NALA - North American Locksmith Association')
     }
 };

@@ -3,7 +3,7 @@ window.app = window.app || {};
 function _t(key, fb) { return (window.i18n ? i18n.t(key) : null) || fb; }
 
 window.app.ready = {
-    title:       _t('ready.title',       'Ready to Start Your Locksmith Career?'),
+    title:       _t('ready.title',       'Ready to start your locksmith career?'),
     description: _t('ready.description', 'Join NALA today and unlock your potential with industry-leading training and support.'),
     button: {
         label:  _t('ready.cta', 'Get Started Today'),

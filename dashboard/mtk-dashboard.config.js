@@ -14,7 +14,7 @@ window.mtkDashboardConfig = {
     progress: {
         label: _dashT("dashboard.progress.label", "Your progress to date:"),
         percentage: 0,
-        courseTitle: _dashT("dashboard.course.title", "NALA - Locksmith Course")
+        courseTitle: _dashT("dashboard.course.title", "NALA locksmith course")
     },
     subscriptions: {
         title: _dashT("dashboard.chooseNext", "Choose your next step:"),

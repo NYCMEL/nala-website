@@ -109,7 +109,7 @@
     "Ask for a review after sending this invoice": "Pedir una reseña después de enviar esta factura",
     "Review request email": "Correo para solicitud de reseña",
     "Send Invoice": "Enviar factura",
-    "Your Locksmith Business": "Tu negocio de cerrajería",
+    "Your locksmith business": "Tu negocio de cerrajería",
     "Business phone": "Teléfono del negocio",
     "Business email": "Correo del negocio",
     "Invoice:": "Factura:",
@@ -249,7 +249,7 @@
     "Upload an SVG, PNG, JPG, or WebP logo. The preview will use the uploaded artwork.": "Sube un logo SVG, PNG, JPG o WebP. La vista previa usará el arte subido.",
     "Logo quality checklist": "Lista de calidad del logo",
     "Your Locksmith": "Tu cerrajero",
-    "Mobile Locksmith Service": "Servicio móvil de cerrajería",
+    "Mobile locksmith service": "Servicio móvil de cerrajería",
     "Starter logo preview": "Vista previa inicial del logo",
     "Uploaded artwork will appear in the preview cards below.": "El arte subido aparecerá en las tarjetas de vista previa de abajo.",
     "Readable": "Legible",
@@ -899,7 +899,7 @@
           ${icon}
           <div class="mtk-biab-setup__logo-copy">
             <strong>${this.escape(this.val("businessName") || "Your Locksmith")}</strong>
-            <span>${this.escape(this.val("tagline") || "Mobile Locksmith Service")}</span>
+            <span>${this.escape(this.val("tagline") || "Mobile locksmith service")}</span>
           </div>
         </div>
       `;
@@ -982,7 +982,7 @@
       if (mode === "business-plan") {
         const serviceList = (this.val("services") || []).join(", ");
         const extraServices = this.val("additionalLaunchServices") || "";
-        return `<article class="mtk-biab-setup__document-preview"><h2>${this.escape(this.val("businessName") || "Your Locksmith Business")}</h2><p><strong>Service area:</strong> ${this.escape(this.val("serviceArea") || "Not set")}</p><p><strong>Launch services:</strong> ${this.escape(serviceList || "Not set")}</p>${extraServices ? `<p><strong>Additional services:</strong> ${this.escape(extraServices)}</p>` : ""}<p><strong>Differentiator:</strong> clear pricing, professional arrival, clean work, ETA updates, detailed invoices, and review follow-up.</p></article>`;
+        return `<article class="mtk-biab-setup__document-preview"><h2>${this.escape(this.val("businessName") || "Your locksmith business")}</h2><p><strong>Service area:</strong> ${this.escape(this.val("serviceArea") || "Not set")}</p><p><strong>Launch services:</strong> ${this.escape(serviceList || "Not set")}</p>${extraServices ? `<p><strong>Additional services:</strong> ${this.escape(extraServices)}</p>` : ""}<p><strong>Differentiator:</strong> clear pricing, professional arrival, clean work, ETA updates, detailed invoices, and review follow-up.</p></article>`;
       }
 
       return `<p>This area is available after setup. Use <a href="biab/index.html">Edit setup</a> to continue guided configuration.</p>`;
@@ -1009,7 +1009,7 @@
             <button type="button" class="mtk-biab-setup__btn mtk-biab-setup__btn--primary" data-biab-action="invoice-send">Send Invoice</button>
           </form>
           <aside class="mtk-biab-setup__invoice-preview" aria-label="Invoice preview">
-            <h2>${this.escape(this.val("businessName") || "Your Locksmith Business")}</h2>
+            <h2>${this.escape(this.val("businessName") || "Your locksmith business")}</h2>
             <p>${this.escape(this.val("businessPhone") || "Business phone")}<br>${this.escape(this.val("businessEmail") || "Business email")}</p>
             <hr>
             <p><strong>Invoice:</strong> ${(this.val("invoicePrefix") || "INV")}-0001</p>
@@ -1346,7 +1346,7 @@
     buildLogoSvg() {
       const palette = this.logoPalette();
       const name = this.escape(this.val("businessName") || "Your Locksmith");
-      const tagline = this.escape(this.val("tagline") || "Mobile Locksmith Service");
+      const tagline = this.escape(this.val("tagline") || "Mobile locksmith service");
       const initials = this.escape(this.logoLetters());
       return `<svg xmlns="http://www.w3.org/2000/svg" width="720" height="240" viewBox="0 0 720 240"><rect width="720" height="240" rx="28" fill="${palette.surface}"/><circle cx="108" cy="120" r="58" fill="${palette.primary}"/><text x="108" y="137" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" font-weight="800" fill="${palette.surface}">${initials}</text><text x="194" y="108" font-family="Arial, sans-serif" font-size="42" font-weight="800" fill="${palette.textOnDark}">${name}</text><text x="196" y="151" font-family="Arial, sans-serif" font-size="22" fill="${palette.accent}">${tagline}</text></svg>`;
     }
@@ -1361,7 +1361,7 @@
       const payload = {
         logo: this.buildLogoDataUrl(),
         businessName: this.val("businessName") || "Your Locksmith",
-        tagline: this.val("tagline") || "Mobile Locksmith Service",
+        tagline: this.val("tagline") || "Mobile locksmith service",
         logoKind: "artwork",
         theme: theme
       };

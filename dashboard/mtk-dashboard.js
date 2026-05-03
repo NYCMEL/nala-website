@@ -144,7 +144,7 @@
             }
 
             if (this.elements.courseTitle) {
-                this.elements.courseTitle.textContent = progress.courseTitle || 'NALA - Locksmith Course';
+                this.elements.courseTitle.textContent = progress.courseTitle || 'NALA locksmith course';
             }
 
             // Reset to 0 then animate to target
@@ -442,7 +442,7 @@
 
     window.myConfig = JSON.parse(JSON.stringify(window.mtkDashboardConfig || {
         user: { fullName: 'User' },
-        progress: { label: _t('dashboard.progress.label', 'Your progress to date:'), percentage: 0, courseTitle: _t('dashboard.course.title', 'NALA - Locksmith Course') },
+        progress: { label: _t('dashboard.progress.label', 'Your progress to date:'), percentage: 0, courseTitle: _t('dashboard.course.title', 'NALA locksmith course') },
         subscriptions: { title: _t('dashboard.chooseNext', 'Choose your next step:'), options: [] }
     }));
 

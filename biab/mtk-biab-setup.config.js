@@ -175,7 +175,7 @@ window.MTK_BIAB_SETUP_CONFIG = {
         { id: "palette", label: "Color scheme", type: "palette", required: true },
         { id: "brandToneExplainer", label: "Color scheme vs. brand tone", type: "info", text: "Color scheme controls the visual look across the website, logo, invoices, and marketing. Brand tone controls the wording style: how direct, warm, polished, or reassuring the business sounds." },
         { id: "brandTone", label: "Brand tone", type: "select", required: true, options: ["Clear and professional", "Warm and neighborly", "Direct and practical", "Polished and premium", "Security-focused and reassuring"] },
-        { id: "tagline", label: "Tagline", type: "text", placeholder: "Mobile Locksmith Service", required: true },
+        { id: "tagline", label: "Tagline", type: "text", placeholder: "Mobile locksmith service", required: true },
         { id: "logoStatus", label: "Logo status", type: "select", required: true, options: ["Create in logo step", "Upload existing logo", "Finish logo later"] }
       ]
     },

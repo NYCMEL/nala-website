@@ -1539,7 +1539,7 @@ window.app.syllabus = [
                         },
                         "resources": [
                             {
-                                "description": "Lesson 44 - How and where to begin advertising as a Locksmith",
+                                "description": "Lesson 44 - How and where to begin advertising as a locksmith",
                                 "url": "https://vimeo.com/827173787",
                                 "type": "video"
                             }

@@ -720,7 +720,7 @@ const MTK_BIAB_CONFIG = {
 <p>There is no single universal U.S. federal invoice format for ordinary small businesses, but good recordkeeping matters. Your invoices should be clear, itemized, professional, and consistent with your tax, accounting, and local legal requirements.</p>
 <p>State and local requirements may add more, especially for tax display, contractor work categories, or license disclosures.</p>
 
-<h3>What Every Professional Locksmith Invoice Should Include</h3>
+<h3>What every professional locksmith invoice should include</h3>
 <ul>
   <li>Invoice number</li>
   <li>Invoice date</li>
@@ -747,7 +747,7 @@ const MTK_BIAB_CONFIG = {
 </ul>
 
 <h3>What a Good Service Description Looks Like</h3>
-<p><strong>Weak:</strong> Locksmith service</p>
+<p><strong>Weak:</strong> locksmith service</p>
 <p><strong>Better:</strong> Opened front entry door using non-destructive methods where possible, rekeyed 2 cylinders, cut 4 keys, tested operation with customer, and confirmed proper latch and key function before leaving.</p>
 
 <h3>Recommended Payment Terms</h3>
@@ -903,7 +903,7 @@ const MTK_BIAB_CONFIG = {
       done: "Search Console is verified, the sitemap is submitted, service pages exist, and the business name, phone, and website match everywhere.",
       steps: [
         { icon: "map", title: "Write the service-area list", summary: "List only places you can actually reach.", details: ["Use exact cities, neighborhoods, ZIP codes, or counties.", "Keep it honest and practical."] },
-        { icon: "web", title: "Create essential pages", summary: "Build the pages buyers expect.", details: ["Homepage.", "About.", "Contact.", "Residential Locksmith.", "Commercial Locksmith.", "Rekey.", "Lock Change.", "Lockout.", "Auto Lockout if offered."] },
+        { icon: "web", title: "Create essential pages", summary: "Build the pages buyers expect.", details: ["Homepage.", "About.", "Contact.", "Residential locksmith.", "Commercial locksmith.", "Rekey.", "Lock change.", "Lockout.", "Auto lockout if offered."] },
         { icon: "call", title: "Put the phone number high", summary: "The phone number should be easy to tap.", details: ["Make it clickable on mobile.", "Match the Google Business Profile phone number."] },
         { icon: "search", title: "Add Search Console", summary: "Verify the live website.", details: ["Use the domain property method if possible."], links: [{ label: "Open Search Console", href: "https://search.google.com/search-console/welcome" }, { label: "Verify site ownership", href: "https://support.google.com/webmasters/answer/9008080?hl=en" }] },
         { icon: "upload_file", title: "Submit the sitemap", summary: "Help Google discover pages faster.", details: ["Submit the website sitemap after verification."], links: [{ label: "Submit a sitemap", href: "https://support.google.com/webmasters/answer/183668?hl=en" }] },

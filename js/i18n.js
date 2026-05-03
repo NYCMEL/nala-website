@@ -345,8 +345,8 @@
       es: 'Caminos hacia el Éxito'
     },
     'carousel.intro': {
-      en: 'Our Locksmith course is built to take you from curiosity to real-world readiness with a clear, practical approach. Whether you are new to the trade or sharpening existing skills, the course focuses on what matters on the job. You learn how locks work, how to diagnose issues quickly, and how to handle common residential, commercial, and automotive services with confidence.',
-      es: 'Nuestro curso de Cerrajería está diseñado para llevarte de la curiosidad a la preparación para el mundo real con un enfoque claro y práctico. Ya sea que seas nuevo en el oficio o estés perfeccionando habilidades existentes, el curso se enfoca en lo que importa en el trabajo. Aprenderás cómo funcionan las cerraduras, cómo diagnosticar problemas rápidamente y cómo manejar con confianza los servicios residenciales, comerciales y automotrices más comunes.'
+      en: 'Our locksmith course is built to take you from curiosity to real-world readiness with a clear, practical approach. Whether you are new to the trade or sharpening existing skills, the course focuses on what matters on the job. You learn how locks work, how to diagnose issues quickly, and how to handle common residential, commercial, and automotive services with confidence.',
+      es: 'Nuestro curso de cerrajería está diseñado para llevarte de la curiosidad a la preparación para el mundo real con un enfoque claro y práctico. Ya sea que seas nuevo en el oficio o estés perfeccionando habilidades existentes, el curso se enfoca en lo que importa en el trabajo. Aprenderás cómo funcionan las cerraduras, cómo diagnosticar problemas rápidamente y cómo manejar con confianza los servicios residenciales, comerciales y automotrices más comunes.'
     },
     'carousel.btn.prev': {
       en: 'Previous',
@@ -401,8 +401,8 @@
 
     // ── ABOUT / BENEFITS ──────────────────────────────────────────
     'about.title1': {
-      en: 'Locksmith Training',
-      es: 'Entrenamiento en Cerrajería'
+      en: 'Locksmith training',
+      es: 'Entrenamiento en cerrajería'
     },
     'about.body1': {
       en: 'Professional locksmith training online: structured, measurable, and practical. This step-by-step program covers residential, commercial, safe, and automotive fundamentals, supported by US-style exams and checkpoints throughout the course.',
@@ -758,8 +758,8 @@
 
     // ── READY / CTA SECTION ───────────────────────────────────────
     'ready.title': {
-      en: 'Ready to Start Your Locksmith Career?',
-      es: '¿Listo para Comenzar tu Carrera como Cerrajero?'
+      en: 'Ready to start your locksmith career?',
+      es: '¿Listo para comenzar tu carrera como cerrajero?'
     },
     'ready.description': {
       en: 'Join NALA today and unlock your potential with industry-leading training and support.',
@@ -778,7 +778,7 @@
       es: 'NALA empodera a los profesionales cerrajeros a través de educación, certificación y liderazgo en la industria. 2026 Todos los derechos reservados'
     },
     'footer.copyright': {
-      en: '2026 NALA - North America Locksmith Association',
+      en: '2026 NALA - North American Locksmith Association',
       es: '2026 NALA - Asociación Norteamericana de Cerrajeros'
     },
 
@@ -833,7 +833,7 @@
     // ── DASHBOARD ─────────────────────────────────────────────────
     'dashboard.continue':        { en: 'Continue with Program',         es: 'Continuar con el programa' },
     'dashboard.progress.label':  { en: 'Your progress to date:',       es: 'Tu progreso hasta la fecha:' },
-    'dashboard.course.title':    { en: 'NALA - Locksmith Course',       es: 'NALA - Curso de Cerrajería' },
+    'dashboard.course.title':    { en: 'NALA locksmith course',       es: 'Curso de cerrajería de NALA' },
     'dashboard.chooseNext':      { en: 'Choose your next step:',        es: 'Elige tu siguiente paso:' },
     'dashboard.activeProducts':  { en: 'Your active products',          es: 'Tus productos activos' },
     'dashboard.price.active':    { en: 'Active',                        es: 'Activo' },
@@ -1009,7 +1009,7 @@
     'msg.btn.close': { en: 'Close Message', es: 'Cerrar Mensaje' },
 
     // ── CURRICULUM PAGE ───────────────────────────────────────────
-    'curriculum.welcome':   { en: 'Welcome to NALA Locksmith Training', es: 'Bienvenido a la capacitación de cerrajería de NALA' },
+    'curriculum.welcome':   { en: 'Welcome to NALA locksmith training', es: 'Bienvenido a la capacitación de cerrajería de NALA' },
     'curriculum.overview':  {
       en: 'Our comprehensive locksmith program combines online education, hands-on workshops, national certification, and business launch preparation. Designed for beginners and professionals, this program ensures you gain both practical skills and professional knowledge.',
       es: 'Nuestro programa completo de cerrajería combina educación en línea, talleres prácticos, certificación nacional y preparación para el lanzamiento de negocios. Diseñado para principiantes y profesionales, este programa garantiza que adquieras tanto habilidades prácticas como conocimiento profesional.'
