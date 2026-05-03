@@ -454,7 +454,7 @@ function nala_mxchat_signup_text(string $key, array $state): string
             'invalid_phone' => 'That phone number does not look valid. Please send a phone number with at least 7 digits.',
             'final_confirm' => 'Ready to create your free NALA account with ' . $name . ', ' . $email . ', and ' . $phone . '? By replying yes, you agree to the [Privacy Policy](' . $privacy_link . ') and [Terms and Conditions](' . $terms_link . '). Reply yes to submit, or send a correction.',
             'success' => 'If registration can be completed, we will email the next steps so you can set your password and start the free lessons. You can also open the [Register page](' . $register_link . ').',
-            'submit_failed' => 'I could not complete signup from chat right now. Please use the [Register page](' . $register_link . '), or contact support@nalanetwork.com.',
+            'submit_failed' => 'I could not complete signup from chat right now. Please use the [Register page](' . $register_link . '), or contact [support@nalanetwork.com](mailto:support@nalanetwork.com).',
             'cancelled' => 'No problem. I stopped the chat signup. You can still use the [Register page](' . $register_link . ') whenever you are ready.',
         ],
         'es' => [
@@ -466,7 +466,7 @@ function nala_mxchat_signup_text(string $key, array $state): string
             'invalid_phone' => 'Ese numero de telefono no parece valido. Envia un numero con al menos 7 digitos.',
             'final_confirm' => 'Listo para crear tu cuenta gratis de NALA con ' . $name . ', ' . $email . ' y ' . $phone . '? Al responder si, aceptas la [Politica de Privacidad](' . $privacy_link . ') y los [Terminos y Condiciones](' . $terms_link . '). Responde si para enviar, o envia una correccion.',
             'success' => 'Si el registro se puede completar, enviaremos los siguientes pasos por correo para que configures tu contrasena y empieces las lecciones gratis. Tambien puedes abrir la [pagina de registro](' . $register_link . ').',
-            'submit_failed' => 'No pude completar el registro desde el chat ahora mismo. Usa la [pagina de registro](' . $register_link . ') o contacta support@nalanetwork.com.',
+            'submit_failed' => 'No pude completar el registro desde el chat ahora mismo. Usa la [pagina de registro](' . $register_link . ') o contacta [support@nalanetwork.com](mailto:support@nalanetwork.com).',
             'cancelled' => 'Sin problema. Detuve el registro por chat. Puedes usar la [pagina de registro](' . $register_link . ') cuando estes listo.',
         ],
     ];
