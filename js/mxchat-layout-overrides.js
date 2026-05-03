@@ -4,13 +4,8 @@
     var attempts = 0;
 
     var css = [
-        ".nala-chat-active.mxchat-chatbot-wrapper,",
-        ".nala-chat-active.mxchat-chatbot,",
         ".chat-container.nala-chat-active {",
-        "  height: auto !important;",
         "  min-height: 0 !important;",
-        "  max-height: calc(100vh - 24px) !important;",
-        "  flex: 0 0 auto !important;",
         "}",
         ".chat-container.nala-compact-popular .chat-box {",
         "  flex: 0 0 auto !important;",
@@ -31,11 +26,12 @@
         "  max-height: 270px !important;",
         "}",
         ".chat-container.nala-chat-active .chat-box {",
-        "  flex: 0 0 auto !important;",
+        "  flex: 1 1 auto !important;",
         "  height: auto !important;",
         "  min-height: 0 !important;",
-        "  max-height: min(52vh, 360px) !important;",
-        "  padding-bottom: 8px !important;",
+        "  max-height: none !important;",
+        "  padding-bottom: 12px !important;",
+        "  overflow-y: auto !important;",
         "}",
         ".chat-container.nala-chat-active .mxchat-popular-questions {",
         "  display: none !important;",
@@ -46,6 +42,7 @@
         "  overflow: hidden !important;",
         "}",
         ".chat-container.nala-chat-active .input-container {",
+        "  flex: 0 0 auto !important;",
         "  margin-top: 8px !important;",
         "  margin-bottom: 10px !important;",
         "}"
