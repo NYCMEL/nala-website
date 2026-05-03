@@ -93,7 +93,15 @@
 		    const position = image.position || "center center";
 		    const fit = image.fit || "cover";
 		    const background = image.background ? `background-color: ${image.background};` : "";
-		    return `<img class="MTK-hero-carousel__image${index === 0 ? ' is-active' : ''}" src="${image.src}" alt="${image.alt || 'NALA training'}" style="object-position: ${position}; object-fit: ${fit}; ${background}">`;
+		    const active = index === 0 ? ' is-active' : '';
+		    if (image.frame) {
+			return `
+			    <span class="MTK-hero-carousel__image MTK-hero-carousel__image--framed${active}" role="img" aria-label="${image.alt || 'NALA training'}" style="${background} --hero-frame-image: url('${image.src}');">
+				<span class="MTK-hero-carousel__frame-bg" aria-hidden="true"></span>
+				<img class="MTK-hero-carousel__frame-img" src="${image.src}" alt="" aria-hidden="true" style="object-position: ${position}; object-fit: ${fit};">
+			    </span>`;
+		    }
+		    return `<img class="MTK-hero-carousel__image${active}" src="${image.src}" alt="${image.alt || 'NALA training'}" style="object-position: ${position}; object-fit: ${fit}; ${background}">`;
 		}).join('')}
 	    </button>
 	`;

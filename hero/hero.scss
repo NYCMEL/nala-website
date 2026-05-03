@@ -91,6 +91,34 @@
     }
   }
 
+  .MTK-hero-carousel__image--framed {
+    display: block;
+    overflow: hidden;
+    background-color: #e7e3e1;
+
+    .MTK-hero-carousel__frame-bg,
+    .MTK-hero-carousel__frame-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .MTK-hero-carousel__frame-bg {
+      background-image: var(--hero-frame-image);
+      background-size: cover;
+      background-position: center center;
+      filter: blur(18px);
+      transform: scale(1.08);
+      opacity: 0.28;
+    }
+
+    .MTK-hero-carousel__frame-img {
+      object-fit: contain;
+      object-position: center center;
+    }
+  }
+
   @media (max-width: ($bp-md - 1)) {
     .MTK-hero-lhs { order: 2; text-align: center; }
     .MTK-hero-rhs { order: 1; margin-bottom: $spacing-xl; }
