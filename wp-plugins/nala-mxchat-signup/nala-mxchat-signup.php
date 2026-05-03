@@ -14,6 +14,7 @@ const NALA_MXCHAT_SIGNUP_ENDPOINT_OPTION = 'nala_mxchat_signup_endpoint';
 const NALA_MXCHAT_SIGNUP_REGISTER_LINK_OPTION = 'nala_mxchat_signup_register_link';
 const NALA_MXCHAT_SIGNUP_TTL = 1800;
 const NALA_MXCHAT_SIGNUP_PRICING_TTL = 600;
+const NALA_MXCHAT_SIGNUP_BUNDLE_DISCOUNT = 200;
 
 add_filter('mxchat_pre_process_message', 'nala_mxchat_signup_pre_process', 10, 3);
 add_filter('mxchat_system_instructions', 'nala_mxchat_signup_system_instructions', 10, 3);
@@ -478,7 +479,8 @@ function nala_mxchat_signup_pricing_answer(string $lang, string $register_link):
 {
     $prices = nala_mxchat_signup_pricing_data();
     $premium = nala_mxchat_signup_format_plan_price($prices['premium'] ?? []);
-    $business = nala_mxchat_signup_format_plan_price($prices['business_full'] ?? []);
+    $business = nala_mxchat_signup_format_bundle_price($prices);
+    $business_addon = nala_mxchat_signup_format_plan_price($prices['business_addon'] ?? []);
 
     if (!$premium && !$business) {
         if ($lang === 'es') {
@@ -494,7 +496,10 @@ function nala_mxchat_signup_pricing_answer(string $lang, string $register_link):
             $lines[] = '- Premium: ' . $premium['monthly'] . ' por mes durante 24 meses con Klarna. Precio total: ' . $premium['total'] . '.';
         }
         if ($business) {
-            $lines[] = '- Business in a Box: ' . $business['monthly'] . ' por mes durante 24 meses con Klarna. Precio total: ' . $business['total'] . '.';
+            $lines[] = '- Premium + Business in a Box: ' . $business['monthly'] . ' por mes durante 24 meses con Klarna. Precio total: ' . $business['total'] . ' despues del descuento de paquete de ' . $business['discount'] . ' (total regular ' . $business['regular'] . '). Esto aplica si lo compras junto desde el inicio o agregas Negocio en una Caja durante el pago de Premium.';
+        }
+        if ($business_addon) {
+            $lines[] = '- Business in a Box despues de comprar Premium por separado: precio total ' . $business_addon['total'] . '.';
         }
         $lines[] = 'La disponibilidad y aprobacion de Klarna se confirman en checkout. Tambien puedes empezar con las [lecciones gratis](' . $register_link . ').';
         return implode("\n", $lines);
@@ -505,7 +510,10 @@ function nala_mxchat_signup_pricing_answer(string $lang, string $register_link):
         $lines[] = '- Premium: ' . $premium['monthly'] . ' per month for 24 months with Klarna. Total price: ' . $premium['total'] . '.';
     }
     if ($business) {
-        $lines[] = '- Business in a Box: ' . $business['monthly'] . ' per month for 24 months with Klarna. Total price: ' . $business['total'] . '.';
+        $lines[] = '- Premium + Business in a Box: ' . $business['monthly'] . ' per month for 24 months with Klarna. Total price: ' . $business['total'] . ' after the ' . $business['discount'] . ' bundle discount (regular total ' . $business['regular'] . '). This applies if you buy it together up front or add Business in a Box during Premium checkout.';
+    }
+    if ($business_addon) {
+        $lines[] = '- Business in a Box after buying Premium separately: total price ' . $business_addon['total'] . '.';
     }
     $lines[] = 'Klarna availability and approval are confirmed at checkout. You can also start with the [free lessons](' . $register_link . ').';
     return implode("\n", $lines);
@@ -520,7 +528,7 @@ function nala_mxchat_signup_pricing_context(): string
 
     $plans = [
         'Premium' => nala_mxchat_signup_format_plan_price($prices['premium'] ?? []),
-        'Business in a Box' => nala_mxchat_signup_format_plan_price($prices['business_full'] ?? []),
+        'Premium + Business in a Box bundle' => nala_mxchat_signup_format_bundle_price($prices),
         'Business in a Box add-on' => nala_mxchat_signup_format_plan_price($prices['business_addon'] ?? []),
     ];
 
@@ -530,7 +538,11 @@ function nala_mxchat_signup_pricing_context(): string
             continue;
         }
 
-        $lines[] = '- ' . $name . ': ' . $plan['monthly'] . ' per month for 24 months with Klarna; total price ' . $plan['total'] . '.';
+        $line = '- ' . $name . ': ' . $plan['monthly'] . ' per month for 24 months with Klarna; total price ' . $plan['total'];
+        if (!empty($plan['discount']) && !empty($plan['regular'])) {
+            $line .= ' after ' . $plan['discount'] . ' bundle discount; regular total ' . $plan['regular'];
+        }
+        $lines[] = $line . '.';
     }
 
     if (!$lines) {
@@ -604,17 +616,7 @@ function nala_mxchat_signup_format_plan_price($entry): array
         return [];
     }
 
-    $amount = null;
-    if (isset($entry['unit_amount']) && is_numeric($entry['unit_amount'])) {
-        $amount = ((float) $entry['unit_amount']) / 100;
-    } elseif (isset($entry['amount']) && is_numeric($entry['amount'])) {
-        $amount = (float) $entry['amount'];
-        if ($amount > 10000) {
-            $amount = $amount / 100;
-        }
-    } elseif (isset($entry['display'])) {
-        $amount = nala_mxchat_signup_display_amount((string) $entry['display']);
-    }
+    $amount = nala_mxchat_signup_plan_amount($entry);
 
     if ($amount === null || $amount <= 0) {
         return [];
@@ -628,6 +630,55 @@ function nala_mxchat_signup_format_plan_price($entry): array
         'total' => $total,
         'monthly' => nala_mxchat_signup_money($amount / 24, 2),
     ];
+}
+
+function nala_mxchat_signup_format_bundle_price(array $prices): array
+{
+    $premium = nala_mxchat_signup_plan_amount($prices['premium'] ?? []);
+    $addon = nala_mxchat_signup_plan_amount($prices['business_addon'] ?? []);
+    $full = nala_mxchat_signup_plan_amount($prices['business_full'] ?? []);
+    $regular = ($premium && $addon) ? $premium + $addon : $full;
+
+    if (!$regular) {
+        return [];
+    }
+
+    $discount = NALA_MXCHAT_SIGNUP_BUNDLE_DISCOUNT;
+    $total = max($regular - $discount, 0);
+
+    return [
+        'total' => nala_mxchat_signup_money($total, nala_mxchat_signup_decimals_for_amount($total)),
+        'monthly' => nala_mxchat_signup_money($total / 24, 2),
+        'regular' => nala_mxchat_signup_money($regular, nala_mxchat_signup_decimals_for_amount($regular)),
+        'discount' => nala_mxchat_signup_money($discount, 0),
+    ];
+}
+
+function nala_mxchat_signup_plan_amount($entry): ?float
+{
+    if (!is_array($entry)) {
+        return null;
+    }
+
+    if (isset($entry['unit_amount']) && is_numeric($entry['unit_amount'])) {
+        return ((float) $entry['unit_amount']) / 100;
+    }
+
+    if (isset($entry['amount']) && is_numeric($entry['amount'])) {
+        $amount = (float) $entry['amount'];
+        return $amount > 10000 ? $amount / 100 : $amount;
+    }
+
+    if (isset($entry['display'])) {
+        return nala_mxchat_signup_display_amount((string) $entry['display']);
+    }
+
+    return null;
+}
+
+function nala_mxchat_signup_decimals_for_amount(float $amount): int
+{
+    return abs($amount - round($amount)) < 0.005 ? 0 : 2;
 }
 
 function nala_mxchat_signup_display_amount(string $display): ?float

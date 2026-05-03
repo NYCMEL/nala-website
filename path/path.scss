@@ -37,6 +37,25 @@
 
   .price  { font-size: clamp(2rem, 3.2vw, 2.6rem); font-weight: $font-weight-bold; line-height: 1; }
   .period { font-size: 1rem; color: $color-text-secondary-alt; margin-left: 0.25rem; display: block; }
+  .total-price {
+    display: block;
+    margin-top: 6px;
+    color: $color-text-secondary-alt;
+    font-size: 0.95rem;
+    font-weight: $font-weight-semibold;
+  }
+
+  .discount-note {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: #f2f7ed;
+    color: #276749;
+    font-size: 0.82rem;
+    font-weight: $font-weight-semibold;
+    line-height: 1.25;
+  }
 
   ul { padding-left: 0; list-style: none; margin-top: 2rem; flex-grow: 1; }
 

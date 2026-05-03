@@ -216,6 +216,14 @@
                         : undefined
                 })
                 : { plan: plan };
+            if (plan === "business" && !hasPremium(user)) {
+                payload.bundle_discount = true;
+                payload.bundle_discount_amount = 20000;
+            }
+            if (plan === "premium") {
+                payload.business_addon_bundle_discount = true;
+                payload.business_addon_discount_amount = 20000;
+            }
 
             const res = await createCheckoutSession(payload);
             if (!res.url) {

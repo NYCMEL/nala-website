@@ -120,6 +120,13 @@
             priceWrap.appendChild(totalPrice);
         }
 
+        if (plan.discountNote) {
+            var discountNote = document.createElement("span");
+            discountNote.className = "discount-note";
+            discountNote.textContent = plan.discountNote;
+            priceWrap.appendChild(discountNote);
+        }
+
         card.appendChild(priceWrap);
 
         var desc = document.createElement("p");

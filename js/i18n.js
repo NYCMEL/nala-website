@@ -292,6 +292,14 @@
       en: 'Get a lockpick tool set with your Business in a Box purchase.',
       es: 'Recibe un set de herramientas de ganzúas con tu compra de Negocio en una Caja.'
     },
+    'home.biab.benefitDiscountTitle': {
+      en: '$200 bundle discount',
+      es: 'Descuento de paquete de $200'
+    },
+    'home.biab.benefitDiscountBody': {
+      en: 'Save $200 when you buy Business in a Box together with Premium.',
+      es: 'Ahorra $200 cuando compras Negocio en una Caja junto con Premium.'
+    },
     'home.biab.point1': {
       en: 'Enter business information once and reuse it across tools.',
       es: 'Ingresa la información del negocio una vez y reutilízala en todas las herramientas.'
@@ -604,6 +612,14 @@
       en: 'Total price {price}',
       es: 'Precio total {price}'
     },
+    'path.premium.addOnNote': {
+      en: 'Add Business in a Box during checkout and the $200 bundle discount applies.',
+      es: 'Agrega Negocio en una Caja durante el pago y se aplica el descuento de paquete de $200.'
+    },
+    'path.business.discountNote': {
+      en: '{discount} bundle discount included. Regular total {regular}.',
+      es: 'Descuento de paquete de {discount} incluido. Total regular {regular}.'
+    },
     'path.bonusLabel': {
       en: 'Included bonus',
       es: 'Bono incluido'
@@ -631,8 +647,8 @@
       es: 'Un juego de herramientas de ganzúas está incluido con la compra de Negocio en una Caja.'
     },
     'path.business.description': {
-      en: 'Premium plus the Business in a Box add-on to help you launch your locksmith business.',
-      es: 'Premium más el complemento Negocio en una Caja para ayudarte a lanzar tu negocio de cerrajería.'
+      en: 'Premium plus the Business in a Box add-on to help you launch your locksmith business, with a $200 bundle discount when purchased together.',
+      es: 'Premium más el complemento Negocio en una Caja para ayudarte a lanzar tu negocio de cerrajería, con un descuento de paquete de $200 cuando se compran juntos.'
     },
     'path.business.f1': { en: 'Everything included in Premium',       es: 'Todo incluido en Premium' },
     'path.business.f2': { en: 'Pre-built locksmith website',           es: 'Sitio web de cerrajería listo para usar' },
@@ -830,7 +846,7 @@
     'dashboard.option.business.active': { en: 'Your Business in a Box package is active.', es: 'Tu paquete Negocio en una Caja está activo.' },
     'dashboard.option.business.addOn': { en: 'Add Business in a Box to your Premium access.', es: 'Agrega Negocio en una Caja a tu acceso Premium.' },
     'dashboard.option.business.purchaseOnly': { en: 'To purchase Business in a Box services, click here.', es: 'Para comprar los servicios de Negocio en una Caja, haz clic aquí.' },
-    'dashboard.option.business.purchaseWithPremium': { en: 'To gain access to the full course and Business in a Box services, click here.', es: 'Para obtener acceso al curso completo y a los servicios de Negocio en una Caja, haz clic aquí.' },
+    'dashboard.option.business.purchaseWithPremium': { en: 'Buy Premium + Business in a Box together and save $200 on the bundle.', es: 'Compra Premium + Negocio en una Caja juntos y ahorra $200 en el paquete.' },
     'dashboard.option.business.buttonOnly': { en: 'Purchase Business in a Box', es: 'Comprar Negocio en una Caja' },
     'dashboard.option.business.buttonBundle': { en: 'Purchase Premium + Business in a Box', es: 'Comprar Premium + Negocio en una Caja' },
     'dashboard.option.business.viewCta': { en: 'Click here to view Business in a Box.', es: 'Haz clic aquí para ver Negocio en una Caja.' },
@@ -875,9 +891,9 @@
     'purchase.loginRequired':    { en: 'Please log in before purchasing.', es: 'Por favor inicia sesión antes de comprar.' },
     'purchase.notAvailable':     { en: 'That purchase option is not available for your current account.', es: 'Esa opción de compra no está disponible para tu cuenta actual.' },
     'purchase.shippingTitle':    { en: 'Lockout Kit Shipping Details', es: 'Detalles de envío del kit de apertura' },
-    'purchase.shippingIntroBusiness': { en: 'Business in a Box includes Premium, the car lockout kit, and the lock pick tool set, so we need the shipping address before opening Stripe Checkout.', es: 'Negocio en una Caja incluye Premium, el kit de apertura de autos y el juego de herramientas de ganzúas, así que necesitamos la dirección de envío antes de abrir Stripe Checkout.' },
+    'purchase.shippingIntroBusiness': { en: 'Business in a Box includes Premium, the car lockout kit, and the lock pick tool set. The $200 bundle discount is included when Business in a Box is bought together with Premium, so we need the shipping address before opening Stripe Checkout.', es: 'Negocio en una Caja incluye Premium, el kit de apertura de autos y el juego de herramientas de ganzúas. El descuento de paquete de $200 se incluye cuando Negocio en una Caja se compra junto con Premium, así que necesitamos la dirección de envío antes de abrir Stripe Checkout.' },
     'purchase.premiumShippingTitle': { en: 'Premium Shipping Details', es: 'Detalles de envío de Premium' },
-    'purchase.premiumShippingIntro': { en: 'Premium includes the car lockout kit, so we need the shipping address before opening Stripe Checkout.', es: 'Premium incluye el kit de apertura de autos, así que necesitamos la dirección de envío antes de abrir Stripe Checkout.' },
+    'purchase.premiumShippingIntro': { en: 'Premium includes the car lockout kit. If you add Business in a Box during checkout, the $200 bundle discount applies, so we need the shipping address before opening Stripe Checkout.', es: 'Premium incluye el kit de apertura de autos. Si agregas Negocio en una Caja durante el pago, se aplica el descuento de paquete de $200, así que necesitamos la dirección de envío antes de abrir Stripe Checkout.' },
     'purchase.recipientName':    { en: 'Recipient Name', es: 'Nombre del destinatario' },
     'purchase.recipientName.short': { en: 'recipient name', es: 'nombre del destinatario' },
     'purchase.address1':         { en: 'Address Line 1', es: 'Dirección línea 1' },
