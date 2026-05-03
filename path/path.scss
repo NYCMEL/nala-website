@@ -9,6 +9,7 @@
   p.lead { color: $color-text-secondary-alt; margin-bottom: 3rem; }
 
   .mtk-card {
+    position: relative;
     background-color: $color-white;
     padding: 1.75rem;
     height: 100%;
@@ -23,9 +24,10 @@
   .mtk-popular { outline: 2px solid $color-blue-path; }
 
   .mtk-badge {
-    align-self: center;
-    margin-top: -1.25rem;
-    margin-bottom: 1.5rem;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -2px);
     background-color: $color-blue-path;
     color: $color-white;
     padding: 0.25rem 0.75rem;
