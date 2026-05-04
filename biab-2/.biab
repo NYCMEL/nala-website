@@ -23,7 +23,6 @@ Data:
 
 Restrictions:
 - No frameworks.
-- No Bootstrap.
 - No external libraries.
 - Vanilla Javascript
 
