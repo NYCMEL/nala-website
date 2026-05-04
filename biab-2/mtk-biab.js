@@ -1,480 +1,269 @@
 class MtkBiab {
-    constructor(element, config) {
-        this.element = element;
-        this.config = config || window.mtkBiabConfig || {};
-        this.activeSectionId = this.config.defaultSection || "introduction";
-        this.selectors = {
-            eyebrow: "[data-biab-eyebrow]",
-            title: "[data-biab-title]",
-            subtitle: "[data-biab-subtitle]",
-            menuButton: "[data-biab-menu-button]",
-            menuLabel: "[data-biab-menu-label]",
-            side: "[data-biab-side]",
-            nav: "[data-biab-nav]",
-            main: "[data-biab-main]",
-            sectionIcon: "[data-biab-section-icon]",
-            activeLabel: "[data-biab-active-label]",
-            sectionTitle: "[data-biab-section-title]",
-            sectionSummary: "[data-biab-section-summary]",
-            sectionBody: "[data-biab-section-body]",
-            bullets: "[data-biab-bullets]",
-            stats: "[data-biab-stats]",
-            getStartedLabel: "[data-biab-get-started-label]",
-            learnMoreLabel: "[data-biab-learn-more-label]",
-            actions: "[data-biab-action]",
-            setupPage: "[data-biab-setup-page]",
-            setupEyebrow: "[data-biab-setup-eyebrow]",
-            setupTitle: "[data-biab-setup-title]",
-            setupBody: "[data-biab-setup-body]",
-            setupClose: "[data-biab-setup-close]"
-        };
+  constructor(root, config) {
+    this.root = root;
+    this.config = config || {};
+    this.sections = Array.isArray(this.config.sections) ? this.config.sections : [];
+    this.events = this.config.events || { publish: {}, subscribe: [] };
+    this.activeId = this.sections[0] ? this.sections[0].id : "";
+    this.isPublishing = false;
+    this.onMessage = this.onMessage.bind(this);
+    this._init();
+  }
 
-        this.onMessage = this.onMessage.bind(this);
-        this.handleNavClick = this.handleNavClick.bind(this);
-        this.handleMenuClick = this.handleMenuClick.bind(this);
-        this.handleActionClick = this.handleActionClick.bind(this);
-        this.handleSetupCloseClick = this.handleSetupCloseClick.bind(this);
-        this.handleDocumentKeydown = this.handleDocumentKeydown.bind(this);
+  _init() {
+    this._subscribe();
+    this._render();
+    this._bind();
+    this._publish(this.events.publish.ready || "mtk-biab:ready", {
+      component: this.config.component || "mtk-biab",
+      version: this.config.version || "1.0.0"
+    });
+  }
 
-        this.init();
+  _subscribe() {
+    const list = Array.isArray(this.events.subscribe) ? this.events.subscribe : [];
+    list.forEach((eventName) => {
+      if (window.wc && typeof window.wc.subscribe === "function") {
+        window.wc.subscribe(eventName, this.onMessage);
+      }
+    });
+  }
+
+  onMessage(eventName, data) {
+    if (this.isPublishing) return;
+
+    if (data && data.sectionId) {
+      this._selectSection(data.sectionId);
     }
 
-    init() {
-        this.cacheElements();
-        this.renderStaticContent();
-        this.renderNav();
-        this.renderSection(this.activeSectionId, false);
-        this.bindEvents();
-        this.subscribe();
-        this.publish("4-mtk-biab:ready", {
-            component: this.config.component,
-            activeSectionId: this.activeSectionId
-        });
+    if (eventName === "4-mtk-biab:open-setup") {
+      this._openSetup();
     }
 
-    cacheElements() {
-        Object.keys(this.selectors).forEach((key) => {
-            if (key === "actions") {
-                this[key] = Array.from(this.element.querySelectorAll(this.selectors[key]));
-            } else {
-                this[key] = this.element.querySelector(this.selectors[key]);
-            }
-        });
+    if (eventName === "4-mtk-biab:close-setup") {
+      this._closeSetup();
+    }
+  }
+
+  _publish(eventName, data) {
+    this.isPublishing = true;
+
+    if (window.wc && typeof window.wc.log === "function") {
+      window.wc.log(eventName, data);
+    } else {
+      console.log(eventName, data);
     }
 
-    renderStaticContent() {
-        this.setText(this.eyebrow, this.config.eyebrow);
-        this.setText(this.title, this.config.title);
-        this.setText(this.subtitle, this.config.subtitle);
-        this.setText(this.menuLabel, this.getLabel("mobileMenu"));
-        this.setText(this.activeLabel, this.getLabel("activeSection"));
-        this.setText(this.getStartedLabel, this.config.actions?.getStarted?.label || this.getLabel("getStarted"));
-        this.setText(this.learnMoreLabel, this.config.actions?.learnMore?.label || this.getLabel("learnMore"));
+    if (window.wc && typeof window.wc.publish === "function") {
+      window.wc.publish(eventName, data);
     }
 
-    renderNav() {
-        if (!this.nav) {
-            return;
-        }
-
-        this.nav.innerHTML = "";
-
-        this.getSections().forEach((section) => {
-            const button = document.createElement("button");
-            button.type = "button";
-            button.className = "mtk-biab__nav-button";
-            button.dataset.sectionId = section.id;
-            button.setAttribute("aria-current", section.id === this.activeSectionId ? "page" : "false");
-
-            const icon = document.createElement("span");
-            icon.className = "mtk-biab__material-icon";
-            icon.setAttribute("aria-hidden", "true");
-            icon.textContent = section.icon || "widgets";
-
-            const label = document.createElement("span");
-            label.textContent = section.label || section.title || section.id;
-
-            button.append(icon, label);
-            this.nav.appendChild(button);
-        });
-    }
-
-    renderSection(sectionId, shouldFocus = true) {
-        const section = this.getSectionById(sectionId) || this.getSections()[0];
-
-        if (!section) {
-            return;
-        }
-
-        this.activeSectionId = section.id;
-        this.setText(this.sectionIcon, section.icon || "widgets");
-        this.setText(this.sectionTitle, section.title);
-        this.setText(this.sectionSummary, section.summary);
-        this.setText(this.sectionBody, section.body);
-        this.renderBullets(section.bullets || []);
-        this.renderStats(section.stats || []);
-        this.updateNavState();
-        this.closeMobileMenu();
-
-        if (shouldFocus && this.main) {
-            this.main.focus({ preventScroll: true });
-        }
-    }
-
-    renderBullets(bullets) {
-        if (!this.bullets) {
-            return;
-        }
-
-        this.bullets.innerHTML = "";
-
-        bullets.forEach((item) => {
-            const li = document.createElement("li");
-            li.className = "mtk-biab__bullet";
-
-            const icon = document.createElement("span");
-            icon.className = "mtk-biab__material-icon";
-            icon.setAttribute("aria-hidden", "true");
-            icon.textContent = "check_circle";
-
-            const text = document.createElement("span");
-            text.textContent = item;
-
-            li.append(icon, text);
-            this.bullets.appendChild(li);
-        });
-    }
-
-    renderStats(stats) {
-        if (!this.stats) {
-            return;
-        }
-
-        this.stats.innerHTML = "";
-
-        stats.forEach((stat) => {
-            const card = document.createElement("div");
-            card.className = "mtk-biab__stat";
-
-            const value = document.createElement("span");
-            value.className = "mtk-biab__stat-value";
-            value.textContent = stat.value;
-
-            const label = document.createElement("span");
-            label.className = "mtk-biab__stat-label";
-            label.textContent = stat.label;
-
-            card.append(value, label);
-            this.stats.appendChild(card);
-        });
-    }
-
-    updateNavState() {
-        if (!this.nav) {
-            return;
-        }
-
-        const buttons = Array.from(this.nav.querySelectorAll(".mtk-biab__nav-button"));
-
-        buttons.forEach((button) => {
-            const isActive = button.dataset.sectionId === this.activeSectionId;
-            button.setAttribute("aria-current", isActive ? "page" : "false");
-        });
-    }
-
-    bindEvents() {
-        if (this.nav) {
-            this.nav.addEventListener("click", this.handleNavClick);
-        }
-
-        if (this.menuButton) {
-            this.menuButton.addEventListener("click", this.handleMenuClick);
-        }
-
-        this.actions.forEach((action) => {
-            action.addEventListener("click", this.handleActionClick);
-        });
-
-        if (this.setupClose) {
-            this.setupClose.addEventListener("click", this.handleSetupCloseClick);
-        }
-
-        document.addEventListener("keydown", this.handleDocumentKeydown);
-    }
-
-    subscribe() {
-        if (!window.wc || typeof window.wc.subscribe !== "function") {
-            this.log("wc.subscribe unavailable", { component: this.config.component });
-            return;
-        }
-
-        window.wc.subscribe("4-mtk-biab", this.onMessage);
-        window.wc.subscribe("4-mtk-biab:select-section", this.onMessage);
-        window.wc.subscribe("4-mtk-biab:open-menu", this.onMessage);
-        window.wc.subscribe("4-mtk-biab:close-menu", this.onMessage);
-        window.wc.subscribe("4-mtk-biab:toggle-menu", this.onMessage);
-        window.wc.subscribe("4-mtk-biab:refresh", this.onMessage);
-        window.wc.subscribe("4-mtk-biab:open-setup", this.onMessage);
-        window.wc.subscribe("4-mtk-biab:close-setup", this.onMessage);
-    }
-
-    onMessage(message = {}) {
-        const topic = message.topic || message.type || message.event || "4-mtk-biab";
-        const payload = message.payload || message.data || message;
-
-        this.log("received", { topic, payload });
-
-        switch (topic) {
-            case "4-mtk-biab:select-section":
-                this.renderSection(payload.sectionId || payload.id);
-                break;
-            case "4-mtk-biab:open-menu":
-                this.openMobileMenu();
-                break;
-            case "4-mtk-biab:close-menu":
-                this.closeMobileMenu();
-                break;
-            case "4-mtk-biab:toggle-menu":
-                this.toggleMobileMenu();
-                break;
-            case "4-mtk-biab:open-setup":
-                this.openSetupPage(payload.sectionId || payload.id || this.activeSectionId);
-                break;
-            case "4-mtk-biab:close-setup":
-                this.closeSetupPage();
-                break;
-            case "4-mtk-biab:refresh":
-            case "4-mtk-biab":
-                this.renderStaticContent();
-                this.renderNav();
-                this.renderSection(this.activeSectionId, false);
-                break;
-            default:
-                break;
-        }
-    }
-
-    handleNavClick(event) {
-        const button = event.target.closest(".mtk-biab__nav-button");
-
-        if (!button) {
-            return;
-        }
-
-        const sectionId = button.dataset.sectionId;
-        const section = this.getSectionById(sectionId);
-
-        this.renderSection(sectionId);
-        this.publish("4-mtk-biab:nav-clicked", {
-            sectionId,
-            section
-        });
-    }
-
-    handleMenuClick() {
-        this.toggleMobileMenu();
-        this.publish("4-mtk-biab:menu-clicked", {
-            isOpen: this.element.classList.contains("mtk-biab--menu-open")
-        });
-    }
-
-    handleActionClick(event) {
-        const actionKey = event.currentTarget.dataset.biabAction;
-        const actionConfig = this.config.actions?.[actionKey] || {};
-        const topic = actionConfig.topic || `4-mtk-biab:${actionKey}-clicked`;
-        const section = this.getSectionById(this.activeSectionId);
-
-        if (actionKey === "getStarted") {
-            this.openSetupPage(this.activeSectionId);
-        }
-
-        this.publish(topic, {
-            action: actionKey,
-            sectionId: this.activeSectionId,
-            section
-        });
-    }
-
-    handleSetupCloseClick() {
-        this.closeSetupPage();
-        this.publish("4-mtk-biab:setup-closed", {
-            sectionId: this.activeSectionId,
-            section: this.getSectionById(this.activeSectionId)
-        });
-    }
-
-    handleDocumentKeydown(event) {
-        if (event.key === "Escape" && this.element.classList.contains("mtk-biab--setup-open")) {
-            this.handleSetupCloseClick();
-        }
-    }
-
-    openSetupPage(sectionId) {
-        const section = this.getSectionById(sectionId) || this.getSectionById(this.activeSectionId) || this.getSections()[0];
-
-        if (!this.setupPage || !section) {
-            return;
-        }
-
-        this.setText(this.setupEyebrow, this.getLabel("setupEyebrow"));
-        this.setText(this.setupTitle, section.label || section.title || "Setup");
-        this.renderSetupBody(section);
-        this.setupPage.setAttribute("aria-hidden", "false");
-        this.element.classList.add("mtk-biab--setup-open");
-        document.body.classList.add("mtk-biab-body-lock");
-
-        if (this.setupClose) {
-            this.setupClose.focus({ preventScroll: true });
-        }
-
-        this.publish("4-mtk-biab:setup-opened", {
-            sectionId: section.id,
-            section
-        });
-    }
-
-    closeSetupPage() {
-        if (!this.setupPage) {
-            return;
-        }
-
-        this.setupPage.setAttribute("aria-hidden", "true");
-        this.element.classList.remove("mtk-biab--setup-open");
-        document.body.classList.remove("mtk-biab-body-lock");
-    }
-
-    renderSetupBody(section) {
-        if (!this.setupBody) {
-            return;
-        }
-
-        const paragraphs = Array.isArray(this.config.setupLorem) ? this.config.setupLorem : [];
-        this.setupBody.innerHTML = "";
-
-        paragraphs.forEach((paragraph) => {
-            const p = document.createElement("p");
-            p.textContent = paragraph;
-            this.setupBody.appendChild(p);
-        });
-    }
-
-    toggleMobileMenu() {
-        const isOpen = this.element.classList.toggle("mtk-biab--menu-open");
-        this.setMenuState(isOpen);
-    }
-
-    openMobileMenu() {
-        this.element.classList.add("mtk-biab--menu-open");
-        this.setMenuState(true);
-    }
-
-    closeMobileMenu() {
-        this.element.classList.remove("mtk-biab--menu-open");
-        this.setMenuState(false);
-    }
-
-    setMenuState(isOpen) {
-        if (!this.menuButton) {
-            return;
-        }
-
-        this.menuButton.setAttribute("aria-expanded", String(isOpen));
-        this.menuButton.setAttribute("aria-label", isOpen ? this.getLabel("closeMenu") : this.getLabel("openMenu"));
-    }
-
-    publish(topic, payload = {}) {
-        this.log("publishing", { topic, payload });
-
-        if (!window.wc || typeof window.wc.publish !== "function") {
-            return;
-        }
-
-        window.wc.publish(topic, payload);
-    }
-
-    log(message, data) {
-        if (window.wc && typeof window.wc.log === "function") {
-            window.wc.log(`[mtk-biab] ${message}`, data);
-            return;
-        }
-
-        console.log(`[mtk-biab] ${message}`, data || "");
-    }
-
-    getSections() {
-        return Array.isArray(this.config.sections) ? this.config.sections : [];
-    }
-
-    getSectionById(sectionId) {
-        return this.getSections().find((section) => section.id === sectionId);
-    }
-
-    getLabel(key) {
-        return this.config.labels?.[key] || "";
-    }
-
-    setText(node, value) {
-        if (node) {
-            node.textContent = value || "";
-        }
-    }
-}
-
-(function initializeMtkBiabWhenReady() {
-    const componentSelector = "mtk-biab.mtk-biab";
-    const initialized = new WeakSet();
-
-    function loadConfig(callback) {
-        if (window.mtkBiabConfig) {
-            callback(window.mtkBiabConfig);
-            return;
-        }
-
-        const existingScript = document.querySelector('script[src$="mtk-biab.config.js"]');
-
-        if (existingScript) {
-            existingScript.addEventListener("load", () => callback(window.mtkBiabConfig || {}), { once: true });
-            existingScript.addEventListener("error", () => callback({}), { once: true });
-            return;
-        }
-
-        const script = document.createElement("script");
-        script.src = "mtk-biab.config.js";
-        script.defer = true;
-        script.addEventListener("load", () => callback(window.mtkBiabConfig || {}), { once: true });
-        script.addEventListener("error", () => callback({}), { once: true });
-        document.head.appendChild(script);
-    }
-
-    function initElements(config) {
-        const elements = Array.from(document.querySelectorAll(componentSelector));
-
-        elements.forEach((element) => {
-            if (!initialized.has(element)) {
-                initialized.add(element);
-                element.mtkBiab = new MtkBiab(element, config);
-            }
-        });
-    }
-
-    function start() {
-        loadConfig((config) => {
-            initElements(config);
-
-            const observer = new MutationObserver(() => {
-                initElements(window.mtkBiabConfig || config);
-            });
-
-            observer.observe(document.documentElement, {
-                childList: true,
-                subtree: true
-            });
-        });
-    }
+    this.isPublishing = false;
+  }
+
+  _render() {
+    const brand = this.config.brand || {};
+    const active = this._getActiveSection();
+
+    this.root.innerHTML = `
+      <section class="mtk-biab__page" aria-labelledby="mtk-biab-title">
+        <header class="mtk-biab__hero">
+          <h1 class="mtk-biab__title" id="mtk-biab-title">${this._escape(brand.title || "Business in a Box")}</h1>
+          <p class="mtk-biab__subtitle">${this._escape(brand.subtitle || "")}</p>
+          <button class="mtk-biab__mobile-toggle" type="button" aria-expanded="false" data-action="toggle-menu">
+            <span class="material-icons" aria-hidden="true">menu</span>
+            <span>${this._escape(brand.mobileMenuLabel || "Menu")}</span>
+          </button>
+        </header>
+
+        <div class="mtk-biab__layout">
+          <aside class="mtk-biab__sidebar" aria-label="Business in a Box navigation">
+            <nav class="mtk-biab__nav">
+              ${this.sections.map((section) => this._navButton(section)).join("")}
+            </nav>
+          </aside>
+
+          <main class="mtk-biab__main">
+            ${this._panel(active)}
+          </main>
+        </div>
+      </section>
+    `;
+  }
+
+  _navButton(section) {
+    const isActive = section.id === this.activeId;
+    return `
+      <button
+        class="mtk-biab__nav-btn${isActive ? " is-active" : ""}"
+        type="button"
+        data-action="select-section"
+        data-section-id="${this._escape(section.id)}"
+        aria-current="${isActive ? "page" : "false"}"
+      >
+        <span class="material-icons" aria-hidden="true">${this._escape(section.icon || "radio_button_unchecked")}</span>
+        <span>${this._escape(section.label || "")}</span>
+      </button>
+    `;
+  }
+
+  _panel(section) {
+    const brand = this.config.brand || {};
+    const safeSection = section || {};
+    return `
+      <article class="mtk-biab__panel" aria-live="polite">
+        <p class="mtk-biab__eyebrow">${this._escape(safeSection.eyebrow || brand.eyebrow || "")}</p>
+        <h2 class="mtk-biab__panel-title">${this._escape(safeSection.title || safeSection.label || "")}</h2>
+        <p class="mtk-biab__description">${this._escape(safeSection.description || "")}</p>
+        <p class="mtk-biab__body">${this._escape(safeSection.body || "")}</p>
+        <button class="mtk-biab__start-btn" type="button" data-action="open-setup">
+          <span class="material-icons" aria-hidden="true">rocket_launch</span>
+          <span>${this._escape(brand.startSetupLabel || "Start setup")}</span>
+        </button>
+      </article>
+    `;
+  }
+
+  _bind() {
+    this.root.addEventListener("click", (event) => {
+      const target = event.target.closest("[data-action]");
+      if (!target || !this.root.contains(target)) return;
+
+      const action = target.getAttribute("data-action");
+
+      if (action === "toggle-menu") {
+        this._toggleMenu(target);
+      }
+
+      if (action === "select-section") {
+        this._selectSection(target.getAttribute("data-section-id"));
+      }
+
+      if (action === "open-setup") {
+        this._openSetup();
+      }
+
+      if (action === "close-setup") {
+        this._closeSetup();
+      }
+    });
+
+    this.root.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        this._closeSetup();
+      }
+    });
+  }
+
+  _toggleMenu(button) {
+    const expanded = button.getAttribute("aria-expanded") === "true";
+    button.setAttribute("aria-expanded", String(!expanded));
+    this.root.classList.toggle("is-menu-open", !expanded);
+  }
+
+  _selectSection(sectionId) {
+    if (!this.sections.some((section) => section.id === sectionId)) return;
+
+    this.activeId = sectionId;
+    this.root.classList.remove("is-menu-open");
+    this._render();
+
+    this._publish(this.events.publish.navSelect || "mtk-biab:nav-select", {
+      sectionId: this.activeId,
+      section: this._getActiveSection()
+    });
+  }
+
+  _openSetup() {
+    const section = this._getActiveSection();
+    const brand = this.config.brand || {};
+    const body = Array.isArray(brand.setupBody) ? brand.setupBody : [];
+
+    this._closeSetup();
+
+    const overlay = document.createElement("section");
+    overlay.className = "mtk-biab__setup";
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    overlay.setAttribute("aria-labelledby", "mtk-biab-setup-title");
+    overlay.innerHTML = `
+      <header class="mtk-biab__setup-header">
+        <div>
+          <p class="mtk-biab__setup-kicker">${this._escape(brand.setupEyebrow || "Current selection")}</p>
+          <h2 class="mtk-biab__setup-title" id="mtk-biab-setup-title">${this._escape(section.title || section.label || "")}</h2>
+        </div>
+        <button class="mtk-biab__setup-close" type="button" data-action="close-setup" aria-label="${this._escape(brand.closeLabel || "Close setup")}">
+          ×
+        </button>
+      </header>
+      <div class="mtk-biab__setup-body">
+        <div class="mtk-biab__setup-card">
+          ${body.map((paragraph) => `<p>${this._escape(paragraph)}</p>`).join("")}
+        </div>
+      </div>
+    `;
+
+    this.root.appendChild(overlay);
+    const closeButton = overlay.querySelector(".mtk-biab__setup-close");
+    if (closeButton) closeButton.focus();
+
+    this._publish(this.events.publish.setupOpen || "mtk-biab:setup-open", {
+      sectionId: this.activeId,
+      section
+    });
+  }
+
+  _closeSetup() {
+    const existing = this.root.querySelector(".mtk-biab__setup");
+    if (!existing) return;
+
+    existing.remove();
+
+    this._publish(this.events.publish.setupClose || "mtk-biab:setup-close", {
+      sectionId: this.activeId
+    });
+  }
+
+  _getActiveSection() {
+    return this.sections.find((section) => section.id === this.activeId) || this.sections[0] || {};
+  }
+
+  _escape(value) {
+    return String(value == null ? "" : value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  static initWhenReady() {
+    const start = () => {
+      const root = document.querySelector("mtk-biab.mtk-biab");
+      if (!root || root.dataset.mtkBiabReady === "true") return false;
+
+      root.dataset.mtkBiabReady = "true";
+      new MtkBiab(root, window.MTK_BIAB_CONFIG || {});
+      return true;
+    };
+
+    if (start()) return;
+
+    const observer = new MutationObserver(() => {
+      if (start()) observer.disconnect();
+    });
+
+    observer.observe(document.documentElement, {
+      childList: true,
+      subtree: true
+    });
 
     if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", start, { once: true });
+      document.addEventListener("DOMContentLoaded", start, { once: true });
     } else {
-        start();
+      start();
     }
-})();
+  }
+}
+
+MtkBiab.initWhenReady();
