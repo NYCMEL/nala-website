@@ -80,3 +80,9 @@ Update my UI. I am explaining each content by numbers:
 
 2) Website Builder
    - use content from client folder
+
+5) Invoices
+   - display a table of invoices with dates, client, amount etc.
+   - allow sorting by clicking on column header
+   - add a heading "All Invoices"
+   - add a "New Invoice" button at the top right of this page
