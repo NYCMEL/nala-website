@@ -505,3 +505,11 @@ mtk-biab.mtk-biab .mtk-biab__client-frame {
 
 mtk-biab.mtk-biab .mtk-biab__setup {
   padding-bottom: 40px; }
+
+/* remove double scrollbars on setup pages */
+mtk-biab.mtk-biab .mtk-biab__setup {
+  overflow: hidden; }
+
+mtk-biab.mtk-biab .mtk-biab__setup-body {
+  overflow-y: auto;
+  max-height: calc(100vh - 120px); }
