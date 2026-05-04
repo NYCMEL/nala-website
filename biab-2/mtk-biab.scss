@@ -671,3 +671,28 @@ mtk-biab.mtk-biab .mtk-biab__invoice-table th:nth-child(8),
 mtk-biab.mtk-biab .mtk-biab__invoice-table td:nth-child(8) {
   width: 10%;
 }
+
+/* remove table internal scroll */
+mtk-biab.mtk-biab .mtk-biab__table-wrap {
+  max-height: none;
+  overflow: visible;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table thead,
+mtk-biab.mtk-biab .mtk-biab__invoice-table tbody {
+  display: table;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table tbody {
+  overflow: visible;
+  max-height: none;
+}
+
+/* ensure page scroll works */
+mtk-biab.mtk-biab {
+  overflow: visible;
+}
+
+mtk-biab.mtk-biab .mtk-biab__page {
+  overflow: visible;
+}
