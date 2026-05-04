@@ -701,3 +701,22 @@ mtk-biab.mtk-biab .mtk-biab__invoice-table th {
 
 mtk-biab.mtk-biab .mtk-biab__invoice-table td {
   font-size: 13px; }
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table td:last-child,
+mtk-biab.mtk-biab .mtk-biab__invoice-table td:nth-last-child(2) {
+  width: 48px;
+  padding: 6px;
+  text-align: center; }
+
+mtk-biab.mtk-biab .mtk-biab__invoice-action-btn {
+  padding: 4px;
+  min-height: 32px;
+  min-width: 32px;
+  justify-content: center; }
+
+mtk-biab.mtk-biab .mtk-biab__invoice-action-btn .material-icons {
+  font-size: 18px; }
+
+mtk-biab.mtk-biab .mtk-biab__invoice-head h3 {
+  font-size: 14px;
+  font-weight: 700; }

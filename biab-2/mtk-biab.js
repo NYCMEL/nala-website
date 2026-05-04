@@ -155,13 +155,13 @@ class MtkBiab {
     ];
 
     return `
-      <section class="mtk-biab__invoice-section" aria-label="${this._escape(section.invoiceHeading || "All Invoices")}">
+      <section class="mtk-biab__invoice-section" aria-label="${this._escape("Status")}">
         <div class="mtk-biab__invoice-head">
           <div class="mtk-biab__invoice-title-row">
-            <h3>${this._escape(section.invoiceHeading || "All Invoices")}</h3>
+            <h3>${this._escape("Status")}</h3>
 
             <label class="mtk-biab__status-filter">
-              <span>Status</span>
+              
               <select data-action="filter-invoices" aria-label="Filter invoices by status">
                 ${this._renderStatusOptions(section)}
               </select>
