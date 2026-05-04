@@ -17,7 +17,7 @@ class MtkBiab {
     this._bind();
     this._publish(this.events.publish.ready || "mtk-biab:ready", {
       component: this.config.component || "mtk-biab",
-      version: this.config.version || "1.0.5"
+      version: this.config.version || "1.0.6"
     });
   }
 
@@ -209,14 +209,16 @@ class MtkBiab {
 
     overlay.innerHTML = `
       <header class="mtk-biab__setup-header">
-        <div>
-          <p class="mtk-biab__setup-kicker">${this._escape(this.labels.currentSelection || "Current selection")}</p>
-          <h2 class="mtk-biab__setup-title" id="mtk-biab-setup-title">${this._escape(section.title || section.label || "")}</h2>
-        </div>
+        <div class="mtk-biab__setup-header-inner">
+          <div>
+            <p class="mtk-biab__setup-kicker">${this._escape(this.labels.currentSelection || "Current selection")}</p>
+            <h2 class="mtk-biab__setup-title" id="mtk-biab-setup-title">${this._escape(section.title || section.label || "")}</h2>
+          </div>
 
-        <button class="mtk-biab__setup-close" type="button" data-action="close-setup" aria-label="${this._escape(this.labels.closeSetup || "Close setup")}">
-          ×
-        </button>
+          <button class="mtk-biab__setup-close" type="button" data-action="close-setup" aria-label="${this._escape(this.labels.closeSetup || "Close setup")}">
+            ×
+          </button>
+        </div>
       </header>
 
       <div class="mtk-biab__setup-body">
