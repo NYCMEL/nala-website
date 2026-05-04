@@ -32,13 +32,11 @@
     --mtk-biab-radius-card: 4px;
 
     &__shell {
-        /* Break out of any page .container wrapper and match the header width.
-           Header uses full-width layout with about 48px left/right padding on desktop. */
-        width: 100vw;
-        max-width: none;
-        margin-left: calc(50% - 50vw);
-        margin-right: calc(50% - 50vw);
-        padding: 24px 48px;
+        width: 100%;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 24px 0;
     }
 
     &__hero {
