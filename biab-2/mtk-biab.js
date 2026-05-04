@@ -81,16 +81,19 @@ class MtkBiab {
           </button>
         </header>
 
-        <div class="mtk-biab__layout">
-          <aside class="mtk-biab__sidebar" aria-label="Business in a Box navigation">
-            <nav class="mtk-biab__nav">
-              ${this.sections.map((section) => this._renderNavButton(section)).join("")}
-            </nav>
-          </aside>
-
-          <main class="mtk-biab__main">
+        <div class="mtk-biab__tabs">
+          <div class="mtk-biab__tab-list">
+            ${this.sections.map(section => `
+              <button class="mtk-biab__tab-btn${section.id === this.activeId ? " is-active" : ""}"
+                data-action="select-section"
+                data-section-id="${this._escape(section.id)}">
+                ${this._escape(section.label)}
+              </button>
+            `).join("")}
+          </div>
+          <div class="mtk-biab__tab-panel">
             ${this._renderPanel(active)}
-          </main>
+          </div>
         </div>
       </section>
     `;
