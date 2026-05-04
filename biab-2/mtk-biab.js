@@ -146,7 +146,64 @@ class MtkBiab {
       return this._renderInvoices(section);
     }
 
+    if (section.viewType === "reviews") {
+      return this._renderReviews(section);
+    }
+
     return "";
+  }
+
+
+  _renderReviews(section) {
+    const reviews = Array.isArray(section.reviews) ? section.reviews : [];
+
+    return `
+      <section class="mtk-biab__reviews-section" aria-label="${this._escape(section.reviewsHeading || "Reviews")}">
+        <div class="mtk-biab__reviews-head">
+          <h3>${this._escape(section.reviewsHeading || "Reviews")}</h3>
+        </div>
+
+        <div class="mtk-biab__reviews-table-wrap">
+          <table class="mtk-biab__reviews-table">
+            <thead>
+              <tr>
+                <th scope="col">Stars</th>
+                <th scope="col">Date</th>
+                <th scope="col">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${reviews.map((review) => `
+                <tr>
+                  <td>
+                    <span class="mtk-biab__review-stars" aria-label="${this._escape(review.rating)} out of 5 stars">
+                      ${this._renderStars(review.rating)}
+                    </span>
+                  </td>
+                  <td>${this._escape(review.date)}</td>
+                  <td>
+                    <span class="mtk-biab__review-notes" title="${this._escape(review.notes)}">
+                      ${this._escape(review.notes)}
+                    </span>
+                  </td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    `;
+  }
+
+  _renderStars(rating) {
+    const value = Math.max(0, Math.min(5, Number(rating) || 0));
+    let output = "";
+
+    for (let index = 1; index <= 5; index += 1) {
+      output += `<span class="material-icons" aria-hidden="true">${index <= value ? "star" : "star_border"}</span>`;
+    }
+
+    return output;
   }
 
   _renderInvoices(section) {
