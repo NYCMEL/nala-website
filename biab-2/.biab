@@ -71,6 +71,8 @@ Update my UI. I am explaining each content by numbers:
   - place the following images side-by side and allow user to select one.
   - on an image selection, show relevant fields for user to fill and submit
   - also add a "Back" button to go back to image selection
+  - add a header "Please select a card" 
+  - add a one paragraph lorem ipsum, below the row of card
   images are:
     	   img/b-card/card-1.png
     	   img/b-card/card-2.png

@@ -65,7 +65,63 @@ window.MTK_BIAB_CONFIG = {
       eyebrow: "Brand",
       title: "Business Card & Logo",
       description: "Create basic brand assets for print and digital use.",
-      body: "Prepare a simple logo direction, business card content, colors, and contact information."
+      body: "Click Start setup to choose a business card design and customize the fields.",
+      setupType: "businessCard",
+      cardTemplates: [
+        {
+          id: "card-1",
+          label: "Business Card 1",
+          image: "img/b-card/card-1.png"
+        },
+        {
+          id: "card-2",
+          label: "Business Card 2",
+          image: "img/b-card/card-2.png"
+        },
+        {
+          id: "card-3",
+          label: "Business Card 3",
+          image: "img/b-card/card-3.png"
+        }
+      ],
+      cardFields: [
+        {
+          id: "businessName",
+          label: "Business name",
+          type: "text",
+          value: "NALA Locksmith"
+        },
+        {
+          id: "contactName",
+          label: "Contact name",
+          type: "text",
+          value: "Mike Mason"
+        },
+        {
+          id: "phone",
+          label: "Phone",
+          type: "tel",
+          value: "(555) 123-4567"
+        },
+        {
+          id: "email",
+          label: "Email",
+          type: "email",
+          value: "info@example.com"
+        },
+        {
+          id: "website",
+          label: "Website",
+          type: "url",
+          value: "www.example.com"
+        },
+        {
+          id: "serviceArea",
+          label: "Service area",
+          type: "text",
+          value: "New Jersey"
+        }
+      ]
     },
     {
       id: "marketing-seo",
