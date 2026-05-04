@@ -83,14 +83,14 @@ Update my UI. I am explaining each content by numbers:
    - use content from client folder
 
 5) Invoices
-  - display a table of invoices with dates, client, amount, etc.
+  - display a table of invoices with dates, client, amount, delete, update etc.
   - allow table body to scroll
   - allow sorting by clicking on column header
   - add a heading "Invoices:"
   - add a "Status" dropdown with "Open", "Paid", "Draft" and other statuses next to the heading. 
     default "Open"
-  - remove sorting on "Status" column"
-
+  - remove sorting on "Status", "Delete" & "Update" headings
+  - remove "Overdue" & "Void"
   - add a "New Invoice" button at the top right of this page
   - Remove "Start setup"
 

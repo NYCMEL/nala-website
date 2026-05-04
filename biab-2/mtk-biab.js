@@ -331,12 +331,7 @@ class MtkBiab {
       }
 
       if (action === "filter-invoices") {
-        this.invoiceStatus = target.value || "Open";
-        this._render();
-        this._publish("mtk-biab:invoice-status-filter", {
-          sectionId: this.activeId,
-          status: this.invoiceStatus
-        });
+        return;
       }
 
       if (action === "select-card-template") {
@@ -354,6 +349,19 @@ class MtkBiab {
       if (action === "close-setup") {
         this._closeSetup();
       }
+    });
+
+    this.root.addEventListener("change", (event) => {
+      const target = event.target.closest("[data-action='filter-invoices']");
+      if (!target || !this.root.contains(target)) return;
+
+      this.invoiceStatus = target.value || "Open";
+      this._render();
+
+      this._publish("mtk-biab:invoice-status-filter", {
+        sectionId: this.activeId,
+        status: this.invoiceStatus
+      });
     });
 
     this.root.addEventListener("keydown", (event) => {
