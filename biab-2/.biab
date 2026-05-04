@@ -89,6 +89,7 @@ Update my UI. I am explaining each content by numbers:
   - add a heading "Invoices:"
   - add a "Status" dropdown with "Open", "Paid", "Draft" and other statuses next to the heading. 
     default "Open"
+  - remove sorting on "Status" column"
 
   - add a "New Invoice" button at the top right of this page
   - Remove "Start setup"
