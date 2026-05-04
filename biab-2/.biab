@@ -44,6 +44,7 @@ Behavior:
 - all published (wc.publish) messages should be logged using wc.log to console before being published
 - all UI elements should use Material Design and Styles
 - all buttons & nav buttons should have 4px rounded corner
+- pick styles from css/nala.css file to start
 
 I want to create a new page for "Business in a box":
   - page will have 5 links on the left side col-md-3 (side nav)
