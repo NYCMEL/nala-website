@@ -17,7 +17,7 @@ class MtkBiab {
     this._bind();
     this._publish(this.events.publish.ready || "mtk-biab:ready", {
       component: this.config.component || "mtk-biab",
-      version: this.config.version || "1.0.3"
+      version: this.config.version || "1.0.5"
     });
   }
 
@@ -112,19 +112,36 @@ class MtkBiab {
 
   _renderPanel(section) {
     const safeSection = section || {};
+    const included = this._renderIncluded(safeSection);
 
     return `
       <article class="mtk-biab__panel" aria-live="polite">
         <p class="mtk-biab__eyebrow">${this._escape(safeSection.eyebrow || "")}</p>
         <h2 class="mtk-biab__panel-title">${this._escape(safeSection.title || safeSection.label || "")}</h2>
         <p class="mtk-biab__description">${this._escape(safeSection.description || "")}</p>
-        <p class="mtk-biab__body">${this._escape(safeSection.body || "")}</p>
+        ${safeSection.body ? `<p class="mtk-biab__body">${this._escape(safeSection.body)}</p>` : ""}
+        ${included}
 
         <button class="mtk-biab__start-btn" type="button" data-action="open-setup">
           <span class="material-icons" aria-hidden="true">rocket_launch</span>
           <span>${this._escape(this.labels.startSetup || "Start setup")}</span>
         </button>
       </article>
+    `;
+  }
+
+  _renderIncluded(section) {
+    if (!section.includedHeading || !Array.isArray(section.includedItems)) {
+      return "";
+    }
+
+    return `
+      <section class="mtk-biab__included" aria-label="Included by default">
+        <h3 class="mtk-biab__included-heading">${section.includedHeading}</h3>
+        <ol class="mtk-biab__included-list">
+          ${section.includedItems.map((item) => `<li>${this._escape(item)}</li>`).join("")}
+        </ol>
+      </section>
     `;
   }
 

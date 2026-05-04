@@ -176,6 +176,36 @@ mtk-biab.mtk-biab .mtk-biab__body {
   font-size: 17px;
   line-height: 1.7; }
 
+mtk-biab.mtk-biab .mtk-biab__included {
+  max-width: 760px;
+  margin: 28px 0 30px;
+  padding: 24px;
+  border: 1px solid #eadfca;
+  border-radius: 12px;
+  background: #fffdf8; }
+
+mtk-biab.mtk-biab .mtk-biab__included-heading {
+  margin: 0 0 16px;
+  color: #0f172a;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1.25; }
+
+mtk-biab.mtk-biab .mtk-biab__included-heading small {
+  color: #64748b;
+  font-size: 15px;
+  font-weight: 800; }
+
+mtk-biab.mtk-biab .mtk-biab__included-list {
+  margin: 0;
+  padding-left: 24px;
+  color: #334155;
+  font-size: 17px;
+  line-height: 1.7; }
+
+mtk-biab.mtk-biab .mtk-biab__included-list li {
+  margin: 0 0 8px; }
+
 mtk-biab.mtk-biab .mtk-biab__start-btn {
   appearance: none;
   display: inline-flex;

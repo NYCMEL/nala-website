@@ -1,6 +1,6 @@
 window.MTK_BIAB_CONFIG = {
   component: "mtk-biab",
-  version: "1.0.3",
+  version: "1.0.5",
 
   labels: {
     pageTitle: "Business in a Box",
@@ -27,9 +27,9 @@ window.MTK_BIAB_CONFIG = {
   },
 
   setupLorem: [
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.",
-    "Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi.",
-    "Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat."
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue.",
+    "Proin porttitor, orci nec nonummy molestie, enim est eleifend mi."
   ],
 
   sections: [
@@ -40,7 +40,14 @@ window.MTK_BIAB_CONFIG = {
       eyebrow: "Getting started",
       title: "Introduction",
       description: "A guided overview of your Business in a Box setup.",
-      body: "Start here to understand the tools, setup flow, and launch checklist."
+      includedHeading: "Included by default — <small>no action required</small>",
+      includedItems: [
+        "Business profile setup",
+        "Basic website structure",
+        "Contact information configuration",
+        "Service listing template",
+        "Customer review workflow"
+      ]
     },
     {
       id: "website-builder",
