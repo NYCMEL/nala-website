@@ -65,3 +65,11 @@ Update my UI. I am explaining each content by numbers:
   1) Introduction
   - heading: "“Included by default — <small>no action required</small>"
   - display a numbered dummy list of 5 items
+
+  3) Business Card & Logo
+  - place the following images side-by side and allow user to select one.
+    this should open a new page with "X" in circle and allow user to make changes to fields.
+    images are:
+    	   img/b-card/card-1.png
+    	   img/b-card/card-2.png
+	   
