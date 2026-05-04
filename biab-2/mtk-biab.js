@@ -300,7 +300,7 @@ class MtkBiab {
               </div>
             `).join("")}
 
-            <div class="mtk-biab__editor-actions"><button class="mtk-biab__submit-btn" type="button" data-action="submit-card-editor">
+            <div class="mtk-biab__editor-actions"><div class="mtk-biab__editor-actions"><button class="mtk-biab__back-btn" type="button" data-action="back-to-templates"><span class="material-icons">chevron_left</span> Back</button><button class="mtk-biab__submit-btn" type="button" data-action="submit-card-editor">
               Submit
             </button></div>
 
