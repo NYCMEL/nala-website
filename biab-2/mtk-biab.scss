@@ -53,7 +53,7 @@ mtk-biab.mtk-biab .mtk-biab__title {
   border: 0;
   color: #0f172a;
   font-family: "Roboto", "Segoe UI", Arial, sans-serif;
-  font-size: 72px;
+  font-size: 36px;
   font-weight: 900;
   line-height: 1.02;
   letter-spacing: -0.04em;
@@ -175,7 +175,7 @@ mtk-biab.mtk-biab .mtk-biab__panel-title {
   margin: 0 0 14px;
   color: #0f172a;
   font-family: "Roboto", "Segoe UI", Arial, sans-serif;
-  font-size: 54px;
+  font-size: 27px;
   font-weight: 900;
   line-height: 1.05;
   letter-spacing: -0.03em;
@@ -271,7 +271,8 @@ mtk-biab.mtk-biab .mtk-biab__setup-header {
   justify-content: space-between;
   gap: 22px;
   min-height: 88px;
-  padding: 22px 56px;
+  width: 100%;
+  padding: 22px 12px;
   border-bottom: 1px solid #e5e7eb;
   background: #ffffff;
   box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
@@ -290,7 +291,7 @@ mtk-biab.mtk-biab .mtk-biab__setup-title {
   margin: 0;
   color: #0f172a;
   font-family: "Roboto", "Segoe UI", Arial, sans-serif;
-  font-size: 46px;
+  font-size: 23px;
   font-weight: 900;
   line-height: 1.08;
 }
