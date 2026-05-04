@@ -6,9 +6,8 @@ class MtkBiab {
     this.labels = this.config.labels || {};
     this.events = this.config.events || { publish: {}, subscribe: [] };
     this.activeId = this.sections[0] ? this.sections[0].id : "";
-    this.selectedTemplate = null;
-    this.invoiceSort = { key: "date", direction: "desc" };
     this.invoiceStatus = "Open";
+    this.selectedTemplate = null;
     this.isPublishing = false;
     this.onMessage = this.onMessage.bind(this);
     this._init();
@@ -20,13 +19,12 @@ class MtkBiab {
     this._bind();
     this._publish(this.events.publish.ready || "mtk-biab:ready", {
       component: this.config.component || "mtk-biab",
-      version: this.config.version || "1.0.6"
+      version: this.config.version || "1.0.7"
     });
   }
 
   _subscribe() {
     const list = Array.isArray(this.events.subscribe) ? this.events.subscribe : [];
-
     list.forEach((eventName) => {
       if (window.wc && typeof window.wc.subscribe === "function") {
         window.wc.subscribe(eventName, this.onMessage);
@@ -74,22 +72,11 @@ class MtkBiab {
         <header class="mtk-biab__hero">
           <h1 class="mtk-biab__title" id="mtk-biab-title">${this._escape(this.labels.pageTitle || "Business in a Box")}</h1>
           <p class="mtk-biab__subtitle">${this._escape(this.labels.pageSubtitle || "")}</p>
-
-          <button class="mtk-biab__mobile-toggle" type="button" aria-expanded="false" data-action="toggle-menu">
-            <span class="material-icons" aria-hidden="true">menu</span>
-            <span>${this._escape(this.labels.menu || "Menu")}</span>
-          </button>
         </header>
 
         <div class="mtk-biab__tabs">
-          <div class="mtk-biab__tab-list">
-            ${this.sections.map(section => `
-              <button class="mtk-biab__tab-btn${section.id === this.activeId ? " is-active" : ""}"
-                data-action="select-section"
-                data-section-id="${this._escape(section.id)}">
-                ${this._escape(section.label)}
-              </button>
-            `).join("")}
+          <div class="mtk-biab__tab-list" role="tablist" aria-label="Business in a Box sections">
+            ${this.sections.map((section) => this._renderTabButton(section)).join("")}
           </div>
           <div class="mtk-biab__tab-panel">
             ${this._renderPanel(active)}
@@ -99,16 +86,17 @@ class MtkBiab {
     `;
   }
 
-  _renderNavButton(section) {
+  _renderTabButton(section) {
     const isActive = section.id === this.activeId;
 
     return `
       <button
-        class="mtk-biab__nav-btn${isActive ? " is-active" : ""}"
+        class="mtk-biab__tab-btn${isActive ? " is-active" : ""}"
         type="button"
+        role="tab"
+        aria-selected="${isActive ? "true" : "false"}"
         data-action="select-section"
         data-section-id="${this._escape(section.id)}"
-        aria-current="${isActive ? "page" : "false"}"
       >
         <span class="material-icons" aria-hidden="true">${this._escape(section.icon || "radio_button_unchecked")}</span>
         <span>${this._escape(section.label || "")}</span>
@@ -130,181 +118,18 @@ class MtkBiab {
         ${included}
         ${customContent}
 
-        ${this._shouldShowStartSetup(safeSection) ? `<button class="mtk-biab__start-btn` : `<span style="display:none"`} type="button" data-action="open-setup">
-          <span class="material-icons" aria-hidden="true">rocket_launch</span>
-          <span>${this._escape(this.labels.startSetup || "Start setup")}</span>
-        </button>
+        ${safeSection.hideStartSetup ? "" : `
+          <button class="mtk-biab__start-btn" type="button" data-action="open-setup">
+            <span class="material-icons" aria-hidden="true">rocket_launch</span>
+            <span>${this._escape(this.labels.startSetup || "Start setup")}</span>
+          </button>
+        `}
       </article>
     `;
   }
 
-
-  _renderSectionContent(section) {
-    if (section.viewType === "invoices") {
-      return this._renderInvoices(section);
-    }
-
-    return "";
-  }
-
-  _renderInvoices(section) {
-    const invoices = this._getSortedInvoices(section);
-    const columns = [
-      { key: "id", label: "Invoice #" },
-      { key: "date", label: "Date" },
-      { key: "client", label: "Client" },
-      { key: "service", label: "Service" },
-      { key: "amount", label: "Amount" }
-    ];
-
-    return `
-      <section class="mtk-biab__invoice-section" aria-label="${this._escape("Status")}">
-        <div class="mtk-biab__invoice-head">
-          <div class="mtk-biab__invoice-title-row">
-            <h3>${this._escape("Status")}</h3>
-
-            <label class="mtk-biab__status-filter">
-              
-              <select data-action="filter-invoices" aria-label="Filter invoices by status">
-                ${this._renderStatusOptions(section)}
-              </select>
-            </label>
-          </div>
-
-          <button class="mtk-biab__new-invoice-btn" type="button" data-action="new-invoice">
-            <span class="material-icons" aria-hidden="true">add</span>
-            <span>${this._escape(section.newInvoiceLabel || "New Invoice")}</span>
-          </button>
-        </div>
-
-        <div class="mtk-biab__table-wrap">
-          <table class="mtk-biab__invoice-table">
-            <thead>
-              <tr>
-                ${columns.map((column) => `
-                  <th scope="col">
-                    <button type="button" data-action="sort-invoices" data-sort-key="${this._escape(column.key)}">
-                      <span>${this._escape(column.label)}</span>
-                      <span class="material-icons" aria-hidden="true">${this._getSortIcon(column.key)}</span>
-                    </button>
-                  </th>
-                `).join("")}
-                <th scope="col">Status</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              ${invoices.map((invoice) => `
-                <tr>
-                  <td>${this._escape(invoice.id)}</td>
-                  <td>${this._escape(invoice.date)}</td>
-                  <td>${this._escape(invoice.client)}</td>
-                  <td>${this._escape(invoice.service)}</td>
-                  <td>${this._formatCurrency(invoice.amount)}</td>
-                  <td><span class="mtk-biab__invoice-status">${this._escape(invoice.status)}</span></td>
-                  <td>
-                    <button class="mtk-biab__invoice-action-btn" type="button" data-action="delete-invoice" data-invoice-id="${this._escape(invoice.id)}">
-                      <span class="material-icons">delete</span>
-                    </button>
-                  </td>
-                  <td>
-                    <button class="mtk-biab__invoice-action-btn" type="button" data-action="update-invoice" data-invoice-id="${this._escape(invoice.id)}">
-                      <span class="material-icons">edit</span>
-                    </button>
-                  </td>
-                </tr>
-              `).join("")}
-            </tbody>
-          </table>
-        </div>
-      </section>
-    `;
-  }
-
-
-  _renderStatusOptions(section) {
-    const baseStatuses = ["Open", "Paid", "Draft"];
-    const invoiceStatuses = Array.isArray(section.invoices)
-      ? section.invoices.map((invoice) => invoice.status).filter(Boolean)
-      : [];
-
-    const statuses = Array.from(new Set(baseStatuses.concat(invoiceStatuses)));
-
-    return statuses.map((status) => `
-      <option value="${this._escape(status)}"${this.invoiceStatus === status ? " selected" : ""}>
-        ${this._escape(status)}
-      </option>
-    `).join("");
-  }
-
-  _getSortedInvoices(section) {
-    const invoices = Array.isArray(section.invoices)
-      ? section.invoices.filter((invoice) => invoice.status === this.invoiceStatus)
-      : [];
-    const key = this.invoiceSort.key;
-    const direction = this.invoiceSort.direction === "asc" ? 1 : -1;
-
-    invoices.sort((a, b) => {
-      const av = a[key];
-      const bv = b[key];
-
-      if (key === "amount") {
-        return ((Number(av) || 0) - (Number(bv) || 0)) * direction;
-      }
-
-      return String(av || "").localeCompare(String(bv || "")) * direction;
-    });
-
-    return invoices;
-  }
-
-  _sortInvoices(key) {
-    if (!key) return;
-
-    if (this.invoiceSort.key === key) {
-      this.invoiceSort.direction = this.invoiceSort.direction === "asc" ? "desc" : "asc";
-    } else {
-      this.invoiceSort.key = key;
-      this.invoiceSort.direction = "asc";
-    }
-
-    this._render();
-
-    this._publish("mtk-biab:invoice-sort", {
-      sectionId: this.activeId,
-      sort: this.invoiceSort
-    });
-  }
-
-  _getSortIcon(key) {
-    if (this.invoiceSort.key !== key) {
-      return "unfold_more";
-    }
-
-    return this.invoiceSort.direction === "asc" ? "expand_less" : "expand_more";
-  }
-
-  _formatCurrency(value) {
-    const number = Number(value) || 0;
-    return "$" + number.toLocaleString("en-US", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    });
-  }
-
-
-  _shouldShowStartSetup(section) {
-    if (!section || !section.id) return true;
-    if (section.id === "introduction") return false;
-    if (section.id === "invoices") return false;
-    return true;
-  }
-
   _renderIncluded(section) {
-    if (!section.includedHeading || !Array.isArray(section.includedItems)) {
-      return "";
-    }
+    if (!section.includedHeading || !Array.isArray(section.includedItems)) return "";
 
     return `
       <section class="mtk-biab__included" aria-label="Included by default">
@@ -316,6 +141,93 @@ class MtkBiab {
     `;
   }
 
+  _renderSectionContent(section) {
+    if (section.viewType === "invoices") {
+      return this._renderInvoices(section);
+    }
+
+    return "";
+  }
+
+  _renderInvoices(section) {
+    const invoices = this._getFilteredInvoices(section);
+
+    return `
+      <section class="mtk-biab__invoice-section" aria-label="Invoices">
+        <div class="mtk-biab__invoice-head">
+          <div class="mtk-biab__invoice-title-row">
+            <h3>Status</h3>
+            <label class="mtk-biab__status-filter">
+              <select data-action="filter-invoices" aria-label="Filter invoices by status">
+                ${this._renderStatusOptions()}
+              </select>
+            </label>
+          </div>
+
+          <button class="mtk-biab__new-invoice-btn" type="button" data-action="new-invoice">
+            <span class="material-icons" aria-hidden="true">add</span>
+            <span>${this._escape(section.newInvoiceLabel || "New Invoice")}</span>
+          </button>
+        </div>
+
+        <p class="mtk-biab__invoice-message" data-invoice-message aria-live="polite"></p>
+
+        <div class="mtk-biab__table-wrap">
+          <table class="mtk-biab__invoice-table">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col">Invoice #</th>
+                <th scope="col">Date</th>
+                <th scope="col">Client</th>
+                <th scope="col">Service</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${invoices.map((invoice) => `
+                <tr>
+                  <td>
+                    <button class="mtk-biab__invoice-action-btn" type="button" data-action="delete-invoice" data-invoice-id="${this._escape(invoice.id)}" aria-label="Delete ${this._escape(invoice.id)}">
+                      <span class="material-icons" aria-hidden="true">delete</span>
+                    </button>
+                  </td>
+                  <td>
+                    <button class="mtk-biab__invoice-action-btn" type="button" data-action="update-invoice" data-invoice-id="${this._escape(invoice.id)}" aria-label="Update ${this._escape(invoice.id)}">
+                      <span class="material-icons" aria-hidden="true">edit</span>
+                    </button>
+                  </td>
+                  <td>${this._escape(invoice.id)}</td>
+                  <td>${this._escape(invoice.date)}</td>
+                  <td>${this._escape(invoice.client)}</td>
+                  <td>${this._escape(invoice.service)}</td>
+                  <td>${this._formatCurrency(invoice.amount)}</td>
+                  <td><span class="mtk-biab__invoice-status">${this._escape(invoice.status)}</span></td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    `;
+  }
+
+  _getFilteredInvoices(section) {
+    return Array.isArray(section.invoices)
+      ? section.invoices.filter((invoice) => invoice.status === this.invoiceStatus)
+      : [];
+  }
+
+  _renderStatusOptions() {
+    return ["Open", "Paid", "Draft"].map((status) => `
+      <option value="${this._escape(status)}"${this.invoiceStatus === status ? " selected" : ""}>
+        ${this._escape(status)}
+      </option>
+    `).join("");
+  }
+
   _bind() {
     this.root.addEventListener("click", (event) => {
       const target = event.target.closest("[data-action]");
@@ -323,44 +235,12 @@ class MtkBiab {
 
       const action = target.getAttribute("data-action");
 
-      if (action === "toggle-menu") {
-        this._toggleMenu(target);
-      }
-
       if (action === "select-section") {
         this._selectSection(target.getAttribute("data-section-id"));
       }
 
       if (action === "open-setup") {
         this._openSetup();
-      }
-
-      if (action === "sort-invoices") {
-        this._sortInvoices(target.getAttribute("data-sort-key"));
-      }
-
-      if (action === "new-invoice") {
-        this._publish("mtk-biab:new-invoice", {
-          sectionId: this.activeId
-        });
-      }
-
-      if (action === "delete-invoice") {
-        this._publish("mtk-biab:delete-invoice", {
-          sectionId: this.activeId,
-          invoiceId: target.getAttribute("data-invoice-id")
-        });
-      }
-
-      if (action === "update-invoice") {
-        this._publish("mtk-biab:update-invoice", {
-          sectionId: this.activeId,
-          invoiceId: target.getAttribute("data-invoice-id")
-        });
-      }
-
-      if (action === "filter-invoices") {
-        return;
       }
 
       if (action === "select-card-template") {
@@ -373,6 +253,28 @@ class MtkBiab {
 
       if (action === "submit-card-editor") {
         this._submitCardEditor();
+      }
+
+      if (action === "new-invoice") {
+        this._publish("mtk-biab:new-invoice", { sectionId: this.activeId });
+      }
+
+      if (action === "delete-invoice") {
+        const invoiceId = target.getAttribute("data-invoice-id");
+        this._showInvoiceMessage("Delete clicked: " + invoiceId);
+        this._publish("mtk-biab:delete-invoice", {
+          sectionId: this.activeId,
+          invoiceId: invoiceId
+        });
+      }
+
+      if (action === "update-invoice") {
+        const invoiceId = target.getAttribute("data-invoice-id");
+        this._showInvoiceMessage("Update clicked: " + invoiceId);
+        this._publish("mtk-biab:update-invoice", {
+          sectionId: this.activeId,
+          invoiceId: invoiceId
+        });
       }
 
       if (action === "close-setup") {
@@ -400,17 +302,18 @@ class MtkBiab {
     });
   }
 
-  _toggleMenu(button) {
-    const expanded = button.getAttribute("aria-expanded") === "true";
-    button.setAttribute("aria-expanded", String(!expanded));
-    this.root.classList.toggle("is-menu-open", !expanded);
+
+  _showInvoiceMessage(message) {
+    const target = this.root.querySelector("[data-invoice-message]");
+    if (!target) return;
+
+    target.textContent = message;
   }
 
   _selectSection(sectionId) {
     if (!this.sections.some((section) => section.id === sectionId)) return;
 
     this.activeId = sectionId;
-    this.root.classList.remove("is-menu-open");
     this._render();
 
     this._publish(this.events.publish.select || "mtk-biab:select", {
@@ -435,7 +338,6 @@ class MtkBiab {
     this._openGenericSetup(section);
   }
 
-
   _openWebsiteBuilder(section) {
     this._closeSetup();
 
@@ -453,8 +355,7 @@ class MtkBiab {
     this._publish(this.events.publish.setupOpen || "mtk-biab:setup-open", {
       sectionId: this.activeId,
       section,
-      mode: "website-builder",
-      clientUrl: section.clientUrl || "client/index.html"
+      mode: "website-builder"
     });
   }
 
@@ -515,7 +416,6 @@ class MtkBiab {
     if (!template) return;
 
     this.selectedTemplate = template;
-
     this._closeSetup();
 
     this._appendSetupOverlay(section, `
@@ -526,7 +426,6 @@ class MtkBiab {
           </div>
 
           <form class="mtk-biab__editor-form" data-card-editor-form>
-            
             ${fields.map((field) => `
               <div class="mtk-biab__field">
                 <label for="mtk-biab-field-${this._escape(field.id)}">${this._escape(field.label)}</label>
@@ -539,14 +438,17 @@ class MtkBiab {
               </div>
             `).join("")}
 
-            <div class="mtk-biab__editor-actions"><div class="mtk-biab__editor-actions"><button class="mtk-biab__back-btn" type="button" data-action="back-to-templates"><span class="material-icons">chevron_left</span> Back</button><button class="mtk-biab__submit-btn" type="button" data-action="submit-card-editor">
-              Submit
-            </button></div>
+            <div class="mtk-biab__editor-actions">
+              <button class="mtk-biab__back-btn" type="button" data-action="back-to-templates">
+                <span class="material-icons" aria-hidden="true">chevron_left</span>
+                <span>Back</span>
+              </button>
+              <button class="mtk-biab__submit-btn" type="button" data-action="submit-card-editor">Submit</button>
+            </div>
 
-            <p class="mtk-biab__status data-card-editor-status aria-live="polite"></p>
+            <p class="mtk-biab__status" data-card-editor-status aria-live="polite"></p>
           </form>
         </div>
-        <p class="mtk-biab__template-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
       </div>
     `);
 
@@ -627,6 +529,14 @@ class MtkBiab {
     return this.sections.find((section) => section.id === this.activeId) || this.sections[0] || {};
   }
 
+  _formatCurrency(value) {
+    const number = Number(value) || 0;
+    return "$" + number.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
+
   _escape(value) {
     return String(value == null ? "" : value)
       .replace(/&/g, "&amp;")
@@ -649,18 +559,14 @@ class MtkBiab {
       return true;
     };
 
-    if (start()) {
-      return;
-    }
+    if (start()) return;
 
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", start, { once: true });
     }
 
     const observer = new MutationObserver(() => {
-      if (start()) {
-        observer.disconnect();
-      }
+      if (start()) observer.disconnect();
     });
 
     observer.observe(document.documentElement, {

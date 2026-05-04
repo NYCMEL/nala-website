@@ -40,15 +40,15 @@ mtk-biab.mtk-biab .mtk-biab__page {
   width: 100%;
   max-width: 1320px;
   margin: 0 auto;
-  padding: 40px 12px 72px;
+  padding: 32px 12px 72px;
 }
 
 mtk-biab.mtk-biab .mtk-biab__hero {
-  margin: 0 0 28px;
+  margin: 0 0 22px;
 }
 
 mtk-biab.mtk-biab .mtk-biab__title {
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   padding: 0;
   border: 0;
   color: #0f172a;
@@ -67,104 +67,65 @@ mtk-biab.mtk-biab .mtk-biab__subtitle {
   line-height: 1.55;
 }
 
-mtk-biab.mtk-biab .mtk-biab__mobile-toggle {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 44px;
-  margin: 22px 0 14px;
-  padding: 10px 14px;
-  border: 1px solid #dadce0;
-  border-radius: 4px;
-  background: #ffffff;
-  color: #202124;
-  font: inherit;
-  font-weight: 800;
-  cursor: pointer;
-  box-shadow: 0 1px 2px rgba(60, 64, 67, 0.16);
-}
-
-mtk-biab.mtk-biab .mtk-biab__layout {
-  display: grid;
-  grid-template-columns: 25% 1fr;
-  gap: 32px;
-  align-items: start;
-}
-
-mtk-biab.mtk-biab .mtk-biab__sidebar,
-mtk-biab.mtk-biab .mtk-biab__main {
-  min-width: 0;
-}
-
-mtk-biab.mtk-biab .mtk-biab__nav {
-  display: grid;
-  gap: 8px;
+mtk-biab.mtk-biab .mtk-biab__tabs {
   width: 100%;
-  padding: 12px;
-  margin: 0;
-  border: 1px solid #e5e7eb;
-  border-radius: 18px;
-  background: #ffffff;
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
 }
 
-mtk-biab.mtk-biab .mtk-biab__nav-btn {
+mtk-biab.mtk-biab .mtk-biab__tab-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+mtk-biab.mtk-biab .mtk-biab__tab-btn {
   appearance: none;
-  width: 100%;
-  min-height: 52px;
-  display: grid;
-  grid-template-columns: 28px 1fr;
-  gap: 12px;
+  display: inline-flex;
   align-items: center;
-  padding: 12px 14px;
-  border: 1px solid transparent;
-  border-radius: 4px;
+  gap: 7px;
+  min-height: 42px;
+  padding: 10px 14px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  border-radius: 4px 4px 0 0;
   background: transparent;
   color: #334155;
   font: inherit;
-  font-size: 15px;
-  font-weight: 800;
-  line-height: 1.25;
-  text-align: left;
+  font-size: 14px;
+  font-weight: 900;
   cursor: pointer;
 }
 
-mtk-biab.mtk-biab .mtk-biab__nav-btn:hover {
-  background: #fbf4e5;
-  color: #4a3a08;
-}
-
-mtk-biab.mtk-biab .mtk-biab__nav-btn.is-active {
-  border-color: #a98212;
-  background: #a98212;
-  color: #ffffff;
-  box-shadow: 0 8px 18px rgba(169, 130, 18, 0.22);
-}
-
-mtk-biab.mtk-biab .mtk-biab__nav-btn:focus-visible,
-mtk-biab.mtk-biab .mtk-biab__start-btn:focus-visible,
-mtk-biab.mtk-biab .mtk-biab__mobile-toggle:focus-visible,
-mtk-biab.mtk-biab .mtk-biab__setup-close:focus-visible {
-  outline: 3px solid rgba(169, 130, 18, 0.35);
+mtk-biab.mtk-biab .mtk-biab__tab-btn:hover,
+mtk-biab.mtk-biab .mtk-biab__tab-btn:focus-visible {
+  color: #a98212;
+  background: #fffdf8;
+  outline: 3px solid rgba(169, 130, 18, 0.25);
   outline-offset: 2px;
 }
 
+mtk-biab.mtk-biab .mtk-biab__tab-btn.is-active {
+  color: #a98212;
+  border-bottom-color: #a98212;
+}
+
 mtk-biab.mtk-biab .mtk-biab__panel {
+  width: 100%;
   min-height: 430px;
   display: block;
-  padding: 52px;
+  padding: 32px;
   border: 1px solid #e5e7eb;
-  border-radius: 22px;
+  border-radius: 18px;
   background: linear-gradient(135deg, #ffffff 0%, #fffdf8 100%);
   box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08);
 }
 
 mtk-biab.mtk-biab .mtk-biab__eyebrow {
   display: block;
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   color: #a98212;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 900;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -172,7 +133,7 @@ mtk-biab.mtk-biab .mtk-biab__eyebrow {
 
 mtk-biab.mtk-biab .mtk-biab__panel-title {
   display: block;
-  margin: 0 0 14px;
+  margin: 0 0 12px;
   color: #0f172a;
   font-family: "Roboto", "Segoe UI", Arial, sans-serif;
   font-size: 27px;
@@ -183,31 +144,31 @@ mtk-biab.mtk-biab .mtk-biab__panel-title {
 
 mtk-biab.mtk-biab .mtk-biab__description {
   max-width: 760px;
-  margin: 0 0 14px;
+  margin: 0 0 12px;
   color: #334155;
-  font-size: 18px;
+  font-size: 17px;
   line-height: 1.55;
 }
 
 mtk-biab.mtk-biab .mtk-biab__body {
   max-width: 760px;
-  margin: 0 0 30px;
+  margin: 0 0 24px;
   color: #475569;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.7;
 }
 
 mtk-biab.mtk-biab .mtk-biab__included {
   max-width: 760px;
-  margin: 28px 0 30px;
-  padding: 24px;
+  margin: 24px 0;
+  padding: 22px;
   border: 1px solid #eadfca;
   border-radius: 12px;
   background: #fffdf8;
 }
 
 mtk-biab.mtk-biab .mtk-biab__included-heading {
-  margin: 0 0 16px;
+  margin: 0 0 14px;
   color: #0f172a;
   font-size: 22px;
   font-weight: 900;
@@ -224,180 +185,205 @@ mtk-biab.mtk-biab .mtk-biab__included-list {
   margin: 0;
   padding-left: 24px;
   color: #334155;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.7;
 }
 
-mtk-biab.mtk-biab .mtk-biab__included-list li {
-  margin: 0 0 8px;
-}
-
-mtk-biab.mtk-biab .mtk-biab__start-btn {
+mtk-biab.mtk-biab .mtk-biab__start-btn,
+mtk-biab.mtk-biab .mtk-biab__submit-btn,
+mtk-biab.mtk-biab .mtk-biab__new-invoice-btn {
   appearance: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  min-height: 48px;
-  padding: 12px 22px;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 16px;
   border: 1px solid #a98212;
   border-radius: 4px;
   background: #a98212;
   color: #ffffff;
   font: inherit;
+  font-size: 14px;
   font-weight: 900;
   cursor: pointer;
-  box-shadow: 0 8px 18px rgba(169, 130, 18, 0.24);
+  box-shadow: 0 8px 18px rgba(169, 130, 18, 0.22);
 }
 
-mtk-biab.mtk-biab .mtk-biab__start-btn:hover {
+mtk-biab.mtk-biab .mtk-biab__start-btn:hover,
+mtk-biab.mtk-biab .mtk-biab__submit-btn:hover,
+mtk-biab.mtk-biab .mtk-biab__new-invoice-btn:hover {
   background: #7a5e0c;
   border-color: #7a5e0c;
 }
 
+/* Invoice table */
+mtk-biab.mtk-biab .mtk-biab__invoice-section {
+  margin: 24px 0 0;
+}
 
-mtk-biab.mtk-biab .mtk-biab__template-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+mtk-biab.mtk-biab .mtk-biab__invoice-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 18px;
-  width: 100%;
+  margin: 0 0 14px;
 }
 
-mtk-biab.mtk-biab .mtk-biab__template-btn {
-  appearance: none;
-  display: block;
-  width: 100%;
-  padding: 12px;
-  border: 2px solid #e5e7eb;
-  border-radius: 4px;
-  background: #ffffff;
-  color: #0f172a;
-  cursor: pointer;
-  text-align: left;
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+mtk-biab.mtk-biab .mtk-biab__invoice-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-mtk-biab.mtk-biab .mtk-biab__template-btn:hover,
-mtk-biab.mtk-biab .mtk-biab__template-btn:focus-visible {
-  border-color: #a98212;
-  outline: 3px solid rgba(169, 130, 18, 0.28);
-  outline-offset: 2px;
-}
-
-mtk-biab.mtk-biab .mtk-biab__template-btn img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 4px;
-}
-
-mtk-biab.mtk-biab .mtk-biab__template-label {
-  display: block;
-  margin-top: 10px;
+mtk-biab.mtk-biab .mtk-biab__invoice-head h3 {
+  margin: 0;
   color: #334155;
   font-size: 14px;
-  font-weight: 900;
+  font-weight: 800;
 }
 
-mtk-biab.mtk-biab .mtk-biab__editor {
-  display: grid;
-  grid-template-columns: 420px 1fr;
-  gap: 32px;
-  align-items: start;
-}
-
-mtk-biab.mtk-biab .mtk-biab__editor-preview {
-  padding: 16px;
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-  background: #ffffff;
-  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.1);
-}
-
-mtk-biab.mtk-biab .mtk-biab__editor-preview img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 4px;
-}
-
-mtk-biab.mtk-biab .mtk-biab__editor-form {
-  display: grid;
-  gap: 16px;
-}
-
-mtk-biab.mtk-biab .mtk-biab__field {
-  display: grid;
-  gap: 7px;
-}
-
-mtk-biab.mtk-biab .mtk-biab__field label {
-  color: #334155;
-  font-size: 13px;
-  font-weight: 900;
-}
-
-mtk-biab.mtk-biab .mtk-biab__field input {
-  width: 100%;
-  min-height: 46px;
-  padding: 11px 12px;
+mtk-biab.mtk-biab .mtk-biab__status-filter select {
+  min-height: 38px;
+  min-width: 120px;
+  padding: 7px 32px 7px 10px;
   border: 1px solid #cbd5e1;
   border-radius: 4px;
   background: #ffffff;
   color: #0f172a;
   font: inherit;
-}
-
-mtk-biab.mtk-biab .mtk-biab__field input:focus {
-  border-color: #a98212;
-  outline: 3px solid rgba(169, 130, 18, 0.28);
-  outline-offset: 2px;
-}
-
-mtk-biab.mtk-biab .mtk-biab__submit-btn {
-  appearance: none;
-  justify-self: start;
-  min-height: 48px;
-  padding: 12px 22px;
-  border: 1px solid #a98212;
-  border-radius: 4px;
-  background: #a98212;
-  color: #ffffff;
-  font: inherit;
-  font-weight: 900;
-  cursor: pointer;
-  box-shadow: 0 8px 18px rgba(169, 130, 18, 0.24);
-}
-
-mtk-biab.mtk-biab .mtk-biab__submit-btn:hover {
-  background: #7a5e0c;
-  border-color: #7a5e0c;
-}
-
-mtk-biab.mtk-biab .mtk-biab__status {
-  min-height: 22px;
-  margin: 4px 0 0;
-  color: #166534;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 800;
+  cursor: pointer;
 }
 
-@media (max-width: 767.98px) {
-  mtk-biab.mtk-biab .mtk-biab__template-grid {
-    grid-template-columns: 1fr;
-  }
-
-  mtk-biab.mtk-biab .mtk-biab__editor {
-    grid-template-columns: 1fr;
-  }
+mtk-biab.mtk-biab .mtk-biab__table-wrap {
+  width: 100%;
+  max-height: 420px;
+  overflow: hidden;
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
 }
 
+mtk-biab.mtk-biab .mtk-biab__invoice-table {
+  width: 100%;
+  min-width: 920px;
+  border-collapse: collapse;
+  table-layout: fixed;
+  color: #334155;
+  font-size: 13px;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table thead,
+mtk-biab.mtk-biab .mtk-biab__invoice-table tbody {
+  display: block;
+  width: 100%;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table tbody {
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table th,
+mtk-biab.mtk-biab .mtk-biab__invoice-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table th {
+  background: #fffdf8;
+  color: #0f172a;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table th:nth-child(1),
+mtk-biab.mtk-biab .mtk-biab__invoice-table th:nth-child(2),
+mtk-biab.mtk-biab .mtk-biab__invoice-table td:nth-child(1),
+mtk-biab.mtk-biab .mtk-biab__invoice-table td:nth-child(2) {
+  width: 46px;
+  padding: 6px;
+  text-align: center;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table th:nth-child(3),
+mtk-biab.mtk-biab .mtk-biab__invoice-table td:nth-child(3) {
+  width: 120px;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table th:nth-child(4),
+mtk-biab.mtk-biab .mtk-biab__invoice-table td:nth-child(4) {
+  width: 122px;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table th:nth-child(7),
+mtk-biab.mtk-biab .mtk-biab__invoice-table td:nth-child(7) {
+  width: 100px;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table th:nth-child(8),
+mtk-biab.mtk-biab .mtk-biab__invoice-table td:nth-child(8) {
+  width: 105px;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #fbf4e5;
+  color: #4a3a08;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-action-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+  min-height: 32px;
+  padding: 4px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #0f172a;
+  cursor: pointer;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-action-btn .material-icons {
+  font-size: 18px;
+}
+
+/* Full page X setup */
 mtk-biab.mtk-biab .mtk-biab__setup {
   position: fixed;
   inset: 0;
   z-index: 99999;
   display: grid;
   grid-template-rows: auto 1fr;
+  overflow: hidden;
+  padding-bottom: 40px;
   background: #f8fafc;
   color: #0f172a;
 }
@@ -456,15 +442,11 @@ mtk-biab.mtk-biab .mtk-biab__setup-close {
   cursor: pointer;
 }
 
-mtk-biab.mtk-biab .mtk-biab__setup-close:hover {
-  background: #a98212;
-  color: #ffffff;
-}
-
 mtk-biab.mtk-biab .mtk-biab__setup-body {
-  overflow: auto;
+  overflow-y: auto;
   width: 100%;
   max-width: 1320px;
+  max-height: calc(100vh - 120px);
   margin: 0 auto;
   padding: 64px 12px;
 }
@@ -479,59 +461,89 @@ mtk-biab.mtk-biab .mtk-biab__setup-card {
   box-shadow: 0 18px 42px rgba(15, 23, 42, 0.1);
 }
 
-mtk-biab.mtk-biab .mtk-biab__setup-card p {
+/* Business card setup */
+mtk-biab.mtk-biab .mtk-biab__template-heading {
   margin: 0 0 18px;
-  color: #334155;
-  font-size: 18px;
-  line-height: 1.75;
+  font-size: 22px;
+  font-weight: 900;
 }
 
-@media (max-width: 767.98px) {
-  mtk-biab.mtk-biab .mtk-biab__page {
-    padding: 28px 12px 72px;
-  }
+mtk-biab.mtk-biab .mtk-biab__template-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  width: 100%;
+}
 
-  mtk-biab.mtk-biab .mtk-biab__mobile-toggle {
-    display: inline-flex;
-  }
+mtk-biab.mtk-biab .mtk-biab__template-btn {
+  appearance: none;
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #0f172a;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
 
-  mtk-biab.mtk-biab .mtk-biab__layout {
-    display: block;
-  }
+mtk-biab.mtk-biab .mtk-biab__template-btn img,
+mtk-biab.mtk-biab .mtk-biab__editor-preview img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
 
-  mtk-biab.mtk-biab .mtk-biab__sidebar {
-    display: none;
-    margin-bottom: 18px;
-  }
+mtk-biab.mtk-biab .mtk-biab__template-label {
+  display: block;
+  margin-top: 10px;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 900;
+}
 
-  mtk-biab.mtk-biab.is-menu-open .mtk-biab__sidebar {
-    display: block;
-  }
+mtk-biab.mtk-biab .mtk-biab__template-text {
+  margin: 18px 0 0;
+  color: #475569;
+  font-size: 15px;
+  line-height: 1.6;
+}
 
-  mtk-biab.mtk-biab .mtk-biab__panel {
-    min-height: auto;
-    padding: 26px;
-  }
+mtk-biab.mtk-biab .mtk-biab__editor {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 32px;
+  align-items: start;
+}
 
-  mtk-biab.mtk-biab .mtk-biab__title {
-    font-size: 32px;
-  }
+mtk-biab.mtk-biab .mtk-biab__editor-form {
+  display: grid;
+  gap: 16px;
+}
 
-  mtk-biab.mtk-biab .mtk-biab__panel-title {
-    font-size: 24px;
-  }
+mtk-biab.mtk-biab .mtk-biab__field {
+  display: grid;
+  gap: 7px;
+}
 
-  mtk-biab.mtk-biab .mtk-biab__setup-header-inner {
-    padding: 18px 12px;
-  }
+mtk-biab.mtk-biab .mtk-biab__field label {
+  color: #334155;
+  font-size: 13px;
+  font-weight: 900;
+}
 
-  mtk-biab.mtk-biab .mtk-biab__setup-body {
-    padding: 24px 12px;
-  }
-
-  mtk-biab.mtk-biab .mtk-biab__setup-card {
-    padding: 26px;
-  }
+mtk-biab.mtk-biab .mtk-biab__field input {
+  width: 100%;
+  min-height: 46px;
+  padding: 11px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #0f172a;
+  font: inherit;
 }
 
 mtk-biab.mtk-biab .mtk-biab__editor-actions {
@@ -544,8 +556,8 @@ mtk-biab.mtk-biab .mtk-biab__back-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  min-height: 48px;
-  padding: 12px 18px;
+  min-height: 44px;
+  padding: 10px 16px;
   border: 1px solid #cbd5e1;
   border-radius: 4px;
   background: #ffffff;
@@ -554,33 +566,14 @@ mtk-biab.mtk-biab .mtk-biab__back-btn {
   cursor: pointer;
 }
 
-mtk-biab.mtk-biab .mtk-biab__back-btn:hover {
-  border-color: #a98212;
-  color: #a98212;
-}
-
-mtk-biab.mtk-biab .mtk-biab__template-heading {
-  font-size: 22px;
-  font-weight: 900;
-  margin-bottom: 18px;
-}
-
-mtk-biab.mtk-biab .mtk-biab__template-text {
-  margin-top: 18px;
-  color: #475569;
-  font-size: 15px;
-  line-height: 1.6;
-}
-
 mtk-biab.mtk-biab .mtk-biab__client-wrap {
   width: 100%;
-  height: calc(100vh - 140px);
+  height: calc(100vh - 180px);
   min-height: 680px;
   border: 1px solid #e5e7eb;
   border-radius: 18px;
   background: #ffffff;
   overflow: hidden;
-  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.1);
 }
 
 mtk-biab.mtk-biab .mtk-biab__client-frame {
@@ -591,286 +584,90 @@ mtk-biab.mtk-biab .mtk-biab__client-frame {
   background: #ffffff;
 }
 
-mtk-biab.mtk-biab .mtk-biab__setup {
-  padding-bottom: 40px;
-}
-
-/* remove double scrollbars on setup pages */
-mtk-biab.mtk-biab .mtk-biab__setup {
-  overflow: hidden;
-}
-
-mtk-biab.mtk-biab .mtk-biab__setup-body {
-  overflow-y: auto;
-  max-height: calc(100vh - 120px);
-}
-
-mtk-biab.mtk-biab .mtk-biab__invoice-section {
-  margin: 28px 0 30px;
-}
-
-mtk-biab.mtk-biab .mtk-biab__invoice-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  margin: 0 0 16px;
-}
-
-mtk-biab.mtk-biab .mtk-biab__invoice-head h3 {
-  margin: 0;
-  color: #0f172a;
-  font-size: 22px;
-  font-weight: 900;
-  line-height: 1.25;
-}
-
-mtk-biab.mtk-biab .mtk-biab__new-invoice-btn {
-  appearance: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 10px 16px;
-  border: 1px solid #a98212;
-  border-radius: 4px;
-  background: #a98212;
-  color: #ffffff;
-  font: inherit;
-  font-weight: 900;
-  cursor: pointer;
-  white-space: nowrap;
-  box-shadow: 0 8px 18px rgba(169, 130, 18, 0.22);
-}
-
-mtk-biab.mtk-biab .mtk-biab__new-invoice-btn:hover {
-  background: #7a5e0c;
-  border-color: #7a5e0c;
-}
-
-mtk-biab.mtk-biab .mtk-biab__table-wrap {
-  width: 100%;
-  overflow-x: auto;
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-  background: #ffffff;
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-}
-
-mtk-biab.mtk-biab .mtk-biab__invoice-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 780px;
-  color: #334155;
-  font-size: 15px;
-}
-
-mtk-biab.mtk-biab .mtk-biab__invoice-table th,
-mtk-biab.mtk-biab .mtk-biab__invoice-table td {
-  padding: 14px 16px;
-  border-bottom: 1px solid #e5e7eb;
-  text-align: left;
-  vertical-align: middle;
-}
-
-mtk-biab.mtk-biab .mtk-biab__invoice-table th {
-  background: #fffdf8;
-  color: #0f172a;
-  font-size: 13px;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-mtk-biab.mtk-biab .mtk-biab__invoice-table th button {
-  appearance: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: inherit;
-  font: inherit;
-  cursor: pointer;
-}
-
-mtk-biab.mtk-biab .mtk-biab__invoice-table th button:focus-visible {
-  outline: 3px solid rgba(169, 130, 18, 0.35);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
-
-mtk-biab.mtk-biab .mtk-biab__invoice-table tbody tr:hover {
-  background: #fffdf8;
-}
-
-mtk-biab.mtk-biab .mtk-biab__invoice-table tbody tr:last-child td {
-  border-bottom: 0;
-}
-
-mtk-biab.mtk-biab .mtk-biab__invoice-status {
-  display: inline-flex;
-  align-items: center;
-  min-height: 28px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: #fbf4e5;
-  color: #4a3a08;
-  font-size: 13px;
-  font-weight: 900;
-}
-
 @media (max-width: 767.98px) {
+  mtk-biab.mtk-biab .mtk-biab__page {
+    padding: 24px 12px 64px;
+  }
+
+  mtk-biab.mtk-biab .mtk-biab__panel {
+    padding: 22px;
+  }
+
+  mtk-biab.mtk-biab .mtk-biab__template-grid,
+  mtk-biab.mtk-biab .mtk-biab__editor {
+    grid-template-columns: 1fr;
+  }
+
   mtk-biab.mtk-biab .mtk-biab__invoice-head {
     align-items: flex-start;
     flex-direction: column;
   }
 }
 
-mtk-biab.mtk-biab .mtk-biab__table-wrap {
-  max-height: 420px;
-  overflow: hidden;
-}
-
-mtk-biab.mtk-biab .mtk-biab__invoice-table thead,
-mtk-biab.mtk-biab .mtk-biab__invoice-table tbody {
-  display: block;
-}
-
-mtk-biab.mtk-biab .mtk-biab__invoice-table tbody {
-  max-height: 360px;
-  overflow-y: auto;
-}
-
-mtk-biab.mtk-biab .mtk-biab__invoice-table thead tr,
-mtk-biab.mtk-biab .mtk-biab__invoice-table tbody tr {
-  display: table;
-  width: 100%;
-  table-layout: fixed;
-}
-
-mtk-biab.mtk-biab .mtk-biab__invoice-title-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-mtk-biab.mtk-biab .mtk-biab__status-filter {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: #334155;
-  font-size: 13px;
-  font-weight: 900;
-}
-
-mtk-biab.mtk-biab .mtk-biab__status-filter select {
-  min-height: 40px;
-  min-width: 132px;
-  padding: 8px 36px 8px 12px;
-  border: 1px solid #cbd5e1;
-  border-radius: 4px;
-  background: #ffffff;
-  color: #0f172a;
-  font: inherit;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-mtk-biab.mtk-biab .mtk-biab__status-filter select:focus {
-  border-color: #a98212;
-  outline: 3px solid rgba(169, 130, 18, 0.28);
-  outline-offset: 2px;
-}
-
-mtk-biab.mtk-biab .mtk-biab__invoice-table th {
-  white-space: nowrap;
-}
-
 mtk-biab.mtk-biab .mtk-biab__invoice-action-btn {
-  appearance: none;
-  min-height: 34px;
-  padding: 7px 10px;
-  border: 1px solid #cbd5e1;
-  border-radius: 4px;
-  background: #ffffff;
-  color: #0f172a;
-  font: inherit;
-  font-size: 13px;
-  font-weight: 900;
-  cursor: pointer;
+  pointer-events: auto;
+  position: relative;
+  z-index: 2;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-action-btn .material-icons {
+  pointer-events: none;
 }
 
 mtk-biab.mtk-biab .mtk-biab__invoice-action-btn:hover,
 mtk-biab.mtk-biab .mtk-biab__invoice-action-btn:focus-visible {
   border-color: #a98212;
+  background: #fbf4e5;
   color: #a98212;
   outline: 3px solid rgba(169, 130, 18, 0.28);
   outline-offset: 2px;
 }
 
-mtk-biab.mtk-biab .mtk-biab__invoice-table {
+mtk-biab.mtk-biab .mtk-biab__invoice-message {
+  min-height: 22px;
+  margin: 0 0 10px;
+  color: #166534;
   font-size: 13px;
-}
-
-mtk-biab.mtk-biab .mtk-biab__invoice-table th {
-  font-size: 12px;
-}
-
-mtk-biab.mtk-biab .mtk-biab__invoice-table td {
-  font-size: 13px;
-}
-
-mtk-biab.mtk-biab .mtk-biab__invoice-table td:last-child,
-mtk-biab.mtk-biab .mtk-biab__invoice-table td:nth-last-child(2) {
-  width: 48px;
-  padding: 6px;
-  text-align: center;
-}
-
-mtk-biab.mtk-biab .mtk-biab__invoice-action-btn {
-  padding: 4px;
-  min-height: 32px;
-  min-width: 32px;
-  justify-content: center;
-}
-
-mtk-biab.mtk-biab .mtk-biab__invoice-action-btn .material-icons {
-  font-size: 18px;
-}
-
-mtk-biab.mtk-biab .mtk-biab__invoice-head h3 {
-  font-size: 14px;
-  font-weight: 700;
-}
-
-mtk-biab.mtk-biab .mtk-biab__tabs {
-  width: 100%;
-}
-
-mtk-biab.mtk-biab .mtk-biab__tab-list {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-mtk-biab.mtk-biab .mtk-biab__tab-btn {
-  padding: 10px 14px;
-  border: none;
-  border-bottom: 2px solid transparent;
-  background: none;
   font-weight: 800;
-  cursor: pointer;
 }
 
-mtk-biab.mtk-biab .mtk-biab__tab-btn.is-active {
-  border-color: #a98212;
-  color: #a98212;
-}
 
-mtk-biab.mtk-biab .mtk-biab__tab-panel {
+mtk-biab.mtk-biab .mtk-biab__invoice-table {
   width: 100%;
+  min-width: 100%;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table th,
+mtk-biab.mtk-biab .mtk-biab__invoice-table td {
+  white-space: normal;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table th:nth-child(3),
+mtk-biab.mtk-biab .mtk-biab__invoice-table td:nth-child(3) {
+  width: 14%;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table th:nth-child(4),
+mtk-biab.mtk-biab .mtk-biab__invoice-table td:nth-child(4) {
+  width: 14%;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table th:nth-child(5),
+mtk-biab.mtk-biab .mtk-biab__invoice-table td:nth-child(5) {
+  width: 18%;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table th:nth-child(6),
+mtk-biab.mtk-biab .mtk-biab__invoice-table td:nth-child(6) {
+  width: 22%;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table th:nth-child(7),
+mtk-biab.mtk-biab .mtk-biab__invoice-table td:nth-child(7) {
+  width: 12%;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table th:nth-child(8),
+mtk-biab.mtk-biab .mtk-biab__invoice-table td:nth-child(8) {
+  width: 10%;
 }

@@ -1,6 +1,6 @@
 window.MTK_BIAB_CONFIG = {
   component: "mtk-biab",
-  version: "1.0.6",
+  version: "1.0.7",
 
   labels: {
     pageTitle: "Business in a Box",
@@ -47,7 +47,8 @@ window.MTK_BIAB_CONFIG = {
         "Contact information configuration",
         "Service listing template",
         "Customer review workflow"
-      ]
+      ],
+      hideStartSetup: true
     },
     {
       id: "website-builder",
@@ -70,59 +71,17 @@ window.MTK_BIAB_CONFIG = {
       body: "Click Start setup to choose a business card design and customize the fields.",
       setupType: "businessCard",
       cardTemplates: [
-        {
-          id: "card-1",
-          label: "Business Card 1",
-          image: "img/b-card/card-1.png"
-        },
-        {
-          id: "card-2",
-          label: "Business Card 2",
-          image: "img/b-card/card-2.png"
-        },
-        {
-          id: "card-3",
-          label: "Business Card 3",
-          image: "img/b-card/card-3.png"
-        }
+        { id: "card-1", label: "Business Card 1", image: "img/b-card/card-1.png" },
+        { id: "card-2", label: "Business Card 2", image: "img/b-card/card-2.png" },
+        { id: "card-3", label: "Business Card 3", image: "img/b-card/card-3.png" }
       ],
       cardFields: [
-        {
-          id: "businessName",
-          label: "Business name",
-          type: "text",
-          value: "NALA Locksmith"
-        },
-        {
-          id: "contactName",
-          label: "Contact name",
-          type: "text",
-          value: "Mike Mason"
-        },
-        {
-          id: "phone",
-          label: "Phone",
-          type: "tel",
-          value: "(555) 123-4567"
-        },
-        {
-          id: "email",
-          label: "Email",
-          type: "email",
-          value: "info@example.com"
-        },
-        {
-          id: "website",
-          label: "Website",
-          type: "url",
-          value: "www.example.com"
-        },
-        {
-          id: "serviceArea",
-          label: "Service area",
-          type: "text",
-          value: "New Jersey"
-        }
+        { id: "businessName", label: "Business name", type: "text", value: "NALA Locksmith" },
+        { id: "contactName", label: "Contact name", type: "text", value: "Mike Mason" },
+        { id: "phone", label: "Phone", type: "tel", value: "(555) 123-4567" },
+        { id: "email", label: "Email", type: "email", value: "info@example.com" },
+        { id: "website", label: "Website", type: "url", value: "www.example.com" },
+        { id: "serviceArea", label: "Service area", type: "text", value: "New Jersey" }
       ]
     },
     {
@@ -140,52 +99,18 @@ window.MTK_BIAB_CONFIG = {
       icon: "receipt_long",
       eyebrow: "Operations",
       title: "Invoices",
-      description: "Prepare invoices for completed locksmith jobs.",
-      body: "Track invoices, clients, dates, status, and payment totals.",
+      description: "Track invoices, clients, dates, status, and payment totals.",
+      body: "Use the invoice table to review and manage invoices.",
       viewType: "invoices",
-      invoiceHeading: "All Invoices",
+      hideStartSetup: true,
+      invoiceHeading: "Status",
       newInvoiceLabel: "New Invoice",
       invoices: [
-        {
-          id: "INV-1001",
-          date: "2026-05-01",
-          client: "Jane Customer",
-          service: "Residential rekey",
-          amount: 185.00,
-          status: "Paid"
-        },
-        {
-          id: "INV-1002",
-          date: "2026-05-02",
-          client: "Acme Property Group",
-          service: "Commercial lock change",
-          amount: 540.00,
-          status: "Open"
-        },
-        {
-          id: "INV-1003",
-          date: "2026-05-03",
-          client: "Robert Lee",
-          service: "House lockout",
-          amount: 125.00,
-          status: "Paid"
-        },
-        {
-          id: "INV-1004",
-          date: "2026-05-04",
-          client: "Northside Realty",
-          service: "Master key consultation",
-          amount: 320.00,
-          status: "Draft"
-        },
-        {
-          id: "INV-1005",
-          date: "2026-05-05",
-          client: "Maria Garcia",
-          service: "Deadbolt installation",
-          amount: 265.00,
-          status: "Open"
-        }
+        { id: "INV-1005", date: "2026-05-05", client: "Maria Garcia", service: "Deadbolt installation", amount: 265.00, status: "Open" },
+        { id: "INV-1002", date: "2026-05-02", client: "Acme Property Group", service: "Commercial lock change", amount: 540.00, status: "Open" },
+        { id: "INV-1001", date: "2026-05-01", client: "Jane Customer", service: "Residential rekey", amount: 185.00, status: "Paid" },
+        { id: "INV-1004", date: "2026-05-04", client: "Northside Realty", service: "Master key consultation", amount: 320.00, status: "Draft" },
+        { id: "INV-1003", date: "2026-05-03", client: "Robert Lee", service: "House lockout", amount: 125.00, status: "Paid" }
       ]
     },
     {
