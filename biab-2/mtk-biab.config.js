@@ -85,15 +85,6 @@ window.MTK_BIAB_CONFIG = {
       ]
     },
     {
-      id: "marketing-seo",
-      label: "Marketing, SEO",
-      icon: "campaign",
-      eyebrow: "Growth",
-      title: "Marketing, SEO",
-      description: "Set up discoverability, search basics, and launch messaging.",
-      body: "Organize local search terms, Google profile details, review prompts, and starter marketing copy."
-    },
-    {
       id: "invoices",
       label: "Invoices",
       icon: "receipt_long",
