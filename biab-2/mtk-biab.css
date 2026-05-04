@@ -669,3 +669,26 @@ mtk-biab.mtk-biab .mtk-biab__status-filter select:focus {
   border-color: #a98212;
   outline: 3px solid rgba(169, 130, 18, 0.28);
   outline-offset: 2px; }
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table th {
+  white-space: nowrap; }
+
+mtk-biab.mtk-biab .mtk-biab__invoice-action-btn {
+  appearance: none;
+  min-height: 34px;
+  padding: 7px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #0f172a;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer; }
+
+mtk-biab.mtk-biab .mtk-biab__invoice-action-btn:hover,
+mtk-biab.mtk-biab .mtk-biab__invoice-action-btn:focus-visible {
+  border-color: #a98212;
+  color: #a98212;
+  outline: 3px solid rgba(169, 130, 18, 0.28);
+  outline-offset: 2px; }

@@ -151,8 +151,7 @@ class MtkBiab {
       { key: "date", label: "Date" },
       { key: "client", label: "Client" },
       { key: "service", label: "Service" },
-      { key: "amount", label: "Amount" },
-      { key: "status", label: "Status" }
+      { key: "amount", label: "Amount" }
     ];
 
     return `
@@ -187,6 +186,9 @@ class MtkBiab {
                     </button>
                   </th>
                 `).join("")}
+                <th scope="col">Status</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
@@ -198,6 +200,16 @@ class MtkBiab {
                   <td>${this._escape(invoice.service)}</td>
                   <td>${this._formatCurrency(invoice.amount)}</td>
                   <td><span class="mtk-biab__invoice-status">${this._escape(invoice.status)}</span></td>
+                  <td>
+                    <button class="mtk-biab__invoice-action-btn" type="button" data-action="delete-invoice" data-invoice-id="${this._escape(invoice.id)}">
+                      Delete
+                    </button>
+                  </td>
+                  <td>
+                    <button class="mtk-biab__invoice-action-btn" type="button" data-action="update-invoice" data-invoice-id="${this._escape(invoice.id)}">
+                      Update
+                    </button>
+                  </td>
                 </tr>
               `).join("")}
             </tbody>
@@ -209,7 +221,7 @@ class MtkBiab {
 
 
   _renderStatusOptions(section) {
-    const baseStatuses = ["Open", "Paid", "Draft", "Overdue", "Void"];
+    const baseStatuses = ["Open", "Paid", "Draft"];
     const invoiceStatuses = Array.isArray(section.invoices)
       ? section.invoices.map((invoice) => invoice.status).filter(Boolean)
       : [];
@@ -327,6 +339,20 @@ class MtkBiab {
       if (action === "new-invoice") {
         this._publish("mtk-biab:new-invoice", {
           sectionId: this.activeId
+        });
+      }
+
+      if (action === "delete-invoice") {
+        this._publish("mtk-biab:delete-invoice", {
+          sectionId: this.activeId,
+          invoiceId: target.getAttribute("data-invoice-id")
+        });
+      }
+
+      if (action === "update-invoice") {
+        this._publish("mtk-biab:update-invoice", {
+          sectionId: this.activeId,
+          invoiceId: target.getAttribute("data-invoice-id")
         });
       }
 
