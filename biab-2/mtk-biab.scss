@@ -604,3 +604,126 @@ mtk-biab.mtk-biab .mtk-biab__setup-body {
   overflow-y: auto;
   max-height: calc(100vh - 120px);
 }
+
+mtk-biab.mtk-biab .mtk-biab__invoice-section {
+  margin: 28px 0 30px;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 0 0 16px;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-head h3 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+mtk-biab.mtk-biab .mtk-biab__new-invoice-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid #a98212;
+  border-radius: 4px;
+  background: #a98212;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 8px 18px rgba(169, 130, 18, 0.22);
+}
+
+mtk-biab.mtk-biab .mtk-biab__new-invoice-btn:hover {
+  background: #7a5e0c;
+  border-color: #7a5e0c;
+}
+
+mtk-biab.mtk-biab .mtk-biab__table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 780px;
+  color: #334155;
+  font-size: 15px;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table th,
+mtk-biab.mtk-biab .mtk-biab__invoice-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+  vertical-align: middle;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table th {
+  background: #fffdf8;
+  color: #0f172a;
+  font-size: 13px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table th button {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table th button:focus-visible {
+  outline: 3px solid rgba(169, 130, 18, 0.35);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table tbody tr:hover {
+  background: #fffdf8;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #fbf4e5;
+  color: #4a3a08;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+@media (max-width: 767.98px) {
+  mtk-biab.mtk-biab .mtk-biab__invoice-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

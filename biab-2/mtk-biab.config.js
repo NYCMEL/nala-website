@@ -141,7 +141,52 @@ window.MTK_BIAB_CONFIG = {
       eyebrow: "Operations",
       title: "Invoices",
       description: "Prepare invoices for completed locksmith jobs.",
-      body: "Define invoice labels, line items, service notes, payment terms, and customer receipt details."
+      body: "Track invoices, clients, dates, status, and payment totals.",
+      viewType: "invoices",
+      invoiceHeading: "All Invoices",
+      newInvoiceLabel: "New Invoice",
+      invoices: [
+        {
+          id: "INV-1001",
+          date: "2026-05-01",
+          client: "Jane Customer",
+          service: "Residential rekey",
+          amount: 185.00,
+          status: "Paid"
+        },
+        {
+          id: "INV-1002",
+          date: "2026-05-02",
+          client: "Acme Property Group",
+          service: "Commercial lock change",
+          amount: 540.00,
+          status: "Open"
+        },
+        {
+          id: "INV-1003",
+          date: "2026-05-03",
+          client: "Robert Lee",
+          service: "House lockout",
+          amount: 125.00,
+          status: "Paid"
+        },
+        {
+          id: "INV-1004",
+          date: "2026-05-04",
+          client: "Northside Realty",
+          service: "Master key consultation",
+          amount: 320.00,
+          status: "Draft"
+        },
+        {
+          id: "INV-1005",
+          date: "2026-05-05",
+          client: "Maria Garcia",
+          service: "Deadbolt installation",
+          amount: 265.00,
+          status: "Open"
+        }
+      ]
     },
     {
       id: "customer-reviews",
