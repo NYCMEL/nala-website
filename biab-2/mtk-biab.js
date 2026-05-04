@@ -8,6 +8,7 @@ class MtkBiab {
     this.activeId = this.sections[0] ? this.sections[0].id : "";
     this.selectedTemplate = null;
     this.invoiceSort = { key: "date", direction: "desc" };
+    this.invoiceStatus = "Open";
     this.isPublishing = false;
     this.onMessage = this.onMessage.bind(this);
     this._init();
@@ -157,7 +158,17 @@ class MtkBiab {
     return `
       <section class="mtk-biab__invoice-section" aria-label="${this._escape(section.invoiceHeading || "All Invoices")}">
         <div class="mtk-biab__invoice-head">
-          <h3>${this._escape(section.invoiceHeading || "All Invoices")}</h3>
+          <div class="mtk-biab__invoice-title-row">
+            <h3>${this._escape(section.invoiceHeading || "All Invoices")}</h3>
+
+            <label class="mtk-biab__status-filter">
+              <span>Status</span>
+              <select data-action="filter-invoices" aria-label="Filter invoices by status">
+                ${this._renderStatusOptions(section)}
+              </select>
+            </label>
+          </div>
+
           <button class="mtk-biab__new-invoice-btn" type="button" data-action="new-invoice">
             <span class="material-icons" aria-hidden="true">add</span>
             <span>${this._escape(section.newInvoiceLabel || "New Invoice")}</span>
@@ -196,8 +207,26 @@ class MtkBiab {
     `;
   }
 
+
+  _renderStatusOptions(section) {
+    const baseStatuses = ["Open", "Paid", "Draft", "Overdue", "Void"];
+    const invoiceStatuses = Array.isArray(section.invoices)
+      ? section.invoices.map((invoice) => invoice.status).filter(Boolean)
+      : [];
+
+    const statuses = Array.from(new Set(baseStatuses.concat(invoiceStatuses)));
+
+    return statuses.map((status) => `
+      <option value="${this._escape(status)}"${this.invoiceStatus === status ? " selected" : ""}>
+        ${this._escape(status)}
+      </option>
+    `).join("");
+  }
+
   _getSortedInvoices(section) {
-    const invoices = Array.isArray(section.invoices) ? section.invoices.slice() : [];
+    const invoices = Array.isArray(section.invoices)
+      ? section.invoices.filter((invoice) => invoice.status === this.invoiceStatus)
+      : [];
     const key = this.invoiceSort.key;
     const direction = this.invoiceSort.direction === "asc" ? 1 : -1;
 
@@ -298,6 +327,15 @@ class MtkBiab {
       if (action === "new-invoice") {
         this._publish("mtk-biab:new-invoice", {
           sectionId: this.activeId
+        });
+      }
+
+      if (action === "filter-invoices") {
+        this.invoiceStatus = target.value || "Open";
+        this._render();
+        this._publish("mtk-biab:invoice-status-filter", {
+          sectionId: this.activeId,
+          status: this.invoiceStatus
         });
       }
 
