@@ -241,6 +241,7 @@ class MtkBiab {
 
     this._appendSetupOverlay(section, `
       <div class="mtk-biab__setup-card">
+        <h3 class="mtk-biab__template-heading">Please select a card</h3>
         <div class="mtk-biab__template-grid" role="list" aria-label="Business card templates">
           ${templates.map((template) => `
             <button
@@ -255,6 +256,7 @@ class MtkBiab {
             </button>
           `).join("")}
         </div>
+        <p class="mtk-biab__template-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
       </div>
     `);
 
@@ -285,7 +287,7 @@ class MtkBiab {
           </div>
 
           <form class="mtk-biab__editor-form" data-card-editor-form>
-            <button class="mtk-biab__back-btn" type="button" data-action="back-to-templates"><span class="material-icons">chevron_left</span> Back</button>
+            
             ${fields.map((field) => `
               <div class="mtk-biab__field">
                 <label for="mtk-biab-field-${this._escape(field.id)}">${this._escape(field.label)}</label>
@@ -298,13 +300,14 @@ class MtkBiab {
               </div>
             `).join("")}
 
-            <div class="mtk-biab__editor-actions"><button class="mtk-biab__back-btn" type="button" data-action="back-to-templates"><span class="material-icons">chevron_left</span> Back</button><button class="mtk-biab__submit-btn" type="button" data-action="submit-card-editor">
+            <div class="mtk-biab__editor-actions"><button class="mtk-biab__submit-btn" type="button" data-action="submit-card-editor">
               Submit
             </button></div>
 
             <p class="mtk-biab__status data-card-editor-status aria-live="polite"></p>
           </form>
         </div>
+        <p class="mtk-biab__template-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
       </div>
     `);
 

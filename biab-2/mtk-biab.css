@@ -474,3 +474,14 @@ mtk-biab.mtk-biab .mtk-biab__back-btn {
 mtk-biab.mtk-biab .mtk-biab__back-btn:hover {
   border-color: #a98212;
   color: #a98212; }
+
+mtk-biab.mtk-biab .mtk-biab__template-heading {
+  font-size: 22px;
+  font-weight: 900;
+  margin-bottom: 18px; }
+
+mtk-biab.mtk-biab .mtk-biab__template-text {
+  margin-top: 18px;
+  color: #475569;
+  font-size: 15px;
+  line-height: 1.6; }
