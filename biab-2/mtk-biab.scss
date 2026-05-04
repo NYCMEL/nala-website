@@ -727,3 +727,25 @@ mtk-biab.mtk-biab .mtk-biab__invoice-status {
     flex-direction: column;
   }
 }
+
+mtk-biab.mtk-biab .mtk-biab__table-wrap {
+  max-height: 420px;
+  overflow: hidden;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table thead,
+mtk-biab.mtk-biab .mtk-biab__invoice-table tbody {
+  display: block;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table tbody {
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table thead tr,
+mtk-biab.mtk-biab .mtk-biab__invoice-table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
