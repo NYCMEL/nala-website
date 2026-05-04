@@ -92,4 +92,7 @@ Update my UI. I am explaining each content by numbers:
   - add a "New Invoice" button at the top right of this page
   - Remove "Start setup"
 
-
+6) Customer Reviews
+  - display a table of ratings with stars in one column, date and notes (single line ellipsis)
+  - add a heading "Reviews"
+  - Remove "Start setup"
