@@ -60,3 +60,7 @@ I want to create a new page for "Business in a box":
 
 - Clicking "Start setup" button, should open a full page with current selection header and an "X" in a circle on the top right
   and for now display some lorem ipsum
+
+I am explaining each content by numbers:
+  1) heading: "“Included by default — <small>no action required</small>"
+  2) display a numbered dummy list of 5 items
