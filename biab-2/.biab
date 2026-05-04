@@ -65,6 +65,7 @@ Update my UI. I am explaining each content by numbers:
 1) Introduction
   - heading: "“Included by default — <small>no action required</small>"
   - display a numbered dummy list of 5 items
+  - Remove "Start setup"
 
   3) clicking on "Start setup" in the "Business Card & Logo" page:
   - open a full screen page (same as before with "X")
@@ -82,7 +83,11 @@ Update my UI. I am explaining each content by numbers:
    - use content from client folder
 
 5) Invoices
-   - display a table of invoices with dates, client, amount etc.
-   - allow sorting by clicking on column header
-   - add a heading "All Invoices"
-   - add a "New Invoice" button at the top right of this page
+  - display a table of invoices with dates, client, amount, status, etc.
+  - allow table body to scroll
+  - allow sorting by clicking on column header
+  - add a heading "All Invoices"
+  - add a "New Invoice" button at the top right of this page
+  - Remove "Start setup"
+
+
