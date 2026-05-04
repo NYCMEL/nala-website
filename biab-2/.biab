@@ -62,7 +62,7 @@ I want to create a new page for "Business in a box":
   and for now display some lorem ipsum
 
 Update my UI. I am explaining each content by numbers:
-  1) Introduction
+1) Introduction
   - heading: "“Included by default — <small>no action required</small>"
   - display a numbered dummy list of 5 items
 
@@ -80,3 +80,5 @@ Update my UI. I am explaining each content by numbers:
 
 
 	   
+2) Website Builder
+   - use content from client folder

@@ -56,7 +56,9 @@ window.MTK_BIAB_CONFIG = {
       eyebrow: "Website",
       title: "Website Builder",
       description: "Create the public website your customers will use.",
-      body: "Plan the homepage, services, service area, contact details, and call-to-action structure."
+      body: "Click Start setup to open the website builder using content from the client folder.",
+      setupType: "websiteBuilder",
+      clientUrl: "client/index.html"
     },
     {
       id: "business-card-logo",

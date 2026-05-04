@@ -216,7 +216,35 @@ class MtkBiab {
       return;
     }
 
+    if (section.setupType === "websiteBuilder") {
+      this._openWebsiteBuilder(section);
+      return;
+    }
+
     this._openGenericSetup(section);
+  }
+
+
+  _openWebsiteBuilder(section) {
+    this._closeSetup();
+
+    this._appendSetupOverlay(section, `
+      <div class="mtk-biab__client-wrap">
+        <iframe
+          class="mtk-biab__client-frame"
+          src="${this._escape(section.clientUrl || "client/index.html")}"
+          title="${this._escape(section.title || "Website Builder")}"
+          loading="lazy"
+        ></iframe>
+      </div>
+    `);
+
+    this._publish(this.events.publish.setupOpen || "mtk-biab:setup-open", {
+      sectionId: this.activeId,
+      section,
+      mode: "website-builder",
+      clientUrl: section.clientUrl || "client/index.html"
+    });
   }
 
   _openGenericSetup(section) {
