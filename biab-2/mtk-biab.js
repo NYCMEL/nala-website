@@ -156,10 +156,22 @@ class MtkBiab {
 
 
   _renderReviews(section) {
-    let reviews = Array.isArray(section.reviews) ? section.reviews.slice() : [];
-    reviews.sort((a,b)=>{
-      return this.reviewSort === "asc" ? a.rating - b.rating : b.rating - a.rating;
-    });
+    
+let reviews = Array.isArray(section.reviews) ? section.reviews.slice() : [];
+reviews.sort((a, b) => {
+  // primary: stars
+  const starCmp = this.reviewSort === "asc"
+    ? (Number(a.rating)||0) - (Number(b.rating)||0)
+    : (Number(b.rating)||0) - (Number(a.rating)||0);
+
+  if (starCmp !== 0) return starCmp;
+
+  // secondary: date DESC (newest first)
+  const ad = new Date(a.date);
+  const bd = new Date(b.date);
+  return bd - ad;
+});
+
 
     return `
       <section class="mtk-biab__reviews-section" aria-label="${this._escape(section.reviewsHeading || "Reviews")}">
