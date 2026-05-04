@@ -157,7 +157,7 @@ class MtkBiab {
 
   _renderReviews(section) {
     
-let reviews = Array.isArray(section.reviews) ? section.reviews.slice() : [];
+const reviews = Array.isArray(section.reviews) ? section.reviews : [];
 reviews.sort((a, b) => {
   // primary: stars
   const starCmp = this.reviewSort === "asc"
@@ -183,7 +183,7 @@ reviews.sort((a, b) => {
           <table class="mtk-biab__reviews-table">
             <thead>
               <tr>
-                <th scope="col"><button type="button" data-action="sort-reviews">Stars</button></th>
+                <th scope="col">Stars</th>
                 <th scope="col">Date</th>
                 <th scope="col">Notes</th>
               </tr>
@@ -339,11 +339,6 @@ reviews.sort((a, b) => {
           sectionId: this.activeId,
           invoiceId: invoiceId
         });
-      }
-
-      if (action === "sort-reviews") {
-        this.reviewSort = this.reviewSort === "asc" ? "desc" : "asc";
-        this._render();
       }
 
       if (action === "update-invoice") {
