@@ -126,7 +126,7 @@ class MtkBiab {
         ${included}
         ${customContent}
 
-        <button class="mtk-biab__start-btn" type="button" data-action="open-setup">
+        ${this._shouldShowStartSetup(safeSection) ? `<button class="mtk-biab__start-btn` : `<span style="display:none"`} type="button" data-action="open-setup">
           <span class="material-icons" aria-hidden="true">rocket_launch</span>
           <span>${this._escape(this.labels.startSetup || "Start setup")}</span>
         </button>
@@ -247,6 +247,14 @@ class MtkBiab {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     });
+  }
+
+
+  _shouldShowStartSetup(section) {
+    if (!section || !section.id) return true;
+    if (section.id === "introduction") return false;
+    if (section.id === "invoices") return false;
+    return true;
   }
 
   _renderIncluded(section) {
