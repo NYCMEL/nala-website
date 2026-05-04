@@ -66,11 +66,14 @@ Update my UI. I am explaining each content by numbers:
   - heading: "“Included by default — <small>no action required</small>"
   - display a numbered dummy list of 5 items
 
-  3) Business Card & Logo
+  3) clicking on "Start setup" in the "Business Card & Logo" page:
+  - open a full screen page (same as before with "X")
   - place the following images side-by side and allow user to select one.
-    this should open a new page with "X" in circle and allow user to make changes to fields.
-    images are:
+  - on an image selection, show relevant fields for user to fill and submit
+  images are:
     	   img/b-card/card-1.png
     	   img/b-card/card-2.png
     	   img/b-card/card-3.png
+
+
 	   
