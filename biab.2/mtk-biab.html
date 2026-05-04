@@ -1,0 +1,66 @@
+<mtk-biab class="mtk-biab" data-component="mtk-biab">
+    <section class="mtk-biab__shell" aria-labelledby="mtk-biab-title">
+        <header class="mtk-biab__hero">
+            <p class="mtk-biab__eyebrow" data-biab-eyebrow></p>
+            <div class="mtk-biab__hero-row">
+                <div class="mtk-biab__hero-copy">
+                    <h1 class="mtk-biab__title" id="mtk-biab-title" data-biab-title></h1>
+                    <p class="mtk-biab__subtitle" data-biab-subtitle></p>
+                </div>
+
+                <button class="mtk-biab__menu-button"
+                        type="button"
+                        aria-expanded="false"
+                        aria-controls="mtk-biab-side-nav"
+                        data-biab-menu-button>
+                    <span class="mtk-biab__material-icon" aria-hidden="true">menu</span>
+                    <span data-biab-menu-label>Business menu</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="mtk-biab__layout">
+            <aside class="mtk-biab__side" data-biab-side>
+                <nav class="mtk-biab__nav"
+                     id="mtk-biab-side-nav"
+                     aria-label="Business in a Box sections"
+                     data-biab-nav></nav>
+            </aside>
+
+            <main class="mtk-biab__main" tabindex="-1" data-biab-main>
+                <article class="mtk-biab__panel" data-biab-panel>
+                    <div class="mtk-biab__panel-header">
+                        <div class="mtk-biab__section-icon" aria-hidden="true" data-biab-section-icon></div>
+                        <div>
+                            <p class="mtk-biab__active-label" data-biab-active-label></p>
+                            <h2 class="mtk-biab__section-title" data-biab-section-title></h2>
+                            <p class="mtk-biab__section-summary" data-biab-section-summary></p>
+                        </div>
+                    </div>
+
+                    <p class="mtk-biab__body" data-biab-section-body></p>
+
+                    <ul class="mtk-biab__bullets" data-biab-bullets></ul>
+
+                    <div class="mtk-biab__stats" data-biab-stats></div>
+
+                    <footer class="mtk-biab__actions">
+                        <button class="mtk-biab__button mtk-biab__button--primary"
+                                type="button"
+                                data-biab-action="getStarted">
+                            <span class="mtk-biab__material-icon" aria-hidden="true">rocket_launch</span>
+                            <span data-biab-get-started-label></span>
+                        </button>
+
+                        <button class="mtk-biab__button mtk-biab__button--secondary"
+                                type="button"
+                                data-biab-action="learnMore">
+                            <span class="mtk-biab__material-icon" aria-hidden="true">info</span>
+                            <span data-biab-learn-more-label></span>
+                        </button>
+                    </footer>
+                </article>
+            </main>
+        </div>
+    </section>
+</mtk-biab>
