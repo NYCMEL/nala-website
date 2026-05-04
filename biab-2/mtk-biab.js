@@ -202,12 +202,12 @@ class MtkBiab {
                   <td><span class="mtk-biab__invoice-status">${this._escape(invoice.status)}</span></td>
                   <td>
                     <button class="mtk-biab__invoice-action-btn" type="button" data-action="delete-invoice" data-invoice-id="${this._escape(invoice.id)}">
-                      Delete
+                      <span class="material-icons">delete</span>
                     </button>
                   </td>
                   <td>
                     <button class="mtk-biab__invoice-action-btn" type="button" data-action="update-invoice" data-invoice-id="${this._escape(invoice.id)}">
-                      Update
+                      <span class="material-icons">edit</span>
                     </button>
                   </td>
                 </tr>

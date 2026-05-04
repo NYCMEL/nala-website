@@ -810,3 +810,15 @@ mtk-biab.mtk-biab .mtk-biab__invoice-action-btn:focus-visible {
   outline: 3px solid rgba(169, 130, 18, 0.28);
   outline-offset: 2px;
 }
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table {
+  font-size: 13px;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table th {
+  font-size: 12px;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-table td {
+  font-size: 13px;
+}
