@@ -336,3 +336,20 @@ mtk-biab.mtk-biab .mtk-biab__setup-card p {
     padding: 24px 12px; }
   mtk-biab.mtk-biab .mtk-biab__setup-card {
     padding: 26px; } }
+
+mtk-biab.mtk-biab .mtk-biab__cards {
+  display: flex;
+  gap: 16px;
+  margin: 24px 0; }
+
+mtk-biab.mtk-biab .mtk-biab__card {
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  background: #fff;
+  padding: 8px;
+  cursor: pointer; }
+
+mtk-biab.mtk-biab .mtk-biab__card img {
+  width: 180px;
+  height: auto;
+  display: block; }

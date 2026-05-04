@@ -120,13 +120,27 @@ class MtkBiab {
         <h2 class="mtk-biab__panel-title">${this._escape(safeSection.title || safeSection.label || "")}</h2>
         <p class="mtk-biab__description">${this._escape(safeSection.description || "")}</p>
         ${safeSection.body ? `<p class="mtk-biab__body">${this._escape(safeSection.body)}</p>` : ""}
-        ${included}
+        ${this._renderCards(safeSection)}${included}
 
         <button class="mtk-biab__start-btn" type="button" data-action="open-setup">
           <span class="material-icons" aria-hidden="true">rocket_launch</span>
           <span>${this._escape(this.labels.startSetup || "Start setup")}</span>
         </button>
       </article>
+    `;
+  }
+
+
+  _renderCards(section) {
+    if (!Array.isArray(section.cards)) return "";
+    return `
+      <div class="mtk-biab__cards">
+        ${section.cards.map((src, i) => `
+          <button class="mtk-biab__card" data-action="open-card" data-card-index="${i}">
+            <img src="${src}" alt="Business card option ${i+1}" />
+          </button>
+        `).join("")}
+      </div>
     `;
   }
 
@@ -158,6 +172,10 @@ class MtkBiab {
 
       if (action === "select-section") {
         this._selectSection(target.getAttribute("data-section-id"));
+      }
+
+      if (action === "open-card") {
+        this._openSetup();
       }
 
       if (action === "open-setup") {
