@@ -40,7 +40,7 @@ window.MTK_BIAB_CONFIG = {
       eyebrow: "Getting started",
       title: "Introduction",
       description: "A guided overview of your Business in a Box setup.",
-      includedHeading: "Included by default <small>- no action required</small>",
+      includedHeading: "Included by default — <small>no action required</small>",
       includedItems: [
         "Business profile setup",
         "Basic website structure",
