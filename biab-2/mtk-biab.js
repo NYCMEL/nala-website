@@ -8,6 +8,7 @@ class MtkBiab {
     this.activeId = this.sections[0] ? this.sections[0].id : "";
     this.invoiceStatus = "Open";
     this.selectedTemplate = null;
+    this.reviewSort = "desc";
     this.isPublishing = false;
     this.onMessage = this.onMessage.bind(this);
     this._init();
@@ -155,7 +156,10 @@ class MtkBiab {
 
 
   _renderReviews(section) {
-    const reviews = Array.isArray(section.reviews) ? section.reviews : [];
+    let reviews = Array.isArray(section.reviews) ? section.reviews.slice() : [];
+    reviews.sort((a,b)=>{
+      return this.reviewSort === "asc" ? a.rating - b.rating : b.rating - a.rating;
+    });
 
     return `
       <section class="mtk-biab__reviews-section" aria-label="${this._escape(section.reviewsHeading || "Reviews")}">
@@ -167,7 +171,7 @@ class MtkBiab {
           <table class="mtk-biab__reviews-table">
             <thead>
               <tr>
-                <th scope="col">Stars</th>
+                <th scope="col"><button type="button" data-action="sort-reviews">Stars</button></th>
                 <th scope="col">Date</th>
                 <th scope="col">Notes</th>
               </tr>
@@ -323,6 +327,11 @@ class MtkBiab {
           sectionId: this.activeId,
           invoiceId: invoiceId
         });
+      }
+
+      if (action === "sort-reviews") {
+        this.reviewSort = this.reviewSort === "asc" ? "desc" : "asc";
+        this._render();
       }
 
       if (action === "update-invoice") {

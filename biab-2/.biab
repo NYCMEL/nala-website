@@ -95,5 +95,4 @@ Update my UI. I am explaining each content by numbers:
   - display a table of ratings with stars in one column, date and notes (single line ellipsis)
   - add a heading "Reviews"
   - Remove "Start setup"
-  - allow sorting for stars only
   - display dates in Descending order
