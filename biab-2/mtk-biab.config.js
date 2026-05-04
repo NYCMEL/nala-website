@@ -12,7 +12,8 @@ window.mtkBiabConfig = {
         closeMenu: "Close Business in a Box menu",
         activeSection: "Current section",
         getStarted: "Get started",
-        learnMore: "Learn more"
+        learnMore: "Learn more",
+        setupEyebrow: "Setup workspace"
     },
     actions: {
         getStarted: {
@@ -24,6 +25,11 @@ window.mtkBiabConfig = {
             topic: "4-mtk-biab:learn-more-clicked"
         }
     },
+    setupLorem: [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae justo non risus facilisis posuere. Sed porta, sapien at gravida luctus, lorem orci luctus mi, non pulvinar nibh mi sit amet sapien.",
+        "Praesent commodo, magna non tincidunt luctus, mi mauris dignissim lorem, sed pretium tortor neque vitae erat. Donec sed sem sit amet ipsum luctus fermentum.",
+        "Aliquam erat volutpat. Suspendisse potenti. Curabitur sed mi vitae arcu rhoncus vulputate. Pellentesque habitant morbi tristique senectus et netus et malesuada fames."
+    ],
     sections: [
         {
             id: "introduction",

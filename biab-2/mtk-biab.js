@@ -21,13 +21,20 @@ class MtkBiab {
             stats: "[data-biab-stats]",
             getStartedLabel: "[data-biab-get-started-label]",
             learnMoreLabel: "[data-biab-learn-more-label]",
-            actions: "[data-biab-action]"
+            actions: "[data-biab-action]",
+            setupPage: "[data-biab-setup-page]",
+            setupEyebrow: "[data-biab-setup-eyebrow]",
+            setupTitle: "[data-biab-setup-title]",
+            setupBody: "[data-biab-setup-body]",
+            setupClose: "[data-biab-setup-close]"
         };
 
         this.onMessage = this.onMessage.bind(this);
         this.handleNavClick = this.handleNavClick.bind(this);
         this.handleMenuClick = this.handleMenuClick.bind(this);
         this.handleActionClick = this.handleActionClick.bind(this);
+        this.handleSetupCloseClick = this.handleSetupCloseClick.bind(this);
+        this.handleDocumentKeydown = this.handleDocumentKeydown.bind(this);
 
         this.init();
     }
@@ -187,6 +194,12 @@ class MtkBiab {
         this.actions.forEach((action) => {
             action.addEventListener("click", this.handleActionClick);
         });
+
+        if (this.setupClose) {
+            this.setupClose.addEventListener("click", this.handleSetupCloseClick);
+        }
+
+        document.addEventListener("keydown", this.handleDocumentKeydown);
     }
 
     subscribe() {
@@ -201,6 +214,8 @@ class MtkBiab {
         window.wc.subscribe("4-mtk-biab:close-menu", this.onMessage);
         window.wc.subscribe("4-mtk-biab:toggle-menu", this.onMessage);
         window.wc.subscribe("4-mtk-biab:refresh", this.onMessage);
+        window.wc.subscribe("4-mtk-biab:open-setup", this.onMessage);
+        window.wc.subscribe("4-mtk-biab:close-setup", this.onMessage);
     }
 
     onMessage(message = {}) {
@@ -221,6 +236,12 @@ class MtkBiab {
                 break;
             case "4-mtk-biab:toggle-menu":
                 this.toggleMobileMenu();
+                break;
+            case "4-mtk-biab:open-setup":
+                this.openSetupPage(payload.sectionId || payload.id || this.activeSectionId);
+                break;
+            case "4-mtk-biab:close-setup":
+                this.closeSetupPage();
                 break;
             case "4-mtk-biab:refresh":
             case "4-mtk-biab":
@@ -263,10 +284,77 @@ class MtkBiab {
         const topic = actionConfig.topic || `4-mtk-biab:${actionKey}-clicked`;
         const section = this.getSectionById(this.activeSectionId);
 
+        if (actionKey === "getStarted") {
+            this.openSetupPage(this.activeSectionId);
+        }
+
         this.publish(topic, {
             action: actionKey,
             sectionId: this.activeSectionId,
             section
+        });
+    }
+
+    handleSetupCloseClick() {
+        this.closeSetupPage();
+        this.publish("4-mtk-biab:setup-closed", {
+            sectionId: this.activeSectionId,
+            section: this.getSectionById(this.activeSectionId)
+        });
+    }
+
+    handleDocumentKeydown(event) {
+        if (event.key === "Escape" && this.element.classList.contains("mtk-biab--setup-open")) {
+            this.handleSetupCloseClick();
+        }
+    }
+
+    openSetupPage(sectionId) {
+        const section = this.getSectionById(sectionId) || this.getSectionById(this.activeSectionId) || this.getSections()[0];
+
+        if (!this.setupPage || !section) {
+            return;
+        }
+
+        this.setText(this.setupEyebrow, this.getLabel("setupEyebrow"));
+        this.setText(this.setupTitle, section.label || section.title || "Setup");
+        this.renderSetupBody(section);
+        this.setupPage.setAttribute("aria-hidden", "false");
+        this.element.classList.add("mtk-biab--setup-open");
+        document.body.classList.add("mtk-biab-body-lock");
+
+        if (this.setupClose) {
+            this.setupClose.focus({ preventScroll: true });
+        }
+
+        this.publish("4-mtk-biab:setup-opened", {
+            sectionId: section.id,
+            section
+        });
+    }
+
+    closeSetupPage() {
+        if (!this.setupPage) {
+            return;
+        }
+
+        this.setupPage.setAttribute("aria-hidden", "true");
+        this.element.classList.remove("mtk-biab--setup-open");
+        document.body.classList.remove("mtk-biab-body-lock");
+    }
+
+    renderSetupBody(section) {
+        if (!this.setupBody) {
+            return;
+        }
+
+        const paragraphs = Array.isArray(this.config.setupLorem) ? this.config.setupLorem : [];
+        this.setupBody.innerHTML = "";
+
+        paragraphs.forEach((paragraph) => {
+            const p = document.createElement("p");
+            p.textContent = paragraph;
+            this.setupBody.appendChild(p);
         });
     }
 

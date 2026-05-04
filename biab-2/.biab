@@ -59,3 +59,5 @@ I want to create a new page for "Business in a box":
     5) Invoices
     6) Customer Reviews
 
+- Clicking "Start setup" button, should open a full page with current selection header and an "X" in a circle on the top right
+  and for now display some lorem ipsum
