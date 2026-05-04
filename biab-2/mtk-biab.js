@@ -3,6 +3,7 @@ class MtkBiab {
     this.root = root;
     this.config = config || {};
     this.sections = Array.isArray(this.config.sections) ? this.config.sections : [];
+    this.labels = this.config.labels || {};
     this.events = this.config.events || { publish: {}, subscribe: [] };
     this.activeId = this.sections[0] ? this.sections[0].id : "";
     this.isPublishing = false;
@@ -16,12 +17,13 @@ class MtkBiab {
     this._bind();
     this._publish(this.events.publish.ready || "mtk-biab:ready", {
       component: this.config.component || "mtk-biab",
-      version: this.config.version || "1.0.0"
+      version: this.config.version || "1.0.3"
     });
   }
 
   _subscribe() {
     const list = Array.isArray(this.events.subscribe) ? this.events.subscribe : [];
+
     list.forEach((eventName) => {
       if (window.wc && typeof window.wc.subscribe === "function") {
         window.wc.subscribe(eventName, this.onMessage);
@@ -36,11 +38,11 @@ class MtkBiab {
       this._selectSection(data.sectionId);
     }
 
-    if (eventName === "4-mtk-biab:open-setup") {
+    if (eventName === "4-mtk-biab:setup-open") {
       this._openSetup();
     }
 
-    if (eventName === "4-mtk-biab:close-setup") {
+    if (eventName === "4-mtk-biab:setup-close") {
       this._closeSetup();
     }
   }
@@ -62,37 +64,38 @@ class MtkBiab {
   }
 
   _render() {
-    const brand = this.config.brand || {};
     const active = this._getActiveSection();
 
     this.root.innerHTML = `
       <section class="mtk-biab__page" aria-labelledby="mtk-biab-title">
         <header class="mtk-biab__hero">
-          <h1 class="mtk-biab__title" id="mtk-biab-title">${this._escape(brand.title || "Business in a Box")}</h1>
-          <p class="mtk-biab__subtitle">${this._escape(brand.subtitle || "")}</p>
+          <h1 class="mtk-biab__title" id="mtk-biab-title">${this._escape(this.labels.pageTitle || "Business in a Box")}</h1>
+          <p class="mtk-biab__subtitle">${this._escape(this.labels.pageSubtitle || "")}</p>
+
           <button class="mtk-biab__mobile-toggle" type="button" aria-expanded="false" data-action="toggle-menu">
             <span class="material-icons" aria-hidden="true">menu</span>
-            <span>${this._escape(brand.mobileMenuLabel || "Menu")}</span>
+            <span>${this._escape(this.labels.menu || "Menu")}</span>
           </button>
         </header>
 
         <div class="mtk-biab__layout">
           <aside class="mtk-biab__sidebar" aria-label="Business in a Box navigation">
             <nav class="mtk-biab__nav">
-              ${this.sections.map((section) => this._navButton(section)).join("")}
+              ${this.sections.map((section) => this._renderNavButton(section)).join("")}
             </nav>
           </aside>
 
           <main class="mtk-biab__main">
-            ${this._panel(active)}
+            ${this._renderPanel(active)}
           </main>
         </div>
       </section>
     `;
   }
 
-  _navButton(section) {
+  _renderNavButton(section) {
     const isActive = section.id === this.activeId;
+
     return `
       <button
         class="mtk-biab__nav-btn${isActive ? " is-active" : ""}"
@@ -107,18 +110,19 @@ class MtkBiab {
     `;
   }
 
-  _panel(section) {
-    const brand = this.config.brand || {};
+  _renderPanel(section) {
     const safeSection = section || {};
+
     return `
       <article class="mtk-biab__panel" aria-live="polite">
-        <p class="mtk-biab__eyebrow">${this._escape(safeSection.eyebrow || brand.eyebrow || "")}</p>
+        <p class="mtk-biab__eyebrow">${this._escape(safeSection.eyebrow || "")}</p>
         <h2 class="mtk-biab__panel-title">${this._escape(safeSection.title || safeSection.label || "")}</h2>
         <p class="mtk-biab__description">${this._escape(safeSection.description || "")}</p>
         <p class="mtk-biab__body">${this._escape(safeSection.body || "")}</p>
+
         <button class="mtk-biab__start-btn" type="button" data-action="open-setup">
           <span class="material-icons" aria-hidden="true">rocket_launch</span>
-          <span>${this._escape(brand.startSetupLabel || "Start setup")}</span>
+          <span>${this._escape(this.labels.startSetup || "Start setup")}</span>
         </button>
       </article>
     `;
@@ -168,7 +172,7 @@ class MtkBiab {
     this.root.classList.remove("is-menu-open");
     this._render();
 
-    this._publish(this.events.publish.navSelect || "mtk-biab:nav-select", {
+    this._publish(this.events.publish.select || "mtk-biab:select", {
       sectionId: this.activeId,
       section: this._getActiveSection()
     });
@@ -176,8 +180,7 @@ class MtkBiab {
 
   _openSetup() {
     const section = this._getActiveSection();
-    const brand = this.config.brand || {};
-    const body = Array.isArray(brand.setupBody) ? brand.setupBody : [];
+    const lorem = Array.isArray(this.config.setupLorem) ? this.config.setupLorem : [];
 
     this._closeSetup();
 
@@ -186,24 +189,28 @@ class MtkBiab {
     overlay.setAttribute("role", "dialog");
     overlay.setAttribute("aria-modal", "true");
     overlay.setAttribute("aria-labelledby", "mtk-biab-setup-title");
+
     overlay.innerHTML = `
       <header class="mtk-biab__setup-header">
         <div>
-          <p class="mtk-biab__setup-kicker">${this._escape(brand.setupEyebrow || "Current selection")}</p>
+          <p class="mtk-biab__setup-kicker">${this._escape(this.labels.currentSelection || "Current selection")}</p>
           <h2 class="mtk-biab__setup-title" id="mtk-biab-setup-title">${this._escape(section.title || section.label || "")}</h2>
         </div>
-        <button class="mtk-biab__setup-close" type="button" data-action="close-setup" aria-label="${this._escape(brand.closeLabel || "Close setup")}">
+
+        <button class="mtk-biab__setup-close" type="button" data-action="close-setup" aria-label="${this._escape(this.labels.closeSetup || "Close setup")}">
           ×
         </button>
       </header>
+
       <div class="mtk-biab__setup-body">
         <div class="mtk-biab__setup-card">
-          ${body.map((paragraph) => `<p>${this._escape(paragraph)}</p>`).join("")}
+          ${lorem.map((paragraph) => `<p>${this._escape(paragraph)}</p>`).join("")}
         </div>
       </div>
     `;
 
     this.root.appendChild(overlay);
+
     const closeButton = overlay.querySelector(".mtk-biab__setup-close");
     if (closeButton) closeButton.focus();
 
@@ -240,29 +247,34 @@ class MtkBiab {
   static initWhenReady() {
     const start = () => {
       const root = document.querySelector("mtk-biab.mtk-biab");
-      if (!root || root.dataset.mtkBiabReady === "true") return false;
+
+      if (!root || root.dataset.mtkBiabReady === "true") {
+        return false;
+      }
 
       root.dataset.mtkBiabReady = "true";
       new MtkBiab(root, window.MTK_BIAB_CONFIG || {});
       return true;
     };
 
-    if (start()) return;
+    if (start()) {
+      return;
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", start, { once: true });
+    }
 
     const observer = new MutationObserver(() => {
-      if (start()) observer.disconnect();
+      if (start()) {
+        observer.disconnect();
+      }
     });
 
     observer.observe(document.documentElement, {
       childList: true,
       subtree: true
     });
-
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", start, { once: true });
-    } else {
-      start();
-    }
   }
 }
 
