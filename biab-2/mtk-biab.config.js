@@ -1,7 +1,6 @@
 window.MTK_BIAB_CONFIG = {
   component: "mtk-biab",
-  version: "1.0.8",
-
+  version: "1.0.9",
   labels: {
     pageTitle: "Business in a Box",
     pageSubtitle: "Launch, manage, and grow your business from one simple dashboard.",
@@ -9,7 +8,6 @@ window.MTK_BIAB_CONFIG = {
     currentSelection: "Current selection",
     closeSetup: "Close setup"
   },
-
   events: {
     publish: {
       ready: "mtk-biab:ready",
@@ -24,13 +22,6 @@ window.MTK_BIAB_CONFIG = {
       "4-mtk-biab:setup-close"
     ]
   },
-
-  setupLorem: [
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    "Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue.",
-    "Proin porttitor, orci nec nonummy molestie, enim est eleifend mi."
-  ],
-
   sections: [
     {
       id: "introduction",
@@ -75,12 +66,12 @@ window.MTK_BIAB_CONFIG = {
         { id: "card-3", label: "Business Card 3", image: "img/b-card/card-3.png" }
       ],
       cardFields: [
-        { id: "businessName", label: "Business name", type: "text", value: "NALA Locksmith" },
-        { id: "contactName", label: "Contact name", type: "text", value: "Mike Mason" },
-        { id: "phone", label: "Phone", type: "tel", value: "(555) 123-4567" },
-        { id: "email", label: "Email", type: "email", value: "info@example.com" },
-        { id: "website", label: "Website", type: "url", value: "www.example.com" },
-        { id: "serviceArea", label: "Service area", type: "text", value: "New Jersey" }
+        { id: "businessName", label: "Business name", type: "text", value: "" },
+        { id: "contactName", label: "Contact name", type: "text", value: "" },
+        { id: "phone", label: "Phone", type: "tel", value: "" },
+        { id: "email", label: "Email", type: "email", value: "" },
+        { id: "website", label: "Website", type: "url", value: "" },
+        { id: "serviceArea", label: "Service area", type: "text", value: "" }
       ]
     },
     {
@@ -93,7 +84,6 @@ window.MTK_BIAB_CONFIG = {
       body: "Use the invoice table to review and manage invoices.",
       viewType: "invoices",
       hideStartSetup: true,
-      invoiceHeading: "Status",
       newInvoiceLabel: "New Invoice",
       invoices: [
         { id: "INV-1005", date: "2026-05-05", client: "Maria Garcia", service: "Deadbolt installation", amount: 265.00, status: "Open" },
@@ -122,5 +112,23 @@ window.MTK_BIAB_CONFIG = {
         { id: "REV-1005", rating: 5, date: "2026-05-05", notes: "Very helpful and explained everything before starting the job." }
       ]
     }
-  ]
+  ],
+  invoiceForm: {
+    fields: [
+      { id: "businessName", label: "Business Name", type: "text", sample: "Example: ABC Locksmith Services" },
+      { id: "invoiceNumber", label: "Invoice #", type: "text", sample: "Example: INV-1001" },
+      { id: "businessPhone", label: "Business Phone", type: "tel", sample: "Example: (555) 555-5555" },
+      { id: "invoiceDate", label: "Invoice Date", type: "date", sample: "Example: 2026-04-29" },
+      { id: "customerName", label: "Customer Name", type: "text", sample: "Example: Jane Smith" },
+      { id: "customerPhone", label: "Customer Phone", type: "tel", sample: "Example: (555) 123-4567" },
+      { id: "serviceAddress", label: "Service Address", type: "text", sample: "Example: 123 Main Street, Tampa, FL" },
+      { id: "serviceType", label: "Service Type", type: "select", sample: "Example: Lockout Service" },
+      { id: "serviceFee", label: "Service Fee", type: "number", sample: "Example: 95" },
+      { id: "partsMaterials", label: "Parts / Materials", type: "number", sample: "Example: 25" },
+      { id: "emergencyFee", label: "Emergency Fee", type: "number", sample: "Example: 50" },
+      { id: "discount", label: "Discount", type: "number", sample: "Example: 10" },
+      { id: "taxRate", label: "Tax Rate %", type: "number", sample: "Example: 6.625" },
+      { id: "notes", label: "Notes", type: "textarea", sample: "Example: Rekeyed front door lock and tested keys." }
+    ]
+  }
 };
