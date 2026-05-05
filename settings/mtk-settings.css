@@ -9,7 +9,7 @@
     box-sizing: border-box; }
   .mtk-settings__shell {
     width: 100%;
-    max-width: 1120px;
+    max-width: 1280px;
     margin: 0 auto;
     padding: 24px; }
   .mtk-settings__header {
@@ -32,47 +32,62 @@
     font-weight: 700;
     line-height: 1.2; }
   .mtk-settings__layout {
-    display: grid;
-    grid-template-columns: 280px 1fr;
+    display: block;
     min-height: 520px;
     border: 1px solid #e5e7eb;
     background: #ffffff;
     box-shadow: 0 18px 45px rgba(17, 24, 39, 0.08); }
   .mtk-settings__tabs {
     display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 18px;
-    border-right: 1px solid #e5e7eb;
-    background: #f9fafb; }
-  .mtk-settings__tab {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0;
     width: 100%;
-    display: flex;
+    padding: 0 18px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f9fafb;
+    overflow-x: auto; }
+  .mtk-settings__tab {
+    min-width: max-content;
+    min-height: 58px;
+    display: inline-flex;
     align-items: center;
-    justify-content: flex-start;
-    min-height: 48px;
-    padding: 12px 14px;
+    justify-content: center;
+    gap: 9px;
+    padding: 0 22px;
     border: 0;
-    border-left: 4px solid transparent;
+    border-bottom: 4px solid transparent;
     background: transparent;
     color: #374151;
     cursor: pointer;
     font: inherit;
-    font-weight: 700;
-    text-align: left;
-    transition: background 160ms ease, color 160ms ease, border-color 160ms ease; }
+    font-weight: 800;
+    text-align: center;
+    transition: background 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease; }
   .mtk-settings__tab:hover {
     background: #eef2ff;
     color: #111827; }
+  .mtk-settings__tab:active {
+    transform: translateY(1px); }
   .mtk-settings__tab:focus-visible {
     outline: 3px solid rgba(169, 130, 17, 0.35);
-    outline-offset: 2px; }
+    outline-offset: -3px; }
   .mtk-settings__tab[aria-selected="true"] {
-    border-left-color: #a98211;
+    border-bottom-color: #a98211;
     background: #fff8e1;
     color: #111827; }
+  .mtk-settings__tab-icon {
+    font-family: "Material Icons", "Material Symbols Outlined", sans-serif;
+    font-size: 1.25rem;
+    font-weight: normal;
+    line-height: 1; }
+  .mtk-settings__tab-label {
+    white-space: nowrap; }
   .mtk-settings__panel {
-    padding: 28px; }
+    width: 100%;
+    padding: 32px; }
+  .mtk-settings__panel--animate {
+    animation: mtk-settings-panel-in 180ms ease-out both; }
   .mtk-settings__panel:focus {
     outline: none; }
   .mtk-settings__panel-header {
@@ -83,7 +98,7 @@
     font-size: 1.45rem;
     line-height: 1.2; }
   .mtk-settings__panel-description {
-    max-width: 640px;
+    max-width: 760px;
     margin: 0;
     color: #6b7280;
     line-height: 1.6; }
@@ -92,7 +107,7 @@
   .mtk-settings__grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 22px 18px; }
+    gap: 22px 24px; }
   .mtk-settings__field {
     min-width: 0; }
   .mtk-settings__field--full, .mtk-settings__checkbox-card {
@@ -204,6 +219,19 @@
     background: #f9fafb;
     color: #4b5563;
     line-height: 1.6; }
+
+@keyframes mtk-settings-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px); }
+  to {
+    opacity: 1;
+    transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) {
+    .mtk-settings__panel--animate {
+      animation: none; }
+    .mtk-settings__tab, .mtk-settings__button, .mtk-settings__input, .mtk-settings__textarea {
+      transition: none; } }
   @media (max-width: 960px) {
     .mtk-settings__checkbox-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -212,23 +240,17 @@
       padding: 16px; }
     .mtk-settings__title {
       font-size: 1.55rem; }
-    .mtk-settings__layout {
-      grid-template-columns: 1fr; }
     .mtk-settings__tabs {
-      flex-direction: row;
-      overflow-x: auto;
-      border-right: 0;
-      border-bottom: 1px solid #e5e7eb; }
+      padding: 0 8px; }
     .mtk-settings__tab {
-      min-width: max-content;
-      border-left: 0;
-      border-bottom: 4px solid transparent; }
-    .mtk-settings__tab[aria-selected="true"] {
-      border-bottom-color: #a98211; }
+      min-height: 52px;
+      padding: 0 16px;
+      font-size: 0.95rem; }
     .mtk-settings__panel {
       padding: 20px; }
     .mtk-settings__grid {
-      grid-template-columns: 1fr; }
+      grid-template-columns: 1fr;
+      gap: 18px; }
     .mtk-settings__checkbox-card {
       padding: 22px 18px; }
     .mtk-settings__checkbox-title {

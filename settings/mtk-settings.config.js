@@ -1,9 +1,12 @@
 /* mtk-settings.config.js */
 window.mtkSettingsConfig = {
+  title: "Profile & Settings",
+  eyebrow: "Account Management",
   tabs: [
     {
       id: "privacy",
       label: "Privacy",
+      icon: "lock",
       eyebrow: "Internal communications only",
       title: "Privacy Settings",
       description: "Manage contact details used only for internal communications.",
@@ -59,6 +62,7 @@ window.mtkSettingsConfig = {
     {
       id: "business",
       label: "Business Information",
+      icon: "business",
       eyebrow: "Business profile",
       title: "Business Information",
       description: "Manage the public and legal details for your business.",
@@ -130,6 +134,7 @@ window.mtkSettingsConfig = {
     {
       id: "services",
       label: "Services Offered",
+      icon: "handyman",
       eyebrow: "Service coverage",
       title: "Services Offered",
       description: "Manage your service areas and launch services.",
