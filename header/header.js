@@ -48,6 +48,7 @@ $(document).on("click", "#header-dd-client", function(e) {
         var message = (window.i18n && typeof window.i18n.t === "function")
             ? window.i18n.t("nav.businessAccessOnly")
             : "Business in a Box is only available for users with Business access.";
+
         if (window.MTKMsgs && typeof MTKMsgs.show === "function") {
             MTKMsgs.show({
                 type: "warning",
@@ -72,6 +73,8 @@ $(document).on("click", "#header-dd-client", function(e) {
 
     if (window.location.hash !== "#biab") {
         window.location.hash = "biab";
+    } else if (window.wc && wc.pages && typeof wc.pages.show === "function") {
+        wc.pages.show("biab");
     } else {
         window.dispatchEvent(new HashChangeEvent("hashchange"));
     }
@@ -253,7 +256,7 @@ function toggleNavbar() {
     };
 
     function restore() {
-        var page = (history.state && history.state.mtkPage) || 'home';
+        var page = (history.state && history.state.mtkPage) || (window.location.hash || '').replace(/^#\/?/, '') || 'home';
         var id   = pageToHeaderId[page];
         if (id) headerSelect(id);
     }
