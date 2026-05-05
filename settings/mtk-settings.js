@@ -1,386 +1,390 @@
 /* mtk-settings.js */
-class MTKSettings {
-  constructor(root, config = window.mtkSettingsConfig) {
-    this.root = root;
-    this.config = config || { tabs: [] };
-    this.activeTabId = this.config.tabs?.[0]?.id || "privacy";
-    this.formState = {};
+(function mtkSettingsModule(window, document) {
+  "use strict";
 
-    this.tabsEl = this.root.querySelector(".mtk-settings__tabs");
-    this.panelEl = this.root.querySelector(".mtk-settings__panel");
+  class MTKSettings {
+    constructor(root, config = window.mtkSettingsConfig) {
+      this.root = root;
+      this.config = config || { tabs: [] };
+      this.activeTabId = this.config.tabs?.[0]?.id || "privacy";
+      this.formState = {};
 
-    this.onMessage = this.onMessage.bind(this);
+      this.tabsEl = this.root.querySelector(".mtk-settings__tabs");
+      this.panelEl = this.root.querySelector(".mtk-settings__panel");
 
-    this.init();
-  }
+      this.onMessage = this.onMessage.bind(this);
 
-  init() {
-    this.cacheInitialValues();
-    this.renderTabs();
-    this.renderPanel();
-
-    if (window.wc && typeof window.wc.subscribe === "function") {
-      window.wc.subscribe("4-mtk-settings", this.onMessage);
+      this.init();
     }
-  }
 
-  cacheInitialValues() {
-    (this.config.tabs || []).forEach((tab) => {
-      this.formState[tab.id] = {};
+    init() {
+      this.cacheInitialValues();
+      this.renderTabs();
+      this.renderPanel();
 
-      if (!Array.isArray(tab.fields)) {
+      if (window.wc && typeof window.wc.subscribe === "function") {
+        window.wc.subscribe("4-mtk-settings", this.onMessage);
+      }
+    }
+
+    cacheInitialValues() {
+      (this.config.tabs || []).forEach((tab) => {
+        this.formState[tab.id] = {};
+
+        if (!Array.isArray(tab.fields)) {
+          return;
+        }
+
+        tab.fields.forEach((field) => {
+          if (field.type === "checkboxGroup") {
+            this.formState[tab.id][field.id] = (field.options || [])
+              .filter((option) => option.checked)
+              .map((option) => option.value);
+            return;
+          }
+
+          this.formState[tab.id][field.id] = field.value || "";
+        });
+      });
+    }
+
+    onMessage(message = {}) {
+      if (!message || typeof message !== "object") {
         return;
       }
 
-      tab.fields.forEach((field) => {
-        if (field.type === "checkboxGroup") {
-          this.formState[tab.id][field.id] = (field.options || [])
-            .filter((option) => option.checked)
-            .map((option) => option.value);
-          return;
+      if (message.type === "select-tab" && message.tabId) {
+        this.setActiveTab(message.tabId);
+      }
+
+      if (message.type === "set-values" && message.tabId && message.values) {
+        this.formState[message.tabId] = {
+          ...(this.formState[message.tabId] || {}),
+          ...message.values
+        };
+
+        if (this.activeTabId === message.tabId) {
+          this.renderPanel();
         }
-
-        this.formState[tab.id][field.id] = field.value || "";
-      });
-    });
-  }
-
-  onMessage(message = {}) {
-    if (!message || typeof message !== "object") {
-      return;
-    }
-
-    if (message.type === "select-tab" && message.tabId) {
-      this.setActiveTab(message.tabId);
-    }
-
-    if (message.type === "set-values" && message.tabId && message.values) {
-      this.formState[message.tabId] = {
-        ...(this.formState[message.tabId] || {}),
-        ...message.values
-      };
-
-      if (this.activeTabId === message.tabId) {
-        this.renderPanel();
       }
     }
-  }
 
-  renderTabs() {
-    this.tabsEl.innerHTML = "";
+    renderTabs() {
+      this.tabsEl.innerHTML = "";
 
-    (this.config.tabs || []).forEach((tab) => {
-      const button = document.createElement("button");
-      button.className = "mtk-settings__tab";
-      button.type = "button";
-      button.id = `mtk-settings-tab-${tab.id}`;
-      button.setAttribute("role", "tab");
-      button.setAttribute("aria-selected", String(tab.id === this.activeTabId));
-      button.setAttribute("aria-controls", `mtk-settings-panel-${tab.id}`);
-      button.textContent = tab.label;
+      (this.config.tabs || []).forEach((tab) => {
+        const button = document.createElement("button");
+        button.className = "mtk-settings__tab";
+        button.type = "button";
+        button.id = `mtk-settings-tab-${tab.id}`;
+        button.setAttribute("role", "tab");
+        button.setAttribute("aria-selected", String(tab.id === this.activeTabId));
+        button.setAttribute("aria-controls", `mtk-settings-panel-${tab.id}`);
+        button.textContent = tab.label;
 
-      button.addEventListener("click", () => this.setActiveTab(tab.id));
+        button.addEventListener("click", () => this.setActiveTab(tab.id));
 
-      this.tabsEl.appendChild(button);
-    });
-  }
-
-  setActiveTab(tabId) {
-    const tabExists = (this.config.tabs || []).some((tab) => tab.id === tabId);
-
-    if (!tabExists) {
-      return;
-    }
-
-    this.activeTabId = tabId;
-    this.renderTabs();
-    this.renderPanel();
-    this.publish("mtk-settings:tab-changed", { tabId });
-  }
-
-  renderPanel() {
-    const tab = (this.config.tabs || []).find((item) => item.id === this.activeTabId);
-
-    if (!tab) {
-      this.panelEl.innerHTML = "";
-      return;
-    }
-
-    this.panelEl.id = `mtk-settings-panel-${tab.id}`;
-    this.panelEl.setAttribute("role", "tabpanel");
-    this.panelEl.setAttribute("aria-labelledby", `mtk-settings-tab-${tab.id}`);
-
-    const header = `
-      <div class="mtk-settings__panel-header">
-        <p class="mtk-settings__eyebrow">${this.escapeHTML(tab.eyebrow || "")}</p>
-        <h3 class="mtk-settings__panel-title">${this.escapeHTML(tab.title || tab.label)}</h3>
-        <p class="mtk-settings__panel-description">${this.escapeHTML(tab.description || "")}</p>
-      </div>
-    `;
-
-    if (Array.isArray(tab.fields) && tab.fields.length) {
-      this.panelEl.innerHTML = header + this.renderForm(tab);
-      this.bindForm(tab);
-      return;
-    }
-
-    this.panelEl.innerHTML = `
-      ${header}
-      <div class="mtk-settings__empty">
-        This section is ready for fields, cards, or controls.
-      </div>
-    `;
-  }
-
-  renderForm(tab) {
-    const fields = tab.fields.map((field) => this.renderField(tab, field)).join("");
-
-    const actions = (tab.actions || []).map((action) => {
-      const variant = action.variant === "primary" ? "primary" : "secondary";
-
-      return `
-        <button
-          class="mtk-settings__button mtk-settings__button--${variant}"
-          type="button"
-          data-action-id="${this.escapeHTML(action.id)}"
-          data-event="${this.escapeHTML(action.event)}"
-        >
-          ${this.escapeHTML(action.label)}
-        </button>
-      `;
-    }).join("");
-
-    return `
-      <form class="mtk-settings__form" novalidate>
-        <div class="mtk-settings__grid">
-          ${fields}
-        </div>
-        <div class="mtk-settings__actions">
-          ${actions}
-        </div>
-      </form>
-    `;
-  }
-
-  renderField(tab, field) {
-    if (field.type === "textarea") {
-      return this.renderTextarea(tab, field);
-    }
-
-    if (field.type === "checkboxGroup") {
-      return this.renderCheckboxGroup(tab, field);
-    }
-
-    return this.renderInput(tab, field);
-  }
-
-  renderInput(tab, field) {
-    const state = this.formState[tab.id] || {};
-    const value = state[field.id] || "";
-    const required = field.required ? "required" : "";
-    const requiredMark = field.required ? " *" : "";
-    const placeholder = field.placeholder || " ";
-    const fullWidthClass = field.fullWidth ? " mtk-settings__field--full" : "";
-
-    return `
-      <div class="mtk-settings__field${fullWidthClass}">
-        <label class="mtk-settings__field-label" for="mtk-settings-${tab.id}-${field.id}">
-          ${this.escapeHTML(field.label)}${requiredMark}
-        </label>
-        <input
-          class="mtk-settings__input"
-          id="mtk-settings-${tab.id}-${field.id}"
-          name="${this.escapeHTML(field.id)}"
-          type="${this.escapeHTML(field.type || "text")}"
-          value="${this.escapeHTML(value)}"
-          autocomplete="${this.escapeHTML(field.autocomplete || "off")}"
-          placeholder="${this.escapeHTML(placeholder)}"
-          ${required}
-        />
-      </div>
-    `;
-  }
-
-  renderTextarea(tab, field) {
-    const state = this.formState[tab.id] || {};
-    const value = state[field.id] || "";
-    const required = field.required ? "required" : "";
-    const requiredMark = field.required ? " *" : "";
-    const rows = field.rows || 4;
-    const fullWidthClass = field.fullWidth ? " mtk-settings__field--full" : "";
-
-    return `
-      <div class="mtk-settings__field${fullWidthClass}">
-        <label class="mtk-settings__field-label" for="mtk-settings-${tab.id}-${field.id}">
-          ${this.escapeHTML(field.label)}${requiredMark}
-        </label>
-        <textarea
-          class="mtk-settings__textarea"
-          id="mtk-settings-${tab.id}-${field.id}"
-          name="${this.escapeHTML(field.id)}"
-          rows="${this.escapeHTML(rows)}"
-          placeholder="${this.escapeHTML(field.placeholder || "")}"
-          ${required}
-        >${this.escapeHTML(value)}</textarea>
-      </div>
-    `;
-  }
-
-  renderCheckboxGroup(tab, field) {
-    const state = this.formState[tab.id] || {};
-    const selectedValues = Array.isArray(state[field.id]) ? state[field.id] : [];
-    const requiredMark = field.required ? " *" : "";
-    const fullWidthClass = field.fullWidth ? " mtk-settings__field--full" : "";
-
-    const options = (field.options || []).map((option) => {
-      const checked = selectedValues.includes(option.value) ? "checked" : "";
-
-      return `
-        <label class="mtk-settings__check">
-          <input
-            class="mtk-settings__checkbox"
-            type="checkbox"
-            name="${this.escapeHTML(field.id)}"
-            value="${this.escapeHTML(option.value)}"
-            ${checked}
-          />
-          <span class="mtk-settings__check-label">${this.escapeHTML(option.label)}</span>
-        </label>
-      `;
-    }).join("");
-
-    return `
-      <fieldset class="mtk-settings__checkbox-card${fullWidthClass}" data-checkbox-group="${this.escapeHTML(field.id)}">
-        <legend class="mtk-settings__checkbox-title">
-          ${this.escapeHTML(field.label)}${requiredMark}
-        </legend>
-        <div class="mtk-settings__checkbox-grid">
-          ${options}
-        </div>
-      </fieldset>
-    `;
-  }
-
-  bindForm(tab) {
-    const form = this.panelEl.querySelector(".mtk-settings__form");
-
-    if (!form) {
-      return;
-    }
-
-    form.querySelectorAll(".mtk-settings__input, .mtk-settings__textarea").forEach((input) => {
-      input.addEventListener("input", () => {
-        this.formState[tab.id] = {
-          ...(this.formState[tab.id] || {}),
-          [input.name]: input.value
-        };
+        this.tabsEl.appendChild(button);
       });
-    });
+    }
 
-    form.querySelectorAll("[data-checkbox-group]").forEach((group) => {
-      const fieldId = group.getAttribute("data-checkbox-group");
+    setActiveTab(tabId) {
+      const tabExists = (this.config.tabs || []).some((tab) => tab.id === tabId);
 
-      group.querySelectorAll(".mtk-settings__checkbox").forEach((checkbox) => {
-        checkbox.addEventListener("change", () => {
+      if (!tabExists) {
+        return;
+      }
+
+      this.activeTabId = tabId;
+      this.renderTabs();
+      this.renderPanel();
+      this.publish("mtk-settings:tab-changed", { tabId });
+    }
+
+    renderPanel() {
+      const tab = (this.config.tabs || []).find((item) => item.id === this.activeTabId);
+
+      if (!tab) {
+        this.panelEl.innerHTML = "";
+        return;
+      }
+
+      this.panelEl.id = `mtk-settings-panel-${tab.id}`;
+      this.panelEl.setAttribute("role", "tabpanel");
+      this.panelEl.setAttribute("aria-labelledby", `mtk-settings-tab-${tab.id}`);
+
+      const header = `
+        <div class="mtk-settings__panel-header">
+          <p class="mtk-settings__eyebrow">${this.escapeHTML(tab.eyebrow || "")}</p>
+          <h3 class="mtk-settings__panel-title">${this.escapeHTML(tab.title || tab.label)}</h3>
+          <p class="mtk-settings__panel-description">${this.escapeHTML(tab.description || "")}</p>
+        </div>
+      `;
+
+      if (Array.isArray(tab.fields) && tab.fields.length) {
+        this.panelEl.innerHTML = header + this.renderForm(tab);
+        this.bindForm(tab);
+        return;
+      }
+
+      this.panelEl.innerHTML = `
+        ${header}
+        <div class="mtk-settings__empty">
+          This section is ready for fields, cards, or controls.
+        </div>
+      `;
+    }
+
+    renderForm(tab) {
+      const fields = tab.fields.map((field) => this.renderField(tab, field)).join("");
+
+      const actions = (tab.actions || []).map((action) => {
+        const variant = action.variant === "primary" ? "primary" : "secondary";
+
+        return `
+          <button
+            class="mtk-settings__button mtk-settings__button--${variant}"
+            type="button"
+            data-action-id="${this.escapeHTML(action.id)}"
+            data-event="${this.escapeHTML(action.event)}"
+          >
+            ${this.escapeHTML(action.label)}
+          </button>
+        `;
+      }).join("");
+
+      return `
+        <form class="mtk-settings__form" novalidate>
+          <div class="mtk-settings__grid">
+            ${fields}
+          </div>
+          <div class="mtk-settings__actions">
+            ${actions}
+          </div>
+        </form>
+      `;
+    }
+
+    renderField(tab, field) {
+      if (field.type === "textarea") {
+        return this.renderTextarea(tab, field);
+      }
+
+      if (field.type === "checkboxGroup") {
+        return this.renderCheckboxGroup(tab, field);
+      }
+
+      return this.renderInput(tab, field);
+    }
+
+    renderInput(tab, field) {
+      const state = this.formState[tab.id] || {};
+      const value = state[field.id] || "";
+      const required = field.required ? "required" : "";
+      const requiredMark = field.required ? " *" : "";
+      const placeholder = field.placeholder || " ";
+      const fullWidthClass = field.fullWidth ? " mtk-settings__field--full" : "";
+
+      return `
+        <div class="mtk-settings__field${fullWidthClass}">
+          <label class="mtk-settings__field-label" for="mtk-settings-${tab.id}-${field.id}">
+            ${this.escapeHTML(field.label)}${requiredMark}
+          </label>
+          <input
+            class="mtk-settings__input"
+            id="mtk-settings-${tab.id}-${field.id}"
+            name="${this.escapeHTML(field.id)}"
+            type="${this.escapeHTML(field.type || "text")}"
+            value="${this.escapeHTML(value)}"
+            autocomplete="${this.escapeHTML(field.autocomplete || "off")}"
+            placeholder="${this.escapeHTML(placeholder)}"
+            ${required}
+          />
+        </div>
+      `;
+    }
+
+    renderTextarea(tab, field) {
+      const state = this.formState[tab.id] || {};
+      const value = state[field.id] || "";
+      const required = field.required ? "required" : "";
+      const requiredMark = field.required ? " *" : "";
+      const rows = field.rows || 4;
+      const fullWidthClass = field.fullWidth ? " mtk-settings__field--full" : "";
+
+      return `
+        <div class="mtk-settings__field${fullWidthClass}">
+          <label class="mtk-settings__field-label" for="mtk-settings-${tab.id}-${field.id}">
+            ${this.escapeHTML(field.label)}${requiredMark}
+          </label>
+          <textarea
+            class="mtk-settings__textarea"
+            id="mtk-settings-${tab.id}-${field.id}"
+            name="${this.escapeHTML(field.id)}"
+            rows="${this.escapeHTML(rows)}"
+            placeholder="${this.escapeHTML(field.placeholder || "")}"
+            ${required}
+          >${this.escapeHTML(value)}</textarea>
+        </div>
+      `;
+    }
+
+    renderCheckboxGroup(tab, field) {
+      const state = this.formState[tab.id] || {};
+      const selectedValues = Array.isArray(state[field.id]) ? state[field.id] : [];
+      const requiredMark = field.required ? " *" : "";
+      const fullWidthClass = field.fullWidth ? " mtk-settings__field--full" : "";
+
+      const options = (field.options || []).map((option) => {
+        const checked = selectedValues.includes(option.value) ? "checked" : "";
+
+        return `
+          <label class="mtk-settings__check">
+            <input
+              class="mtk-settings__checkbox"
+              type="checkbox"
+              name="${this.escapeHTML(field.id)}"
+              value="${this.escapeHTML(option.value)}"
+              ${checked}
+            />
+            <span class="mtk-settings__check-label">${this.escapeHTML(option.label)}</span>
+          </label>
+        `;
+      }).join("");
+
+      return `
+        <fieldset class="mtk-settings__checkbox-card${fullWidthClass}" data-checkbox-group="${this.escapeHTML(field.id)}">
+          <legend class="mtk-settings__checkbox-title">
+            ${this.escapeHTML(field.label)}${requiredMark}
+          </legend>
+          <div class="mtk-settings__checkbox-grid">
+            ${options}
+          </div>
+        </fieldset>
+      `;
+    }
+
+    bindForm(tab) {
+      const form = this.panelEl.querySelector(".mtk-settings__form");
+
+      if (!form) {
+        return;
+      }
+
+      form.querySelectorAll(".mtk-settings__input, .mtk-settings__textarea").forEach((input) => {
+        input.addEventListener("input", () => {
           this.formState[tab.id] = {
             ...(this.formState[tab.id] || {}),
-            [fieldId]: Array.from(group.querySelectorAll(".mtk-settings__checkbox:checked")).map((item) => item.value)
+            [input.name]: input.value
           };
         });
       });
-    });
 
-    form.querySelectorAll("[data-action-id]").forEach((button) => {
-      button.addEventListener("click", () => {
-        const eventName = button.getAttribute("data-event");
-        const actionId = button.getAttribute("data-action-id");
+      form.querySelectorAll("[data-checkbox-group]").forEach((group) => {
+        const fieldId = group.getAttribute("data-checkbox-group");
 
-        if (!this.validateTab(tab, form)) {
-          return;
-        }
-
-        this.publish(eventName, {
-          tabId: tab.id,
-          actionId,
-          values: { ...(this.formState[tab.id] || {}) }
+        group.querySelectorAll(".mtk-settings__checkbox").forEach((checkbox) => {
+          checkbox.addEventListener("change", () => {
+            this.formState[tab.id] = {
+              ...(this.formState[tab.id] || {}),
+              [fieldId]: Array.from(group.querySelectorAll(".mtk-settings__checkbox:checked")).map((item) => item.value)
+            };
+          });
         });
       });
-    });
-  }
 
-  validateTab(tab, form) {
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return false;
+      form.querySelectorAll("[data-action-id]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const eventName = button.getAttribute("data-event");
+          const actionId = button.getAttribute("data-action-id");
+
+          if (!this.validateTab(tab, form)) {
+            return;
+          }
+
+          this.publish(eventName, {
+            tabId: tab.id,
+            actionId,
+            values: { ...(this.formState[tab.id] || {}) }
+          });
+        });
+      });
     }
 
-    const requiredCheckboxGroups = (tab.fields || []).filter((field) => {
-      return field.type === "checkboxGroup" && field.required;
-    });
-
-    for (const field of requiredCheckboxGroups) {
-      const values = this.formState[tab.id]?.[field.id] || [];
-
-      if (!values.length) {
-        const firstCheckbox = form.querySelector(`[data-checkbox-group="${field.id}"] .mtk-settings__checkbox`);
-
-        if (firstCheckbox) {
-          firstCheckbox.focus();
-        }
-
-        this.publish("mtk-settings:validation-error", {
-          tabId: tab.id,
-          fieldId: field.id,
-          message: `${field.label} is required.`
-        });
-
+    validateTab(tab, form) {
+      if (!form.checkValidity()) {
+        form.reportValidity();
         return false;
       }
+
+      const requiredCheckboxGroups = (tab.fields || []).filter((field) => {
+        return field.type === "checkboxGroup" && field.required;
+      });
+
+      for (const field of requiredCheckboxGroups) {
+        const values = this.formState[tab.id]?.[field.id] || [];
+
+        if (!values.length) {
+          const firstCheckbox = form.querySelector(`[data-checkbox-group="${field.id}"] .mtk-settings__checkbox`);
+
+          if (firstCheckbox) {
+            firstCheckbox.focus();
+          }
+
+          this.publish("mtk-settings:validation-error", {
+            tabId: tab.id,
+            fieldId: field.id,
+            message: `${field.label} is required.`
+          });
+
+          return false;
+        }
+      }
+
+      return true;
     }
 
-    return true;
-  }
+    publish(eventName, payload = {}) {
+      const message = {
+        component: "mtk-settings",
+        event: eventName,
+        payload
+      };
 
-  publish(eventName, payload = {}) {
-    const message = {
-      component: "mtk-settings",
-      event: eventName,
-      payload
-    };
+      if (window.wc && typeof window.wc.log === "function") {
+        window.wc.log("mtk-settings publish", message);
+      }
 
-    if (window.wc && typeof window.wc.log === "function") {
-      window.wc.log("mtk-settings publish", message);
+      if (window.wc && typeof window.wc.publish === "function") {
+        window.wc.publish(eventName, message);
+        return;
+      }
+
+      this.root.dispatchEvent(
+        new CustomEvent(eventName, {
+          bubbles: true,
+          detail: message
+        })
+      );
     }
 
-    if (window.wc && typeof window.wc.publish === "function") {
-      window.wc.publish(eventName, message);
-      return;
+    escapeHTML(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
     }
-
-    this.root.dispatchEvent(
-      new CustomEvent(eventName, {
-        bubbles: true,
-        detail: message
-      })
-    );
   }
 
-  escapeHTML(value) {
-    return String(value)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-}
+  window.MTKSettings = MTKSettings;
 
-(function initMTKSettings() {
-  const start = () => {
+  function initMTKSettings() {
     const root = document.querySelector("mtk-settings.mtk-settings");
 
     if (!root) {
-      window.requestAnimationFrame(start);
+      window.requestAnimationFrame(initMTKSettings);
       return;
     }
 
@@ -389,13 +393,13 @@ class MTKSettings {
     }
 
     root.dataset.mtkSettingsReady = "true";
-    new MTKSettings(root);
-  };
+    root.mtkSettings = new window.MTKSettings(root);
+  }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", start, { once: true });
+    document.addEventListener("DOMContentLoaded", initMTKSettings, { once: true });
     return;
   }
 
-  start();
-})();
+  initMTKSettings();
+})(window, document);
