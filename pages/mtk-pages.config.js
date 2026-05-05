@@ -54,7 +54,7 @@ window.app.pages = [
         "cache": "false",
         "page":  "biab",
         "label": "Business in a Box",
-        "url":   "<wc-include href='biab/index.inc.html' />"
+        "url":   "<wc-include href='biab/index.html' />"
     },
     {
         "cache": "false",
