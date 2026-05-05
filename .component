@@ -22,7 +22,7 @@ Data:
   - any and all data must come from mtk-component.config.js file
 
 Restrictions:
-- No inline styles. (All styles in  "*.scss" file)
+- No inline styles. All styles in  "*.scss" file
 - No inline Javascript. (All scripts in "*.js" file)
 - No frameworks.
 - No external libraries.
