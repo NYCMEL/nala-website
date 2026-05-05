@@ -1,298 +1,405 @@
-/**
- * mtk-settings Component
- * Material Design Settings/Profile Component
- */
+/* mtk-settings.js */
+(function mtkSettingsModule(window, document) {
+  "use strict";
 
-if (typeof MtkSettings === 'undefined') {
-    class MtkSettings {
-	constructor(config = null) {
-            this.externalConfig = config;
-            this.config = null;
-            this.elements = {};
-            this.state = {
-		editMode: false,
-		passwordVisible: {
-                    current: false,
-                    new: false,
-                    confirm: false
-		}
+  class MTKSettings {
+    constructor(root, config = window.mtkSettingsConfig) {
+      this.root = root;
+      this.config = config || { tabs: [] };
+      this.activeTabId = this.config.tabs?.[0]?.id || "privacy";
+      this.formState = {};
+
+      this.tabsEl = this.root.querySelector(".mtk-settings__tabs");
+      this.panelEl = this.root.querySelector(".mtk-settings__panel");
+
+      this.onMessage = this.onMessage.bind(this);
+
+      this.init();
+    }
+
+    init() {
+      this.cacheInitialValues();
+      this.renderTabs();
+      this.renderPanel();
+
+      if (window.wc && typeof window.wc.subscribe === "function") {
+        window.wc.subscribe("4-mtk-settings", this.onMessage);
+      }
+    }
+
+    cacheInitialValues() {
+      (this.config.tabs || []).forEach((tab) => {
+        this.formState[tab.id] = {};
+
+        if (!Array.isArray(tab.fields)) {
+          return;
+        }
+
+        tab.fields.forEach((field) => {
+          if (field.type === "checkboxGroup") {
+            this.formState[tab.id][field.id] = (field.options || [])
+              .filter((option) => option.checked)
+              .map((option) => option.value);
+            return;
+          }
+
+          this.formState[tab.id][field.id] = field.value || "";
+        });
+      });
+    }
+
+    onMessage(message = {}) {
+      if (!message || typeof message !== "object") {
+        return;
+      }
+
+      if (message.type === "select-tab" && message.tabId) {
+        this.setActiveTab(message.tabId);
+      }
+
+      if (message.type === "set-values" && message.tabId && message.values) {
+        this.formState[message.tabId] = {
+          ...(this.formState[message.tabId] || {}),
+          ...message.values
+        };
+
+        if (this.activeTabId === message.tabId) {
+          this.renderPanel();
+        }
+      }
+    }
+
+    renderTabs() {
+      this.tabsEl.innerHTML = "";
+
+      (this.config.tabs || []).forEach((tab) => {
+        const button = document.createElement("button");
+        button.className = "mtk-settings__tab";
+        button.type = "button";
+        button.id = `mtk-settings-tab-${tab.id}`;
+        button.setAttribute("role", "tab");
+        button.setAttribute("aria-selected", String(tab.id === this.activeTabId));
+        button.setAttribute("aria-controls", `mtk-settings-panel-${tab.id}`);
+        button.textContent = tab.label;
+
+        button.addEventListener("click", () => this.setActiveTab(tab.id));
+
+        this.tabsEl.appendChild(button);
+      });
+    }
+
+    setActiveTab(tabId) {
+      const tabExists = (this.config.tabs || []).some((tab) => tab.id === tabId);
+
+      if (!tabExists) {
+        return;
+      }
+
+      this.activeTabId = tabId;
+      this.renderTabs();
+      this.renderPanel();
+      this.publish("mtk-settings:tab-changed", { tabId });
+    }
+
+    renderPanel() {
+      const tab = (this.config.tabs || []).find((item) => item.id === this.activeTabId);
+
+      if (!tab) {
+        this.panelEl.innerHTML = "";
+        return;
+      }
+
+      this.panelEl.id = `mtk-settings-panel-${tab.id}`;
+      this.panelEl.setAttribute("role", "tabpanel");
+      this.panelEl.setAttribute("aria-labelledby", `mtk-settings-tab-${tab.id}`);
+
+      const header = `
+        <div class="mtk-settings__panel-header">
+          <p class="mtk-settings__eyebrow">${this.escapeHTML(tab.eyebrow || "")}</p>
+          <h3 class="mtk-settings__panel-title">${this.escapeHTML(tab.title || tab.label)}</h3>
+          <p class="mtk-settings__panel-description">${this.escapeHTML(tab.description || "")}</p>
+        </div>
+      `;
+
+      if (Array.isArray(tab.fields) && tab.fields.length) {
+        this.panelEl.innerHTML = header + this.renderForm(tab);
+        this.bindForm(tab);
+        return;
+      }
+
+      this.panelEl.innerHTML = `
+        ${header}
+        <div class="mtk-settings__empty">
+          This section is ready for fields, cards, or controls.
+        </div>
+      `;
+    }
+
+    renderForm(tab) {
+      const fields = tab.fields.map((field) => this.renderField(tab, field)).join("");
+
+      const actions = (tab.actions || []).map((action) => {
+        const variant = action.variant === "primary" ? "primary" : "secondary";
+
+        return `
+          <button
+            class="mtk-settings__button mtk-settings__button--${variant}"
+            type="button"
+            data-action-id="${this.escapeHTML(action.id)}"
+            data-event="${this.escapeHTML(action.event)}"
+          >
+            ${this.escapeHTML(action.label)}
+          </button>
+        `;
+      }).join("");
+
+      return `
+        <form class="mtk-settings__form" novalidate>
+          <div class="mtk-settings__grid">
+            ${fields}
+          </div>
+          <div class="mtk-settings__actions">
+            ${actions}
+          </div>
+        </form>
+      `;
+    }
+
+    renderField(tab, field) {
+      if (field.type === "textarea") {
+        return this.renderTextarea(tab, field);
+      }
+
+      if (field.type === "checkboxGroup") {
+        return this.renderCheckboxGroup(tab, field);
+      }
+
+      return this.renderInput(tab, field);
+    }
+
+    renderInput(tab, field) {
+      const state = this.formState[tab.id] || {};
+      const value = state[field.id] || "";
+      const required = field.required ? "required" : "";
+      const requiredMark = field.required ? " *" : "";
+      const placeholder = field.placeholder || " ";
+      const fullWidthClass = field.fullWidth ? " mtk-settings__field--full" : "";
+
+      return `
+        <div class="mtk-settings__field${fullWidthClass}">
+          <label class="mtk-settings__field-label" for="mtk-settings-${tab.id}-${field.id}">
+            ${this.escapeHTML(field.label)}${requiredMark}
+          </label>
+          <input
+            class="mtk-settings__input"
+            id="mtk-settings-${tab.id}-${field.id}"
+            name="${this.escapeHTML(field.id)}"
+            type="${this.escapeHTML(field.type || "text")}"
+            value="${this.escapeHTML(value)}"
+            autocomplete="${this.escapeHTML(field.autocomplete || "off")}"
+            placeholder="${this.escapeHTML(placeholder)}"
+            ${required}
+          />
+        </div>
+      `;
+    }
+
+    renderTextarea(tab, field) {
+      const state = this.formState[tab.id] || {};
+      const value = state[field.id] || "";
+      const required = field.required ? "required" : "";
+      const requiredMark = field.required ? " *" : "";
+      const rows = field.rows || 4;
+      const fullWidthClass = field.fullWidth ? " mtk-settings__field--full" : "";
+
+      return `
+        <div class="mtk-settings__field${fullWidthClass}">
+          <label class="mtk-settings__field-label" for="mtk-settings-${tab.id}-${field.id}">
+            ${this.escapeHTML(field.label)}${requiredMark}
+          </label>
+          <textarea
+            class="mtk-settings__textarea"
+            id="mtk-settings-${tab.id}-${field.id}"
+            name="${this.escapeHTML(field.id)}"
+            rows="${this.escapeHTML(rows)}"
+            placeholder="${this.escapeHTML(field.placeholder || "")}"
+            ${required}
+          >${this.escapeHTML(value)}</textarea>
+        </div>
+      `;
+    }
+
+    renderCheckboxGroup(tab, field) {
+      const state = this.formState[tab.id] || {};
+      const selectedValues = Array.isArray(state[field.id]) ? state[field.id] : [];
+      const requiredMark = field.required ? " *" : "";
+      const fullWidthClass = field.fullWidth ? " mtk-settings__field--full" : "";
+
+      const options = (field.options || []).map((option) => {
+        const checked = selectedValues.includes(option.value) ? "checked" : "";
+
+        return `
+          <label class="mtk-settings__check">
+            <input
+              class="mtk-settings__checkbox"
+              type="checkbox"
+              name="${this.escapeHTML(field.id)}"
+              value="${this.escapeHTML(option.value)}"
+              ${checked}
+            />
+            <span class="mtk-settings__check-label">${this.escapeHTML(option.label)}</span>
+          </label>
+        `;
+      }).join("");
+
+      return `
+        <fieldset class="mtk-settings__checkbox-card${fullWidthClass}" data-checkbox-group="${this.escapeHTML(field.id)}">
+          <legend class="mtk-settings__checkbox-title">
+            ${this.escapeHTML(field.label)}${requiredMark}
+          </legend>
+          <div class="mtk-settings__checkbox-grid">
+            ${options}
+          </div>
+        </fieldset>
+      `;
+    }
+
+    bindForm(tab) {
+      const form = this.panelEl.querySelector(".mtk-settings__form");
+
+      if (!form) {
+        return;
+      }
+
+      form.querySelectorAll(".mtk-settings__input, .mtk-settings__textarea").forEach((input) => {
+        input.addEventListener("input", () => {
+          this.formState[tab.id] = {
+            ...(this.formState[tab.id] || {}),
+            [input.name]: input.value
+          };
+        });
+      });
+
+      form.querySelectorAll("[data-checkbox-group]").forEach((group) => {
+        const fieldId = group.getAttribute("data-checkbox-group");
+
+        group.querySelectorAll(".mtk-settings__checkbox").forEach((checkbox) => {
+          checkbox.addEventListener("change", () => {
+            this.formState[tab.id] = {
+              ...(this.formState[tab.id] || {}),
+              [fieldId]: Array.from(group.querySelectorAll(".mtk-settings__checkbox:checked")).map((item) => item.value)
             };
+          });
+        });
+      });
 
-            this.init();
-	}
+      form.querySelectorAll("[data-action-id]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const eventName = button.getAttribute("data-event");
+          const actionId = button.getAttribute("data-action-id");
 
-	async init() {
-            await this.waitForElement();
-            this.loadConfig();
-            this.cacheElements();
-            this.setup();
-            this.subscribeToEvents();
+          if (!this.validateTab(tab, form)) {
+            return;
+          }
 
-            wc.log('mtk-settings component initialized', { config: this.config });
-	}
-
-	waitForElement() {
-            return new Promise((resolve) => {
-		const check = () => {
-                    const el = document.querySelector('mtk-settings.mtk-settings');
-                    if (el) resolve(el);
-                    else requestAnimationFrame(check);
-		};
-		check();
-            });
-	}
-
-	t(key, fallback, vars = {}) {
-	    let text = (window.i18n && typeof window.i18n.t === 'function') ? window.i18n.t(key) : fallback;
-	    if (text === key || text == null) {
-		text = fallback;
-	    }
-	    Object.keys(vars).forEach((name) => {
-		text = String(text).replace(`{${name}}`, vars[name]);
-	    });
-	    return text;
-	}
-
-	/**
-	 * CONFIG LOADING LOGIC
-	 */
-	loadConfig() {
-            if (wc.testing) {
-		// LOCAL → use global config
-		if (typeof window.mtkSettingsConfig !== 'undefined') {
-                    this.config = window.mtkSettingsConfig;
-		} else {
-                    console.error('mtk-settings: window.mtkSettingsConfig not found (local mode)');
-		}
-            } else {
-		// PRODUCTION → use passed config
-		if (this.externalConfig) {
-                    this.config = this.externalConfig;
-		} else {
-                    console.error('mtk-settings: No config passed in production mode');
-		}
-            }
-
-            // Safety fallback
-            if (!this.config) {
-		this.config = {
-                    user: {
-			firstName: '',
-			middleInitial: '',
-			lastName: '',
-			email: '',
-			currentPassword: ''
-                    },
-                    labels: {
-			title: 'Profile Settings',
-			privacyTitle: 'Privacy Settings'
-                    },
-                    validation: {
-			passwordMinLength: 8,
-			passwordRequireUppercase: false,
-			passwordRequireLowercase: false,
-			passwordRequireNumber: false
-                    }
-		};
-            }
-	}
-
-	cacheElements() {
-            const root = document.querySelector('mtk-settings.mtk-settings');
-
-            this.elements = {
-		root,
-		title: root.querySelector('#mtk-settings-title'),
-		fullName: root.querySelector('#mtk-settings-fullname'),
-		email: root.querySelector('#mtk-settings-email'),
-		currentPassword: root.querySelector('#mtk-settings-current-password'),
-		toggleCurrentPassword: root.querySelector('#mtk-settings-toggle-current-password'),
-		updateBtn: root.querySelector('#mtk-settings-update-btn'),
-		newPasswordGroup: root.querySelector('#mtk-settings-new-password-group'),
-		newPassword: root.querySelector('#mtk-settings-new-password'),
-		toggleNewPassword: root.querySelector('#mtk-settings-toggle-new-password'),
-		newPasswordError: root.querySelector('#mtk-settings-new-password-error'),
-		newPasswordErrorText: root.querySelector('#mtk-settings-new-password-error-text'),
-		confirmPasswordGroup: root.querySelector('#mtk-settings-confirm-password-group'),
-		confirmPassword: root.querySelector('#mtk-settings-confirm-password'),
-		toggleConfirmPassword: root.querySelector('#mtk-settings-toggle-confirm-password'),
-		confirmPasswordError: root.querySelector('#mtk-settings-confirm-password-error'),
-		confirmPasswordErrorText: root.querySelector('#mtk-settings-confirm-password-error-text'),
-		passwordStrength: root.querySelector('#mtk-settings-password-strength'),
-		passwordStrengthText: root.querySelector('#mtk-settings-password-strength-text'),
-		passwordStrengthFill: root.querySelector('#mtk-settings-password-strength-fill'),
-		saveActions: root.querySelector('#mtk-settings-save-actions'),
-		saveBtn: root.querySelector('#mtk-settings-save-btn'),
-		cancelBtn: root.querySelector('#mtk-settings-cancel-btn')
-            };
-	}
-
-	setup() {
-            if (this.config.labels?.title) {
-		this.elements.title.textContent = this.config.labels.title;
-            }
-
-	    const privacyTitle = document.getElementById('mtk-settings-privacy-title');
-	    if (privacyTitle && this.config.labels?.privacyTitle) {
-		privacyTitle.textContent = this.config.labels.privacyTitle;
-	    }
-
-            this.elements.fullName.value = this.formatFullName();
-            this.elements.email.value = this.config.user.email || '';
-
-            if (this.config.user.currentPassword) {
-		this.elements.currentPassword.value =
-                    this.maskPassword(this.config.user.currentPassword);
-            }
-
-            this.attachEventListeners();
-	}
-
-	formatFullName() {
-            const { firstName, middleInitial, lastName } = this.config.user;
-            const parts = [firstName];
-            if (middleInitial) parts.push(middleInitial + '.');
-            parts.push(lastName);
-            return parts.filter(Boolean).join(' ');
-	}
-
-	maskPassword(password) {
-            return '*'.repeat(password.length);
-	}
-
-	attachEventListeners() {
-            this.elements.updateBtn.addEventListener('click', () => this.enterEditMode());
-            this.elements.saveBtn.addEventListener('click', () => this.handleSaveClick());
-            this.elements.cancelBtn.addEventListener('click', () => this.exitEditMode());
-
-	    // Visibility toggles
-	    this._bindVisibilityToggle(
-		this.elements.toggleCurrentPassword,
-		this.elements.currentPassword
-	    );
-	    this._bindVisibilityToggle(
-		this.elements.toggleNewPassword,
-		this.elements.newPassword
-	    );
-	    this._bindVisibilityToggle(
-		this.elements.toggleConfirmPassword,
-		this.elements.confirmPassword
-	    );
-	}
-
-	_bindVisibilityToggle(btn, input) {
-	    if (!btn || !input) return;
-	    btn.addEventListener('click', () => {
-		const isPassword = input.type === 'password';
-		input.type = isPassword ? 'text' : 'password';
-		const icon = btn.querySelector('.material-icons');
-		if (icon) icon.textContent = isPassword ? 'visibility_off' : 'visibility';
-	    });
-	}
-
-	enterEditMode() {
-            this.state.editMode = true;
-            this.elements.currentPassword.disabled = false;
-            this.elements.currentPassword.value = '';
-            this.elements.newPasswordGroup.classList.remove('mtk-settings__hidden');
-            this.elements.confirmPasswordGroup.classList.remove('mtk-settings__hidden');
-            this.elements.updateBtn.classList.add('mtk-settings__hidden');
-            this.elements.saveActions.classList.remove('mtk-settings__hidden');
-	}
-
-	exitEditMode() {
-            this.state.editMode = false;
-            this.elements.currentPassword.disabled = true;
-            this.elements.currentPassword.value =
-		this.maskPassword(this.config.user.currentPassword);
-            this.elements.newPasswordGroup.classList.add('mtk-settings__hidden');
-            this.elements.confirmPasswordGroup.classList.add('mtk-settings__hidden');
-            this.elements.newPassword.value = '';
-            this.elements.confirmPassword.value = '';
-            this.elements.updateBtn.classList.remove('mtk-settings__hidden');
-            this.elements.saveActions.classList.add('mtk-settings__hidden');
-	}
-
-	validatePassword(password) {
-            const v = this.config.validation;
-
-            if (password.length < v.passwordMinLength)
-		return { valid: false, message: this.t('settings.error.minLength', `Minimum ${v.passwordMinLength} characters`, { n: v.passwordMinLength }) };
-
-            if (v.passwordRequireUppercase && !/[A-Z]/.test(password))
-		return { valid: false, message: this.t('settings.error.uppercase', 'Must contain uppercase letter') };
-
-            if (v.passwordRequireLowercase && !/[a-z]/.test(password))
-		return { valid: false, message: this.t('settings.error.lowercase', 'Must contain lowercase letter') };
-
-            if (v.passwordRequireNumber && !/[0-9]/.test(password))
-		return { valid: false, message: this.t('settings.error.number', 'Must contain number') };
-
-            return { valid: true };
-	}
-
-	handleSaveClick() {
-            const current = this.elements.currentPassword.value;
-            const newPass = this.elements.newPassword.value;
-            const confirm = this.elements.confirmPassword.value;
-
-            if (current !== this.config.user.currentPassword) {
-		alert(this.t('settings.error.currentPassword', 'Could not update password. Check the fields and try again.'));
-		return;
-            }
-
-            const validation = this.validatePassword(newPass);
-            if (!validation.valid) {
-		alert(validation.message);
-		return;
-            }
-
-            if (newPass !== confirm) {
-		alert(this.t('settings.error.passwordMismatch', 'Passwords do not match'));
-		return;
-            }
-
-            this.config.user.currentPassword = newPass;
-
-            wc.publish('4-mtk-settings', {
-		action: 'password_updated',
-		success: true,
-		timestamp: new Date().toISOString()
-            });
-
-            this.exitEditMode();
-	}
-
-	subscribeToEvents() {
-            wc.subscribe('4-mtk-settings', (data) => {
-		wc.log('mtk-settings received message:', data);
-            });
-	}
+          this.publish(eventName, {
+            tabId: tab.id,
+            actionId,
+            values: { ...(this.formState[tab.id] || {}) }
+          });
+        });
+      });
     }
 
-    /**
-     * CLEAN INITIALIZATION
-     */
-    function initMtkSettings() {
-	if (wc.testing) {
-            new MtkSettings(); // uses window.mtkSettingsConfig
-	} else {
-            // must provide config in production
-            new MtkSettings(wc.mtkSettingsConfig);
-	}
+    validateTab(tab, form) {
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return false;
+      }
+
+      const requiredCheckboxGroups = (tab.fields || []).filter((field) => {
+        return field.type === "checkboxGroup" && field.required;
+      });
+
+      for (const field of requiredCheckboxGroups) {
+        const values = this.formState[tab.id]?.[field.id] || [];
+
+        if (!values.length) {
+          const firstCheckbox = form.querySelector(`[data-checkbox-group="${field.id}"] .mtk-settings__checkbox`);
+
+          if (firstCheckbox) {
+            firstCheckbox.focus();
+          }
+
+          this.publish("mtk-settings:validation-error", {
+            tabId: tab.id,
+            fieldId: field.id,
+            message: `${field.label} is required.`
+          });
+
+          return false;
+        }
+      }
+
+      return true;
     }
 
-    if (document.readyState === 'loading') {
-	document.addEventListener('DOMContentLoaded', initMtkSettings);
-    } else {
-	if (wc.testing) {
-            new MtkSettings(); // uses window.mtkSettingsConfig
-	} else {
-	    mtkSettingsConfig.user.firstName = wc.session.user.name;
-	    mtkSettingsConfig.user.email = wc.session.user.email;
-	    
-            // must provide config in production
-            new MtkSettings(mtkSettingsConfig);
-	}
+    publish(eventName, payload = {}) {
+      const message = {
+        component: "mtk-settings",
+        event: eventName,
+        payload
+      };
+
+      if (window.wc && typeof window.wc.log === "function") {
+        window.wc.log("mtk-settings publish", message);
+      }
+
+      if (window.wc && typeof window.wc.publish === "function") {
+        window.wc.publish(eventName, message);
+        return;
+      }
+
+      this.root.dispatchEvent(
+        new CustomEvent(eventName, {
+          bubbles: true,
+          detail: message
+        })
+      );
     }
-}
+
+    escapeHTML(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+  }
+
+  window.MTKSettings = MTKSettings;
+
+  function initMTKSettings() {
+    const root = document.querySelector("mtk-settings.mtk-settings");
+
+    if (!root) {
+      window.requestAnimationFrame(initMTKSettings);
+      return;
+    }
+
+    if (root.dataset.mtkSettingsReady === "true") {
+      return;
+    }
+
+    root.dataset.mtkSettingsReady = "true";
+    root.mtkSettings = new window.MTKSettings(root);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initMTKSettings, { once: true });
+    return;
+  }
+
+  initMTKSettings();
+})(window, document);
