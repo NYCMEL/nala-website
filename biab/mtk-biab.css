@@ -1001,7 +1001,7 @@ mtk-biab.mtk-biab {
   border-color: #a98211; }
 
 .is-active > .mtk-biab__logo-radio::after {
-  content: "";
+  content: '';
   position: absolute;
   inset: 3px;
   border-radius: 50%;
@@ -1204,7 +1204,7 @@ mtk-biab.mtk-biab {
   .mtk-biab__logo-control-group,
   .mtk-biab__logo-control-group--brand,
   .mtk-biab__logo-control-group--brand + .mtk-biab__logo-control-group {
-    grid-column: 1/-1; } }
+    grid-column: 1 / -1; } }
 
 .mtk-biab *,
 .mtk-biab *::before,
@@ -1399,7 +1399,7 @@ mtk-biab.mtk-biab {
   transform: scaleX(1); }
 
 .mtk-biab__tab-btn::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   background: radial-gradient(circle, rgba(255, 255, 255, 0.14) 0%, transparent 70%);
@@ -1551,7 +1551,7 @@ mtk-biab.mtk-biab {
   transition: color 150ms cubic-bezier(0.2, 0, 0, 1); }
 
 .mtk-biab__sidebar-item-btn::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   border-radius: inherit;
@@ -1759,7 +1759,7 @@ mtk-biab.mtk-biab {
   gap: 10px; }
 
 .mtk-biab__content-title::before {
-  content: "";
+  content: '';
   display: block;
   width: 4px;
   height: 22px;
