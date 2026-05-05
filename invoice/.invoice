@@ -48,3 +48,5 @@ What I want:
 - create a material design form from the image
 - input font size should be 16px and normal weight
 - reduce input label font-size
+- changing tax rage and "Service fee" should update the total accordingly
+- remove all values from config file and add a sample helper to input fields
