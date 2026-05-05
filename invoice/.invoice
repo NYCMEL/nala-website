@@ -1,0 +1,56 @@
+FORGET ALL PREVIOUS CONTEXT for mtk-invoice and remember this as mtk-invoice forever
+
+Create a reusable UI invoice named mtk-invoice using:
+- HTML
+- SCSS
+- Vanilla JavaScript
+- Bootstrap 5 (layout only)
+- Modern Material Design, Material Design icons and styles
+- Always create a JS class for mtk-invoice and initialize it inside the JS file itself
+
+Rules:
+- The invoice is wrapped in a display:block element <mtk-invoice class="mtk-invoice">.
+- The root element uses .mtk-invoice.
+- All styles must be scoped to .mtk-invoice.
+- No global styles or IDs.
+- publish click events using wc.publish
+- subscribe to all 4-mtk-invoice everns using wc.subscribe
+- create a onMessage function to be passed to wc.subscribe function
+
+Data:
+- The invoice is JSON driven.
+  - any and all data must come from mtk-invoice.config.js file
+
+Restrictions:
+- No inline styles. (All styles in  "*.scss" file)
+- No inline Javascript. (All scripts in "*.js" file)
+- No frameworks.
+- No external libraries.
+- Vanilla Javascript
+
+Accessibility:
+- Use semantic HTML.
+- Keyboard accessible.
+- Visible focus states.
+- ADA compliant
+
+Output! Create exactly these files:
+- mtk-invoice.config.js (JSON FILE)
+- mtk-invoice.scss
+- minimal mtk-invoice.html
+- mtk-invoice.js
+
+Behavior:
+- MUST WAIT for element to be available inside DOM, since i will be using <wc-include> for dynamic inclusion
+- all published (wc.publish) messages should be logged using wc.log to console before being published
+
+What I want:
+- create a material design form from the image
+- input font size should be 16px and normal weight
+- reduce input label font-size
+- changing tax rage and "Service fee" should update the total accordingly
+- remove all values from config file and add a sample helper to input fields
+- place input field helpers inside the input fields. As material design does
+- remove "Print / Save PDF" from top
+- add a "Print" next to "Save Invoice"
+- when i click "Save Invoice", add it to my tab "invoices" table

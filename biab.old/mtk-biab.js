@@ -1,0 +1,2449 @@
+/**
+ * mtk-biab.js
+ * Business In A Box — Vanilla JS Class
+ * Material Design UI | Bootstrap 5 layout
+ * All events published/subscribed via wc.publish / wc.subscribe
+ */
+
+// ─── wc shim ────────────────────────────────────────────────────────────────
+// Provides wc.publish, wc.subscribe, and wc.log if the host page
+// has not already defined a "wc" bus.
+if (typeof window.wc === 'undefined') {
+  window.wc = (() => {
+    const _channels = {};
+
+    function subscribe(event, callback) {
+      if (!_channels[event]) _channels[event] = [];
+      _channels[event].push(callback);
+    }
+
+    function publish(event, data) {
+      if (_channels[event]) {
+        _channels[event].forEach(cb => {
+          try { cb(event, data); } catch (e) { console.error('[wc] subscriber error', e); }
+        });
+      }
+    }
+
+    function log(event, data) {
+      console.log(`[wc] ${event}`, data);
+    }
+
+    return { subscribe, publish, log };
+  })();
+}
+// ────────────────────────────────────────────────────────────────────────────
+
+const MTK_BIAB_LOGO_ICONS = [
+  {
+    key: 'precision-key',
+    label: 'Precision Key',
+    svg: `
+      <svg viewBox="0 0 96 96" aria-hidden="true">
+        <circle cx="28" cy="48" r="16" fill="currentColor"></circle>
+        <circle cx="28" cy="48" r="7" fill="var(--logo-bg, #ffffff)"></circle>
+        <rect x="42" y="43" width="34" height="10" rx="5" fill="currentColor"></rect>
+        <rect x="68" y="43" width="6" height="18" rx="2" fill="currentColor"></rect>
+        <rect x="58" y="43" width="6" height="14" rx="2" fill="currentColor"></rect>
+      </svg>`
+  },
+  {
+    key: 'shield-lock',
+    label: 'Shield Lock',
+    svg: `
+      <svg viewBox="0 0 96 96" aria-hidden="true">
+        <path d="M48 12l24 8v18c0 20-10 34-24 42C34 72 24 58 24 38V20l24-8z" fill="currentColor"></path>
+        <rect x="37" y="43" width="22" height="19" rx="4" fill="var(--logo-bg, #ffffff)"></rect>
+        <path d="M40 43v-5c0-5 3-10 8-10s8 5 8 10v5" fill="none" stroke="var(--logo-bg, #ffffff)" stroke-width="6" stroke-linecap="round"></path>
+      </svg>`
+  },
+  {
+    key: 'modern-keyhole',
+    label: 'Modern Keyhole',
+    svg: `
+      <svg viewBox="0 0 96 96" aria-hidden="true">
+        <circle cx="48" cy="36" r="18" fill="currentColor"></circle>
+        <path d="M48 44l10 24H38l10-24z" fill="currentColor"></path>
+        <circle cx="48" cy="36" r="7" fill="var(--logo-bg, #ffffff)"></circle>
+      </svg>`
+  },
+  {
+    key: 'entry-lock',
+    label: 'Entry Lock',
+    svg: `
+      <svg viewBox="0 0 96 96" aria-hidden="true">
+        <rect x="26" y="38" width="44" height="34" rx="8" fill="currentColor"></rect>
+        <path d="M34 38V30c0-8 6-14 14-14s14 6 14 14v8" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"></path>
+        <circle cx="48" cy="54" r="5" fill="var(--logo-bg, #ffffff)"></circle>
+        <rect x="46" y="54" width="4" height="10" rx="2" fill="var(--logo-bg, #ffffff)"></rect>
+      </svg>`
+  },
+  {
+    key: 'garage-key',
+    label: 'Garage Key',
+    svg: `
+      <svg viewBox="0 0 96 96" aria-hidden="true">
+        <path d="M19 55l20-20 11 11 19-19 8 8-19 19 11 11-20 20-30-30z" fill="currentColor"></path>
+        <circle cx="33" cy="40" r="6" fill="var(--logo-bg, #ffffff)"></circle>
+      </svg>`
+  },
+  {
+    key: 'monogram-n',
+    label: 'Monogram N',
+    svg: `
+      <svg viewBox="0 0 96 96" aria-hidden="true">
+        <rect x="18" y="18" width="60" height="60" rx="18" fill="currentColor"></rect>
+        <path d="M34 64V32h7l21 20V32h8v32h-7L42 44v20h-8z" fill="var(--logo-bg, #ffffff)"></path>
+      </svg>`
+  }
+];
+
+const MTK_BIAB_LOGO_PALETTES = [
+  {
+    key: 'midnight-brass',
+    label: 'Midnight Brass',
+    description: 'High-trust dark navy with warm brass accents for premium residential and commercial positioning.',
+    surface: '#0f172a',
+    surfaceSoft: '#16213b',
+    primary: '#c6952d',
+    accent: '#f5d36c',
+    textOnDark: '#f8fafc',
+    textOnLight: '#0f172a',
+    neutral: '#e5e7eb'
+  },
+  {
+    key: 'forest-steel',
+    label: 'Forest Steel',
+    description: 'Professional green and steel for locksmiths leaning into property managers, hardware, and security.',
+    surface: '#163126',
+    surfaceSoft: '#23483a',
+    primary: '#7dbb8b',
+    accent: '#dfe7e2',
+    textOnDark: '#f7fbf8',
+    textOnLight: '#163126',
+    neutral: '#d1d5db'
+  },
+  {
+    key: 'signal-orange',
+    label: 'Signal Orange',
+    description: 'Urgency-focused palette suited to mobile, emergency, and roadside-first positioning.',
+    surface: '#1f2937',
+    surfaceSoft: '#374151',
+    primary: '#f97316',
+    accent: '#fed7aa',
+    textOnDark: '#ffffff',
+    textOnLight: '#1f2937',
+    neutral: '#e5e7eb'
+  },
+  {
+    key: 'contract-bronze',
+    label: 'Contract Bronze',
+    description: 'Refined bronze system for corporate, access-control, and service-contract oriented brands.',
+    surface: '#3a2f1b',
+    surfaceSoft: '#4a3a08',
+    primary: '#c6952d',
+    accent: '#fbf4e5',
+    textOnDark: '#f8fbff',
+    textOnLight: '#3a2f1b',
+    neutral: '#dbe4f0'
+  }
+];
+
+const MTK_BIAB_LOGO_FONTS = [
+  {
+    key: 'outfit-manrope',
+    label: 'Outfit + Manrope',
+    headline: "'Outfit', 'Segoe UI', sans-serif",
+    body: "'Manrope', 'Segoe UI', sans-serif",
+    rationale: 'Modern geometric pairing with clean counters and excellent van, website, and social readability.'
+  },
+  {
+    key: 'archivo-manrope',
+    label: 'Archivo Black + Manrope',
+    headline: "'Archivo Black', 'Arial Black', sans-serif",
+    body: "'Manrope', 'Segoe UI', sans-serif",
+    rationale: 'Bold signage-first wordmark system for roadside visibility and simple fleet graphics.'
+  },
+  {
+    key: 'space-libre',
+    label: 'Space Grotesk + Libre Baskerville',
+    headline: "'Space Grotesk', 'Segoe UI', sans-serif",
+    body: "'Libre Baskerville', Georgia, serif",
+    rationale: 'A more premium pairing that balances modern locksmith service with established trust.'
+  }
+];
+
+const MTK_BIAB_LOGO_TEMPLATES = [
+  {
+    key: 'service-wordmark',
+    label: 'Service Wordmark',
+    badge: 'Best for vans',
+    description: 'Horizontal lockup with strong icon-left hierarchy for vehicle wraps, Google profile art, and website headers.'
+  },
+  {
+    key: 'trusted-shield',
+    label: 'Trusted Shield',
+    badge: 'Best for trust',
+    description: 'Badge-driven system with stronger security cues for rekeys, property managers, and commercial accounts.'
+  },
+  {
+    key: 'modern-stack',
+    label: 'Modern Stack',
+    badge: 'Best for web',
+    description: 'Clean stacked layout for websites, proposals, and social assets with a simple modern feel.'
+  },
+  {
+    key: 'monogram-seal',
+    label: 'Monogram Seal',
+    badge: 'Best for premium',
+    description: 'Compact emblem system suited to invoices, stationery, stamps, and polished premium brands.'
+  }
+];
+
+const MTK_BIAB_LOGO_VARIATIONS = [
+  { key: 'horizontal', label: 'Horizontal', description: 'Primary website and van lockup.' },
+  { key: 'stacked', label: 'Stacked', description: 'Balanced for square ads and flyers.' },
+  { key: 'badge', label: 'Badge', description: 'Compact seal for uniforms, decals, and favicons.' },
+  { key: 'icon-only', label: 'Icon Only', description: 'Small-format social avatar and favicon mark.' }
+];
+
+const MTK_BIAB_I18N = {
+  en: {
+    selectOption: 'Select an option',
+    chooseTopic: 'Choose a topic from the menu on the left to get started.',
+    applyLogo: 'Apply to Website Maker',
+    uploadLogo: 'Upload your own logo',
+    download: 'Download',
+    email: 'Send in an email',
+    previous: 'Previous',
+    next: 'Next',
+    step: 'Step',
+    finalDocument: 'Final document',
+    businessInfo: 'Business Info',
+    contactInfo: 'Contact Info',
+    serviceSetup: 'Service Setup',
+    marketingSetup: 'Marketing Setup',
+    operations: 'Operations',
+    invoiceSetup: 'Invoice Setup',
+    automationIntro: 'These APIs can reduce manual work, but they need OAuth, approved access, and server-side credential handling before the website can create or change accounts automatically.',
+    logoApplied: 'Logo sent to the Website Maker. Open or refresh the Website Maker tab if it is not visible yet.',
+    reviewsIntro: 'Send review requests after completed jobs. Every submitted rating counts toward the public average; you can only choose which written reviews appear on the webpage.',
+    sendReviewRequest: 'Send review request',
+    customerName: 'Customer name',
+    customerEmail: 'Customer email',
+    jobType: 'Job type or note',
+    publicReviewLink: 'Public review link',
+    visibleOnWebsite: 'Show on webpage',
+    hiddenOnWebsite: 'Hidden from webpage',
+    allRatingsCount: 'All ratings count',
+    publishedReviews: 'Published reviews'
+  },
+  es: {
+    selectOption: 'Selecciona una opción',
+    chooseTopic: 'Elige un tema del menú de la izquierda para comenzar.',
+    applyLogo: 'Aplicar al creador de página',
+    uploadLogo: 'Subir tu propio logo',
+    download: 'Descargar',
+    email: 'Enviar por correo',
+    previous: 'Anterior',
+    next: 'Siguiente',
+    step: 'Paso',
+    finalDocument: 'Documento final',
+    businessInfo: 'Información del negocio',
+    contactInfo: 'Información de contacto',
+    serviceSetup: 'Configuración de servicios',
+    marketingSetup: 'Configuración de marketing',
+    operations: 'Operaciones',
+    invoiceSetup: 'Configuración de factura',
+    automationIntro: 'Estas APIs pueden reducir trabajo manual, pero requieren OAuth, acceso aprobado y manejo seguro de credenciales en el servidor antes de que el sitio pueda crear o modificar cuentas automáticamente.',
+    logoApplied: 'Logo enviado al creador de página. Abre o actualiza la pestaña Website Maker si aún no aparece.',
+    reviewsIntro: 'Envía solicitudes de reseña después de trabajos terminados. Cada calificación enviada cuenta para el promedio público; solo puedes elegir qué reseñas escritas aparecen en la página web.',
+    sendReviewRequest: 'Enviar solicitud de reseña',
+    customerName: 'Nombre del cliente',
+    customerEmail: 'Correo del cliente',
+    jobType: 'Tipo de trabajo o nota',
+    publicReviewLink: 'Enlace público de reseña',
+    visibleOnWebsite: 'Mostrar en la página',
+    hiddenOnWebsite: 'Oculta en la página',
+    allRatingsCount: 'Todas las calificaciones cuentan',
+    publishedReviews: 'Reseñas publicadas'
+  }
+};
+
+class MtkBiab {
+  /**
+   * @param {HTMLElement} el  - The <mtk-biab> root element
+   * @param {Object}      cfg - MTK_BIAB_CONFIG from mtk-biab.config.js
+   */
+  constructor(el, cfg) {
+    this.el     = el;
+    this.cfg    = cfg;
+    this.tabs   = cfg.tabs;
+    this.events = cfg.events;
+    this.logoDesignerState = this._getDefaultLogoDesignerState();
+    this.formState = this._getDefaultFormState();
+    this.reviewState = this._getDefaultReviewState();
+    this.reviewsLoadedForUid = '';
+    this.formSteps = {};
+    this.completedSteps = {}; // { 'business-plan': Set([0,1,...]) }
+    this.guidedSetupSteps = {};
+    this.guidedSetupCompleted = {};
+
+    // Active state
+    this.activeTabId    = null;
+    this.activeMenuState = {}; // { tabId: { menuId, itemId } }
+
+    this._init();
+  }
+
+  // ── Initialization ─────────────────────────────────────────────────────────
+
+  _init() {
+    this._subscribeAll();
+    this._render();
+    this._renderDynamicPanels();
+    this._renderToolPanels();
+    this._bindAll();
+    this._activateDefaultTab();
+    this._bindLanguageChanges();
+
+    // Publish ready
+    this._publish(this.events.publish.ready, {
+      component: this.cfg.component,
+      version:   this.cfg.version
+    });
+  }
+
+  // ── Subscriptions ──────────────────────────────────────────────────────────
+
+  _subscribeAll() {
+    this.events.subscribe.forEach(eventName => {
+      wc.subscribe(eventName, this.onMessage.bind(this));
+    });
+  }
+
+  /**
+   * onMessage — handler passed to wc.subscribe for all 4 mtk-biab events
+   * @param {string} event
+   * @param {Object} data
+   */
+  onMessage(event, data) {
+    // Ignore events we published ourselves to prevent infinite loops
+    if (this._publishing) return;
+
+    switch (event) {
+      case this.events.publish.ready:
+        // Component ready — no further action needed here
+        break;
+
+      case this.events.publish.tabChange:
+        // External tab change request
+        if (data && data.tabId) {
+          this._activateTab(data.tabId);
+        }
+        break;
+
+      case this.events.publish.menuSelect:
+        // External menu selection request
+        if (data && data.tabId && data.menuId) {
+          this._expandMenu(data.tabId, data.menuId);
+        }
+        break;
+
+      case this.events.publish.itemSelect:
+        // External item selection request
+        if (data && data.tabId && data.itemId) {
+          this._activateItem(data.tabId, data.itemId, data.menuId, null, true);
+        }
+        break;
+
+      default:
+        console.warn(`[mtk-biab] onMessage: unhandled event "${event}"`);
+    }
+  }
+
+  // ── Publish helper ─────────────────────────────────────────────────────────
+
+  _publish(eventName, data) {
+    this._publishing = true;
+    wc.log(eventName, data);
+    wc.publish(eventName, data);
+    this._publishing = false;
+  }
+
+  // ── Render ─────────────────────────────────────────────────────────────────
+
+  _render() {
+    this.el.innerHTML = this._buildHTML();
+  }
+
+  _buildHTML() {
+    return `
+      <div class="mtk-biab__wrapper">
+        ${this._buildHeader()}
+        <main class="mtk-biab__content" id="mtk-biab-content">
+          <div class="mtk-biab__container">
+            <div class="row g-0">
+              <div class="col-md-12">
+                ${this.tabs.map(tab => this._buildTabPanel(tab)).join('')}
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    `;
+  }
+
+  _buildHeader() {
+    return `
+      <header class="mtk-biab__header" role="banner">
+        <div class="mtk-biab__header-inner">
+          <a class="mtk-biab__logo" href="#" tabindex="0" aria-label="NALA - Business in a Box">
+            <img class="mtk-biab__logo-icon" src="img/footer-logo.png" alt="NALA logo" height="70" />
+            <span class="mtk-biab__logo-text">
+              <span class="mtk-biab__logo-full"><small> Business in a Box</small></span>
+              <span class="mtk-biab__logo-short">NALA</span>
+            </span>
+          </a>
+
+          <button
+            class="mtk-biab__hamburger"
+            aria-label="Toggle navigation"
+            aria-expanded="false"
+            aria-controls="mtk-biab-tabs-nav"
+            data-action="toggle-nav"
+          >
+            <span class="material-icons" aria-hidden="true">menu</span>
+          </button>
+
+          <div class="mtk-biab__header-divider" aria-hidden="true"></div>
+
+          <nav
+            class="mtk-biab__tabs-nav"
+            id="mtk-biab-tabs-nav"
+            role="tablist"
+            aria-label="Main navigation tabs"
+          >
+            ${this.tabs.map((tab, i) => `
+              <button
+                class="mtk-biab__tab-btn${tab.active ? ' is-active' : ''}"
+                role="tab"
+                id="mtk-biab-tab-${tab.id}"
+                aria-controls="mtk-biab-panel-${tab.id}"
+                aria-selected="${tab.active ? 'true' : 'false'}"
+                tabindex="${tab.active ? '0' : '-1'}"
+                data-action="select-tab"
+                data-tab-id="${tab.id}"
+              >
+                <span class="material-icons" aria-hidden="true">${tab.icon}</span>
+                <span>${tab.label}</span>
+                <span class="mtk-biab__tab-indicator" aria-hidden="true"></span>
+              </button>
+            `).join('')}
+          </nav>
+
+        </div>
+      </header>
+    `;
+  }
+
+  _buildTabPanel(tab) {
+    let inner = '';
+    if (tab.type === 'iframe') {
+      inner = this._buildIframePanel(tab);
+    } else if (tab.type === 'sidebar') {
+      inner = this._buildSidebarPanel(tab);
+    } else if (tab.type === 'simple') {
+      inner = this._buildSimplePanel(tab);
+    }
+
+    return `
+      <section
+        class="mtk-biab__tab-panel${tab.active ? ' is-active' : ''}"
+        id="mtk-biab-panel-${tab.id}"
+        role="tabpanel"
+        aria-labelledby="mtk-biab-tab-${tab.id}"
+        ${!tab.active ? 'hidden' : ''}
+        data-panel-id="${tab.id}"
+      >
+        ${inner}
+      </section>
+    `;
+  }
+
+  _buildIframePanel(tab) {
+    return `
+      <div class="mtk-biab__iframe-panel">
+        <iframe
+          class="mtk-biab__iframe"
+          id="mtk-biab-iframe-${tab.id}"
+          src="${tab.iframeUrl}"
+          title="Client Website Preview"
+          aria-label="Client website preview"
+          loading="lazy"
+          allow="fullscreen"
+        ></iframe>
+      </div>
+    `;
+  }
+
+  _buildSidebarPanel(tab) {
+    const { menus } = tab.sidebar;
+
+    const sidebarHTML = menus.map((menu, mi) => `
+      <nav class="mtk-biab__sidebar-menu" aria-label="${menu.label}">
+        <button
+          class="mtk-biab__sidebar-menu-header is-collapsed"
+          aria-expanded="false"
+          aria-controls="mtk-biab-menu-items-${tab.id}-${menu.id}"
+          data-action="toggle-menu"
+          data-tab-id="${tab.id}"
+          data-menu-id="${menu.id}"
+        >
+          <span class="material-icons" aria-hidden="true">${menu.icon}</span>
+          <span>${menu.label}</span>
+          <span class="material-icons mtk-biab__sidebar-menu-header-chevron" aria-hidden="true">expand_more</span>
+        </button>
+        <ul
+          class="mtk-biab__sidebar-items is-collapsed"
+          id="mtk-biab-menu-items-${tab.id}-${menu.id}"
+          role="list"
+        >
+          ${menu.items.map(item => {
+            // Check if this item has a tool — if so, render sub-steps
+            const toolMatch = item.content && item.content.body && item.content.body.match(/data-biab-tool="([^"]+)"/);
+            const tool = toolMatch ? toolMatch[1] : null;
+            const steps = tool ? this._getToolSteps(tool) : [];
+
+            const subItems = steps.length ? `
+              <ul class="mtk-biab__sidebar-subitems" id="mtk-biab-subitems-${tab.id}-${item.id}" role="list">
+                ${steps.map((step, si) => `
+                  <li role="listitem">
+                    <button
+                      class="mtk-biab__sidebar-subitem-btn"
+                      data-action="select-step"
+                      data-tab-id="${tab.id}"
+                      data-menu-id="${menu.id}"
+                      data-item-id="${item.id}"
+                      data-tool="${tool}"
+                      data-step="${si}"
+                      aria-current="false"
+                    >
+                      <span class="mtk-biab__sidebar-step-num">${si + 1}</span>
+                      <span>${step.title}</span>
+                    </button>
+                  </li>
+                `).join('')}
+              </ul>` : '';
+
+            return `
+            <li class="mtk-biab__sidebar-item${steps.length ? ' has-subitems' : ''}" role="listitem">
+              <button
+                class="mtk-biab__sidebar-item-btn"
+                data-action="select-item"
+                data-tab-id="${tab.id}"
+                data-menu-id="${menu.id}"
+                data-item-id="${item.id}"
+                aria-current="false"
+                aria-expanded="${steps.length ? 'false' : undefined}"
+              >
+                <span class="material-icons" aria-hidden="true">${item.icon}</span>
+                <span>${item.label}</span>
+                ${steps.length ? '<span class="material-icons mtk-biab__sidebar-item-chevron">chevron_right</span>' : ''}
+              </button>
+              ${subItems}
+            </li>`;
+          }).join('')}
+        </ul>
+        ${mi < menus.length - 1 ? '<div class="mtk-biab__sidebar-divider" aria-hidden="true"></div>' : ''}
+      </nav>
+    `).join('');
+
+    const contentPanels = menus.flatMap(menu =>
+      menu.items.map(item => `
+        <article
+          class="mtk-biab__content-panel"
+          id="mtk-biab-content-${tab.id}-${item.id}"
+          data-tab-id="${tab.id}"
+          data-item-id="${item.id}"
+          aria-label="${item.content.title}"
+          tabindex="-1"
+        >
+          <nav class="mtk-biab__breadcrumb" aria-label="Breadcrumb">
+            <span>${tab.label}</span>
+            <span class="material-icons" aria-hidden="true">chevron_right</span>
+            <span>${menu.label}</span>
+            <span class="material-icons" aria-hidden="true">chevron_right</span>
+            <span class="is-current" aria-current="page">${item.label}</span>
+          </nav>
+          <div class="mtk-biab__content-card">
+            <h2 class="mtk-biab__content-title">${item.content.title}</h2>
+            <p class="mtk-biab__content-subtitle">${menu.label} · ${tab.label}</p>
+            ${(() => {
+              const hasTool = item.content.body.includes('data-biab-tool=');
+              const isPricing = item.id && item.id.startsWith('pricing-');
+
+              // Pricing items or items with NO tool: always expanded, no link, no badge
+              if (isPricing || !hasTool) {
+                const cleanBody = item.content.body.replace(/<p[^>]*>\s*<span[^>]*border-radius:999px[^>]*>.*?<\/span>\s*<\/p>/gs, '');
+                return `<div class="mtk-biab__content-body">${cleanBody}</div>`;
+              }
+
+              // Items WITH a tool wizard: show tool immediately, collapse static guide below
+              const toolMatch = item.content.body.match(/(<div[^>]*data-biab-tool[^>]*>.*?<\/div>)/s);
+              const toolDiv = toolMatch ? toolMatch[0] : '';
+              const rest = item.content.body.replace(toolDiv, '').trim();
+              return `
+                <div class="mtk-biab__content-body">${toolDiv}</div>
+                ${rest ? `
+                  <div class="mtk-biab__content-body mtk-biab__content-body--collapsed" hidden>${rest}</div>
+                  <a href="#" class="mtk-biab__read-more-link" data-action="expand-body">
+                    <span class="material-icons">menu_book</span>
+                    Guides. Read More…
+                  </a>
+                ` : ''}
+              `;
+            })()}
+          </div>
+        </article>
+      `)
+    ).join('');
+
+    return `
+      <div class="mtk-biab__sidebar-panel row g-0">
+        <aside
+          class="mtk-biab__sidebar col-md-3"
+          aria-label="${tab.label} navigation"
+        >
+          ${sidebarHTML}
+        </aside>
+        <div class="mtk-biab__sidebar-content col-md-9">
+          <div
+            class="mtk-biab__content-empty"
+            id="mtk-biab-empty-${tab.id}"
+            aria-live="polite"
+          >
+            <span class="material-icons" aria-hidden="true">touch_app</span>
+            <h3>${this._t('selectOption')}</h3>
+            <p>${this._t('chooseTopic')}</p>
+          </div>
+          ${contentPanels}
+        </div>
+      </div>
+    `;
+  }
+
+  _buildSimplePanel(tab) {
+    const hasTool = tab.content.body.includes('data-biab-tool=');
+
+    // Extract tool div and static guide separately
+    let toolDiv = '';
+    let rest = tab.content.body;
+
+    if (hasTool) {
+      const toolMatch = tab.content.body.match(/(<div[^>]*data-biab-tool[^>]*>.*?<\/div>)/s);
+      toolDiv = toolMatch ? toolMatch[0] : '';
+      rest = tab.content.body.replace(toolDiv, '').trim();
+      // Strip Starter badge from rest
+      rest = rest.replace(/<p[^>]*>\s*<span[^>]*border-radius:999px[^>]*>.*?<\/span>\s*<\/p>/gs, '');
+    }
+
+    const guideSection = rest ? `
+      <div class="mtk-biab__content-body mtk-biab__content-body--collapsed" hidden>${rest}</div>
+      <a href="#" class="mtk-biab__read-more-link" data-action="expand-body">
+        <span class="material-icons">menu_book</span>
+        Guides. Read More…
+      </a>
+    ` : '';
+
+    return `
+      <div class="mtk-biab__simple-panel">
+        <div class="mtk-biab__container">
+          <div class="row g-0">
+            <div class="col-md-12">
+              <div class="mtk-biab__content-card">
+                <h2 class="mtk-biab__content-title">${tab.content.title}</h2>
+                <div class="mtk-biab__content-body">${hasTool ? toolDiv : tab.content.body}</div>
+                ${guideSection}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // ── Bind Events ────────────────────────────────────────────────────────────
+
+  _bindAll() {
+    // Delegate all interactions from the root element
+    this.el.addEventListener('click', this._onClick.bind(this));
+    this.el.addEventListener('keydown', this._onKeydown.bind(this));
+    this.el.addEventListener('input', this._onInput.bind(this));
+  }
+
+  _onClick(e) {
+    // Prevent hash-only anchors from navigating (avoids wc-include re-injection)
+    const anchor = e.target.closest('a[href="#"]');
+    if (anchor) {
+      e.preventDefault();
+      // Logo click → go home
+      if (anchor.classList.contains('mtk-biab__logo')) {
+        window.location.replace('/repo_deploy/');
+        return;
+      }
+      // Read More expand — handle before returning
+      if (anchor.dataset.action === 'expand-body') {
+        const card = anchor.closest('.mtk-biab__content-card');
+        if (card) {
+          const body = card.querySelector('.mtk-biab__content-body--collapsed');
+          if (body) {
+            body.removeAttribute('hidden');
+            body.classList.remove('mtk-biab__content-body--collapsed');
+
+            // Remove any existing close button before adding (prevent duplicates)
+            const existing = body.querySelector('.mtk-biab__guide-close');
+            if (existing) existing.remove();
+
+            // Find first h3 text to use as section heading (replace Starter badge row)
+            const firstH3 = body.querySelector('h3');
+            const heading = firstH3 ? firstH3.textContent.trim() : '';
+
+            // Hide the Starter/badge span
+            const badge = body.querySelector('p > span[style*="border-radius:999px"]');
+            if (badge) {
+              const badgeP = badge.closest('p');
+              if (badgeP) badgeP.style.display = 'none';
+            }
+
+            // Hide the first h3 inside the body (it's now shown as the small header)
+            if (firstH3) firstH3.style.display = 'none';
+
+            // Build header row: heading text + X button
+            const headerRow = document.createElement('div');
+            headerRow.className = 'mtk-biab__guide-header';
+            headerRow.innerHTML = heading
+              ? '<span class="mtk-biab__guide-heading">' + heading + '</span>'
+              : '';
+
+            const closeBtn = document.createElement('button');
+            closeBtn.type = 'button';
+            closeBtn.className = 'mtk-biab__guide-close';
+            closeBtn.setAttribute('aria-label', 'Close guide');
+            closeBtn.innerHTML = '<span class="material-icons">close</span>';
+            closeBtn.addEventListener('click', function() {
+              body.setAttribute('hidden', '');
+              body.classList.add('mtk-biab__content-body--collapsed');
+              headerRow.remove();
+              // Restore h3 visibility
+              if (firstH3) firstH3.style.display = '';
+              // Restore badge visibility
+              if (badge && badge.closest('p')) badge.closest('p').style.display = '';
+              // Restore Read More link
+              const link = document.createElement('a');
+              link.href = '#';
+              link.className = 'mtk-biab__read-more-link';
+              link.dataset.action = 'expand-body';
+              link.innerHTML = '<span class="material-icons">menu_book</span> Guides. Read More…';
+              body.insertAdjacentElement('afterend', link);
+            });
+            headerRow.appendChild(closeBtn);
+            body.insertAdjacentElement('beforebegin', headerRow);
+          }
+          anchor.remove();
+        }
+        return;
+      }
+      return;
+    }
+
+    const btn = e.target.closest('[data-action]');
+    if (!btn) return;
+
+    const action = btn.dataset.action;
+
+    switch (action) {
+      case 'toggle-nav':
+        this._handleNavToggle();
+        break;
+      case 'select-tab':
+        this._activateTab(btn.dataset.tabId);
+        this._closeNav();
+        break;
+      case 'select-item':
+        this._handleItemClick(btn);
+        this._toggleSubitems(btn);
+        break;
+      case 'expand-body': {
+        const card = btn.closest('.mtk-biab__content-card');
+        if (!card) break;
+        const body = card.querySelector('.mtk-biab__content-body--collapsed');
+        if (body) {
+          body.removeAttribute('hidden');
+          body.classList.remove('mtk-biab__content-body--collapsed');
+        }
+        btn.remove();
+        break;
+      }
+      case 'select-step':
+        this._handleStepClick(btn);
+        break;
+      case 'toggle-menu':
+        this._handleMenuToggle(btn);
+        break;
+      case 'iframe-reload':
+        this._handleIframeReload(btn);
+        break;
+      case 'iframe-open':
+        this._handleIframeOpen(btn);
+        break;
+      case 'logo-set-icon':
+        this._setLogoDesignerState('iconKey', btn.dataset.logoValue);
+        break;
+      case 'logo-set-palette':
+        this._setLogoDesignerState('paletteKey', btn.dataset.logoValue);
+        break;
+      case 'logo-set-font':
+        this._setLogoDesignerState('fontKey', btn.dataset.logoValue);
+        break;
+      case 'logo-set-template':
+        this._setLogoDesignerState('templateKey', btn.dataset.logoValue);
+        break;
+      case 'logo-set-variation':
+        this._setLogoDesignerState('variationKey', btn.dataset.logoValue);
+        break;
+      case 'logo-apply-to-client':
+        this._applyLogoToClient();
+        break;
+      case 'logo-upload':
+        this._openLogoUpload();
+        break;
+      case 'set-lang':
+        this._setLanguage(btn.dataset.lang);
+        break;
+      case 'tool-prev':
+        this._moveToolStep(btn.dataset.tool, -1);
+        break;
+      case 'tool-next':
+        this._moveToolStep(btn.dataset.tool, 1);
+        break;
+      case 'tool-download':
+        this._downloadToolDocument(btn.dataset.tool);
+        break;
+      case 'tool-email':
+        this._emailToolDocument(btn.dataset.tool);
+        break;
+      case 'guided-setup-step':
+        this._setGuidedSetupStep(btn.dataset.setupKey, parseInt(btn.dataset.step, 10));
+        break;
+      case 'guided-setup-complete':
+        this._toggleGuidedSetupComplete(btn.dataset.setupKey, parseInt(btn.dataset.step, 10));
+        break;
+      case 'review-send-request':
+        this._sendReviewRequest();
+        break;
+      case 'review-toggle-published':
+        this._toggleReviewPublished(btn.dataset.reviewId);
+        break;
+    }
+  }
+
+  _onInput(e) {
+    if (e.target.dataset.reviewField) {
+      this.reviewState.request[e.target.dataset.reviewField] = e.target.value;
+      return;
+    }
+
+    if (e.target.dataset.toolField) {
+      this._updateToolField(e.target.dataset.tool, e.target.dataset.toolField, e.target.value);
+      return;
+    }
+
+    const field = e.target.dataset.logoField;
+    if (!field) return;
+    const cursorStart = typeof e.target.selectionStart === 'number' ? e.target.selectionStart : null;
+    const cursorEnd = typeof e.target.selectionEnd === 'number' ? e.target.selectionEnd : cursorStart;
+    this.logoDesignerState[field] = e.target.value;
+    this._renderDynamicPanels();
+
+    const replacement = this.el.querySelector(`[data-logo-field="${field}"]`);
+    if (replacement) {
+      replacement.focus();
+      if (cursorStart !== null && typeof replacement.setSelectionRange === 'function') {
+        replacement.setSelectionRange(cursorStart, cursorEnd);
+      }
+    }
+  }
+
+  _onKeydown(e) {
+    // Tab navigation: arrow keys within tablist
+    if (e.target.classList.contains('mtk-biab__tab-btn')) {
+      const tabs = Array.from(this.el.querySelectorAll('.mtk-biab__tab-btn'));
+      const idx  = tabs.indexOf(e.target);
+
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        const next = tabs[(idx + 1) % tabs.length];
+        next.focus();
+        next.click();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        const prev = tabs[(idx - 1 + tabs.length) % tabs.length];
+        prev.focus();
+        prev.click();
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        tabs[0].focus();
+        tabs[0].click();
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        tabs[tabs.length - 1].focus();
+        tabs[tabs.length - 1].click();
+      }
+    }
+
+    // Sidebar item: Enter / Space
+    if (e.target.classList.contains('mtk-biab__sidebar-item-btn')) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        e.target.click();
+      }
+    }
+  }
+
+  // ── Action Handlers ────────────────────────────────────────────────────────
+
+  _handleItemClick(btn) {
+    const { tabId, menuId, itemId } = btn.dataset;
+    this._activateItem(tabId, itemId, menuId, btn);
+  }
+
+  _handleNavToggle() {
+    const nav = this.el.querySelector('.mtk-biab__tabs-nav');
+    const btn = this.el.querySelector('.mtk-biab__hamburger');
+    if (!nav) return;
+    const isOpen = nav.classList.toggle('is-open');
+    if (btn) btn.setAttribute('aria-expanded', String(isOpen));
+  }
+
+  _closeNav() {
+    const nav = this.el.querySelector('.mtk-biab__tabs-nav');
+    const btn = this.el.querySelector('.mtk-biab__hamburger');
+    if (nav) nav.classList.remove('is-open');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+  }
+
+  _toggleSubitems(btn) {
+    const subitems = btn.closest('li').querySelector('.mtk-biab__sidebar-subitems');
+    if (!subitems) return;
+    const isOpen = subitems.classList.contains('is-open');
+
+    // Collapse all other open subitems first (accordion)
+    if (!isOpen) {
+      this.el.querySelectorAll('.mtk-biab__sidebar-subitems.is-open').forEach(s => {
+        s.classList.remove('is-open');
+        const parentBtn = s.closest('li').querySelector('.mtk-biab__sidebar-item-btn');
+        if (parentBtn) {
+          parentBtn.setAttribute('aria-expanded', 'false');
+          const ch = parentBtn.querySelector('.mtk-biab__sidebar-item-chevron');
+          if (ch) ch.style.transform = 'rotate(0deg)';
+        }
+      });
+    }
+
+    subitems.classList.toggle('is-open', !isOpen);
+    btn.setAttribute('aria-expanded', String(!isOpen));
+    const chevron = btn.querySelector('.mtk-biab__sidebar-item-chevron');
+    if (chevron) chevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(90deg)';
+  }
+
+  _handleStepClick(btn) {
+    const { tabId, menuId, itemId, tool, step } = btn.dataset;
+    const stepIndex = parseInt(step, 10);
+
+    // First activate the parent item to show its content panel
+    const parentBtn = this.el.querySelector(
+      `[data-action="select-item"][data-tab-id="${tabId}"][data-item-id="${itemId}"]`
+    );
+    if (parentBtn) this._handleItemClick(parentBtn);
+
+    // Jump the wizard to this step
+    this.formSteps[tool] = stepIndex;
+
+    // Mark active sub-step in sidebar
+    this.el.querySelectorAll('.mtk-biab__sidebar-subitem-btn').forEach(b => {
+      b.classList.remove('is-active');
+      b.setAttribute('aria-current', 'false');
+    });
+    btn.classList.add('is-active');
+    btn.setAttribute('aria-current', 'step');
+
+    // Re-render the tool panel
+    const renderMap = {
+      'business-plan':    () => this._renderBusinessPlanTool(),
+      'startup-checklist':() => this._renderStartupTool(),
+      'invoice-setup':    () => this._renderInvoiceTool()
+    };
+    if (renderMap[tool]) renderMap[tool]();
+    // Update h2 to match selected step
+    this._updateContentTitle(tool);
+
+    wc.log('[biab] step selected →', tool, stepIndex);
+    wc.publish('mtk-biab:step-select', { tabId, menuId, itemId, tool, step: stepIndex });
+  }
+
+    _handleMenuToggle(btn) {
+    const { tabId, menuId } = btn.dataset;
+    const itemsEl = this.el.querySelector(`#mtk-biab-menu-items-${tabId}-${menuId}`);
+    const willOpen = itemsEl.classList.contains('is-collapsed');
+
+    // Collapse ALL other menus in this tab first (accordion behaviour)
+    if (willOpen) {
+      this.el.querySelectorAll(`.mtk-biab__sidebar-menu-header[data-tab-id="${tabId}"]`).forEach(h => {
+        if (h.dataset.menuId === menuId) return;
+        const otherItems = this.el.querySelector(`#mtk-biab-menu-items-${tabId}-${h.dataset.menuId}`);
+        if (otherItems) otherItems.classList.add('is-collapsed');
+        h.classList.add('is-collapsed');
+        h.setAttribute('aria-expanded', 'false');
+      });
+    }
+
+    itemsEl.classList.toggle('is-collapsed', !willOpen);
+    btn.classList.toggle('is-collapsed', !willOpen);
+    btn.setAttribute('aria-expanded', String(willOpen));
+
+    this._publish(this.events.publish.menuSelect, { tabId, menuId, collapsed: !willOpen });
+  }
+
+  _handleIframeReload(btn) {
+    const { tabId } = btn.dataset;
+    const iframe = this.el.querySelector(`#mtk-biab-iframe-${tabId}`);
+    if (iframe) iframe.src = iframe.src;
+  }
+
+  _handleIframeOpen(btn) {
+    const url = btn.dataset.url;
+    if (url) window.open(url, '_blank', 'noopener noreferrer');
+  }
+
+  // ── Tab Activation ─────────────────────────────────────────────────────────
+
+  _activateDefaultTab() {
+    const defaultTab = this.tabs.find(t => t.active) || this.tabs[0];
+    if (defaultTab) this._activateTab(defaultTab.id, true);
+  }
+
+  _activateTab(tabId, silent = false) {
+    if (this.activeTabId === tabId) return;
+    this.activeTabId = tabId;
+
+    // Tab buttons
+    const allTabBtns = this.el.querySelectorAll('.mtk-biab__tab-btn');
+    allTabBtns.forEach(btn => {
+      const isActive = btn.dataset.tabId === tabId;
+      btn.classList.toggle('is-active', isActive);
+      btn.setAttribute('aria-selected', String(isActive));
+      btn.tabIndex = isActive ? 0 : -1;
+    });
+
+    // Tab panels — use visibility to avoid layout reflow
+    const allPanels = this.el.querySelectorAll('.mtk-biab__tab-panel');
+    allPanels.forEach(panel => {
+      const isActive = panel.dataset.panelId === tabId;
+      panel.classList.toggle('is-active', isActive);
+      panel.hidden = !isActive;
+      panel.style.display = isActive ? '' : 'none';
+    });
+
+    if (!silent) {
+      this._publish(this.events.publish.tabChange, { tabId });
+    }
+  }
+
+  // ── Item Activation ────────────────────────────────────────────────────────
+
+  _activateItem(tabId, itemId, menuId, clickedBtn, silent = false) {
+    // Deactivate previous item buttons in this tab
+    const prevBtns = this.el.querySelectorAll(
+      `#mtk-biab-panel-${tabId} .mtk-biab__sidebar-item-btn.is-active`
+    );
+    prevBtns.forEach(b => {
+      b.classList.remove('is-active');
+      b.setAttribute('aria-current', 'false');
+    });
+
+    // Activate clicked button
+    const btn = clickedBtn || this.el.querySelector(
+      `[data-tab-id="${tabId}"][data-item-id="${itemId}"].mtk-biab__sidebar-item-btn`
+    );
+    if (btn) {
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-current', 'true');
+    }
+
+    // Hide empty state
+    const empty = this.el.querySelector(`#mtk-biab-empty-${tabId}`);
+    if (empty) empty.style.display = 'none';
+
+    // Deactivate all content panels in this tab
+    const prevPanels = this.el.querySelectorAll(
+      `#mtk-biab-panel-${tabId} .mtk-biab__content-panel.is-active`
+    );
+    prevPanels.forEach(p => p.classList.remove('is-active'));
+
+    // Activate target content panel
+    const targetPanel = this.el.querySelector(
+      `#mtk-biab-content-${tabId}-${itemId}`
+    );
+    if (targetPanel) {
+      targetPanel.classList.add('is-active');
+      targetPanel.focus({ preventScroll: true });
+
+      // Reset any previously expanded guide body back to collapsed
+      targetPanel.querySelectorAll('.mtk-biab__guide-header').forEach(h => h.remove());
+      // Only reset items that have tool wizards (others are always expanded)
+      const hasPricingId = itemId && itemId.startsWith('pricing-');
+      const hasTool = targetPanel.querySelector('[data-biab-tool]');
+      if (!hasPricingId && hasTool) {
+      targetPanel.querySelectorAll('.mtk-biab__content-body').forEach(b => {
+        if (!b.querySelector('[data-biab-tool]') && !b.hasAttribute('hidden')) {
+          b.setAttribute('hidden', '');
+          b.classList.add('mtk-biab__content-body--collapsed');
+          // Restore hidden h3 and badge
+          b.querySelectorAll('h3').forEach(h => h.style.display = '');
+          const badge = b.querySelector('p > span[style*="border-radius:999px"]');
+          if (badge && badge.closest('p')) badge.closest('p').style.display = '';
+          // Re-insert Read More link if missing
+          if (!targetPanel.querySelector('.mtk-biab__read-more-link')) {
+            const link = document.createElement('a');
+            link.href = '#';
+            link.className = 'mtk-biab__read-more-link';
+            link.dataset.action = 'expand-body';
+            link.innerHTML = '<span class="material-icons">menu_book</span> Guides. Read More…';
+            b.insertAdjacentElement('afterend', link);
+          }
+        }
+      });
+      } // end pricing check
+    }
+
+    this._renderDynamicPanels();
+
+    // Update state
+    this.activeMenuState[tabId] = { menuId, itemId };
+
+    // Publish
+    if (!silent) {
+      this._publish(this.events.publish.itemSelect, { tabId, menuId, itemId });
+    }
+  }
+
+  // ── Expand Menu ────────────────────────────────────────────────────────────
+
+  _expandMenu(tabId, menuId) {
+    const itemsEl = this.el.querySelector(`#mtk-biab-menu-items-${tabId}-${menuId}`);
+    const headerBtn = this.el.querySelector(
+      `[data-action="toggle-menu"][data-tab-id="${tabId}"][data-menu-id="${menuId}"]`
+    );
+    if (!itemsEl) return;
+    itemsEl.classList.remove('is-collapsed');
+    if (headerBtn) {
+      headerBtn.classList.remove('is-collapsed');
+      headerBtn.setAttribute('aria-expanded', 'true');
+    }
+  }
+
+  _getDefaultLogoDesignerState() {
+    return {
+      businessName: 'Harbor Lock & Key',
+      tagline: 'Mobile locksmith, rekeys, and access upgrades',
+      iconKey: 'precision-key',
+      paletteKey: 'midnight-brass',
+      fontKey: 'outfit-manrope',
+      templateKey: 'service-wordmark',
+      variationKey: 'horizontal',
+      customLogo: ''
+    };
+  }
+
+  _setLogoDesignerState(field, value) {
+    if (!field || typeof value === 'undefined') return;
+    this.logoDesignerState[field] = value;
+    this._renderDynamicPanels();
+  }
+
+  _renderDynamicPanels() {
+    this._renderLogoConceptsPanel();
+    this._renderLogoGuidelinesPanel();
+    this._renderLogoVariationsPanel();
+    this._renderStationeryPanels();
+  }
+
+  _renderToolPanels() {
+    this._renderBusinessPlanTool();
+    this._renderStartupTool();
+    this._renderInvoiceTool();
+    this._renderAutomationTool();
+    this._renderGuidedSetups();
+    this._renderReviewsTool();
+  }
+
+  _renderLogoConceptsPanel() {
+    const mount = this.el.querySelector('[data-logo-designer-panel="concepts"]');
+    if (!mount) return;
+
+    const state = this.logoDesignerState;
+    const icon = this._getLogoResource(MTK_BIAB_LOGO_ICONS, state.iconKey);
+    const palette = this._getLogoResource(MTK_BIAB_LOGO_PALETTES, state.paletteKey);
+    const font = this._getLogoResource(MTK_BIAB_LOGO_FONTS, state.fontKey);
+    const template = this._getLogoResource(MTK_BIAB_LOGO_TEMPLATES, state.templateKey);
+    const variation = this._getLogoResource(MTK_BIAB_LOGO_VARIATIONS, state.variationKey);
+
+    mount.innerHTML = `
+      <section class="mtk-biab__logo-designer">
+        <div class="mtk-biab__logo-note">
+          <strong>Step 1:</strong> choose the name, tagline, logo source, color system, font system, and template direction. Then apply the approved mark to the Website Maker.
+        </div>
+
+        <div class="mtk-biab__logo-preview-area mtk-biab__logo-preview-area--hero">
+          <div class="mtk-biab__logo-preview-summary">
+            <span class="mtk-biab__logo-badge">Research-based starter direction</span>
+            <h3>${template.label}</h3>
+            <p>${template.description}</p>
+            <div class="mtk-biab__logo-actions">
+              <button type="button" class="mtk-biab__action-btn" data-action="logo-upload">${this._t('uploadLogo')}</button>
+              <button type="button" class="mtk-biab__action-btn mtk-biab__action-btn--primary" data-action="logo-apply-to-client">${this._t('applyLogo')}</button>
+            </div>
+            <ul>
+              <li><strong>Chosen icon:</strong> ${icon.label}</li>
+              <li><strong>Chosen palette:</strong> ${palette.label}</li>
+              <li><strong>Chosen font system:</strong> ${font.label}</li>
+              <li><strong>Chosen primary variation:</strong> ${variation.label}</li>
+            </ul>
+          </div>
+
+          <div class="mtk-biab__logo-preview-grid mtk-biab__logo-preview-grid--concepts">
+            ${this._buildLogoPreviewCard('Primary concept', this._buildLogoMarkup(state, 'primary-dark'), palette.surface, palette.textOnDark, false, 'hero')}
+            ${this._buildLogoPreviewCard('Light-background concept', this._buildLogoMarkup(state, 'primary-light'), '#ffffff', palette.textOnLight, true)}
+            ${this._buildLogoPreviewCard('Social avatar / favicon', this._buildLogoMarkup(state, 'icon-only'), palette.surfaceSoft, palette.textOnDark)}
+            ${this._buildLogoPreviewCard('Vehicle / signage lockup', this._buildLogoMarkup(state, 'horizontal-banner'), palette.surface, palette.textOnDark)}
+          </div>
+        </div>
+
+        <div class="mtk-biab__logo-controls">
+          <div class="mtk-biab__logo-controls-grid">
+            <div class="mtk-biab__logo-control-group">
+              <h3>Brand text</h3>
+              <label class="mtk-biab__logo-label">Business name
+                <input class="mtk-biab__logo-input" data-logo-field="businessName" type="text" maxlength="40" value="${this._escapeHtml(state.businessName)}">
+              </label>
+              <label class="mtk-biab__logo-label">Tagline
+                <input class="mtk-biab__logo-input" data-logo-field="tagline" type="text" maxlength="70" value="${this._escapeHtml(state.tagline)}">
+              </label>
+            </div>
+
+            <div class="mtk-biab__logo-control-group">
+              <h3>Icon library</h3>
+              <p>Choose one clear symbol for your logo. Simple icons stay readable on vans, invoices, and social avatars.</p>
+              ${state.customLogo ? '<p><strong>Custom logo uploaded.</strong> It will be used in previews and stationery until another logo is chosen.</p>' : ''}
+              <div class="mtk-biab__logo-option-grid">
+                ${MTK_BIAB_LOGO_ICONS.map(option => `
+                  <button type="button" class="mtk-biab__logo-option-card${option.key === state.iconKey ? ' is-active' : ''}" data-action="logo-set-icon" data-logo-value="${option.key}">
+                    <span class="mtk-biab__logo-option-icon" style="--logo-option-color:${palette.primary};--logo-bg:${palette.surface};">${option.svg}</span>
+                    <span class="mtk-biab__logo-option-title">${option.label}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="mtk-biab__logo-control-group">
+              <h3>Color schemes</h3>
+              <p>Each scheme is built for contrast, visibility, and a professional locksmith brand feel.</p>
+              <div class="mtk-biab__logo-option-grid">
+                ${MTK_BIAB_LOGO_PALETTES.map(option => `
+                  <button type="button" class="mtk-biab__logo-swatch-card${option.key === state.paletteKey ? ' is-active' : ''}" data-action="logo-set-palette" data-logo-value="${option.key}">
+                    <span class="mtk-biab__logo-swatch-row">
+                      <span class="mtk-biab__logo-swatch" style="background:${option.surface};"></span>
+                      <span class="mtk-biab__logo-swatch" style="background:${option.primary};"></span>
+                      <span class="mtk-biab__logo-swatch" style="background:${option.accent};"></span>
+                    </span>
+                    <span class="mtk-biab__logo-option-title">${option.label}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="mtk-biab__logo-control-group">
+              <h3>Font systems</h3>
+              <div class="mtk-biab__logo-stack">
+                ${MTK_BIAB_LOGO_FONTS.map(option => `
+                  <button type="button" class="mtk-biab__logo-choice${option.key === state.fontKey ? ' is-active' : ''}" data-action="logo-set-font" data-logo-value="${option.key}">
+                    <strong style="font-family:${option.headline};">${option.label}</strong>
+                    <span>${option.rationale}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="mtk-biab__logo-control-group">
+              <h3>Template direction</h3>
+              <div class="mtk-biab__logo-stack">
+                ${MTK_BIAB_LOGO_TEMPLATES.map(option => `
+                  <button type="button" class="mtk-biab__logo-choice${option.key === state.templateKey ? ' is-active' : ''}" data-action="logo-set-template" data-logo-value="${option.key}">
+                    <strong>${option.label}</strong>
+                    <span>${option.description}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="mtk-biab__logo-control-group">
+              <h3>Primary variation</h3>
+              <div class="mtk-biab__logo-pill-row">
+                ${MTK_BIAB_LOGO_VARIATIONS.map(option => `
+                  <button type="button" class="mtk-biab__logo-pill${option.key === state.variationKey ? ' is-active' : ''}" data-action="logo-set-variation" data-logo-value="${option.key}">${option.label}</button>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  _renderLogoGuidelinesPanel() {
+    const mount = this.el.querySelector('[data-logo-designer-panel="guidelines"]');
+    if (!mount) return;
+
+    const state = this.logoDesignerState;
+    const palette = this._getLogoResource(MTK_BIAB_LOGO_PALETTES, state.paletteKey);
+    const font = this._getLogoResource(MTK_BIAB_LOGO_FONTS, state.fontKey);
+    const template = this._getLogoResource(MTK_BIAB_LOGO_TEMPLATES, state.templateKey);
+    const variation = this._getLogoResource(MTK_BIAB_LOGO_VARIATIONS, state.variationKey);
+
+    mount.innerHTML = `
+      <section class="mtk-biab__logo-guidelines">
+        <div class="mtk-biab__logo-note">
+          <strong>Step 2:</strong> review the rules that keep the logo consistent on invoices, stationery, Google profiles, vans, and the public website.
+        </div>
+        <div class="mtk-biab__logo-preview-area mtk-biab__logo-preview-area--hero">
+          ${this._buildLogoPreviewCard('Approved guideline sample', this._buildLogoMarkup(state, 'primary-dark'), palette.surface, palette.textOnDark, false, 'hero')}
+        </div>
+
+        <div class="mtk-biab__logo-preview-summary">
+          <span class="mtk-biab__logo-badge">Starter brand system</span>
+          <h3>${this._escapeHtml(state.businessName)}</h3>
+          <p>Built for simplicity, memorability, scalability, and contrast across van graphics, invoices, Google Business Profile, and web headers.</p>
+        </div>
+
+        <div class="mtk-biab__logo-guideline-grid">
+          <div class="mtk-biab__logo-guideline-card">
+            <h4>Color system</h4>
+            <p>${palette.description}</p>
+            <div class="mtk-biab__logo-swatch-row">
+              <span class="mtk-biab__logo-swatch mtk-biab__logo-swatch--large" style="background:${palette.surface};"></span>
+              <span class="mtk-biab__logo-swatch mtk-biab__logo-swatch--large" style="background:${palette.primary};"></span>
+              <span class="mtk-biab__logo-swatch mtk-biab__logo-swatch--large" style="background:${palette.accent};"></span>
+            </div>
+            <ul>
+              <li><strong>Base:</strong> ${palette.surface}</li>
+              <li><strong>Primary:</strong> ${palette.primary}</li>
+              <li><strong>Accent:</strong> ${palette.accent}</li>
+            </ul>
+          </div>
+
+          <div class="mtk-biab__logo-guideline-card">
+            <h4>Typography</h4>
+            <p>${font.rationale}</p>
+            <div class="mtk-biab__logo-font-demo">
+              <div style="font-family:${font.headline};">Primary wordmark face</div>
+              <div style="font-family:${font.body};">Support copy / tagline face</div>
+            </div>
+            <ul>
+              <li>Use the headline face for the business name only.</li>
+              <li>Use the support face for taglines, subheads, and stationery body copy.</li>
+              <li>Keep tracking tight and avoid stretching or outlining the type.</li>
+            </ul>
+          </div>
+
+          <div class="mtk-biab__logo-guideline-card">
+            <h4>Layout rules</h4>
+            <ul>
+              <li><strong>Template:</strong> ${template.label}</li>
+              <li><strong>Primary variation:</strong> ${variation.label}</li>
+              <li>Keep icon-to-wordmark spacing consistent across every application.</li>
+              <li>Protect minimum clear space equal to half the icon width.</li>
+              <li>Never add metallic bevels, drop shadows, or tiny hardware details.</li>
+            </ul>
+          </div>
+
+          <div class="mtk-biab__logo-guideline-card">
+            <h4>Logo quality checklist</h4>
+            <ul>
+              <li>Keep the icon simple enough to recognize at small sizes.</li>
+              <li>Keep the business name readable without stretching or outlining the type.</li>
+              <li>Use the same colors across the website, invoices, Google profile, and print materials.</li>
+              <li>Check the logo on a white invoice, dark website header, shirt, and vehicle graphic.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  _renderLogoVariationsPanel() {
+    const mount = this.el.querySelector('[data-logo-designer-panel="variations"]');
+    if (!mount) return;
+
+    const state = this.logoDesignerState;
+    const palette = this._getLogoResource(MTK_BIAB_LOGO_PALETTES, state.paletteKey);
+
+    mount.innerHTML = `
+      <section class="mtk-biab__logo-variations">
+        <div class="mtk-biab__logo-note">
+          <strong>Step 3:</strong> review the logo versions you can use across the website, social profiles, favicon, invoices, and vehicle graphics.
+        </div>
+
+        <div class="mtk-biab__logo-preview-area mtk-biab__logo-preview-area--hero">
+          ${this._buildLogoPreviewCard('Primary selected variation', this._buildLogoMarkup(state, 'primary-dark'), palette.surface, palette.textOnDark, false, 'hero')}
+        </div>
+
+        <div class="mtk-biab__logo-preview-grid">
+          ${this._buildLogoPreviewCard('Dark background primary', this._buildLogoMarkup(state, 'primary-dark'), palette.surface, palette.textOnDark)}
+          ${this._buildLogoPreviewCard('White background primary', this._buildLogoMarkup(state, 'primary-light'), '#ffffff', palette.textOnLight, true)}
+          ${this._buildLogoPreviewCard('One-color mark', this._buildLogoMarkup(state, 'mono'), '#f3f4f6', '#111827', true)}
+          ${this._buildLogoPreviewCard('Badge / favicon', this._buildLogoMarkup(state, 'icon-only'), palette.surfaceSoft, palette.textOnDark)}
+          ${this._buildLogoPreviewCard('Stacked social format', this._buildLogoMarkup(state, 'stacked'), '#ffffff', palette.textOnLight, true)}
+          ${this._buildLogoPreviewCard('Service van banner', this._buildLogoMarkup(state, 'horizontal-banner'), palette.surface, palette.textOnDark)}
+        </div>
+      </section>
+    `;
+  }
+
+  _buildLogoPreviewCard(label, markup, background, textColor, isLight = false, size = 'standard') {
+    const cardClass = isLight ? ' mtk-biab__logo-preview-card--light' : '';
+    const sizeClass = size === 'hero' ? ' mtk-biab__logo-preview-card--hero' : '';
+    return `
+      <article class="mtk-biab__logo-preview-card${cardClass}${sizeClass}">
+        <div class="mtk-biab__logo-preview-label">${label}</div>
+        <div class="mtk-biab__logo-preview-canvas" style="background:${background};color:${textColor};">
+          ${markup}
+        </div>
+      </article>
+    `;
+  }
+
+  _buildLogoMarkup(state, variant) {
+    const palette = this._getLogoResource(MTK_BIAB_LOGO_PALETTES, state.paletteKey);
+    const font = this._getLogoResource(MTK_BIAB_LOGO_FONTS, state.fontKey);
+    const icon = this._getLogoResource(MTK_BIAB_LOGO_ICONS, state.iconKey);
+    const template = this._getLogoResource(MTK_BIAB_LOGO_TEMPLATES, state.templateKey);
+    const businessName = this._escapeHtml(state.businessName || 'Your Locksmith Brand');
+    const tagline = this._escapeHtml(state.tagline || 'Residential, commercial, automotive');
+    const isMono = variant === 'mono';
+    const iconColor = isMono ? '#111827' : palette.primary;
+    const bgColor = variant === 'primary-light' || variant === 'stacked' ? '#ffffff' : palette.surface;
+    const textColor = bgColor === '#ffffff' ? palette.textOnLight : palette.textOnDark;
+    const iconMarkup = state.customLogo
+      ? `<span class="mtk-biab__logo-mark mtk-biab__logo-mark--custom"><img src="${state.customLogo}" alt=""></span>`
+      : `<span class="mtk-biab__logo-mark" style="color:${iconColor};--logo-bg:${bgColor};">${icon.svg}</span>`;
+    const resolvedVariant = (variant === 'primary-dark' || variant === 'primary-light')
+      ? state.variationKey
+      : variant;
+
+    if (resolvedVariant === 'icon-only') {
+      return `<div class="mtk-biab__logo-lockup mtk-biab__logo-lockup--icon-only">${iconMarkup}</div>`;
+    }
+
+    if (resolvedVariant === 'stacked' || template.key === 'modern-stack') {
+      return `
+        <div class="mtk-biab__logo-lockup mtk-biab__logo-lockup--stacked" style="--logo-heading-font:${font.headline};--logo-body-font:${font.body};color:${textColor};">
+          ${iconMarkup}
+          <div class="mtk-biab__logo-copy">
+            <div class="mtk-biab__logo-name">${businessName}</div>
+            <div class="mtk-biab__logo-tagline">${tagline}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    if (resolvedVariant === 'horizontal-banner' || resolvedVariant === 'horizontal' || template.key === 'service-wordmark') {
+      return `
+        <div class="mtk-biab__logo-lockup mtk-biab__logo-lockup--horizontal" style="--logo-heading-font:${font.headline};--logo-body-font:${font.body};color:${textColor};">
+          ${iconMarkup}
+          <div class="mtk-biab__logo-copy">
+            <div class="mtk-biab__logo-name">${businessName}</div>
+            <div class="mtk-biab__logo-tagline">${tagline}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    if (resolvedVariant === 'badge' || template.key === 'trusted-shield' || template.key === 'monogram-seal') {
+      return `
+        <div class="mtk-biab__logo-lockup mtk-biab__logo-lockup--badge" style="--logo-heading-font:${font.headline};--logo-body-font:${font.body};color:${textColor};border-color:${isMono ? '#111827' : palette.primary};">
+          ${iconMarkup}
+          <div class="mtk-biab__logo-copy">
+            <div class="mtk-biab__logo-name">${businessName}</div>
+            <div class="mtk-biab__logo-tagline">${tagline}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="mtk-biab__logo-lockup mtk-biab__logo-lockup--horizontal" style="--logo-heading-font:${font.headline};--logo-body-font:${font.body};color:${textColor};">
+        ${iconMarkup}
+        <div class="mtk-biab__logo-copy">
+          <div class="mtk-biab__logo-name">${businessName}</div>
+          <div class="mtk-biab__logo-tagline">${tagline}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  _getLogoResource(collection, key) {
+    return collection.find(item => item.key === key) || collection[0];
+  }
+
+  _getLang() {
+    return (window.i18n && typeof window.i18n.getLang === 'function') ? window.i18n.getLang() : 'en';
+  }
+
+  _t(key) {
+    const lang = this._getLang();
+    return (MTK_BIAB_I18N[lang] && MTK_BIAB_I18N[lang][key]) || MTK_BIAB_I18N.en[key] || key;
+  }
+
+  _setLanguage(lang) {
+    // Update slider and active state
+    const switchEl = this.el.querySelector('.mtk-biab__lang-switch');
+    if (switchEl) {
+      const slider = switchEl.querySelector('.mtk-biab__lang-slider');
+      if (slider) slider.classList.toggle('is-es', lang === 'es');
+      switchEl.querySelectorAll('button').forEach(b => {
+        b.classList.toggle('nala-lang-active', b.dataset.lang === lang);
+      });
+    }
+    if (window.i18n && typeof window.i18n.setLang === 'function') {
+      window.i18n.setLang(lang);
+      return;
+    }
+    document.documentElement.lang = lang;
+    this._handleLanguageChanged();
+  }
+
+  _bindLanguageChanges() {
+    document.addEventListener('i18n:changed', () => this._handleLanguageChanged());
+  }
+
+  _handleLanguageChanged() {
+    this._render();
+    this._renderDynamicPanels();
+    this._renderToolPanels();
+    this._activateDefaultTab();
+  }
+
+  _openLogoUpload() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = () => {
+      const file = input.files && input.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        this.logoDesignerState.customLogo = event.target.result;
+        this._renderDynamicPanels();
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  }
+
+  _buildLogoDataUrl() {
+    if (this.logoDesignerState.customLogo) return this.logoDesignerState.customLogo;
+    const state = this.logoDesignerState;
+    const palette = this._getLogoResource(MTK_BIAB_LOGO_PALETTES, state.paletteKey);
+    const name = this._escapeHtml(state.businessName || 'Your Locksmith Brand');
+    const tagline = this._escapeHtml(state.tagline || '');
+    const initials = name.split(/\s+/).map(word => word.charAt(0)).join('').slice(0, 3).toUpperCase();
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="720" height="240" viewBox="0 0 720 240">
+      <rect width="720" height="240" rx="28" fill="${palette.surface}"/>
+      <circle cx="108" cy="120" r="58" fill="${palette.primary}"/>
+      <text x="108" y="137" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" font-weight="800" fill="${palette.surface}">${initials}</text>
+      <text x="194" y="108" font-family="Arial, sans-serif" font-size="42" font-weight="800" fill="${palette.textOnDark}">${name}</text>
+      <text x="196" y="151" font-family="Arial, sans-serif" font-size="22" fill="${palette.accent}">${tagline}</text>
+    </svg>`;
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }
+
+  _applyLogoToClient() {
+    const logo = this._buildLogoDataUrl();
+    const payload = {
+      logo,
+      businessName: this.logoDesignerState.businessName,
+      tagline: this.logoDesignerState.tagline
+    };
+    try {
+      localStorage.setItem('nalaBiabLogo', JSON.stringify(payload));
+    } catch (err) {
+      wc.warn('[mtk-biab] Could not save logo locally', err);
+    }
+
+    const iframe = this.el.querySelector('#mtk-biab-iframe-website-maker');
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.postMessage({ type: 'nala:biab-logo', payload }, '*');
+    }
+
+    wc.publish('mtk-biab:logo-applied', payload);
+    if (window.MTKMsgs && typeof MTKMsgs.show === 'function') {
+      MTKMsgs.show({ type: 'success', icon: 'success', message: this._t('logoApplied'), closable: true, timer: 5 });
+    }
+  }
+
+  _getDefaultFormState() {
+    return {
+      'business-plan': {
+        businessName: 'Harbor Lock & Key',
+        ownerName: '',
+        serviceArea: '',
+        businessWebsite: this._getPrebuiltWebsiteUrl(),
+        launchServices: 'House lockouts, rekeys, lock changes, deadbolt installation, mailbox/cabinet locks, car lockouts, basic commercial lock service',
+        futureServices: 'Master key systems, panic hardware, door closers, access control, safe work, automotive key programming',
+        customerFocus: 'Homeowners, drivers, property managers, small businesses, realtors, commercial offices',
+        differentiator: 'Clear pricing, professional arrival, clean work, ETA updates, detailed invoices, and review follow-up.',
+        startupNeeds: 'Business registration, EIN, bank account, insurance, phone, domain, website, Google Business Profile, email, logo, vehicle setup, tools, payment processor, invoicing, and bookkeeping.',
+        launchGoal: 'Book the first 25 paid locksmith jobs and collect 10 reviews.',
+        pricingPlan: 'Use fixed service call pricing plus itemized labor and parts.',
+        marketingPlan: 'Google Business Profile, local SEO, review requests, referral partners, social proof content, and tightly targeted ads.',
+        operationsPlan: 'Confirm the issue, quote clearly, send ETA updates, verify authorization, complete and test the work, collect payment, send the invoice, request a review, and save job notes.',
+        weeklyMetrics: 'Calls received, booked jobs, completed jobs, average ticket, gross revenue, ad spend, cost per booked job, review count, repeat customers, and net cash after expenses.'
+      },
+      'startup-checklist': {
+        legal: '',
+        phoneEmail: '',
+        website: this._getPrebuiltWebsiteUrl(),
+        profile: '',
+        logoBrand: '',
+        insurance: '',
+        payments: '',
+        vehicleTools: '',
+        launch: '',
+        hoursArea: '',
+        callHandling: '',
+        authorizationPolicy: '',
+        paymentScheduling: '',
+        documentationPolicy: '',
+        followupPolicy: '',
+        inventoryReview: '',
+        financeReview: '',
+        marketingReview: '',
+        scheduleReview: ''
+      },
+      'invoice-setup': {
+        businessName: 'Harbor Lock & Key',
+        invoicePrefix: 'HLK',
+        invoiceDate: new Date().toISOString().slice(0, 10),
+        legalName: 'Harbor Lock & Key LLC',
+        dbaName: '',
+        businessAddress: '',
+        businessPhone: '',
+        businessEmail: '',
+        businessWebsite: this._getPrebuiltWebsiteUrl(),
+        customerName: '',
+        serviceAddress: '',
+        billingAddress: '',
+        workDescription: 'Opened front entry door using non-destructive methods where possible, rekeyed 2 cylinders, cut 4 keys, tested operation with customer, and confirmed proper latch and key function before leaving.',
+        laborLine: 'Mobile service call and locksmith labor',
+        partsLine: 'Cylinders, keys, and hardware installed',
+        subtotal: '',
+        taxAmount: '',
+        totalAmount: '',
+        paymentTerms: 'Due on receipt',
+        paymentMethod: '',
+        paymentStatus: 'Unpaid',
+        technician: '',
+        taxLine: 'Sales tax shown separately where applicable',
+        warranty: 'Workmanship warranty applies to installed parts and labor unless otherwise stated.',
+        licenseNumber: '',
+        authorizationNote: 'Customer authorization confirmed before work began.',
+        afterHoursDisclosure: ''
+      }
+    };
+  }
+
+  _getDefaultReviewState() {
+    return {
+      request: {
+        customerName: '',
+        customerEmail: '',
+        jobType: ''
+      },
+      reviews: []
+    };
+  }
+
+  _getPrebuiltWebsiteUrl() {
+    const origin = window.location.origin || 'https://nala-test.com';
+    const uid = this._getReviewUid ? this._getReviewUid() : 'U12345';
+    const query = uid ? '?nalaUID=' + encodeURIComponent(uid) : '';
+    return `${origin}/repo_deploy/client/index.html${query}`;
+  }
+
+  _isGeneratedPrebuiltWebsiteUrl(value) {
+    return /^https?:\/\/[^/]+\/repo_deploy\/client\/index\.html(?:\?nalaUID=[A-Za-z0-9_-]+)?$/.test(String(value || '').trim());
+  }
+
+  _syncPrebuiltWebsiteLink() {
+    const url = this._getPrebuiltWebsiteUrl();
+    [
+      ['business-plan', 'businessWebsite'],
+      ['startup-checklist', 'website'],
+      ['invoice-setup', 'businessWebsite']
+    ].forEach(([tool, field]) => {
+      const state = this.formState[tool];
+      if (!state) return;
+      const current = state[field];
+      if (!current || this._isGeneratedPrebuiltWebsiteUrl(current)) {
+        state[field] = url;
+      }
+    });
+  }
+
+  _moveToolStep(tool, direction) {
+    const steps = this._getToolSteps(tool);
+    const current = this.formSteps[tool] || 0;
+    // Mark current step as complete when moving forward
+    if (direction > 0) {
+      if (!this.completedSteps[tool]) this.completedSteps[tool] = new Set();
+      this.completedSteps[tool].add(current);
+      this._updateSidebarStepBadge(tool, current, true);
+    }
+    this.formSteps[tool] = Math.max(0, Math.min(steps.length - 1, current + direction));
+    this._renderToolPanels();
+    // Update content-title h2 to match current step
+    this._updateContentTitle(tool);
+  }
+
+  _updateContentTitle(tool) {
+    const steps = this._getToolSteps(tool);
+    const stepIndex = this.formSteps[tool] || 0;
+    const step = steps[stepIndex];
+    if (!step) return;
+    // Find the active content panel that contains this tool
+    const mount = this.el.querySelector(`[data-biab-tool="${tool}"]`);
+    if (!mount) return;
+    const panel = mount.closest('.mtk-biab__content-panel');
+    if (!panel) return;
+    const h2 = panel.querySelector('.mtk-biab__content-title');
+    if (h2) h2.textContent = step.title;
+  }
+
+  _updateSidebarStepBadge(tool, stepIndex, completed) {
+    const btn = this.el.querySelector(
+      `.mtk-biab__sidebar-subitem-btn[data-tool="${tool}"][data-step="${stepIndex}"]`
+    );
+    if (!btn) return;
+    const badge = btn.querySelector('.mtk-biab__sidebar-step-num');
+    if (!badge) return;
+    if (completed) {
+      badge.innerHTML = '&#10003;';
+      badge.classList.add('is-complete');
+    } else {
+      badge.innerHTML = stepIndex + 1;
+      badge.classList.remove('is-complete');
+    }
+  }
+
+  _updateToolField(tool, field, value) {
+    if (!this.formState[tool]) return;
+    this.formState[tool][field] = value;
+    this._renderToolPreview(tool);
+  }
+
+  _getToolSteps(tool) {
+    const map = {
+      'business-plan': [
+        { title: this._t('businessInfo'), fields: ['businessName', 'ownerName', 'serviceArea', 'businessWebsite'] },
+        { title: 'Launch Services', fields: ['launchServices', 'futureServices'] },
+        { title: 'Customers & Positioning', fields: ['customerFocus', 'differentiator'] },
+        { title: 'Startup Needs', fields: ['startupNeeds'] },
+        { title: 'Pricing Strategy', fields: ['pricingPlan'] },
+        { title: this._t('marketingSetup'), fields: ['marketingPlan'] },
+        { title: this._t('operations'), fields: ['operationsPlan'] },
+        { title: 'Weekly Metrics', fields: ['weeklyMetrics'] },
+        { title: '90-Day Launch Goals', fields: ['launchGoal'] }
+      ],
+      'startup-checklist': [
+        { title: 'Before Launch: Foundation', fields: ['legal', 'phoneEmail', 'website', 'profile'] },
+        { title: 'Before Launch: Business Assets', fields: ['logoBrand', 'insurance', 'payments', 'vehicleTools', 'launch'] },
+        { title: 'Before First Job: Readiness', fields: ['hoursArea', 'callHandling', 'authorizationPolicy'] },
+        { title: 'Before First Job: Workflow', fields: ['paymentScheduling', 'documentationPolicy', 'followupPolicy'] },
+        { title: 'Weekly Operating Review', fields: ['inventoryReview', 'financeReview', 'marketingReview', 'scheduleReview'] }
+      ],
+      'invoice-setup': [
+        { title: 'Invoice Identity', fields: ['businessName', 'invoicePrefix', 'invoiceDate'] },
+        { title: 'Business Details', fields: ['legalName', 'dbaName', 'businessAddress', 'licenseNumber'] },
+        { title: this._t('contactInfo'), fields: ['businessPhone', 'businessEmail', 'businessWebsite'] },
+        { title: 'Customer & Job', fields: ['customerName', 'serviceAddress', 'billingAddress', 'technician'] },
+        { title: 'Work Performed', fields: ['workDescription', 'laborLine', 'partsLine'] },
+        { title: 'Totals & Tax', fields: ['subtotal', 'taxLine', 'taxAmount', 'totalAmount'] },
+        { title: 'Payment & Disclosures', fields: ['paymentTerms', 'paymentMethod', 'paymentStatus', 'warranty', 'authorizationNote', 'afterHoursDisclosure'] }
+      ]
+    };
+    return map[tool] || [];
+  }
+
+  _renderBusinessPlanTool() {
+    this._renderWizardTool('business-plan', 'Business Plan Builder');
+  }
+
+  _renderStartupTool() {
+    this._renderWizardTool('startup-checklist', 'Startup Checklist Builder');
+  }
+
+  _renderInvoiceTool() {
+    this._renderWizardTool('invoice-setup', 'Invoice Setup Builder');
+  }
+
+  _renderWizardTool(tool, heading) {
+    const mount = this.el.querySelector(`[data-biab-tool="${tool}"]`);
+    if (!mount) return;
+    this._syncPrebuiltWebsiteLink();
+    const steps = this._getToolSteps(tool);
+    const stepIndex = this.formSteps[tool] || 0;
+    const active = steps[stepIndex] || steps[0];
+    const state = this.formState[tool] || {};
+    mount.innerHTML = `
+      <section class="mtk-biab-tool">
+        <div class="mtk-biab-tool__head">
+          <div>
+            <span class="mtk-biab__logo-badge">${this._t('step')} ${stepIndex + 1} / ${steps.length}</span>
+          </div>
+          <div class="mtk-biab-tool__actions">
+            <button type="button" class="mtk-biab__action-btn" data-action="tool-download" data-tool="${tool}">${this._t('download')}</button>
+            <button type="button" class="mtk-biab__action-btn" data-action="tool-email" data-tool="${tool}">${this._t('email')}</button>
+          </div>
+        </div>
+        <div class="mtk-biab-tool__grid">
+          <div class="mtk-biab-tool__form">
+            ${active.fields.map(field => this._buildToolField(tool, field, state[field])).join('')}
+            <div class="mtk-biab-tool__nav">
+              <button type="button" class="mtk-biab__action-btn" data-action="tool-prev" data-tool="${tool}" ${stepIndex === 0 ? 'disabled' : ''}>${this._t('previous')}</button>
+              <button type="button" class="mtk-biab__action-btn mtk-biab__action-btn--primary" data-action="tool-next" data-tool="${tool}" ${stepIndex === steps.length - 1 ? 'disabled' : ''}>${this._t('next')}</button>
+            </div>
+          </div>
+          <article class="mtk-biab-tool__preview" data-tool-preview="${tool}">
+            ${this._buildToolDocument(tool)}
+          </article>
+        </div>
+      </section>
+    `;
+  }
+
+  _buildToolField(tool, field, value) {
+    const labels = {
+      businessName: 'Business name',
+      ownerName: 'Owner name',
+      serviceArea: 'Service area',
+      launchServices: 'Services offered at launch',
+      futureServices: 'Services to add later',
+      customerFocus: 'Customer focus',
+      differentiator: 'What makes you different',
+      startupNeeds: 'Startup needs',
+      launchGoal: 'Launch goal',
+      pricingPlan: 'Pricing plan',
+      marketingPlan: 'Marketing plan',
+      operationsPlan: 'Operations plan',
+      weeklyMetrics: 'Weekly metrics',
+      legal: 'Registration / licensing steps',
+      phoneEmail: 'Phone and email setup',
+      website: 'Website setup',
+      profile: 'Google Business Profile setup',
+      logoBrand: 'Logo and brand kit',
+      insurance: 'Insurance / compliance',
+      payments: 'Payments and bookkeeping',
+      vehicleTools: 'Vehicle, tools, and inventory',
+      launch: 'Launch-day checklist',
+      hoursArea: 'Hours and service area',
+      callHandling: 'Call answering and ETA workflow',
+      authorizationPolicy: 'Authorization verification policy',
+      paymentScheduling: 'Payment and scheduling method',
+      documentationPolicy: 'Photo, notes, and invoice workflow',
+      followupPolicy: 'Cancellation and review follow-up workflow',
+      inventoryReview: 'Inventory and equipment review',
+      financeReview: 'Invoices, quotes, and profitability review',
+      marketingReview: 'Ad spend and review monitoring',
+      scheduleReview: 'Next-week schedule planning',
+      invoicePrefix: 'Invoice prefix',
+      invoiceDate: 'Invoice date',
+      legalName: 'Business legal name',
+      dbaName: 'DBA if used',
+      businessAddress: 'Business address / mailing address',
+      businessPhone: 'Business phone',
+      businessEmail: 'Business email',
+      businessWebsite: 'Prebuilt website link',
+      customerName: 'Customer name',
+      serviceAddress: 'Service address',
+      billingAddress: 'Billing address if different',
+      workDescription: 'Clear description of work performed',
+      laborLine: 'Itemized labor',
+      partsLine: 'Itemized parts / hardware',
+      subtotal: 'Subtotal',
+      paymentTerms: 'Payment terms',
+      paymentMethod: 'Payment method',
+      paymentStatus: 'Payment status',
+      technician: 'Technician name or ID',
+      taxLine: 'Tax line',
+      taxAmount: 'Tax amount',
+      totalAmount: 'Total',
+      warranty: 'Warranty / disclosure',
+      licenseNumber: 'License number if required',
+      authorizationNote: 'Authorization note',
+      afterHoursDisclosure: 'After-hours fee disclosure'
+    };
+    return `
+      <label class="mtk-biab-tool__field">${labels[field] || field}
+        <textarea data-tool="${tool}" data-tool-field="${field}" rows="3">${this._escapeHtml(value || '')}</textarea>
+      </label>
+    `;
+  }
+
+  _renderToolPreview(tool) {
+    const target = this.el.querySelector(`[data-tool-preview="${tool}"]`);
+    if (target) target.innerHTML = this._buildToolDocument(tool);
+  }
+
+  _buildToolSummarySection(title, rows) {
+    return `
+      <section class="mtk-biab-tool-doc__section">
+        <h4>${this._escapeHtml(title)}</h4>
+        ${rows.map(([label, value]) => `
+          <p><strong>${this._escapeHtml(label)}:</strong> ${this._escapeHtml(value || 'Not set')}</p>
+        `).join('')}
+      </section>
+    `;
+  }
+
+  _buildToolDocument(tool) {
+    const s = this.formState[tool] || {};
+    if (tool === 'startup-checklist') {
+      return `
+        <div class="mtk-biab-tool-doc">
+          <h3>${this._t('finalDocument')}</h3>
+          ${this._buildToolSummarySection('Before Launch: Foundation', [
+            ['Registration / licensing', s.legal],
+            ['Phone and email', s.phoneEmail],
+            ['Website', s.website],
+            ['Google Business Profile', s.profile]
+          ])}
+          ${this._buildToolSummarySection('Before Launch: Business Assets', [
+            ['Logo and brand kit', s.logoBrand],
+            ['Insurance / compliance', s.insurance],
+            ['Payments and bookkeeping', s.payments],
+            ['Vehicle, tools, and inventory', s.vehicleTools],
+            ['Launch-day checklist', s.launch]
+          ])}
+          ${this._buildToolSummarySection('Before First Job', [
+            ['Hours and service area', s.hoursArea],
+            ['Call answering and ETA workflow', s.callHandling],
+            ['Authorization verification', s.authorizationPolicy],
+            ['Payment and scheduling', s.paymentScheduling],
+            ['Photo, notes, and invoice workflow', s.documentationPolicy],
+            ['Cancellation and review follow-up', s.followupPolicy]
+          ])}
+          ${this._buildToolSummarySection('Weekly Operating Review', [
+            ['Inventory and equipment', s.inventoryReview],
+            ['Invoices, quotes, and profitability', s.financeReview],
+            ['Ad spend and reviews', s.marketingReview],
+            ['Next-week schedule', s.scheduleReview]
+          ])}
+        </div>
+      `;
+    }
+    if (tool === 'invoice-setup') {
+      return `
+        <div class="mtk-biab-invoice">
+          <div class="mtk-biab-invoice__header">
+            <div>
+              <h3>${this._escapeHtml(s.businessName || 'Invoice Setup')}</h3>
+              <p>${this._escapeHtml(s.legalName || s.businessName || 'Business legal name')}</p>
+              ${s.dbaName ? `<p>DBA: ${this._escapeHtml(s.dbaName)}</p>` : ''}
+            </div>
+            <div class="mtk-biab-invoice__meta">
+              <h4>${this._escapeHtml(s.invoicePrefix || 'INV')}-0001</h4>
+              <p><strong>Date:</strong> ${this._escapeHtml(s.invoiceDate || 'Not set')}</p>
+              <p><strong>Status:</strong> ${this._escapeHtml(s.paymentStatus || 'Not set')}</p>
+            </div>
+          </div>
+          <div class="mtk-biab-invoice__parties">
+            <div>
+              <h4>Business</h4>
+              <p>${this._escapeHtml(s.businessAddress || 'Business address / mailing address')}</p>
+              <p>${this._escapeHtml(s.businessPhone || 'Business phone')}<br>${this._escapeHtml(s.businessEmail || 'Business email')}<br>${this._escapeHtml(s.businessWebsite || 'Business website')}</p>
+              <p><strong>License:</strong> ${this._escapeHtml(s.licenseNumber || 'If required in the area')}</p>
+            </div>
+            <div>
+              <h4>Customer</h4>
+              <p><strong>Name:</strong> ${this._escapeHtml(s.customerName || 'Customer name')}</p>
+              <p><strong>Service address:</strong> ${this._escapeHtml(s.serviceAddress || 'Service address')}</p>
+              <p><strong>Billing address:</strong> ${this._escapeHtml(s.billingAddress || 'Same as service address / not set')}</p>
+              <p><strong>Technician:</strong> ${this._escapeHtml(s.technician || 'Technician name or ID')}</p>
+            </div>
+          </div>
+          <div class="mtk-biab-invoice__work">
+            <h4>Work Performed</h4>
+            <p>${this._escapeHtml(s.workDescription || 'Clear description of work performed')}</p>
+          </div>
+          <table class="mtk-biab-invoice__table">
+            <thead><tr><th>Line item</th><th>Details</th></tr></thead>
+            <tbody>
+              <tr><td>Labor</td><td>${this._escapeHtml(s.laborLine || 'Itemized labor')}</td></tr>
+              <tr><td>Parts / hardware</td><td>${this._escapeHtml(s.partsLine || 'Itemized parts / hardware')}</td></tr>
+            </tbody>
+            <tfoot>
+              <tr><th>Subtotal</th><td>${this._escapeHtml(s.subtotal || 'Not set')}</td></tr>
+              <tr><th>Tax</th><td>${this._escapeHtml(s.taxAmount || s.taxLine || 'Shown separately where applicable')}</td></tr>
+              <tr><th>Total</th><td>${this._escapeHtml(s.totalAmount || 'Not set')}</td></tr>
+            </tfoot>
+          </table>
+          <div class="mtk-biab-invoice__terms">
+            <p><strong>Payment terms:</strong> ${this._escapeHtml(s.paymentTerms || 'Not set')}</p>
+            <p><strong>Payment method:</strong> ${this._escapeHtml(s.paymentMethod || 'Not set')}</p>
+            <p><strong>Warranty:</strong> ${this._escapeHtml(s.warranty || 'Not set')}</p>
+            <p><strong>Authorization:</strong> ${this._escapeHtml(s.authorizationNote || 'Not set')}</p>
+            <p><strong>After-hours fee:</strong> ${this._escapeHtml(s.afterHoursDisclosure || 'Not set')}</p>
+          </div>
+        </div>
+      `;
+    }
+    return `
+      <div class="mtk-biab-tool-doc">
+        <h3>${this._escapeHtml(s.businessName || 'Business Plan')}</h3>
+        ${this._buildToolSummarySection('Business Info', [
+          ['Owner', s.ownerName],
+          ['Service area', s.serviceArea],
+          ['Prebuilt website link', s.businessWebsite]
+        ])}
+        ${this._buildToolSummarySection('Services', [
+          ['Launch services', s.launchServices],
+          ['Services to add later', s.futureServices]
+        ])}
+        ${this._buildToolSummarySection('Customers & Positioning', [
+          ['Customer focus', s.customerFocus],
+          ['What makes you different', s.differentiator]
+        ])}
+        ${this._buildToolSummarySection('Operating Plan', [
+          ['Startup needs', s.startupNeeds],
+          ['Pricing strategy', s.pricingPlan],
+          ['Marketing plan', s.marketingPlan],
+          ['Operations plan', s.operationsPlan],
+          ['Weekly metrics', s.weeklyMetrics],
+          ['90-day launch goals', s.launchGoal]
+        ])}
+      </div>
+    `;
+  }
+
+  _downloadToolDocument(tool) {
+    const html = `<!doctype html><html><head><meta charset="utf-8"><title>${tool}</title></head><body>${this._buildToolDocument(tool)}</body></html>`;
+    const blob = new Blob([html], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `${tool}-${new Date().toISOString().slice(0, 10)}.html`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  _emailToolDocument(tool) {
+    const text = this._buildToolDocument(tool).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    window.location.href = `mailto:?subject=${encodeURIComponent(tool.replace(/-/g, ' '))}&body=${encodeURIComponent(text)}`;
+  }
+
+  _renderGuidedSetups() {
+    const mounts = this.el.querySelectorAll('[data-biab-guided-setup]');
+    mounts.forEach(mount => this._renderGuidedSetup(mount.dataset.biabGuidedSetup));
+  }
+
+  _renderGuidedSetup(setupKey) {
+    const mount = this.el.querySelector(`[data-biab-guided-setup="${setupKey}"]`);
+    const setup = this.cfg.guidedSetups && this.cfg.guidedSetups[setupKey];
+    if (!mount || !setup || !Array.isArray(setup.steps) || !setup.steps.length) return;
+
+    const steps = setup.steps;
+    const activeIndex = Math.max(0, Math.min(steps.length - 1, this.guidedSetupSteps[setupKey] || 0));
+    const active = steps[activeIndex];
+    const completed = this.guidedSetupCompleted[setupKey] || new Set();
+    const completeCount = completed.size;
+    const percent = Math.round((completeCount / steps.length) * 100);
+    const isComplete = completed.has(activeIndex);
+
+    mount.innerHTML = `
+      <section class="mtk-biab-guided-setup" aria-label="${this._escapeHtml(setup.title)}">
+        <div class="mtk-biab-guided-setup__header">
+          <div>
+            <span class="mtk-biab__logo-badge">${this._escapeHtml(setup.badge || 'Starter')}</span>
+            <h3>${this._escapeHtml(setup.title)}</h3>
+            <p>${this._escapeHtml(setup.intro || '')}</p>
+          </div>
+          <div class="mtk-biab-guided-setup__meter" aria-label="${completeCount} of ${steps.length} steps complete">
+            <strong>${completeCount}/${steps.length}</strong>
+            <span>complete</span>
+          </div>
+        </div>
+        <div class="mtk-biab-guided-setup__progress" role="progressbar" aria-valuemin="0" aria-valuemax="${steps.length}" aria-valuenow="${completeCount}">
+          <span style="width:${percent}%"></span>
+        </div>
+        <div class="mtk-biab-guided-setup__layout">
+          <ol class="mtk-biab-guided-setup__list">
+            ${steps.map((step, index) => `
+              <li>
+                <button
+                  type="button"
+                  class="mtk-biab-guided-setup__list-btn${index === activeIndex ? ' is-active' : ''}${completed.has(index) ? ' is-complete' : ''}"
+                  data-action="guided-setup-step"
+                  data-setup-key="${this._escapeHtml(setupKey)}"
+                  data-step="${index}"
+                  aria-current="${index === activeIndex ? 'step' : 'false'}"
+                >
+                  <span class="material-icons" aria-hidden="true">${completed.has(index) ? 'check_circle' : this._escapeHtml(step.icon || 'radio_button_unchecked')}</span>
+                  <span>
+                    <strong>${this._escapeHtml(step.title)}</strong>
+                    <small>${this._escapeHtml(step.summary || '')}</small>
+                  </span>
+                </button>
+              </li>
+            `).join('')}
+          </ol>
+          <article class="mtk-biab-guided-setup__detail">
+            <span class="mtk-biab-guided-setup__step-label">Step ${activeIndex + 1} of ${steps.length}</span>
+            <h4>${this._escapeHtml(active.title)}</h4>
+            <p>${this._escapeHtml(active.summary || '')}</p>
+            ${this._buildGuidedSetupDetails(active)}
+            ${this._buildGuidedSetupLinks(active)}
+            <div class="mtk-biab-guided-setup__actions">
+              <button
+                type="button"
+                class="mtk-biab__action-btn${isComplete ? '' : ' mtk-biab__action-btn--primary'}"
+                data-action="guided-setup-complete"
+                data-setup-key="${this._escapeHtml(setupKey)}"
+                data-step="${activeIndex}"
+              >${isComplete ? 'Completed' : 'Mark complete'}</button>
+            </div>
+            <p class="mtk-biab-guided-setup__done"><strong>Done means:</strong> ${this._escapeHtml(setup.done || '')}</p>
+          </article>
+        </div>
+      </section>
+    `;
+  }
+
+  _buildGuidedSetupDetails(step) {
+    if (!Array.isArray(step.details) || !step.details.length) return '';
+    return `<ul class="mtk-biab-guided-setup__details">${step.details.map(item => `<li>${this._escapeHtml(item)}</li>`).join('')}</ul>`;
+  }
+
+  _buildGuidedSetupLinks(step) {
+    if (!Array.isArray(step.links) || !step.links.length) return '';
+    return `
+      <div class="mtk-biab-guided-setup__links">
+        ${step.links.map(link => `<a class="mtk-biab-guide__link" href="${this._escapeHtml(link.href)}" target="_blank" rel="noopener">${this._escapeHtml(link.label)}</a>`).join('')}
+      </div>
+    `;
+  }
+
+  _setGuidedSetupStep(setupKey, stepIndex) {
+    if (!setupKey || Number.isNaN(stepIndex)) return;
+    this.guidedSetupSteps[setupKey] = stepIndex;
+    this._renderGuidedSetup(setupKey);
+  }
+
+  _toggleGuidedSetupComplete(setupKey, stepIndex) {
+    if (!setupKey || Number.isNaN(stepIndex)) return;
+    if (!this.guidedSetupCompleted[setupKey]) this.guidedSetupCompleted[setupKey] = new Set();
+    const completed = this.guidedSetupCompleted[setupKey];
+    if (completed.has(stepIndex)) {
+      completed.delete(stepIndex);
+    } else {
+      completed.add(stepIndex);
+    }
+    this._renderGuidedSetup(setupKey);
+  }
+
+  _renderReviewsTool() {
+    const mount = this.el.querySelector('[data-biab-tool="reviews"]');
+    if (!mount) return;
+    this._loadSavedReviewState();
+    const request = this.reviewState.request;
+    const reviews = this.reviewState.reviews;
+    const ratingTotal = reviews.reduce((sum, review) => sum + Number(review.rating || 0), 0);
+    const ratingCount = reviews.length;
+    const average = ratingCount ? (ratingTotal / ratingCount).toFixed(1) : '0.0';
+    const publishedCount = reviews.filter(review => review.published).length;
+    const reviewUrl = this._buildReviewUrl();
+
+    mount.innerHTML = `
+      <section class="mtk-biab-tool mtk-biab-reviews">
+        <div class="mtk-biab-tool__head">
+          <div>
+            <span class="mtk-biab__logo-badge">${this._t('allRatingsCount')}</span>
+            <h3>Review Requests</h3>
+            <p>${this._t('reviewsIntro')}</p>
+          </div>
+          <div class="mtk-biab-reviews__score" aria-label="Current rating">
+            <strong>${average}</strong>
+            <span>${'★'.repeat(Math.round(Number(average)))}</span>
+            <small>${ratingCount} ratings · ${publishedCount} shown</small>
+          </div>
+        </div>
+
+        <div class="mtk-biab-tool__grid">
+          <form class="mtk-biab-tool__form" onsubmit="return false">
+            <label class="mtk-biab-tool__field">${this._t('customerName')}
+              <input data-review-field="customerName" type="text" value="${this._escapeHtml(request.customerName)}" placeholder="Jane Customer">
+            </label>
+            <label class="mtk-biab-tool__field">${this._t('customerEmail')}
+              <input data-review-field="customerEmail" type="email" value="${this._escapeHtml(request.customerEmail)}" placeholder="jane@example.com">
+            </label>
+            <label class="mtk-biab-tool__field">${this._t('jobType')}
+              <textarea data-review-field="jobType" rows="3" placeholder="Rekey, lockout, lock change...">${this._escapeHtml(request.jobType)}</textarea>
+            </label>
+            <label class="mtk-biab-tool__field">${this._t('publicReviewLink')}
+              <input type="text" readonly value="${this._escapeHtml(reviewUrl)}">
+            </label>
+            <button type="button" class="mtk-biab__action-btn mtk-biab__action-btn--primary mtk-biab-reviews__send" data-action="review-send-request">
+              ${this._t('sendReviewRequest')}
+            </button>
+          </form>
+
+          <article class="mtk-biab-tool__preview">
+            <h3>${this._t('publishedReviews')}</h3>
+            <p>Written reviews can be hidden from the public webpage, but the rating number remains part of the business average.</p>
+            <div class="mtk-biab-reviews__list">
+              ${reviews.length ? reviews.map(review => this._buildReviewModerationCard(review)).join('') : '<p>No customer reviews have been submitted yet.</p>'}
+            </div>
+          </article>
+        </div>
+      </section>
+    `;
+  }
+
+  _buildReviewModerationCard(review) {
+    const status = review.published ? this._t('visibleOnWebsite') : this._t('hiddenOnWebsite');
+    return `
+      <article class="mtk-biab-reviews__card${review.published ? ' is-published' : ''}">
+        <div>
+          <strong>${this._escapeHtml(review.customerName)}</strong>
+          <span class="mtk-biab-reviews__stars">${'★'.repeat(Number(review.rating || 0))}</span>
+          <small>${this._escapeHtml(review.createdAt)}</small>
+        </div>
+        <p>${this._escapeHtml(review.text)}</p>
+        <button type="button" class="mtk-biab__action-btn" data-action="review-toggle-published" data-review-id="${this._escapeHtml(review.id)}">
+          ${status}
+        </button>
+      </article>
+    `;
+  }
+
+  _getReviewUid() {
+    let uid = (window.config && window.config.nalaUID) || '';
+    try {
+      const iframe = this.el.querySelector('#mtk-biab-iframe-website-maker');
+      const profile = iframe && iframe.contentWindow && iframe.contentWindow._clientProfileInstance;
+      if (profile && profile.data && profile.data.nalaUID) uid = profile.data.nalaUID;
+    } catch (err) {
+      wc.warn('[mtk-biab] Could not read Website Maker profile UID', err);
+    }
+    return uid || 'U12345';
+  }
+
+  _buildReviewUrl(token = '') {
+    const origin = window.location.origin || '';
+    const uid = this._getReviewUid();
+    const tokenQuery = token ? `&token=${encodeURIComponent(token)}` : '';
+    return `${origin}/repo_deploy/client/review.html?nalaUID=${encodeURIComponent(uid)}${tokenQuery}`;
+  }
+
+  _sendReviewRequest() {
+    const request = this.reviewState.request;
+    const token = this._createReviewToken();
+    const payload = {
+      nalaUID: this._getReviewUid(),
+      token,
+      customerName: request.customerName.trim(),
+      customerEmail: request.customerEmail.trim(),
+      jobType: request.jobType.trim(),
+      reviewUrl: this._buildReviewUrl(token)
+    };
+
+    if (!payload.customerName || !payload.customerEmail) {
+      if (window.MTKMsgs && typeof MTKMsgs.show === 'function') {
+        MTKMsgs.show({ type: 'error', icon: 'error', message: 'Add the customer name and email before sending.', closable: true, timer: 6 });
+      }
+      return;
+    }
+
+    wc.publish('mtk-biab:review-request', payload);
+    if (window.MTKMsgs && typeof MTKMsgs.show === 'function') {
+      MTKMsgs.show({ type: 'success', icon: 'success', message: 'Review request queued for email delivery.', closable: true, timer: 6 });
+    }
+    this.reviewState.request = { customerName: '', customerEmail: '', jobType: '' };
+    this._renderReviewsTool();
+  }
+
+  _createReviewToken() {
+    if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+      return window.crypto.randomUUID();
+    }
+    return 'review-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+  }
+
+  _loadSavedReviewState() {
+    const uid = this._getReviewUid();
+    if (!uid || this.reviewsLoadedForUid === uid || !window.fetch) return;
+    this.reviewsLoadedForUid = uid;
+
+    fetch((window.wc && wc.apiURL ? wc.apiURL : '') + `/api/business_in_a_box_reviews.php?nalaUID=${encodeURIComponent(uid)}`, {
+      credentials: 'include'
+    }).then(res => res.json().then(json => {
+      if (!res.ok) throw new Error((json && (json.error || json.message)) || 'Could not load reviews.');
+      return json;
+    })).then(json => {
+      if (Array.isArray(json.reviews) && json.reviews.length) {
+        this.reviewState.reviews = json.reviews;
+        this._renderReviewsTool();
+      }
+    }).catch(err => {
+      wc.warn('[mtk-biab] Could not load saved reviews', err);
+    });
+  }
+
+  _toggleReviewPublished(reviewId) {
+    const review = this.reviewState.reviews.find(item => item.id === reviewId);
+    if (!review) return;
+    review.published = !review.published;
+    wc.publish('mtk-biab:reviews-save', {
+      nalaUID: this._getReviewUid(),
+      reviews: this.reviewState.reviews,
+      rating: this._calculateReviewAverage(),
+      reviewCount: this.reviewState.reviews.length
+    });
+    this._renderReviewsTool();
+  }
+
+  _calculateReviewAverage() {
+    const reviews = this.reviewState.reviews;
+    if (!reviews.length) return 0;
+    const total = reviews.reduce((sum, review) => sum + Number(review.rating || 0), 0);
+    return Math.round((total / reviews.length) * 10) / 10;
+  }
+
+  _renderAutomationTool() {
+    const mount = this.el.querySelector('[data-biab-tool="automation-options"]');
+    if (!mount) return;
+    mount.innerHTML = `
+      <section class="mtk-biab-tool">
+        <div class="mtk-biab-tool__head"><div><h3>Automation Readiness</h3><p>${this._t('automationIntro')}</p></div></div>
+        <div class="mtk-biab-api-grid">
+          ${[
+            ['Google Ads API', 'Create accounts/campaign pieces, keywords, budgets, conversion actions after OAuth and developer-token approval.', 'https://developers.google.com/google-ads/api/docs/start'],
+            ['Business Profile APIs', 'Read and manage business locations, attributes, photos, and some profile data after account authorization.', 'https://developers.google.com/my-business'],
+            ['Search Console API', 'Add verified sites, inspect URLs, submit sitemaps, and read performance data.', 'https://developers.google.com/webmaster-tools'],
+            ['Google Analytics Admin API', 'Create/manage GA4 properties and data streams when authorized.', 'https://developers.google.com/analytics/devguides/config/admin/v1'],
+            ['Local Services Ads', 'API surface is limited compared with standard Google Ads; eligibility and screening still require Google workflows.', 'https://developers.google.com/google-ads/api/docs/campaigns/local-service-campaigns']
+          ].map(([name, detail, href]) => `<article class="mtk-biab-api-card"><h4>${name}</h4><p>${detail}</p><a class="mtk-biab-guide__link" href="${href}" target="_blank" rel="noopener">Open docs</a></article>`).join('')}
+        </div>
+      </section>
+    `;
+  }
+
+  _renderStationeryPanels() {
+    ['business-card', 'letterhead', 'envelope'].forEach(type => {
+      const mount = this.el.querySelector(`[data-stationery-designer-panel="${type}"]`);
+      if (!mount) return;
+      const logo = this._buildLogoDataUrl();
+      const state = this.logoDesignerState;
+      mount.innerHTML = `
+        <section class="mtk-biab-stationery">
+          <div class="mtk-biab-tool__head">
+            <div><span class="mtk-biab__logo-badge">Auto-filled from logo designer</span><h3>${type.replace('-', ' ')}</h3><p>Logo, business name, and tagline update automatically from the Logo Designer.</p></div>
+            <button type="button" class="mtk-biab__action-btn mtk-biab__action-btn--primary" data-action="logo-apply-to-client">${this._t('applyLogo')}</button>
+          </div>
+          <div class="mtk-biab-stationery__preview mtk-biab-stationery__preview--${type}">
+            <img src="${logo}" alt="">
+            <strong>${this._escapeHtml(state.businessName)}</strong>
+            <span>${this._escapeHtml(state.tagline)}</span>
+            <small>(555) 555-0123 · service@example.com · yourlocksmith.com</small>
+          </div>
+        </section>
+      `;
+    });
+  }
+
+  _escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+}
+
+
+// ─── Auto-init ───────────────────────────────────────────────────────────────
+// Wait for the <mtk-biab> element to appear, even when inserted via <wc-include>.
+
+(function initMtkBiab() {
+  const SELECTOR = 'mtk-biab.mtk-biab';
+
+  function tryInit() {
+    const el = document.querySelector(SELECTOR);
+    if (!el) return false;
+
+    // Guard: already initialized
+    if (el._mtkBiabInstance) return true;
+
+    const cfg = (typeof MTK_BIAB_CONFIG !== 'undefined')
+      ? MTK_BIAB_CONFIG
+      : null;
+
+    if (!cfg) {
+      console.error('[mtk-biab] MTK_BIAB_CONFIG not found. Make sure mtk-biab.config.js is loaded first.');
+      return false;
+    }
+
+    el._mtkBiabInstance = new MtkBiab(el, cfg);
+    return true;
+  }
+
+  // Try immediately (if DOM already has the element)
+  if (tryInit()) return;
+
+  // Otherwise wait for DOMContentLoaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      if (tryInit()) return;
+      observeForElement();
+    });
+  } else {
+    // DOM ready but element might be injected later (wc-include)
+    observeForElement();
+  }
+
+  function observeForElement() {
+    const observer = new MutationObserver(() => {
+      if (tryInit()) observer.disconnect();
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree:   true
+    });
+
+    // Safety timeout: stop observing after 15s
+    setTimeout(() => observer.disconnect(), 15000);
+  }
+})();
+
+

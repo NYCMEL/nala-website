@@ -4,9 +4,6 @@
 
 window.app = window.app || {};
 
-// PAGE DEFINITIONS
-// cache: "true"  = load once, reuse on revisit
-// cache: "false" = reload every time the page is shown
 window.app.pages = [
     {
         "cache": "true",
@@ -45,16 +42,16 @@ window.app.pages = [
         "url":   "<wc-include href='hierarchy/index.inc.html' />"
     },
     {
-        "cache": "true",
-        "page":  "final",
-        "label": "Final",
-        "url":   "<wc-include href='final/index.inc.html' />"
-    },
-    {
         "cache": "false",
         "page":  "settings",
         "label": "Settings",
         "url":   "<wc-include href='settings/index.inc.html' />"
+    },
+    {
+        "cache": "false",
+        "page":  "biab",
+        "label": "Business in a Box",
+        "url":   "<wc-include href='biab/index.inc.html' />"
     },
     {
         "cache": "false",
@@ -73,5 +70,5 @@ window.app.pages = [
         "page":  "alerts",
         "label": "Alerts",
         "url":   "<wc-include href='alerts/index.inc.html' />"
-    },
+    }
 ];

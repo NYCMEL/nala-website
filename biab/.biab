@@ -23,7 +23,6 @@ Data:
 
 Restrictions:
 - No frameworks.
-- No Bootstrap.
 - No external libraries.
 - Vanilla Javascript
 
@@ -42,28 +41,59 @@ Output! Create exactly these files:
 Behavior:
 - MUST WAIT for element to be available inside DOM, since i will be using <wc-include> for dynamic inclusion
 - all published (wc.publish) messages should be logged using wc.log to console before being published
+- all UI elements should use Material Design and Styles
+- all buttons & nav buttons should have 4px rounded corner
+- pick styles from css/nala.css file to start
 
-I want to create a new page for my website:
-  - page will have 5 tabs. First one selected by default
-  
-  - tabs:
-    A) Website Maker
-    B) Business Guide & Pricing
-    C) Marketing
-    D) Invoicing
+I want to create a new page for "Business in a box":
+  - page will have 5 links on the left side col-md-3 (side nav)
+  - a main page on the right col-md-9
+  - should fold into the hamberger menu in main header on mobile
+    
+  - Side nav menus:
+    1) Introduction
+    2) Website Builder
+    3) Business Card & Logo
+    5) Invoices
+    6) Customer Reviews
 
-A) display our current client page
-B) will have a side menu(s) col-md-3 with menus:
-   - Templates & Guides
-   - Per Zip Code pricing
+- Clicking "Start setup" button, should open a full page with current selection header and an "X" in a circle on the top right
+  and for now display some lorem ipsum
 
-   content should be updated based on menu selections (make a dummy lorem ipsum page for each link)
-   
-C is similar to B with the following menus:
-  - Stationary Designer
-  - Logo Designer
-  - Online Marketing Setup
+Update my UI. I am explaining each content by numbers:
+1) Introduction
+  - heading: "“Included by default — <small>no action required</small>"
+  - display a numbered dummy list of 5 items
+  - Remove "Start setup"
 
-   content should be updated based on menu selections (make a dummy lorem ipsum page for each link)
+  3) clicking on "Start setup" in the "Business Card & Logo" page:
+  - open a full screen page (same as before with "X")
+  - place the following images side-by side and allow user to select one.
+  - on an image selection, show relevant fields for user to fill and submit
+  - also add a "Back" button to go back to image selection
+  - add a header "Please select a card" 
+  - add a one paragraph lorem ipsum, below the row of card
+  images are:
+    	   img/b-card/card-1.png
+    	   img/b-card/card-2.png
+    	   img/b-card/card-3.png
 
+2) Website Builder
+   - use content from client folder
 
+5) Invoices
+  - display a table of invoices with dates, client, amount, delete, update customer email, customer phone number, etc.
+  - add a heading "Invoices:"
+  - add a "Status" dropdown with "Open", "Paid", "Draft" and other statuses next to the heading. 
+    default "Open"
+  - remove sorting on table columns
+  - remove "Overdue" & "Void"
+  - add a "New Invoice" button at the top right of this page
+  - Remove "Start setup"
+  - clicking on the "New Invoice" should open a full page showing repo_deploy/invoice with "X" in a circle
+
+6) Customer Reviews
+  - display a table of ratings with stars in one column, date and notes (single line ellipsis)
+  - add a heading "Reviews"
+  - Remove "Start setup"
+  - display dates in Descending order
