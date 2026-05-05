@@ -2,7 +2,7 @@
  * mtk-biab.js
  * Full BIAB component.
  * Reload-safe.
- * _openNewInvoice loads existing /repo_deploy/#invoice page.
+ * New Invoice opens a full-page invoice view using existing /repo_deploy/invoice with circular X close.
  */
 (function () {
   "use strict";
@@ -33,7 +33,7 @@
       this._bind();
       this._publish(this.events.publish.ready || "mtk-biab:ready", {
         component: this.config.component || "mtk-biab",
-        version: this.config.version || "1.0.12"
+        version: this.config.version || "1.0.13"
       });
     }
 
@@ -319,6 +319,7 @@
         }
 
         if (action === "close-setup") this._closeSetup();
+        if (action === "close-invoice-page") this._closeInvoicePage();
       });
 
       this.root.addEventListener("change", (event) => {
@@ -334,7 +335,10 @@
       });
 
       this.root.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") this._closeSetup();
+        if (event.key === "Escape") {
+          this._closeInvoicePage();
+          this._closeSetup();
+        }
       });
     }
 
@@ -368,14 +372,126 @@
 
     _openNewInvoice() {
       const section = this._getActiveSection();
+      this._closeSetup();
+      this._closeInvoicePage();
 
       this._publish("mtk-biab:new-invoice", {
         sectionId: this.activeId,
         section,
-        target: "invoice"
+        target: "invoice/"
       });
 
-      window.location.hash = "invoice";
+      const page = document.createElement("section");
+      page.className = "mtk-biab__invoice-page";
+      page.setAttribute("role", "dialog");
+      page.setAttribute("aria-modal", "true");
+      page.setAttribute("aria-label", "New invoice");
+
+      page.innerHTML = `
+        <style>
+          .mtk-biab__invoice-page {
+            position: fixed;
+            inset: 0;
+            z-index: 2147483647;
+            display: grid;
+            grid-template-rows: 72px 1fr;
+            background: #ffffff;
+            color: #0f172a;
+          }
+
+          .mtk-biab__invoice-page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 12px 22px;
+            border-bottom: 1px solid rgba(15, 23, 42, 0.14);
+            background: #ffffff;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+          }
+
+          .mtk-biab__invoice-page-title {
+            margin: 0;
+            font: 900 28px/1.15 "Segoe UI", system-ui, sans-serif;
+            color: #0f172a;
+          }
+
+          .mtk-biab__invoice-page-subtitle {
+            margin: 2px 0 0;
+            font: 700 12px/1.3 "Segoe UI", system-ui, sans-serif;
+            color: #a98211;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+          }
+
+          .mtk-biab__invoice-page-close {
+            width: 46px;
+            height: 46px;
+            flex: 0 0 46px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #a98211;
+            border-radius: 50%;
+            background: #ffffff;
+            color: #0f172a;
+            font-size: 30px;
+            font-weight: 900;
+            line-height: 1;
+            cursor: pointer;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
+          }
+
+          .mtk-biab__invoice-page-close:hover,
+          .mtk-biab__invoice-page-close:focus-visible {
+            background: #a98211;
+            color: #ffffff;
+            outline: 3px solid rgba(169, 130, 17, .3);
+            outline-offset: 3px;
+          }
+
+          .mtk-biab__invoice-page-frame {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            background: #ffffff;
+          }
+
+          body.mtk-biab-invoice-page-open {
+            overflow: hidden !important;
+          }
+        </style>
+
+        <header class="mtk-biab__invoice-page-header">
+          <div>
+            <p class="mtk-biab__invoice-page-subtitle">Business in a Box</p>
+            <h2 class="mtk-biab__invoice-page-title">New Invoice</h2>
+          </div>
+
+          <button class="mtk-biab__invoice-page-close" type="button" data-action="close-invoice-page" aria-label="Close invoice">
+            ×
+          </button>
+        </header>
+
+        <iframe
+          class="mtk-biab__invoice-page-frame"
+          src="invoice/"
+          title="New invoice"
+          loading="eager"
+        ></iframe>
+      `;
+
+      document.body.classList.add("mtk-biab-invoice-page-open");
+      this.root.appendChild(page);
+
+      const closeButton = page.querySelector(".mtk-biab__invoice-page-close");
+      if (closeButton) closeButton.focus();
+    }
+
+    _closeInvoicePage() {
+      const existing = this.root.querySelector(".mtk-biab__invoice-page");
+      if (existing) existing.remove();
+      document.body.classList.remove("mtk-biab-invoice-page-open");
     }
 
     _openWebsiteBuilder(section) {
