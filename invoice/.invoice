@@ -50,4 +50,6 @@ What I want:
 - reduce input label font-size
 - changing tax rage and "Service fee" should update the total accordingly
 - remove all values from config file and add a sample helper to input fields
-  place helpers inside the input fields. As material design does
+- place input field helpers inside the input fields. As material design does
+- remove "Print / Save PDF" from top
+- add a "Print" next to "Save Invoice"

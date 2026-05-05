@@ -1,15 +1,4 @@
 class MtkInvoice {
-  openFullPage() {
-    this.root.classList.add("mtk-invoice--open");
-    this._render();
-    this._bind();
-  }
-
-  closeFullPage() {
-    this.root.classList.remove("mtk-invoice--open");
-    this.root.innerHTML = "";
-  }
-
   constructor(root, config) {
     this.root = root;
     this.config = config || {};
@@ -61,10 +50,6 @@ class MtkInvoice {
       this._bind();
       this._updateTotals();
     }
-    if (topic === "4-mtk-invoice:open") {
-      this.openFullPage();
-    }
-
     if (topic === "4-mtk-invoice:set-data" && data && typeof data === "object") {
       Object.assign(this.values, data);
       this._render();
@@ -89,12 +74,7 @@ class MtkInvoice {
   _render() {
     this.root.innerHTML = `
       <section class="mtk-invoice__shell" aria-labelledby="mtk-invoice-title">
-        <div class="mtk-invoice__overlay-header">
-      <button class="mtk-invoice__close" data-action="close" aria-label="Close">
-        <span class="material-icons">close</span>
-      </button>
-    </div>
-    <div class="mtk-invoice__card">
+        <div class="mtk-invoice__card">
           <header class="mtk-invoice__header">
             <div>
               <h1 class="mtk-invoice__title" id="mtk-invoice-title">${this._escape(this.labels.title || "Locksmith Invoice")}</h1>
@@ -177,7 +157,6 @@ class MtkInvoice {
       const action = actionTarget.getAttribute("data-action");
       if (action === "print") this._print();
       if (action === "save") this._save();
-      if (action === "close") this.closeFullPage();
     });
   }
 
