@@ -25,7 +25,6 @@ Restrictions:
 - No inline styles. (All styles in  "*.scss" file)
 - No inline Javascript. (All scripts in "*.js" file)
 - No frameworks.
-- No Bootstrap.
 - No external libraries.
 - Vanilla Javascript
 - Use styles, colors, fonts etc from css/nala.scss file
