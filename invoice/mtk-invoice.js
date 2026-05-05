@@ -18,7 +18,7 @@ class MtkInvoice {
     this._updateTotals();
     this._publish(this.events.publish.ready || "mtk-invoice:ready", {
       component: this.config.component || "mtk-invoice",
-      version: this.config.version || "1.0.1"
+      version: this.config.version || "1.0.2"
     });
   }
 
@@ -140,7 +140,7 @@ class MtkInvoice {
 
               <button class="mtk-invoice__save-btn" type="button" data-action="save">
                 <span class="material-icons" aria-hidden="true">save</span>
-                <span>${this._escape(this.labels.submitLabel || "Save Invoice")}</span>
+                <span>${this._escape(this.labels.saveButton || "Save Invoice")}</span>
               </button>
             </div>
 
@@ -165,11 +165,19 @@ class MtkInvoice {
     const required = field.required ? " required" : "";
 
     if (field.type === "select") {
+      const isEmpty = !value;
+
       return `
         <div class="${fieldClass}">
           <label for="mtk-invoice-${this._escape(field.id)}">${this._escape(field.label)}</label>
-          <select id="mtk-invoice-${this._escape(field.id)}" name="${this._escape(field.id)}" data-field="${this._escape(field.id)}"${required}>
-            ${field.placeholder ? `<option value="" disabled${!value ? " selected" : ""}>${this._escape(field.placeholder)}</option>` : ""}
+          <select
+            id="mtk-invoice-${this._escape(field.id)}"
+            class="${isEmpty ? "mtk-invoice__select-placeholder" : ""}"
+            name="${this._escape(field.id)}"
+            data-field="${this._escape(field.id)}"
+            ${required}
+          >
+            <option value="" disabled${isEmpty ? " selected" : ""}>${this._escape(field.helper || "Select")}</option>
             ${(field.options || []).map((option) => `
               <option value="${this._escape(option)}"${value === option ? " selected" : ""}>${this._escape(option)}</option>
             `).join("")}
@@ -186,7 +194,7 @@ class MtkInvoice {
             id="mtk-invoice-${this._escape(field.id)}"
             name="${this._escape(field.id)}"
             data-field="${this._escape(field.id)}"
-            placeholder="${this._escape(field.placeholder || "")}"
+            placeholder="${this._escape(field.helper || "")}"
             ${required}
           >${this._escape(value)}</textarea>
         </div>
@@ -202,7 +210,7 @@ class MtkInvoice {
           data-field="${this._escape(field.id)}"
           type="${this._escape(field.type || "text")}"
           value="${this._escape(value)}"
-          placeholder="${this._escape(field.placeholder || "")}"
+          placeholder="${this._escape(field.helper || "")}"
           ${required}
         >
       </div>
@@ -228,6 +236,11 @@ class MtkInvoice {
       if (!field || !this.root.contains(field)) return;
 
       this.values[field.getAttribute("data-field")] = field.value;
+
+      if (field.tagName.toLowerCase() === "select") {
+        field.classList.toggle("mtk-invoice__select-placeholder", !field.value);
+      }
+
       this._updateTotals();
     });
 
@@ -291,11 +304,7 @@ class MtkInvoice {
     const tax = subtotal * (taxRate / 100);
     const total = subtotal + tax;
 
-    return {
-      subtotal,
-      tax,
-      total
-    };
+    return { subtotal, tax, total };
   }
 
   _getValues() {

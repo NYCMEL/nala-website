@@ -124,7 +124,7 @@ mtk-invoice.mtk-invoice textarea::placeholder {
   font-weight: 400;
   opacity: 1; }
 
-mtk-invoice.mtk-invoice select:invalid {
+mtk-invoice.mtk-invoice select.mtk-invoice__select-placeholder {
   color: #64748b;
   font-weight: 400; }
 
