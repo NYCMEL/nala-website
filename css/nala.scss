@@ -719,3 +719,10 @@ h1.title {
 }
 
 
+:root {
+  --nala-placeholder: #999;
+}
+
+::placeholder {
+  color: var(--nala-placeholder) !important;
+}
