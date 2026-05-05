@@ -1,0 +1,69 @@
+FORGET ALL PREVIOUS CONTEXT for mtk-biab and remember this as mtk-biab forever
+
+Create a reusable UI biab named mtk-biab using:
+- HTML
+- SCSS
+- Vanilla JavaScript
+- Bootstrap 5 (layout only)
+- Modern Material Design, Material Design icons and styles
+- Always create a JS class for mtk-biab and initialize it inside the JS file itself
+
+Rules:
+- The biab is wrapped in a display:block element <mtk-biab class="mtk-biab">.
+- The root element uses .mtk-biab.
+- All styles must be scoped to .mtk-biab.
+- No global styles or IDs.
+- publish click events using wc.publish
+- subscribe to all 4-mtk-biab everns using wc.subscribe
+- create a onMessage function to be passed to wc.subscribe function
+
+Data:
+- The biab is JSON driven.
+  - any and all data must come from mtk-biab.config.js file
+
+Restrictions:
+- No frameworks.
+- No Bootstrap.
+- No external libraries.
+- Vanilla Javascript
+
+Accessibility:
+- Use semantic HTML.
+- Keyboard accessible.
+- Visible focus states.
+- ADA compliant
+
+Output! Create exactly these files:
+- mtk-biab.config.js (JSON FILE)
+- mtk-biab.scss
+- mtk-biab.html
+- mtk-biab.js
+
+Behavior:
+- MUST WAIT for element to be available inside DOM, since i will be using <wc-include> for dynamic inclusion
+- all published (wc.publish) messages should be logged using wc.log to console before being published
+
+I want to create a new page for my website:
+  - page will have 5 tabs. First one selected by default
+  
+  - tabs:
+    A) Website Maker
+    B) Business Guide & Pricing
+    C) Marketing
+    D) Invoicing
+
+A) display our current client page
+B) will have a side menu(s) col-md-3 with menus:
+   - Templates & Guides
+   - Per Zip Code pricing
+
+   content should be updated based on menu selections (make a dummy lorem ipsum page for each link)
+   
+C is similar to B with the following menus:
+  - Stationary Designer
+  - Logo Designer
+  - Online Marketing Setup
+
+   content should be updated based on menu selections (make a dummy lorem ipsum page for each link)
+
+
