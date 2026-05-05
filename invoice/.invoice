@@ -53,3 +53,4 @@ What I want:
 - place input field helpers inside the input fields. As material design does
 - remove "Print / Save PDF" from top
 - add a "Print" next to "Save Invoice"
+- when i click "Save Invoice", add it to my tab "invoices" table
