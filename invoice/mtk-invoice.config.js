@@ -29,16 +29,16 @@ window.MTK_INVOICE_CONFIG = {
 
   fields: {
     business: [
-      { id: "businessName", label: "Business Name", type: "text", value: "", placeholder: "Example: ABC Locksmith Services", required: true },
-      { id: "invoiceNumber", label: "Invoice #", type: "text", value: "", placeholder: "Example: INV-1001", required: true },
-      { id: "businessPhone", label: "Business Phone", type: "tel", value: "", placeholder: "Example: (555) 555-5555", required: true },
-      { id: "invoiceDate", label: "Invoice Date", type: "date", value: "", placeholder: "Example: 2026-04-29", required: true }
+      { id: "businessName", label: "Business Name", type: "text", value: "", placeholder: "ABC Locksmith Services", required: true },
+      { id: "invoiceNumber", label: "Invoice #", type: "text", value: "", placeholder: "INV-1001", required: true },
+      { id: "businessPhone", label: "Business Phone", type: "tel", value: "", placeholder: "(555) 555-5555", required: true },
+      { id: "invoiceDate", label: "Invoice Date", type: "date", value: "", placeholder: "2026-04-29", required: true }
     ],
 
     customer: [
-      { id: "customerName", label: "Customer Name", type: "text", value: "", placeholder: "Example: Jane Smith", required: true },
-      { id: "customerPhone", label: "Customer Phone", type: "tel", value: "", placeholder: "Example: (555) 123-4567", required: true },
-      { id: "serviceAddress", label: "Service Address", type: "text", value: "", placeholder: "Example: 123 Main Street, Tampa, FL", required: true, full: true }
+      { id: "customerName", label: "Customer Name", type: "text", value: "", placeholder: "Jane Smith", required: true },
+      { id: "customerPhone", label: "Customer Phone", type: "tel", value: "", placeholder: "(555) 123-4567", required: true },
+      { id: "serviceAddress", label: "Service Address", type: "text", value: "", placeholder: "123 Main Street, Tampa, FL", required: true, full: true }
     ],
 
     service: [
@@ -57,12 +57,12 @@ window.MTK_INVOICE_CONFIG = {
           "Emergency Service"
         ]
       },
-      { id: "serviceFee", label: "Service Fee", type: "number", value: "", placeholder: "Example: 95" },
-      { id: "partsMaterials", label: "Parts / Materials", type: "number", value: "", placeholder: "Example: 25" },
-      { id: "emergencyFee", label: "Emergency Fee", type: "number", value: "", placeholder: "Example: 50" },
-      { id: "discount", label: "Discount", type: "number", value: "", placeholder: "Example: 10" },
-      { id: "taxRate", label: "Tax Rate %", type: "number", value: "", placeholder: "Example: 6.625" },
-      { id: "notes", label: "Notes", type: "textarea", value: "", placeholder: "Example: Rekeyed front door lock and tested keys.", full: true }
+      { id: "serviceFee", label: "Service Fee", type: "number", value: "", placeholder: "95" },
+      { id: "partsMaterials", label: "Parts / Materials", type: "number", value: "", placeholder: "25" },
+      { id: "emergencyFee", label: "Emergency Fee", type: "number", value: "", placeholder: "50" },
+      { id: "discount", label: "Discount", type: "number", value: "", placeholder: "10" },
+      { id: "taxRate", label: "Tax Rate %", type: "number", value: "", placeholder: "6.625" },
+      { id: "notes", label: "Notes", type: "textarea", value: "", placeholder: "Rekeyed front door lock and tested keys.", full: true }
     ]
   }
 };
