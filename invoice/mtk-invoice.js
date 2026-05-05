@@ -7,22 +7,22 @@ class MtkInvoice {
     this.values = {};
     this.isPublishing = false;
     this.onMessage = this.onMessage.bind(this);
-    this._init();
+    this.init();
   }
 
-  _init() {
-    this._hydrateValues();
-    this._subscribe();
-    this._render();
-    this._bind();
-    this._updateTotals();
-    this._publish(this.events.publish.ready || "mtk-invoice:ready", {
+  init() {
+    this.hydrateValues();
+    this.subscribe();
+    this.render();
+    this.bind();
+    this.updateTotals();
+    this.publish(this.events.publish.ready || "mtk-invoice:ready", {
       component: this.config.component || "mtk-invoice",
-      version: this.config.version || "1.0.2"
+      version: this.config.version || "1.0.3"
     });
   }
 
-  _hydrateValues() {
+  hydrateValues() {
     const groups = this.config.fields || {};
 
     Object.keys(groups).forEach((groupName) => {
@@ -34,7 +34,7 @@ class MtkInvoice {
     });
   }
 
-  _subscribe() {
+  subscribe() {
     const topics = Array.isArray(this.events.subscribe) ? this.events.subscribe : [];
 
     topics.forEach((topic) => {
@@ -48,25 +48,25 @@ class MtkInvoice {
     if (this.isPublishing) return;
 
     if (topic === "4-mtk-invoice:print") {
-      this._print();
+      this.print();
     }
 
     if (topic === "4-mtk-invoice:reset") {
-      this._hydrateValues();
-      this._render();
-      this._bind();
-      this._updateTotals();
+      this.hydrateValues();
+      this.render();
+      this.bind();
+      this.updateTotals();
     }
 
     if (topic === "4-mtk-invoice:set-data" && data && typeof data === "object") {
       Object.assign(this.values, data);
-      this._render();
-      this._bind();
-      this._updateTotals();
+      this.render();
+      this.bind();
+      this.updateTotals();
     }
   }
 
-  _publish(topic, data) {
+  publish(topic, data) {
     this.isPublishing = true;
 
     if (window.wc && typeof window.wc.log === "function") {
@@ -82,13 +82,13 @@ class MtkInvoice {
     this.isPublishing = false;
   }
 
-  _render() {
+  render() {
     this.root.innerHTML = `
       <section class="mtk-invoice__shell" aria-labelledby="mtk-invoice-title">
         <div class="mtk-invoice__card">
           <header class="mtk-invoice__header">
-            <h1 class="mtk-invoice__title" id="mtk-invoice-title">${this._escape(this.labels.title || "Locksmith Invoice")}</h1>
-            <p class="mtk-invoice__subtitle">${this._escape(this.labels.subtitle || "")}</p>
+            <h1 class="mtk-invoice__title" id="mtk-invoice-title">${this.escape(this.labels.title || "Locksmith Invoice")}</h1>
+            <p class="mtk-invoice__subtitle">${this.escape(this.labels.subtitle || "")}</p>
           </header>
 
           <div class="mtk-invoice__divider" aria-hidden="true"></div>
@@ -96,26 +96,26 @@ class MtkInvoice {
           <form class="mtk-invoice__form" novalidate>
             <section class="mtk-invoice__section" aria-label="Business and invoice information">
               <div class="mtk-invoice__grid">
-                ${this._renderFields("business")}
+                ${this.renderFields("business")}
               </div>
             </section>
 
             <section class="mtk-invoice__section" aria-labelledby="mtk-invoice-customer-heading">
-              <h2 class="mtk-invoice__section-title" id="mtk-invoice-customer-heading">${this._escape(this.labels.customerHeading || "Customer")}</h2>
+              <h2 class="mtk-invoice__section-title" id="mtk-invoice-customer-heading">${this.escape(this.labels.customerHeading || "Customer")}</h2>
               <div class="mtk-invoice__grid">
-                ${this._renderFields("customer")}
+                ${this.renderFields("customer")}
               </div>
             </section>
 
             <section class="mtk-invoice__section" aria-labelledby="mtk-invoice-service-heading">
-              <h2 class="mtk-invoice__section-title" id="mtk-invoice-service-heading">${this._escape(this.labels.serviceHeading || "Service Details")}</h2>
+              <h2 class="mtk-invoice__section-title" id="mtk-invoice-service-heading">${this.escape(this.labels.serviceHeading || "Service Details")}</h2>
               <div class="mtk-invoice__grid mtk-invoice__grid--three">
-                ${this._renderFields("service")}
+                ${this.renderFields("service")}
               </div>
             </section>
 
             <section class="mtk-invoice__section" aria-labelledby="mtk-invoice-totals-heading">
-              <h2 class="mtk-invoice__section-title" id="mtk-invoice-totals-heading">${this._escape(this.labels.totalsHeading || "Totals")}</h2>
+              <h2 class="mtk-invoice__section-title" id="mtk-invoice-totals-heading">${this.escape(this.labels.totalsHeading || "Totals")}</h2>
               <div class="mtk-invoice__totals" aria-live="polite">
                 <div class="mtk-invoice__total-row">
                   <span>Subtotal</span>
@@ -135,12 +135,12 @@ class MtkInvoice {
             <div class="mtk-invoice__actions">
               <button class="mtk-invoice__print-btn" type="button" data-action="print">
                 <span class="material-icons" aria-hidden="true">print</span>
-                <span>${this._escape(this.labels.printButton || "Print")}</span>
+                <span>${this.escape(this.labels.printButton || "Print")}</span>
               </button>
 
               <button class="mtk-invoice__save-btn" type="button" data-action="save">
                 <span class="material-icons" aria-hidden="true">save</span>
-                <span>${this._escape(this.labels.saveButton || "Save Invoice")}</span>
+                <span>${this.escape(this.labels.saveButton || "Save Invoice")}</span>
               </button>
             </div>
 
@@ -151,35 +151,38 @@ class MtkInvoice {
     `;
   }
 
-  _renderFields(groupName) {
+  renderFields(groupName) {
     const fields = this.config.fields && Array.isArray(this.config.fields[groupName])
       ? this.config.fields[groupName]
       : [];
 
-    return fields.map((field) => this._renderField(field)).join("");
+    return fields.map((field) => this.renderField(field)).join("");
   }
 
-  _renderField(field) {
+  renderField(field) {
     const fieldClass = field.full ? "mtk-invoice__field mtk-invoice__field--full" : "mtk-invoice__field";
     const value = this.values[field.id] || "";
     const required = field.required ? " required" : "";
+    const label = this.escape(field.label || "");
+    const fieldId = this.escape(field.id);
+    const placeholder = this.escape(field.placeholder || "");
 
     if (field.type === "select") {
       const isEmpty = !value;
 
       return `
         <div class="${fieldClass}">
-          <label for="mtk-invoice-${this._escape(field.id)}">${this._escape(field.label)}</label>
+          <label for="mtk-invoice-${fieldId}">${label}</label>
           <select
-            id="mtk-invoice-${this._escape(field.id)}"
-            class="${isEmpty ? "mtk-invoice__select-placeholder" : ""}"
-            name="${this._escape(field.id)}"
-            data-field="${this._escape(field.id)}"
+            id="mtk-invoice-${fieldId}"
+            class="${isEmpty ? "is-placeholder" : ""}"
+            name="${fieldId}"
+            data-field="${fieldId}"
             ${required}
           >
-            <option value="" disabled${isEmpty ? " selected" : ""}>${this._escape(field.helper || "Select")}</option>
+            <option value="" disabled${isEmpty ? " selected" : ""}>${placeholder || "Select"}</option>
             ${(field.options || []).map((option) => `
-              <option value="${this._escape(option)}"${value === option ? " selected" : ""}>${this._escape(option)}</option>
+              <option value="${this.escape(option)}"${value === option ? " selected" : ""}>${this.escape(option)}</option>
             `).join("")}
           </select>
         </div>
@@ -189,45 +192,45 @@ class MtkInvoice {
     if (field.type === "textarea") {
       return `
         <div class="${fieldClass}">
-          <label for="mtk-invoice-${this._escape(field.id)}">${this._escape(field.label)}</label>
+          <label for="mtk-invoice-${fieldId}">${label}</label>
           <textarea
-            id="mtk-invoice-${this._escape(field.id)}"
-            name="${this._escape(field.id)}"
-            data-field="${this._escape(field.id)}"
-            placeholder="${this._escape(field.helper || "")}"
+            id="mtk-invoice-${fieldId}"
+            name="${fieldId}"
+            data-field="${fieldId}"
+            placeholder="${placeholder}"
             ${required}
-          >${this._escape(value)}</textarea>
+          >${this.escape(value)}</textarea>
         </div>
       `;
     }
 
     return `
       <div class="${fieldClass}">
-        <label for="mtk-invoice-${this._escape(field.id)}">${this._escape(field.label)}</label>
+        <label for="mtk-invoice-${fieldId}">${label}</label>
         <input
-          id="mtk-invoice-${this._escape(field.id)}"
-          name="${this._escape(field.id)}"
-          data-field="${this._escape(field.id)}"
-          type="${this._escape(field.type || "text")}"
-          value="${this._escape(value)}"
-          placeholder="${this._escape(field.helper || "")}"
+          id="mtk-invoice-${fieldId}"
+          name="${fieldId}"
+          data-field="${fieldId}"
+          type="${this.escape(field.type || "text")}"
+          value="${this.escape(value)}"
+          placeholder="${placeholder}"
           ${required}
         >
       </div>
     `;
   }
 
-  _bind() {
+  bind() {
     this.root.addEventListener("input", (event) => {
       const field = event.target.closest("[data-field]");
       if (!field || !this.root.contains(field)) return;
 
       this.values[field.getAttribute("data-field")] = field.value;
-      this._updateTotals();
+      this.updateTotals();
 
-      this._publish(this.events.publish.change || "mtk-invoice:change", {
-        values: this._getValues(),
-        totals: this._calculateTotals()
+      this.publish(this.events.publish.change || "mtk-invoice:change", {
+        values: this.getValues(),
+        totals: this.calculateTotals()
       });
     });
 
@@ -238,10 +241,10 @@ class MtkInvoice {
       this.values[field.getAttribute("data-field")] = field.value;
 
       if (field.tagName.toLowerCase() === "select") {
-        field.classList.toggle("mtk-invoice__select-placeholder", !field.value);
+        field.classList.toggle("is-placeholder", !field.value);
       }
 
-      this._updateTotals();
+      this.updateTotals();
     });
 
     this.root.addEventListener("click", (event) => {
@@ -251,54 +254,54 @@ class MtkInvoice {
       const action = actionTarget.getAttribute("data-action");
 
       if (action === "print") {
-        this._print();
+        this.print();
       }
 
       if (action === "save") {
-        this._save();
+        this.save();
       }
     });
   }
 
-  _print() {
-    this._publish(this.events.publish.print || "mtk-invoice:print", {
-      values: this._getValues(),
-      totals: this._calculateTotals()
+  print() {
+    this.publish(this.events.publish.print || "mtk-invoice:print", {
+      values: this.getValues(),
+      totals: this.calculateTotals()
     });
 
     window.print();
   }
 
-  _save() {
+  save() {
     const status = this.root.querySelector("[data-status]");
 
     if (status) {
       status.textContent = "Invoice saved.";
     }
 
-    this._publish(this.events.publish.save || "mtk-invoice:save", {
-      values: this._getValues(),
-      totals: this._calculateTotals()
+    this.publish(this.events.publish.save || "mtk-invoice:save", {
+      values: this.getValues(),
+      totals: this.calculateTotals()
     });
   }
 
-  _updateTotals() {
-    const totals = this._calculateTotals();
+  updateTotals() {
+    const totals = this.calculateTotals();
 
     Object.keys(totals).forEach((key) => {
       const target = this.root.querySelector(`[data-total="${key}"]`);
       if (target) {
-        target.textContent = this._formatCurrency(totals[key]);
+        target.textContent = this.formatCurrency(totals[key]);
       }
     });
   }
 
-  _calculateTotals() {
-    const serviceFee = this._number(this.values.serviceFee);
-    const partsMaterials = this._number(this.values.partsMaterials);
-    const emergencyFee = this._number(this.values.emergencyFee);
-    const discount = this._number(this.values.discount);
-    const taxRate = this._number(this.values.taxRate);
+  calculateTotals() {
+    const serviceFee = this.number(this.values.serviceFee);
+    const partsMaterials = this.number(this.values.partsMaterials);
+    const emergencyFee = this.number(this.values.emergencyFee);
+    const discount = this.number(this.values.discount);
+    const taxRate = this.number(this.values.taxRate);
 
     const subtotal = Math.max(0, serviceFee + partsMaterials + emergencyFee - discount);
     const tax = subtotal * (taxRate / 100);
@@ -307,23 +310,23 @@ class MtkInvoice {
     return { subtotal, tax, total };
   }
 
-  _getValues() {
+  getValues() {
     return Object.assign({}, this.values);
   }
 
-  _number(value) {
+  number(value) {
     const parsed = Number(value);
     return Number.isFinite(parsed) ? parsed : 0;
   }
 
-  _formatCurrency(value) {
+  formatCurrency(value) {
     return "$" + (Number(value) || 0).toLocaleString("en-US", {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     });
   }
 
-  _escape(value) {
+  escape(value) {
     return String(value == null ? "" : value)
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")

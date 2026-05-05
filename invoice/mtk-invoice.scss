@@ -42,10 +42,10 @@ mtk-invoice.mtk-invoice .mtk-invoice__shell {
 }
 
 mtk-invoice.mtk-invoice .mtk-invoice__card {
+  padding: 40px;
   border: 1px solid #d1d5db;
   background: #ffffff;
   box-shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
-  padding: 40px;
 }
 
 mtk-invoice.mtk-invoice .mtk-invoice__header {
@@ -99,6 +99,7 @@ mtk-invoice.mtk-invoice .mtk-invoice__grid--three {
 }
 
 mtk-invoice.mtk-invoice .mtk-invoice__field {
+  position: relative;
   display: grid;
   gap: 8px;
   min-width: 0;
@@ -144,7 +145,7 @@ mtk-invoice.mtk-invoice textarea::placeholder {
   opacity: 1;
 }
 
-mtk-invoice.mtk-invoice select.mtk-invoice__select-placeholder {
+mtk-invoice.mtk-invoice select.is-placeholder {
   color: #64748b;
   font-weight: 400;
 }
