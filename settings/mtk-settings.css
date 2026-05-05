@@ -105,58 +105,101 @@
   line-height: 1.6; }
 
 .mtk-settings__form {
-  max-width: 720px; }
+  max-width: 100%; }
 
 .mtk-settings__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px; }
+  gap: 22px 18px; }
 
 .mtk-settings__field {
-  position: relative; }
+  min-width: 0; }
 
-.mtk-settings__input {
+.mtk-settings__field--full, .mtk-settings__checkbox-card {
+  grid-column: 1 / -1; }
+
+.mtk-settings__field-label {
+  display: block;
+  margin: 0 0 10px;
+  color: #202124;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.25; }
+
+.mtk-settings__input, .mtk-settings__textarea {
   width: 100%;
-  min-height: 56px;
-  padding: 20px 14px 8px;
   border: 1px solid #cbd5e1;
   background: #ffffff;
   color: #111827;
   font: inherit;
-  line-height: 1.2;
+  font-size: 1rem;
+  line-height: 1.4;
   transition: border-color 160ms ease, box-shadow 160ms ease; }
 
-.mtk-settings__input:hover {
+.mtk-settings__input {
+  min-height: 56px;
+  padding: 0 14px; }
+
+.mtk-settings__textarea {
+  min-height: 96px;
+  padding: 14px;
+  resize: vertical; }
+
+.mtk-settings__input::placeholder, .mtk-settings__textarea::placeholder {
+  color: #70757a;
+  opacity: 1; }
+
+.mtk-settings__input:hover, .mtk-settings__textarea:hover {
   border-color: #94a3b8; }
 
-.mtk-settings__input:focus {
+.mtk-settings__input:focus, .mtk-settings__textarea:focus {
   border-color: #a98211;
   box-shadow: 0 0 0 4px rgba(169, 130, 17, 0.15);
   outline: none; }
 
-.mtk-settings__label {
-  position: absolute;
-  top: 17px;
-  left: 14px;
-  color: #64748b;
-  pointer-events: none;
-  transform-origin: left top;
-  transition: transform 160ms ease, color 160ms ease; }
+.mtk-settings__checkbox-card {
+  margin: 8px 0 0;
+  padding: 26px 24px;
+  border: 1px solid #d7dce2;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(17, 24, 39, 0.08); }
 
-.mtk-settings__input:focus + .mtk-settings__label,
-.mtk-settings__input:not(:placeholder-shown) + .mtk-settings__label {
-  color: #7a5f0c;
-  transform: translateY(-11px) scale(0.78); }
+.mtk-settings__checkbox-title {
+  margin: 0 0 22px;
+  padding: 0 12px;
+  color: #202124;
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1.2; }
 
-.mtk-settings__hint {
-  grid-column: 1 / -1;
-  margin: 0;
-  padding: 12px 14px;
-  border-left: 4px solid #a98211;
-  background: #fff8e1;
-  color: #4b5563;
-  font-size: 0.94rem;
-  line-height: 1.5; }
+.mtk-settings__checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 26px 34px; }
+
+.mtk-settings__check {
+  display: inline-grid;
+  grid-template-columns: 24px 1fr;
+  align-items: start;
+  gap: 10px;
+  color: #202124;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  cursor: pointer; }
+
+.mtk-settings__checkbox {
+  width: 16px;
+  height: 16px;
+  margin: 4px 0 0;
+  accent-color: #a98211;
+  cursor: pointer; }
+
+.mtk-settings__checkbox:focus-visible {
+  outline: 3px solid rgba(169, 130, 17, 0.35);
+  outline-offset: 3px; }
+
+.mtk-settings__check-label {
+  min-width: 0; }
 
 .mtk-settings__actions {
   display: flex;
@@ -205,6 +248,10 @@
   color: #4b5563;
   line-height: 1.6; }
 
+@media (max-width: 960px) {
+  .mtk-settings__checkbox-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
 @media (max-width: 760px) {
   .mtk-settings__shell {
     padding: 16px; }
@@ -226,4 +273,11 @@
   .mtk-settings__panel {
     padding: 20px; }
   .mtk-settings__grid {
-    grid-template-columns: 1fr; } }
+    grid-template-columns: 1fr; }
+  .mtk-settings__checkbox-card {
+    padding: 22px 18px; }
+  .mtk-settings__checkbox-title {
+    font-size: 1.25rem; }
+  .mtk-settings__checkbox-grid {
+    grid-template-columns: 1fr;
+    gap: 16px; } }

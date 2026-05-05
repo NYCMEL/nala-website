@@ -130,9 +130,80 @@ window.mtkSettingsConfig = {
     {
       id: "services",
       label: "Services Offered",
-      eyebrow: "Offerings",
+      eyebrow: "Service coverage",
       title: "Services Offered",
-      description: "Add service fields and pricing options here."
+      description: "Manage your service areas and launch services.",
+      fields: [
+        {
+          id: "serviceArea",
+          label: "Service area",
+          type: "textarea",
+          required: true,
+          value: "",
+          placeholder: "Brooklyn, Queens, Manhattan",
+          rows: 4,
+          fullWidth: true
+        },
+        {
+          id: "launchServices",
+          label: "Launch services",
+          type: "checkboxGroup",
+          required: true,
+          fullWidth: true,
+          options: [
+            {
+              id: "houseLockouts",
+              label: "House lockouts",
+              value: "House lockouts",
+              checked: false
+            },
+            {
+              id: "rekeys",
+              label: "Rekeys",
+              value: "Rekeys",
+              checked: false
+            },
+            {
+              id: "lockChanges",
+              label: "Lock changes",
+              value: "Lock changes",
+              checked: false
+            },
+            {
+              id: "deadboltInstallation",
+              label: "Deadbolt installation",
+              value: "Deadbolt installation",
+              checked: false
+            },
+            {
+              id: "mailboxCabinetLocks",
+              label: "Mailbox / cabinet locks",
+              value: "Mailbox / cabinet locks",
+              checked: false
+            },
+            {
+              id: "carLockouts",
+              label: "Car lockouts",
+              value: "Car lockouts",
+              checked: false
+            },
+            {
+              id: "basicCommercialLockService",
+              label: "Basic commercial lock service",
+              value: "Basic commercial lock service",
+              checked: false
+            }
+          ]
+        }
+      ],
+      actions: [
+        {
+          id: "saveServices",
+          label: "Save/Update",
+          variant: "primary",
+          event: "mtk-settings:services-save"
+        }
+      ]
     }
   ]
 };
