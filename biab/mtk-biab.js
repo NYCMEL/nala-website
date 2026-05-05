@@ -2,7 +2,8 @@
  * mtk-biab.js
  * Full BIAB component.
  * Reload-safe.
- * New Invoice opens existing repo_deploy/invoice page in a full-page iframe.
+ * Invoice opens as a full-page wc-include view.
+ * It loads invoice CSS/config/JS so mtk-invoice does not stay stuck on "Loading invoice..."
  */
 (function () {
   "use strict";
@@ -34,7 +35,7 @@
       this._bind();
       this._publish(this.events.publish.ready || "mtk-biab:ready", {
         component: this.config.component || "mtk-biab",
-        version: this.config.version || "1.0.14"
+        version: this.config.version || "1.0.16"
       });
     }
 
@@ -120,27 +121,35 @@
 
         .mtk-biab__invoice-page-body {
           min-height: 0;
-          overflow: hidden;
+          overflow: auto;
           padding: 28px 0;
         }
 
         .mtk-biab__invoice-page-body-inner {
-          height: 100%;
-          min-height: 0;
-          border: 1px solid rgba(15, 23, 42, 0.12);
-          border-radius: 18px;
+          min-height: calc(100vh - 178px);
           background: #ffffff;
-          box-shadow: 0 18px 42px rgba(15, 23, 42, 0.10);
-          overflow: hidden;
+          overflow: visible;
         }
 
-        .mtk-biab__invoice-page-frame {
+        .mtk-biab__invoice-page-body-inner wc-include,
+        .mtk-biab__invoice-page-body-inner .mtk-invoice {
           display: block;
           width: 100%;
-          height: 100%;
-          min-height: calc(100vh - 178px);
-          border: 0;
-          background: #ffffff;
+        }
+
+        .mtk-biab__invoice-page-body-inner .mtk-invoice__shell {
+          display: contents !important;
+        }
+
+        .mtk-biab__invoice-page-body-inner .mtk-invoice__card {
+          width: 100% !important;
+          max-width: none !important;
+          margin: 0 auto 40px !important;
+        }
+
+        .mtk-biab__invoice-page-body-inner input::placeholder,
+        .mtk-biab__invoice-page-body-inner textarea::placeholder {
+          font-style: italic !important;
         }
 
         body.mtk-biab-invoice-page-open {
@@ -511,6 +520,7 @@
 
       this._closeSetup();
       this._closeInvoicePage();
+      this._loadInvoiceAssets();
 
       const page = document.createElement("section");
       page.className = "mtk-biab__invoice-page";
@@ -534,11 +544,7 @@
 
         <div class="mtk-biab__invoice-page-body">
           <div class="mtk-biab__invoice-page-body-inner">
-            <iframe
-              class="mtk-biab__invoice-page-frame"
-              src="invoice/"
-              title="New Invoice"
-            ></iframe>
+            <wc-include href="invoice/mtk-invoice.html"></wc-include>
           </div>
         </div>
       `;
@@ -546,10 +552,7 @@
       this.root.appendChild(page);
       document.body.classList.add("mtk-biab-invoice-page-open");
 
-      const iframe = page.querySelector(".mtk-biab__invoice-page-frame");
-      if (iframe) {
-        iframe.addEventListener("load", () => this._cleanInvoiceFrame(iframe));
-      }
+      this._cleanInvoiceInclude(page);
 
       const closeButton = page.querySelector(".mtk-biab__invoice-page-close");
       if (closeButton) closeButton.focus();
@@ -557,47 +560,72 @@
       this._publish("mtk-biab:new-invoice", {
         sectionId: this.activeId,
         section,
-        target: "invoice/"
+        target: "invoice/mtk-invoice.html"
       });
     }
 
-    _cleanInvoiceFrame(iframe) {
-      try {
-        const doc = iframe.contentDocument || iframe.contentWindow.document;
-        if (!doc) return;
+    _loadInvoiceAssets() {
+      this._loadStylesheetOnce("mtk-invoice-css", "invoice/mtk-invoice.css");
+      this._loadScriptOnce("mtk-invoice-config-js", "invoice/mtk-invoice.config.js");
+      this._loadScriptOnce("mtk-invoice-js", "invoice/mtk-invoice.js");
+    }
 
-        const style = doc.createElement("style");
-        style.textContent = `
-          .mtk-invoice__shell {
-            display: contents !important;
-          }
+    _loadStylesheetOnce(id, href) {
+      if (document.getElementById(id)) return;
+      const link = document.createElement("link");
+      link.id = id;
+      link.rel = "stylesheet";
+      link.href = href;
+      document.head.appendChild(link);
+    }
 
-          .mtk-invoice__card {
-            width: min(1180px, calc(100% - 48px)) !important;
-            max-width: 1180px !important;
-            margin: 0 auto 40px !important;
-          }
+    _loadScriptOnce(id, src) {
+      if (document.getElementById(id)) return;
+      const script = document.createElement("script");
+      script.id = id;
+      script.src = src;
+      document.body.appendChild(script);
+    }
 
-          input::placeholder,
-          textarea::placeholder {
-            font-style: italic !important;
-          }
-        `;
-        doc.head.appendChild(style);
+    _cleanInvoiceInclude(page) {
+      const clean = () => {
+        const shell = page.querySelector(".mtk-invoice__shell");
+        if (shell) shell.style.display = "contents";
 
-        const placeholders = Array.from(doc.querySelectorAll("input[placeholder], textarea[placeholder]"));
+        const card = page.querySelector(".mtk-invoice__card");
+        if (card) {
+          card.style.width = "100%";
+          card.style.maxWidth = "none";
+          card.style.margin = "0 auto 40px";
+        }
+
+        const placeholders = Array.from(page.querySelectorAll("input[placeholder], textarea[placeholder]"));
         placeholders.forEach((field) => {
-          field.setAttribute("placeholder", field.getAttribute("placeholder").replace(/^Example:\s*/i, ""));
-          field.style.fontStyle = "normal";
+          field.setAttribute("placeholder", field.getAttribute("placeholder").replace(/^Example:\\s*/i, ""));
         });
-      } catch (error) {
-        console.warn("Unable to style invoice frame", error);
-      }
+      };
+
+      clean();
+
+      const observer = new MutationObserver(clean);
+      observer.observe(page, { childList: true, subtree: true });
+      page.__mtkInvoiceCleanObserver = observer;
+
+      page.addEventListener("include:loaded", () => {
+        clean();
+        if (window.MtkInvoice && typeof window.MtkInvoice.initWhenReady === "function") {
+          window.MtkInvoice.initWhenReady();
+        }
+      });
     }
 
     _closeInvoicePage() {
       const existing = this.root.querySelector(".mtk-biab__invoice-page");
       if (!existing) return;
+
+      if (existing.__mtkInvoiceCleanObserver) {
+        existing.__mtkInvoiceCleanObserver.disconnect();
+      }
 
       existing.remove();
       document.body.classList.remove("mtk-biab-invoice-page-open");
