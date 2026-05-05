@@ -357,3 +357,13 @@ h1.title::after {
 
 .mtk-msgs.mtk-msgs--success .mtk-msgs__button, .mtk-msgs.mtk-msgs--success .mtk-msgs__close {
   color: #ffffff; }
+
+msgs.mtk-msgs--error .mtk-msgs__button, .mtk-msgs.mtk-msgs--error .mtk-msgs__close {
+  color: #ffffff; }
+
+.mtk-msgs.mtk-msgs--success {
+  background-color: #198754;
+  color: #ffffff; }
+
+.mtk-msgs.mtk-msgs--success .mtk-msgs__button, .mtk-msgs.mtk-msgs--success .mtk-msgs__close {
+  color: #ffffff; }

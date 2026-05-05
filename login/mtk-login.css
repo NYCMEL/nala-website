@@ -265,3 +265,12 @@ h1.title::after {
 .mtk-login form .links a:hover, .mtk-login form .links a:focus {
   text-decoration: underline;
   outline: none; }
+
+      font-size: 14px; }
+      .mtk-login form .links a {
+        color: #a98212;
+        text-decoration: none;
+        cursor: pointer; }
+        .mtk-login form .links a:hover, .mtk-login form .links a:focus {
+          text-decoration: underline;
+          outline: none; }

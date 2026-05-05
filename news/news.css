@@ -374,3 +374,15 @@ h1.title::after {
 
 .news-article__body p:last-child {
   margin: 0; }
+olor: #5f6368;
+    margin: 0; }
+    .news-article__date i {
+      margin-right: 6px;
+      color: #a98211; }
+  .news-article__body p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #3c4043;
+    margin: 0 0 20px; }
+    .news-article__body p:last-child {
+      margin: 0; }
