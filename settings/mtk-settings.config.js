@@ -59,9 +59,73 @@ window.mtkSettingsConfig = {
     {
       id: "business",
       label: "Business Information",
-      eyebrow: "Company profile",
+      eyebrow: "Business profile",
       title: "Business Information",
-      description: "Add business profile fields here."
+      description: "Manage the public and legal details for your business.",
+      fields: [
+        {
+          id: "customerFacingBusinessName",
+          label: "Customer-facing business name",
+          type: "text",
+          autocomplete: "organization",
+          required: true,
+          value: "",
+          placeholder: "Harbor Lock & Key"
+        },
+        {
+          id: "legalBusinessName",
+          label: "Legal business name",
+          type: "text",
+          autocomplete: "organization",
+          required: false,
+          value: "",
+          placeholder: "Harbor Lock & Key LLC"
+        },
+        {
+          id: "ownerOrResponsiblePartyName",
+          label: "Owner or responsible party name",
+          type: "text",
+          autocomplete: "name",
+          required: false,
+          value: "",
+          placeholder: "Owner name"
+        },
+        {
+          id: "businessPhone",
+          label: "Business phone",
+          type: "tel",
+          autocomplete: "tel",
+          required: true,
+          value: "",
+          placeholder: "(555) 123-4567"
+        },
+        {
+          id: "businessEmail",
+          label: "Business email",
+          type: "email",
+          autocomplete: "email",
+          required: true,
+          value: "",
+          placeholder: "service@example.com"
+        },
+        {
+          id: "businessHours",
+          label: "Business hours",
+          type: "text",
+          autocomplete: "off",
+          required: false,
+          value: "",
+          placeholder: "Mon-Fri 8am-6pm; emergency calls by appointment"
+        }
+      ],
+      actions: [
+        {
+          id: "saveBusiness",
+          label: "Save/Update",
+          variant: "primary",
+          event: "mtk-settings:business-save"
+        }
+      ]
     },
     {
       id: "services",
