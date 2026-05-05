@@ -37,9 +37,8 @@ Accessibility:
 Output! Create exactly these files:
 - mtk-invoice.config.js (JSON FILE)
 - mtk-invoice.scss
-- mtk-invoice.html
+- minimal mtk-invoice.html
 - mtk-invoice.js
-- A minimal index.html file
 
 Behavior:
 - MUST WAIT for element to be available inside DOM, since i will be using <wc-include> for dynamic inclusion
