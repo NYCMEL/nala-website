@@ -1,6 +1,16 @@
-<link href="settings/mtk-settings.css" rel="stylesheet">
+<!-- mtk-settings.html -->
+<mtk-settings class="mtk-settings">
+  <section class="mtk-settings__shell" aria-label="Settings">
+    <header class="mtk-settings__header">
+      <div>
+        <p class="mtk-settings__eyebrow">Account Settings</p>
+        <h2 class="mtk-settings__title">Settings</h2>
+      </div>
+    </header>
 
-<mtk-settings class="mtk-settings" aria-label="Profile and Settings"></mtk-settings>
-
-<script src="settings/mtk-settings.config.js"></script>
-<script src="settings/mtk-settings.js"></script>
+    <div class="mtk-settings__layout">
+      <nav class="mtk-settings__tabs" aria-label="Settings sections"></nav>
+      <main class="mtk-settings__panel" tabindex="-1"></main>
+    </div>
+  </section>
+</mtk-settings>

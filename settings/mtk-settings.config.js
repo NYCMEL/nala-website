@@ -1,163 +1,74 @@
+/* mtk-settings.config.js */
 window.mtkSettingsConfig = {
-  component: {
-    name: "mtk-settings",
-    title: "Profile & Settings",
-    defaultTab: "privacy"
-  },
-  user: {
-    fullName: "Business Test",
-    email: "business@nala.com"
-  },
   tabs: [
     {
       id: "privacy",
       label: "Privacy",
-      icon: "privacy_tip",
-      heading: "Privacy Settings",
+      eyebrow: "Internal communications only",
+      title: "Privacy Settings",
+      description: "Manage contact details used only for internal communications.",
       fields: [
         {
           id: "fullName",
           label: "Full Name",
           type: "text",
-          valueKey: "fullName",
-          readonly: true
+          autocomplete: "name",
+          required: true,
+          value: ""
         },
         {
-          id: "email",
+          id: "emailAddress",
           label: "Email Address",
           type: "email",
-          valueKey: "email",
-          readonly: true
+          autocomplete: "email",
+          required: true,
+          value: ""
         },
         {
-          id: "currentPassword",
-          label: "Current Password",
-          type: "password",
-          placeholder: "Current password",
-          readonly: false
+          id: "contactPhoneNumber",
+          label: "Contact Phone Number",
+          type: "tel",
+          autocomplete: "tel",
+          required: false,
+          value: ""
         },
         {
-          id: "newPassword",
-          label: "New Password",
+          id: "password",
+          label: "Password",
           type: "password",
-          placeholder: "New password",
-          readonly: false
-        },
-        {
-          id: "confirmPassword",
-          label: "Confirm New Password",
-          type: "password",
-          placeholder: "Confirm new password",
-          readonly: false
+          autocomplete: "current-password",
+          required: true,
+          value: ""
         }
       ],
       actions: [
         {
-          id: "privacy-save",
-          label: "Save Privacy Settings",
-          icon: "save",
+          id: "saveUpdate",
+          label: "Save/Update",
+          variant: "primary",
           event: "mtk-settings:privacy-save"
+        },
+        {
+          id: "changePassword",
+          label: "Change Password",
+          variant: "secondary",
+          event: "mtk-settings:change-password"
         }
       ]
     },
     {
       id: "business",
       label: "Business Information",
-      icon: "business",
-      heading: "Business Information",
-      fields: [
-        {
-          id: "businessName",
-          label: "Business Name",
-          type: "text",
-          placeholder: "Enter business name"
-        },
-        {
-          id: "licenseNumber",
-          label: "License Number",
-          type: "text",
-          placeholder: "Enter license number"
-        },
-        {
-          id: "phone",
-          label: "Business Phone",
-          type: "tel",
-          placeholder: "Enter phone number"
-        },
-        {
-          id: "website",
-          label: "Website",
-          type: "url",
-          placeholder: "Enter website URL"
-        },
-        {
-          id: "address",
-          label: "Business Address",
-          type: "textarea",
-          placeholder: "Enter business address"
-        }
-      ],
-      actions: [
-        {
-          id: "business-save",
-          label: "Save Business Information",
-          icon: "save",
-          event: "mtk-settings:business-save"
-        }
-      ]
+      eyebrow: "Company profile",
+      title: "Business Information",
+      description: "Add business profile fields here."
     },
     {
       id: "services",
       label: "Services Offered",
-      icon: "construction",
-      heading: "Services Offered",
-      fields: [
-        {
-          id: "residential",
-          label: "Residential Locksmith",
-          type: "checkbox"
-        },
-        {
-          id: "commercial",
-          label: "Commercial Locksmith",
-          type: "checkbox"
-        },
-        {
-          id: "automotive",
-          label: "Automotive Locksmith",
-          type: "checkbox"
-        },
-        {
-          id: "emergency",
-          label: "Emergency Lockout Service",
-          type: "checkbox"
-        },
-        {
-          id: "safeService",
-          label: "Safe Installation & Repair",
-          type: "checkbox"
-        },
-        {
-          id: "additionalServices",
-          label: "Additional Services",
-          type: "textarea",
-          placeholder: "List additional services"
-        }
-      ],
-      actions: [
-        {
-          id: "services-save",
-          label: "Save Services Offered",
-          icon: "save",
-          event: "mtk-settings:services-save"
-        }
-      ]
+      eyebrow: "Offerings",
+      title: "Services Offered",
+      description: "Add service fields and pricing options here."
     }
-  ],
-  events: {
-    ready: "mtk-settings:ready",
-    tabChanged: "mtk-settings:tab-changed",
-    fieldChanged: "mtk-settings:field-changed"
-  },
-  subscribeTopic: "4-mtk-settings"
+  ]
 };
