@@ -42,6 +42,7 @@ $(document).on("click", "#header-dd-profile", function(e) {
 $(document).on("click", "#header-dd-client", function(e) {
     e.preventDefault();
     $("#nala-user-dd").hide();
+
     var user = (window.wc && wc.session && wc.session.user) ? wc.session.user : {};
     if (Number(user.has_business_in_a_box || 0) !== 1) {
         var message = (window.i18n && typeof window.i18n.t === "function")
@@ -58,8 +59,22 @@ $(document).on("click", "#header-dd-client", function(e) {
         }
         return;
     }
-    wc.log("mtk-header-client → /repo_deploy/biab");
-    window.location.replace("/repo_deploy/biab");
+
+    headerSelect("mtk-header-settings");
+
+    wc.log("mtk-header-client → #biab");
+    wc.publish("mtk-header-client");
+
+    if (window.location.pathname !== "/repo_deploy/") {
+        window.location.href = "/repo_deploy/#biab";
+        return;
+    }
+
+    if (window.location.hash !== "#biab") {
+        window.location.hash = "biab";
+    } else {
+        window.dispatchEvent(new HashChangeEvent("hashchange"));
+    }
 });
 
 $(document).on("click", "#header-dd-logout", function(e) {
@@ -78,7 +93,8 @@ var pageToHeaderId = {
     "dashboard": "mtk-header-dashboard",
     "hierarchy": "mtk-header-hierarchy",
     "alerts":    "mtk-header-messages",
-    "settings":  "mtk-header-settings"
+    "settings":  "mtk-header-settings",
+    "biab":      "mtk-header-settings"
 };
 
 // RESTORE ACTIVE HEADER LINK whenever a page is shown (including reload)
@@ -232,7 +248,8 @@ function toggleNavbar() {
         'dashboard': 'mtk-header-dashboard',
         'hierarchy': 'mtk-header-hierarchy',
         'alerts':    'mtk-header-messages',
-        'settings':  'mtk-header-settings'
+        'settings':  'mtk-header-settings',
+        'biab':      'mtk-header-settings'
     };
 
     function restore() {
