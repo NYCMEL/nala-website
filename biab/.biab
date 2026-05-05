@@ -90,7 +90,7 @@ Update my UI. I am explaining each content by numbers:
   - remove "Overdue" & "Void"
   - add a "New Invoice" button at the top right of this page
   - Remove "Start setup"
-  - clicking on the "New Invoice" should open a full page showing invoice with "X" in a circle
+  - clicking on the "New Invoice" should open a full page showing repo_deploy/invoice with "X" in a circle
 
 6) Customer Reviews
   - display a table of ratings with stars in one column, date and notes (single line ellipsis)
