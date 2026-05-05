@@ -4,9 +4,6 @@
 
 window.app = window.app || {};
 
-// PAGE DEFINITIONS
-// cache: "true"  = load once, reuse on revisit
-// cache: "false" = reload every time the page is shown
 window.app.pages = [
     {
         "cache": "true",
@@ -54,7 +51,7 @@ window.app.pages = [
         "cache": "false",
         "page":  "biab",
         "label": "Business in a Box",
-        "url":   "<wc-include href='biab/index.html' />"
+        "url":   "<wc-include href='biab/index.inc.html' />"
     },
     {
         "cache": "false",
