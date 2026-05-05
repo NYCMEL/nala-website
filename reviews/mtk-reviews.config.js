@@ -2,7 +2,7 @@ window.MTK_REVIEWS_CONFIG = {
   component: "mtk-reviews",
   version: "1.0.1",
   labels: {
-    title: "Leave a Review",
+    title: "Please leave a review for <Locksmith-name>",
     subtitle: "Your rating helps future customers understand the business. The business owner cannot remove ratings from the average.",
     nameLabel: "Your name",
     namePlaceholder: "Your name",

@@ -1,4 +1,10 @@
 @use "../css/nala.scss" as *;
+:root {
+  --nala-placeholder: #CCC; }
+
+::placeholder {
+  color: var(--nala-placeholder) !important; }
+
 .mtk-reviews {
   display: block;
   width: 100%;
@@ -44,14 +50,14 @@
     margin: 0 0 18px;
     color: var(--mtk-reviews-text);
     font-family: var(--nala-font-display, Georgia, "Times New Roman", serif);
-    font-size: clamp(40px, 6vw, 64px);
+    font-size: clamp(20px, 3vw, 32px);
     font-weight: 700;
     line-height: 1.08; }
   .mtk-reviews__subtitle {
     max-width: 940px;
     margin: 0 0 34px;
     color: var(--mtk-reviews-text);
-    font-size: clamp(20px, 2.8vw, 28px);
+    font-size: clamp(12px, 1.6vw, 16px);
     line-height: 1.55; }
   .mtk-reviews__form {
     display: grid;
@@ -64,7 +70,7 @@
     align-items: center;
     gap: 8px;
     color: var(--mtk-reviews-text);
-    font-size: clamp(20px, 2.6vw, 28px);
+    font-size: clamp(12px, 1.6vw, 16px);
     font-weight: 800;
     line-height: 1.2; }
   .mtk-reviews__required {
@@ -80,7 +86,7 @@
     background: #ffffff;
     color: #111827;
     font: inherit;
-    font-size: clamp(18px, 2vw, 24px);
+    font-size: clamp(12px, 1.4vw, 14px);
     font-weight: 700;
     outline: none;
     transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease; }
@@ -148,7 +154,7 @@
     color: #ffffff;
     cursor: pointer;
     font: inherit;
-    font-size: clamp(18px, 2.3vw, 26px);
+    font-size: clamp(12px, 1.4vw, 14px);
     font-weight: 800;
     box-shadow: 0 8px 18px rgba(169, 130, 17, 0.22);
     transition: background-color 160ms ease, box-shadow 160ms ease, transform 160ms ease; }

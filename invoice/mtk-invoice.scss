@@ -1,3 +1,11 @@
+:root {
+  --nala-placeholder: #CCC;
+}
+
+::placeholder {
+  color: var(--nala-placeholder) !important;
+}
+
 mtk-invoice.mtk-invoice {
   display: block;
   width: 100%;
