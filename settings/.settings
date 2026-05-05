@@ -47,4 +47,17 @@ Behavior:
 
 What I want:
 - I want to create a new page for "Profile & Settings":
-- 3 tabs: Privacy, Business Information, Services Offered
+- 3 tabs:
+    1) Privacy
+    2) Business Information
+    3) Services Offered
+
+1) Privacy
+   add editable fields (for internal communications only)
+   - Full Name
+   - Email Address
+   - Contact Phone Number
+   - Password
+   
+  Add a "Save/Update" Button
+  Add a "Change Password"
