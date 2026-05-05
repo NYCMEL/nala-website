@@ -28,6 +28,7 @@ Restrictions:
 - No Bootstrap.
 - No external libraries.
 - Vanilla Javascript
+- Use styles, colors, fonts etc from css/nala.scss file
 
 Accessibility:
 - Use semantic HTML.
