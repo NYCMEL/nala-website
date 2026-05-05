@@ -1,181 +1,247 @@
-@import "../css/nala.scss";
+@use "../css/nala.scss" as *;
 
 .mtk-settings {
   display: block;
-  width: 100%;
-  margin: 0 auto;
-  color: $color-text-87;
-  background: $color-bg-lighter;
-  padding-bottom: 60px;
+  color: var(--nala-text, #222);
+  font-family: var(--nala-font-family, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
 
-  &__card {
-    background: $color-bg-lighter;
-    border-radius: $radius-none;
-    overflow: hidden;
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
 
-  &__header {
-    color: #000;
-    padding: $spacing-xl;
-    border-bottom: 1px $color-border-light solid;
-
-    h2 {
-      font-family: fb;
-      margin: 0;
-      font-size: $font-size-3xl;
-      font-weight: $font-weight-medium;
-      letter-spacing: 0.5px;
-    }
+  .mtk-settings__shell {
+    width: 100%;
+    padding: 2rem 0;
   }
 
-  &__content {
-    padding: $spacing-xl;
-    max-width: 500px;
+  .mtk-settings__title {
+    margin: 0 0 1.5rem;
+    font-size: clamp(1.75rem, 2.5vw, 2.25rem);
+    font-weight: 700;
+    color: var(--nala-text-strong, #111);
   }
 
-  &__form-group {
-    margin-bottom: $spacing-xl;
-    position: relative;
-    &:last-child { margin-bottom: 0; }
+  .mtk-settings__panel {
+    border-top: 1px solid var(--nala-border, #d7d7d7);
+    padding-top: 1.5rem;
   }
 
-  &__label {
-    display: block;
-    font-size: $font-size-xs;
-    font-weight: $font-weight-medium;
-    color: $color-text-60;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: $spacing-sm;
-  }
-
-  &__input-wrapper { position: relative; display: flex; align-items: stretch; }
-
-  &__input {
-    @extend %input-base;
-
-    &--readonly {
-      background-color: $color-bg-lighter;
-      color: $color-text-60;
-      cursor: default;
-      &:hover { background-color: $color-bg-lighter; }
-    }
-
-    &--password {
-      padding-right: 48px;
-      letter-spacing: 2px;
-      &:not([type="text"]) { letter-spacing: 4px; }
-    }
-  }
-
-  &__icon-btn {
-    position: absolute;
-    right: $spacing-sm;
-    top: 0;
-    bottom: 0;
-    margin: auto 0;
-    width: 40px;
-    height: 40px;
-    @include flex-center;
-    background: transparent;
-    border: none;
-    border-radius: $radius-circle;
-    cursor: pointer;
-    color: $color-text-54;
-    transition: $transition-fast;
-    outline: none;
-
-    &:hover  { background-color: rgba(0, 0, 0, 0.04); color: $color-text-87; }
-    &:focus  { background-color: rgba(0, 0, 0, 0.08); outline: 2px solid $color-primary; outline-offset: 2px; }
-    &:active { background-color: rgba(0, 0, 0, 0.12); }
-
-    .material-icons { font-size: $font-size-2xl; user-select: none; color: $color-gold; display:flex; align-items: center; justify-content: center; line-height: 1; }
-  }
-
-  &__actions {
+  .mtk-settings__tabs {
     display: flex;
-    gap: 12px;
-    margin-top: $spacing-xl;
-    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0 0 1.5rem;
+    padding: 0;
+    border-bottom: 1px solid var(--nala-border, #d7d7d7);
   }
 
-  &__btn {
-    @extend %btn-base;
-
-    &--primary  { @extend %btn-primary; }
-    &--secondary { @extend %btn-secondary; }
-
-    &--text {
-      @extend %btn-base;
-      background: transparent;
-      color: $color-primary;
-      padding: 10px $font-size-lg;
-      text-transform: none;
-
-      &:hover  { background-color: rgba($color-primary, 0.08); }
-      &:active { background-color: rgba($color-primary, 0.16); }
-    }
+  .mtk-settings__tab {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    border: 0;
+    border-bottom: 3px solid transparent;
+    background: transparent;
+    color: var(--nala-text, #333);
+    min-height: 48px;
+    padding: 0.75rem 1rem;
+    font: inherit;
+    font-weight: 650;
+    cursor: pointer;
+    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
   }
 
-  &__password-strength {
-    margin-top: $spacing-sm;
-    font-size: $font-size-xs;
-    color: $color-text-60;
-
-    &-bar {
-      height: 4px;
-      background-color: $color-border;
-      border-radius: 2px;
-      overflow: hidden;
-      margin-top: $spacing-xs;
-
-      &-fill {
-        height: 100%;
-        transition: width $duration-medium $ease-standard, background-color $duration-medium;
-        border-radius: 2px;
-
-        &--weak   { background-color: $color-error; }
-        &--medium { background-color: $color-warning; }
-        &--strong { background-color: $color-success; }
-      }
-    }
+  .mtk-settings__tab:hover {
+    background: rgba(191, 146, 0, 0.09);
   }
 
-  &__error {
-    color: $color-error;
-    font-size: $font-size-xs;
-    margin-top: $spacing-xs;
+  .mtk-settings__tab[aria-selected="true"] {
+    color: var(--nala-gold, #b99018);
+    border-bottom-color: var(--nala-gold, #b99018);
+  }
+
+  .mtk-settings__tab:focus-visible,
+  .mtk-settings__input:focus-visible,
+  .mtk-settings__textarea:focus-visible,
+  .mtk-settings__checkbox:focus-visible,
+  .mtk-settings__btn:focus-visible {
+    outline: 3px solid var(--nala-focus, #b99018);
+    outline-offset: 3px;
+  }
+
+  .mtk-settings__icon {
+    font-family: "Material Icons";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 1.25rem;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+  }
+
+  .mtk-settings__card {
+    border: 1px solid var(--nala-border, #d7d7d7);
+    background: var(--nala-surface, #fff);
+    box-shadow: var(--nala-shadow, 0 2px 8px rgba(0, 0, 0, 0.08));
+    min-height: 28rem;
+  }
+
+  .mtk-settings__card-header {
     display: flex;
     align-items: center;
-    gap: $spacing-xs;
-
-    .material-icons { font-size: $font-size-lg; }
+    min-height: 4.25rem;
+    padding: 1rem 1.25rem;
+    background: var(--nala-gold, #ffc107);
+    color: var(--nala-on-gold, #1f1f1f);
   }
 
-  &__hidden { display: none !important; }
-
-  &--edit-mode {
-    .mtk-settings__input--readonly { background-color: #fbf4e5; }
+  .mtk-settings__heading {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 700;
   }
 
-  .material-icons { @include material-icon; }
-}
+  .mtk-settings__content {
+    padding: 1.5rem;
+  }
 
-@media (max-width: $bp-md) {
-  .mtk-settings {
-    max-width: 100%;
+  .mtk-settings__form {
+    display: grid;
+    gap: 1.25rem;
+  }
 
-    &__content { padding: $font-size-lg; }
+  .mtk-settings__form-group {
+    display: grid;
+    gap: 0.5rem;
+  }
 
-    &__header {
-      padding: $font-size-lg;
-      h2 { font-size: $font-size-2xl; }
+  .mtk-settings__label {
+    color: var(--nala-muted, #666);
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .mtk-settings__input,
+  .mtk-settings__textarea {
+    width: 100%;
+    min-height: 48px;
+    border: 1px solid transparent;
+    border-bottom: 2px solid var(--nala-border-strong, #777);
+    background: var(--nala-field-bg, #f8f8f8);
+    color: var(--nala-text, #222);
+    padding: 0.75rem 0.85rem;
+    font: inherit;
+  }
+
+  .mtk-settings__textarea {
+    min-height: 7rem;
+    resize: vertical;
+  }
+
+  .mtk-settings__input[readonly] {
+    color: var(--nala-muted, #666);
+    background: transparent;
+  }
+
+  .mtk-settings__checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 48px;
+  }
+
+  .mtk-settings__checkbox {
+    width: 1.25rem;
+    height: 1.25rem;
+    accent-color: var(--nala-gold, #b99018);
+  }
+
+  .mtk-settings__checkbox-label {
+    font-weight: 600;
+  }
+
+  .mtk-settings__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding-top: 0.5rem;
+  }
+
+  .mtk-settings__btn {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    border: 0;
+    min-height: 44px;
+    padding: 0.75rem 1.1rem;
+    background: var(--nala-gold, #b99018);
+    color: var(--nala-on-gold, #111);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: var(--nala-button-shadow, 0 2px 4px rgba(0, 0, 0, 0.2));
+    transition: transform 120ms ease, box-shadow 120ms ease;
+  }
+
+  .mtk-settings__btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .mtk-settings__btn:active {
+    transform: translateY(0);
+  }
+
+  .mtk-settings__sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 767.98px) {
+    .mtk-settings__shell {
+      padding: 1.25rem 0;
     }
 
-    &__actions {
-      flex-direction: column;
-      .mtk-settings__btn { width: 100%; justify-content: center; }
+    .mtk-settings__tabs {
+      display: grid;
+      grid-template-columns: 1fr;
+      border-bottom: 0;
+    }
+
+    .mtk-settings__tab {
+      border: 1px solid var(--nala-border, #d7d7d7);
+      border-left: 4px solid transparent;
+      justify-content: flex-start;
+    }
+
+    .mtk-settings__tab[aria-selected="true"] {
+      border-left-color: var(--nala-gold, #b99018);
+      border-bottom-color: var(--nala-border, #d7d7d7);
+    }
+
+    .mtk-settings__content {
+      padding: 1rem;
+    }
+
+    .mtk-settings__actions {
+      justify-content: stretch;
+    }
+
+    .mtk-settings__btn {
+      width: 100%;
     }
   }
 }
-
