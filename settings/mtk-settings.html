@@ -2,19 +2,21 @@
 
 <!-- mtk-settings.html -->
 <mtk-settings class="mtk-settings">
-    <section class="mtk-settings__shell" aria-label="Settings">
-	<header class="mtk-settings__header">
-	    <div>
-		<p class="mtk-settings__eyebrow">Account Settings</p>
-		<h2 class="mtk-settings__title">Settings</h2>
-	    </div>
-	</header>
+  <section class="mtk-settings__shell" aria-label="Settings">
+    <header class="mtk-settings__header">
+      <div>
+        <p class="mtk-settings__eyebrow" data-eyebrow>Account Management</p>
+        <h2 class="mtk-settings__title" data-title>Profile &amp; Settings</h2>
+      </div>
+    </header>
 
-	<div class="mtk-settings__layout">
-	    <nav class="mtk-settings__tabs" aria-label="Settings sections"></nav>
-	    <main class="mtk-settings__panel" tabindex="-1"></main>
-	</div>
-    </section>
+    <div class="mtk-settings__layout">
+      <nav class="mtk-settings__tabs" aria-label="Settings sections"></nav>
+      <main class="mtk-settings__panel" tabindex="-1">
+          <div class="mtk-settings__empty">Loading settings...</div>
+      </main>
+    </div>
+  </section>
 </mtk-settings>
 
 <script src="settings/mtk-settings.config.js"></script>

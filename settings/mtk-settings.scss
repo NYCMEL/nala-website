@@ -12,7 +12,7 @@
 
   &__shell {
     width: 100%;
-    max-width: 1120px;
+    max-width: 1280px;
     margin: 0 auto;
     padding: 24px;
   }
@@ -43,8 +43,7 @@
   }
 
   &__layout {
-    display: grid;
-    grid-template-columns: 280px 1fr;
+    display: block;
     min-height: 520px;
     border: 1px solid #e5e7eb;
     background: #ffffff;
@@ -53,29 +52,33 @@
 
   &__tabs {
     display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 18px;
-    border-right: 1px solid #e5e7eb;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0;
+    width: 100%;
+    padding: 0 18px;
+    border-bottom: 1px solid #e5e7eb;
     background: #f9fafb;
+    overflow-x: auto;
   }
 
   &__tab {
-    width: 100%;
-    display: flex;
+    min-width: max-content;
+    min-height: 58px;
+    display: inline-flex;
     align-items: center;
-    justify-content: flex-start;
-    min-height: 48px;
-    padding: 12px 14px;
+    justify-content: center;
+    gap: 9px;
+    padding: 0 22px;
     border: 0;
-    border-left: 4px solid transparent;
+    border-bottom: 4px solid transparent;
     background: transparent;
     color: #374151;
     cursor: pointer;
     font: inherit;
-    font-weight: 700;
-    text-align: left;
-    transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+    font-weight: 800;
+    text-align: center;
+    transition: background 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease;
   }
 
   &__tab:hover {
@@ -83,19 +86,39 @@
     color: #111827;
   }
 
+  &__tab:active {
+    transform: translateY(1px);
+  }
+
   &__tab:focus-visible {
     outline: 3px solid rgba(169, 130, 17, 0.35);
-    outline-offset: 2px;
+    outline-offset: -3px;
   }
 
   &__tab[aria-selected="true"] {
-    border-left-color: #a98211;
+    border-bottom-color: #a98211;
     background: #fff8e1;
     color: #111827;
   }
 
+  &__tab-icon {
+    font-family: "Material Icons", "Material Symbols Outlined", sans-serif;
+    font-size: 1.25rem;
+    font-weight: normal;
+    line-height: 1;
+  }
+
+  &__tab-label {
+    white-space: nowrap;
+  }
+
   &__panel {
-    padding: 28px;
+    width: 100%;
+    padding: 32px;
+  }
+
+  &__panel--animate {
+    animation: mtk-settings-panel-in 180ms ease-out both;
   }
 
   &__panel:focus {
@@ -114,7 +137,7 @@
   }
 
   &__panel-description {
-    max-width: 640px;
+    max-width: 760px;
     margin: 0;
     color: #6b7280;
     line-height: 1.6;
@@ -127,7 +150,7 @@
   &__grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 22px 18px;
+    gap: 22px 24px;
   }
 
   &__field {
@@ -296,6 +319,31 @@
     line-height: 1.6;
   }
 
+  @keyframes mtk-settings-panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__panel--animate {
+      animation: none;
+    }
+
+    &__tab,
+    &__button,
+    &__input,
+    &__textarea {
+      transition: none;
+    }
+  }
+
   @media (max-width: 960px) {
     &__checkbox-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -311,25 +359,14 @@
       font-size: 1.55rem;
     }
 
-    &__layout {
-      grid-template-columns: 1fr;
-    }
-
     &__tabs {
-      flex-direction: row;
-      overflow-x: auto;
-      border-right: 0;
-      border-bottom: 1px solid #e5e7eb;
+      padding: 0 8px;
     }
 
     &__tab {
-      min-width: max-content;
-      border-left: 0;
-      border-bottom: 4px solid transparent;
-    }
-
-    &__tab[aria-selected="true"] {
-      border-bottom-color: #a98211;
+      min-height: 52px;
+      padding: 0 16px;
+      font-size: 0.95rem;
     }
 
     &__panel {
@@ -338,6 +375,7 @@
 
     &__grid {
       grid-template-columns: 1fr;
+      gap: 18px;
     }
 
     &__checkbox-card {
