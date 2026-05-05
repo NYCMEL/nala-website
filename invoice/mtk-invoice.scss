@@ -245,3 +245,36 @@ mtk-invoice.mtk-invoice .mtk-invoice__status {
   mtk-invoice.mtk-invoice .mtk-invoice__actions,
   mtk-invoice.mtk-invoice .mtk-invoice__status { display: none; }
 }
+
+
+mtk-invoice.mtk-invoice.mtk-invoice--open {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(15,23,42,0.6);
+  overflow: auto;
+}
+
+mtk-invoice.mtk-invoice .mtk-invoice__overlay-header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 16px;
+}
+
+mtk-invoice.mtk-invoice .mtk-invoice__close {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid #a98212;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+mtk-invoice.mtk-invoice .mtk-invoice__close:hover {
+  background: #fef3c7;
+}
