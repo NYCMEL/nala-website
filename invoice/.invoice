@@ -46,3 +46,5 @@ Behavior:
 
 What I want:
 - create a material design form from the image
+- input font size should be 16px and normal weight
+- reduce input label font-size

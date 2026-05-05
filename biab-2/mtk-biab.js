@@ -305,6 +305,17 @@ class MtkBiab {
         window.print();
       }
 
+      if (action === "save-new-invoice") {
+        const status = this.root.querySelector("[data-new-invoice-status]");
+        if (status) {
+          status.textContent = "Invoice saved.";
+        }
+
+        this._publish("mtk-biab:save-new-invoice", {
+          sectionId: this.activeId
+        });
+      }
+
       if (action === "select-card-template") {
         this._openCardEditor(target.getAttribute("data-template-id"));
       }
@@ -489,6 +500,30 @@ class MtkBiab {
               <textarea placeholder="Example: Rekeyed front door lock and tested keys."></textarea>
             </div>
           </div>
+
+          <section class="mtk-biab__invoice-total-box" aria-label="Invoice totals">
+            <div class="mtk-biab__invoice-total-row">
+              <span>Subtotal</span>
+              <strong>$95.00</strong>
+            </div>
+            <div class="mtk-biab__invoice-total-row">
+              <span>Tax</span>
+              <strong>$0.00</strong>
+            </div>
+            <div class="mtk-biab__invoice-total-row mtk-biab__invoice-total-row--grand">
+              <span>Total</span>
+              <strong>$95.00</strong>
+            </div>
+          </section>
+
+          <div class="mtk-biab__invoice-actions">
+            <button class="mtk-biab__submit-btn" type="button" data-action="save-new-invoice">
+              <span class="material-icons" aria-hidden="true">save</span>
+              <span>Save Invoice</span>
+            </button>
+          </div>
+
+          <p class="mtk-biab__invoice-save-status" data-new-invoice-status aria-live="polite"></p>
         </form>
       </div>
     `);
