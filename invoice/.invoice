@@ -1,25 +1,25 @@
-FORGET ALL PREVIOUS CONTEXT for mtk-component and remember this as mtk-component forever
+FORGET ALL PREVIOUS CONTEXT for mtk-invoice and remember this as mtk-invoice forever
 
-Create a reusable UI component named mtk-component using:
+Create a reusable UI invoice named mtk-invoice using:
 - HTML
 - SCSS
 - Vanilla JavaScript
 - Bootstrap 5 (layout only)
 - Modern Material Design, Material Design icons and styles
-- Always create a JS class for mtk-component and initialize it inside the JS file itself
+- Always create a JS class for mtk-invoice and initialize it inside the JS file itself
 
 Rules:
-- The component is wrapped in a display:block element <mtk-component class="mtk-component">.
-- The root element uses .mtk-component.
-- All styles must be scoped to .mtk-component.
+- The invoice is wrapped in a display:block element <mtk-invoice class="mtk-invoice">.
+- The root element uses .mtk-invoice.
+- All styles must be scoped to .mtk-invoice.
 - No global styles or IDs.
 - publish click events using wc.publish
-- subscribe to all 4-mtk-component everns using wc.subscribe
+- subscribe to all 4-mtk-invoice everns using wc.subscribe
 - create a onMessage function to be passed to wc.subscribe function
 
 Data:
-- The component is JSON driven.
-  - any and all data must come from mtk-component.config.js file
+- The invoice is JSON driven.
+  - any and all data must come from mtk-invoice.config.js file
 
 Restrictions:
 - No inline styles. (All styles in  "*.scss" file)
@@ -35,10 +35,10 @@ Accessibility:
 - ADA compliant
 
 Output! Create exactly these files:
-- mtk-component.config.js (JSON FILE)
-- mtk-component.scss
-- mtk-component.html
-- mtk-component.js
+- mtk-invoice.config.js (JSON FILE)
+- mtk-invoice.scss
+- mtk-invoice.html
+- mtk-invoice.js
 - A minimal index.html file
 
 Behavior:
