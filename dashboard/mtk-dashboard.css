@@ -200,6 +200,12 @@ h1.title::after {
   background-color: #a98212;
   transform: translateX(-50%); }
 
+:root {
+  --nala-placeholder: #999; }
+
+::placeholder {
+  color: var(--nala-placeholder) !important; }
+
 .mtk-dashboard {
   margin: 0 auto;
   padding: 0;
@@ -436,15 +442,3 @@ h1.title::after {
 .mtk-dashboard__subscriptions {
   animation-delay: 0.1s;
   animation-fill-mode: both; }
-4px; }
-      .mtk-dashboard__user-name {
-        font-size: 24px; }
-      .mtk-dashboard__subscriptions {
-        padding: 24px; }
-      .mtk-dashboard__subscription-grid {
-        grid-template-columns: 1fr; } }
-  .mtk-dashboard__header, .mtk-dashboard__subscriptions {
-    animation: mtk-fade-in 600ms cubic-bezier(0.4, 0, 0.2, 1); }
-  .mtk-dashboard__subscriptions {
-    animation-delay: 0.1s;
-    animation-fill-mode: both; }

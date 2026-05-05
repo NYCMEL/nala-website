@@ -45,4 +45,4 @@ Behavior:
 - all published (wc.publish) messages should be logged using wc.log to console before being published
 
 What I want:
-- create a material design form from the image
+- create a material design form from the image. allow user to pick star rating
