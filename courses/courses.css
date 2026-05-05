@@ -136,18 +136,18 @@ a:hover {
   white-space: nowrap;
   word-wrap: normal;
   direction: ltr;
-  -webkit-font-feature-settings: "liga";
-  font-feature-settings: "liga";
+  -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   user-select: none; }
 
-.nav-link.active[id=mtk-header-home],
-.nav-link.active[id=mtk-header-register],
-.nav-link.active[id=mtk-header-login],
-.nav-link.active[id=mtk-header-dashboard],
-.nav-link.active[id=mtk-header-hierarchy],
-.nav-link.active[id=mtk-header-settings] {
+.nav-link.active[id="mtk-header-home"],
+.nav-link.active[id="mtk-header-register"],
+.nav-link.active[id="mtk-header-login"],
+.nav-link.active[id="mtk-header-dashboard"],
+.nav-link.active[id="mtk-header-hierarchy"],
+.nav-link.active[id="mtk-header-settings"] {
   color: #a98212 !important; }
 
 #page-content {
@@ -179,7 +179,7 @@ h1.title {
   padding-bottom: 0.5rem; }
 
 h1.title::after {
-  content: "";
+  content: '';
   position: absolute;
   left: 50%;
   bottom: 0;
@@ -187,6 +187,12 @@ h1.title::after {
   height: 3px;
   background-color: #a98212;
   transform: translateX(-50%); }
+
+:root {
+  --nala-placeholder: #999; }
+
+::placeholder {
+  color: var(--nala-placeholder) !important; }
 
 .mtk-courses {
   padding: 2rem 0;

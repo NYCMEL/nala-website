@@ -187,6 +187,12 @@ h1.title::after {
   background-color: #a98212;
   transform: translateX(-50%); }
 
+:root {
+  --nala-placeholder: #999; }
+
+::placeholder {
+  color: var(--nala-placeholder) !important; }
+
 .nav-link.active[id="mtk-header-home"],
 .nav-link.active[id="mtk-header-news"],
 .nav-link.active[id="mtk-header-register"],

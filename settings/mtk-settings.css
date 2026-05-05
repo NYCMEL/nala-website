@@ -287,6 +287,12 @@ h1.title::after {
   background-color: #a98212;
   transform: translateX(-50%); }
 
+:root {
+  --nala-placeholder: #999; }
+
+::placeholder {
+  color: var(--nala-placeholder) !important; }
+
 .mtk-settings {
   display: block;
   width: 100%;

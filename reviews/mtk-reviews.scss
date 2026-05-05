@@ -1,13 +1,5 @@
 @use "../css/nala.scss" as *;
 
-:root {
-  --nala-placeholder: #CCC;
-}
-
-::placeholder {
-  color: var(--nala-placeholder) !important;
-}
-
 .mtk-reviews {
   display: block;
   width: 100%;
