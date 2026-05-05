@@ -82,7 +82,7 @@ Update my UI. I am explaining each content by numbers:
    - use content from client folder
 
 5) Invoices
-  - display a table of invoices with dates, client, amount, delete, update etc.
+  - display a table of invoices with dates, client, amount, delete, update customer email, customer phone number, etc.
   - add a heading "Invoices:"
   - add a "Status" dropdown with "Open", "Paid", "Draft" and other statuses next to the heading. 
     default "Open"
