@@ -21,7 +21,7 @@ class MtkReviews {
     this._bind();
     this._publish(this.events.publish.ready || "mtk-reviews:ready", {
       component: this.config.component || "mtk-reviews",
-      version: this.config.version || "1.0.0"
+      version: this.config.version || "1.0.1"
     });
   }
 

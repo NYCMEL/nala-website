@@ -1,6 +1,6 @@
 window.MTK_REVIEWS_CONFIG = {
   component: "mtk-reviews",
-  version: "1.0.0",
+  version: "1.0.1",
   labels: {
     title: "Leave a Review",
     subtitle: "Your rating helps future customers understand the business. The business owner cannot remove ratings from the average.",
