@@ -2,7 +2,7 @@
  * mtk-biab.js
  * Full BIAB component.
  * Reload-safe.
- * New Invoice opens a full-page invoice view using existing /repo_deploy/invoice with circular X close.
+ * New Invoice opens existing repo_deploy/invoice page in a full-page iframe.
  */
 (function () {
   "use strict";
@@ -28,13 +28,149 @@
     }
 
     _init() {
+      this._ensureInvoicePageStyles();
       this._subscribe();
       this._render();
       this._bind();
       this._publish(this.events.publish.ready || "mtk-biab:ready", {
         component: this.config.component || "mtk-biab",
-        version: this.config.version || "1.0.13"
+        version: this.config.version || "1.0.14"
       });
+    }
+
+    _ensureInvoicePageStyles() {
+      if (document.getElementById("mtk-biab-invoice-page-styles")) return;
+
+      const style = document.createElement("style");
+      style.id = "mtk-biab-invoice-page-styles";
+      style.textContent = `
+        .mtk-biab__invoice-page {
+          position: fixed;
+          inset: 0;
+          z-index: 99999;
+          display: grid;
+          grid-template-rows: auto 1fr;
+          background: #f8fafc;
+          color: #0f172a;
+        }
+
+        .mtk-biab__invoice-page-header {
+          background: #ffffff;
+          border-bottom: 1px solid rgba(15, 23, 42, 0.14);
+          box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+        }
+
+        .mtk-biab__invoice-page-header-inner,
+        .mtk-biab__invoice-page-body-inner {
+          width: min(1180px, calc(100% - 48px));
+          margin: 0 auto;
+        }
+
+        .mtk-biab__invoice-page-header-inner {
+          min-height: 92px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 24px;
+          padding: 20px 0;
+        }
+
+        .mtk-biab__invoice-page-kicker {
+          margin: 0 0 4px;
+          color: #a98211;
+          font-size: 12px;
+          font-weight: 900;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+        }
+
+        .mtk-biab__invoice-page-title {
+          margin: 0;
+          color: #0f172a;
+          font-size: clamp(28px, 4vw, 48px);
+          font-weight: 900;
+          line-height: 1.08;
+        }
+
+        .mtk-biab__invoice-page-close {
+          width: 48px;
+          height: 48px;
+          flex: 0 0 48px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          border: 2px solid #a98211;
+          border-radius: 50%;
+          background: #ffffff;
+          color: #0f172a;
+          font-size: 30px;
+          font-weight: 900;
+          line-height: 1;
+          cursor: pointer;
+          box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
+        }
+
+        .mtk-biab__invoice-page-close:hover,
+        .mtk-biab__invoice-page-close:focus-visible {
+          background: #a98211;
+          color: #ffffff;
+          outline: 3px solid rgba(169, 130, 17, 0.28);
+          outline-offset: 3px;
+        }
+
+        .mtk-biab__invoice-page-body {
+          min-height: 0;
+          overflow: hidden;
+          padding: 28px 0;
+        }
+
+        .mtk-biab__invoice-page-body-inner {
+          height: 100%;
+          min-height: 0;
+          border: 1px solid rgba(15, 23, 42, 0.12);
+          border-radius: 18px;
+          background: #ffffff;
+          box-shadow: 0 18px 42px rgba(15, 23, 42, 0.10);
+          overflow: hidden;
+        }
+
+        .mtk-biab__invoice-page-frame {
+          display: block;
+          width: 100%;
+          height: 100%;
+          min-height: calc(100vh - 178px);
+          border: 0;
+          background: #ffffff;
+        }
+
+        body.mtk-biab-invoice-page-open {
+          overflow: hidden;
+        }
+
+        @media (max-width: 720px) {
+          .mtk-biab__invoice-page-header-inner,
+          .mtk-biab__invoice-page-body-inner {
+            width: min(100% - 28px, 1180px);
+          }
+
+          .mtk-biab__invoice-page-header-inner {
+            align-items: flex-start;
+            min-height: 78px;
+          }
+
+          .mtk-biab__invoice-page-close {
+            width: 42px;
+            height: 42px;
+            flex-basis: 42px;
+            font-size: 26px;
+          }
+
+          .mtk-biab__invoice-page-body {
+            padding: 14px 0;
+          }
+        }
+      `;
+      document.head.appendChild(style);
     }
 
     _subscribe() {
@@ -372,125 +508,98 @@
 
     _openNewInvoice() {
       const section = this._getActiveSection();
+
       this._closeSetup();
       this._closeInvoicePage();
+
+      const page = document.createElement("section");
+      page.className = "mtk-biab__invoice-page";
+      page.setAttribute("role", "dialog");
+      page.setAttribute("aria-modal", "true");
+      page.setAttribute("aria-labelledby", "mtk-biab-invoice-page-title");
+
+      page.innerHTML = `
+        <header class="mtk-biab__invoice-page-header">
+          <div class="mtk-biab__invoice-page-header-inner">
+            <div>
+              <p class="mtk-biab__invoice-page-kicker">Current selection</p>
+              <h2 class="mtk-biab__invoice-page-title" id="mtk-biab-invoice-page-title">New Invoice</h2>
+            </div>
+
+            <button class="mtk-biab__invoice-page-close" type="button" data-action="close-invoice-page" aria-label="Close invoice">
+              ×
+            </button>
+          </div>
+        </header>
+
+        <div class="mtk-biab__invoice-page-body">
+          <div class="mtk-biab__invoice-page-body-inner">
+            <iframe
+              class="mtk-biab__invoice-page-frame"
+              src="invoice/"
+              title="New Invoice"
+            ></iframe>
+          </div>
+        </div>
+      `;
+
+      this.root.appendChild(page);
+      document.body.classList.add("mtk-biab-invoice-page-open");
+
+      const iframe = page.querySelector(".mtk-biab__invoice-page-frame");
+      if (iframe) {
+        iframe.addEventListener("load", () => this._cleanInvoiceFrame(iframe));
+      }
+
+      const closeButton = page.querySelector(".mtk-biab__invoice-page-close");
+      if (closeButton) closeButton.focus();
 
       this._publish("mtk-biab:new-invoice", {
         sectionId: this.activeId,
         section,
         target: "invoice/"
       });
+    }
 
-      const page = document.createElement("section");
-      page.className = "mtk-biab__invoice-page";
-      page.setAttribute("role", "dialog");
-      page.setAttribute("aria-modal", "true");
-      page.setAttribute("aria-label", "New invoice");
+    _cleanInvoiceFrame(iframe) {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        if (!doc) return;
 
-      page.innerHTML = `
-        <style>
-          .mtk-biab__invoice-page {
-            position: fixed;
-            inset: 0;
-            z-index: 2147483647;
-            display: grid;
-            grid-template-rows: 72px 1fr;
-            background: #ffffff;
-            color: #0f172a;
+        const style = doc.createElement("style");
+        style.textContent = `
+          .mtk-invoice__shell {
+            display: contents !important;
           }
 
-          .mtk-biab__invoice-page-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 18px;
-            padding: 12px 22px;
-            border-bottom: 1px solid rgba(15, 23, 42, 0.14);
-            background: #ffffff;
-            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+          .mtk-invoice__card {
+            width: min(1180px, calc(100% - 48px)) !important;
+            max-width: 1180px !important;
+            margin: 0 auto 40px !important;
           }
 
-          .mtk-biab__invoice-page-title {
-            margin: 0;
-            font: 900 28px/1.15 "Segoe UI", system-ui, sans-serif;
-            color: #0f172a;
+          input::placeholder,
+          textarea::placeholder {
+            font-style: italic !important;
           }
+        `;
+        doc.head.appendChild(style);
 
-          .mtk-biab__invoice-page-subtitle {
-            margin: 2px 0 0;
-            font: 700 12px/1.3 "Segoe UI", system-ui, sans-serif;
-            color: #a98211;
-            letter-spacing: .09em;
-            text-transform: uppercase;
-          }
-
-          .mtk-biab__invoice-page-close {
-            width: 46px;
-            height: 46px;
-            flex: 0 0 46px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid #a98211;
-            border-radius: 50%;
-            background: #ffffff;
-            color: #0f172a;
-            font-size: 30px;
-            font-weight: 900;
-            line-height: 1;
-            cursor: pointer;
-            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
-          }
-
-          .mtk-biab__invoice-page-close:hover,
-          .mtk-biab__invoice-page-close:focus-visible {
-            background: #a98211;
-            color: #ffffff;
-            outline: 3px solid rgba(169, 130, 17, .3);
-            outline-offset: 3px;
-          }
-
-          .mtk-biab__invoice-page-frame {
-            width: 100%;
-            height: 100%;
-            border: 0;
-            background: #ffffff;
-          }
-
-          body.mtk-biab-invoice-page-open {
-            overflow: hidden !important;
-          }
-        </style>
-
-        <header class="mtk-biab__invoice-page-header">
-          <div>
-            <p class="mtk-biab__invoice-page-subtitle">Business in a Box</p>
-            <h2 class="mtk-biab__invoice-page-title">New Invoice</h2>
-          </div>
-
-          <button class="mtk-biab__invoice-page-close" type="button" data-action="close-invoice-page" aria-label="Close invoice">
-            ×
-          </button>
-        </header>
-
-        <iframe
-          class="mtk-biab__invoice-page-frame"
-          src="invoice/"
-          title="New invoice"
-          loading="eager"
-        ></iframe>
-      `;
-
-      document.body.classList.add("mtk-biab-invoice-page-open");
-      this.root.appendChild(page);
-
-      const closeButton = page.querySelector(".mtk-biab__invoice-page-close");
-      if (closeButton) closeButton.focus();
+        const placeholders = Array.from(doc.querySelectorAll("input[placeholder], textarea[placeholder]"));
+        placeholders.forEach((field) => {
+          field.setAttribute("placeholder", field.getAttribute("placeholder").replace(/^Example:\s*/i, ""));
+          field.style.fontStyle = "normal";
+        });
+      } catch (error) {
+        console.warn("Unable to style invoice frame", error);
+      }
     }
 
     _closeInvoicePage() {
       const existing = this.root.querySelector(".mtk-biab__invoice-page");
-      if (existing) existing.remove();
+      if (!existing) return;
+
+      existing.remove();
       document.body.classList.remove("mtk-biab-invoice-page-open");
     }
 
