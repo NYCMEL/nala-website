@@ -8,7 +8,6 @@ class MtkBiab {
     this.activeId = this.sections[0] ? this.sections[0].id : "";
     this.invoiceStatus = "Open";
     this.selectedTemplate = null;
-    this.reviewSort = "desc";
     this.isPublishing = false;
     this.onMessage = this.onMessage.bind(this);
     this._init();
@@ -20,7 +19,7 @@ class MtkBiab {
     this._bind();
     this._publish(this.events.publish.ready || "mtk-biab:ready", {
       component: this.config.component || "mtk-biab",
-      version: this.config.version || "1.0.7"
+      version: this.config.version || "1.0.8"
     });
   }
 
@@ -154,24 +153,71 @@ class MtkBiab {
     return "";
   }
 
+  _renderInvoices(section) {
+    const invoices = this._getFilteredInvoices(section);
+
+    return `
+      <section class="mtk-biab__invoice-section" aria-label="Invoices">
+        <div class="mtk-biab__invoice-head">
+          <div class="mtk-biab__invoice-title-row">
+            <h3>Status</h3>
+            <label class="mtk-biab__status-filter">
+              <select data-action="filter-invoices" aria-label="Filter invoices by status">
+                ${this._renderStatusOptions()}
+              </select>
+            </label>
+          </div>
+
+          <button class="mtk-biab__new-invoice-btn" type="button" data-action="new-invoice">
+            <span class="material-icons" aria-hidden="true">add</span>
+            <span>${this._escape(section.newInvoiceLabel || "New Invoice")}</span>
+          </button>
+        </div>
+
+        <div class="mtk-biab__table-wrap">
+          <table class="mtk-biab__invoice-table">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col">Invoice #</th>
+                <th scope="col">Date</th>
+                <th scope="col">Client</th>
+                <th scope="col">Service</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${invoices.map((invoice) => `
+                <tr>
+                  <td>
+                    <button class="mtk-biab__invoice-action-btn" type="button" data-action="delete-invoice" data-invoice-id="${this._escape(invoice.id)}" aria-label="Delete ${this._escape(invoice.id)}">
+                      <span class="material-icons" aria-hidden="true">delete</span>
+                    </button>
+                  </td>
+                  <td>
+                    <button class="mtk-biab__invoice-action-btn" type="button" data-action="update-invoice" data-invoice-id="${this._escape(invoice.id)}" aria-label="Update ${this._escape(invoice.id)}">
+                      <span class="material-icons" aria-hidden="true">edit</span>
+                    </button>
+                  </td>
+                  <td>${this._escape(invoice.id)}</td>
+                  <td>${this._escape(invoice.date)}</td>
+                  <td>${this._escape(invoice.client)}</td>
+                  <td>${this._escape(invoice.service)}</td>
+                  <td>${this._formatCurrency(invoice.amount)}</td>
+                  <td><span class="mtk-biab__invoice-status">${this._escape(invoice.status)}</span></td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    `;
+  }
 
   _renderReviews(section) {
-    
-const reviews = Array.isArray(section.reviews) ? section.reviews : [];
-reviews.sort((a, b) => {
-  // primary: stars
-  const starCmp = this.reviewSort === "asc"
-    ? (Number(a.rating)||0) - (Number(b.rating)||0)
-    : (Number(b.rating)||0) - (Number(a.rating)||0);
-
-  if (starCmp !== 0) return starCmp;
-
-  // secondary: date DESC (newest first)
-  const ad = new Date(a.date);
-  const bd = new Date(b.date);
-  return bd - ad;
-});
-
+    const reviews = Array.isArray(section.reviews) ? section.reviews : [];
 
     return `
       <section class="mtk-biab__reviews-section" aria-label="${this._escape(section.reviewsHeading || "Reviews")}">
@@ -222,71 +268,6 @@ reviews.sort((a, b) => {
     return output;
   }
 
-  _renderInvoices(section) {
-    const invoices = this._getFilteredInvoices(section);
-
-    return `
-      <section class="mtk-biab__invoice-section" aria-label="Invoices">
-        <div class="mtk-biab__invoice-head">
-          <div class="mtk-biab__invoice-title-row">
-            <h3>Status</h3>
-            <label class="mtk-biab__status-filter">
-              <select data-action="filter-invoices" aria-label="Filter invoices by status">
-                ${this._renderStatusOptions()}
-              </select>
-            </label>
-          </div>
-
-          <button class="mtk-biab__new-invoice-btn" type="button" data-action="new-invoice">
-            <span class="material-icons" aria-hidden="true">add</span>
-            <span>${this._escape(section.newInvoiceLabel || "New Invoice")}</span>
-          </button>
-        </div>
-
-        <p class="mtk-biab__invoice-message" data-invoice-message aria-live="polite"></p>
-
-        <div class="mtk-biab__table-wrap">
-          <table class="mtk-biab__invoice-table">
-            <thead>
-              <tr>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col">Invoice #</th>
-                <th scope="col">Date</th>
-                <th scope="col">Client</th>
-                <th scope="col">Service</th>
-                <th scope="col">Amount</th>
-                <th scope="col">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${invoices.map((invoice) => `
-                <tr>
-                  <td>
-                    <button class="mtk-biab__invoice-action-btn" type="button" data-action="delete-invoice" data-invoice-id="${this._escape(invoice.id)}" aria-label="Delete ${this._escape(invoice.id)}">
-                      <span class="material-icons" aria-hidden="true">delete</span>
-                    </button>
-                  </td>
-                  <td>
-                    <button class="mtk-biab__invoice-action-btn" type="button" data-action="update-invoice" data-invoice-id="${this._escape(invoice.id)}" aria-label="Update ${this._escape(invoice.id)}">
-                      <span class="material-icons" aria-hidden="true">edit</span>
-                    </button>
-                  </td>
-                  <td>${this._escape(invoice.id)}</td>
-                  <td>${this._escape(invoice.date)}</td>
-                  <td>${this._escape(invoice.client)}</td>
-                  <td>${this._escape(invoice.service)}</td>
-                  <td>${this._formatCurrency(invoice.amount)}</td>
-                  <td><span class="mtk-biab__invoice-status">${this._escape(invoice.status)}</span></td>
-                </tr>
-              `).join("")}
-            </tbody>
-          </table>
-        </div>
-      </section>
-    `;
-  }
-
   _getFilteredInvoices(section) {
     return Array.isArray(section.invoices)
       ? section.invoices.filter((invoice) => invoice.status === this.invoiceStatus)
@@ -316,6 +297,14 @@ reviews.sort((a, b) => {
         this._openSetup();
       }
 
+      if (action === "new-invoice") {
+        this._openNewInvoice();
+      }
+
+      if (action === "print-new-invoice") {
+        window.print();
+      }
+
       if (action === "select-card-template") {
         this._openCardEditor(target.getAttribute("data-template-id"));
       }
@@ -328,25 +317,17 @@ reviews.sort((a, b) => {
         this._submitCardEditor();
       }
 
-      if (action === "new-invoice") {
-        this._publish("mtk-biab:new-invoice", { sectionId: this.activeId });
-      }
-
       if (action === "delete-invoice") {
-        const invoiceId = target.getAttribute("data-invoice-id");
-        this._showInvoiceMessage("Delete clicked: " + invoiceId);
         this._publish("mtk-biab:delete-invoice", {
           sectionId: this.activeId,
-          invoiceId: invoiceId
+          invoiceId: target.getAttribute("data-invoice-id")
         });
       }
 
       if (action === "update-invoice") {
-        const invoiceId = target.getAttribute("data-invoice-id");
-        this._showInvoiceMessage("Update clicked: " + invoiceId);
         this._publish("mtk-biab:update-invoice", {
           sectionId: this.activeId,
-          invoiceId: invoiceId
+          invoiceId: target.getAttribute("data-invoice-id")
         });
       }
 
@@ -375,14 +356,6 @@ reviews.sort((a, b) => {
     });
   }
 
-
-  _showInvoiceMessage(message) {
-    const target = this.root.querySelector("[data-invoice-message]");
-    if (!target) return;
-
-    target.textContent = message;
-  }
-
   _selectSection(sectionId) {
     if (!this.sections.some((section) => section.id === sectionId)) return;
 
@@ -409,6 +382,121 @@ reviews.sort((a, b) => {
     }
 
     this._openGenericSetup(section);
+  }
+
+  _openNewInvoice() {
+    const section = this._getActiveSection();
+
+    this._closeSetup();
+
+    this._appendSetupOverlay(section, `
+      <div class="mtk-biab__invoice-form-card">
+        <header class="mtk-biab__invoice-form-header">
+          <div>
+            <h3>Locksmith Invoice</h3>
+            <p>Create a quick service invoice and print or save as PDF.</p>
+          </div>
+          <button class="mtk-biab__invoice-print-btn" type="button" data-action="print-new-invoice">
+            <span class="material-icons" aria-hidden="true">picture_as_pdf</span>
+            <span>Print / Save PDF</span>
+          </button>
+        </header>
+
+        <div class="mtk-biab__invoice-gold-line" aria-hidden="true"></div>
+
+        <form class="mtk-biab__invoice-form">
+          <div class="mtk-biab__invoice-form-grid">
+            <div class="mtk-biab__invoice-field">
+              <label>Business Name</label>
+              <input type="text" value="ABC Locksmith Services">
+            </div>
+
+            <div class="mtk-biab__invoice-field">
+              <label>Invoice #</label>
+              <input type="text" value="INV-1001">
+            </div>
+
+            <div class="mtk-biab__invoice-field">
+              <label>Business Phone</label>
+              <input type="tel" value="(555) 555-5555">
+            </div>
+
+            <div class="mtk-biab__invoice-field">
+              <label>Invoice Date</label>
+              <input type="date" value="2026-04-29">
+            </div>
+          </div>
+
+          <h3 class="mtk-biab__invoice-section-title">Customer</h3>
+
+          <div class="mtk-biab__invoice-form-grid">
+            <div class="mtk-biab__invoice-field">
+              <label>Customer Name</label>
+              <input type="text" value="Jane Smith">
+            </div>
+
+            <div class="mtk-biab__invoice-field">
+              <label>Customer Phone</label>
+              <input type="tel" value="(555) 123-4567">
+            </div>
+
+            <div class="mtk-biab__invoice-field mtk-biab__invoice-field--full">
+              <label>Service Address</label>
+              <input type="text" value="123 Main Street, Tampa, FL">
+            </div>
+          </div>
+
+          <h3 class="mtk-biab__invoice-section-title">Service Details</h3>
+
+          <div class="mtk-biab__invoice-form-grid mtk-biab__invoice-form-grid--three">
+            <div class="mtk-biab__invoice-field">
+              <label>Service Type</label>
+              <select>
+                <option>Lockout Service</option>
+                <option>Rekey Service</option>
+                <option>Deadbolt Installation</option>
+                <option>Lock Repair</option>
+              </select>
+            </div>
+
+            <div class="mtk-biab__invoice-field">
+              <label>Service Fee</label>
+              <input type="number" value="95">
+            </div>
+
+            <div class="mtk-biab__invoice-field">
+              <label>Parts / Materials</label>
+              <input type="number" value="0">
+            </div>
+
+            <div class="mtk-biab__invoice-field">
+              <label>Emergency Fee</label>
+              <input type="number" value="0">
+            </div>
+
+            <div class="mtk-biab__invoice-field">
+              <label>Discount</label>
+              <input type="number" value="0">
+            </div>
+
+            <div class="mtk-biab__invoice-field">
+              <label>Tax Rate %</label>
+              <input type="number" value="0">
+            </div>
+
+            <div class="mtk-biab__invoice-field mtk-biab__invoice-field--full">
+              <label>Notes</label>
+              <textarea placeholder="Example: Rekeyed front door lock and tested keys."></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+    `);
+
+    this._publish("mtk-biab:new-invoice", {
+      sectionId: this.activeId,
+      section
+    });
   }
 
   _openWebsiteBuilder(section) {

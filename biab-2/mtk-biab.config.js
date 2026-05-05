@@ -1,11 +1,10 @@
 window.MTK_BIAB_CONFIG = {
   component: "mtk-biab",
-  version: "1.0.7",
+  version: "1.0.8",
 
   labels: {
     pageTitle: "Business in a Box",
     pageSubtitle: "Launch, manage, and grow your business from one simple dashboard.",
-    menu: "Menu",
     startSetup: "Start setup",
     currentSelection: "Current selection",
     closeSetup: "Close setup"
@@ -116,36 +115,11 @@ window.MTK_BIAB_CONFIG = {
       hideStartSetup: true,
       reviewsHeading: "Reviews",
       reviews: [
-        {
-          id: "REV-1001",
-          rating: 5,
-          date: "2026-05-01",
-          notes: "Fast response, professional service, and the lock was repaired correctly the first time."
-        },
-        {
-          id: "REV-1002",
-          rating: 4,
-          date: "2026-05-02",
-          notes: "Good work and fair pricing, technician arrived within the promised window."
-        },
-        {
-          id: "REV-1003",
-          rating: 5,
-          date: "2026-05-03",
-          notes: "Excellent customer service and clean installation of the new deadbolt."
-        },
-        {
-          id: "REV-1004",
-          rating: 3,
-          date: "2026-05-04",
-          notes: "Service was completed, but arrival time was later than expected."
-        },
-        {
-          id: "REV-1005",
-          rating: 5,
-          date: "2026-05-05",
-          notes: "Very helpful and explained everything before starting the job."
-        }
+        { id: "REV-1001", rating: 5, date: "2026-05-01", notes: "Fast response, professional service, and the lock was repaired correctly the first time." },
+        { id: "REV-1002", rating: 4, date: "2026-05-02", notes: "Good work and fair pricing, technician arrived within the promised window." },
+        { id: "REV-1003", rating: 5, date: "2026-05-03", notes: "Excellent customer service and clean installation of the new deadbolt." },
+        { id: "REV-1004", rating: 3, date: "2026-05-04", notes: "Service was completed, but arrival time was later than expected." },
+        { id: "REV-1005", rating: 5, date: "2026-05-05", notes: "Very helpful and explained everything before starting the job." }
       ]
     }
   ]
