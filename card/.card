@@ -48,7 +48,7 @@ Behavior:
 What I want:
 - create a col-md-6     
 - grab text from img/b-card/card-1.png image file and add them to mtk-card.config.js file
-- add label fields with same texts with wheat background and red color to completely cover each field
+- add label fields (no padding, no margin) with same texts with wheat background and red color to completely cover each field
   grab the text from mtk-card.config.js
   try to use same font-size as the image for labels and make sure labels are same width & height as the text on image
 - when i hover over a label, hide it, so i can see the text below

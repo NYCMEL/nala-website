@@ -16,24 +16,22 @@ class MtkCard {
   }
 
   initialize() {
-    this.bindFields();
+    this.bindText();
     this.bindLabels();
-    this.bindImage();
-    this.registerEvents();
     this.subscribe();
   }
 
-  bindFields() {
-    const fields = this.element.querySelectorAll("[data-field]");
+  bindText() {
+    const fields = this.element.querySelectorAll("[data-text]");
 
     fields.forEach((field) => {
-      const key = field.getAttribute("data-field");
+      const key = field.getAttribute("data-text");
 
       if (
-        this.config.card &&
-        Object.prototype.hasOwnProperty.call(this.config.card, key)
+        this.config.text &&
+        Object.prototype.hasOwnProperty.call(this.config.text, key)
       ) {
-        field.textContent = this.config.card[key];
+        field.textContent = this.config.text[key];
       }
     });
   }
@@ -50,43 +48,6 @@ class MtkCard {
       ) {
         label.textContent = this.config.labels[key];
       }
-    });
-  }
-
-  bindImage() {
-    const image = this.element.querySelector("[data-card-image]");
-
-    if (image && this.config.image && this.config.image.src) {
-      image.setAttribute("src", this.config.image.src);
-
-      if (this.config.image.alt) {
-        image.setAttribute("alt", this.config.image.alt);
-      }
-    }
-  }
-
-  registerEvents() {
-    const clickable = this.element.querySelectorAll("[data-field], [data-label]");
-
-    clickable.forEach((item) => {
-      if (!item.hasAttribute("tabindex")) {
-        item.setAttribute("tabindex", "0");
-      }
-
-      item.addEventListener("click", () => {
-        const payload = {
-          event: "mtk-card-click",
-          field: item.getAttribute("data-field") || item.getAttribute("data-label")
-        };
-
-        if (window.wc && wc.log) {
-          wc.log(payload);
-        }
-
-        if (window.wc && wc.publish) {
-          wc.publish("mtk-card-click", payload);
-        }
-      });
     });
   }
 
