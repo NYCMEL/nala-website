@@ -3,7 +3,6 @@ window.mtkCardConfig = {
     src: "img/b-card/card-1.png",
     alt: "Original locksmith business card"
   },
-
   text: {
     logoText: "Locksmith",
     personName: "John Smith",
@@ -15,7 +14,6 @@ window.mtkCardConfig = {
     phone: "123-456-7890",
     email: "Info@printit4less.com"
   },
-
   labels: {
     logoText: "Locksmith",
     personName: "John Smith",
