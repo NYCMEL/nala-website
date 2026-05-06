@@ -1,6 +1,6 @@
 window.MTK_BIAB_CONFIG = {
   component: "mtk-biab",
-  version: "1.0.18",
+  version: "1.0.9",
   labels: {
     pageTitle: "Business in a Box",
     pageSubtitle: "Launch, manage, and grow your business from one simple dashboard.",
@@ -30,7 +30,7 @@ window.MTK_BIAB_CONFIG = {
       eyebrow: "Getting started",
       title: "Introduction",
       description: "A guided overview of your Business in a Box setup.",
-      includedHeading: "Included by default - <small>no action required</small>",
+      includedHeading: "Included by default — <small>no action required</small>",
       includedItems: [
         "Business profile setup",
         "Basic website structure",
@@ -49,7 +49,7 @@ window.MTK_BIAB_CONFIG = {
       description: "Create the public website your customers will use.",
       body: "Click Start setup to open the website builder using content from the client folder.",
       setupType: "websiteBuilder",
-      clientUrl: "client/index.inc.html"
+      clientUrl: "client/index.html"
     },
     {
       id: "business-card-logo",
@@ -112,5 +112,23 @@ window.MTK_BIAB_CONFIG = {
         { id: "REV-1005", rating: 5, date: "2026-05-05", notes: "Very helpful and explained everything before starting the job." }
       ]
     }
-  ]
+  ],
+  invoiceForm: {
+    fields: [
+      { id: "businessName", label: "Business Name", type: "text", sample: "Example: ABC Locksmith Services" },
+      { id: "invoiceNumber", label: "Invoice #", type: "text", sample: "Example: INV-1001" },
+      { id: "businessPhone", label: "Business Phone", type: "tel", sample: "Example: (555) 555-5555" },
+      { id: "invoiceDate", label: "Invoice Date", type: "date", sample: "Example: 2026-04-29" },
+      { id: "customerName", label: "Customer Name", type: "text", sample: "Example: Jane Smith" },
+      { id: "customerPhone", label: "Customer Phone", type: "tel", sample: "Example: (555) 123-4567" },
+      { id: "serviceAddress", label: "Service Address", type: "text", sample: "Example: 123 Main Street, Tampa, FL" },
+      { id: "serviceType", label: "Service Type", type: "select", sample: "Example: Lockout Service" },
+      { id: "serviceFee", label: "Service Fee", type: "number", sample: "Example: 95" },
+      { id: "partsMaterials", label: "Parts / Materials", type: "number", sample: "Example: 25" },
+      { id: "emergencyFee", label: "Emergency Fee", type: "number", sample: "Example: 50" },
+      { id: "discount", label: "Discount", type: "number", sample: "Example: 10" },
+      { id: "taxRate", label: "Tax Rate %", type: "number", sample: "Example: 6.625" },
+      { id: "notes", label: "Notes", type: "textarea", sample: "Example: Rekeyed front door lock and tested keys." }
+    ]
+  }
 };
