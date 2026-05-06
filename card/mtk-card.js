@@ -5,11 +5,11 @@ class MtkCard {
   }
 
   waitForElement() {
-    const timer = setInterval(() => {
+    const timer = window.setInterval(() => {
       this.element = document.querySelector(".mtk-card");
 
       if (this.element) {
-        clearInterval(timer);
+        window.clearInterval(timer);
         this.initialize();
       }
     }, 100);
@@ -18,6 +18,7 @@ class MtkCard {
   initialize() {
     this.bindFields();
     this.bindLabels();
+    this.bindImage();
     this.registerEvents();
     this.subscribe();
   }
@@ -28,8 +29,8 @@ class MtkCard {
     fields.forEach((field) => {
       const key = field.getAttribute("data-field");
 
-      if (this.config[key]) {
-        field.textContent = this.config[key];
+      if (this.config.card && Object.prototype.hasOwnProperty.call(this.config.card, key)) {
+        field.textContent = this.config.card[key];
       }
     });
   }
@@ -40,25 +41,36 @@ class MtkCard {
     labels.forEach((label) => {
       const key = label.getAttribute("data-label");
 
-      if (
-        this.config.labels &&
-        this.config.labels[key]
-      ) {
+      if (this.config.labels && Object.prototype.hasOwnProperty.call(this.config.labels, key)) {
         label.textContent = this.config.labels[key];
       }
     });
   }
 
+  bindImage() {
+    const image = this.element.querySelector("[data-field-image='src']");
+
+    if (image && this.config.image && this.config.image.src) {
+      image.setAttribute("src", this.config.image.src);
+
+      if (this.config.image.alt) {
+        image.setAttribute("alt", this.config.image.alt);
+      }
+    }
+  }
+
   registerEvents() {
-    const clickable = this.element.querySelectorAll("[data-field]");
+    const clickable = this.element.querySelectorAll("[data-field], .mtk-card__label");
 
     clickable.forEach((item) => {
-      item.setAttribute("tabindex", "0");
+      if (!item.hasAttribute("tabindex")) {
+        item.setAttribute("tabindex", "0");
+      }
 
       item.addEventListener("click", () => {
         const payload = {
           event: "mtk-card-click",
-          field: item.getAttribute("data-field")
+          field: item.getAttribute("data-field") || item.getAttribute("data-label")
         };
 
         if (window.wc && wc.log) {

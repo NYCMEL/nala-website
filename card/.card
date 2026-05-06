@@ -51,3 +51,4 @@ What I want:
   try to use same font-size as the image for labels and make sure labels are same width & height as the text on image
 - when i hover over a label, hide it, so i can see the text below
 - display the original card to the right of this card for comparison
+- use exact image size for card and adjust text and fonts accordingly
