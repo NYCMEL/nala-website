@@ -50,3 +50,4 @@ What I want:
 - add label fields with same texts with wheat background to completely cover each field
   try to use same font-size as the image for labels and make sure labels are same width & height as the text on image
 - when i hover over a label, hide it, so i can see the text below
+- display the original card to the right of this card for comparison
