@@ -188,6 +188,7 @@
                 <tr>
                   <th scope="col"></th>
                   <th scope="col"></th>
+                  <th scope="col"></th>
                   <th scope="col">Invoice #</th>
                   <th scope="col">Date</th>
                   <th scope="col">Client</th>
@@ -199,6 +200,11 @@
               <tbody>
                 ${invoices.map((invoice) => `
                   <tr>
+                    <td>
+                      <button class="mtk-biab__invoice-action-btn" type="button" data-action="email-invoice" data-invoice-id="${this._escape(invoice.id)}" aria-label="Email ${this._escape(invoice.id)}">
+                        <span class="material-icons" aria-hidden="true">mail</span>
+                      </button>
+                    </td>
                     <td>
                       <button class="mtk-biab__invoice-action-btn" type="button" data-action="delete-invoice" data-invoice-id="${this._escape(invoice.id)}" aria-label="Delete ${this._escape(invoice.id)}">
                         <span class="material-icons" aria-hidden="true">delete</span>
@@ -303,6 +309,13 @@
         if (action === "select-card-template") this._openCardEditor(target.getAttribute("data-template-id"));
         if (action === "back-to-templates") this._openBusinessCardTemplatePicker(this._getActiveSection());
         if (action === "submit-card-editor") this._submitCardEditor();
+
+        if (action === "email-invoice") {
+          this._publish("mtk-biab:email-invoice", {
+            sectionId: this.activeId,
+            invoiceId: target.getAttribute("data-invoice-id")
+          });
+        }
 
         if (action === "delete-invoice") {
           this._publish("mtk-biab:delete-invoice", {
