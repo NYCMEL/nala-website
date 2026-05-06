@@ -202,18 +202,21 @@
         }
 
         navigateToBusinessInABox() {
+            wc.log("[dashboard] BIAB card clicked → #biab");
+
             if (window.location.pathname !== "/repo_deploy/") {
                 window.location.href = "/repo_deploy/#biab";
                 return;
             }
 
-            if (window.location.hash !== "#biab") {
-                window.location.hash = "biab";
-            } else if (window.wc && wc.pages && typeof wc.pages.show === "function") {
+            if (window.wc && wc.pages && typeof wc.pages.show === "function") {
+                window.history.pushState({ mtkPage: "biab" }, "", "#biab");
                 wc.pages.show("biab");
-            } else {
-                window.dispatchEvent(new HashChangeEvent("hashchange"));
+                return;
             }
+
+            window.location.hash = "biab";
+            window.dispatchEvent(new HashChangeEvent("hashchange"));
         }
 
         createSubscriptionCard(option) {
@@ -299,7 +302,7 @@
             const tools = [
                 { label: 'Default Offerings', icon: 'list_alt' },
                 { label: 'Website Builder', icon: 'language' },
-                { label: 'Business Card & Logo', icon: 'badge' },
+                { label: 'Business Card', icon: 'badge' },
                 { label: 'Invoices', icon: 'receipt_long' },
                 { label: 'Customer Reviews', icon: 'reviews' }
             ];
