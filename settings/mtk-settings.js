@@ -1,9 +1,9 @@
 /* mtk-settings.js */
-(function mtkSettingsModule(window, document) {
+(function (window, document) {
   "use strict";
 
   function escapeHTML(value) {
-    return String(value)
+    return String(value === undefined || value === null ? "" : value)
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
@@ -11,41 +11,65 @@
       .replace(/'/g, "&#039;");
   }
 
+  function getConfig() {
+    return window.mtkSettingsConfig || { title: "Profile & Settings", eyebrow: "Account Management", tabs: [] };
+  }
+
   function getTabs(config) {
-    if (!config || !Array.isArray(config.tabs)) {
-      return [];
+    return config && Array.isArray(config.tabs) ? config.tabs : [];
+  }
+
+  function iconMarkup(iconName) {
+    if (!iconName) {
+      return "";
     }
 
-    return config.tabs;
+    if (iconName === "save") {
+      return '' +
+        '<span class="mtk-settings__button-icon" aria-hidden="true">' +
+          '<svg viewBox="0 0 24 24" focusable="false">' +
+            '<path d="M17 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7l-4-4ZM12 19a3 3 0 1 1 0-6 3 3 0 0 1 0 6ZM6 5h9v5H6V5Z"></path>' +
+          '</svg>' +
+        '</span>';
+    }
+
+    return '<span class="mtk-settings__tab-icon" aria-hidden="true">' + escapeHTML(iconName) + '</span>';
   }
 
   function MTKSettings(root, config) {
     this.root = root;
-    this.config = config || window.mtkSettingsConfig || { tabs: [] };
+    this.config = config || getConfig();
     this.tabs = getTabs(this.config);
-    this.activeTabId = this.tabs.length ? this.tabs[0].id : "privacy";
+    this.activeTabId = this.tabs.length ? this.tabs[0].id : "";
     this.formState = {};
-
-    this.tabsEl = this.root.querySelector(".mtk-settings__tabs");
-    this.panelEl = this.root.querySelector(".mtk-settings__panel");
-
+    this.tabsEl = root.querySelector(".mtk-settings__tabs");
+    this.panelEl = root.querySelector(".mtk-settings__panel");
+    this.titleEl = root.querySelector("[data-title]");
+    this.eyebrowEl = root.querySelector("[data-eyebrow]");
     this.onMessage = this.onMessage.bind(this);
-
     this.init();
   }
 
-  MTKSettings.prototype.init = function init() {
+  MTKSettings.prototype.init = function () {
     if (!this.tabsEl || !this.panelEl) {
       return;
     }
+
+    if (this.titleEl) {
+      this.titleEl.textContent = this.config.title || "Profile & Settings";
+    }
+
+    if (this.eyebrowEl) {
+      this.eyebrowEl.textContent = this.config.eyebrow || "Account Management";
+    }
+
+    this.cacheInitialValues();
 
     if (!this.tabs.length) {
       this.panelEl.innerHTML = '<div class="mtk-settings__empty">Settings configuration is missing.</div>';
       return;
     }
 
-    this.cacheInitialValues();
-    this.setHeaderText();
     this.renderTabs();
     this.renderPanel();
 
@@ -54,38 +78,19 @@
     }
   };
 
-  MTKSettings.prototype.setHeaderText = function setHeaderText() {
-    var titleEl = this.root.querySelector("[data-title]");
-    var eyebrowEl = this.root.querySelector("[data-eyebrow]");
-
-    if (titleEl) {
-      titleEl.textContent = this.config.title || "Profile & Settings";
-    }
-
-    if (eyebrowEl) {
-      eyebrowEl.textContent = this.config.eyebrow || "Account Management";
-    }
-  };
-
-  MTKSettings.prototype.cacheInitialValues = function cacheInitialValues() {
+  MTKSettings.prototype.cacheInitialValues = function () {
     var self = this;
 
-    this.tabs.forEach(function eachTab(tab) {
+    this.tabs.forEach(function (tab) {
       self.formState[tab.id] = {};
 
       if (!Array.isArray(tab.fields)) {
         return;
       }
 
-      tab.fields.forEach(function eachField(field) {
+      tab.fields.forEach(function (field) {
         if (field.type === "checkboxGroup") {
-          self.formState[tab.id][field.id] = (field.options || [])
-            .filter(function onlyChecked(option) {
-              return option.checked;
-            })
-            .map(function toValue(option) {
-              return option.value;
-            });
+          self.formState[tab.id][field.id] = [];
           return;
         }
 
@@ -94,28 +99,33 @@
     });
   };
 
-  MTKSettings.prototype.onMessage = function onMessage(message) {
-    message = message || {};
+  MTKSettings.prototype.onMessage = function (message) {
+    if (!message || typeof message !== "object") {
+      return;
+    }
 
     if (message.type === "select-tab" && message.tabId) {
       this.setActiveTab(message.tabId);
     }
-
-    if (message.type === "set-values" && message.tabId && message.values) {
-      this.formState[message.tabId] = Object.assign({}, this.formState[message.tabId] || {}, message.values);
-
-      if (this.activeTabId === message.tabId) {
-        this.renderPanel();
-      }
-    }
   };
 
-  MTKSettings.prototype.renderTabs = function renderTabs() {
-    var self = this;
+  MTKSettings.prototype.findTab = function (tabId) {
+    var found = null;
 
+    this.tabs.forEach(function (tab) {
+      if (tab.id === tabId) {
+        found = tab;
+      }
+    });
+
+    return found;
+  };
+
+  MTKSettings.prototype.renderTabs = function () {
+    var self = this;
     this.tabsEl.innerHTML = "";
 
-    this.tabs.forEach(function eachTab(tab) {
+    this.tabs.forEach(function (tab) {
       var button = document.createElement("button");
       button.className = "mtk-settings__tab";
       button.type = "button";
@@ -124,10 +134,10 @@
       button.setAttribute("aria-selected", String(tab.id === self.activeTabId));
       button.setAttribute("aria-controls", "mtk-settings-panel-" + tab.id);
       button.innerHTML =
-        '<span class="mtk-settings__tab-icon" aria-hidden="true">' + escapeHTML(tab.icon || "settings") + "</span>" +
-        '<span class="mtk-settings__tab-label">' + escapeHTML(tab.label) + "</span>";
+        '<span class="mtk-settings__tab-icon" aria-hidden="true">' + escapeHTML(tab.icon || "settings") + '</span>' +
+        '<span class="mtk-settings__tab-label">' + escapeHTML(tab.label || "") + '</span>';
 
-      button.addEventListener("click", function onClick() {
+      button.addEventListener("click", function () {
         self.setActiveTab(tab.id);
       });
 
@@ -135,12 +145,8 @@
     });
   };
 
-  MTKSettings.prototype.setActiveTab = function setActiveTab(tabId) {
-    var tabExists = this.tabs.some(function findTab(tab) {
-      return tab.id === tabId;
-    });
-
-    if (!tabExists) {
+  MTKSettings.prototype.setActiveTab = function (tabId) {
+    if (!this.findTab(tabId)) {
       return;
     }
 
@@ -150,23 +156,16 @@
     this.publish("mtk-settings:tab-changed", { tabId: tabId });
   };
 
-  MTKSettings.prototype.renderPanel = function renderPanel() {
-    var tab = null;
-
-    for (var i = 0; i < this.tabs.length; i += 1) {
-      if (this.tabs[i].id === this.activeTabId) {
-        tab = this.tabs[i];
-        break;
-      }
-    }
+  MTKSettings.prototype.renderPanel = function () {
+    var tab = this.findTab(this.activeTabId);
 
     if (!tab) {
-      this.panelEl.innerHTML = '<div class="mtk-settings__empty">Unable to find selected tab.</div>';
+      this.panelEl.innerHTML = '<div class="mtk-settings__empty">No tab selected.</div>';
       return;
     }
 
     this.panelEl.classList.remove("mtk-settings__panel--animate");
-    void this.panelEl.offsetWidth;
+    this.panelEl.offsetWidth;
     this.panelEl.classList.add("mtk-settings__panel--animate");
 
     this.panelEl.id = "mtk-settings-panel-" + tab.id;
@@ -175,10 +174,10 @@
 
     var header =
       '<div class="mtk-settings__panel-header">' +
-        '<p class="mtk-settings__eyebrow">' + escapeHTML(tab.eyebrow || "") + "</p>" +
-        '<h3 class="mtk-settings__panel-title">' + escapeHTML(tab.title || tab.label) + "</h3>" +
-        '<p class="mtk-settings__panel-description">' + escapeHTML(tab.description || "") + "</p>" +
-      "</div>";
+        '<p class="mtk-settings__eyebrow">' + escapeHTML(tab.eyebrow || "") + '</p>' +
+        '<h3 class="mtk-settings__panel-title">' + escapeHTML(tab.title || tab.label || "") + '</h3>' +
+        '<p class="mtk-settings__panel-description">' + escapeHTML(tab.description || "") + '</p>' +
+      '</div>';
 
     if (Array.isArray(tab.fields) && tab.fields.length) {
       this.panelEl.innerHTML = header + this.renderForm(tab);
@@ -189,31 +188,29 @@
     this.panelEl.innerHTML = header + '<div class="mtk-settings__empty">This section is ready for fields, cards, or controls.</div>';
   };
 
-  MTKSettings.prototype.renderForm = function renderForm(tab) {
+  MTKSettings.prototype.renderForm = function (tab) {
     var self = this;
-    var fields = tab.fields.map(function eachField(field) {
+    var fields = tab.fields.map(function (field) {
       return self.renderField(tab, field);
     }).join("");
 
-    var actions = (tab.actions || []).map(function eachAction(action) {
+    var actions = (tab.actions || []).map(function (action) {
       var variant = action.variant === "primary" ? "primary" : "secondary";
-
       return '' +
-        '<button class="mtk-settings__button mtk-settings__button--' + variant + '" type="button" ' +
-          'data-action-id="' + escapeHTML(action.id) + '" ' +
-          'data-event="' + escapeHTML(action.event) + '">' +
-          escapeHTML(action.label) +
-        "</button>";
+        '<button class="mtk-settings__button mtk-settings__button--' + variant + '" type="button" data-action-id="' + escapeHTML(action.id) + '" data-event="' + escapeHTML(action.event) + '">' +
+          iconMarkup(action.icon) +
+          '<span class="mtk-settings__button-label">' + escapeHTML(action.label || "Save") + '</span>' +
+        '</button>';
     }).join("");
 
     return '' +
       '<form class="mtk-settings__form" novalidate>' +
-        '<div class="mtk-settings__grid">' + fields + "</div>" +
-        '<div class="mtk-settings__actions">' + actions + "</div>" +
-      "</form>";
+        '<div class="mtk-settings__grid">' + fields + '</div>' +
+        '<div class="mtk-settings__actions">' + actions + '</div>' +
+      '</form>';
   };
 
-  MTKSettings.prototype.renderField = function renderField(tab, field) {
+  MTKSettings.prototype.renderField = function (tab, field) {
     if (field.type === "textarea") {
       return this.renderTextarea(tab, field);
     }
@@ -225,82 +222,55 @@
     return this.renderInput(tab, field);
   };
 
-  MTKSettings.prototype.renderInput = function renderInput(tab, field) {
-    var state = this.formState[tab.id] || {};
-    var value = state[field.id] || "";
-    var required = field.required ? "required" : "";
+  MTKSettings.prototype.renderInput = function (tab, field) {
+    var value = this.formState[tab.id] ? this.formState[tab.id][field.id] || "" : "";
+    var required = field.required ? " required" : "";
     var requiredMark = field.required ? " *" : "";
-    var placeholder = field.placeholder || " ";
     var fullWidthClass = field.fullWidth ? " mtk-settings__field--full" : "";
 
     return '' +
       '<div class="mtk-settings__field' + fullWidthClass + '">' +
-        '<label class="mtk-settings__field-label" for="mtk-settings-' + tab.id + "-" + field.id + '">' +
-          escapeHTML(field.label) + requiredMark +
-        "</label>" +
-        '<input class="mtk-settings__input" ' +
-          'id="mtk-settings-' + tab.id + "-" + field.id + '" ' +
-          'name="' + escapeHTML(field.id) + '" ' +
-          'type="' + escapeHTML(field.type || "text") + '" ' +
-          'value="' + escapeHTML(value) + '" ' +
-          'autocomplete="' + escapeHTML(field.autocomplete || "off") + '" ' +
-          'placeholder="' + escapeHTML(placeholder) + '" ' +
-          required +
-        " />" +
-      "</div>";
+        '<label class="mtk-settings__field-label" for="mtk-settings-' + escapeHTML(tab.id) + '-' + escapeHTML(field.id) + '">' + escapeHTML(field.label) + requiredMark + '</label>' +
+        '<input class="mtk-settings__input" id="mtk-settings-' + escapeHTML(tab.id) + '-' + escapeHTML(field.id) + '" name="' + escapeHTML(field.id) + '" type="' + escapeHTML(field.type || "text") + '" value="' + escapeHTML(value) + '" placeholder="' + escapeHTML(field.placeholder || "") + '"' + required + '>' +
+      '</div>';
   };
 
-  MTKSettings.prototype.renderTextarea = function renderTextarea(tab, field) {
-    var state = this.formState[tab.id] || {};
-    var value = state[field.id] || "";
-    var required = field.required ? "required" : "";
+  MTKSettings.prototype.renderTextarea = function (tab, field) {
+    var value = this.formState[tab.id] ? this.formState[tab.id][field.id] || "" : "";
+    var required = field.required ? " required" : "";
     var requiredMark = field.required ? " *" : "";
     var rows = field.rows || 4;
     var fullWidthClass = field.fullWidth ? " mtk-settings__field--full" : "";
 
     return '' +
       '<div class="mtk-settings__field' + fullWidthClass + '">' +
-        '<label class="mtk-settings__field-label" for="mtk-settings-' + tab.id + "-" + field.id + '">' +
-          escapeHTML(field.label) + requiredMark +
-        "</label>" +
-        '<textarea class="mtk-settings__textarea" ' +
-          'id="mtk-settings-' + tab.id + "-" + field.id + '" ' +
-          'name="' + escapeHTML(field.id) + '" ' +
-          'rows="' + escapeHTML(rows) + '" ' +
-          'placeholder="' + escapeHTML(field.placeholder || "") + '" ' +
-          required +
-        ">" + escapeHTML(value) + "</textarea>" +
-      "</div>";
+        '<label class="mtk-settings__field-label" for="mtk-settings-' + escapeHTML(tab.id) + '-' + escapeHTML(field.id) + '">' + escapeHTML(field.label) + requiredMark + '</label>' +
+        '<textarea class="mtk-settings__textarea" id="mtk-settings-' + escapeHTML(tab.id) + '-' + escapeHTML(field.id) + '" name="' + escapeHTML(field.id) + '" rows="' + escapeHTML(rows) + '" placeholder="' + escapeHTML(field.placeholder || "") + '"' + required + '>' + escapeHTML(value) + '</textarea>' +
+      '</div>';
   };
 
-  MTKSettings.prototype.renderCheckboxGroup = function renderCheckboxGroup(tab, field) {
-    var state = this.formState[tab.id] || {};
-    var selectedValues = Array.isArray(state[field.id]) ? state[field.id] : [];
+  MTKSettings.prototype.renderCheckboxGroup = function (tab, field) {
     var requiredMark = field.required ? " *" : "";
     var fullWidthClass = field.fullWidth ? " mtk-settings__field--full" : "";
+    var selected = this.formState[tab.id] && Array.isArray(this.formState[tab.id][field.id]) ? this.formState[tab.id][field.id] : [];
 
-    var options = (field.options || []).map(function eachOption(option) {
-      var checked = selectedValues.indexOf(option.value) > -1 ? "checked" : "";
-
+    var options = (field.options || []).map(function (option) {
+      var checked = selected.indexOf(option.value) > -1 ? " checked" : "";
       return '' +
         '<label class="mtk-settings__check">' +
-          '<input class="mtk-settings__checkbox" type="checkbox" ' +
-            'name="' + escapeHTML(field.id) + '" ' +
-            'value="' + escapeHTML(option.value) + '" ' +
-            checked +
-          " />" +
-          '<span class="mtk-settings__check-label">' + escapeHTML(option.label) + "</span>" +
-        "</label>";
+          '<input class="mtk-settings__checkbox" type="checkbox" name="' + escapeHTML(field.id) + '" value="' + escapeHTML(option.value) + '"' + checked + '>' +
+          '<span class="mtk-settings__check-label">' + escapeHTML(option.label) + '</span>' +
+        '</label>';
     }).join("");
 
     return '' +
       '<fieldset class="mtk-settings__checkbox-card' + fullWidthClass + '" data-checkbox-group="' + escapeHTML(field.id) + '">' +
-        '<legend class="mtk-settings__checkbox-title">' + escapeHTML(field.label) + requiredMark + "</legend>" +
-        '<div class="mtk-settings__checkbox-grid">' + options + "</div>" +
-      "</fieldset>";
+        '<legend class="mtk-settings__checkbox-title">' + escapeHTML(field.label) + requiredMark + '</legend>' +
+        '<div class="mtk-settings__checkbox-grid">' + options + '</div>' +
+      '</fieldset>';
   };
 
-  MTKSettings.prototype.bindForm = function bindForm(tab) {
+  MTKSettings.prototype.bindForm = function (tab) {
     var self = this;
     var form = this.panelEl.querySelector(".mtk-settings__form");
 
@@ -308,22 +278,20 @@
       return;
     }
 
-    Array.prototype.forEach.call(form.querySelectorAll(".mtk-settings__input, .mtk-settings__textarea"), function eachInput(input) {
-      input.addEventListener("input", function onInput() {
-        self.formState[tab.id] = Object.assign({}, self.formState[tab.id] || {});
+    Array.prototype.forEach.call(form.querySelectorAll(".mtk-settings__input, .mtk-settings__textarea"), function (input) {
+      input.addEventListener("input", function () {
         self.formState[tab.id][input.name] = input.value;
       });
     });
 
-    Array.prototype.forEach.call(form.querySelectorAll("[data-checkbox-group]"), function eachGroup(group) {
+    Array.prototype.forEach.call(form.querySelectorAll("[data-checkbox-group]"), function (group) {
       var fieldId = group.getAttribute("data-checkbox-group");
 
-      Array.prototype.forEach.call(group.querySelectorAll(".mtk-settings__checkbox"), function eachCheckbox(checkbox) {
-        checkbox.addEventListener("change", function onChange() {
-          self.formState[tab.id] = Object.assign({}, self.formState[tab.id] || {});
+      Array.prototype.forEach.call(group.querySelectorAll(".mtk-settings__checkbox"), function (checkbox) {
+        checkbox.addEventListener("change", function () {
           self.formState[tab.id][fieldId] = Array.prototype.map.call(
             group.querySelectorAll(".mtk-settings__checkbox:checked"),
-            function toValue(item) {
+            function (item) {
               return item.value;
             }
           );
@@ -331,8 +299,8 @@
       });
     });
 
-    Array.prototype.forEach.call(form.querySelectorAll("[data-action-id]"), function eachButton(button) {
-      button.addEventListener("click", function onClick() {
+    Array.prototype.forEach.call(form.querySelectorAll("[data-action-id]"), function (button) {
+      button.addEventListener("click", function () {
         var eventName = button.getAttribute("data-event");
         var actionId = button.getAttribute("data-action-id");
 
@@ -343,39 +311,28 @@
         self.publish(eventName, {
           tabId: tab.id,
           actionId: actionId,
-          values: Object.assign({}, self.formState[tab.id] || {})
+          values: self.formState[tab.id]
         });
       });
     });
   };
 
-  MTKSettings.prototype.validateTab = function validateTab(tab, form) {
+  MTKSettings.prototype.validateTab = function (tab, form) {
+    var fields = tab.fields || [];
+
     if (!form.checkValidity()) {
       form.reportValidity();
       return false;
     }
 
-    var fields = tab.fields || [];
-
     for (var i = 0; i < fields.length; i += 1) {
-      var field = fields[i];
-
-      if (field.type === "checkboxGroup" && field.required) {
-        var values = this.formState[tab.id] && this.formState[tab.id][field.id] ? this.formState[tab.id][field.id] : [];
-
+      if (fields[i].type === "checkboxGroup" && fields[i].required) {
+        var values = this.formState[tab.id][fields[i].id] || [];
         if (!values.length) {
-          var firstCheckbox = form.querySelector('[data-checkbox-group="' + field.id + '"] .mtk-settings__checkbox');
-
+          var firstCheckbox = form.querySelector('[data-checkbox-group="' + fields[i].id + '"] .mtk-settings__checkbox');
           if (firstCheckbox) {
             firstCheckbox.focus();
           }
-
-          this.publish("mtk-settings:validation-error", {
-            tabId: tab.id,
-            fieldId: field.id,
-            message: field.label + " is required."
-          });
-
           return false;
         }
       }
@@ -384,7 +341,7 @@
     return true;
   };
 
-  MTKSettings.prototype.publish = function publish(eventName, payload) {
+  MTKSettings.prototype.publish = function (eventName, payload) {
     var message = {
       component: "mtk-settings",
       event: eventName,
@@ -400,12 +357,7 @@
       return;
     }
 
-    this.root.dispatchEvent(
-      new CustomEvent(eventName, {
-        bubbles: true,
-        detail: message
-      })
-    );
+    this.root.dispatchEvent(new CustomEvent(eventName, { bubbles: true, detail: message }));
   };
 
   window.MTKSettings = MTKSettings;
@@ -414,26 +366,17 @@
     var root = document.querySelector("mtk-settings.mtk-settings");
 
     if (!root) {
-      window.requestAnimationFrame(initMTKSettings);
+      window.setTimeout(initMTKSettings, 30);
       return;
     }
 
-    if (!window.mtkSettingsConfig) {
-      window.setTimeout(initMTKSettings, 25);
+    if (root.getAttribute("data-mtk-settings-ready") === "true") {
       return;
     }
 
-    if (root.dataset.mtkSettingsReady === "true") {
-      return;
-    }
-
-    root.dataset.mtkSettingsReady = "true";
-    root.mtkSettings = new window.MTKSettings(root, window.mtkSettingsConfig);
+    root.setAttribute("data-mtk-settings-ready", "true");
+    root.mtkSettings = new window.MTKSettings(root, getConfig());
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initMTKSettings, { once: true });
-  } else {
-    initMTKSettings();
-  }
+  initMTKSettings();
 })(window, document);

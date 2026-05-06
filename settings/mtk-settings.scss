@@ -1,394 +1,416 @@
 /* mtk-settings.scss */
 .mtk-settings {
   display: block;
-  color: #1f2937;
+  color: #111827;
   font-family: Roboto, Arial, sans-serif;
+}
 
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
+.mtk-settings *,
+.mtk-settings *::before,
+.mtk-settings *::after {
+  box-sizing: border-box;
+}
+
+.mtk-settings__shell {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.mtk-settings__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.mtk-settings__eyebrow {
+  margin: 0 0 4px;
+  color: #6b7280;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mtk-settings__title {
+  margin: 0;
+  color: #111827;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.mtk-settings__layout {
+  display: block;
+  min-height: 520px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  box-shadow: 0 18px 45px rgba(17, 24, 39, 0.08);
+}
+
+.mtk-settings__tabs {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  width: 100%;
+  padding: 0 18px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+  overflow-x: auto;
+}
+
+.mtk-settings__tab {
+  min-width: max-content;
+  min-height: 58px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 0 22px;
+  border: 0;
+  border-bottom: 4px solid transparent;
+  background: transparent;
+  color: #374151;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  text-align: center;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.mtk-settings__tab:hover {
+  background: #eef2ff;
+  color: #111827;
+}
+
+.mtk-settings__tab:active {
+  transform: translateY(1px);
+}
+
+.mtk-settings__tab:focus-visible {
+  outline: 3px solid rgba(169, 130, 17, 0.35);
+  outline-offset: -3px;
+}
+
+.mtk-settings__tab[aria-selected="true"] {
+  border-bottom-color: #a98211;
+  background: #fff8e1;
+  color: #111827;
+}
+
+.mtk-settings__tab-icon {
+  font-family: "Material Icons", "Material Symbols Outlined", sans-serif;
+  font-size: 1.25rem;
+  font-weight: normal;
+  line-height: 1;
+}
+
+.mtk-settings__tab-label {
+  white-space: nowrap;
+}
+
+.mtk-settings__panel {
+  width: 100%;
+  padding: 32px;
+}
+
+.mtk-settings__panel--animate {
+  animation: mtk-settings-panel-in 180ms ease-out both;
+}
+
+.mtk-settings__panel:focus {
+  outline: none;
+}
+
+.mtk-settings__panel-header {
+  margin-bottom: 24px;
+}
+
+.mtk-settings__panel-title {
+  margin: 0 0 8px;
+  color: #111827;
+  font-size: 1.45rem;
+  line-height: 1.2;
+}
+
+.mtk-settings__panel-description {
+  max-width: 760px;
+  margin: 0;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.mtk-settings__form {
+  max-width: 100%;
+}
+
+.mtk-settings__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 24px;
+}
+
+.mtk-settings__field {
+  min-width: 0;
+}
+
+.mtk-settings__field--full,
+.mtk-settings__checkbox-card {
+  grid-column: 1 / -1;
+}
+
+.mtk-settings__field-label {
+  display: block;
+  margin: 0 0 10px;
+  color: #202124;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.mtk-settings__input,
+.mtk-settings__textarea {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #111827;
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1.4;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.mtk-settings__input {
+  min-height: 56px;
+  padding: 0 14px;
+}
+
+.mtk-settings__textarea {
+  min-height: 96px;
+  padding: 14px;
+  resize: vertical;
+}
+
+.mtk-settings__input::placeholder,
+.mtk-settings__textarea::placeholder {
+  color: #70757a;
+  opacity: 1;
+}
+
+.mtk-settings__input:hover,
+.mtk-settings__textarea:hover {
+  border-color: #94a3b8;
+}
+
+.mtk-settings__input:focus,
+.mtk-settings__textarea:focus {
+  border-color: #a98211;
+  box-shadow: 0 0 0 4px rgba(169, 130, 17, 0.15);
+  outline: none;
+}
+
+.mtk-settings__checkbox-card {
+  margin: 8px 0 0;
+  padding: 26px 24px;
+  border: 1px solid #d7dce2;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(17, 24, 39, 0.08);
+}
+
+.mtk-settings__checkbox-title {
+  margin: 0 0 22px;
+  padding: 0 12px;
+  color: #202124;
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.mtk-settings__checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 26px 34px;
+}
+
+.mtk-settings__check {
+  display: inline-grid;
+  grid-template-columns: 24px 1fr;
+  align-items: start;
+  gap: 10px;
+  color: #202124;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.mtk-settings__checkbox {
+  width: 16px;
+  height: 16px;
+  margin: 4px 0 0;
+  accent-color: #a98211;
+  cursor: pointer;
+}
+
+.mtk-settings__checkbox:focus-visible {
+  outline: 3px solid rgba(169, 130, 17, 0.35);
+  outline-offset: 3px;
+}
+
+.mtk-settings__check-label {
+  min-width: 0;
+}
+
+.mtk-settings__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.mtk-settings__button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 20px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.mtk-settings__button:hover {
+  transform: translateY(-1px);
+}
+
+.mtk-settings__button:focus-visible {
+  outline: 3px solid rgba(169, 130, 17, 0.35);
+  outline-offset: 3px;
+}
+
+.mtk-settings__button--primary {
+  background: #a98211;
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(169, 130, 17, 0.28);
+}
+
+.mtk-settings__button--primary:hover {
+  background: #8f6f0e;
+}
+
+.mtk-settings__button--secondary {
+  border-color: #a98211;
+  background: #ffffff;
+  color: #7a5f0c;
+}
+
+.mtk-settings__button--secondary:hover {
+  background: #fff8e1;
+}
+
+.mtk-settings__button-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mtk-settings__button-icon svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+  fill: currentColor;
+}
+
+.mtk-settings__button-label {
+  line-height: 1;
+}
+
+.mtk-settings__empty {
+  max-width: 680px;
+  padding: 24px;
+  border: 1px dashed #cbd5e1;
+  background: #f9fafb;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+@keyframes mtk-settings-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
   }
 
-  &__shell {
-    width: 100%;
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 24px;
-  }
-
-  &__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    margin-bottom: 18px;
-  }
-
-  &__eyebrow {
-    margin: 0 0 4px;
-    color: #6b7280;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  &__title {
-    margin: 0;
-    color: #111827;
-    font-size: 2rem;
-    font-weight: 700;
-    line-height: 1.2;
-  }
-
-  &__layout {
-    display: block;
-    min-height: 520px;
-    border: 1px solid #e5e7eb;
-    background: #ffffff;
-    box-shadow: 0 18px 45px rgba(17, 24, 39, 0.08);
-  }
-
-  &__tabs {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    gap: 0;
-    width: 100%;
-    padding: 0 18px;
-    border-bottom: 1px solid #e5e7eb;
-    background: #f9fafb;
-    overflow-x: auto;
-  }
-
-  &__tab {
-    min-width: max-content;
-    min-height: 58px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 9px;
-    padding: 0 22px;
-    border: 0;
-    border-bottom: 4px solid transparent;
-    background: transparent;
-    color: #374151;
-    cursor: pointer;
-    font: inherit;
-    font-weight: 800;
-    text-align: center;
-    transition: background 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease;
-  }
-
-  &__tab:hover {
-    background: #eef2ff;
-    color: #111827;
-  }
-
-  &__tab:active {
-    transform: translateY(1px);
-  }
-
-  &__tab:focus-visible {
-    outline: 3px solid rgba(169, 130, 17, 0.35);
-    outline-offset: -3px;
-  }
-
-  &__tab[aria-selected="true"] {
-    border-bottom-color: #a98211;
-    background: #fff8e1;
-    color: #111827;
-  }
-
-  &__tab-icon {
-    font-family: "Material Icons", "Material Symbols Outlined", sans-serif;
-    font-size: 1.25rem;
-    font-weight: normal;
-    line-height: 1;
-  }
-
-  &__tab-label {
-    white-space: nowrap;
-  }
-
-  &__panel {
-    width: 100%;
-    padding: 32px;
-  }
-
-  &__panel--animate {
-    animation: mtk-settings-panel-in 180ms ease-out both;
-  }
-
-  &__panel:focus {
-    outline: none;
-  }
-
-  &__panel-header {
-    margin-bottom: 24px;
-  }
-
-  &__panel-title {
-    margin: 0 0 8px;
-    color: #111827;
-    font-size: 1.45rem;
-    line-height: 1.2;
-  }
-
-  &__panel-description {
-    max-width: 760px;
-    margin: 0;
-    color: #6b7280;
-    line-height: 1.6;
-  }
-
-  &__form {
-    max-width: 100%;
-  }
-
-  &__grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 22px 24px;
-  }
-
-  &__field {
-    min-width: 0;
-  }
-
-  &__field--full,
-  &__checkbox-card {
-    grid-column: 1 / -1;
-  }
-
-  &__field-label {
-    display: block;
-    margin: 0 0 10px;
-    color: #202124;
-    font-size: 1.05rem;
-    font-weight: 800;
-    line-height: 1.25;
-  }
-
-  &__input,
-  &__textarea {
-    width: 100%;
-    border: 1px solid #cbd5e1;
-    background: #ffffff;
-    color: #111827;
-    font: inherit;
-    font-size: 1rem;
-    line-height: 1.4;
-    transition: border-color 160ms ease, box-shadow 160ms ease;
-  }
-
-  &__input {
-    min-height: 56px;
-    padding: 0 14px;
-  }
-
-  &__textarea {
-    min-height: 96px;
-    padding: 14px;
-    resize: vertical;
-  }
-
-  &__input::placeholder,
-  &__textarea::placeholder {
-    color: #70757a;
+  to {
     opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mtk-settings__panel--animate {
+    animation: none;
   }
 
-  &__input:hover,
-  &__textarea:hover {
-    border-color: #94a3b8;
+  .mtk-settings__tab,
+  .mtk-settings__button,
+  .mtk-settings__input,
+  .mtk-settings__textarea {
+    transition: none;
+  }
+}
+
+@media (max-width: 960px) {
+  .mtk-settings__checkbox-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .mtk-settings__shell {
+    padding: 16px;
   }
 
-  &__input:focus,
-  &__textarea:focus {
-    border-color: #a98211;
-    box-shadow: 0 0 0 4px rgba(169, 130, 17, 0.15);
-    outline: none;
+  .mtk-settings__title {
+    font-size: 1.55rem;
   }
 
-  &__checkbox-card {
-    margin: 8px 0 0;
-    padding: 26px 24px;
-    border: 1px solid #d7dce2;
-    background: #ffffff;
-    box-shadow: 0 2px 8px rgba(17, 24, 39, 0.08);
+  .mtk-settings__tabs {
+    padding: 0 8px;
   }
 
-  &__checkbox-title {
-    margin: 0 0 22px;
-    padding: 0 12px;
-    color: #202124;
-    font-size: 1.45rem;
-    font-weight: 800;
-    line-height: 1.2;
+  .mtk-settings__tab {
+    min-height: 52px;
+    padding: 0 16px;
+    font-size: 0.95rem;
   }
 
-  &__checkbox-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 26px 34px;
+  .mtk-settings__panel {
+    padding: 20px;
   }
 
-  &__check {
-    display: inline-grid;
-    grid-template-columns: 24px 1fr;
-    align-items: start;
-    gap: 10px;
-    color: #202124;
-    font-size: 1.05rem;
-    line-height: 1.45;
-    cursor: pointer;
+  .mtk-settings__grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
   }
 
-  &__checkbox {
-    width: 16px;
-    height: 16px;
-    margin: 4px 0 0;
-    accent-color: #a98211;
-    cursor: pointer;
+  .mtk-settings__checkbox-card {
+    padding: 22px 18px;
   }
 
-  &__checkbox:focus-visible {
-    outline: 3px solid rgba(169, 130, 17, 0.35);
-    outline-offset: 3px;
+  .mtk-settings__checkbox-title {
+    font-size: 1.25rem;
   }
 
-  &__check-label {
-    min-width: 0;
-  }
-
-  &__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 24px;
-  }
-
-  &__button {
-    min-height: 44px;
-    padding: 0 20px;
-    border: 1px solid transparent;
-    cursor: pointer;
-    font: inherit;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
-  }
-
-  &__button:hover {
-    transform: translateY(-1px);
-  }
-
-  &__button:focus-visible {
-    outline: 3px solid rgba(169, 130, 17, 0.35);
-    outline-offset: 3px;
-  }
-
-  &__button--primary {
-    background: #a98211;
-    color: #ffffff;
-    box-shadow: 0 8px 18px rgba(169, 130, 17, 0.28);
-  }
-
-  &__button--primary:hover {
-    background: #8f6f0e;
-  }
-
-  &__button--secondary {
-    border-color: #a98211;
-    background: #ffffff;
-    color: #7a5f0c;
-  }
-
-  &__button--secondary:hover {
-    background: #fff8e1;
-  }
-
-  &__empty {
-    max-width: 680px;
-    padding: 24px;
-    border: 1px dashed #cbd5e1;
-    background: #f9fafb;
-    color: #4b5563;
-    line-height: 1.6;
-  }
-
-  @keyframes mtk-settings-panel-in {
-    from {
-      opacity: 0;
-      transform: translateY(8px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    &__panel--animate {
-      animation: none;
-    }
-
-    &__tab,
-    &__button,
-    &__input,
-    &__textarea {
-      transition: none;
-    }
-  }
-
-  @media (max-width: 960px) {
-    &__checkbox-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  @media (max-width: 760px) {
-    &__shell {
-      padding: 16px;
-    }
-
-    &__title {
-      font-size: 1.55rem;
-    }
-
-    &__tabs {
-      padding: 0 8px;
-    }
-
-    &__tab {
-      min-height: 52px;
-      padding: 0 16px;
-      font-size: 0.95rem;
-    }
-
-    &__panel {
-      padding: 20px;
-    }
-
-    &__grid {
-      grid-template-columns: 1fr;
-      gap: 18px;
-    }
-
-    &__checkbox-card {
-      padding: 22px 18px;
-    }
-
-    &__checkbox-title {
-      font-size: 1.25rem;
-    }
-
-    &__checkbox-grid {
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
+  .mtk-settings__checkbox-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 }
