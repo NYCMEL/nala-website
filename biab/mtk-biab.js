@@ -2,8 +2,7 @@
  * mtk-biab.js
  * Full BIAB component.
  * Reload-safe.
- * Invoice opens as a full-page wc-include view.
- * It loads invoice CSS/config/JS so mtk-invoice does not stay stuck on "Loading invoice..."
+ * Website Builder opens full page and loads client/index.inc.html with wc-include.
  */
 (function () {
   "use strict";
@@ -29,157 +28,13 @@
     }
 
     _init() {
-      this._ensureInvoicePageStyles();
       this._subscribe();
       this._render();
       this._bind();
       this._publish(this.events.publish.ready || "mtk-biab:ready", {
         component: this.config.component || "mtk-biab",
-        version: this.config.version || "1.0.16"
+        version: this.config.version || "1.0.17"
       });
-    }
-
-    _ensureInvoicePageStyles() {
-      if (document.getElementById("mtk-biab-invoice-page-styles")) return;
-
-      const style = document.createElement("style");
-      style.id = "mtk-biab-invoice-page-styles";
-      style.textContent = `
-        .mtk-biab__invoice-page {
-          position: fixed;
-          inset: 0;
-          z-index: 99999;
-          display: grid;
-          grid-template-rows: auto 1fr;
-          background: #f8fafc;
-          color: #0f172a;
-        }
-
-        .mtk-biab__invoice-page-header {
-          background: #ffffff;
-          border-bottom: 1px solid rgba(15, 23, 42, 0.14);
-          box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-        }
-
-        .mtk-biab__invoice-page-header-inner,
-        .mtk-biab__invoice-page-body-inner {
-          width: min(1180px, calc(100% - 48px));
-          margin: 0 auto;
-        }
-
-        .mtk-biab__invoice-page-header-inner {
-          min-height: 92px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 24px;
-          padding: 20px 0;
-        }
-
-        .mtk-biab__invoice-page-kicker {
-          margin: 0 0 4px;
-          color: #a98211;
-          font-size: 12px;
-          font-weight: 900;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-        }
-
-        .mtk-biab__invoice-page-title {
-          margin: 0;
-          color: #0f172a;
-          font-size: clamp(28px, 4vw, 48px);
-          font-weight: 900;
-          line-height: 1.08;
-        }
-
-        .mtk-biab__invoice-page-close {
-          width: 48px;
-          height: 48px;
-          flex: 0 0 48px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          border: 2px solid #a98211;
-          border-radius: 50%;
-          background: #ffffff;
-          color: #0f172a;
-          font-size: 30px;
-          font-weight: 900;
-          line-height: 1;
-          cursor: pointer;
-          box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
-        }
-
-        .mtk-biab__invoice-page-close:hover,
-        .mtk-biab__invoice-page-close:focus-visible {
-          background: #a98211;
-          color: #ffffff;
-          outline: 3px solid rgba(169, 130, 17, 0.28);
-          outline-offset: 3px;
-        }
-
-        .mtk-biab__invoice-page-body {
-          min-height: 0;
-          overflow: auto;
-          padding: 28px 0;
-        }
-
-        .mtk-biab__invoice-page-body-inner {
-          min-height: calc(100vh - 178px);
-          background: #ffffff;
-          overflow: visible;
-        }
-
-        .mtk-biab__invoice-page-body-inner wc-include,
-        .mtk-biab__invoice-page-body-inner .mtk-invoice {
-          display: block;
-          width: 100%;
-        }
-
-        .mtk-biab__invoice-page-body-inner .mtk-invoice__shell {
-          display: contents !important;
-        }
-
-        .mtk-biab__invoice-page-body-inner .mtk-invoice__card {
-          width: 100% !important;
-          max-width: none !important;
-          margin: 0 auto 40px !important;
-        }
-
-        .mtk-biab__invoice-page-body-inner input::placeholder,
-        .mtk-biab__invoice-page-body-inner textarea::placeholder {
-          font-style: italic !important;
-        }
-
-        body.mtk-biab-invoice-page-open {
-          overflow: hidden;
-        }
-
-        @media (max-width: 720px) {
-          .mtk-biab__invoice-page-header-inner,
-          .mtk-biab__invoice-page-body-inner {
-            width: min(100% - 28px, 1180px);
-          }
-
-          .mtk-biab__invoice-page-header-inner {
-            align-items: flex-start;
-            min-height: 78px;
-          }
-
-          .mtk-biab__invoice-page-close {
-            width: 42px;
-            height: 42px;
-            flex-basis: 42px;
-            font-size: 26px;
-          }
-
-          .mtk-biab__invoice-page-body {
-            padding: 14px 0;
-          }
-        }
-      `;
-      document.head.appendChild(style);
     }
 
     _subscribe() {
@@ -292,7 +147,7 @@
 
       return `
         <section class="mtk-biab__included" aria-label="Included by default">
-          <h3 class="mtk-biab__included-heading">${this._escape(section.includedHeading)}</h3>
+          <h3 class="mtk-biab__included-heading">${section.includedHeading}</h3>
           <ol class="mtk-biab__included-list">
             ${section.includedItems.map((item) => `<li>${this._escape(item)}</li>`).join("")}
           </ol>
@@ -515,6 +370,23 @@
       this._openGenericSetup(section);
     }
 
+    _openWebsiteBuilder(section) {
+      this._closeSetup();
+
+      this._showSetupView(section, `
+        <div class="mtk-biab__client-wrap">
+          <wc-include href="${this._escape(section.clientUrl || "client/index.inc.html")}"></wc-include>
+        </div>
+      `);
+
+      this._publish(this.events.publish.setupOpen || "mtk-biab:setup-open", {
+        sectionId: this.activeId,
+        section,
+        mode: "website-builder",
+        target: section.clientUrl || "client/index.inc.html"
+      });
+    }
+
     _openNewInvoice() {
       const section = this._getActiveSection();
 
@@ -529,32 +401,30 @@
       page.setAttribute("aria-labelledby", "mtk-biab-invoice-page-title");
 
       page.innerHTML = `
-        <header class="mtk-biab__invoice-page-header">
-          <div class="mtk-biab__invoice-page-header-inner">
+        <header class="mtk-biab__setup-header">
+          <div class="mtk-biab__setup-header-inner">
             <div>
-              <p class="mtk-biab__invoice-page-kicker">Current selection</p>
-              <h2 class="mtk-biab__invoice-page-title" id="mtk-biab-invoice-page-title">New Invoice</h2>
+              <p class="mtk-biab__setup-kicker">Current selection</p>
+              <h2 class="mtk-biab__setup-title" id="mtk-biab-invoice-page-title">New Invoice</h2>
             </div>
 
-            <button class="mtk-biab__invoice-page-close" type="button" data-action="close-invoice-page" aria-label="Close invoice">
+            <button class="mtk-biab__setup-close" type="button" data-action="close-invoice-page" aria-label="Close invoice">
               ×
             </button>
           </div>
         </header>
 
-        <div class="mtk-biab__invoice-page-body">
-          <div class="mtk-biab__invoice-page-body-inner">
+        <div class="mtk-biab__setup-body">
+          <div class="mtk-biab__client-wrap">
             <wc-include href="invoice/mtk-invoice.html"></wc-include>
           </div>
         </div>
       `;
 
       this.root.appendChild(page);
-      document.body.classList.add("mtk-biab-invoice-page-open");
+      document.body.classList.add("mtk-biab-setup-open");
 
-      this._cleanInvoiceInclude(page);
-
-      const closeButton = page.querySelector(".mtk-biab__invoice-page-close");
+      const closeButton = page.querySelector(".mtk-biab__setup-close");
       if (closeButton) closeButton.focus();
 
       this._publish("mtk-biab:new-invoice", {
@@ -587,69 +457,11 @@
       document.body.appendChild(script);
     }
 
-    _cleanInvoiceInclude(page) {
-      const clean = () => {
-        const shell = page.querySelector(".mtk-invoice__shell");
-        if (shell) shell.style.display = "contents";
-
-        const card = page.querySelector(".mtk-invoice__card");
-        if (card) {
-          card.style.width = "100%";
-          card.style.maxWidth = "none";
-          card.style.margin = "0 auto 40px";
-        }
-
-        const placeholders = Array.from(page.querySelectorAll("input[placeholder], textarea[placeholder]"));
-        placeholders.forEach((field) => {
-          field.setAttribute("placeholder", field.getAttribute("placeholder").replace(/^Example:\\s*/i, ""));
-        });
-      };
-
-      clean();
-
-      const observer = new MutationObserver(clean);
-      observer.observe(page, { childList: true, subtree: true });
-      page.__mtkInvoiceCleanObserver = observer;
-
-      page.addEventListener("include:loaded", () => {
-        clean();
-        if (window.MtkInvoice && typeof window.MtkInvoice.initWhenReady === "function") {
-          window.MtkInvoice.initWhenReady();
-        }
-      });
-    }
-
     _closeInvoicePage() {
       const existing = this.root.querySelector(".mtk-biab__invoice-page");
       if (!existing) return;
-
-      if (existing.__mtkInvoiceCleanObserver) {
-        existing.__mtkInvoiceCleanObserver.disconnect();
-      }
-
       existing.remove();
-      document.body.classList.remove("mtk-biab-invoice-page-open");
-    }
-
-    _openWebsiteBuilder(section) {
-      this._closeSetup();
-
-      this._showSetupView(section, `
-        <div class="mtk-biab__client-wrap">
-          <iframe
-            class="mtk-biab__client-frame"
-            src="${this._escape(section.clientUrl || "client/index.html")}"
-            title="${this._escape(section.title || "Website Builder")}"
-            loading="lazy"
-          ></iframe>
-        </div>
-      `);
-
-      this._publish(this.events.publish.setupOpen || "mtk-biab:setup-open", {
-        sectionId: this.activeId,
-        section,
-        mode: "website-builder"
-      });
+      document.body.classList.remove("mtk-biab-setup-open");
     }
 
     _openGenericSetup(section) {
@@ -799,6 +611,8 @@
       `;
 
       this.root.appendChild(overlay);
+      document.body.classList.add("mtk-biab-setup-open");
+
       const closeButton = overlay.querySelector(".mtk-biab__setup-close");
       if (closeButton) closeButton.focus();
     }
@@ -808,6 +622,7 @@
       if (!existing) return;
 
       existing.remove();
+      document.body.classList.remove("mtk-biab-setup-open");
 
       this._publish(this.events.publish.setupClose || "mtk-biab:setup-close", {
         sectionId: this.activeId

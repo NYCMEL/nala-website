@@ -1,238 +1,258 @@
-<div class="container-fluid px-0">
-    <div class="row g-0">
-        <div class="col-md-12">
+<!-- client/index.inc.html -->
+<!-- Partial only. Safe for wc-include. No html, head, body, base tag, or recursive wc-include. -->
 
-    <!-- Sticky edit bar — outside client-container to avoid padding offset -->
-    <style>
-        #editModeBar .bar-inner { min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 12px;width:100%;box-sizing:border-box }
-        #editModeBar .bar-label { font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;color:#555 }
-        #editModeBar #saveChangesBtn { white-space:nowrap;padding:6px 14px;margin-right:20px;font-size:13px;font-weight:600;border:none;border-radius:10px;background:#7a5e0c;color:#fff;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,0.2) }
-        #personalUrlBar { display:flex;align-items:center;gap:8px;min-width:0;font-size:13px;color:#34302a }
-        #personalUrlBar strong { white-space:nowrap;color:#111 }
-        #personalUrlText { overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:52vw;color:#7a5e0c;font-weight:600 }
-        #copyPersonalUrlBtn { border:1px solid #c8b37a;background:#fff;color:#4a3a08;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:700;cursor:pointer }
-        #editModeControls { display:flex;align-items:center;justify-content:flex-end;gap:0;flex-shrink:0 }
-        #clientDashboardReturn { display:inline-flex;align-items:center;gap:5px;border:1px solid #c8b37a;background:#fff;color:#4a3a08;border-radius:8px;padding:5px 10px;font-size:12px;font-weight:800;text-decoration:none;white-space:nowrap;transition:background-color 160ms cubic-bezier(0.2,0,0,1),box-shadow 160ms cubic-bezier(0.2,0,0,1),transform 160ms cubic-bezier(0.2,0,0,1) }
-        #clientDashboardReturn:hover { background:#fffaf0;box-shadow:0 8px 18px rgba(169,130,18,0.13);transform:translateY(-1px) }
-        #clientDashboardReturn .material-icons { font-size:16px;line-height:1 }
-        @media (max-width: 700px) {
+<link href="client/css/client.css" rel="stylesheet">
+
+<div id="client-access-root">
+  <div class="container-fluid px-0">
+    <div class="row g-0">
+      <div class="col-md-12">
+
+        <!-- Sticky edit bar outside client-container to avoid padding offset -->
+        <style>
+          #editModeBar .bar-inner { min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 12px;width:100%;box-sizing:border-box }
+          #editModeBar .bar-label { font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;color:#555 }
+          #editModeBar #saveChangesBtn { white-space:nowrap;padding:6px 14px;margin-right:20px;font-size:13px;font-weight:600;border:none;border-radius:10px;background:#7a5e0c;color:#fff;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,0.2) }
+          #personalUrlBar { display:flex;align-items:center;gap:8px;min-width:0;font-size:13px;color:#34302a }
+          #personalUrlBar strong { white-space:nowrap;color:#111 }
+          #personalUrlText { overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:52vw;color:#7a5e0c;font-weight:600 }
+          #copyPersonalUrlBtn { border:1px solid #c8b37a;background:#fff;color:#4a3a08;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:700;cursor:pointer }
+          #editModeControls { display:flex;align-items:center;justify-content:flex-end;gap:0;flex-shrink:0 }
+          #clientDashboardReturn { display:inline-flex;align-items:center;gap:5px;border:1px solid #c8b37a;background:#fff;color:#4a3a08;border-radius:8px;padding:5px 10px;font-size:12px;font-weight:800;text-decoration:none;white-space:nowrap;transition:background-color 160ms cubic-bezier(0.2,0,0,1),box-shadow 160ms cubic-bezier(0.2,0,0,1),transform 160ms cubic-bezier(0.2,0,0,1) }
+          #clientDashboardReturn:hover { background:#fffaf0;box-shadow:0 8px 18px rgba(169,130,18,0.13);transform:translateY(-1px) }
+          #clientDashboardReturn .material-icons { font-size:16px;line-height:1 }
+          @media (max-width: 700px) {
             #editModeBar .bar-inner { align-items:flex-start;flex-direction:column;padding:10px 12px }
             #personalUrlBar { width:100%;flex-wrap:wrap }
             #personalUrlText { max-width:100%;flex:1 1 180px }
             #editModeControls { width:100%;justify-content:space-between;gap:8px;flex-wrap:wrap }
             #saveChangesBtn { margin-right:0 !important }
-        }
-    </style>
-    <div id="editModeBar" style="display:none;background:#ebebeb;">
-        <div class="bar-inner">
+          }
+        </style>
+
+        <div id="editModeBar" style="display:none;background:#ebebeb;">
+          <div class="bar-inner">
             <div id="personalUrlBar">
-                <strong>Your personal page:</strong>
-                <span id="personalUrlText">Loading...</span>
-                <button type="button" id="copyPersonalUrlBtn">Copy</button>
+              <strong>Your personal page:</strong>
+              <span id="personalUrlText">Loading...</span>
+              <button type="button" id="copyPersonalUrlBtn">Copy</button>
             </div>
             <div id="editModeControls">
-                <a id="clientDashboardReturn" href="pages/index.html?page=dashboard" aria-label="Back to dashboard">
-                    <span class="material-icons" aria-hidden="true">arrow_back</span>
-                    Dashboard
-                </a>
-                <button id="saveChangesBtn" style="display:none"
-                    onmouseover="this.style.background='#a98212'"
-                    onmouseout="this.style.background='#7a5e0c'">
-                    Save Changes
-                </button>
-                <span class="bar-label" style="margin-right:6px"
-                    onclick="document.getElementById('editModeToggle').checked=false;document.getElementById('editModeToggle').dispatchEvent(new Event('change'))">Review</span>
-                <label class="edit-switch" style="position:relative;display:inline-block;width:44px;height:24px;cursor:pointer;flex-shrink:0">
-                    <input type="checkbox" id="editModeToggle" style="opacity:0;width:0;height:0">
-                    <span class="edit-switch-slider" style="position:absolute;inset:0;background:#90a4ae;border-radius:24px;transition:0.2s"></span>
-                    <span class="edit-switch-knob" style="position:absolute;height:18px;width:18px;left:3px;bottom:3px;
-                        background:#fff;border-radius:50%;transition:0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.3)"></span>
-                </label>
-                <span class="bar-label" style="margin-left:6px;color:#7a5e0c"
-                    onclick="document.getElementById('editModeToggle').checked=true;document.getElementById('editModeToggle').dispatchEvent(new Event('change'))">Edit</span>
+              <a id="clientDashboardReturn" href="pages/index.html?page=dashboard" aria-label="Back to dashboard">
+                <span class="material-icons" aria-hidden="true">arrow_back</span>
+                Dashboard
+              </a>
+              <button id="saveChangesBtn" style="display:none"
+                onmouseover="this.style.background='#a98212'"
+                onmouseout="this.style.background='#7a5e0c'">
+                Save Changes
+              </button>
+              <span class="bar-label" style="margin-right:6px"
+                onclick="document.getElementById('editModeToggle').checked=false;document.getElementById('editModeToggle').dispatchEvent(new Event('change'))">Review</span>
+              <label class="edit-switch" style="position:relative;display:inline-block;width:44px;height:24px;cursor:pointer;flex-shrink:0">
+                <input type="checkbox" id="editModeToggle" style="opacity:0;width:0;height:0">
+                <span class="edit-switch-slider" style="position:absolute;inset:0;background:#90a4ae;border-radius:24px;transition:0.2s"></span>
+                <span class="edit-switch-knob" style="position:absolute;height:18px;width:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.3)"></span>
+              </label>
+              <span class="bar-label" style="margin-left:6px;color:#7a5e0c"
+                onclick="document.getElementById('editModeToggle').checked=true;document.getElementById('editModeToggle').dispatchEvent(new Event('change'))">Edit</span>
             </div>
-        </div>
-        <div id="editModeHint" style="display:none;padding:10px;font-size:11px;font-style:italic;color:#777;text-align:center">
+          </div>
+          <div id="editModeHint" style="display:none;padding:10px;font-size:11px;font-style:italic;color:#777;text-align:center">
             Editable fields are marked with highlighted dashed borders. Please update as necessary.
-        </div>
-        <div id="editModeTabBar" style="display:none !important;align-items:center;gap:0;padding:0 16px">
+          </div>
+          <div id="editModeTabBar" style="display:none !important;align-items:center;gap:0;padding:0 16px">
             <button class="edit-tab-btn active" data-edit-tab="online" style="background:#fff;border:none;color:#000;font-size:13px;font-weight:600;padding:10px 16px;cursor:pointer;margin-bottom:-2px;border-radius:5px 5px 0 0;transition:all 0.2s">My Online Page</button>
+          </div>
         </div>
+
+        <div class="client-container" style="max-width:1320px;margin-left:auto;margin-right:auto;">
+          <div class="client-layout" style="margin-top:25px">
+            <main class="client-main">
+              <header class="client-header">
+                <div class="client-logo" id="clientLogo" data-editable></div>
+                <div class="client-info">
+                  <h1 class="client-name" id="clientName" data-editable></h1>
+                  <div class="client-rating" id="clientRating"></div>
+                  <div class="client-badges" id="clientBadges"></div>
+                  <button class="btn-share" id="btnShare">
+                    <span class="material-icons">share</span>
+                    Share
+                  </button>
+                </div>
+              </header>
+
+              <section class="client-stats" id="clientStats"></section>
+              <nav class="client-tabs" id="clientTabs"></nav>
+
+              <div class="client-content">
+                <section class="content-section" id="aboutSection">
+                  <h2>About</h2>
+                  <p class="about-text" id="aboutText" data-editable></p>
+                </section>
+
+                <section class="content-section">
+                  <h2 id="businessHoursTitle"></h2>
+                  <p id="businessHoursText" data-editable></p>
+                </section>
+
+                <section class="content-section">
+                  <h2 id="paymentMethodsTitle"></h2>
+                  <p id="paymentMethodsText" data-editable></p>
+                </section>
+
+                <section class="content-section">
+                  <h2 id="socialMediaTitle"></h2>
+                  <div id="socialMediaLinks" data-editable></div>
+                </section>
+
+                <section class="content-section" id="reviewsSection" style="display:none">
+                  <h2>Reviews</h2>
+                  <div class="client-reviews" id="clientReviews"></div>
+                </section>
+
+                <section class="content-section" id="topProSection" style="display:none">
+                  <h2 id="topProTitle"></h2>
+                  <p id="topProDescription"></p>
+                  <div class="top-pro-badges" id="topProBadges"></div>
+                </section>
+              </div>
+            </main>
+
+            <aside class="client-sidebar">
+              <div class="card contact-card">
+                <div class="contact-header">
+                  <span class="material-icons">chat_bubble_outline</span>
+                  <span id="contactPrice"></span>
+                </div>
+                <button class="btn-primary btn-estimate" id="btnEstimate"></button>
+                <div class="online-status" id="onlineStatus">
+                  <span class="status-dot"></span>
+                  <span>Online now</span>
+                </div>
+              </div>
+
+              <div class="card guarantee-card">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+                  <div class="guarantee-icon" style="margin-bottom:0;flex-shrink:0">
+                    <span class="material-icons">verified_user</span>
+                  </div>
+                  <h3 id="guaranteeTitle" style="margin:0;font-size:18px;font-weight:500"></h3>
+                </div>
+                <p id="guaranteeText"></p>
+                <a href="#" class="link-learn-more" id="learnMoreLink"></a>
+              </div>
+            </aside>
+          </div>
+        </div>
+
+      </div>
     </div>
+  </div>
 
-            <div class="client-container" style="max-width:1320px;margin-left:auto;margin-right:auto;">
-    <div class="client-layout" style="margin-top:25px">
-	<!-- Main Content -->
-	<main class="client-main">
-	    <!-- Header Section -->
-	    <header class="client-header">
-		<div class="client-logo" id="clientLogo" data-editable></div>
-		<div class="client-info">
-		    <h1 class="client-name" id="clientName" data-editable></h1>
-		    <div class="client-rating" id="clientRating"></div>
-		    <div class="client-badges" id="clientBadges"></div>
-		    <button class="btn-share" id="btnShare">
-			<span class="material-icons">share</span>
-			Share
-		    </button>
-		</div>
-	    </header>
+  <link href="client/css/mtk-request.css" rel="stylesheet">
 
-	    <!-- Stats Section -->
-	    <section class="client-stats" id="clientStats"></section>
-
-	    <!-- Tabs Navigation -->
-	    <nav class="client-tabs" id="clientTabs"></nav>
-
-	    <!-- Tab Content -->
-	    <div class="client-content">
-		<!-- About Section -->
-		<section class="content-section" id="aboutSection">
-		    <h2>About</h2>
-		    <p class="about-text" id="aboutText" data-editable></p>
-		</section>
-
-		<!-- Business Hours -->
-		<section class="content-section">
-		    <h2 id="businessHoursTitle"></h2>
-		    <p id="businessHoursText" data-editable></p>
-		</section>
-
-		<!-- Payment Methods -->
-		<section class="content-section">
-		    <h2 id="paymentMethodsTitle"></h2>
-		    <p id="paymentMethodsText" data-editable></p>
-		</section>
-
-		<!-- Social Media -->
-		<section class="content-section">
-		    <h2 id="socialMediaTitle"></h2>
-		    <div id="socialMediaLinks" data-editable></div>
-		</section>
-
-		<!-- Reviews -->
-		<section class="content-section" id="reviewsSection" style="display:none">
-		    <h2>Reviews</h2>
-		    <div class="client-reviews" id="clientReviews"></div>
-		</section>
-
-		<!-- Top Pro Status -->
-		<section class="content-section" id="topProSection" style="display:none">
-		    <h2 id="topProTitle"></h2>
-		    <p id="topProDescription"></p>
-		    <div class="top-pro-badges" id="topProBadges"></div>
-		</section>
-	    </div>
-	</main>
-
-	<!-- Sidebar -->
-	<aside class="client-sidebar">
-	    <!-- Contact Card -->
-	    <div class="card contact-card">
-		<div class="contact-header">
-		    <span class="material-icons">chat_bubble_outline</span>
-		    <span id="contactPrice"></span>
-		</div>
-		<button class="btn-primary btn-estimate" id="btnEstimate"></button>
-		<div class="online-status" id="onlineStatus">
-		    <span class="status-dot"></span>
-		    <span>Online now</span>
-		</div>
-	    </div>
-
-	    <!-- Guarantee Card -->
-	    <div class="card guarantee-card">
-		<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-		    <div class="guarantee-icon" style="margin-bottom:0;flex-shrink:0">
-			<span class="material-icons">verified_user</span>
-		    </div>
-		    <h3 id="guaranteeTitle" style="margin:0;font-size:18px;font-weight:500"></h3>
-		</div>
-		<p id="guaranteeText"></p>
-		<a href="#" class="link-learn-more" id="learnMoreLink"></a>
-	    </div>
-	</aside>
-    </div>
-</div>
-
-        </div><!-- /.client-container -->
-    </div><!-- /.col-md-12 -->
-</div><!-- /.row -->
-</div><!-- /.container-fluid -->
-
-<!-- REQUEST DIALOG — inlined to avoid nested wc-include timing issues -->
-<link href="client/css/mtk-request.css" rel="stylesheet">
-
-<mtk-request class="mtk-request">
-
-    <!-- Trigger button hidden — opened via wc.publish("mtk-request:open") -->
+  <mtk-request class="mtk-request">
     <button type="button" class="btn btn-primary open-dialog" style="display:none" aria-hidden="true">
-	Request estimate
+      Request estimate
     </button>
 
     <div class="modal fade" tabindex="-1">
-	<div class="modal-dialog modal-dialog-centered">
-	    <div class="modal-content">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
 
-		<div class="modal-header">
-		    <h5 class="modal-title"></h5>
-		    <button type="button" class="btn-close close-dialog"></button>
-		</div>
+          <div class="modal-header">
+            <h5 class="modal-title"></h5>
+            <button type="button" class="btn-close close-dialog"></button>
+          </div>
 
-		<div class="modal-body">
-		    <form>
+          <div class="modal-body">
+            <form>
+              <div class="md-field">
+                <input type="text" class="name" required />
+                <label></label>
+              </div>
 
-			<div class="md-field">
-			    <input type="text" class="name" required />
-			    <label></label>
-			</div>
+              <div class="md-field">
+                <input type="email" class="email" />
+                <label></label>
+              </div>
 
-			<div class="md-field">
-			    <input type="email" class="email" />
-			    <label></label>
-			</div>
+              <div class="md-field">
+                <input type="tel" class="phone" />
+                <label></label>
+              </div>
 
-			<div class="md-field">
-			    <input type="tel" class="phone" />
-			    <label></label>
-			</div>
+              <div class="md-field">
+                <input type="text" class="address" />
+                <label></label>
+              </div>
 
-			<div class="md-field">
-			    <input type="text" class="address" />
-			    <label></label>
-			</div>
+              <div class="md-field">
+                <textarea class="help" rows="3"></textarea>
+                <label></label>
+              </div>
 
-			<div class="md-field">
-			    <textarea class="help" rows="3"></textarea>
-			    <label></label>
-			</div>
+              <div class="contact-group">
+                <div class="group-label">Preferred Contact Method</div>
+                <div class="radio-group"></div>
+              </div>
 
-			<!-- RADIO GROUP -->
-			<div class="contact-group">
-			    <div class="group-label">Preferred Contact Method</div>
-			    <div class="radio-group"></div>
-			</div>
+              <div class="phone-times" style="margin-top:12px">
+                <div style="font-size:13px;color:#777;margin-bottom:8px">Best Time to Call</div>
+                <div class="call-time-checks" style="display:flex;flex-direction:column;gap:8px"></div>
+              </div>
 
-			<div class="phone-times" style="margin-top:12px">
-			    <div style="font-size:13px;color:#777;margin-bottom:8px">Best Time to Call</div>
-			    <div class="call-time-checks" style="display:flex;flex-direction:column;gap:8px"></div>
-			</div>
+              <input type="hidden" class="nala-uid" name="nalaUID" value="" />
 
-			<input type="hidden" class="nala-uid" name="nalaUID" value="" />
+              <div class="submit-wrap">
+                <button type="submit" class="btn btn-primary submit-btn"></button>
+              </div>
+            </form>
+          </div>
 
-			<div class="submit-wrap">
-			    <button type="submit" class="btn btn-primary submit-btn"></button>
-			</div>
-
-		    </form>
-		</div>
-
-	    </div>
-	</div>
+        </div>
+      </div>
     </div>
+  </mtk-request>
+</div>
 
-</mtk-request>
+<script>
+(function () {
+  function loadScriptOnce(id, src, callback) {
+    var existing = document.getElementById(id);
+    if (existing) {
+      if (typeof callback === "function") {
+        window.setTimeout(callback, 0);
+      }
+      return;
+    }
 
-<script src="client/js/mtk-request.config.js"></script>
-<script src="client/js/mtk-request.js"></script>
+    var script = document.createElement("script");
+    script.id = id;
+    script.src = src;
 
+    if (typeof callback === "function") {
+      script.onload = callback;
+    }
+
+    document.body.appendChild(script);
+  }
+
+  function bootClient() {
+    if (window.__mtkBiabClientBooted) return;
+    if (typeof window.client !== "function" || typeof window.config === "undefined") return;
+
+    window.__mtkBiabClientBooted = true;
+    window.client(window.config);
+  }
+
+  loadScriptOnce("client-js", "client/js/client.js", function () {
+    loadScriptOnce("client-config-js", "client/js/client.config.js", bootClient);
+  });
+
+  loadScriptOnce("mtk-request-config-js", "client/js/mtk-request.config.js", function () {
+    loadScriptOnce("mtk-request-js", "client/js/mtk-request.js");
+  });
+})();
+</script>
