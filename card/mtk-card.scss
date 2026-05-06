@@ -39,7 +39,7 @@
   &__logo-mark {
     position: absolute;
     left: 52px;
-    top: 58px;
+    top: 43px;
     width: 203px;
     height: 95px;
     z-index: 1;
@@ -86,9 +86,9 @@
     background: #ffffff;
   }
 
-  &__field {
+  &__text {
     position: absolute;
-    display: inline-block;
+    display: block;
     width: max-content;
     max-width: none;
     color: #000000;
@@ -97,15 +97,7 @@
     z-index: 5;
   }
 
-  &__text {
-    position: relative;
-    display: inline-block;
-    width: max-content;
-    max-width: none;
-    z-index: 1;
-  }
-
-  &__field--logo {
+  &__text--logo {
     left: 138px;
     top: 67px;
     font-size: 25px;
@@ -114,7 +106,7 @@
     z-index: 8;
   }
 
-  &__field--person-name {
+  &__text--person-name {
     right: 70px;
     top: 53px;
     font-size: 28px;
@@ -122,7 +114,7 @@
     letter-spacing: -0.6px;
   }
 
-  &__field--person-title {
+  &__text--person-title {
     right: 80px;
     top: 87px;
     font-size: 18px;
@@ -131,7 +123,7 @@
     letter-spacing: 0;
   }
 
-  &__field--company {
+  &__text--company {
     left: 194px;
     top: 158px;
     font-size: 31px;
@@ -164,59 +156,22 @@
     z-index: 5;
   }
 
-  &__field--address,
-  &__field--phone,
-  &__field--email {
+  &__address .mtk-card__text,
+  &__contact .mtk-card__text {
     position: relative;
-    display: inline-block;
-    width: max-content;
-    max-width: none;
+    display: block;
     font-size: 18px;
     font-weight: 400;
     line-height: 1.22;
     letter-spacing: -0.25px;
   }
 
-  &__field--phone,
-  &__field--email {
+  &__text--phone,
+  &__text--email {
     text-align: right;
   }
 
-  &__label {
-    position: absolute;
-    inset: 0;
-    display: inline-flex;
-    width: 100%;
-    height: 100%;
-    min-width: 100%;
-    min-height: 100%;
-    padding: 0;
-    margin: 0;
-    align-items: center;
-    justify-content: inherit;
-    background: wheat;
-    color: #ff0000;
-    font: inherit;
-    font-weight: inherit;
-    font-style: inherit;
-    line-height: inherit;
-    letter-spacing: inherit;
-    text-align: inherit;
-    white-space: nowrap;
-    overflow: hidden;
-    z-index: 20;
-    cursor: pointer;
-    transition: opacity 0.15s ease, visibility 0.15s ease;
-  }
-
-  &__label:hover,
-  &__label:focus-visible {
-    opacity: 0;
-    visibility: hidden;
-  }
-
   &__business-card:focus-visible,
-  &__label:focus-visible,
   .mtk-card__text:focus-visible {
     outline: 2px solid #1976d2;
     outline-offset: 2px;

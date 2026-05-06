@@ -32,7 +32,7 @@
 .mtk-card__logo-mark {
   position: absolute;
   left: 52px;
-  top: 58px;
+  top: 43px;
   width: 203px;
   height: 95px;
   z-index: 1; }
@@ -74,9 +74,9 @@
   height: 4px;
   background: #ffffff; }
 
-.mtk-card__field {
+.mtk-card__text {
   position: absolute;
-  display: inline-block;
+  display: block;
   width: max-content;
   max-width: none;
   color: #000000;
@@ -84,14 +84,7 @@
   white-space: nowrap;
   z-index: 5; }
 
-.mtk-card__text {
-  position: relative;
-  display: inline-block;
-  width: max-content;
-  max-width: none;
-  z-index: 1; }
-
-.mtk-card__field--logo {
+.mtk-card__text--logo {
   left: 138px;
   top: 67px;
   font-size: 25px;
@@ -99,14 +92,14 @@
   letter-spacing: -1.25px;
   z-index: 8; }
 
-.mtk-card__field--person-name {
+.mtk-card__text--person-name {
   right: 70px;
   top: 53px;
   font-size: 28px;
   font-weight: 400;
   letter-spacing: -0.6px; }
 
-.mtk-card__field--person-title {
+.mtk-card__text--person-title {
   right: 80px;
   top: 87px;
   font-size: 18px;
@@ -114,7 +107,7 @@
   font-style: italic;
   letter-spacing: 0; }
 
-.mtk-card__field--company {
+.mtk-card__text--company {
   left: 194px;
   top: 158px;
   font-size: 31px;
@@ -144,50 +137,19 @@
   text-align: right;
   z-index: 5; }
 
-.mtk-card__field--address, .mtk-card__field--phone, .mtk-card__field--email {
+.mtk-card__address .mtk-card__text,
+.mtk-card__contact .mtk-card__text {
   position: relative;
-  display: inline-block;
-  width: max-content;
-  max-width: none;
+  display: block;
   font-size: 18px;
   font-weight: 400;
   line-height: 1.22;
   letter-spacing: -0.25px; }
 
-.mtk-card__field--phone, .mtk-card__field--email {
+.mtk-card__text--phone, .mtk-card__text--email {
   text-align: right; }
 
-.mtk-card__label {
-  position: absolute;
-  inset: 0;
-  display: inline-flex;
-  width: 100%;
-  height: 100%;
-  min-width: 100%;
-  min-height: 100%;
-  padding: 0;
-  margin: 0;
-  align-items: center;
-  justify-content: inherit;
-  background: wheat;
-  color: #ff0000;
-  font: inherit;
-  font-weight: inherit;
-  font-style: inherit;
-  line-height: inherit;
-  letter-spacing: inherit;
-  text-align: inherit;
-  white-space: nowrap;
-  overflow: hidden;
-  z-index: 20;
-  cursor: pointer;
-  transition: opacity 0.15s ease, visibility 0.15s ease; }
-
-.mtk-card__label:hover, .mtk-card__label:focus-visible {
-  opacity: 0;
-  visibility: hidden; }
-
-.mtk-card__business-card:focus-visible, .mtk-card__label:focus-visible,
+.mtk-card__business-card:focus-visible,
 .mtk-card .mtk-card__text:focus-visible {
   outline: 2px solid #1976d2;
   outline-offset: 2px; }

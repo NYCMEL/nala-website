@@ -8,11 +8,11 @@ window.mtkCardConfig = {
 	personName: "Mel M. Heravi",
 	personTitle: "Owner",
 	companyName: "MEL'S LOCKSMITH",
-	addressLine1: "123 Maine Street",
-	addressLine2: "City, ST 00000",
+	addressLine1: "P.O.Box 1230",
+	addressLine2: "New York, NJ 10012",
 	phonePrefix: "Tel:",
-	phone: "123-456-7890",
-	email: "Info@printit4less.com"
+	phone: "(646) 303-1234",
+	email: "mel.locksmitt@gmail.com"
     },
     labels: {
 	logoText: "Locksmith",

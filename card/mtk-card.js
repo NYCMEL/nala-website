@@ -17,7 +17,6 @@ class MtkCard {
 
   initialize() {
     this.bindText();
-    this.bindLabels();
     this.bindImage();
     this.registerEvents();
     this.subscribe();
@@ -38,31 +37,6 @@ class MtkCard {
     });
   }
 
-  bindLabels() {
-    const labels = this.element.querySelectorAll("[data-label]");
-
-    labels.forEach((label) => {
-      const key = label.getAttribute("data-label");
-      const value = this.getLabelText(key);
-
-      if (value) {
-        label.textContent = value;
-      }
-    });
-  }
-
-  getLabelText(key) {
-    if (!this.config.text) {
-      return "";
-    }
-
-    if (key === "phone") {
-      return `${this.config.text.phonePrefix} ${this.config.text.phone}`;
-    }
-
-    return this.config.text[key] || "";
-  }
-
   bindImage() {
     const image = this.element.querySelector("[data-card-image]");
 
@@ -80,17 +54,15 @@ class MtkCard {
   }
 
   registerEvents() {
-    const clickable = this.element.querySelectorAll("[data-text], [data-label]");
+    const clickable = this.element.querySelectorAll("[data-text]");
 
     clickable.forEach((item) => {
-      if (!item.hasAttribute("tabindex")) {
-        item.setAttribute("tabindex", "0");
-      }
+      item.setAttribute("tabindex", "0");
 
       item.addEventListener("click", () => {
         const payload = {
           event: "mtk-card-click",
-          field: item.getAttribute("data-text") || item.getAttribute("data-label")
+          field: item.getAttribute("data-text")
         };
 
         if (window.wc && wc.log) {
