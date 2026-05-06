@@ -2,7 +2,7 @@
  * mtk-biab.js
  * Full BIAB component.
  * Reload-safe.
- * Website Builder opens full page and loads client/index.inc.html with wc-include.
+ * Website Builder opens as a full-page wc-include view.
  */
 (function () {
   "use strict";
@@ -33,7 +33,7 @@
       this._bind();
       this._publish(this.events.publish.ready || "mtk-biab:ready", {
         component: this.config.component || "mtk-biab",
-        version: this.config.version || "1.0.17"
+        version: this.config.version || "1.0.18"
       });
     }
 
@@ -186,9 +186,9 @@
             <table class="mtk-biab__invoice-table">
               <thead>
                 <tr>
-                  <th scope="col"></th>
-                  <th scope="col"></th>
-                  <th scope="col"></th>
+                  <th scope="col" aria-label="Email"></th>
+                  <th scope="col" aria-label="Delete"></th>
+                  <th scope="col" aria-label="Edit"></th>
                   <th scope="col">Invoice #</th>
                   <th scope="col">Date</th>
                   <th scope="col">Client</th>

@@ -1,6 +1,6 @@
 window.MTK_BIAB_CONFIG = {
   component: "mtk-biab",
-  version: "1.0.17",
+  version: "1.0.18",
   labels: {
     pageTitle: "Business in a Box",
     pageSubtitle: "Launch, manage, and grow your business from one simple dashboard.",
