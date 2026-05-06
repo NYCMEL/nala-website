@@ -1,0 +1,47 @@
+<mtk-card class="mtk-card">
+  <section class="mtk-card__surface container-fluid" aria-label="Locksmith business card" tabindex="0">
+    <div class="row mtk-card__top align-items-start">
+      <div class="col-12 col-md-7 mtk-card__brand-wrap">
+        <button class="mtk-card__field mtk-card__field--logo" type="button" data-field="logoText" aria-label="Locksmith logo text">
+          <span class="mtk-card__key" aria-hidden="true"></span>
+          <span class="mtk-card__label" data-bind="logoText"></span>
+        </button>
+      </div>
+      <div class="col-12 col-md-5 mtk-card__person-wrap text-md-end">
+        <button class="mtk-card__field mtk-card__field--person-name" type="button" data-field="personName">
+          <span class="mtk-card__label" data-bind="personName"></span>
+        </button>
+        <button class="mtk-card__field mtk-card__field--person-title" type="button" data-field="personTitle">
+          <span class="mtk-card__label" data-bind="personTitle"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 mtk-card__company-wrap text-center">
+        <button class="mtk-card__field mtk-card__field--company" type="button" data-field="companyName">
+          <span class="mtk-card__label" data-bind="companyName"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="row mtk-card__bottom align-items-end">
+      <address class="col-12 col-md-6 mtk-card__address-wrap">
+        <button class="mtk-card__field mtk-card__field--address-line" type="button" data-field="addressLine1">
+          <span class="mtk-card__label" data-bind="addressLine1"></span>
+        </button>
+        <button class="mtk-card__field mtk-card__field--address-line" type="button" data-field="addressLine2">
+          <span class="mtk-card__label" data-bind="addressLine2"></span>
+        </button>
+      </address>
+      <div class="col-12 col-md-6 mtk-card__contact-wrap text-md-end">
+        <button class="mtk-card__field mtk-card__field--phone" type="button" data-field="phone">
+          <span class="mtk-card__label"><span data-bind="phoneLabel"></span> <span data-bind="phone"></span></span>
+        </button>
+        <button class="mtk-card__field mtk-card__field--email" type="button" data-field="email">
+          <span class="mtk-card__label" data-bind="email"></span>
+        </button>
+      </div>
+    </div>
+  </section>
+</mtk-card>
