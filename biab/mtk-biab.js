@@ -333,6 +333,7 @@
                 <tr>
                   <th scope="col"></th>
                   <th scope="col"></th>
+                  <th scope="col"></th>
                   <th scope="col">Invoice #</th>
                   <th scope="col">Date</th>
                   <th scope="col">Client</th>
@@ -344,6 +345,11 @@
               <tbody>
                 ${invoices.map((invoice) => `
                   <tr>
+                    <td>
+                      <button class="mtk-biab__invoice-action-btn" type="button" data-action="email-invoice" data-invoice-id="${this._escape(invoice.id)}" aria-label="Email ${this._escape(invoice.id)}">
+                        <span class="material-icons" aria-hidden="true">email</span>
+                      </button>
+                    </td>
                     <td>
                       <button class="mtk-biab__invoice-action-btn" type="button" data-action="delete-invoice" data-invoice-id="${this._escape(invoice.id)}" aria-label="Delete ${this._escape(invoice.id)}">
                         <span class="material-icons" aria-hidden="true">delete</span>
