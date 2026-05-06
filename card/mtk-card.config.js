@@ -5,8 +5,8 @@ window.mtkCardConfig = {
     },
     text: {
 	logoText: "Locksmith",
-	personName: "John Smith",
-	personTitle: "Manager",
+	personName: "Mel M. Heravi",
+	personTitle: "Owner",
 	companyName: "COMPANY NAME",
 	addressLine1: "123 Maine Street",
 	addressLine2: "City, ST 00000",
