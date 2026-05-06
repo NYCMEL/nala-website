@@ -43,14 +43,24 @@ class MtkCard {
 
     labels.forEach((label) => {
       const key = label.getAttribute("data-label");
+      const value = this.getLabelText(key);
 
-      if (
-        this.config.labels &&
-        Object.prototype.hasOwnProperty.call(this.config.labels, key)
-      ) {
-        label.textContent = this.config.labels[key];
+      if (value) {
+        label.textContent = value;
       }
     });
+  }
+
+  getLabelText(key) {
+    if (!this.config.text) {
+      return "";
+    }
+
+    if (key === "phone") {
+      return `${this.config.text.phonePrefix} ${this.config.text.phone}`;
+    }
+
+    return this.config.text[key] || "";
   }
 
   bindImage() {
