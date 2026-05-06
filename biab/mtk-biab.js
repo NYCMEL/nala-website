@@ -445,7 +445,8 @@
         if (action === "select-section") this._selectSection(target.getAttribute("data-section-id"));
         if (action === "open-setup") this._openSetup();
         if (action === "new-invoice") this._openNewInvoice();
-        if (action === "select-card-template") this._openCardEditor(target.getAttribute("data-template-id"));
+        if (action === "select-card-template") this._selectCardTemplate(target.getAttribute("data-template-id"));
+        if (action === "order-card-selection") this._orderSelectedCard();
         if (action === "back-to-templates") this._openBusinessCardTemplatePicker(this._getActiveSection());
         if (action === "submit-card-editor") this._submitCardEditor();
 
@@ -670,25 +671,27 @@
 
     _openBusinessCardTemplatePicker(section) {
       const templates = Array.isArray(section.cardTemplates) ? section.cardTemplates : [];
+      const defaultTemplate = templates.find((template) => template.isDefault) || templates[0] || null;
+
+      if (!this.selectedTemplate && defaultTemplate) {
+        this.selectedTemplate = defaultTemplate;
+      }
+
       this._closeSetup();
 
       this._showSetupView(section, `
         <div class="mtk-biab__setup-card">
           <h3 class="mtk-biab__template-heading">Please select a card</h3>
           <div class="mtk-biab__template-grid" role="list" aria-label="Business card templates">
-            ${templates.map((template) => `
-              <button
-                class="mtk-biab__template-btn"
-                type="button"
-                data-action="select-card-template"
-                data-template-id="${this._escape(template.id)}"
-                aria-label="Select ${this._escape(template.label)}"
-              >
-                <img src="${this._escape(template.image)}" alt="${this._escape(template.label)}">
-                <span class="mtk-biab__template-label">${this._escape(template.label)}</span>
-              </button>
-            `).join("")}
+            ${templates.map((template) => this._renderCardTemplateButton(template)).join("")}
           </div>
+
+          <div class="mtk-biab__template-actions">
+            <button class="mtk-biab__submit-btn" type="button" data-action="order-card-selection">
+              Order my Selection
+            </button>
+          </div>
+
           <p class="mtk-biab__template-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
         </div>
       `);
@@ -696,7 +699,62 @@
       this._publish(this.events.publish.setupOpen || "mtk-biab:setup-open", {
         sectionId: this.activeId,
         section,
-        mode: "card-template-picker"
+        mode: "card-template-picker",
+        selectedTemplate: this.selectedTemplate
+      });
+    }
+
+    _renderCardTemplateButton(template) {
+      const selectedId = this.selectedTemplate ? this.selectedTemplate.id : "";
+      const isSelected = template.id === selectedId;
+
+      return `
+        <button
+          class="mtk-biab__template-btn${isSelected ? " is-selected" : ""}"
+          type="button"
+          data-action="select-card-template"
+          data-template-id="${this._escape(template.id)}"
+          aria-label="Select ${this._escape(template.label)}"
+          aria-pressed="${isSelected ? "true" : "false"}"
+        >
+          <span class="mtk-biab__template-image-wrap">
+            <img src="${this._escape(template.image)}" alt="${this._escape(template.label)}">
+            <span class="mtk-biab__template-check" aria-hidden="true">✓</span>
+          </span>
+          <span class="mtk-biab__template-label">${this._escape(template.label)}</span>
+        </button>
+      `;
+    }
+
+    _selectCardTemplate(templateId) {
+      const section = this._getActiveSection();
+      const templates = Array.isArray(section.cardTemplates) ? section.cardTemplates : [];
+      const template = templates.find((item) => item.id === templateId);
+
+      if (!template) return;
+
+      this.selectedTemplate = template;
+      this._openBusinessCardTemplatePicker(section);
+
+      this._publish("mtk-biab:business-card-selected", {
+        sectionId: this.activeId,
+        template
+      });
+    }
+
+    _orderSelectedCard() {
+      const section = this._getActiveSection();
+      const templates = Array.isArray(section.cardTemplates) ? section.cardTemplates : [];
+      const defaultTemplate = templates.find((template) => template.isDefault) || templates[0] || null;
+      const template = this.selectedTemplate || defaultTemplate;
+
+      if (!template) return;
+
+      this._openCardEditor(template.id);
+
+      this._publish("mtk-biab:business-card-order-selection", {
+        sectionId: this.activeId,
+        template
       });
     }
 

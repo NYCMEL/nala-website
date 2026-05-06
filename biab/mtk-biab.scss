@@ -634,3 +634,65 @@ mtk-biab.mtk-biab .mtk-biab__client-frame {
     flex-direction: column;
   }
 }
+
+
+/* Business card template selection */
+mtk-biab.mtk-biab .mtk-biab__template-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+mtk-biab.mtk-biab .mtk-biab__template-image-wrap {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+mtk-biab.mtk-biab .mtk-biab__template-check {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%) scale(0.86);
+  width: 78px;
+  height: 78px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #16a34a;
+  color: #ffffff;
+  font-size: 54px;
+  font-weight: 900;
+  line-height: 1;
+  box-shadow: 0 12px 28px rgba(22, 163, 74, 0.35);
+  pointer-events: none;
+}
+
+mtk-biab.mtk-biab .mtk-biab__template-btn.is-selected {
+  border-color: #16a34a;
+  box-shadow: 0 14px 30px rgba(22, 163, 74, 0.18);
+}
+
+mtk-biab.mtk-biab .mtk-biab__template-btn.is-selected .mtk-biab__template-check {
+  display: inline-flex;
+}
+
+mtk-biab.mtk-biab .mtk-biab__template-actions {
+  display: flex;
+  justify-content: flex-start;
+  margin: 26px 0 0;
+}
+
+mtk-biab.mtk-biab .mtk-biab__template-actions .mtk-biab__submit-btn {
+  min-width: 190px;
+}
+
+@media (max-width: 991.98px) {
+  mtk-biab.mtk-biab .mtk-biab__template-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767.98px) {
+  mtk-biab.mtk-biab .mtk-biab__template-grid {
+    grid-template-columns: 1fr;
+  }
+}
