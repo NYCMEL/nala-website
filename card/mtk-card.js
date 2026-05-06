@@ -29,7 +29,10 @@ class MtkCard {
     fields.forEach((field) => {
       const key = field.getAttribute("data-field");
 
-      if (this.config.card && Object.prototype.hasOwnProperty.call(this.config.card, key)) {
+      if (
+        this.config.card &&
+        Object.prototype.hasOwnProperty.call(this.config.card, key)
+      ) {
         field.textContent = this.config.card[key];
       }
     });
@@ -41,14 +44,17 @@ class MtkCard {
     labels.forEach((label) => {
       const key = label.getAttribute("data-label");
 
-      if (this.config.labels && Object.prototype.hasOwnProperty.call(this.config.labels, key)) {
+      if (
+        this.config.labels &&
+        Object.prototype.hasOwnProperty.call(this.config.labels, key)
+      ) {
         label.textContent = this.config.labels[key];
       }
     });
   }
 
   bindImage() {
-    const image = this.element.querySelector("[data-field-image='src']");
+    const image = this.element.querySelector("[data-card-image]");
 
     if (image && this.config.image && this.config.image.src) {
       image.setAttribute("src", this.config.image.src);
@@ -60,7 +66,7 @@ class MtkCard {
   }
 
   registerEvents() {
-    const clickable = this.element.querySelectorAll("[data-field], .mtk-card__label");
+    const clickable = this.element.querySelectorAll("[data-field], [data-label]");
 
     clickable.forEach((item) => {
       if (!item.hasAttribute("tabindex")) {

@@ -46,9 +46,11 @@ Behavior:
 - all published (wc.publish) messages should be logged using wc.log to console before being published
 
 What I want:
+- create a col-md-6     
 - grab text from card-1.png image file and add them to mtk-card.config.js file
 - add label fields with same texts with wheat background to completely cover each field
   try to use same font-size as the image for labels and make sure labels are same width & height as the text on image
 - when i hover over a label, hide it, so i can see the text below
-- display the original card to the right of this card for comparison
+- display the img/b-card/card-1.png image to the right in col-md-6
 - use exact image size for card and adjust text and fonts accordingly
+- adjust fonts, font-weights to match the card

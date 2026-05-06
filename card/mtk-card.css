@@ -1,191 +1,177 @@
 .mtk-card {
   display: block;
   width: 100%;
-  font-family: inherit; }
+  font-family: Arial, Helvetica, sans-serif; }
 
 .mtk-card * {
   box-sizing: border-box; }
 
 .mtk-card__comparison {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: 600px 600px;
+  gap: 24px;
   align-items: start;
+  justify-content: center;
   width: 100%; }
 
 .mtk-card__panel {
-  width: 100%; }
+  width: 600px;
+  height: 360px; }
 
-.mtk-card__card, .mtk-card__reference-image {
-  width: 100%;
-  aspect-ratio: 5 / 3;
+.mtk-card__business-card, .mtk-card__reference-image {
+  width: 600px;
+  height: 360px;
   background: #ffffff;
-  border-radius: 0.125rem;
-  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.24); }
+  box-shadow: 7px 8px 12px rgba(0, 0, 0, 0.35); }
 
-.mtk-card__card {
+.mtk-card__business-card {
   position: relative;
   overflow: hidden;
-  padding: 5.6% 6%;
   color: #000000; }
 
 .mtk-card__reference-image {
   display: block;
   object-fit: contain; }
 
-.mtk-card__row {
-  display: flex;
-  width: 100%; }
-
-.mtk-card__row--top {
-  justify-content: space-between;
-  align-items: flex-start; }
-
-.mtk-card__row--middle {
-  justify-content: center;
-  margin-top: 8.5%; }
-
-.mtk-card__row--bottom {
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-top: 14.5%; }
-
-.mtk-card__logo-block {
-  display: flex;
-  align-items: center;
-  width: 42%; }
-
-.mtk-card__key {
-  position: relative;
-  display: inline-block;
-  width: 40%;
-  aspect-ratio: 1.7 / 1;
-  margin-right: 2%; }
+.mtk-card__logo-mark {
+  position: absolute;
+  left: 53px;
+  top: 44px;
+  width: 203px;
+  height: 94px; }
 
 .mtk-card__key-head {
   position: absolute;
   left: 0;
-  top: 10%;
-  width: 42%;
-  height: 80%;
+  top: 0;
+  width: 82px;
+  height: 94px;
   background: #000000;
   border-radius: 50%; }
 
-.mtk-card__key-head::after {
-  content: "";
+.mtk-card__key-hole {
   position: absolute;
-  left: 31%;
-  top: 25%;
-  width: 35%;
-  height: 50%;
+  left: 23px;
+  top: 30px;
+  width: 30px;
+  height: 36px;
   background: #ffffff;
-  border-radius: 50%; }
+  border-radius: 50%;
+  z-index: 2; }
 
 .mtk-card__key-shaft {
   position: absolute;
-  left: 35%;
-  top: 37%;
-  width: 62%;
-  height: 26%;
-  background: #000000; }
-
-.mtk-card__key-shaft::before, .mtk-card__key-shaft::after {
-  content: "";
-  position: absolute;
-  bottom: -35%;
-  width: 14%;
-  height: 45%;
-  background: #000000; }
-
-.mtk-card__key-shaft::before {
-  left: 38%; }
+  left: 65px;
+  top: 35px;
+  width: 138px;
+  height: 25px;
+  background: #000000;
+  clip-path: polygon(0 0, 100% 0, 100% 48%, 93% 72%, 86% 100%, 77% 100%, 72% 74%, 65% 74%, 60% 100%, 50% 100%, 46% 74%, 0 74%); }
 
 .mtk-card__key-shaft::after {
-  left: 58%; }
+  content: "";
+  position: absolute;
+  left: 12px;
+  top: 8px;
+  width: 116px;
+  height: 4px;
+  background: #ffffff; }
 
-.mtk-card__person-block {
-  width: 34%;
-  text-align: right; }
-
-.mtk-card__address-block, .mtk-card__contact-block {
-  width: 44%;
-  font-style: normal; }
-
-.mtk-card__contact-block {
-  text-align: right; }
+.mtk-card__key-tooth {
+  display: none; }
 
 .mtk-card__field {
-  position: relative;
-  display: inline-flex;
-  width: auto;
-  max-width: 100%;
-  line-height: 1.05;
+  position: absolute;
+  display: inline-block;
+  width: max-content;
+  max-width: none;
   color: #000000;
-  vertical-align: top; }
+  line-height: 1;
+  white-space: nowrap; }
 
 .mtk-card__field--logo {
-  font-size: clamp(1rem, 2.25vw, 1.75rem);
-  font-weight: 800; }
+  left: 137px;
+  top: 69px;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -1.2px; }
 
 .mtk-card__field--person-name {
-  font-size: clamp(1rem, 2.45vw, 1.75rem);
-  font-weight: 400; }
+  right: 70px;
+  top: 54px;
+  font-size: 27px;
+  font-weight: 400;
+  letter-spacing: -0.4px; }
 
 .mtk-card__field--person-title {
-  margin-top: 2%;
-  font-size: clamp(0.78rem, 1.6vw, 1.15rem);
+  right: 79px;
+  top: 88px;
+  font-size: 18px;
+  font-weight: 400;
   font-style: italic;
-  font-weight: 400; }
+  letter-spacing: 0; }
 
 .mtk-card__field--company {
-  font-size: clamp(1.25rem, 3vw, 2.2rem);
-  font-weight: 800;
-  letter-spacing: 0.01em; }
+  left: 194px;
+  top: 159px;
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: -0.2px; }
 
-.mtk-card__field--address, .mtk-card__field--phone, .mtk-card__field--email {
-  font-size: clamp(0.78rem, 1.65vw, 1.15rem);
+.mtk-card__address {
+  position: absolute;
+  left: 52px;
+  top: 267px;
+  margin: 0;
+  font-style: normal; }
+
+.mtk-card__contact {
+  position: absolute;
+  right: 41px;
+  top: 267px;
+  text-align: right; }
+
+.mtk-card__field--address-one, .mtk-card__field--address-two, .mtk-card__field--phone, .mtk-card__field--email {
+  position: relative;
+  display: block;
+  font-size: 18px;
   font-weight: 400;
-  line-height: 1.12; }
-
-.mtk-card__field--address {
-  display: flex;
-  margin-bottom: 1.2%; }
+  line-height: 1.22;
+  letter-spacing: -0.2px; }
 
 .mtk-card__field--phone, .mtk-card__field--email {
-  justify-content: flex-end;
-  margin-bottom: 1.2%; }
+  text-align: right; }
 
 .mtk-card__label {
   position: absolute;
   inset: 0;
+  display: inline-flex;
   width: 100%;
   height: 100%;
-  min-width: 100%;
-  min-height: 100%;
-  display: inline-flex;
   align-items: center;
   justify-content: inherit;
-  overflow: hidden;
   background: wheat;
   color: #000000;
   font: inherit;
-  letter-spacing: inherit;
+  font-weight: inherit;
+  font-style: inherit;
   line-height: inherit;
+  letter-spacing: inherit;
   text-align: inherit;
   white-space: nowrap;
-  z-index: 5;
+  z-index: 10;
   cursor: pointer;
-  transition: opacity 0.16s ease, visibility 0.16s ease; }
+  transition: opacity 0.15s ease, visibility 0.15s ease; }
 
 .mtk-card__label:hover, .mtk-card__label:focus-visible {
   opacity: 0;
   visibility: hidden; }
 
-.mtk-card__card:focus-visible, .mtk-card__label:focus-visible,
+.mtk-card__business-card:focus-visible, .mtk-card__label:focus-visible,
 .mtk-card [data-field]:focus-visible {
-  outline: 0.15rem solid #1976d2;
-  outline-offset: 0.15rem; }
+  outline: 2px solid #1976d2;
+  outline-offset: 2px; }
 
-@media (max-width: 900px) {
+@media (max-width: 1272px) {
   .mtk-card__comparison {
-    grid-template-columns: 1fr; } }
+    grid-template-columns: 600px; } }
