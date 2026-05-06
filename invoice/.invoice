@@ -8,6 +8,8 @@ Modern Material Design styles
 Material Design icon-style UI
 No external libraries
 
+Always try to use styles from css/nala.scss for colors, fonts, etc.
+
 Always create a JS class for mtk-invoice and initialize it inside the JS file itself.
 
 Rules:
