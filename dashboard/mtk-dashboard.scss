@@ -157,14 +157,12 @@
     padding: 8px 10px;
     color: #4a3a08;
     background: #fffaf0;
+    font-family: inherit;
     font-size: 13px;
     font-weight: $font-weight-bold;
-    text-decoration: none;
-
-    &:hover {
-      background: #fbf4e5;
-      text-decoration: none;
-    }
+    text-align: left;
+    cursor: inherit;
+    pointer-events: none;
 
     .material-icons { font-size: 18px; }
   }

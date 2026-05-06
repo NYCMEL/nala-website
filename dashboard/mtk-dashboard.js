@@ -147,7 +147,6 @@
                 this.elements.courseTitle.textContent = progress.courseTitle || 'NALA locksmith course';
             }
 
-            // Reset to 0 then animate to target
             if (this.elements.progressFill) {
                 this.elements.progressFill.style.width = '0%';
                 setTimeout(() => {
@@ -155,10 +154,9 @@
                 }, 80);
             }
 
-            // Animate counter from 0 to target
             if (this.elements.progressPercentage) {
                 this.elements.progressPercentage.textContent = '0%';
-                const duration = 2200; // ms
+                const duration = 2200;
                 const startTime = performance.now();
                 const easeOutCubic = (value) => 1 - Math.pow(1 - value, 3);
 
@@ -203,6 +201,21 @@
             }
         }
 
+        navigateToBusinessInABox() {
+            if (window.location.pathname !== "/repo_deploy/") {
+                window.location.href = "/repo_deploy/#biab";
+                return;
+            }
+
+            if (window.location.hash !== "#biab") {
+                window.location.hash = "biab";
+            } else if (window.wc && wc.pages && typeof wc.pages.show === "function") {
+                wc.pages.show("biab");
+            } else {
+                window.dispatchEvent(new HashChangeEvent("hashchange"));
+            }
+        }
+
         createSubscriptionCard(option) {
             if (option && option.variant === 'message') {
                 return this.createMessageCard(option);
@@ -231,7 +244,6 @@
             price.className = 'mtk-dashboard__card-price';
             price.textContent = option.price || '';
 
-            // If Active, append "Click here to view Business in a Box" to description
             const isActive = (option.price || '').trim().toLowerCase() === 'active' && (option.id || '').includes('business');
             if (isActive) {
                 const cta = document.createElement('span');
@@ -252,18 +264,17 @@
             }
 
             if (isActive) {
-                // Active cards always clickable — navigate to BIAB
                 card.setAttribute('role', 'button');
                 card.setAttribute('tabindex', '0');
                 card.style.cursor = 'pointer';
                 card.addEventListener('click', () => {
                     wc.log('[dashboard] Active card clicked → BIAB page');
-                    window.location.href = 'biab/index.html';
+                    this.navigateToBusinessInABox();
                 });
                 card.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
-                        window.location.href = 'biab/index.html';
+                        this.navigateToBusinessInABox();
                     }
                 });
             } else if (option.clickable !== false) {
@@ -286,24 +297,21 @@
             actions.className = 'mtk-dashboard__business-tools';
 
             const tools = [
-                { label: 'Edit setup', href: 'biab/index.html', icon: 'tune' },
-                { label: 'Website', href: 'client/index.html', icon: 'language' },
-                { label: 'Invoices', href: 'biab/index.html?tool=invoices', icon: 'receipt_long' },
-                { label: 'Reviews', href: 'biab/index.html?tool=reviews', icon: 'reviews' },
-                { label: 'Business Plan', href: 'biab/index.html?tool=business-plan', icon: 'article' },
-                { label: 'Brand Kit', href: 'biab/index.html?tool=brand', icon: 'palette' },
-                { label: 'Marketing', href: 'biab/index.html?tool=marketing', icon: 'campaign' }
+                { label: 'Default Offerings', icon: 'list_alt' },
+                { label: 'Website Builder', icon: 'language' },
+                { label: 'Business Card & Logo', icon: 'badge' },
+                { label: 'Invoices', icon: 'receipt_long' },
+                { label: 'Customer Reviews', icon: 'reviews' }
             ];
 
             tools.forEach((tool) => {
-                const link = document.createElement('a');
-                link.className = 'mtk-dashboard__business-tool';
-                link.href = tool.href;
-                link.innerHTML = `<span class="material-icons" aria-hidden="true">${tool.icon}</span><span>${tool.label}</span>`;
-                link.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                });
-                actions.appendChild(link);
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'mtk-dashboard__business-tool';
+                button.setAttribute('tabindex', '-1');
+                button.setAttribute('aria-hidden', 'true');
+                button.innerHTML = `<span class="material-icons" aria-hidden="true">${tool.icon}</span><span>${tool.label}</span>`;
+                actions.appendChild(button);
             });
 
             return actions;

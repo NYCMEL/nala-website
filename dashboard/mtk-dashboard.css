@@ -352,13 +352,12 @@ h1.title::after {
   padding: 8px 10px;
   color: #4a3a08;
   background: #fffaf0;
+  font-family: inherit;
   font-size: 13px;
   font-weight: 700;
-  text-decoration: none; }
-
-.mtk-dashboard__business-tool:hover {
-  background: #fbf4e5;
-  text-decoration: none; }
+  text-align: left;
+  cursor: inherit;
+  pointer-events: none; }
 
 .mtk-dashboard__business-tool .material-icons {
   font-size: 18px; }
