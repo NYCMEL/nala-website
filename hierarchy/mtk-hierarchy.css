@@ -221,6 +221,14 @@ h1.title::after {
   transform: translateX(-50%);
 }
 
+:root {
+  --nala-placeholder: #999;
+}
+
+::placeholder {
+  color: var(--nala-placeholder) !important;
+}
+
 .mtk-hierarchy {
   --mtk-primary: #a98212;
   --mtk-primary-dark: #7a5e0c;
