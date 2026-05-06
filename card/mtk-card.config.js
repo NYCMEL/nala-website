@@ -12,7 +12,7 @@ window.mtkCardConfig = {
 	addressLine2: "New York, NJ 10012",
 	phonePrefix: "Tel:",
 	phone: "(646) 303-1234",
-	email: "mel.locksmitt@gmail.com"
+	email: "mel.locksmith@gmail.com"
     },
     labels: {
 	logoText: "Locksmith",
