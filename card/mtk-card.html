@@ -1,46 +1,64 @@
 <mtk-card class="mtk-card">
-  <section class="mtk-card__surface container-fluid" aria-label="Locksmith business card" tabindex="0">
-    <div class="row mtk-card__top align-items-start">
-      <div class="col-12 col-md-7 mtk-card__brand-wrap">
-        <button class="mtk-card__field mtk-card__field--logo" type="button" data-field="logoText" aria-label="Locksmith logo text">
-          <span class="mtk-card__key" aria-hidden="true"></span>
-          <span class="mtk-card__label" data-bind="logoText"></span>
-        </button>
-      </div>
-      <div class="col-12 col-md-5 mtk-card__person-wrap text-md-end">
-        <button class="mtk-card__field mtk-card__field--person-name" type="button" data-field="personName">
-          <span class="mtk-card__label" data-bind="personName"></span>
-        </button>
-        <button class="mtk-card__field mtk-card__field--person-title" type="button" data-field="personTitle">
-          <span class="mtk-card__label" data-bind="personTitle"></span>
-        </button>
-      </div>
-    </div>
+  <section class="mtk-card__surface" aria-label="Business card">
+    <div class="container-fluid p-0">
+      <div class="row g-0 align-items-start">
+        <div class="col-7">
+          <div class="mtk-card__brand" aria-label="Locksmith logo">
+            <span class="mtk-card__key" aria-hidden="true"></span>
+            <span class="mtk-card__field mtk-card__logo-text" data-field="logoText">
+              <span class="mtk-card__text"></span>
+              <span class="mtk-card__label" data-label="logoText" tabindex="0"></span>
+            </span>
+          </div>
+        </div>
 
-    <div class="row">
-      <div class="col-12 mtk-card__company-wrap text-center">
-        <button class="mtk-card__field mtk-card__field--company" type="button" data-field="companyName">
-          <span class="mtk-card__label" data-bind="companyName"></span>
-        </button>
+        <div class="col-5 text-end">
+          <p class="mtk-card__field mtk-card__person-name" data-field="personName">
+            <span class="mtk-card__text"></span>
+            <span class="mtk-card__label" data-label="personName" tabindex="0"></span>
+          </p>
+          <p class="mtk-card__field mtk-card__person-title" data-field="personTitle">
+            <span class="mtk-card__text"></span>
+            <span class="mtk-card__label" data-label="personTitle" tabindex="0"></span>
+          </p>
+        </div>
       </div>
-    </div>
 
-    <div class="row mtk-card__bottom align-items-end">
-      <address class="col-12 col-md-6 mtk-card__address-wrap">
-        <button class="mtk-card__field mtk-card__field--address-line" type="button" data-field="addressLine1">
-          <span class="mtk-card__label" data-bind="addressLine1"></span>
-        </button>
-        <button class="mtk-card__field mtk-card__field--address-line" type="button" data-field="addressLine2">
-          <span class="mtk-card__label" data-bind="addressLine2"></span>
-        </button>
-      </address>
-      <div class="col-12 col-md-6 mtk-card__contact-wrap text-md-end">
-        <button class="mtk-card__field mtk-card__field--phone" type="button" data-field="phone">
-          <span class="mtk-card__label"><span data-bind="phoneLabel"></span> <span data-bind="phone"></span></span>
-        </button>
-        <button class="mtk-card__field mtk-card__field--email" type="button" data-field="email">
-          <span class="mtk-card__label" data-bind="email"></span>
-        </button>
+      <div class="row g-0">
+        <div class="col-12 text-center">
+          <h2 class="mtk-card__field mtk-card__company-name" data-field="companyName">
+            <span class="mtk-card__text"></span>
+            <span class="mtk-card__label" data-label="companyName" tabindex="0"></span>
+          </h2>
+        </div>
+      </div>
+
+      <div class="row g-0 mtk-card__bottom align-items-end">
+        <div class="col-6">
+          <address class="mtk-card__address">
+            <p class="mtk-card__field mtk-card__body-line" data-field="addressLine1">
+              <span class="mtk-card__text"></span>
+              <span class="mtk-card__label" data-label="addressLine1" tabindex="0"></span>
+            </p>
+            <p class="mtk-card__field mtk-card__body-line" data-field="addressLine2">
+              <span class="mtk-card__text"></span>
+              <span class="mtk-card__label" data-label="addressLine2" tabindex="0"></span>
+            </p>
+          </address>
+        </div>
+
+        <div class="col-6 text-end">
+          <div class="mtk-card__contact" aria-label="Contact information">
+            <p class="mtk-card__field mtk-card__body-line" data-field="phone">
+              <span class="mtk-card__text"><span data-field-inline="phoneLabel"></span> <span data-field-inline="phone"></span></span>
+              <span class="mtk-card__label" data-label="phone" tabindex="0"></span>
+            </p>
+            <p class="mtk-card__field mtk-card__body-line" data-field="email">
+              <span class="mtk-card__text"></span>
+              <span class="mtk-card__label" data-label="email" tabindex="0"></span>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </section>

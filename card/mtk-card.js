@@ -1,146 +1,104 @@
 class MtkCard {
-  constructor(element, config) {
-    this.element = element;
-    this.config = config || window.mtkCardConfig || {};
-    this.card = this.config.card || {};
-    this.actions = this.config.actions || {};
-    this.subscribeTopic = this.config.subscribeTopic || "4-mtk-card";
-    this.onMessage = this.onMessage.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-    this.init();
+  constructor(config = window.mtkCardConfig || {}) {
+    this.config = config;
+    this.root = null;
+    this.waitForElement();
+  }
+
+  waitForElement() {
+    const findElement = () => {
+      this.root = document.querySelector('mtk-card.mtk-card, .mtk-card');
+
+      if (this.root) {
+        this.init();
+        return;
+      }
+
+      window.requestAnimationFrame(findElement);
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => window.requestAnimationFrame(findElement), { once: true });
+    } else {
+      window.requestAnimationFrame(findElement);
+    }
   }
 
   init() {
-    this.renderData();
+    this.render();
     this.bindEvents();
     this.subscribe();
-    this.publish(this.actions.ready || "mtk-card:ready", {
-      component: this.config.component || "mtk-card"
-    });
   }
 
-  renderData() {
-    const binders = this.element.querySelectorAll("[data-bind]");
+  render() {
+    this.root.querySelectorAll('[data-field]').forEach((field) => {
+      const key = field.getAttribute('data-field');
+      const text = field.querySelector(':scope > .mtk-card__text');
 
-    binders.forEach((binder) => {
-      const key = binder.getAttribute("data-bind");
-      binder.textContent = this.card[key] || "";
+      if (text && this.config[key] !== undefined && key !== 'phone') {
+        text.textContent = this.config[key];
+      }
     });
 
-    const surface = this.element.querySelector(".mtk-card__surface");
-    if (surface && this.config.ariaLabel) {
-      surface.setAttribute("aria-label", this.config.ariaLabel);
-    }
+    this.root.querySelectorAll('[data-field-inline]').forEach((field) => {
+      const key = field.getAttribute('data-field-inline');
+
+      if (this.config[key] !== undefined) {
+        field.textContent = this.config[key];
+      }
+    });
+
+    this.root.querySelectorAll('[data-label]').forEach((label) => {
+      const key = label.getAttribute('data-label');
+
+      if (this.config.labels && this.config.labels[key] !== undefined) {
+        label.textContent = this.config.labels[key];
+      }
+    });
   }
 
   bindEvents() {
-    this.element.addEventListener("click", this.handleClick);
-    this.element.addEventListener("keydown", (event) => {
-      if (event.key !== "Enter" && event.key !== " ") {
-        return;
-      }
+    this.root.querySelectorAll('.mtk-card__field').forEach((field) => {
+      field.setAttribute('tabindex', '0');
 
-      const field = event.target.closest(".mtk-card__field");
-      if (!field) {
-        return;
-      }
-
-      event.preventDefault();
-      field.click();
-    });
-  }
-
-  subscribe() {
-    if (window.wc && typeof window.wc.subscribe === "function") {
-      window.wc.subscribe(this.subscribeTopic, this.onMessage);
-    }
-  }
-
-  onMessage(message) {
-    const payload = message || {};
-
-    if (payload.type === "refresh" || payload.action === "refresh") {
-      this.renderData();
-    }
-
-    if (payload.type === "update" || payload.action === "update") {
-      this.card = Object.assign({}, this.card, payload.card || payload.data || {});
-      this.renderData();
-    }
-  }
-
-  handleClick(event) {
-    const field = event.target.closest(".mtk-card__field");
-
-    if (!field || !this.element.contains(field)) {
-      this.publish(this.actions.cardClick || "mtk-card:card-clicked", {
-        component: this.config.component || "mtk-card"
+      field.addEventListener('click', () => {
+        this.publish('mtk-card:field-click', {
+          component: 'mtk-card',
+          field: field.getAttribute('data-field'),
+          value: field.textContent.trim()
+        });
       });
-      return;
-    }
 
-    const fieldName = field.getAttribute("data-field") || "unknown";
-
-    this.publish(this.actions.fieldClick || "mtk-card:field-clicked", {
-      component: this.config.component || "mtk-card",
-      field: fieldName,
-      value: this.card[fieldName] || ""
+      field.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          field.click();
+        }
+      });
     });
   }
 
   publish(topic, payload) {
-    const detail = payload || {};
-
-    if (window.wc && typeof window.wc.log === "function") {
-      window.wc.log("mtk-card publish", { topic, payload: detail });
-    } else if (window.console && typeof window.console.log === "function") {
-      window.console.log("mtk-card publish", { topic, payload: detail });
+    if (window.wc && typeof window.wc.log === 'function') {
+      window.wc.log(topic, payload);
     }
 
-    if (window.wc && typeof window.wc.publish === "function") {
-      window.wc.publish(topic, detail);
+    if (window.wc && typeof window.wc.publish === 'function') {
+      window.wc.publish(topic, payload);
     }
   }
 
-  static waitForElement(selector, callback) {
-    const existingElement = document.querySelector(selector);
-
-    if (existingElement) {
-      callback(existingElement);
-      return;
+  subscribe() {
+    if (window.wc && typeof window.wc.subscribe === 'function') {
+      window.wc.subscribe('4-mtk-card', this.onMessage.bind(this));
     }
-
-    const observer = new MutationObserver(() => {
-      const element = document.querySelector(selector);
-
-      if (!element) {
-        return;
-      }
-
-      observer.disconnect();
-      callback(element);
-    });
-
-    observer.observe(document.documentElement, {
-      childList: true,
-      subtree: true
-    });
   }
 
-  static boot() {
-    MtkCard.waitForElement("mtk-card.mtk-card", (element) => {
-      if (element.dataset.mtkCardReady === "true") {
-        return;
-      }
-
-      element.dataset.mtkCardReady = "true";
-      new MtkCard(element, window.mtkCardConfig);
-    });
+  onMessage(message) {
+    if (window.wc && typeof window.wc.log === 'function') {
+      window.wc.log('4-mtk-card', message);
+    }
   }
 }
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", MtkCard.boot);
-} else {
-  MtkCard.boot();
-}
+new MtkCard();
