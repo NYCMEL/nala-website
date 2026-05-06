@@ -1,4 +1,6 @@
+- AI HELPER should do spanish too
 - link to our paid NALA CHATGPT
+
 - Spanish translation for BIAB and SETTINGS
 - Change Password (I guess you send email)
 - biab > Introduction.
