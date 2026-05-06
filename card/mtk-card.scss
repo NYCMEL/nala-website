@@ -8,23 +8,19 @@
   }
 
   &__comparison {
-    display: grid;
-    grid-template-columns: 600px 600px;
-    gap: 24px;
-    align-items: start;
-    justify-content: center;
     width: 100%;
   }
 
-  &__panel {
-    width: 600px;
-    height: 360px;
+  &__column {
+    display: flex;
+    justify-content: center;
   }
 
   &__business-card,
   &__reference-image {
     width: 600px;
     height: 360px;
+    max-width: 100%;
     background: #ffffff;
     box-shadow: 7px 8px 12px rgba(0, 0, 0, 0.35);
   }
@@ -33,27 +29,29 @@
     position: relative;
     overflow: hidden;
     color: #000000;
+    flex: 0 0 auto;
   }
 
   &__reference-image {
     display: block;
     object-fit: contain;
+    flex: 0 0 auto;
   }
 
   &__logo-mark {
     position: absolute;
-    left: 53px;
-    top: 44px;
+    left: 52px;
+    top: 43px;
     width: 203px;
-    height: 94px;
+    height: 95px;
   }
 
   &__key-head {
     position: absolute;
     left: 0;
     top: 0;
-    width: 82px;
-    height: 94px;
+    width: 83px;
+    height: 95px;
     background: #000000;
     border-radius: 50%;
   }
@@ -62,8 +60,8 @@
     position: absolute;
     left: 23px;
     top: 30px;
-    width: 30px;
-    height: 36px;
+    width: 31px;
+    height: 37px;
     background: #ffffff;
     border-radius: 50%;
     z-index: 2;
@@ -71,12 +69,12 @@
 
   &__key-shaft {
     position: absolute;
-    left: 65px;
+    left: 66px;
     top: 35px;
-    width: 138px;
-    height: 25px;
+    width: 139px;
+    height: 27px;
     background: #000000;
-    clip-path: polygon(0 0, 100% 0, 100% 48%, 93% 72%, 86% 100%, 77% 100%, 72% 74%, 65% 74%, 60% 100%, 50% 100%, 46% 74%, 0 74%);
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 92% 76%, 84% 100%, 76% 100%, 71% 75%, 64% 75%, 59% 100%, 49% 100%, 45% 75%, 0 75%);
   }
 
   &__key-shaft::after {
@@ -87,10 +85,6 @@
     width: 116px;
     height: 4px;
     background: #ffffff;
-  }
-
-  &__key-tooth {
-    display: none;
   }
 
   &__field {
@@ -104,24 +98,24 @@
   }
 
   &__field--logo {
-    left: 137px;
-    top: 69px;
-    font-size: 24px;
+    left: 138px;
+    top: 68px;
+    font-size: 25px;
     font-weight: 900;
-    letter-spacing: -1.2px;
+    letter-spacing: -1.25px;
   }
 
   &__field--person-name {
     right: 70px;
-    top: 54px;
-    font-size: 27px;
+    top: 53px;
+    font-size: 28px;
     font-weight: 400;
-    letter-spacing: -0.4px;
+    letter-spacing: -0.6px;
   }
 
   &__field--person-title {
-    right: 79px;
-    top: 88px;
+    right: 80px;
+    top: 87px;
     font-size: 18px;
     font-weight: 400;
     font-style: italic;
@@ -130,10 +124,10 @@
 
   &__field--company {
     left: 194px;
-    top: 159px;
-    font-size: 30px;
+    top: 158px;
+    font-size: 31px;
     font-weight: 900;
-    letter-spacing: -0.2px;
+    letter-spacing: -0.55px;
   }
 
   &__address {
@@ -151,8 +145,7 @@
     text-align: right;
   }
 
-  &__field--address-one,
-  &__field--address-two,
+  &__field--address,
   &__field--phone,
   &__field--email {
     position: relative;
@@ -160,7 +153,7 @@
     font-size: 18px;
     font-weight: 400;
     line-height: 1.22;
-    letter-spacing: -0.2px;
+    letter-spacing: -0.25px;
   }
 
   &__field--phone,
@@ -174,6 +167,8 @@
     display: inline-flex;
     width: 100%;
     height: 100%;
+    min-width: 100%;
+    min-height: 100%;
     align-items: center;
     justify-content: inherit;
     background: wheat;
@@ -185,6 +180,7 @@
     letter-spacing: inherit;
     text-align: inherit;
     white-space: nowrap;
+    overflow: hidden;
     z-index: 10;
     cursor: pointer;
     transition: opacity 0.15s ease, visibility 0.15s ease;
@@ -201,11 +197,5 @@
   [data-field]:focus-visible {
     outline: 2px solid #1976d2;
     outline-offset: 2px;
-  }
-
-  @media (max-width: 1272px) {
-    &__comparison {
-      grid-template-columns: 600px;
-    }
   }
 }
