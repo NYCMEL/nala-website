@@ -1,0 +1,10 @@
+- Spanish translation for BIAB and SETTINGS
+- Change Password (I guess you send email)
+- biab > Introduction.
+  Please add SEO and all other goodies we provide
+- Website builder: discuss workflow
+- Business card: need better samples (no more than 3)
+  I will create individual forms for each
+- Add Invoice functionality
+  Any email sent by paid customers should include a link to Reviews
+-
