@@ -47,4 +47,4 @@ Behavior:
 
 What I want:
 - grab text from card-1.png image file and add them to mtk-card.config.js file
-
+- add label fields with same texts with wheat background to completely cover each field
