@@ -22,7 +22,7 @@ window.mtkCardConfig = {
         logoText: "",
         personName: "Mel M. Heravi",
         personTitle: "Owner/Operator",
-        companyName: "MEL'S LOCKSMITH",
+        companyName: "LOCAL LOCKSMITH",
         addressLine1: "P.O.Box 1230",
         addressLine2: "New York, NJ 10012",
         phonePrefix: "Tel:",
