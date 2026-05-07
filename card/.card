@@ -53,5 +53,6 @@ What I want:
 - display the img/b-card/card-1.png image to the right in col-md-6
 - use exact image size for card and adjust text and fonts accordingly
 - adjust fonts, font-weights to match the card
-- the word "Locksmith" position should be just above the key image
+- remove the word "Locksmith" from card
 - pay special attention to font size, font-weight and positioning
+
