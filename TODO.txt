@@ -27,10 +27,26 @@ Thu May  7 09:35:12 EDT 2026
   - clicking on a link should expand to show description of the link clicked on
            
 Website Builder:
-  - remove the logo and place the one from 	
+  - remove the logo and place the one from /img/clients/x.webp (generic)
+  - remove "Learn more about our guarantee" link in "Our Guarantee"
+  *** I am also assuming that all is working, the links etc.
 
-Business Card & Logo
+Business Card & Logo:
+  - Find and show 6 different cards (I think you did this already)
+  - make sure what is on the screen is available in "Profile & Settings"
+  - Cards displayed MUST show information from profile and not just generic text
+  - Clicking on "Order my Selection" should do ...
+  - Once ordered, it CAN NOT be changed!
+  - Returning to this tab, should only show the selected and ordered card.
 
-Invoices
+Invoices:
+  - Clicking on "Email" icon, should email the invoice from NALA server
+  - email should contain a link to "Review" services rendered from https://nala-test.com/repo_deploy/reviews
+  - Make delete work
+  - Allow editing an invoice, by clicking on "Edit" icon
+  - New Invoice:
+    - IS BROKEN, not working
+    - can only be Saved. Upon save "New Invoice" screen should close and take user back to Invoces
 
-Customer Reviews
+Customer Reviews:
+  - nothing to do here, but to view
