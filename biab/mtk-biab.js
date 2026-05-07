@@ -702,7 +702,7 @@
             </button>
           </div>
 
-          <p class="mtk-biab__template-text">${this._escape(section.generatorIntro || "Twelve options are generated from curated design rules so each card stays readable and balanced.")}</p>
+          <p class="mtk-biab__template-text">${this._escape(section.generatorIntro || "Six options are generated from curated design rules so each card stays readable and balanced.")}</p>
         </div>
       `);
 
@@ -872,9 +872,9 @@
 
       const fonts = [
         { heading: "Segoe UI, Arial, sans-serif", body: "Segoe UI, Arial, sans-serif", headingSize: 28, bodySize: 14 },
-        { heading: "Franklin Gothic Medium, Arial, sans-serif", body: "Arial, sans-serif", headingSize: 29, bodySize: 13 },
+        { heading: "Franklin Gothic Medium, Arial Narrow, Arial, sans-serif", body: "Arial, sans-serif", headingSize: 29, bodySize: 13 },
         { heading: "Trebuchet MS, Verdana, sans-serif", body: "Verdana, Arial, sans-serif", headingSize: 28, bodySize: 13 },
-        { heading: "Arial, Helvetica, sans-serif", body: "Tahoma, Arial, sans-serif", headingSize: 29, bodySize: 13 },
+        { heading: "Arial Black, Arial, sans-serif", body: "Arial, Helvetica, sans-serif", headingSize: 25, bodySize: 13 },
         { heading: "Verdana, Geneva, sans-serif", body: "Arial, Helvetica, sans-serif", headingSize: 26, bodySize: 13 },
         { heading: "Calibri, Segoe UI, sans-serif", body: "Segoe UI, Arial, sans-serif", headingSize: 29, bodySize: 14 },
         { heading: "Century Gothic, Arial, sans-serif", body: "Arial, Helvetica, sans-serif", headingSize: 27, bodySize: 13 },
@@ -882,7 +882,13 @@
         { heading: "Georgia, Times New Roman, serif", body: "Arial, Helvetica, sans-serif", headingSize: 28, bodySize: 13 },
         { heading: "Cambria, Georgia, serif", body: "Calibri, Arial, sans-serif", headingSize: 28, bodySize: 13 },
         { heading: "Lucida Sans, Arial, sans-serif", body: "Lucida Sans, Arial, sans-serif", headingSize: 26, bodySize: 13 },
-        { heading: "Helvetica, Arial, sans-serif", body: "Helvetica, Arial, sans-serif", headingSize: 29, bodySize: 13 }
+        { heading: "Helvetica, Arial, sans-serif", body: "Helvetica, Arial, sans-serif", headingSize: 29, bodySize: 13 },
+        { heading: "Tahoma, Geneva, sans-serif", body: "Arial, Helvetica, sans-serif", headingSize: 28, bodySize: 13 },
+        { heading: "Palatino Linotype, Georgia, serif", body: "Arial, Helvetica, sans-serif", headingSize: 27, bodySize: 13 },
+        { heading: "Book Antiqua, Georgia, serif", body: "Calibri, Arial, sans-serif", headingSize: 27, bodySize: 13 },
+        { heading: "Arial Narrow, Arial, sans-serif", body: "Arial, Helvetica, sans-serif", headingSize: 30, bodySize: 13 },
+        { heading: "Optima, Segoe UI, sans-serif", body: "Segoe UI, Arial, sans-serif", headingSize: 28, bodySize: 13 },
+        { heading: "Futura, Century Gothic, Arial, sans-serif", body: "Arial, Helvetica, sans-serif", headingSize: 27, bodySize: 13 }
       ];
 
       const icons = [
@@ -932,16 +938,13 @@
       const area = this._businessCardFieldValue(section, "serviceArea") || "24/7 Locksmith Service";
       const isSpanish = window.i18n && typeof window.i18n.getLang === "function" && window.i18n.getLang() === "es";
       const labelBase = isSpanish ? "Tarjeta" : "Business Card";
-      const sizeLabels = isSpanish
-        ? { Standard: "Estándar", MOO: "MOO", Square: "Cuadrada", Mini: "Mini" }
-        : {};
 
       const iconChoices = this._shuffleCardOptions(icons);
       const fontChoices = this._shuffleCardOptions(fonts);
       const paletteChoices = this._shuffleCardOptions(palettes);
       const layoutChoices = this._shuffleCardOptions(layouts);
 
-      this.generatedCardTemplates = Array.from({ length: 12 }).map((_, index) => {
+      this.generatedCardTemplates = Array.from({ length: 6 }).map((_, index) => {
         const palette = paletteChoices[index % paletteChoices.length];
         const font = fontChoices[index % fontChoices.length];
         const icon = iconChoices[index % iconChoices.length];
@@ -951,7 +954,7 @@
 
         return {
           id: "generated-card-" + (index + 1),
-          label: labelBase + " " + (index + 1) + " - " + (sizeLabels[size.name] || size.name),
+          label: labelBase + " " + (index + 1),
           image: this._businessCardDataUri(design),
           design,
           isDefault: index === 0
@@ -997,16 +1000,16 @@
       `;
       const variants = {
         "left-mark": `<rect width="560" height="350" fill="${p.bg}"/><rect width="150" height="350" fill="${p.accent}" opacity=".16"/>${icon}${baseText}`,
-        "top-band": `<rect width="560" height="350" fill="${p.bg}"/><rect width="560" height="92" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 74, 46, 52)}<g transform="translate(0 16)">${baseText}</g>`,
-        "split": `<rect width="560" height="350" fill="${p.bg}"/><rect x="352" width="208" height="350" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 456, 150, 104)}${baseText}`,
+        "top-band": `<rect width="560" height="350" fill="${p.bg}"/><rect width="560" height="92" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 74, 46, 52)}${baseText}`,
+        "split": `<rect width="560" height="350" fill="${p.bg}"/><rect x="352" width="208" height="350" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 456, 132, 84)}${baseText}`,
         "corner-badge": `<rect width="560" height="350" fill="${p.bg}"/><circle cx="464" cy="84" r="54" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 464, 84, 58)}${baseText}`,
         "centered": `<rect width="560" height="350" fill="${p.bg}"/>${this._placedIcon(design.icon, p.accent, 280, 76, 62)}<text x="280" y="153" text-anchor="middle" fill="${p.fg}" font-family="${font.heading}" font-size="${headingSize}" font-weight="800">${businessName}</text><text x="280" y="187" text-anchor="middle" fill="${p.muted}" font-family="${font.body}" font-size="14">${area}</text><text x="280" y="255" text-anchor="middle" fill="${p.fg}" font-family="${font.body}" font-size="${contactSize}" font-weight="700">${contactName}</text><text x="280" y="285" text-anchor="middle" fill="${p.muted}" font-family="${font.body}" font-size="${detailSize}">${contactLine}</text><text x="280" y="312" text-anchor="middle" fill="${p.muted}" font-family="${font.body}" font-size="${detailSize}">${website}</text>`,
         "vertical-accent": `<rect width="560" height="350" fill="${p.bg}"/><rect x="512" width="48" height="350" fill="${p.accent}"/>${this._placedIcon(design.icon, p.accent, 82, 84, 64)}${baseText}`,
-        "bottom-rule": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="308" width="480" height="5" rx="2.5" fill="${p.accent}"/>${this._placedIcon(design.icon, p.accent, 82, 82, 62)}${baseText}`,
-        "right-mark": `<rect width="560" height="350" fill="${p.bg}"/><rect x="386" y="0" width="174" height="350" fill="${p.accent}" opacity=".14"/>${this._placedIcon(design.icon, p.accent, 452, 92, 84)}${baseText}`,
+        "bottom-rule": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="332" width="480" height="5" rx="2.5" fill="${p.accent}"/>${this._placedIcon(design.icon, p.accent, 82, 82, 62)}${baseText}`,
+        "right-mark": `<rect width="560" height="350" fill="${p.bg}"/><rect x="392" y="0" width="168" height="350" fill="${p.accent}" opacity=".14"/>${this._placedIcon(design.icon, p.accent, 454, 86, 74)}${baseText}`,
         "framed": `<rect width="560" height="350" fill="${p.bg}"/><rect x="28" y="28" width="504" height="294" rx="10" fill="none" stroke="${p.accent}" stroke-width="4"/>${this._placedIcon(design.icon, p.accent, 84, 84, 58)}${baseText}`,
         "badge-left": `<rect width="560" height="350" fill="${p.bg}"/><circle cx="86" cy="86" r="52" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 86, 86, 56)}${baseText}`,
-        "double-rule": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="40" width="480" height="4" rx="2" fill="${p.accent}"/><rect x="40" y="306" width="480" height="4" rx="2" fill="${p.accent}"/>${this._placedIcon(design.icon, p.accent, 86, 91, 58)}${baseText}`,
+        "double-rule": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="40" width="480" height="4" rx="2" fill="${p.accent}"/><rect x="40" y="332" width="480" height="4" rx="2" fill="${p.accent}"/>${this._placedIcon(design.icon, p.accent, 86, 91, 58)}${baseText}`,
         "top-left-icon": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="40" width="88" height="88" rx="18" fill="${p.accent}" opacity=".16"/>${this._placedIcon(design.icon, p.accent, 84, 84, 58)}${baseText}`
       };
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="560" height="350" viewBox="0 0 560 350">${variants[design.layout] || variants["left-mark"]}</svg>`;
