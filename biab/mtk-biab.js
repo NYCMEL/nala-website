@@ -17,12 +17,16 @@
     constructor(root, config) {
       this.root = root;
       this.config = config || {};
+      if (window.i18n && typeof window.i18n.applyConfig === "function") {
+        window.i18n.applyConfig(this.config);
+      }
       this.sections = Array.isArray(this.config.sections) ? this.config.sections : [];
       this.labels = this.config.labels || {};
       this.events = this.config.events || { publish: {}, subscribe: [] };
       this.activeId = this.sections[0] ? this.sections[0].id : "";
       this.invoiceStatus = "Open";
       this.selectedTemplate = null;
+      this.generatedCardTemplates = null;
       this.isPublishing = false;
       this.onMessage = this.onMessage.bind(this);
       this._init();
@@ -436,7 +440,7 @@
     _renderStatusOptions() {
       return ["Open", "Paid", "Draft"].map((status) => `
         <option value="${this._escape(status)}"${this.invoiceStatus === status ? " selected" : ""}>
-          ${this._escape(status)}
+          ${this._escape(this._text(status))}
         </option>
       `).join("");
     }
@@ -539,8 +543,8 @@
         <header class="mtk-biab__invoice-page-header">
           <div class="mtk-biab__invoice-page-header-inner">
             <div>
-              <p class="mtk-biab__invoice-page-kicker">Current selection</p>
-              <h2 class="mtk-biab__invoice-page-title" id="mtk-biab-invoice-page-title">New Invoice</h2>
+              <p class="mtk-biab__invoice-page-kicker">${this._escape(this._text("Current selection"))}</p>
+              <h2 class="mtk-biab__invoice-page-title" id="mtk-biab-invoice-page-title">${this._escape(this._text("New Invoice"))}</h2>
             </div>
 
             <button class="mtk-biab__invoice-page-close" type="button" data-action="close-invoice-page" aria-label="Close invoice">
@@ -676,7 +680,7 @@
     }
 
     _openBusinessCardTemplatePicker(section) {
-      const templates = Array.isArray(section.cardTemplates) ? section.cardTemplates : [];
+      const templates = this._getCardTemplates(section);
       const defaultTemplate = templates.find((template) => template.isDefault) || templates[0] || null;
 
       if (!this.selectedTemplate && defaultTemplate) {
@@ -687,18 +691,18 @@
 
       this._showSetupView(section, `
         <div class="mtk-biab__setup-card">
-          <h3 class="mtk-biab__template-heading">Please select a card</h3>
+          <h3 class="mtk-biab__template-heading">${this._escape(this._text("Please select a card"))}</h3>
           <div class="mtk-biab__template-grid" role="list" aria-label="Business card templates">
             ${templates.map((template) => this._renderCardTemplateButton(template)).join("")}
           </div>
 
           <div class="mtk-biab__template-actions">
             <button class="mtk-biab__submit-btn" type="button" data-action="order-card-selection">
-              Order my Selection
+              ${this._escape(this._text("Order my Selection"))}
             </button>
           </div>
 
-          <p class="mtk-biab__template-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <p class="mtk-biab__template-text">${this._escape(section.generatorIntro || "Six options are generated from curated design rules so each card stays readable and balanced.")}</p>
         </div>
       `);
 
@@ -734,7 +738,7 @@
 
     _selectCardTemplate(templateId) {
       const section = this._getActiveSection();
-      const templates = Array.isArray(section.cardTemplates) ? section.cardTemplates : [];
+      const templates = this._getCardTemplates(section);
       const template = templates.find((item) => item.id === templateId);
 
       if (!template) return;
@@ -750,7 +754,7 @@
 
     _orderSelectedCard() {
       const section = this._getActiveSection();
-      const templates = Array.isArray(section.cardTemplates) ? section.cardTemplates : [];
+      const templates = this._getCardTemplates(section);
       const defaultTemplate = templates.find((template) => template.isDefault) || templates[0] || null;
       const template = this.selectedTemplate || defaultTemplate;
 
@@ -766,7 +770,7 @@
 
     _openCardEditor(templateId) {
       const section = this._getActiveSection();
-      const templates = Array.isArray(section.cardTemplates) ? section.cardTemplates : [];
+      const templates = this._getCardTemplates(section);
       const fields = Array.isArray(section.cardFields) ? section.cardFields : [];
       const template = templates.find((item) => item.id === templateId) || templates[0];
 
@@ -836,6 +840,117 @@
       });
     }
 
+    _getCardTemplates(section) {
+      if (Array.isArray(section.cardTemplates) && section.cardTemplates.length) {
+        return section.cardTemplates;
+      }
+
+      if (this.generatedCardTemplates) {
+        return this.generatedCardTemplates;
+      }
+
+      const palettes = [
+        { bg: "#0f172a", fg: "#f8fafc", accent: "#38bdf8", muted: "#cbd5e1" },
+        { bg: "#ffffff", fg: "#111827", accent: "#b45309", muted: "#475569" },
+        { bg: "#12372a", fg: "#f7fee7", accent: "#facc15", muted: "#d9f99d" },
+        { bg: "#1f2937", fg: "#f9fafb", accent: "#f97316", muted: "#d1d5db" },
+        { bg: "#f8fafc", fg: "#0f172a", accent: "#0f766e", muted: "#475569" },
+        { bg: "#27272a", fg: "#fafafa", accent: "#eab308", muted: "#d4d4d8" },
+        { bg: "#0b3b4a", fg: "#f0fdfa", accent: "#f59e0b", muted: "#ccfbf1" },
+        { bg: "#faf7f2", fg: "#1f2937", accent: "#991b1b", muted: "#57534e" }
+      ];
+
+      const fonts = [
+        { heading: "Arial", body: "Arial" },
+        { heading: "Georgia", body: "Arial" },
+        { heading: "Trebuchet MS", body: "Verdana" },
+        { heading: "Impact", body: "Arial" },
+        { heading: "Verdana", body: "Tahoma" },
+        { heading: "Courier New", body: "Arial" }
+      ];
+
+      const icons = ["key", "shield", "lock", "bolt", "home", "star"];
+      const layouts = ["left-mark", "top-band", "split", "corner-badge", "centered", "vertical-accent"];
+      const sizes = [
+        { name: "Standard", width: 3.5, height: 2.0 },
+        { name: "MOO", width: 3.46, height: 2.32 },
+        { name: "Square", width: 2.71, height: 2.71 },
+        { name: "Mini", width: 2.9, height: 1.26 }
+      ];
+      const businessName = this._businessCardFieldValue(section, "businessName") || "NALA Lock & Key";
+      const contactName = this._businessCardFieldValue(section, "contactName") || "Your Name";
+      const phone = this._businessCardFieldValue(section, "phone") || "(555) 123-4567";
+      const email = this._businessCardFieldValue(section, "email") || "hello@example.com";
+      const website = this._businessCardFieldValue(section, "website") || "example.com";
+      const area = this._businessCardFieldValue(section, "serviceArea") || "24/7 Locksmith Service";
+      const isSpanish = window.i18n && typeof window.i18n.getLang === "function" && window.i18n.getLang() === "es";
+      const labelBase = isSpanish ? "Tarjeta" : "Business Card";
+      const sizeLabels = isSpanish
+        ? { Standard: "Estándar", MOO: "MOO", Square: "Cuadrada", Mini: "Mini" }
+        : {};
+
+      this.generatedCardTemplates = Array.from({ length: 6 }).map((_, index) => {
+        const palette = palettes[(index * 3 + businessName.length) % palettes.length];
+        const font = fonts[(index + contactName.length) % fonts.length];
+        const icon = icons[(index * 2 + phone.length) % icons.length];
+        const layout = layouts[index % layouts.length];
+        const size = sizes[(index + website.length) % sizes.length];
+        const design = { palette, font, icon, layout, size, businessName, contactName, phone, email, website, area };
+
+        return {
+          id: "generated-card-" + (index + 1),
+          label: labelBase + " " + (index + 1) + " - " + (sizeLabels[size.name] || size.name),
+          image: this._businessCardDataUri(design),
+          design,
+          isDefault: index === 0
+        };
+      });
+
+      return this.generatedCardTemplates;
+    }
+
+    _businessCardFieldValue(section, fieldId) {
+      const fields = Array.isArray(section.cardFields) ? section.cardFields : [];
+      const field = fields.find((item) => item.id === fieldId);
+      return field && field.value ? String(field.value).trim() : "";
+    }
+
+    _businessCardDataUri(design) {
+      const p = design.palette;
+      const safe = (value) => this._escape(value);
+      const icon = this._iconSvg(design.icon, p.accent);
+      const baseText = `
+        <text x="44" y="178" fill="${p.fg}" font-family="${design.font.heading}" font-size="30" font-weight="800">${safe(design.businessName)}</text>
+        <text x="44" y="213" fill="${p.muted}" font-family="${design.font.body}" font-size="15">${safe(design.area)}</text>
+        <text x="44" y="276" fill="${p.fg}" font-family="${design.font.body}" font-size="18" font-weight="700">${safe(design.contactName)}</text>
+        <text x="44" y="304" fill="${p.muted}" font-family="${design.font.body}" font-size="14">${safe(design.phone)}  |  ${safe(design.email)}</text>
+        <text x="44" y="329" fill="${p.muted}" font-family="${design.font.body}" font-size="14">${safe(design.website)}</text>
+      `;
+      const variants = {
+        "left-mark": `<rect width="560" height="350" fill="${p.bg}"/><rect width="150" height="350" fill="${p.accent}" opacity=".16"/><g transform="translate(48 46) scale(1.2)">${icon}</g>${baseText}`,
+        "top-band": `<rect width="560" height="350" fill="${p.bg}"/><rect width="560" height="92" fill="${p.accent}"/><g transform="translate(42 26)">${this._iconSvg(design.icon, p.bg)}</g><g transform="translate(0 18)">${baseText}</g>`,
+        "split": `<rect width="560" height="350" fill="${p.bg}"/><rect x="342" width="218" height="350" fill="${p.accent}"/><g transform="translate(390 92) scale(1.7)">${this._iconSvg(design.icon, p.bg)}</g>${baseText}`,
+        "corner-badge": `<rect width="560" height="350" fill="${p.bg}"/><circle cx="464" cy="82" r="58" fill="${p.accent}"/><g transform="translate(434 52)">${this._iconSvg(design.icon, p.bg)}</g>${baseText}`,
+        "centered": `<rect width="560" height="350" fill="${p.bg}"/><g transform="translate(254 42)">${icon}</g><text x="280" y="158" text-anchor="middle" fill="${p.fg}" font-family="${design.font.heading}" font-size="31" font-weight="800">${safe(design.businessName)}</text><text x="280" y="190" text-anchor="middle" fill="${p.muted}" font-family="${design.font.body}" font-size="15">${safe(design.area)}</text><text x="280" y="262" text-anchor="middle" fill="${p.fg}" font-family="${design.font.body}" font-size="18" font-weight="700">${safe(design.contactName)}</text><text x="280" y="291" text-anchor="middle" fill="${p.muted}" font-family="${design.font.body}" font-size="14">${safe(design.phone)}  |  ${safe(design.email)}</text><text x="280" y="318" text-anchor="middle" fill="${p.muted}" font-family="${design.font.body}" font-size="14">${safe(design.website)}</text>`,
+        "vertical-accent": `<rect width="560" height="350" fill="${p.bg}"/><rect x="512" width="48" height="350" fill="${p.accent}"/><g transform="translate(44 48)">${icon}</g>${baseText}`
+      };
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="560" height="350" viewBox="0 0 560 350">${variants[design.layout] || variants["left-mark"]}</svg>`;
+      return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+    }
+
+    _iconSvg(name, color) {
+      const attrs = `fill="none" stroke="${color}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"`;
+      const icons = {
+        key: `<g ${attrs}><circle cx="22" cy="22" r="15"/><path d="M34 34 L68 68 M52 52 L52 68 M62 62 L76 62"/></g>`,
+        shield: `<g ${attrs}><path d="M40 6 L74 20 V43 C74 63 60 78 40 86 C20 78 6 63 6 43 V20 Z"/><path d="M25 44 L36 55 L58 32"/></g>`,
+        lock: `<g ${attrs}><rect x="12" y="38" width="64" height="44" rx="8"/><path d="M24 38 V26 C24 14 32 7 44 7 C56 7 64 14 64 26 V38"/></g>`,
+        bolt: `<g ${attrs}><path d="M49 5 L18 50 H42 L34 86 L72 36 H48 Z"/></g>`,
+        home: `<g ${attrs}><path d="M8 42 L44 12 L80 42"/><path d="M18 40 V80 H70 V40"/><path d="M36 80 V56 H52 V80"/></g>`,
+        star: `<g ${attrs}><path d="M44 7 L55 32 L82 34 L61 52 L68 79 L44 65 L20 79 L27 52 L6 34 L33 32 Z"/></g>`
+      };
+      return icons[name] || icons.key;
+    }
+
     _showSetupView(section, bodyHTML) {
       const overlay = document.createElement("section");
       overlay.className = "mtk-biab__setup";
@@ -897,6 +1012,12 @@
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+    }
+
+    _text(value) {
+      return window.i18n && typeof window.i18n.translateLiteral === "function"
+        ? window.i18n.translateLiteral(value)
+        : value;
     }
 
     static initWhenReady() {

@@ -39,7 +39,9 @@ class _febe {
 	    "mtk-request:submit",
 	    "mtk-biab:review-request",
 	    "mtk-biab:reviews-save",
-	    "mtk-biab:invoice-sent"
+	    "mtk-biab:invoice-sent",
+	    "mtk-invoice:save",
+	    "mtk-settings:change-password"
 	];
 
 	// create handlers mapping
@@ -93,6 +95,8 @@ class _febe {
 	    "mtk-biab:review-request": this.handleBiabReviewRequest,
 	    "mtk-biab:reviews-save": this.handleBiabReviewsSave,
 	    "mtk-biab:invoice-sent": this.handleBiabInvoiceSent,
+	    "mtk-invoice:save": this.handleInvoiceSave,
+	    "mtk-settings:change-password": this.handleSettingsChangePassword,
 
 	};
     }
@@ -274,6 +278,74 @@ class _febe {
 	return this.postBiabJson("/api/business_in_a_box_review_request.php", data || {}, "Review request email sent.", this.t("biab.error.reviewRequest", "Could not send review request email."));
     }
 
+    getSessionUser() {
+	const session = (window.wc && wc.session) || {};
+	return session.user || session.currentUser || window.wc.currentUser || {};
+    }
+
+    getBusinessPageId() {
+	const user = this.getSessionUser();
+	return String(
+	    (window._clientProfileInstance && window._clientProfileInstance.data && window._clientProfileInstance.data.nalaUID) ||
+	    (wc.session && wc.session.nalaUID) ||
+	    user.nalaUID ||
+	    user.id ||
+	    user.user_id ||
+	    user.email ||
+	    "demo"
+	).replace(/[^a-zA-Z0-9_-]/g, "");
+    }
+
+    buildReviewUrl(uid, token) {
+	const origin = (wc && wc.apiURL) ? String(wc.apiURL).replace(/\/$/, "") : window.location.origin;
+	return origin + "/repo_deploy/client/review.html?nalaUID=" + encodeURIComponent(uid) + "&token=" + encodeURIComponent(token);
+    }
+
+    normalizeInvoicePayload(data) {
+	const values = Object.assign({}, (data && data.values) || data || {});
+	const totals = (data && data.totals) || {};
+	const subtotal = Number(totals.subtotal || 0);
+	const tax = Number(totals.tax || 0);
+	const total = Number(totals.total || 0);
+	return Object.assign({}, values, {
+	    invoiceNumber: values.invoiceNumber || ("INV-" + new Date().toISOString().slice(0, 10).replace(/-/g, "")),
+	    invoiceDate: values.invoiceDate || new Date().toISOString().slice(0, 10),
+	    serviceFeeAmount: values.serviceFee || 0,
+	    partsAmount: values.partsMaterials || 0,
+	    laborAmount: 0,
+	    taxAmount: tax,
+	    subtotal,
+	    total,
+	    paymentStatus: values.paymentStatus || "Open"
+	});
+    }
+
+    handleInvoiceSave(data) {
+	const uid = this.getBusinessPageId();
+	const invoice = this.normalizeInvoicePayload(data || {});
+
+	return this.postBiabJson("/api/business_in_a_box_invoices.php", {
+	    nalaUID: uid,
+	    invoice
+	}, "", this.t("biab.error.generic", "Could not complete that request. Please try again.")).then(json => {
+	    const savedId = json && json.id ? json.id : invoice.id;
+	    const token = "review-" + (savedId || Date.now()).toString().replace(/[^a-zA-Z0-9_-]/g, "");
+	    const reviewPayload = {
+		nalaUID: uid,
+		customerName: invoice.customerName,
+		customerEmail: invoice.customerEmail,
+		jobType: invoice.serviceType || invoice.notes || "Locksmith service",
+		token,
+		reviewUrl: this.buildReviewUrl(uid, token)
+	    };
+
+	    return this.postBiabJson("/api/business_in_a_box_review_request.php", reviewPayload, this.t("invoice.success.reviewSent", "Invoice saved. Review request email sent automatically."), this.t("biab.error.reviewRequest", "Could not send review request email.")).then(() => {
+		wc.publish("mtk-biab:invoice-sent", Object.assign({}, invoice, { id: savedId, nalaUID: uid }));
+		return json;
+	    });
+	});
+    }
+
     handleBiabInvoiceSent(data) {
 	const invoice = data || {};
 	const customer = invoice.customerName || "Customer";
@@ -310,6 +382,50 @@ class _febe {
 	}
 
 	return this.postBiabJson("/api/business_in_a_box_reviews.php", data || {}, "Review display settings saved.", this.t("biab.error.reviewsSave", "Could not save review display settings."));
+    }
+
+    handleSettingsChangePassword(data) {
+	const payload = data && data.payload ? data.payload : data || {};
+	const values = payload.values || {};
+	const user = this.getSessionUser();
+	const email = String(values.emailAddress || user.email || (wc.session && wc.session.email) || "").trim();
+
+	if (!email) {
+	    MTKMsgs.show({
+		type: "error",
+		icon: "error",
+		message: this.t("settings.error.noEmail", "Could not start password reset from this session."),
+		closable: true,
+		timer: 8
+	    });
+	    return;
+	}
+
+	return fetch(wc.apiURL + "/api/forgot_password.php", {
+	    method: "POST",
+	    credentials: "include",
+	    headers: { "Content-Type": "application/json" },
+	    body: JSON.stringify({ email })
+	}).then(res => {
+	    if (!res.ok) throw new Error("reset failed");
+	    return res.json().catch(() => ({}));
+	}).then(() => {
+	    MTKMsgs.show({
+		type: "success",
+		icon: "success",
+		message: this.t("settings.success.reset", "Password reset email sent. Please check your inbox."),
+		closable: true,
+		timer: 10
+	    });
+	}).catch(() => {
+	    MTKMsgs.show({
+		type: "error",
+		icon: "error",
+		message: this.t("settings.error.resetFail", "Could not send reset link."),
+		closable: true,
+		timer: 10
+	    });
+	});
     }
 
     getBiabApiUrl(path) {
@@ -381,6 +497,7 @@ class _febe {
 	    } else {
 		alert(this.customerMessage(err, errorMessage || this.t("biab.error.generic", "Could not complete that request. Please try again.")));
 	    }
+	    throw err;
 	});
     }
 

@@ -918,6 +918,83 @@
     'biab.error.reviewRequest':  { en: 'Could not send review request email.', es: 'No se pudo enviar el correo de solicitud de reseña.' },
     'biab.error.reviewsSave':    { en: 'Could not save review display settings.', es: 'No se pudo guardar la configuración de reseñas.' },
 
+    // BIAB, settings, invoice, and business card literals
+    'biab.pageTitle': { en: 'Business in a Box', es: 'Negocio en una Caja' },
+    'biab.pageSubtitle': { en: 'Launch, manage, and grow your business from one simple dashboard.', es: 'Lanza, administra y haz crecer tu negocio desde un panel sencillo.' },
+    'biab.startSetup': { en: 'Start setup', es: 'Comenzar configuración' },
+    'biab.currentSelection': { en: 'Current selection', es: 'Selección actual' },
+    'biab.closeSetup': { en: 'Close setup', es: 'Cerrar configuración' },
+    'biab.introduction.desc': { en: 'A guided overview of your Business in a Box setup.', es: 'Una guía general de tu configuración de Negocio en una Caja.' },
+    'biab.includedHeading': { en: 'Included by default — <small>no action required</small>', es: 'Incluido por defecto — <small>no requiere acción</small>' },
+    'biab.website.title': { en: 'Website Builder', es: 'Creador de sitio web' },
+    'biab.website.body': { en: 'Click Start setup to open the website builder using content from the client folder.', es: 'Haz clic en Comenzar configuración para abrir el creador de sitio web con el contenido del cliente.' },
+    'biab.card.title': { en: 'Business Card & Logo', es: 'Tarjeta de presentación y logo' },
+    'biab.card.desc': { en: 'Create basic brand assets for print and digital use.', es: 'Crea recursos básicos de marca para impresión y uso digital.' },
+    'biab.card.body': { en: 'Click Start setup to choose a business card design and customize the fields.', es: 'Haz clic en Comenzar configuración para elegir un diseño de tarjeta y personalizar los campos.' },
+    'biab.card.intro': { en: 'Six options are generated from curated layout, palette, typography, and icon rules so each card stays readable and balanced.', es: 'Se generan seis opciones con reglas curadas de diseño, paleta, tipografía e íconos para que cada tarjeta sea legible y equilibrada.' },
+    'biab.card.select': { en: 'Please select a card', es: 'Selecciona una tarjeta' },
+    'biab.card.order': { en: 'Order my Selection', es: 'Pedir mi selección' },
+    'biab.introduction': { en: 'Introduction', es: 'Introducción' },
+    'biab.gettingStarted': { en: 'Getting started', es: 'Primeros pasos' },
+    'biab.brand': { en: 'Brand', es: 'Marca' },
+    'biab.website.eyebrow': { en: 'Website', es: 'Sitio web' },
+    'biab.operations': { en: 'Operations', es: 'Operaciones' },
+    'biab.businessProfileSetup': { en: 'Business profile setup', es: 'Configuración del perfil del negocio' },
+    'biab.basicWebsiteStructure': { en: 'Basic website structure', es: 'Estructura básica del sitio web' },
+    'biab.contactInformationConfiguration': { en: 'Contact information configuration', es: 'Configuración de la información de contacto' },
+    'biab.serviceListingTemplate': { en: 'Service listing template', es: 'Plantilla de listado de servicios' },
+    'biab.customerReviewWorkflow': { en: 'Customer review workflow', es: 'Flujo de reseñas de clientes' },
+    'biab.field.businessName': { en: 'Business name', es: 'Nombre del negocio' },
+    'biab.field.contactName': { en: 'Contact name', es: 'Nombre de contacto' },
+    'biab.field.phone': { en: 'Phone', es: 'Teléfono' },
+    'biab.field.email': { en: 'Email', es: 'Correo electrónico' },
+    'biab.field.website': { en: 'Website', es: 'Sitio web' },
+    'biab.status': { en: 'Status', es: 'Estado' },
+    'biab.newInvoice': { en: 'New Invoice', es: 'Nueva factura' },
+    'biab.invoices.title': { en: 'Invoices', es: 'Facturas' },
+    'biab.invoices.desc': { en: 'Track invoices, clients, dates, status, and payment totals.', es: 'Da seguimiento a facturas, clientes, fechas, estado y totales de pago.' },
+    'biab.invoices.body': { en: 'Use the invoice table to review and manage invoices.', es: 'Usa la tabla de facturas para revisar y administrar facturas.' },
+    'biab.reviews.title': { en: 'Customer Reviews', es: 'Reseñas de clientes' },
+    'biab.reviews.desc': { en: 'Build a simple review request workflow.', es: 'Crea un flujo sencillo para solicitar reseñas.' },
+    'biab.reviews.body': { en: 'Review recent customer feedback and ratings.', es: 'Revisa comentarios y calificaciones recientes de clientes.' },
+    'settings.accountManagement': { en: 'Account Management', es: 'Administración de cuenta' },
+    'settings.profileAndSettings': { en: 'Profile & Settings', es: 'Perfil y configuración' },
+    'settings.privacy': { en: 'Privacy', es: 'Privacidad' },
+    'settings.privacyDesc': { en: 'Manage contact details used only for internal communications.', es: 'Administra datos de contacto usados solo para comunicaciones internas.' },
+    'settings.fullName': { en: 'Full Name', es: 'Nombre completo' },
+    'settings.emailAddress': { en: 'Email Address', es: 'Correo electrónico' },
+    'settings.phone': { en: 'Contact Phone Number', es: 'Teléfono de contacto' },
+    'settings.password': { en: 'Password', es: 'Contraseña' },
+    'settings.changePassword': { en: 'Change Password', es: 'Cambiar contraseña' },
+    'settings.save': { en: 'Save', es: 'Guardar' },
+    'settings.enterFullName': { en: 'Enter your full name', es: 'Ingresa tu nombre completo' },
+    'settings.enterEmail': { en: 'Enter your email address', es: 'Ingresa tu correo electrónico' },
+    'settings.enterPhone': { en: 'Enter your phone number', es: 'Ingresa tu número de teléfono' },
+    'settings.enterPassword': { en: 'Enter your password', es: 'Ingresa tu contraseña' },
+    'settings.businessInfo': { en: 'Business Information', es: 'Información del negocio' },
+    'settings.businessInfoDesc': { en: 'Manage the public and legal details for your business.', es: 'Administra los datos públicos y legales de tu negocio.' },
+    'settings.customerFacingName': { en: 'Customer-facing business name', es: 'Nombre comercial para clientes' },
+    'settings.legalName': { en: 'Legal business name', es: 'Nombre legal del negocio' },
+    'settings.ownerName': { en: 'Owner or responsible party name', es: 'Nombre del dueño o responsable' },
+    'settings.businessPhone': { en: 'Business phone', es: 'Teléfono del negocio' },
+    'settings.businessEmail': { en: 'Business email', es: 'Correo del negocio' },
+    'settings.businessHours': { en: 'Business hours', es: 'Horario del negocio' },
+    'settings.services': { en: 'Services Offered', es: 'Servicios ofrecidos' },
+    'settings.servicesDesc': { en: 'Manage your service areas and launch services.', es: 'Administra tus áreas de servicio y servicios iniciales.' },
+    'settings.serviceArea': { en: 'Service area', es: 'Área de servicio' },
+    'settings.launchServices': { en: 'Launch services', es: 'Servicios iniciales' },
+    'settings.customServices': { en: 'Add custom services', es: 'Agregar servicios personalizados' },
+    'invoice.title': { en: 'Locksmith Invoice', es: 'Factura de cerrajería' },
+    'invoice.subtitle': { en: 'Create a quick service invoice.', es: 'Crea una factura rápida de servicio.' },
+    'invoice.print': { en: 'Print', es: 'Imprimir' },
+    'invoice.save': { en: 'Save Invoice', es: 'Guardar factura' },
+    'invoice.customer': { en: 'Customer', es: 'Cliente' },
+    'invoice.serviceDetails': { en: 'Service Details', es: 'Detalles del servicio' },
+    'invoice.totals': { en: 'Totals', es: 'Totales' },
+    'invoice.customerEmail': { en: 'Customer Email', es: 'Correo del cliente' },
+    'invoice.customerName': { en: 'Customer Name', es: 'Nombre del cliente' },
+    'invoice.success.reviewSent': { en: 'Invoice saved. Review request email sent automatically.', es: 'Factura guardada. La solicitud de reseña se envió automáticamente.' },
+
     // ── CLIENT ───────────────────────────────────────────────────
     'client.locked.title':       { en: 'Business in a Box', es: 'Negocio en una Caja' },
     'client.locked.accessTitle': { en: 'Business in a Box Access', es: 'Acceso a Negocio en una Caja' },
@@ -1170,6 +1247,16 @@
     return entry[_lang] || entry['en'] || key;
   }
 
+  function translateLiteral(value) {
+    if (_lang === 'en' || typeof value !== 'string') return value;
+    for (var key in DICT) {
+      if (Object.prototype.hasOwnProperty.call(DICT, key) && DICT[key] && DICT[key].en === value) {
+        return DICT[key][_lang] || value;
+      }
+    }
+    return value;
+  }
+
   /**
    * Apply translations to the DOM.
    * Processes data-i18n, data-i18n-placeholder, data-i18n-aria.
@@ -1235,6 +1322,8 @@
         var v = obj[k];
         if (typeof v === 'string' && DICT[v]) {
           obj[k] = t(v);
+        } else if (typeof v === 'string') {
+          obj[k] = translateLiteral(v);
         } else if (typeof v === 'object' || Array.isArray(v)) {
           applyConfig(v);
         }
@@ -1585,6 +1674,7 @@
     t            : t,
     setLang      : setLang,
     getLang      : getLang,
+    translateLiteral: translateLiteral,
     applyDOM     : applyDOM,
     applyConfig  : applyConfig,
     applyAllConfigs: applyAllConfigs,

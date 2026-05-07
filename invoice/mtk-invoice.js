@@ -2,6 +2,9 @@ class MtkInvoice {
   constructor(root, config) {
     this.root = root;
     this.config = config || {};
+    if (window.i18n && typeof window.i18n.applyConfig === "function") {
+      window.i18n.applyConfig(this.config);
+    }
     this.labels = this.config.labels || {};
     this.events = this.config.events || { publish: {}, subscribe: [] };
     this.values = {};
@@ -274,6 +277,12 @@ class MtkInvoice {
 
   save() {
     const status = this.root.querySelector("[data-status]");
+
+    const form = this.root.querySelector(".mtk-invoice__form");
+    if (form && !form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
 
     if (status) {
       status.textContent = "Invoice saved.";

@@ -12,7 +12,11 @@
   }
 
   function getConfig() {
-    return window.mtkSettingsConfig || { title: "Profile & Settings", eyebrow: "Account Management", tabs: [] };
+    var config = window.mtkSettingsConfig || { title: "Profile & Settings", eyebrow: "Account Management", tabs: [] };
+    if (window.i18n && typeof window.i18n.applyConfig === "function") {
+      window.i18n.applyConfig(config);
+    }
+    return config;
   }
 
   function getTabs(config) {
@@ -304,7 +308,7 @@
         var eventName = button.getAttribute("data-event");
         var actionId = button.getAttribute("data-action-id");
 
-        if (!self.validateTab(tab, form)) {
+        if (actionId !== "changePassword" && !self.validateTab(tab, form)) {
           return;
         }
 

@@ -37,6 +37,7 @@ window.MTK_INVOICE_CONFIG = {
 
     customer: [
       { id: "customerName", label: "Customer Name", type: "text", value: "", placeholder: "Jane Smith", required: true },
+      { id: "customerEmail", label: "Customer Email", type: "email", value: "", placeholder: "jane@example.com", required: true },
       { id: "customerPhone", label: "Customer Phone", type: "tel", value: "", placeholder: "(555) 123-4567", required: true },
       { id: "serviceAddress", label: "Service Address", type: "text", value: "", placeholder: "123 Main Street, Tampa, FL", required: true, full: true }
     ],

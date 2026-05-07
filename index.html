@@ -81,6 +81,45 @@
 
 	<!-- YOUR CODE TO HERE... -->
 
+	<script>
+	(function () {
+	    try {
+		var lang = window.i18n && typeof window.i18n.getLang === "function"
+		    ? window.i18n.getLang()
+		    : (localStorage.getItem("nala_lang") || "en");
+		if (lang === "es") {
+		    window.nalaMxChatLanguage = "es";
+		    if (!window.__nalaMxChatFetchLanguagePatch && window.fetch) {
+			window.__nalaMxChatFetchLanguagePatch = true;
+			var originalFetch = window.fetch.bind(window);
+			window.fetch = function (input, init) {
+			    try {
+				var requestUrl = typeof input === "string" ? input : (input && input.url) || "";
+				if (requestUrl.indexOf("/wp-json/mxchat") !== -1 || requestUrl.indexOf("mxchat") !== -1) {
+				    init = init || {};
+				    if (init.body instanceof FormData) {
+					init.body.set("site_lang", "es");
+				    } else if (init.body instanceof URLSearchParams) {
+					init.body.set("site_lang", "es");
+				    } else if (typeof init.body === "string" && init.body.charAt(0) === "{") {
+					var body = JSON.parse(init.body);
+					body.site_lang = "es";
+					init.body = JSON.stringify(body);
+				    }
+				}
+			    } catch (e) {}
+			    return originalFetch(input, init);
+			};
+		    }
+		    var url = new URL(window.location.href);
+		    if (url.searchParams.get("lang") !== "es") {
+			url.searchParams.set("lang", "es");
+			window.history.replaceState(window.history.state, "", url.toString());
+		    }
+		}
+	    } catch (e) {}
+	}());
+	</script>
 	<script src="https://nalanetwork.com/wp-json/mxchat-embed/v1/loader.js?key=G9N61FC4MEplohp2CNRIQacbMkkjG32K" async></script>
 	<script src="js/mxchat-layout-overrides.js"></script>
 

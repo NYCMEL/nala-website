@@ -107,7 +107,10 @@ function nala_mxchat_signup_system_instructions($instructions, $bot_id, $session
 {
     $extra = "\n\nNALA direct signup: If a visitor wants to sign up, register, create an account, enroll, join NALA, start free lessons, or get started, tell them direct signup is available in chat or through the Register page. Do not ask for passwords, payment details, Social Security numbers, or private financial information in chat. The direct signup flow only collects full name, email, and phone, then NALA emails the next steps. Use generic privacy-safe wording and never reveal whether an email, phone, or personal detail already exists in the system.";
     $current_message = nala_mxchat_signup_current_request_message();
-    $current_language = nala_mxchat_signup_detect_language($current_message);
+    $current_language = nala_mxchat_signup_detect_language($current_message, nala_mxchat_signup_current_page_language());
+    if ($current_language === 'es') {
+        $extra .= "\n\nLanguage rule: The visitor is using the Spanish version of the NALA site. Answer in Spanish unless the visitor explicitly asks for English.";
+    }
     $current_context_line = nala_mxchat_signup_personalized_context_line(
         nala_mxchat_signup_personal_context(nala_mxchat_signup_normalize($current_message)),
         $current_language
@@ -147,10 +150,10 @@ function nala_mxchat_signup_pre_process($message, $user_id, $session_id)
     }
 
     if (!$is_active) {
-        $state = nala_mxchat_signup_default_state(nala_mxchat_signup_detect_language($message));
+        $state = nala_mxchat_signup_default_state(nala_mxchat_signup_detect_language($message, nala_mxchat_signup_current_page_language()));
     }
 
-    $state['lang'] = nala_mxchat_signup_detect_language($message, $state['lang'] ?? 'en');
+    $state['lang'] = nala_mxchat_signup_detect_language($message, $state['lang'] ?? nala_mxchat_signup_current_page_language());
 
     if (nala_mxchat_signup_is_cancel($message)) {
         delete_transient($state_key);
@@ -432,7 +435,7 @@ function nala_mxchat_signup_fast_answer(string $message): string
         return '';
     }
 
-    $lang = nala_mxchat_signup_detect_language($message);
+    $lang = nala_mxchat_signup_detect_language($message, nala_mxchat_signup_current_page_language());
     $register_link = nala_mxchat_signup_register_link();
     $support_link = '[support@nalanetwork.com](mailto:support@nalanetwork.com)';
     $personal_context = nala_mxchat_signup_personal_context($normalized);
@@ -1325,6 +1328,29 @@ function nala_mxchat_signup_current_page_url(): string
     }
 
     return '';
+}
+
+function nala_mxchat_signup_current_page_language(): string
+{
+    foreach (['site_lang', 'lang', 'nala_lang'] as $key) {
+        if (isset($_POST[$key]) && strtolower((string) wp_unslash($_POST[$key])) === 'es') {
+            return 'es';
+        }
+    }
+
+    $page_url = nala_mxchat_signup_current_page_url();
+    if ($page_url !== '') {
+        $query = (string) parse_url($page_url, PHP_URL_QUERY);
+        if ($query !== '') {
+            parse_str($query, $params);
+            $lang = strtolower((string)($params['lang'] ?? ''));
+            if ($lang === 'es') {
+                return 'es';
+            }
+        }
+    }
+
+    return 'en';
 }
 
 function nala_mxchat_signup_is_allowed_host(string $host): bool

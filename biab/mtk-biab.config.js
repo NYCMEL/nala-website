@@ -60,14 +60,7 @@ window.MTK_BIAB_CONFIG = {
       description: "Create basic brand assets for print and digital use.",
       body: "Click Start setup to choose a business card design and customize the fields.",
       setupType: "businessCard",
-      cardTemplates: [
-        { id: "card-1", label: "Business Card 1", image: "img/b-card/card-1.png", isDefault: true },
-        { id: "card-2", label: "Business Card 2", image: "img/b-card/card-1.png" },
-        { id: "card-3", label: "Business Card 3", image: "img/b-card/card-1.png" },
-        { id: "card-4", label: "Business Card 4", image: "img/b-card/card-1.png" },
-        { id: "card-5", label: "Business Card 5", image: "img/b-card/card-1.png" },
-        { id: "card-6", label: "Business Card 6", image: "img/b-card/card-1.png" }
-      ],
+      generatorIntro: "Six options are generated from curated layout, palette, typography, and icon rules so each card stays readable and balanced.",
       cardFields: [
         { id: "businessName", label: "Business name", type: "text", value: "" },
         { id: "contactName", label: "Contact name", type: "text", value: "" },
