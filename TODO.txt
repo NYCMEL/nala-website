@@ -58,3 +58,6 @@ Customer Reviews:
 *******************************************
 *** MORE TO COME AFTER YOU UPDATE ABOVE :(
 *******************************************
+
+upon login, the entire user profile should be handed over and available at all times.
+this include BIAB (if any) and others.
