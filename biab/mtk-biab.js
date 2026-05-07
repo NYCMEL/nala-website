@@ -794,7 +794,7 @@
                     id="mtk-biab-field-${this._escape(field.id)}"
                     name="${this._escape(field.id)}"
                     type="${this._escape(field.type || "text")}"
-                    value="${this._escape(field.value || "")}"
+                    value="${this._escape(this._cardEditorFieldValue(field))}"
                   >
                 </div>
               `).join("")}
@@ -869,7 +869,20 @@
         { heading: "Courier New", body: "Arial" }
       ];
 
-      const icons = ["key", "shield", "lock", "bolt", "home", "star"];
+      const icons = [
+        "key-round",
+        "shield-check",
+        "lock-keyhole",
+        "wrench",
+        "home",
+        "badge-check",
+        "map-pin",
+        "building",
+        "bolt",
+        "shield-lock",
+        "sparkles",
+        "phone-call"
+      ];
       const layouts = ["left-mark", "top-band", "split", "corner-badge", "centered", "vertical-accent"];
       const sizes = [
         { name: "Standard", width: 3.5, height: 2.0 },
@@ -881,7 +894,7 @@
       const contactName = this._businessCardFieldValue(section, "contactName") || "Your Name";
       const phone = this._businessCardFieldValue(section, "phone") || "(555) 123-4567";
       const email = this._businessCardFieldValue(section, "email") || "hello@example.com";
-      const website = this._businessCardFieldValue(section, "website") || "example.com";
+      const website = this._businessCardFieldValue(section, "website") || this._defaultClientWebsite();
       const area = this._businessCardFieldValue(section, "serviceArea") || "24/7 Locksmith Service";
       const isSpanish = window.i18n && typeof window.i18n.getLang === "function" && window.i18n.getLang() === "es";
       const labelBase = isSpanish ? "Tarjeta" : "Business Card";
@@ -915,10 +928,18 @@
       return field && field.value ? String(field.value).trim() : "";
     }
 
+    _cardEditorFieldValue(field) {
+      if (!field) return "";
+      if (field.id === "website" && !field.value) {
+        return this._defaultClientWebsite();
+      }
+      return field.value || "";
+    }
+
     _businessCardDataUri(design) {
       const p = design.palette;
       const safe = (value) => this._escape(value);
-      const icon = this._iconSvg(design.icon, p.accent);
+      const icon = this._placedIcon(design.icon, p.accent, 80, 80, 74);
       const baseText = `
         <text x="44" y="178" fill="${p.fg}" font-family="${design.font.heading}" font-size="30" font-weight="800">${safe(design.businessName)}</text>
         <text x="44" y="213" fill="${p.muted}" font-family="${design.font.body}" font-size="15">${safe(design.area)}</text>
@@ -927,28 +948,50 @@
         <text x="44" y="329" fill="${p.muted}" font-family="${design.font.body}" font-size="14">${safe(design.website)}</text>
       `;
       const variants = {
-        "left-mark": `<rect width="560" height="350" fill="${p.bg}"/><rect width="150" height="350" fill="${p.accent}" opacity=".16"/><g transform="translate(48 46) scale(1.2)">${icon}</g>${baseText}`,
-        "top-band": `<rect width="560" height="350" fill="${p.bg}"/><rect width="560" height="92" fill="${p.accent}"/><g transform="translate(42 26)">${this._iconSvg(design.icon, p.bg)}</g><g transform="translate(0 18)">${baseText}</g>`,
-        "split": `<rect width="560" height="350" fill="${p.bg}"/><rect x="342" width="218" height="350" fill="${p.accent}"/><g transform="translate(390 92) scale(1.7)">${this._iconSvg(design.icon, p.bg)}</g>${baseText}`,
-        "corner-badge": `<rect width="560" height="350" fill="${p.bg}"/><circle cx="464" cy="82" r="58" fill="${p.accent}"/><g transform="translate(434 52)">${this._iconSvg(design.icon, p.bg)}</g>${baseText}`,
-        "centered": `<rect width="560" height="350" fill="${p.bg}"/><g transform="translate(254 42)">${icon}</g><text x="280" y="158" text-anchor="middle" fill="${p.fg}" font-family="${design.font.heading}" font-size="31" font-weight="800">${safe(design.businessName)}</text><text x="280" y="190" text-anchor="middle" fill="${p.muted}" font-family="${design.font.body}" font-size="15">${safe(design.area)}</text><text x="280" y="262" text-anchor="middle" fill="${p.fg}" font-family="${design.font.body}" font-size="18" font-weight="700">${safe(design.contactName)}</text><text x="280" y="291" text-anchor="middle" fill="${p.muted}" font-family="${design.font.body}" font-size="14">${safe(design.phone)}  |  ${safe(design.email)}</text><text x="280" y="318" text-anchor="middle" fill="${p.muted}" font-family="${design.font.body}" font-size="14">${safe(design.website)}</text>`,
-        "vertical-accent": `<rect width="560" height="350" fill="${p.bg}"/><rect x="512" width="48" height="350" fill="${p.accent}"/><g transform="translate(44 48)">${icon}</g>${baseText}`
+        "left-mark": `<rect width="560" height="350" fill="${p.bg}"/><rect width="150" height="350" fill="${p.accent}" opacity=".16"/>${icon}${baseText}`,
+        "top-band": `<rect width="560" height="350" fill="${p.bg}"/><rect width="560" height="92" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 74, 46, 54)}<g transform="translate(0 18)">${baseText}</g>`,
+        "split": `<rect width="560" height="350" fill="${p.bg}"/><rect x="342" width="218" height="350" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 451, 154, 112)}${baseText}`,
+        "corner-badge": `<rect width="560" height="350" fill="${p.bg}"/><circle cx="464" cy="82" r="58" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 464, 82, 62)}${baseText}`,
+        "centered": `<rect width="560" height="350" fill="${p.bg}"/>${this._placedIcon(design.icon, p.accent, 280, 78, 66)}<text x="280" y="158" text-anchor="middle" fill="${p.fg}" font-family="${design.font.heading}" font-size="31" font-weight="800">${safe(design.businessName)}</text><text x="280" y="190" text-anchor="middle" fill="${p.muted}" font-family="${design.font.body}" font-size="15">${safe(design.area)}</text><text x="280" y="262" text-anchor="middle" fill="${p.fg}" font-family="${design.font.body}" font-size="18" font-weight="700">${safe(design.contactName)}</text><text x="280" y="291" text-anchor="middle" fill="${p.muted}" font-family="${design.font.body}" font-size="14">${safe(design.phone)}  |  ${safe(design.email)}</text><text x="280" y="318" text-anchor="middle" fill="${p.muted}" font-family="${design.font.body}" font-size="14">${safe(design.website)}</text>`,
+        "vertical-accent": `<rect width="560" height="350" fill="${p.bg}"/><rect x="512" width="48" height="350" fill="${p.accent}"/>${this._placedIcon(design.icon, p.accent, 80, 82, 70)}${baseText}`
       };
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="560" height="350" viewBox="0 0 560 350">${variants[design.layout] || variants["left-mark"]}</svg>`;
       return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
     }
 
+    _placedIcon(name, color, centerX, centerY, size) {
+      const scale = size / 24;
+      return `<g transform="translate(${centerX - size / 2} ${centerY - size / 2}) scale(${scale})">${this._iconSvg(name, color)}</g>`;
+    }
+
     _iconSvg(name, color) {
-      const attrs = `fill="none" stroke="${color}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"`;
+      const attrs = `fill="none" stroke="${color}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"`;
       const icons = {
-        key: `<g ${attrs}><circle cx="22" cy="22" r="15"/><path d="M34 34 L68 68 M52 52 L52 68 M62 62 L76 62"/></g>`,
-        shield: `<g ${attrs}><path d="M40 6 L74 20 V43 C74 63 60 78 40 86 C20 78 6 63 6 43 V20 Z"/><path d="M25 44 L36 55 L58 32"/></g>`,
-        lock: `<g ${attrs}><rect x="12" y="38" width="64" height="44" rx="8"/><path d="M24 38 V26 C24 14 32 7 44 7 C56 7 64 14 64 26 V38"/></g>`,
-        bolt: `<g ${attrs}><path d="M49 5 L18 50 H42 L34 86 L72 36 H48 Z"/></g>`,
-        home: `<g ${attrs}><path d="M8 42 L44 12 L80 42"/><path d="M18 40 V80 H70 V40"/><path d="M36 80 V56 H52 V80"/></g>`,
-        star: `<g ${attrs}><path d="M44 7 L55 32 L82 34 L61 52 L68 79 L44 65 L20 79 L27 52 L6 34 L33 32 Z"/></g>`
+        "key-round": `<g ${attrs}><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 21 2"/><path d="M15 7h4v4"/><path d="M17 5l2 2"/></g>`,
+        "shield-check": `<g ${attrs}><path d="M12 3c2.5 2 5 3 8 3v6c0 4.7-3.1 7.8-8 9-4.9-1.2-8-4.3-8-9V6c3 0 5.5-1 8-3z"/><path d="m8.7 12.4 2.2 2.2 4.7-5"/></g>`,
+        "lock-keyhole": `<g ${attrs}><rect x="5" y="10" width="14" height="10" rx="2.2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1"/><path d="M12 16v1.7"/></g>`,
+        wrench: `<g ${attrs}><path d="M14.7 6.3a4.4 4.4 0 0 0-5.1 5.8L3.6 18a2 2 0 1 0 2.8 2.8l5.9-6a4.4 4.4 0 0 0 5.9-5.1l-3 3-3.3-1 1-3.3 2.8-3.1z"/></g>`,
+        home: `<g ${attrs}><path d="m3 11 9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></g>`,
+        "badge-check": `<g ${attrs}><path d="M12 3 14.2 5.1 17.2 4.8 18 7.7 20.7 9 19.5 11.8 20.7 14.6 18 15.9 17.2 18.8 14.2 18.5 12 20.6 9.8 18.5 6.8 18.8 6 15.9 3.3 14.6 4.5 11.8 3.3 9 6 7.7 6.8 4.8 9.8 5.1z"/><path d="m8.7 12 2.1 2.1 4.5-4.7"/></g>`,
+        "map-pin": `<g ${attrs}><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="2.5"/></g>`,
+        building: `<g ${attrs}><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 21v-4h6v4"/><path d="M8 7h.01M12 7h.01M16 7h.01M8 11h.01M12 11h.01M16 11h.01"/></g>`,
+        bolt: `<g ${attrs}><path d="M13 2 4 14h7l-1 8 10-13h-7z"/></g>`,
+        "shield-lock": `<g ${attrs}><path d="M12 3c2.5 2 5 3 8 3v6c0 4.7-3.1 7.8-8 9-4.9-1.2-8-4.3-8-9V6c3 0 5.5-1 8-3z"/><rect x="9" y="11" width="6" height="5" rx="1"/><path d="M10 11V9.8a2 2 0 0 1 4 0V11"/></g>`,
+        sparkles: `<g ${attrs}><path d="M12 3 14 9l6 2-6 2-2 6-2-6-6-2 6-2z"/><path d="M19 3v4M21 5h-4M5 17v3M6.5 18.5h-3"/></g>`,
+        "phone-call": `<g ${attrs}><path d="M15 5a4 4 0 0 1 4 4"/><path d="M15 2a7 7 0 0 1 7 7"/><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.7 19.7 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.7 19.7 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7A2 2 0 0 1 22 16.9z"/></g>`
       };
-      return icons[name] || icons.key;
+      return icons[name] || icons["key-round"];
+    }
+
+    _defaultClientWebsite() {
+      const websiteSection = this.sections.find((item) => item && item.setupType === "websiteBuilder");
+      const clientUrl = (websiteSection && websiteSection.clientUrl) || "client/index.html";
+
+      try {
+        return new URL(clientUrl, window.location.href).href;
+      } catch (err) {
+        return clientUrl;
+      }
     }
 
     _showSetupView(section, bodyHTML) {
