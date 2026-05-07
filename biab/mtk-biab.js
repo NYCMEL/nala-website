@@ -870,16 +870,23 @@
       ];
 
       const icons = [
-        "key-round",
-        "lock-keyhole",
-        "door-open",
-        "house-lock",
+        "key",
+        "lock",
+        "lock-open",
+        "lock-check",
+        "lock-code",
         "shield-lock",
-        "key-square",
-        "wrench",
-        "building-lock",
-        "door-key",
-        "safe"
+        "shield-check",
+        "square-key",
+        "home-lock",
+        "home-shield",
+        "door",
+        "door-enter",
+        "door-exit",
+        "building",
+        "fingerprint",
+        "id-badge",
+        "map-shield"
       ];
       const layouts = ["left-mark", "top-band", "split", "corner-badge", "centered", "vertical-accent"];
       const sizes = [
@@ -900,10 +907,12 @@
         ? { Standard: "Estándar", MOO: "MOO", Square: "Cuadrada", Mini: "Mini" }
         : {};
 
+      const iconChoices = this._shuffleCardOptions(icons);
+
       this.generatedCardTemplates = Array.from({ length: 6 }).map((_, index) => {
         const palette = palettes[(index * 3 + businessName.length) % palettes.length];
         const font = fonts[(index + contactName.length) % fonts.length];
-        const icon = icons[(index + phone.length) % icons.length];
+        const icon = iconChoices[index % iconChoices.length];
         const layout = layouts[index % layouts.length];
         const size = sizes[(index + website.length) % sizes.length];
         const design = { palette, font, icon, layout, size, businessName, contactName, phone, email, website, area };
@@ -962,21 +971,39 @@
       return `<g transform="translate(${centerX - size / 2} ${centerY - size / 2}) scale(${scale})">${this._iconSvg(name, color)}</g>`;
     }
 
+    _shuffleCardOptions(options) {
+      const items = Array.isArray(options) ? options.slice() : [];
+      for (let index = items.length - 1; index > 0; index -= 1) {
+        const swapIndex = Math.floor(Math.random() * (index + 1));
+        const current = items[index];
+        items[index] = items[swapIndex];
+        items[swapIndex] = current;
+      }
+      return items;
+    }
+
     _iconSvg(name, color) {
       const attrs = `fill="none" stroke="${color}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"`;
       const icons = {
-        "key-round": `<g ${attrs}><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 21 2"/><path d="M15 7h4v4"/><path d="M17 5l2 2"/></g>`,
-        "lock-keyhole": `<g ${attrs}><rect x="5" y="10" width="14" height="10" rx="2.2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1"/><path d="M12 16v1.7"/></g>`,
-        "door-open": `<g ${attrs}><path d="M14 4.5v15l-8-1.5v-12z"/><path d="M14 6h4v13h-4"/><path d="M11 12h.01"/></g>`,
-        "house-lock": `<g ${attrs}><path d="m3 11 9-7 9 7"/><path d="M5 10v10h14V10"/><rect x="9" y="14" width="6" height="5" rx="1"/><path d="M10 14v-1.2a2 2 0 0 1 4 0V14"/></g>`,
-        "shield-lock": `<g ${attrs}><path d="M12 3c2.5 2 5 3 8 3v6c0 4.7-3.1 7.8-8 9-4.9-1.2-8-4.3-8-9V6c3 0 5.5-1 8-3z"/><rect x="9" y="11" width="6" height="5" rx="1"/><path d="M10 11V9.8a2 2 0 0 1 4 0V11"/></g>`,
-        "key-square": `<g ${attrs}><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="12" r="2.5"/><path d="M11.5 12H18"/><path d="M15 12v2"/><path d="M17 12v2"/></g>`,
-        wrench: `<g ${attrs}><path d="M14.7 6.3a4.4 4.4 0 0 0-5.1 5.8L3.6 18a2 2 0 1 0 2.8 2.8l5.9-6a4.4 4.4 0 0 0 5.9-5.1l-3 3-3.3-1 1-3.3 2.8-3.1z"/></g>`,
-        "building-lock": `<g ${attrs}><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h.01M12 7h.01M16 7h.01M8 11h.01M16 11h.01"/><rect x="9" y="14" width="6" height="5" rx="1"/><path d="M10 14v-1a2 2 0 0 1 4 0v1"/></g>`,
-        "door-key": `<g ${attrs}><path d="M6 4h12v16H6z"/><path d="M15 12h.01"/><circle cx="9" cy="12" r="1.8"/><path d="M10.8 12H14"/><path d="M12.5 12v1.5"/></g>`,
-        safe: `<g ${attrs}><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M12 9v6M9 12h6"/><path d="M6.5 8h.01M17.5 8h.01"/></g>`
+        key: `<g ${attrs}><path d="M16.555 3.843l3.602 3.602a2.877 2.877 0 0 1 0 4.069l-2.643 2.643a2.877 2.877 0 0 1 -4.069 0l-.301 -.301l-6.558 6.558a2 2 0 0 1 -1.239 .578l-.175 .008h-1.172a1 1 0 0 1 -.993 -.883l-.007 -.117v-1.172a2 2 0 0 1 .467 -1.284l.119 -.13l.414 -.414h2v-2h2v-2l2.144 -2.144l-.301 -.301a2.877 2.877 0 0 1 0 -4.069l2.643 -2.643a2.877 2.877 0 0 1 4.069 0" /><path d="M15 9h.01" /></g>`,
+        lock: `<g ${attrs}><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6" /><path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" /><path d="M8 11v-4a4 4 0 1 1 8 0v4" /></g>`,
+        "lock-open": `<g ${attrs}><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2l0 -6" /><path d="M11 16a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M8 11v-5a4 4 0 0 1 8 0" /></g>`,
+        "lock-check": `<g ${attrs}><path d="M11.5 21h-4.5a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v.5" /><path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" /><path d="M8 11v-4a4 4 0 1 1 8 0v4" /><path d="M15 19l2 2l4 -4" /></g>`,
+        "lock-code": `<g ${attrs}><path d="M11.5 21h-4.5a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2" /><path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" /><path d="M8 11v-4a4 4 0 1 1 8 0v4" /><path d="M20 21l2 -2l-2 -2" /><path d="M17 17l-2 2l2 2" /></g>`,
+        "shield-lock": `<g ${attrs}><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" /><path d="M11 11a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 12l0 2.5" /></g>`,
+        "shield-check": `<g ${attrs}><path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06" /><path d="M15 19l2 2l4 -4" /></g>`,
+        "square-key": `<g ${attrs}><path d="M12 10a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M12.5 11.5l-4 4l1.5 1.5" /><path d="M12 15l-1.5 -1.5" /><path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14" /></g>`,
+        "home-lock": `<g ${attrs}><path d="M5 12h-2l9 -9l8 8" /><path d="M5 12v7a2 2 0 0 0 2 2h6" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2c.688 0 1.294 .347 1.654 .875" /><path d="M17 19a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-2" /><path d="M18 18v-1.5a1.5 1.5 0 1 1 3 0v1.5" /></g>`,
+        "home-shield": `<g ${attrs}><path d="M5 12h-2l9 -9l7.636 7.636" /><path d="M5 12v7a2 2 0 0 0 2 2h5" /><path d="M9 21v-6a2 2 0 0 1 2 -2h1.5" /><path d="M22 16c0 4 -2.5 6 -3.5 6s-3.5 -2 -3.5 -6c1 0 2.5 -.5 3.5 -1.5c1 1 2.5 1.5 3.5 1.5" /></g>`,
+        door: `<g ${attrs}><path d="M14 12v.01" /><path d="M3 21h18" /><path d="M6 21v-16a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v16" /></g>`,
+        "door-enter": `<g ${attrs}><path d="M13 12v.01" /><path d="M3 21h18" /><path d="M5 21v-16a2 2 0 0 1 2 -2h6m4 10.5v7.5" /><path d="M21 7h-7m3 -3l-3 3l3 3" /></g>`,
+        "door-exit": `<g ${attrs}><path d="M13 12v.01" /><path d="M3 21h18" /><path d="M5 21v-16a2 2 0 0 1 2 -2h7.5m2.5 10.5v7.5" /><path d="M14 7h7m-3 -3l3 3l-3 3" /></g>`,
+        building: `<g ${attrs}><path d="M3 21l18 0" /><path d="M9 8l1 0" /><path d="M9 12l1 0" /><path d="M9 16l1 0" /><path d="M14 8l1 0" /><path d="M14 12l1 0" /><path d="M14 16l1 0" /><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" /></g>`,
+        fingerprint: `<g ${attrs}><path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3" /><path d="M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6" /><path d="M12 11v2a14 14 0 0 0 2.5 8" /><path d="M8 15a18 18 0 0 0 1.8 6" /><path d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 12 -6.95" /></g>`,
+        "id-badge": `<g ${attrs}><path d="M5 6a3 3 0 0 1 3 -3h8a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-8a3 3 0 0 1 -3 -3l0 -12" /><path d="M10 13a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M10 6h4" /><path d="M9 18h6" /></g>`,
+        "map-shield": `<g ${attrs}><path d="M15 11a3 3 0 1 0 -3 3" /><path d="M12.249 21.47a2 2 0 0 1 -1.662 -.57l-4.244 -4.243a8 8 0 1 1 13.655 -5.828" /><path d="M22 16c0 4 -2.5 6 -3.5 6s-3.5 -2 -3.5 -6c1 0 2.5 -.5 3.5 -1.5c1 1 2.5 1.5 3.5 1.5" /></g>`
       };
-      return icons[name] || icons["key-round"];
+      return icons[name] || icons.key;
     }
 
     _defaultClientWebsite() {
