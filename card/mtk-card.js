@@ -18,7 +18,8 @@ class MtkCard {
   initialize() {
     this.bindText();
     this.bindImage();
-    this.bindDownloadButton();
+    this.bindKeyArt();
+    this.bindDownloadLabel();
     this.registerEvents();
     this.subscribe();
   }
@@ -41,31 +42,34 @@ class MtkCard {
   bindImage() {
     const image = this.element.querySelector("[data-mtk-card-image]");
 
-    if (
-      image &&
-      this.config.image &&
-      this.config.image.src
-    ) {
+    if (image && this.config.image && this.config.image.src) {
       image.setAttribute("src", this.config.image.src);
       image.setAttribute("alt", this.config.image.alt || "");
     }
   }
 
-  bindDownloadButton() {
+  bindKeyArt() {
+    const image = this.element.querySelector("[data-mtk-key-image]");
+    const keyArt = this.config.keyArt || {};
+    const fallbackSrc = this.config.image && this.config.image.src ? this.config.image.src : "";
+
+    if (image) {
+      image.setAttribute("src", keyArt.src || fallbackSrc);
+      image.setAttribute("alt", keyArt.alt || "");
+    }
+  }
+
+  bindDownloadLabel() {
     const label = this.element.querySelector("[data-mtk-download-label]");
 
-    if (
-      label &&
-      this.config.download &&
-      this.config.download.buttonText
-    ) {
-      label.textContent = this.config.download.buttonText;
+    if (label && this.config.download && this.config.download.buttonLabel) {
+      label.textContent = this.config.download.buttonLabel;
     }
   }
 
   registerEvents() {
     const clickable = this.element.querySelectorAll("[data-mtk-field]");
-    const downloadButton = this.element.querySelector("[data-mtk-download-button]");
+    const downloadButton = this.element.querySelector("[data-mtk-download-card]");
 
     clickable.forEach((item) => {
       item.addEventListener("click", () => {
@@ -74,7 +78,7 @@ class MtkCard {
           field: item.getAttribute("data-mtk-field")
         };
 
-        this.logAndPublish("mtk-card-click", payload);
+        this.publish("mtk-card-click", payload);
       });
 
       item.addEventListener("keydown", (event) => {
@@ -87,184 +91,12 @@ class MtkCard {
 
     if (downloadButton) {
       downloadButton.addEventListener("click", () => {
-        this.downloadCard(downloadButton);
+        this.downloadCard();
       });
     }
   }
 
-  async downloadCard(button) {
-    const card = this.element.querySelector("[data-mtk-download-card]");
-
-    if (!card) {
-      return;
-    }
-
-    const startPayload = {
-      event: "mtk-card-download-start",
-      fileName: this.getDownloadFileName()
-    };
-
-    this.logAndPublish("mtk-card-download-start", startPayload);
-
-    try {
-      button.disabled = true;
-
-      if (document.fonts && document.fonts.ready) {
-        await document.fonts.ready;
-      }
-
-      const dataUrl = this.createCardImage(card);
-      const link = document.createElement("a");
-      link.href = dataUrl;
-      link.download = this.getDownloadFileName();
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-
-      const completePayload = {
-        event: "mtk-card-download-complete",
-        fileName: this.getDownloadFileName()
-      };
-
-      this.logAndPublish("mtk-card-download-complete", completePayload);
-    } catch (error) {
-      const errorPayload = {
-        event: "mtk-card-download-error",
-        message: error && error.message ? error.message : "Unable to download card image"
-      };
-
-      this.logAndPublish("mtk-card-download-error", errorPayload);
-    } finally {
-      button.disabled = false;
-    }
-  }
-
-  createCardImage(card) {
-    const width = 600;
-    const height = 360;
-    const scale = Math.max(window.devicePixelRatio || 1, 2);
-    const canvas = document.createElement("canvas");
-    const context = canvas.getContext("2d");
-    const data = this.getCurrentCardText(card);
-
-    canvas.width = width * scale;
-    canvas.height = height * scale;
-    canvas.style.width = width + "px";
-    canvas.style.height = height + "px";
-
-    context.setTransform(scale, 0, 0, scale, 0, 0);
-    this.drawCardBackground(context, width, height);
-    this.drawKeyLogo(context);
-    this.drawCardText(context, data);
-
-    return canvas.toDataURL("image/png");
-  }
-
-  getCurrentCardText(card) {
-    const getText = (key) => {
-      const field = card.querySelector("[data-mtk-field='" + key + "']");
-      return field ? field.textContent.trim() : "";
-    };
-
-    return {
-      logoText: getText("logoText"),
-      personName: getText("personName"),
-      personTitle: getText("personTitle"),
-      companyName: getText("companyName"),
-      addressLine1: getText("addressLine1"),
-      addressLine2: getText("addressLine2"),
-      phonePrefix: getText("phonePrefix"),
-      phone: getText("phone"),
-      email: getText("email")
-    };
-  }
-
-  drawCardBackground(context, width, height) {
-    context.save();
-    context.fillStyle = "#ffffff";
-    context.fillRect(0, 0, width, height);
-    context.restore();
-  }
-
-  drawKeyLogo(context) {
-    context.save();
-    context.fillStyle = "#000000";
-    context.beginPath();
-    context.ellipse(111, 106, 42, 48, 0, 0, Math.PI * 2);
-    context.fill();
-
-    context.fillStyle = "#ffffff";
-    context.beginPath();
-    context.ellipse(108.5, 106.5, 15.5, 18.5, 0, 0, Math.PI * 2);
-    context.fill();
-
-    context.fillStyle = "#000000";
-    context.beginPath();
-    context.moveTo(136, 93);
-    context.lineTo(269, 93);
-    context.lineTo(269, 104.7);
-    context.lineTo(259.7, 111.2);
-    context.lineTo(250.4, 119);
-    context.lineTo(238.4, 119);
-    context.lineTo(231.8, 112.8);
-    context.lineTo(222.45, 112.8);
-    context.lineTo(215.8, 119);
-    context.lineTo(202.5, 119);
-    context.lineTo(197.2, 112.8);
-    context.lineTo(136, 112.8);
-    context.closePath();
-    context.fill();
-
-    context.fillStyle = "#ffffff";
-    context.fillRect(148, 101, 112, 4);
-    context.restore();
-  }
-
-  drawCardText(context, data) {
-    context.save();
-    context.fillStyle = "#000000";
-    context.textBaseline = "top";
-
-    this.drawText(context, data.logoText, 137, 68, "900 24px Arial", "left");
-    this.drawText(context, data.personName, 528, 53, "400 27px Arial", "right");
-    this.drawText(context, data.personTitle, 515, 88, "italic 400 18px Arial", "right");
-    this.drawText(context, data.companyName, 194, 158, "900 30px Arial", "left");
-    this.drawText(context, data.addressLine1, 52, 267, "400 18px Arial", "left");
-    this.drawText(context, data.addressLine2, 52, 290, "400 18px Arial", "left");
-    this.drawText(context, this.getPhoneText(data), 560, 267, "400 18px Arial", "right");
-    this.drawText(context, data.email, 560, 290, "400 18px Arial", "right");
-
-    context.restore();
-  }
-
-  drawText(context, text, x, y, font, align) {
-    if (!text) {
-      return;
-    }
-
-    context.font = font;
-    context.textAlign = align;
-    context.fillText(text, x, y);
-  }
-
-  getPhoneText(data) {
-    return [data.phonePrefix, data.phone]
-      .filter((value) => value && value.length)
-      .join(" ");
-  }
-
-  getDownloadFileName() {
-    if (
-      this.config.download &&
-      this.config.download.fileName
-    ) {
-      return this.config.download.fileName;
-    }
-
-    return "mtk-card.png";
-  }
-
-  logAndPublish(topic, payload) {
+  publish(topic, payload) {
     if (window.wc && wc.log) {
       wc.log(payload);
     }
@@ -283,6 +115,154 @@ class MtkCard {
   onMessage(message) {
     if (window.wc && wc.log) {
       wc.log(message);
+    }
+
+    if (message && message.text && typeof message.text === "object") {
+      this.config.text = Object.assign({}, this.config.text || {}, message.text);
+      this.bindText();
+    }
+  }
+
+  downloadCard() {
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+    const width = 600;
+    const height = 360;
+
+    canvas.width = width;
+    canvas.height = height;
+
+    context.fillStyle = "#ffffff";
+    context.fillRect(0, 0, width, height);
+
+    this.drawKeyArt(context, () => {
+      this.drawCardText(context);
+      this.saveCanvas(canvas);
+    });
+  }
+
+  drawKeyArt(context, callback) {
+    const keyArt = this.config.keyArt || {};
+    const src = keyArt.src || (this.config.image && this.config.image.src ? this.config.image.src : "");
+
+    if (!src) {
+      this.drawFallbackKey(context);
+      callback();
+      return;
+    }
+
+    const image = new Image();
+    image.crossOrigin = "anonymous";
+
+    image.onload = () => {
+      try {
+        context.drawImage(
+          image,
+          keyArt.cropX || 52,
+          keyArt.cropY || 48,
+          keyArt.cropWidth || 225,
+          keyArt.cropHeight || 112,
+          keyArt.cropX || 52,
+          keyArt.cropY || 48,
+          keyArt.cropWidth || 225,
+          keyArt.cropHeight || 112
+        );
+      } catch (error) {
+        this.drawFallbackKey(context);
+      }
+
+      callback();
+    };
+
+    image.onerror = () => {
+      this.drawFallbackKey(context);
+      callback();
+    };
+
+    image.src = src;
+  }
+
+  drawFallbackKey(context) {
+    const color = this.config.download && this.config.download.keyFallbackColor ? this.config.download.keyFallbackColor : "#000000";
+
+    context.save();
+    context.fillStyle = color;
+    context.beginPath();
+    context.ellipse(111, 106, 42, 48, 0, 0, Math.PI * 2);
+    context.fill();
+
+    context.fillStyle = "#ffffff";
+    context.beginPath();
+    context.ellipse(107, 108, 16, 19, 0, 0, Math.PI * 2);
+    context.fill();
+
+    context.fillStyle = color;
+    context.beginPath();
+    context.moveTo(136, 93);
+    context.lineTo(269, 93);
+    context.lineTo(269, 105);
+    context.lineTo(260, 114);
+    context.lineTo(253, 131);
+    context.lineTo(242, 131);
+    context.lineTo(236, 116);
+    context.lineTo(228, 116);
+    context.lineTo(221, 131);
+    context.lineTo(209, 131);
+    context.lineTo(203, 116);
+    context.lineTo(136, 116);
+    context.closePath();
+    context.fill();
+
+    context.fillStyle = "#ffffff";
+    context.fillRect(151, 101, 104, 4);
+    context.restore();
+  }
+
+  drawCardText(context) {
+    const text = this.config.text || {};
+
+    context.save();
+    context.fillStyle = "#000000";
+    context.textBaseline = "top";
+
+    this.drawText(context, text.logoText, 137, 68, "900 24px Arial", "left");
+    this.drawText(context, text.personName, 528, 53, "400 27px Arial", "right");
+    this.drawText(context, text.personTitle, 515, 88, "italic 400 18px Arial", "right");
+    this.drawText(context, text.companyName, 194, 158, "900 30px Arial", "left");
+    this.drawText(context, text.addressLine1, 52, 267, "400 18px Arial", "left");
+    this.drawText(context, text.addressLine2, 52, 290, "400 18px Arial", "left");
+    this.drawText(context, `${text.phonePrefix || ""} ${text.phone || ""}`.trim(), 560, 267, "400 18px Arial", "right");
+    this.drawText(context, text.email, 560, 290, "400 18px Arial", "right");
+
+    context.restore();
+  }
+
+  drawText(context, value, x, y, font, align) {
+    if (!value) {
+      return;
+    }
+
+    context.font = font;
+    context.textAlign = align;
+    context.fillText(value, x, y);
+  }
+
+  saveCanvas(canvas) {
+    try {
+      const link = document.createElement("a");
+      link.download = this.config.download && this.config.download.fileName ? this.config.download.fileName : "mtk-card.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+
+      this.publish("mtk-card-download", {
+        event: "mtk-card-download",
+        fileName: link.download
+      });
+    } catch (error) {
+      this.publish("mtk-card-download-error", {
+        event: "mtk-card-download-error",
+        message: error.message
+      });
     }
   }
 }

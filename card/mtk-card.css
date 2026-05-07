@@ -11,15 +11,10 @@
 
 .mtk-card__column {
   display: flex;
-  justify-content: center; }
-
-.mtk-card__left-panel {
-  display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
-  width: 600px;
-  max-width: 100%; }
+  justify-content: center;
+  gap: 1rem; }
 
 .mtk-card__business-card, .mtk-card__reference-image {
   width: 600px;
@@ -39,48 +34,24 @@
 
 .mtk-card__logo-mark {
   position: absolute;
-  left: 69px;
-  top: 58px;
-  width: 200px;
-  height: 96px;
+  left: 52px;
+  top: 48px;
+  width: 225px;
+  height: 112px;
+  overflow: hidden;
   z-index: 1; }
 
-.mtk-card__key-head {
+.mtk-card__key-art {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 84px;
-  height: 96px;
-  background: #000000;
-  border-radius: 50%; }
-
-.mtk-card__key-hole {
-  position: absolute;
-  left: 24px;
-  top: 30px;
-  width: 31px;
-  height: 37px;
-  background: #ffffff;
-  border-radius: 50%;
-  z-index: 2; }
-
-.mtk-card__key-shaft {
-  position: absolute;
-  left: 67px;
-  top: 35px;
-  width: 133px;
-  height: 26px;
-  background: #000000;
-  clip-path: polygon(0 0, 100% 0, 100% 45%, 93% 70%, 86% 100%, 77% 100%, 72% 76%, 65% 76%, 60% 100%, 50% 100%, 46% 76%, 0 76%); }
-
-.mtk-card__key-shaft::after {
-  content: "";
-  position: absolute;
-  left: 12px;
-  top: 8px;
-  width: 112px;
-  height: 4px;
-  background: #ffffff; }
+  left: -52px;
+  top: -48px;
+  width: 600px;
+  height: 360px;
+  display: block;
+  max-width: none;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none; }
 
 .mtk-card__copy {
   position: absolute;
@@ -117,10 +88,11 @@
 
 .mtk-card__copy--company {
   left: 194px;
-  top: 158px;
+  top: 148px;
   font-size: 30px;
   font-weight: 900;
-  letter-spacing: -0.5px; }
+  letter-spacing: -0.5px;
+  background: #FFF; }
 
 .mtk-card__address {
   position: absolute;
@@ -161,38 +133,21 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 0.5rem;
   min-height: 44px;
-  padding: 10px 22px;
   border: 0;
   border-radius: 999px;
-  background: #8b6508;
+  padding: 0.75rem 1.25rem;
+  background: #8f6f22;
   color: #ffffff;
-  font: inherit;
-  font-size: 16px;
   font-weight: 700;
-  line-height: 1;
+  letter-spacing: 0.2px;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.28);
-  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease; }
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.28); }
 
-.mtk-card__download-button:hover {
-  background: #6f5106;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.32);
-  transform: translateY(-1px); }
+.mtk-card__download-button:hover, .mtk-card__download-button:focus-visible {
+  background: #745816; }
 
-.mtk-card__download-button:active {
-  transform: translateY(0); }
-
-.mtk-card__download-button:disabled {
-  cursor: wait;
-  opacity: 0.68;
-  transform: none; }
-
-.mtk-card__download-icon {
-  font-size: 20px;
-  line-height: 1; }
-
-.mtk-card__business-card:focus-visible, .mtk-card__copy:focus-visible, .mtk-card__download-button:focus-visible {
+.mtk-card__download-button:focus-visible, .mtk-card__business-card:focus-visible, .mtk-card__copy:focus-visible {
   outline: 2px solid #1976d2;
   outline-offset: 2px; }
