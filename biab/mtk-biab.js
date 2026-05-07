@@ -861,12 +861,18 @@
       ];
 
       const fonts = [
-        { heading: "Arial", body: "Arial" },
-        { heading: "Georgia", body: "Arial" },
-        { heading: "Trebuchet MS", body: "Verdana" },
-        { heading: "Impact", body: "Arial" },
-        { heading: "Verdana", body: "Tahoma" },
-        { heading: "Courier New", body: "Arial" }
+        { heading: "Segoe UI, Arial, sans-serif", body: "Segoe UI, Arial, sans-serif", headingSize: 28, bodySize: 14 },
+        { heading: "Franklin Gothic Medium, Arial, sans-serif", body: "Arial, sans-serif", headingSize: 29, bodySize: 13 },
+        { heading: "Trebuchet MS, Verdana, sans-serif", body: "Verdana, Arial, sans-serif", headingSize: 28, bodySize: 13 },
+        { heading: "Arial, Helvetica, sans-serif", body: "Tahoma, Arial, sans-serif", headingSize: 29, bodySize: 13 },
+        { heading: "Verdana, Geneva, sans-serif", body: "Arial, Helvetica, sans-serif", headingSize: 26, bodySize: 13 },
+        { heading: "Calibri, Segoe UI, sans-serif", body: "Segoe UI, Arial, sans-serif", headingSize: 29, bodySize: 14 },
+        { heading: "Century Gothic, Arial, sans-serif", body: "Arial, Helvetica, sans-serif", headingSize: 27, bodySize: 13 },
+        { heading: "Gill Sans, Trebuchet MS, sans-serif", body: "Trebuchet MS, Arial, sans-serif", headingSize: 28, bodySize: 13 },
+        { heading: "Georgia, Times New Roman, serif", body: "Arial, Helvetica, sans-serif", headingSize: 28, bodySize: 13 },
+        { heading: "Cambria, Georgia, serif", body: "Calibri, Arial, sans-serif", headingSize: 28, bodySize: 13 },
+        { heading: "Lucida Sans, Arial, sans-serif", body: "Lucida Sans, Arial, sans-serif", headingSize: 26, bodySize: 13 },
+        { heading: "Helvetica, Arial, sans-serif", body: "Helvetica, Arial, sans-serif", headingSize: 29, bodySize: 13 }
       ];
 
       const icons = [
@@ -908,10 +914,11 @@
         : {};
 
       const iconChoices = this._shuffleCardOptions(icons);
+      const fontChoices = this._shuffleCardOptions(fonts);
 
       this.generatedCardTemplates = Array.from({ length: 6 }).map((_, index) => {
         const palette = palettes[(index * 3 + businessName.length) % palettes.length];
-        const font = fonts[(index + contactName.length) % fonts.length];
+        const font = fontChoices[index % fontChoices.length];
         const icon = iconChoices[index % iconChoices.length];
         const layout = layouts[index % layouts.length];
         const size = sizes[(index + website.length) % sizes.length];
@@ -947,23 +954,49 @@
       const p = design.palette;
       const safe = (value) => this._escape(value);
       const icon = this._placedIcon(design.icon, p.accent, 82, 82, 68);
+      const font = design.font || {};
+      const headingSize = font.headingSize || 28;
+      const contactSize = Math.max(16, headingSize - 11);
+      const detailSize = font.bodySize || 13;
+      const businessName = safe(this._cardText(design.businessName, 27));
+      const area = safe(this._cardText(design.area, 42));
+      const contactName = safe(this._cardText(design.contactName, 32));
+      const contactLine = safe(this._cardText([design.phone, design.email].filter(Boolean).join("  |  "), 52));
+      const website = safe(this._cardDisplayWebsite(design.website));
       const baseText = `
-        <text x="48" y="176" fill="${p.fg}" font-family="${design.font.heading}" font-size="29" font-weight="800">${safe(design.businessName)}</text>
-        <text x="48" y="210" fill="${p.muted}" font-family="${design.font.body}" font-size="15">${safe(design.area)}</text>
-        <text x="48" y="270" fill="${p.fg}" font-family="${design.font.body}" font-size="18" font-weight="700">${safe(design.contactName)}</text>
-        <text x="48" y="299" fill="${p.muted}" font-family="${design.font.body}" font-size="13">${safe(design.phone)}  |  ${safe(design.email)}</text>
-        <text x="48" y="324" fill="${p.muted}" font-family="${design.font.body}" font-size="13">${safe(design.website)}</text>
+        <text x="48" y="174" fill="${p.fg}" font-family="${font.heading}" font-size="${headingSize}" font-weight="800">${businessName}</text>
+        <text x="48" y="209" fill="${p.muted}" font-family="${font.body}" font-size="14">${area}</text>
+        <text x="48" y="268" fill="${p.fg}" font-family="${font.body}" font-size="${contactSize}" font-weight="700">${contactName}</text>
+        <text x="48" y="298" fill="${p.muted}" font-family="${font.body}" font-size="${detailSize}">${contactLine}</text>
+        <text x="48" y="323" fill="${p.muted}" font-family="${font.body}" font-size="${detailSize}">${website}</text>
       `;
       const variants = {
         "left-mark": `<rect width="560" height="350" fill="${p.bg}"/><rect width="150" height="350" fill="${p.accent}" opacity=".16"/>${icon}${baseText}`,
         "top-band": `<rect width="560" height="350" fill="${p.bg}"/><rect width="560" height="92" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 74, 46, 52)}<g transform="translate(0 16)">${baseText}</g>`,
         "split": `<rect width="560" height="350" fill="${p.bg}"/><rect x="352" width="208" height="350" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 456, 150, 104)}${baseText}`,
         "corner-badge": `<rect width="560" height="350" fill="${p.bg}"/><circle cx="464" cy="84" r="54" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 464, 84, 58)}${baseText}`,
-        "centered": `<rect width="560" height="350" fill="${p.bg}"/>${this._placedIcon(design.icon, p.accent, 280, 76, 62)}<text x="280" y="154" text-anchor="middle" fill="${p.fg}" font-family="${design.font.heading}" font-size="30" font-weight="800">${safe(design.businessName)}</text><text x="280" y="187" text-anchor="middle" fill="${p.muted}" font-family="${design.font.body}" font-size="15">${safe(design.area)}</text><text x="280" y="256" text-anchor="middle" fill="${p.fg}" font-family="${design.font.body}" font-size="18" font-weight="700">${safe(design.contactName)}</text><text x="280" y="286" text-anchor="middle" fill="${p.muted}" font-family="${design.font.body}" font-size="13">${safe(design.phone)}  |  ${safe(design.email)}</text><text x="280" y="314" text-anchor="middle" fill="${p.muted}" font-family="${design.font.body}" font-size="13">${safe(design.website)}</text>`,
+        "centered": `<rect width="560" height="350" fill="${p.bg}"/>${this._placedIcon(design.icon, p.accent, 280, 76, 62)}<text x="280" y="153" text-anchor="middle" fill="${p.fg}" font-family="${font.heading}" font-size="${headingSize}" font-weight="800">${businessName}</text><text x="280" y="187" text-anchor="middle" fill="${p.muted}" font-family="${font.body}" font-size="14">${area}</text><text x="280" y="255" text-anchor="middle" fill="${p.fg}" font-family="${font.body}" font-size="${contactSize}" font-weight="700">${contactName}</text><text x="280" y="285" text-anchor="middle" fill="${p.muted}" font-family="${font.body}" font-size="${detailSize}">${contactLine}</text><text x="280" y="312" text-anchor="middle" fill="${p.muted}" font-family="${font.body}" font-size="${detailSize}">${website}</text>`,
         "vertical-accent": `<rect width="560" height="350" fill="${p.bg}"/><rect x="512" width="48" height="350" fill="${p.accent}"/>${this._placedIcon(design.icon, p.accent, 82, 84, 64)}${baseText}`
       };
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="560" height="350" viewBox="0 0 560 350">${variants[design.layout] || variants["left-mark"]}</svg>`;
       return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+    }
+
+    _cardText(value, maxLength) {
+      const text = String(value || "").replace(/\s+/g, " ").trim();
+      if (!maxLength || text.length <= maxLength) return text;
+      return text.slice(0, Math.max(0, maxLength - 1)).trimEnd() + "…";
+    }
+
+    _cardDisplayWebsite(value) {
+      const text = String(value || "").trim();
+      try {
+        const url = new URL(text, window.location.href);
+        const path = url.pathname.replace(/\/index\.html$/i, "").replace(/\/$/, "");
+        return this._cardText(url.hostname + path, 46);
+      } catch (err) {
+        return this._cardText(text.replace(/^https?:\/\//i, "").replace(/\/index\.html$/i, ""), 46);
+      }
     }
 
     _placedIcon(name, color, centerX, centerY, size) {
