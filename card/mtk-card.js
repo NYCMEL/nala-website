@@ -1,4 +1,3 @@
-
 class MtkCard {
   constructor() {
     this.config = window.mtkCardConfig || {};
@@ -19,6 +18,7 @@ class MtkCard {
   initialize() {
     this.bindText();
     this.bindImage();
+    this.subscribe();
   }
 
   bindText() {
@@ -46,6 +46,18 @@ class MtkCard {
     ) {
       image.src = this.config.image.src;
       image.alt = this.config.image.alt || "";
+    }
+  }
+
+  subscribe() {
+    if (window.wc && wc.subscribe) {
+      wc.subscribe("4-mtk-card", this.onMessage.bind(this));
+    }
+  }
+
+  onMessage(message) {
+    if (window.wc && wc.log) {
+      wc.log(message);
     }
   }
 }
