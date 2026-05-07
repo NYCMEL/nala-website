@@ -1,179 +1,89 @@
+
 .mtk-card {
-  display: block;
-  width: 100%;
-  font-family: Arial, Helvetica, sans-serif;
-
-  * {
-    box-sizing: border-box;
-  }
-
-  &__comparison {
-    width: 100%;
-  }
-
-  &__column {
-    display: flex;
-    justify-content: center;
-  }
-
-  &__business-card,
-  &__reference-image {
-    width: 600px;
-    height: 360px;
-    max-width: 100%;
-    background: #ffffff;
-    box-shadow: 7px 8px 12px rgba(0, 0, 0, 0.35);
-  }
-
   &__business-card {
     position: relative;
+    width: 600px;
+    height: 360px;
     overflow: hidden;
-    color: #000000;
-  }
-
-  &__reference-image {
-    display: block;
-    object-fit: contain;
+    background: #ffffff;
   }
 
   &__logo-mark {
     position: absolute;
     left: 52px;
-    top: 43px;
+    top: 58px;
     width: 203px;
     height: 95px;
     z-index: 1;
   }
 
-  &__key-head {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 83px;
-    height: 95px;
-    background: #000000;
-    border-radius: 50%;
-  }
-
-  &__key-hole {
-    position: absolute;
-    left: 23px;
-    top: 30px;
-    width: 31px;
-    height: 37px;
-    background: #ffffff;
-    border-radius: 50%;
-    z-index: 2;
-  }
-
-  &__key-shaft {
-    position: absolute;
-    left: 66px;
-    top: 35px;
-    width: 139px;
-    height: 27px;
-    background: #000000;
-    clip-path: polygon(0 0, 100% 0, 100% 45%, 92% 76%, 84% 100%, 76% 100%, 71% 75%, 64% 75%, 59% 100%, 49% 100%, 45% 75%, 0 75%);
-  }
-
-  &__key-shaft::after {
-    content: "";
-    position: absolute;
-    left: 12px;
-    top: 8px;
-    width: 116px;
-    height: 4px;
-    background: #ffffff;
-  }
-
-  &__text {
-    position: absolute;
-    display: block;
-    width: max-content;
-    max-width: none;
-    color: #000000;
-    line-height: 1;
-    white-space: nowrap;
-    z-index: 5;
-  }
-
   &__text--logo {
-    left: 138px;
-    top: 67px;
-    font-size: 25px;
+    position: absolute;
+    left: 102px;
+    top: 58px;
+    font-size: 24px;
     font-weight: 900;
-    letter-spacing: -1.25px;
-    z-index: 8;
+    letter-spacing: -1px;
+    line-height: 1;
+    z-index: 10;
   }
 
   &__text--person-name {
+    position: absolute;
     right: 70px;
     top: 53px;
     font-size: 28px;
     font-weight: 400;
-    letter-spacing: -0.6px;
+    line-height: 1;
   }
 
   &__text--person-title {
+    position: absolute;
     right: 80px;
-    top: 87px;
+    top: 88px;
     font-size: 18px;
     font-weight: 400;
     font-style: italic;
-    letter-spacing: 0;
+    line-height: 1;
   }
 
   &__text--company {
+    position: absolute;
     left: 194px;
     top: 158px;
     font-size: 31px;
     font-weight: 900;
-    letter-spacing: -0.55px;
+    letter-spacing: -0.5px;
+    line-height: 1;
   }
 
   &__address {
     position: absolute;
     left: 52px;
-    top: 267px;
+    bottom: 42px;
     display: flex;
     flex-direction: column;
-    gap: 1px;
+    gap: 2px;
     margin: 0;
     padding: 0;
-    font-style: normal;
-    z-index: 5;
   }
 
   &__contact {
     position: absolute;
-    right: 41px;
-    top: 267px;
+    right: 40px;
+    bottom: 42px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 1px;
-    text-align: right;
-    z-index: 5;
+    gap: 2px;
   }
 
   &__address .mtk-card__text,
   &__contact .mtk-card__text {
     position: relative;
-    display: block;
     font-size: 18px;
     font-weight: 400;
-    line-height: 1.22;
-    letter-spacing: -0.25px;
-  }
-
-  &__text--phone,
-  &__text--email {
-    text-align: right;
-  }
-
-  &__business-card:focus-visible,
-  .mtk-card__text:focus-visible {
-    outline: 2px solid #1976d2;
-    outline-offset: 2px;
+    line-height: 1.2;
+    white-space: nowrap;
   }
 }

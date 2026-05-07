@@ -1,9 +1,12 @@
+
 <mtk-card class="mtk-card">
-  <section class="mtk-card__comparison container-fluid" aria-label="Business card comparison">
+  <section class="mtk-card__comparison container-fluid">
     <div class="row g-4 align-items-start justify-content-center">
-      <article class="col-md-6 mtk-card__column" aria-label="Generated business card">
-        <div class="mtk-card__business-card" tabindex="0">
-          <div class="mtk-card__logo-mark" aria-hidden="true">
+
+      <article class="col-md-6 mtk-card__column">
+        <div class="mtk-card__business-card">
+
+          <div class="mtk-card__logo-mark">
             <span class="mtk-card__key-head"></span>
             <span class="mtk-card__key-hole"></span>
             <span class="mtk-card__key-shaft"></span>
@@ -14,24 +17,31 @@
           <div class="mtk-card__text mtk-card__text--person-title" data-text="personTitle"></div>
           <div class="mtk-card__text mtk-card__text--company" data-text="companyName"></div>
 
-          <address class="mtk-card__address" aria-label="Business address">
+          <address class="mtk-card__address">
             <div class="mtk-card__text mtk-card__text--address" data-text="addressLine1"></div>
             <div class="mtk-card__text mtk-card__text--address" data-text="addressLine2"></div>
           </address>
 
-          <div class="mtk-card__contact" aria-label="Business contact information">
+          <div class="mtk-card__contact">
             <div class="mtk-card__text mtk-card__text--phone">
               <span data-text="phonePrefix"></span>
               <span data-text="phone"></span>
             </div>
+
             <div class="mtk-card__text mtk-card__text--email" data-text="email"></div>
           </div>
+
         </div>
       </article>
 
-      <article class="col-md-6 mtk-card__column" aria-label="Original business card">
-        <img class="mtk-card__reference-image" data-card-image alt="Original locksmith business card">
+      <article class="col-md-6 mtk-card__column">
+        <img
+          class="mtk-card__reference-image"
+          data-card-image
+          alt="Original business card"
+        />
       </article>
+
     </div>
   </section>
 </mtk-card>
