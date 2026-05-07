@@ -5,11 +5,11 @@ class MtkCard {
   }
 
   waitForElement() {
-    const timer = setInterval(() => {
+    const timer = window.setInterval(() => {
       this.element = document.querySelector(".mtk-card");
 
       if (this.element) {
-        clearInterval(timer);
+        window.clearInterval(timer);
         this.initialize();
       }
     }, 100);
@@ -18,14 +18,15 @@ class MtkCard {
   initialize() {
     this.bindText();
     this.bindImage();
+    this.registerEvents();
     this.subscribe();
   }
 
   bindText() {
-    const fields = this.element.querySelectorAll("[data-text]");
+    const fields = this.element.querySelectorAll("[data-mtk-field]");
 
     fields.forEach((field) => {
-      const key = field.getAttribute("data-text");
+      const key = field.getAttribute("data-mtk-field");
 
       if (
         this.config.text &&
@@ -37,16 +38,44 @@ class MtkCard {
   }
 
   bindImage() {
-    const image = this.element.querySelector("[data-card-image]");
+    const image = this.element.querySelector("[data-mtk-card-image]");
 
     if (
       image &&
       this.config.image &&
       this.config.image.src
     ) {
-      image.src = this.config.image.src;
-      image.alt = this.config.image.alt || "";
+      image.setAttribute("src", this.config.image.src);
+      image.setAttribute("alt", this.config.image.alt || "");
     }
+  }
+
+  registerEvents() {
+    const clickable = this.element.querySelectorAll("[data-mtk-field]");
+
+    clickable.forEach((item) => {
+      item.addEventListener("click", () => {
+        const payload = {
+          event: "mtk-card-click",
+          field: item.getAttribute("data-mtk-field")
+        };
+
+        if (window.wc && wc.log) {
+          wc.log(payload);
+        }
+
+        if (window.wc && wc.publish) {
+          wc.publish("mtk-card-click", payload);
+        }
+      });
+
+      item.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          item.click();
+        }
+      });
+    });
   }
 
   subscribe() {

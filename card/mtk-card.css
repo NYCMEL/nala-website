@@ -1,55 +1,154 @@
+.mtk-card {
+  display: block;
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif; }
+
+.mtk-card * {
+  box-sizing: border-box; }
+
+.mtk-card__comparison {
+  width: 100%; }
+
+.mtk-card__column {
+  display: flex;
+  justify-content: center; }
+
+.mtk-card__business-card, .mtk-card__reference-image {
+  width: 600px;
+  height: 360px;
+  max-width: 100%;
+  background: #ffffff;
+  box-shadow: 7px 8px 12px rgba(0, 0, 0, 0.35); }
+
+.mtk-card__business-card {
+  position: relative;
+  overflow: hidden;
+  color: #000000; }
+
+.mtk-card__reference-image {
+  display: block;
+  object-fit: contain; }
+
 .mtk-card__logo-mark {
   position: absolute;
-  left: 34px;
-  top: 70px;
-  width: 205px;
-  height: 108px;
+  left: 69px;
+  top: 58px;
+  width: 200px;
+  height: 96px;
   z-index: 1; }
 
 .mtk-card__key-head {
   position: absolute;
   left: 0;
   top: 0;
-  width: 92px;
-  height: 108px;
+  width: 84px;
+  height: 96px;
   background: #000000;
   border-radius: 50%; }
 
 .mtk-card__key-hole {
   position: absolute;
-  left: 26px;
-  top: 32px;
-  width: 36px;
-  height: 43px;
+  left: 24px;
+  top: 30px;
+  width: 31px;
+  height: 37px;
   background: #ffffff;
   border-radius: 50%;
   z-index: 2; }
 
 .mtk-card__key-shaft {
   position: absolute;
-  left: 74px;
-  top: 34px;
-  width: 171px;
-  height: 24px;
+  left: 67px;
+  top: 35px;
+  width: 133px;
+  height: 26px;
   background: #000000;
-  clip-path: polygon(0 0, 100% 0, 100% 46%, 92% 76%, 84% 100%, 76% 100%, 71% 74%, 64% 74%, 59% 100%, 49% 100%, 45% 74%, 0 74%); }
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 93% 70%, 86% 100%, 77% 100%, 72% 76%, 65% 76%, 60% 100%, 50% 100%, 46% 76%, 0 76%); }
 
 .mtk-card__key-shaft::after {
   content: "";
   position: absolute;
   left: 12px;
-  top: 7px;
-  width: 142px;
-  height: 5px;
+  top: 8px;
+  width: 112px;
+  height: 4px;
   background: #ffffff; }
 
-.mtk-card__text--logo {
+.mtk-card__copy {
   position: absolute;
-  left: 104px;
-  top: 66px;
-  font-size: 31px;
-  font-weight: 900;
-  letter-spacing: -1.8px;
+  display: block;
+  width: max-content;
+  max-width: none;
+  color: #000000;
+  white-space: nowrap;
   line-height: 1;
-  color: #1f1f1f;
-  z-index: 10; }
+  z-index: 5; }
+
+.mtk-card__copy--logo {
+  left: 137px;
+  top: 68px;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -1.2px;
+  z-index: 8; }
+
+.mtk-card__copy--person-name {
+  right: 72px;
+  top: 53px;
+  font-size: 27px;
+  font-weight: 400;
+  letter-spacing: -0.5px; }
+
+.mtk-card__copy--person-title {
+  right: 85px;
+  top: 88px;
+  font-size: 18px;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0; }
+
+.mtk-card__copy--company {
+  left: 194px;
+  top: 158px;
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: -0.5px; }
+
+.mtk-card__address {
+  position: absolute;
+  left: 52px;
+  top: 267px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  font-style: normal;
+  z-index: 5; }
+
+.mtk-card__contact {
+  position: absolute;
+  right: 40px;
+  top: 267px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  text-align: right;
+  z-index: 5; }
+
+.mtk-card__address .mtk-card__copy,
+.mtk-card__contact .mtk-card__copy {
+  position: relative;
+  display: block;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.18;
+  letter-spacing: -0.25px; }
+
+.mtk-card__copy--phone, .mtk-card__copy--email {
+  text-align: right; }
+
+.mtk-card__business-card:focus-visible, .mtk-card__copy:focus-visible {
+  outline: 2px solid #1976d2;
+  outline-offset: 2px; }
