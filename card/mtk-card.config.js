@@ -3,10 +3,14 @@ window.mtkCardConfig = {
 	src: "img/b-card/card-1.png",
 	alt: "Original locksmith business card"
     },
+    download: {
+	buttonText: "Download Card",
+	fileName: "mtk-card.png"
+    },
     text: {
 	logoText: "",
 	personName: "Mel M. Heravi",
-	personTitle: "Owner/Operators",
+	personTitle: "Owner/Operator",
 	companyName: "MEL'S LOCKSMITH",
 	addressLine1: "P.O.Box 1230",
 	addressLine2: "New York, NJ 10012",

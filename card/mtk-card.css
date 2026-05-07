@@ -13,6 +13,14 @@
   display: flex;
   justify-content: center; }
 
+.mtk-card__left-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 600px;
+  max-width: 100%; }
+
 .mtk-card__business-card, .mtk-card__reference-image {
   width: 600px;
   height: 360px;
@@ -149,6 +157,42 @@
 .mtk-card__copy--phone, .mtk-card__copy--email {
   text-align: right; }
 
-.mtk-card__business-card:focus-visible, .mtk-card__copy:focus-visible {
+.mtk-card__download-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 22px;
+  border: 0;
+  border-radius: 999px;
+  background: #8b6508;
+  color: #ffffff;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.28);
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease; }
+
+.mtk-card__download-button:hover {
+  background: #6f5106;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.32);
+  transform: translateY(-1px); }
+
+.mtk-card__download-button:active {
+  transform: translateY(0); }
+
+.mtk-card__download-button:disabled {
+  cursor: wait;
+  opacity: 0.68;
+  transform: none; }
+
+.mtk-card__download-icon {
+  font-size: 20px;
+  line-height: 1; }
+
+.mtk-card__business-card:focus-visible, .mtk-card__copy:focus-visible, .mtk-card__download-button:focus-visible {
   outline: 2px solid #1976d2;
   outline-offset: 2px; }
