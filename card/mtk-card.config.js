@@ -4,7 +4,7 @@ window.mtkCardConfig = {
 	alt: "Original locksmith business card"
     },
     text: {
-	logoText: "Locksmith",
+	logoText: "",
 	personName: "Mel M. Heravi",
 	personTitle: "Owner",
 	companyName: "MEL'S LOCKSMITH",
