@@ -6,7 +6,7 @@ window.mtkCardConfig = {
     text: {
 	logoText: "",
 	personName: "Mel M. Heravi",
-	personTitle: "Owner/Operator",
+	personTitle: "Owner/Operators",
 	companyName: "MEL'S LOCKSMITH",
 	addressLine1: "P.O.Box 1230",
 	addressLine2: "New York, NJ 10012",
