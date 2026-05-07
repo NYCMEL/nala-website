@@ -702,7 +702,7 @@
             </button>
           </div>
 
-          <p class="mtk-biab__template-text">${this._escape(section.generatorIntro || "Six options are generated from curated design rules so each card stays readable and balanced.")}</p>
+          <p class="mtk-biab__template-text">${this._escape(section.generatorIntro || "Twelve options are generated from curated design rules so each card stays readable and balanced.")}</p>
         </div>
       `);
 
@@ -857,7 +857,17 @@
         { bg: "#f8fafc", fg: "#0f172a", accent: "#0f766e", muted: "#475569" },
         { bg: "#27272a", fg: "#fafafa", accent: "#eab308", muted: "#d4d4d8" },
         { bg: "#0b3b4a", fg: "#f0fdfa", accent: "#f59e0b", muted: "#ccfbf1" },
-        { bg: "#faf7f2", fg: "#1f2937", accent: "#991b1b", muted: "#57534e" }
+        { bg: "#faf7f2", fg: "#1f2937", accent: "#991b1b", muted: "#57534e" },
+        { bg: "#111827", fg: "#f9fafb", accent: "#22c55e", muted: "#d1d5db" },
+        { bg: "#f9fafb", fg: "#172554", accent: "#2563eb", muted: "#475569" },
+        { bg: "#0c0a09", fg: "#fafaf9", accent: "#d97706", muted: "#d6d3d1" },
+        { bg: "#ecfeff", fg: "#164e63", accent: "#0891b2", muted: "#475569" },
+        { bg: "#18181b", fg: "#fafafa", accent: "#a3e635", muted: "#d4d4d8" },
+        { bg: "#fefce8", fg: "#1f2937", accent: "#ca8a04", muted: "#4b5563" },
+        { bg: "#eef2ff", fg: "#1e1b4b", accent: "#4f46e5", muted: "#475569" },
+        { bg: "#052e16", fg: "#f0fdf4", accent: "#86efac", muted: "#bbf7d0" },
+        { bg: "#fff7ed", fg: "#1f2937", accent: "#c2410c", muted: "#57534e" },
+        { bg: "#f1f5f9", fg: "#0f172a", accent: "#334155", muted: "#475569" }
       ];
 
       const fonts = [
@@ -894,7 +904,20 @@
         "id-badge",
         "map-shield"
       ];
-      const layouts = ["left-mark", "top-band", "split", "corner-badge", "centered", "vertical-accent"];
+      const layouts = [
+        "left-mark",
+        "top-band",
+        "split",
+        "corner-badge",
+        "centered",
+        "vertical-accent",
+        "bottom-rule",
+        "right-mark",
+        "framed",
+        "badge-left",
+        "double-rule",
+        "top-left-icon"
+      ];
       const sizes = [
         { name: "Standard", width: 3.5, height: 2.0 },
         { name: "MOO", width: 3.46, height: 2.32 },
@@ -915,12 +938,14 @@
 
       const iconChoices = this._shuffleCardOptions(icons);
       const fontChoices = this._shuffleCardOptions(fonts);
+      const paletteChoices = this._shuffleCardOptions(palettes);
+      const layoutChoices = this._shuffleCardOptions(layouts);
 
-      this.generatedCardTemplates = Array.from({ length: 6 }).map((_, index) => {
-        const palette = palettes[(index * 3 + businessName.length) % palettes.length];
+      this.generatedCardTemplates = Array.from({ length: 12 }).map((_, index) => {
+        const palette = paletteChoices[index % paletteChoices.length];
         const font = fontChoices[index % fontChoices.length];
         const icon = iconChoices[index % iconChoices.length];
-        const layout = layouts[index % layouts.length];
+        const layout = layoutChoices[index % layoutChoices.length];
         const size = sizes[(index + website.length) % sizes.length];
         const design = { palette, font, icon, layout, size, businessName, contactName, phone, email, website, area };
 
@@ -976,7 +1001,13 @@
         "split": `<rect width="560" height="350" fill="${p.bg}"/><rect x="352" width="208" height="350" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 456, 150, 104)}${baseText}`,
         "corner-badge": `<rect width="560" height="350" fill="${p.bg}"/><circle cx="464" cy="84" r="54" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 464, 84, 58)}${baseText}`,
         "centered": `<rect width="560" height="350" fill="${p.bg}"/>${this._placedIcon(design.icon, p.accent, 280, 76, 62)}<text x="280" y="153" text-anchor="middle" fill="${p.fg}" font-family="${font.heading}" font-size="${headingSize}" font-weight="800">${businessName}</text><text x="280" y="187" text-anchor="middle" fill="${p.muted}" font-family="${font.body}" font-size="14">${area}</text><text x="280" y="255" text-anchor="middle" fill="${p.fg}" font-family="${font.body}" font-size="${contactSize}" font-weight="700">${contactName}</text><text x="280" y="285" text-anchor="middle" fill="${p.muted}" font-family="${font.body}" font-size="${detailSize}">${contactLine}</text><text x="280" y="312" text-anchor="middle" fill="${p.muted}" font-family="${font.body}" font-size="${detailSize}">${website}</text>`,
-        "vertical-accent": `<rect width="560" height="350" fill="${p.bg}"/><rect x="512" width="48" height="350" fill="${p.accent}"/>${this._placedIcon(design.icon, p.accent, 82, 84, 64)}${baseText}`
+        "vertical-accent": `<rect width="560" height="350" fill="${p.bg}"/><rect x="512" width="48" height="350" fill="${p.accent}"/>${this._placedIcon(design.icon, p.accent, 82, 84, 64)}${baseText}`,
+        "bottom-rule": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="308" width="480" height="5" rx="2.5" fill="${p.accent}"/>${this._placedIcon(design.icon, p.accent, 82, 82, 62)}${baseText}`,
+        "right-mark": `<rect width="560" height="350" fill="${p.bg}"/><rect x="386" y="0" width="174" height="350" fill="${p.accent}" opacity=".14"/>${this._placedIcon(design.icon, p.accent, 452, 92, 84)}${baseText}`,
+        "framed": `<rect width="560" height="350" fill="${p.bg}"/><rect x="28" y="28" width="504" height="294" rx="10" fill="none" stroke="${p.accent}" stroke-width="4"/>${this._placedIcon(design.icon, p.accent, 84, 84, 58)}${baseText}`,
+        "badge-left": `<rect width="560" height="350" fill="${p.bg}"/><circle cx="86" cy="86" r="52" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 86, 86, 56)}${baseText}`,
+        "double-rule": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="40" width="480" height="4" rx="2" fill="${p.accent}"/><rect x="40" y="306" width="480" height="4" rx="2" fill="${p.accent}"/>${this._placedIcon(design.icon, p.accent, 86, 91, 58)}${baseText}`,
+        "top-left-icon": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="40" width="88" height="88" rx="18" fill="${p.accent}" opacity=".16"/>${this._placedIcon(design.icon, p.accent, 84, 84, 58)}${baseText}`
       };
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="560" height="350" viewBox="0 0 560 350">${variants[design.layout] || variants["left-mark"]}</svg>`;
       return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
