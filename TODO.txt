@@ -49,6 +49,8 @@ Invoices:
   - New Invoice:
     - IS BROKEN, not working
     - can only be Saved. Upon save "New Invoice" screen should close and take user back to Invoces
+    - top portion "Business Name" & "Business Phone" should load from profile and NOT EDITABLE
+    - Date should show today
 
 Customer Reviews:
   - nothing to do here, but to view
