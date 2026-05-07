@@ -871,17 +871,15 @@
 
       const icons = [
         "key-round",
-        "shield-check",
         "lock-keyhole",
-        "wrench",
-        "home",
-        "badge-check",
-        "map-pin",
-        "building",
-        "bolt",
+        "door-open",
+        "house-lock",
         "shield-lock",
-        "sparkles",
-        "phone-call"
+        "key-square",
+        "wrench",
+        "building-lock",
+        "door-key",
+        "safe"
       ];
       const layouts = ["left-mark", "top-band", "split", "corner-badge", "centered", "vertical-accent"];
       const sizes = [
@@ -905,7 +903,7 @@
       this.generatedCardTemplates = Array.from({ length: 6 }).map((_, index) => {
         const palette = palettes[(index * 3 + businessName.length) % palettes.length];
         const font = fonts[(index + contactName.length) % fonts.length];
-        const icon = icons[(index * 2 + phone.length) % icons.length];
+        const icon = icons[(index + phone.length) % icons.length];
         const layout = layouts[index % layouts.length];
         const size = sizes[(index + website.length) % sizes.length];
         const design = { palette, font, icon, layout, size, businessName, contactName, phone, email, website, area };
@@ -939,21 +937,21 @@
     _businessCardDataUri(design) {
       const p = design.palette;
       const safe = (value) => this._escape(value);
-      const icon = this._placedIcon(design.icon, p.accent, 80, 80, 74);
+      const icon = this._placedIcon(design.icon, p.accent, 82, 82, 68);
       const baseText = `
-        <text x="44" y="178" fill="${p.fg}" font-family="${design.font.heading}" font-size="30" font-weight="800">${safe(design.businessName)}</text>
-        <text x="44" y="213" fill="${p.muted}" font-family="${design.font.body}" font-size="15">${safe(design.area)}</text>
-        <text x="44" y="276" fill="${p.fg}" font-family="${design.font.body}" font-size="18" font-weight="700">${safe(design.contactName)}</text>
-        <text x="44" y="304" fill="${p.muted}" font-family="${design.font.body}" font-size="14">${safe(design.phone)}  |  ${safe(design.email)}</text>
-        <text x="44" y="329" fill="${p.muted}" font-family="${design.font.body}" font-size="14">${safe(design.website)}</text>
+        <text x="48" y="176" fill="${p.fg}" font-family="${design.font.heading}" font-size="29" font-weight="800">${safe(design.businessName)}</text>
+        <text x="48" y="210" fill="${p.muted}" font-family="${design.font.body}" font-size="15">${safe(design.area)}</text>
+        <text x="48" y="270" fill="${p.fg}" font-family="${design.font.body}" font-size="18" font-weight="700">${safe(design.contactName)}</text>
+        <text x="48" y="299" fill="${p.muted}" font-family="${design.font.body}" font-size="13">${safe(design.phone)}  |  ${safe(design.email)}</text>
+        <text x="48" y="324" fill="${p.muted}" font-family="${design.font.body}" font-size="13">${safe(design.website)}</text>
       `;
       const variants = {
         "left-mark": `<rect width="560" height="350" fill="${p.bg}"/><rect width="150" height="350" fill="${p.accent}" opacity=".16"/>${icon}${baseText}`,
-        "top-band": `<rect width="560" height="350" fill="${p.bg}"/><rect width="560" height="92" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 74, 46, 54)}<g transform="translate(0 18)">${baseText}</g>`,
-        "split": `<rect width="560" height="350" fill="${p.bg}"/><rect x="342" width="218" height="350" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 451, 154, 112)}${baseText}`,
-        "corner-badge": `<rect width="560" height="350" fill="${p.bg}"/><circle cx="464" cy="82" r="58" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 464, 82, 62)}${baseText}`,
-        "centered": `<rect width="560" height="350" fill="${p.bg}"/>${this._placedIcon(design.icon, p.accent, 280, 78, 66)}<text x="280" y="158" text-anchor="middle" fill="${p.fg}" font-family="${design.font.heading}" font-size="31" font-weight="800">${safe(design.businessName)}</text><text x="280" y="190" text-anchor="middle" fill="${p.muted}" font-family="${design.font.body}" font-size="15">${safe(design.area)}</text><text x="280" y="262" text-anchor="middle" fill="${p.fg}" font-family="${design.font.body}" font-size="18" font-weight="700">${safe(design.contactName)}</text><text x="280" y="291" text-anchor="middle" fill="${p.muted}" font-family="${design.font.body}" font-size="14">${safe(design.phone)}  |  ${safe(design.email)}</text><text x="280" y="318" text-anchor="middle" fill="${p.muted}" font-family="${design.font.body}" font-size="14">${safe(design.website)}</text>`,
-        "vertical-accent": `<rect width="560" height="350" fill="${p.bg}"/><rect x="512" width="48" height="350" fill="${p.accent}"/>${this._placedIcon(design.icon, p.accent, 80, 82, 70)}${baseText}`
+        "top-band": `<rect width="560" height="350" fill="${p.bg}"/><rect width="560" height="92" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 74, 46, 52)}<g transform="translate(0 16)">${baseText}</g>`,
+        "split": `<rect width="560" height="350" fill="${p.bg}"/><rect x="352" width="208" height="350" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 456, 150, 104)}${baseText}`,
+        "corner-badge": `<rect width="560" height="350" fill="${p.bg}"/><circle cx="464" cy="84" r="54" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 464, 84, 58)}${baseText}`,
+        "centered": `<rect width="560" height="350" fill="${p.bg}"/>${this._placedIcon(design.icon, p.accent, 280, 76, 62)}<text x="280" y="154" text-anchor="middle" fill="${p.fg}" font-family="${design.font.heading}" font-size="30" font-weight="800">${safe(design.businessName)}</text><text x="280" y="187" text-anchor="middle" fill="${p.muted}" font-family="${design.font.body}" font-size="15">${safe(design.area)}</text><text x="280" y="256" text-anchor="middle" fill="${p.fg}" font-family="${design.font.body}" font-size="18" font-weight="700">${safe(design.contactName)}</text><text x="280" y="286" text-anchor="middle" fill="${p.muted}" font-family="${design.font.body}" font-size="13">${safe(design.phone)}  |  ${safe(design.email)}</text><text x="280" y="314" text-anchor="middle" fill="${p.muted}" font-family="${design.font.body}" font-size="13">${safe(design.website)}</text>`,
+        "vertical-accent": `<rect width="560" height="350" fill="${p.bg}"/><rect x="512" width="48" height="350" fill="${p.accent}"/>${this._placedIcon(design.icon, p.accent, 82, 84, 64)}${baseText}`
       };
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="560" height="350" viewBox="0 0 560 350">${variants[design.layout] || variants["left-mark"]}</svg>`;
       return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
@@ -968,17 +966,15 @@
       const attrs = `fill="none" stroke="${color}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"`;
       const icons = {
         "key-round": `<g ${attrs}><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 21 2"/><path d="M15 7h4v4"/><path d="M17 5l2 2"/></g>`,
-        "shield-check": `<g ${attrs}><path d="M12 3c2.5 2 5 3 8 3v6c0 4.7-3.1 7.8-8 9-4.9-1.2-8-4.3-8-9V6c3 0 5.5-1 8-3z"/><path d="m8.7 12.4 2.2 2.2 4.7-5"/></g>`,
         "lock-keyhole": `<g ${attrs}><rect x="5" y="10" width="14" height="10" rx="2.2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1"/><path d="M12 16v1.7"/></g>`,
-        wrench: `<g ${attrs}><path d="M14.7 6.3a4.4 4.4 0 0 0-5.1 5.8L3.6 18a2 2 0 1 0 2.8 2.8l5.9-6a4.4 4.4 0 0 0 5.9-5.1l-3 3-3.3-1 1-3.3 2.8-3.1z"/></g>`,
-        home: `<g ${attrs}><path d="m3 11 9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></g>`,
-        "badge-check": `<g ${attrs}><path d="M12 3 14.2 5.1 17.2 4.8 18 7.7 20.7 9 19.5 11.8 20.7 14.6 18 15.9 17.2 18.8 14.2 18.5 12 20.6 9.8 18.5 6.8 18.8 6 15.9 3.3 14.6 4.5 11.8 3.3 9 6 7.7 6.8 4.8 9.8 5.1z"/><path d="m8.7 12 2.1 2.1 4.5-4.7"/></g>`,
-        "map-pin": `<g ${attrs}><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="2.5"/></g>`,
-        building: `<g ${attrs}><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 21v-4h6v4"/><path d="M8 7h.01M12 7h.01M16 7h.01M8 11h.01M12 11h.01M16 11h.01"/></g>`,
-        bolt: `<g ${attrs}><path d="M13 2 4 14h7l-1 8 10-13h-7z"/></g>`,
+        "door-open": `<g ${attrs}><path d="M14 4.5v15l-8-1.5v-12z"/><path d="M14 6h4v13h-4"/><path d="M11 12h.01"/></g>`,
+        "house-lock": `<g ${attrs}><path d="m3 11 9-7 9 7"/><path d="M5 10v10h14V10"/><rect x="9" y="14" width="6" height="5" rx="1"/><path d="M10 14v-1.2a2 2 0 0 1 4 0V14"/></g>`,
         "shield-lock": `<g ${attrs}><path d="M12 3c2.5 2 5 3 8 3v6c0 4.7-3.1 7.8-8 9-4.9-1.2-8-4.3-8-9V6c3 0 5.5-1 8-3z"/><rect x="9" y="11" width="6" height="5" rx="1"/><path d="M10 11V9.8a2 2 0 0 1 4 0V11"/></g>`,
-        sparkles: `<g ${attrs}><path d="M12 3 14 9l6 2-6 2-2 6-2-6-6-2 6-2z"/><path d="M19 3v4M21 5h-4M5 17v3M6.5 18.5h-3"/></g>`,
-        "phone-call": `<g ${attrs}><path d="M15 5a4 4 0 0 1 4 4"/><path d="M15 2a7 7 0 0 1 7 7"/><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.7 19.7 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.7 19.7 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7A2 2 0 0 1 22 16.9z"/></g>`
+        "key-square": `<g ${attrs}><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="12" r="2.5"/><path d="M11.5 12H18"/><path d="M15 12v2"/><path d="M17 12v2"/></g>`,
+        wrench: `<g ${attrs}><path d="M14.7 6.3a4.4 4.4 0 0 0-5.1 5.8L3.6 18a2 2 0 1 0 2.8 2.8l5.9-6a4.4 4.4 0 0 0 5.9-5.1l-3 3-3.3-1 1-3.3 2.8-3.1z"/></g>`,
+        "building-lock": `<g ${attrs}><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h.01M12 7h.01M16 7h.01M8 11h.01M16 11h.01"/><rect x="9" y="14" width="6" height="5" rx="1"/><path d="M10 14v-1a2 2 0 0 1 4 0v1"/></g>`,
+        "door-key": `<g ${attrs}><path d="M6 4h12v16H6z"/><path d="M15 12h.01"/><circle cx="9" cy="12" r="1.8"/><path d="M10.8 12H14"/><path d="M12.5 12v1.5"/></g>`,
+        safe: `<g ${attrs}><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M12 9v6M9 12h6"/><path d="M6.5 8h.01M17.5 8h.01"/></g>`
       };
       return icons[name] || icons["key-round"];
     }
