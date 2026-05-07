@@ -924,6 +924,30 @@
         "double-rule",
         "top-left-icon"
       ];
+      const textPlacements = [
+        { id: "left-standard", anchor: "start", x: 48, ys: [174, 209, 268, 298, 323] },
+        { id: "left-raised", anchor: "start", x: 48, ys: [154, 188, 254, 286, 314] },
+        { id: "left-lower", anchor: "start", x: 48, ys: [184, 218, 274, 301, 323] },
+        { id: "center-standard", anchor: "middle", x: 280, ys: [153, 187, 255, 285, 312] },
+        { id: "center-lower", anchor: "middle", x: 280, ys: [170, 204, 266, 296, 321] },
+        { id: "center-raised", anchor: "middle", x: 280, ys: [142, 176, 246, 276, 304] },
+        { id: "right-standard", anchor: "end", x: 512, ys: [174, 209, 268, 298, 323] },
+        { id: "right-raised", anchor: "end", x: 512, ys: [154, 188, 254, 286, 314] }
+      ];
+      const textPlacementRules = {
+        split: ["left-standard", "left-raised", "left-lower"],
+        "right-mark": ["left-standard", "left-raised", "left-lower"],
+        "vertical-accent": ["left-standard", "left-raised", "left-lower", "center-lower"],
+        centered: ["center-standard", "center-lower", "center-raised"],
+        "corner-badge": ["left-standard", "left-lower", "center-lower"],
+        "top-band": ["left-standard", "center-lower", "right-standard"],
+        "left-mark": ["left-standard", "center-lower", "right-standard"],
+        "badge-left": ["left-standard", "center-lower", "right-standard"],
+        "bottom-rule": ["left-standard", "left-raised", "center-standard", "right-standard"],
+        framed: ["left-standard", "center-standard", "right-standard"],
+        "double-rule": ["left-standard", "center-standard", "right-standard"],
+        "top-left-icon": ["left-standard", "center-lower", "right-standard"]
+      };
       const sizes = [
         { name: "Standard", width: 3.5, height: 2.0 },
         { name: "MOO", width: 3.46, height: 2.32 },
@@ -943,6 +967,7 @@
       const fontChoices = this._shuffleCardOptions(fonts);
       const paletteChoices = this._shuffleCardOptions(palettes);
       const layoutChoices = this._shuffleCardOptions(layouts);
+      const textPlacementChoices = this._shuffleCardOptions(textPlacements);
 
       this.generatedCardTemplates = Array.from({ length: 6 }).map((_, index) => {
         const palette = paletteChoices[index % paletteChoices.length];
@@ -950,7 +975,8 @@
         const icon = iconChoices[index % iconChoices.length];
         const layout = layoutChoices[index % layoutChoices.length];
         const size = sizes[(index + website.length) % sizes.length];
-        const design = { palette, font, icon, layout, size, businessName, contactName, phone, email, website, area };
+        const textPlacement = this._pickCardTextPlacement(layout, textPlacementChoices, textPlacementRules, textPlacements, index);
+        const design = { palette, font, icon, layout, textPlacement, size, businessName, contactName, phone, email, website, area };
 
         return {
           id: "generated-card-" + (index + 1),
@@ -968,6 +994,13 @@
       const fields = Array.isArray(section.cardFields) ? section.cardFields : [];
       const field = fields.find((item) => item.id === fieldId);
       return field && field.value ? String(field.value).trim() : "";
+    }
+
+    _pickCardTextPlacement(layout, shuffledPlacements, rules, allPlacements, index) {
+      const allowedIds = rules[layout] || ["left-standard", "center-standard"];
+      const preferred = shuffledPlacements.filter((item) => allowedIds.includes(item.id));
+      const choices = preferred.length ? preferred : allPlacements.filter((item) => allowedIds.includes(item.id));
+      return choices[index % choices.length] || allPlacements[0];
     }
 
     _cardEditorFieldValue(field) {
@@ -991,29 +1024,51 @@
       const contactName = safe(this._cardText(design.contactName, 32));
       const contactLine = safe(this._cardText([design.phone, design.email].filter(Boolean).join("  |  "), 52));
       const website = safe(this._cardDisplayWebsite(design.website));
-      const baseText = `
-        <text x="48" y="174" fill="${p.fg}" font-family="${font.heading}" font-size="${headingSize}" font-weight="800">${businessName}</text>
-        <text x="48" y="209" fill="${p.muted}" font-family="${font.body}" font-size="14">${area}</text>
-        <text x="48" y="268" fill="${p.fg}" font-family="${font.body}" font-size="${contactSize}" font-weight="700">${contactName}</text>
-        <text x="48" y="298" fill="${p.muted}" font-family="${font.body}" font-size="${detailSize}">${contactLine}</text>
-        <text x="48" y="323" fill="${p.muted}" font-family="${font.body}" font-size="${detailSize}">${website}</text>
-      `;
+      const text = this._businessCardTextSvg({
+        placement: design.textPlacement,
+        palette: p,
+        font,
+        headingSize,
+        contactSize,
+        detailSize,
+        businessName,
+        area,
+        contactName,
+        contactLine,
+        website
+      });
       const variants = {
-        "left-mark": `<rect width="560" height="350" fill="${p.bg}"/><rect width="150" height="350" fill="${p.accent}" opacity=".16"/>${icon}${baseText}`,
-        "top-band": `<rect width="560" height="350" fill="${p.bg}"/><rect width="560" height="92" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 74, 46, 52)}${baseText}`,
-        "split": `<rect width="560" height="350" fill="${p.bg}"/><rect x="352" width="208" height="350" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 456, 132, 84)}${baseText}`,
-        "corner-badge": `<rect width="560" height="350" fill="${p.bg}"/><circle cx="464" cy="84" r="54" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 464, 84, 58)}${baseText}`,
-        "centered": `<rect width="560" height="350" fill="${p.bg}"/>${this._placedIcon(design.icon, p.accent, 280, 76, 62)}<text x="280" y="153" text-anchor="middle" fill="${p.fg}" font-family="${font.heading}" font-size="${headingSize}" font-weight="800">${businessName}</text><text x="280" y="187" text-anchor="middle" fill="${p.muted}" font-family="${font.body}" font-size="14">${area}</text><text x="280" y="255" text-anchor="middle" fill="${p.fg}" font-family="${font.body}" font-size="${contactSize}" font-weight="700">${contactName}</text><text x="280" y="285" text-anchor="middle" fill="${p.muted}" font-family="${font.body}" font-size="${detailSize}">${contactLine}</text><text x="280" y="312" text-anchor="middle" fill="${p.muted}" font-family="${font.body}" font-size="${detailSize}">${website}</text>`,
-        "vertical-accent": `<rect width="560" height="350" fill="${p.bg}"/><rect x="512" width="48" height="350" fill="${p.accent}"/>${this._placedIcon(design.icon, p.accent, 82, 84, 64)}${baseText}`,
-        "bottom-rule": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="332" width="480" height="5" rx="2.5" fill="${p.accent}"/>${this._placedIcon(design.icon, p.accent, 82, 82, 62)}${baseText}`,
-        "right-mark": `<rect width="560" height="350" fill="${p.bg}"/><rect x="392" y="0" width="168" height="350" fill="${p.accent}" opacity=".14"/>${this._placedIcon(design.icon, p.accent, 454, 86, 74)}${baseText}`,
-        "framed": `<rect width="560" height="350" fill="${p.bg}"/><rect x="24" y="18" width="512" height="314" rx="10" fill="none" stroke="${p.accent}" stroke-width="4"/>${this._placedIcon(design.icon, p.accent, 84, 84, 58)}${baseText}`,
-        "badge-left": `<rect width="560" height="350" fill="${p.bg}"/><circle cx="86" cy="86" r="52" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 86, 86, 56)}${baseText}`,
-        "double-rule": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="40" width="480" height="4" rx="2" fill="${p.accent}"/><rect x="40" y="332" width="480" height="4" rx="2" fill="${p.accent}"/>${this._placedIcon(design.icon, p.accent, 86, 91, 58)}${baseText}`,
-        "top-left-icon": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="40" width="88" height="88" rx="18" fill="${p.accent}" opacity=".16"/>${this._placedIcon(design.icon, p.accent, 84, 84, 58)}${baseText}`
+        "left-mark": `<rect width="560" height="350" fill="${p.bg}"/><rect width="150" height="350" fill="${p.accent}" opacity=".16"/>${icon}${text}`,
+        "top-band": `<rect width="560" height="350" fill="${p.bg}"/><rect width="560" height="92" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 74, 46, 52)}${text}`,
+        "split": `<rect width="560" height="350" fill="${p.bg}"/><rect x="352" width="208" height="350" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 456, 132, 84)}${text}`,
+        "corner-badge": `<rect width="560" height="350" fill="${p.bg}"/><circle cx="464" cy="84" r="54" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 464, 84, 58)}${text}`,
+        "centered": `<rect width="560" height="350" fill="${p.bg}"/>${this._placedIcon(design.icon, p.accent, 280, 76, 62)}${text}`,
+        "vertical-accent": `<rect width="560" height="350" fill="${p.bg}"/><rect x="512" width="48" height="350" fill="${p.accent}"/>${this._placedIcon(design.icon, p.accent, 82, 84, 64)}${text}`,
+        "bottom-rule": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="332" width="480" height="5" rx="2.5" fill="${p.accent}"/>${this._placedIcon(design.icon, p.accent, 82, 82, 62)}${text}`,
+        "right-mark": `<rect width="560" height="350" fill="${p.bg}"/><rect x="392" y="0" width="168" height="350" fill="${p.accent}" opacity=".14"/>${this._placedIcon(design.icon, p.accent, 454, 86, 74)}${text}`,
+        "framed": `<rect width="560" height="350" fill="${p.bg}"/><rect x="24" y="18" width="512" height="314" rx="10" fill="none" stroke="${p.accent}" stroke-width="4"/>${this._placedIcon(design.icon, p.accent, 84, 84, 58)}${text}`,
+        "badge-left": `<rect width="560" height="350" fill="${p.bg}"/><circle cx="86" cy="86" r="52" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 86, 86, 56)}${text}`,
+        "double-rule": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="40" width="480" height="4" rx="2" fill="${p.accent}"/><rect x="40" y="332" width="480" height="4" rx="2" fill="${p.accent}"/>${this._placedIcon(design.icon, p.accent, 86, 91, 58)}${text}`,
+        "top-left-icon": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="40" width="88" height="88" rx="18" fill="${p.accent}" opacity=".16"/>${this._placedIcon(design.icon, p.accent, 84, 84, 58)}${text}`
       };
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="560" height="350" viewBox="0 0 560 350">${variants[design.layout] || variants["left-mark"]}</svg>`;
       return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+    }
+
+    _businessCardTextSvg(options) {
+      const placement = options.placement || { anchor: "start", x: 48, ys: [174, 209, 268, 298, 323] };
+      const anchor = placement.anchor || "start";
+      const x = placement.x || 48;
+      const ys = placement.ys || [174, 209, 268, 298, 323];
+      const anchorAttr = anchor === "start" ? "" : ` text-anchor="${anchor}"`;
+
+      return `
+        <text x="${x}" y="${ys[0]}"${anchorAttr} fill="${options.palette.fg}" font-family="${options.font.heading}" font-size="${options.headingSize}" font-weight="800">${options.businessName}</text>
+        <text x="${x}" y="${ys[1]}"${anchorAttr} fill="${options.palette.muted}" font-family="${options.font.body}" font-size="14">${options.area}</text>
+        <text x="${x}" y="${ys[2]}"${anchorAttr} fill="${options.palette.fg}" font-family="${options.font.body}" font-size="${options.contactSize}" font-weight="700">${options.contactName}</text>
+        <text x="${x}" y="${ys[3]}"${anchorAttr} fill="${options.palette.muted}" font-family="${options.font.body}" font-size="${options.detailSize}">${options.contactLine}</text>
+        <text x="${x}" y="${ys[4]}"${anchorAttr} fill="${options.palette.muted}" font-family="${options.font.body}" font-size="${options.detailSize}">${options.website}</text>
+      `;
     }
 
     _cardText(value, maxLength) {
