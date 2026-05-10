@@ -748,6 +748,13 @@ function nala_mxchat_signup_current_request_message(): string
         }
     }
 
+    $json = nala_mxchat_signup_json_payload();
+    foreach (['message', 'user_message', 'input'] as $key) {
+        if (isset($json[$key])) {
+            return nala_mxchat_signup_clean_message((string) $json[$key]);
+        }
+    }
+
     return '';
 }
 
@@ -1323,6 +1330,16 @@ function nala_mxchat_signup_current_page_url(): string
         }
     }
 
+    $json = nala_mxchat_signup_json_payload();
+    foreach (['current_page_url', 'page_url'] as $key) {
+        if (isset($json[$key])) {
+            $url = esc_url_raw((string) $json[$key]);
+            if ($url !== '') {
+                return $url;
+            }
+        }
+    }
+
     if (isset($_SERVER['HTTP_REFERER'])) {
         return esc_url_raw(wp_unslash((string) $_SERVER['HTTP_REFERER']));
     }
@@ -1334,6 +1351,19 @@ function nala_mxchat_signup_current_page_language(): string
 {
     foreach (['site_lang', 'lang', 'nala_lang'] as $key) {
         if (isset($_POST[$key]) && strtolower((string) wp_unslash($_POST[$key])) === 'es') {
+            return 'es';
+        }
+    }
+
+    $json = nala_mxchat_signup_json_payload();
+    foreach (['site_lang', 'lang', 'nala_lang'] as $key) {
+        if (isset($json[$key]) && strtolower((string) $json[$key]) === 'es') {
+            return 'es';
+        }
+    }
+
+    foreach (['site_lang', 'lang', 'nala_lang'] as $key) {
+        if (isset($_GET[$key]) && strtolower((string) wp_unslash($_GET[$key])) === 'es') {
             return 'es';
         }
     }
@@ -1351,6 +1381,28 @@ function nala_mxchat_signup_current_page_language(): string
     }
 
     return 'en';
+}
+
+function nala_mxchat_signup_json_payload(): array
+{
+    static $payload = null;
+
+    if (is_array($payload)) {
+        return $payload;
+    }
+
+    $payload = [];
+    $raw = file_get_contents('php://input');
+    if (!is_string($raw) || trim($raw) === '') {
+        return $payload;
+    }
+
+    $decoded = json_decode($raw, true);
+    if (is_array($decoded)) {
+        $payload = $decoded;
+    }
+
+    return $payload;
 }
 
 function nala_mxchat_signup_is_allowed_host(string $host): bool

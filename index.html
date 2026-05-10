@@ -81,65 +81,12 @@
 
 	<!-- YOUR CODE TO HERE... -->
 
+	<script src="js/mxchat-language-bridge.js"></script>
 	<script>
 	(function () {
-	    function currentLang() {
-		try {
-		    var lang = window.i18n && typeof window.i18n.getLang === "function"
-			? window.i18n.getLang()
-			: (localStorage.getItem("nala_lang") || document.documentElement.lang || "en");
-		    return lang === "es" ? "es" : "en";
-		} catch (e) {
-		    return "en";
-		}
+	    if (window.nalaMxChatBridge && typeof window.nalaMxChatBridge.load === "function") {
+		window.nalaMxChatBridge.load(window.nalaMxChatBridge.currentLang());
 	    }
-
-	    try {
-		window.nalaMxChatLanguage = currentLang();
-		if (!window.__nalaMxChatFetchLanguagePatch && window.fetch) {
-		    window.__nalaMxChatFetchLanguagePatch = true;
-		    var originalFetch = window.fetch.bind(window);
-		    window.fetch = function (input, init) {
-			try {
-			    var requestUrl = typeof input === "string" ? input : (input && input.url) || "";
-			    if (requestUrl.indexOf("/wp-json/mxchat") !== -1 || requestUrl.indexOf("mxchat") !== -1) {
-				var lang = currentLang();
-				window.nalaMxChatLanguage = lang;
-				init = init || {};
-				if (init.body instanceof FormData) {
-				    init.body.set("site_lang", lang);
-				    init.body.set("lang", lang);
-				} else if (init.body instanceof URLSearchParams) {
-				    init.body.set("site_lang", lang);
-				    init.body.set("lang", lang);
-				} else if (typeof init.body === "string" && init.body.charAt(0) === "{") {
-				    var body = JSON.parse(init.body);
-				    body.site_lang = lang;
-				    body.lang = lang;
-				    init.body = JSON.stringify(body);
-				}
-			    }
-			} catch (e) {}
-			return originalFetch(input, init);
-		    };
-		}
-
-		var url = new URL(window.location.href);
-		var lang = currentLang();
-		if (url.searchParams.get("lang") !== lang) {
-		    url.searchParams.set("lang", lang);
-		    window.history.replaceState(window.history.state, "", url.toString());
-		}
-	    } catch (e) {}
-	}());
-	</script>
-	<script>
-	(function () {
-	    var lang = window.nalaMxChatLanguage || "en";
-	    var script = document.createElement("script");
-	    script.src = "https://nalanetwork.com/wp-json/mxchat-embed/v1/loader.js?key=G9N61FC4MEplohp2CNRIQacbMkkjG32K&lang=" + encodeURIComponent(lang);
-	    script.async = true;
-	    document.head.appendChild(script);
 	}());
 	</script>
 	<script src="js/mxchat-layout-overrides.js"></script>
