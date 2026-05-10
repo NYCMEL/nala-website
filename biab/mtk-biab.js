@@ -31,6 +31,7 @@
       this.invoiceStatus = "All";
       this.invoiceSort = { key: "date", direction: "desc" };
       this.invoices = [];
+      this.googleSeo = null;
       this.selectedTemplate = null;
       this.generatedCardTemplates = null;
       this.orderedCard = this._loadOrderedCard();
@@ -47,6 +48,7 @@
       this._bind();
       this._requestInvoices();
       this._requestCardOrder();
+      this._requestGoogleSeoStatus();
       this._publish(this.events.publish.ready || "mtk-biab:ready", {
         component: this.config.component || "mtk-biab",
         version: this.config.version || "1.0.16"
@@ -251,6 +253,11 @@
         }
         this._render();
       }
+
+      if (eventName === "4-mtk-biab:google-seo-status" && data) {
+        this.googleSeo = data.status || data;
+        this._render();
+      }
     }
 
     _publish(eventName, data) {
@@ -402,7 +409,59 @@
     _renderSectionContent(section) {
       if (section.viewType === "invoices") return this._renderInvoices(section);
       if (section.viewType === "reviews") return this._renderReviews(section);
+      if (section.viewType === "googleSeo") return this._renderGoogleSeo(section);
       return "";
+    }
+
+    _renderGoogleSeo(section) {
+      const status = this.googleSeo || {};
+      const steps = Array.isArray(status.steps) && status.steps.length ? status.steps : (Array.isArray(section.workflow) ? section.workflow : []);
+      const exportData = status.exportData || this._buildGoogleSeoPayload().exportData;
+      const requestedAt = status.requestedAt ? new Date(status.requestedAt).toLocaleString() : "";
+
+      return `
+        <section class="mtk-biab__google-seo" aria-label="${this._escape(section.title || "Google SEO Automation")}">
+          <div class="mtk-biab__google-seo-head">
+            <div>
+              <h3>${this._escape(section.title || "Google SEO Automation")}</h3>
+              <p>${this._escape(section.body || "")}</p>
+              ${requestedAt ? `<p class="mtk-biab__google-seo-note">${this._escape(this._text("Last prepared"))}: ${this._escape(requestedAt)}</p>` : ""}
+            </div>
+            <div class="mtk-biab__google-seo-actions">
+              <button class="mtk-biab__submit-btn" type="button" data-action="request-google-seo">
+                <span class="material-icons" aria-hidden="true">auto_fix_high</span>
+                <span>${this._escape(this._text("Prepare Google SEO"))}</span>
+              </button>
+              <button class="mtk-biab__secondary-btn" type="button" data-action="refresh-google-seo">
+                <span class="material-icons" aria-hidden="true">refresh</span>
+                <span>${this._escape(this._text("Refresh"))}</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="mtk-biab__google-seo-grid">
+            ${steps.map((step) => `
+              <article class="mtk-biab__google-seo-card">
+                <span class="mtk-biab__google-seo-status">${this._escape(this._text(step.status || "Prepared"))}</span>
+                <h4>${this._escape(this._text(step.label || step.name || ""))}</h4>
+                <p>${this._escape(this._text(step.description || ""))}</p>
+              </article>
+            `).join("")}
+          </div>
+
+          <div class="mtk-biab__google-seo-data">
+            <h4>${this._escape(this._text("Google-ready business data"))}</h4>
+            <dl>
+              ${Object.keys(exportData).map((key) => `
+                <div>
+                  <dt>${this._escape(this._text(this._humanizeKey(key)))}</dt>
+                  <dd>${this._escape(exportData[key] || this._text("Not provided yet"))}</dd>
+                </div>
+              `).join("")}
+            </dl>
+          </div>
+        </section>
+      `;
     }
 
     _renderInvoices(section) {
@@ -595,6 +654,7 @@
       this.selectedTemplate = null;
       this.generatedCardTemplates = null;
       this.orderedCard = null;
+      this.googleSeo = null;
       try {
         window.localStorage.removeItem(this._orderedCardStorageKey());
         window.localStorage.removeItem("nala_profile_settings");
@@ -610,6 +670,14 @@
 
     _requestCardOrder() {
       this._publish("mtk-biab:card-order-load", { nalaUID: this._businessPageId() });
+    }
+
+    _requestGoogleSeoStatus() {
+      this._publish("mtk-biab:google-seo-status-load", { nalaUID: this._businessPageId() });
+    }
+
+    _requestGoogleSeoSetup() {
+      this._publish("mtk-biab:google-seo-request", this._buildGoogleSeoPayload());
     }
 
     _toggleIncluded(index) {
@@ -668,6 +736,8 @@
         if (action === "back-to-templates") this._openBusinessCardTemplatePicker(this._getActiveSection());
         if (action === "submit-card-editor") this._submitCardEditor();
         if (action === "sort-invoices") this._sortInvoiceBy(target.getAttribute("data-sort-key"));
+        if (action === "refresh-google-seo") this._requestGoogleSeoStatus();
+        if (action === "request-google-seo") this._requestGoogleSeoSetup();
 
         if (action === "email-invoice") {
           this._publish("mtk-biab:email-invoice", {
@@ -1351,6 +1421,58 @@
       } catch (err) {
         this.settingsProfile = {};
       }
+    }
+
+    _buildGoogleSeoPayload() {
+      this._loadStoredSettings();
+      const settings = this.settingsProfile || {};
+      const business = settings.business || {};
+      const privacy = settings.privacy || {};
+      const services = settings.services || {};
+      const businessName = business.customerFacingBusinessName || business.legalBusinessName || "";
+      const websiteUrl = business.businessWebsite || this._defaultClientWebsite();
+      const sitemapUrl = this._sitemapUrlForWebsite(websiteUrl);
+      const serviceArea = services.serviceArea || business.serviceArea || "";
+      const serviceList = [
+        services.primaryService,
+        services.secondaryService,
+        services.launchServices,
+        services.servicesOffered
+      ].filter(Boolean).join(", ");
+
+      return {
+        nalaUID: this._businessPageId(),
+        requestedAt: new Date().toISOString(),
+        exportData: {
+          businessName,
+          legalBusinessName: business.legalBusinessName || businessName,
+          ownerName: privacy.fullName || business.ownerOrResponsiblePartyName || "",
+          phone: business.businessPhone || privacy.contactPhoneNumber || "",
+          email: business.businessEmail || privacy.emailAddress || "",
+          websiteUrl,
+          sitemapUrl,
+          address: business.businessAddress || "",
+          serviceArea,
+          hours: business.businessHours || "",
+          services: serviceList,
+          description: business.businessDescription || "Professional locksmith services for local residential and commercial customers."
+        }
+      };
+    }
+
+    _sitemapUrlForWebsite(websiteUrl) {
+      try {
+        const url = new URL(websiteUrl, window.location.origin);
+        return url.origin + "/repo_deploy/client/sitemap.xml?nalaUID=" + encodeURIComponent(this._businessPageId());
+      } catch (err) {
+        return "/repo_deploy/client/sitemap.xml?nalaUID=" + encodeURIComponent(this._businessPageId());
+      }
+    }
+
+    _humanizeKey(key) {
+      return String(key || "")
+        .replace(/([A-Z])/g, " $1")
+        .replace(/^./, (letter) => letter.toUpperCase());
     }
 
     _defaultInvoiceValues() {

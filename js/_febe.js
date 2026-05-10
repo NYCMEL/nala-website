@@ -46,6 +46,8 @@ class _febe {
 	    "mtk-biab:delete-invoice",
 	    "mtk-biab:card-order-load",
 	    "mtk-biab:business-card-submit",
+	    "mtk-biab:google-seo-status-load",
+	    "mtk-biab:google-seo-request",
 	    "mtk-biab:reset",
 	    "mtk-dashboard:reset-biab",
 	    "mtk-invoice:save",
@@ -113,6 +115,8 @@ class _febe {
 	    "mtk-biab:delete-invoice": this.handleBiabInvoiceDelete,
 	    "mtk-biab:card-order-load": this.handleBiabCardOrderLoad,
 	    "mtk-biab:business-card-submit": this.handleBiabCardSubmit,
+	    "mtk-biab:google-seo-status-load": this.handleBiabGoogleSeoStatusLoad,
+	    "mtk-biab:google-seo-request": this.handleBiabGoogleSeoRequest,
 	    "mtk-biab:reset": this.handleBiabReset,
 	    "mtk-dashboard:reset-biab": this.handleBiabReset,
 	    "mtk-invoice:save": this.handleInvoiceSave,
@@ -618,6 +622,32 @@ class _febe {
 	});
     }
 
+    handleBiabGoogleSeoStatusLoad(data) {
+	const uid = (data && data.nalaUID) || this.getBusinessPageId();
+	return this.getBiabJson("/api/business_in_a_box_google_seo.php?nalaUID=" + encodeURIComponent(uid), this.t("biab.error.generic", "Could not complete that request. Please try again.")).then(json => {
+	    wc.publish("4-mtk-biab:google-seo-status", {
+		nalaUID: uid,
+		status: json.status || {}
+	    });
+	    return json;
+	});
+    }
+
+    handleBiabGoogleSeoRequest(data) {
+	const payload = data || {};
+	const uid = payload.nalaUID || this.getBusinessPageId();
+	return this.postBiabJson("/api/business_in_a_box_google_seo.php", Object.assign({}, payload, {
+	    nalaUID: uid,
+	    action: "prepare"
+	}), this.t("biab.googleSeo.preparedSuccess", "Google SEO package prepared."), this.t("biab.error.generic", "Could not complete that request. Please try again.")).then(json => {
+	    wc.publish("4-mtk-biab:google-seo-status", {
+		nalaUID: uid,
+		status: json.status || {}
+	    });
+	    return json;
+	});
+    }
+
     handleBiabReset(data) {
 	const uid = (data && data.nalaUID) || this.getBusinessPageId();
 	try {
@@ -638,12 +668,17 @@ class _febe {
 	    this.postBiabJson("/api/business_in_a_box_reviews.php", {
 		action: "reset",
 		nalaUID: uid
+	    }, "", this.t("biab.error.generic", "Could not complete that request. Please try again.")),
+	    this.postBiabJson("/api/business_in_a_box_google_seo.php", {
+		action: "reset",
+		nalaUID: uid
 	    }, "", this.t("biab.error.generic", "Could not complete that request. Please try again."))
 	];
 
 	return Promise.allSettled(requests).then(() => {
 	    wc.publish("4-mtk-biab:card-order-loaded", { nalaUID: uid, order: null });
 	    wc.publish("4-mtk-biab:invoices-loaded", { nalaUID: uid, invoices: [] });
+	    wc.publish("4-mtk-biab:google-seo-status", { nalaUID: uid, status: {} });
 	});
     }
 

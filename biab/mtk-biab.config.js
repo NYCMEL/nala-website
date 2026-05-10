@@ -23,7 +23,8 @@ window.MTK_BIAB_CONFIG = {
       "4-mtk-biab:invoices-loaded",
       "4-mtk-biab:invoice-saved",
       "4-mtk-biab:invoice-emailed",
-      "4-mtk-biab:card-order-loaded"
+      "4-mtk-biab:card-order-loaded",
+      "4-mtk-biab:google-seo-status"
     ]
   },
   sections: [
@@ -38,6 +39,7 @@ window.MTK_BIAB_CONFIG = {
       includedItems: [
         { label: "Business profile setup", actionRequired: true, page: "settings", settingsTab: "business", description: "Save the business name, phone, email, service area, hours, and launch services once so the website, cards, invoices, and review flow can reuse the same profile data." },
         { label: "Business card choice", actionRequired: true, sectionId: "business-card-logo", openSetup: true, description: "Choose one business card design. Once ordered, the card choice is locked so the print workflow stays consistent." },
+        { label: "Google authorization", actionRequired: true, sectionId: "google-seo", description: "Authorize or invite NALA to the business Google account when you want us to submit Search Console and Google Business Profile updates for you." },
         { label: "Basic website structure", done: true, description: "The client website is generated with a homepage, service positioning, contact details, reviews, and trust sections." },
         { label: "Contact information configuration", done: true, description: "Public contact fields flow from Profile & Settings into the website, cards, and invoices." },
         { label: "Service listing template", done: true, description: "Locksmith services are organized for residential, commercial, rekey, lock change, deadbolt, lockout, and emergency-service pages." },
@@ -57,6 +59,23 @@ window.MTK_BIAB_CONFIG = {
       body: "Click Start setup to open the website builder using content from the client folder.",
       setupType: "websiteBuilder",
       clientUrl: "client/index.html"
+    },
+    {
+      id: "google-seo",
+      label: "Google SEO",
+      icon: "travel_explore",
+      eyebrow: "Search",
+      title: "Google SEO Automation",
+      description: "Prepare the hosted website, Search Console submission, and Google Business Profile data from the same business profile.",
+      body: "NALA automatically prepares the on-site SEO and Google-ready business data. Google Search Console and Google Business Profile submissions require the client to authorize the correct Google account or add NALA as a manager first.",
+      viewType: "googleSeo",
+      hideStartSetup: true,
+      workflow: [
+        { label: "Hosted website SEO", status: "Automatic", description: "Titles, descriptions, local business schema, review schema, internal links, and sitemap-ready URLs are generated from the business profile." },
+        { label: "Search Console sitemap", status: "Needs authorization", description: "After the Google account has access to the website property, NALA can submit the sitemap through the Search Console API." },
+        { label: "Google Business Profile", status: "Needs authorization", description: "The owner must claim or verify the profile, then NALA can prepare and manage eligible location details with approved access." },
+        { label: "Local SEO data package", status: "Prepared", description: "Name, phone, website, service area, hours, services, and description are kept consistent for listings and citation work." }
+      ]
     },
     {
       id: "business-card-logo",
