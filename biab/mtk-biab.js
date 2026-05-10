@@ -835,8 +835,6 @@
               ${this._escape(this._text("Order my Selection"))}
             </button>
           </div>
-
-          <p class="mtk-biab__template-text">${this._escape(section.generatorIntro || "Six options are generated from curated design rules so each card stays readable and balanced.")}</p>
         </div>
       `);
 
@@ -1265,13 +1263,15 @@
       const x = placement.x || 48;
       const ys = placement.ys || [174, 209, 268, 298, 323];
       const anchorAttr = anchor === "start" ? "" : ` text-anchor="${anchor}"`;
+      const websiteLength = String(options.website || "").length;
+      const websiteFit = websiteLength > 44 ? ` textLength="464" lengthAdjust="spacingAndGlyphs"` : "";
 
       return `
         <text x="${x}" y="${ys[0]}"${anchorAttr} fill="${options.palette.fg}" font-family="${options.font.heading}" font-size="${options.headingSize}" font-weight="800">${options.businessName}</text>
         <text x="${x}" y="${ys[1]}"${anchorAttr} fill="${options.palette.muted}" font-family="${options.font.body}" font-size="14">${options.area}</text>
         <text x="${x}" y="${ys[2]}"${anchorAttr} fill="${options.palette.fg}" font-family="${options.font.body}" font-size="${options.contactSize}" font-weight="700">${options.contactName}</text>
         <text x="${x}" y="${ys[3]}"${anchorAttr} fill="${options.palette.muted}" font-family="${options.font.body}" font-size="${options.detailSize}">${options.contactLine}</text>
-        <text x="${x}" y="${ys[4]}"${anchorAttr} fill="${options.palette.muted}" font-family="${options.font.body}" font-size="${options.detailSize}">${options.website}</text>
+        <text x="${x}" y="${ys[4]}"${anchorAttr}${websiteFit} fill="${options.palette.muted}" font-family="${options.font.body}" font-size="${options.detailSize}">${options.website}</text>
       `;
     }
 
@@ -1285,10 +1285,9 @@
       const text = String(value || "").trim();
       try {
         const url = new URL(text, window.location.href);
-        const path = url.pathname.replace(/\/index\.html$/i, "").replace(/\/$/, "");
-        return this._cardText(url.hostname + path, 46);
+        return url.href;
       } catch (err) {
-        return this._cardText(text.replace(/^https?:\/\//i, "").replace(/\/index\.html$/i, ""), 46);
+        return text;
       }
     }
 
@@ -1333,13 +1332,15 @@
     }
 
     _defaultClientWebsite() {
-      const websiteSection = this.sections.find((item) => item && item.setupType === "websiteBuilder");
-      const clientUrl = (websiteSection && websiteSection.clientUrl) || "client/index.html";
+      const uid = this._businessPageId();
+      const clientUrl = "/repo_deploy/client/index.html";
 
       try {
-        return new URL(clientUrl, window.location.href).href;
+        const url = new URL(clientUrl, window.location.origin || window.location.href);
+        if (uid) url.searchParams.set("nalaUID", uid);
+        return url.href;
       } catch (err) {
-        return clientUrl;
+        return clientUrl + (uid ? "?nalaUID=" + encodeURIComponent(uid) : "");
       }
     }
 

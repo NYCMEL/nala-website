@@ -932,7 +932,6 @@
     'biab.card.title': { en: 'Business Card & Logo', es: 'Tarjeta de presentación y logo' },
     'biab.card.desc': { en: 'Create basic brand assets for print and digital use.', es: 'Crea recursos básicos de marca para impresión y uso digital.' },
     'biab.card.body': { en: 'Click Start setup to choose a business card design and customize the fields.', es: 'Haz clic en Comenzar configuración para elegir un diseño de tarjeta y personalizar los campos.' },
-    'biab.card.intro': { en: 'Six options are generated from curated layout, palette, typography, and icon rules so each card stays readable and balanced.', es: 'Se generan seis opciones con reglas curadas de diseño, paleta, tipografía e íconos para que cada tarjeta sea legible y equilibrada.' },
     'biab.card.select': { en: 'Please select a card', es: 'Selecciona una tarjeta' },
     'biab.card.order': { en: 'Order my Selection', es: 'Pedir mi selección' },
     'biab.introduction': { en: 'Introduction', es: 'Introducción' },
