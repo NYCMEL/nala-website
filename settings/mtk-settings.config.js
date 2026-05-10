@@ -127,7 +127,7 @@ window.mtkSettingsConfig = {
       label: "Services Offered",
       icon: "handyman",
       title: "Services Offered",
-      description: "Manage your service areas and launch services.",
+      description: "Manage your service areas and services offered.",
       fields: [
         {
           id: "serviceArea",
@@ -140,7 +140,7 @@ window.mtkSettingsConfig = {
         },
         {
           id: "launchServices",
-          label: "Launch services",
+          label: "Services offered",
           type: "checkboxGroup",
           required: true,
           fullWidth: true,
