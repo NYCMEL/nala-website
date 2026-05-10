@@ -539,19 +539,27 @@
       const key = sort.key || "date";
 
       return rows.slice().sort((a, b) => {
-        let av = a[key];
-        let bv = b[key];
-        if (key === "amount") {
-          av = Number(av) || 0;
-          bv = Number(bv) || 0;
-        } else {
-          av = String(av || "").toLowerCase();
-          bv = String(bv || "").toLowerCase();
-        }
+        const av = this._invoiceSortValue(a, key);
+        const bv = this._invoiceSortValue(b, key);
         if (av < bv) return -1 * direction;
         if (av > bv) return 1 * direction;
         return 0;
       });
+    }
+
+    _invoiceSortValue(invoice, key) {
+      const value = invoice ? invoice[key] : "";
+
+      if (key === "amount") {
+        return Number(value) || 0;
+      }
+
+      if (key === "date") {
+        const time = Date.parse(value);
+        return Number.isFinite(time) ? time : 0;
+      }
+
+      return String(value || "").toLowerCase();
     }
 
     _normalizeInvoiceRow(invoice) {
