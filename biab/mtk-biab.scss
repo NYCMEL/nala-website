@@ -242,8 +242,125 @@ mtk-biab.mtk-biab .mtk-biab__new-invoice-btn:hover {
 }
 
 mtk-biab.mtk-biab .mtk-biab__invoice-section,
-mtk-biab.mtk-biab .mtk-biab__reviews-section {
+mtk-biab.mtk-biab .mtk-biab__reviews-section,
+mtk-biab.mtk-biab .mtk-biab__google-seo {
   margin: 24px 0 0;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-page {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-page-header {
+  background: #ffffff;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.14);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-page-header-inner,
+mtk-biab.mtk-biab .mtk-biab__invoice-page-body-inner {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-page-header-inner {
+  min-height: 92px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px 0;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-page-kicker {
+  margin: 0 0 4px;
+  color: #a98211;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-page-title {
+  margin: 0;
+  color: #0f172a;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 900;
+  line-height: 1.08;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-page-close {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 2px solid #a98211;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #0f172a;
+  line-height: 0;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-page-close .material-icons {
+  display: block;
+  font-size: 26px;
+  line-height: 1;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-page-close:hover,
+mtk-biab.mtk-biab .mtk-biab__invoice-page-close:focus-visible {
+  background: #a98211;
+  color: #ffffff;
+  outline: 3px solid rgba(169, 130, 17, 0.28);
+  outline-offset: 3px;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-page-body {
+  min-height: 0;
+  overflow: auto;
+  padding: 28px 0;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-page-body-inner {
+  min-height: calc(100vh - 178px);
+  background: #ffffff;
+  overflow: visible;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-page-body-inner wc-include,
+mtk-biab.mtk-biab .mtk-biab__invoice-page-body-inner .mtk-invoice {
+  display: block;
+  width: 100%;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-page-body-inner .mtk-invoice__shell {
+  display: contents !important;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-page-body-inner .mtk-invoice__card {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 auto 40px !important;
+}
+
+mtk-biab.mtk-biab .mtk-biab__invoice-page-body-inner input::placeholder,
+mtk-biab.mtk-biab .mtk-biab__invoice-page-body-inner textarea::placeholder {
+  font-style: italic !important;
+}
+
+body.mtk-biab-invoice-page-open {
+  overflow: hidden;
 }
 
 mtk-biab.mtk-biab .mtk-biab__invoice-head {
@@ -660,13 +777,39 @@ mtk-biab.mtk-biab .mtk-biab__client-frame {
   }
 
   mtk-biab.mtk-biab .mtk-biab__template-grid,
-  mtk-biab.mtk-biab .mtk-biab__editor {
+  mtk-biab.mtk-biab .mtk-biab__editor,
+  mtk-biab.mtk-biab .mtk-biab__google-seo-grid,
+  mtk-biab.mtk-biab .mtk-biab__google-seo-data dl {
     grid-template-columns: 1fr;
   }
 
   mtk-biab.mtk-biab .mtk-biab__invoice-head {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  mtk-biab.mtk-biab .mtk-biab__invoice-page-header-inner,
+  mtk-biab.mtk-biab .mtk-biab__invoice-page-body-inner {
+    width: min(100% - 28px, 1180px);
+  }
+
+  mtk-biab.mtk-biab .mtk-biab__invoice-page-header-inner {
+    align-items: flex-start;
+    min-height: 78px;
+  }
+
+  mtk-biab.mtk-biab .mtk-biab__invoice-page-close {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+  }
+
+  mtk-biab.mtk-biab .mtk-biab__invoice-page-close .material-icons {
+    font-size: 24px;
+  }
+
+  mtk-biab.mtk-biab .mtk-biab__invoice-page-body {
+    padding: 14px 0;
   }
 }
 
