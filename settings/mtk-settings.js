@@ -23,6 +23,21 @@
     return config && Array.isArray(config.tabs) ? config.tabs : [];
   }
 
+  function translate(key, fallback) {
+    if (window.wc && typeof window.wc.t === "function") {
+      return window.wc.t(key, fallback);
+    }
+
+    if (window.i18n && typeof window.i18n.t === "function") {
+      var value = window.i18n.t(key);
+      if (value && value !== key) {
+        return value;
+      }
+    }
+
+    return fallback || key;
+  }
+
   function readStoredSettings() {
     try {
       return JSON.parse(window.localStorage.getItem("nala_profile_settings") || "{}") || {};
@@ -589,10 +604,30 @@
     }, 0);
   };
 
+  MTKSettings.prototype.showValidationMessage = function (message) {
+    if (window.MTKMsgs && typeof window.MTKMsgs.show === "function") {
+      window.MTKMsgs.show({
+        type: "warning",
+        icon: "warning",
+        message: message,
+        closable: true,
+        timer: 7
+      });
+    }
+  };
+
+  MTKSettings.prototype.hasCheckedCustomServices = function (tabId) {
+    var rows = normalizeCustomServices(this.formState[tabId] ? this.formState[tabId].customServices : []);
+    return rows.some(function (row) {
+      return row.checked !== false && String(row.label || "").trim();
+    });
+  };
+
   MTKSettings.prototype.validateTab = function (tab, form) {
     var fields = tab.fields || [];
 
     if (!form.checkValidity()) {
+      this.showValidationMessage(translate("settings.error.requiredFields", "Please complete all required fields before saving."));
       form.reportValidity();
       return false;
     }
@@ -600,8 +635,14 @@
     for (var i = 0; i < fields.length; i += 1) {
       if (fields[i].type === "checkboxGroup" && fields[i].required) {
         var values = this.formState[tab.id][fields[i].id] || [];
-        if (!values.length) {
+        var customServicesSatisfyRequirement = fields[i].id === "launchServices" && this.hasCheckedCustomServices(tab.id);
+        if (!values.length && !customServicesSatisfyRequirement) {
           var firstCheckbox = form.querySelector('[data-checkbox-group="' + fields[i].id + '"] .mtk-settings__checkbox');
+          this.showValidationMessage(
+            fields[i].id === "launchServices"
+              ? translate("settings.error.servicesRequired", "Select at least one service offered, or add and check a custom service.")
+              : translate("settings.error.requiredFields", "Please complete all required fields before saving.")
+          );
           if (firstCheckbox) {
             firstCheckbox.focus();
           }

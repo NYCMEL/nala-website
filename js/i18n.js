@@ -926,6 +926,8 @@
     'settings.success.reset':    { en: 'Password reset email sent. Please check your inbox.', es: 'Correo de restablecimiento enviado. Por favor revisa tu bandeja de entrada.' },
     'settings.error.resetFail':  { en: 'Could not send reset link.',    es: 'No se pudo enviar el enlace de restablecimiento.' },
     'settings.success.saved':    { en: 'Settings saved.',               es: 'Configuración guardada.' },
+    'settings.error.requiredFields': { en: 'Please complete all required fields before saving.', es: 'Completa todos los campos requeridos antes de guardar.' },
+    'settings.error.servicesRequired': { en: 'Select at least one service offered, or add and check a custom service.', es: 'Selecciona al menos un servicio ofrecido, o agrega y marca un servicio personalizado.' },
 
     // ── PURCHASE FLOW ────────────────────────────────────────────
     'purchase.loginRequired':    { en: 'Please log in before purchasing.', es: 'Por favor inicia sesión antes de comprar.' },
