@@ -378,15 +378,18 @@ class MtkInvoice {
 
   static initWhenReady() {
     const start = () => {
-      const root = document.querySelector("mtk-invoice.mtk-invoice");
+      const roots = Array.from(document.querySelectorAll("mtk-invoice.mtk-invoice"));
+      let initialized = false;
 
-      if (!root || root.dataset.mtkInvoiceReady === "true") {
-        return false;
-      }
+      roots.forEach((root) => {
+        if (!root || root.dataset.mtkInvoiceReady === "true") return;
 
-      root.dataset.mtkInvoiceReady = "true";
-      root.__mtkInvoiceInstance = new MtkInvoice(root, window.MTK_INVOICE_CONFIG || {});
-      return true;
+        root.dataset.mtkInvoiceReady = "true";
+        root.__mtkInvoiceInstance = new MtkInvoice(root, window.MTK_INVOICE_CONFIG || {});
+        initialized = true;
+      });
+
+      return initialized;
     };
 
     if (start()) return;
@@ -406,4 +409,5 @@ class MtkInvoice {
   }
 }
 
+window.MtkInvoice = MtkInvoice;
 MtkInvoice.initWhenReady();

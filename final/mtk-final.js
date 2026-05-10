@@ -473,14 +473,19 @@ class MtkFinal {
             const close = document.createElement('button');
             close.type = 'button';
             close.setAttribute('aria-label', 'Close message');
-            close.innerHTML = '&times;';
+            close.innerHTML = '<span class="material-icons" aria-hidden="true">close</span>';
             close.style.position = 'absolute';
             close.style.top = '8px';
             close.style.right = '10px';
+            close.style.width = '32px';
+            close.style.height = '32px';
+            close.style.display = 'inline-flex';
+            close.style.alignItems = 'center';
+            close.style.justifyContent = 'center';
             close.style.border = '0';
             close.style.background = 'transparent';
-            close.style.fontSize = '24px';
-            close.style.lineHeight = '1';
+            close.style.padding = '0';
+            close.style.lineHeight = '0';
             close.style.cursor = 'pointer';
             close.style.color = '#345';
 

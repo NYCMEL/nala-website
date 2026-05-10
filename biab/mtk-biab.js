@@ -114,15 +114,20 @@
           display: inline-flex;
           align-items: center;
           justify-content: center;
+          padding: 0;
           border: 2px solid #a98211;
           border-radius: 50%;
           background: #ffffff;
           color: #0f172a;
-          font-size: 30px;
-          font-weight: 900;
-          line-height: 1;
+          line-height: 0;
           cursor: pointer;
           box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
+        }
+
+        .mtk-biab__invoice-page-close .material-icons {
+          display: block;
+          font-size: 26px;
+          line-height: 1;
         }
 
         .mtk-biab__invoice-page-close:hover,
@@ -185,7 +190,10 @@
             width: 42px;
             height: 42px;
             flex-basis: 42px;
-            font-size: 26px;
+          }
+
+          .mtk-biab__invoice-page-close .material-icons {
+            font-size: 24px;
           }
 
           .mtk-biab__invoice-page-body {
@@ -750,7 +758,7 @@
             </div>
 
             <button class="mtk-biab__invoice-page-close" type="button" data-action="close-invoice-page" aria-label="Close invoice">
-              ×
+              <span class="material-icons" aria-hidden="true">close</span>
             </button>
           </div>
         </header>
@@ -1532,7 +1540,7 @@
             </div>
 
             <button class="mtk-biab__setup-close" type="button" data-action="close-setup" aria-label="${this._escape(this.labels.closeSetup || "Close setup")}">
-              ×
+              <span class="material-icons" aria-hidden="true">close</span>
             </button>
           </div>
         </header>
