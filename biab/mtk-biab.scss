@@ -184,6 +184,31 @@ mtk-biab.mtk-biab .mtk-biab__included-list {
   line-height: 1.7;
 }
 
+mtk-biab.mtk-biab .mtk-biab__included-link {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 800;
+  text-align: left;
+  padding: 0;
+  cursor: pointer;
+}
+
+mtk-biab.mtk-biab .mtk-biab__included-link:hover,
+mtk-biab.mtk-biab .mtk-biab__included-link:focus-visible {
+  color: #a98211;
+  outline: none;
+}
+
+mtk-biab.mtk-biab .mtk-biab__included-detail {
+  margin: 8px 0 0;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
 mtk-biab.mtk-biab .mtk-biab__start-btn,
 mtk-biab.mtk-biab .mtk-biab__submit-btn,
 mtk-biab.mtk-biab .mtk-biab__new-invoice-btn {

@@ -110,6 +110,27 @@ function biab_invoice_list($uid) {
     return $records;
 }
 
+function biab_invoice_get($uid, $id) {
+    $cleanId = preg_replace('/[^a-zA-Z0-9_-]/', '', (string)$id);
+    if ($cleanId === '') {
+        biab_invoice_json_response(400, array('error' => 'Missing invoice ID.'));
+    }
+    $stmt = biab_invoice_db()->prepare('SELECT * FROM invoices WHERE nala_uid = :uid AND id = :id LIMIT 1');
+    $stmt->execute(array(':uid' => $uid, ':id' => $cleanId));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $row ? biab_invoice_record_from_row($row) : null;
+}
+
+function biab_invoice_delete($uid, $id) {
+    $cleanId = preg_replace('/[^a-zA-Z0-9_-]/', '', (string)$id);
+    if ($cleanId === '') {
+        biab_invoice_json_response(400, array('error' => 'Missing invoice ID.'));
+    }
+    $stmt = biab_invoice_db()->prepare('DELETE FROM invoices WHERE nala_uid = :uid AND id = :id');
+    $stmt->execute(array(':uid' => $uid, ':id' => $cleanId));
+    return $stmt->rowCount() > 0;
+}
+
 function biab_invoice_save($uid, $invoice) {
     if (!is_array($invoice)) {
         biab_invoice_json_response(400, array('error' => 'Invoice data is required.'));

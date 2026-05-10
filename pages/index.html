@@ -82,7 +82,7 @@
 	     if (loggedIn) {
 		 try {
 		     wc.timeout(function(){
-			 wc.pages.show(requestedPage || 'dashboard');
+			 wc.pages.show(requestedPage && requestedPage !== 'home' ? requestedPage : 'dashboard');
 
 			 // SHOW PUBLIC HEADER
 			 $(".app-header").hide(function() {

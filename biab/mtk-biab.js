@@ -25,8 +25,10 @@
       this.events = this.config.events || { publish: {}, subscribe: [] };
       this.activeId = this.sections[0] ? this.sections[0].id : "";
       this.invoiceStatus = "Open";
+      this.invoices = [];
       this.selectedTemplate = null;
       this.generatedCardTemplates = null;
+      this.orderedCard = this._loadOrderedCard();
       this.isPublishing = false;
       this.onMessage = this.onMessage.bind(this);
       this._init();
@@ -35,8 +37,11 @@
     _init() {
       this._ensureInvoicePageStyles();
       this._subscribe();
+      this._loadStoredSettings();
       this._render();
       this._bind();
+      this._requestInvoices();
+      this._requestCardOrder();
       this._publish(this.events.publish.ready || "mtk-biab:ready", {
         component: this.config.component || "mtk-biab",
         version: this.config.version || "1.0.16"
@@ -209,6 +214,28 @@
       if (eventName === "4-mtk-biab:setup-close") {
         this._closeSetup();
       }
+
+      if (eventName === "4-mtk-biab:invoices-loaded" && data && Array.isArray(data.invoices)) {
+        this.invoices = data.invoices;
+        this._render();
+      }
+
+      if (eventName === "4-mtk-biab:invoice-saved") {
+        if (data && Array.isArray(data.invoices)) {
+          this.invoices = data.invoices;
+        }
+        this._closeInvoicePage();
+        this._selectSection("invoices");
+        this._requestInvoices();
+      }
+
+      if (eventName === "4-mtk-biab:card-order-loaded" && data && data.order) {
+        this.orderedCard = data.order;
+        this._saveOrderedCard(this.orderedCard);
+        if (this.setupOverlay && this._getActiveSection().setupType === "businessCard") {
+          this._openBusinessCardTemplatePicker(this._getActiveSection());
+        }
+      }
     }
 
     _publish(eventName, data) {
@@ -298,9 +325,26 @@
         <section class="mtk-biab__included" aria-label="Included by default">
           <h3 class="mtk-biab__included-heading">${this._escape(section.includedHeading)}</h3>
           <ol class="mtk-biab__included-list">
-            ${section.includedItems.map((item) => `<li>${this._escape(item)}</li>`).join("")}
+            ${section.includedItems.map((item, index) => this._renderIncludedItem(item, index)).join("")}
           </ol>
         </section>
+      `;
+    }
+
+    _renderIncludedItem(item, index) {
+      if (typeof item === "string") {
+        return `<li>${this._escape(item)}</li>`;
+      }
+
+      return `
+        <li>
+          <button class="mtk-biab__included-link" type="button" data-action="toggle-included" data-included-index="${index}">
+            ${this._escape(item.label || "")}
+          </button>
+          <p class="mtk-biab__included-detail" data-included-detail="${index}" hidden>
+            ${this._escape(item.description || "")}
+          </p>
+        </li>
       `;
     }
 
@@ -432,9 +476,47 @@
     }
 
     _getFilteredInvoices(section) {
-      return Array.isArray(section.invoices)
-        ? section.invoices.filter((invoice) => invoice.status === this.invoiceStatus)
-        : [];
+      const source = this.invoices.length ? this.invoices : (Array.isArray(section.invoices) ? section.invoices : []);
+      return source.map((invoice) => this._normalizeInvoiceRow(invoice)).filter((invoice) => invoice.status === this.invoiceStatus);
+    }
+
+    _normalizeInvoiceRow(invoice) {
+      const payload = invoice && invoice.invoice ? invoice.invoice : invoice || {};
+      return {
+        id: invoice.id || payload.id || payload.invoiceNumber || "",
+        date: invoice.invoiceDate || payload.invoiceDate || invoice.date || "",
+        client: invoice.customerName || payload.customerName || invoice.client || "",
+        service: payload.serviceType || invoice.service || payload.notes || "",
+        amount: invoice.total !== undefined ? invoice.total : (payload.total || invoice.amount || 0),
+        status: invoice.paymentStatus || payload.paymentStatus || invoice.status || "Open",
+        invoice: payload
+      };
+    }
+
+    _businessPageId() {
+      const user = (window.wc && wc.session && wc.session.user) ? wc.session.user : {};
+      return String(
+        (window._clientProfileInstance && window._clientProfileInstance.data && window._clientProfileInstance.data.nalaUID) ||
+        (window.wc && wc.session && wc.session.nalaUID) ||
+        user.nalaUID ||
+        user.id ||
+        user.user_id ||
+        user.email ||
+        "demo"
+      ).replace(/[^a-zA-Z0-9_-]/g, "");
+    }
+
+    _requestInvoices() {
+      this._publish("mtk-biab:invoices-load", { nalaUID: this._businessPageId() });
+    }
+
+    _requestCardOrder() {
+      this._publish("mtk-biab:card-order-load", { nalaUID: this._businessPageId() });
+    }
+
+    _toggleIncluded(index) {
+      const detail = this.root.querySelector('[data-included-detail="' + String(index).replace(/[^0-9]/g, "") + '"]');
+      if (detail) detail.hidden = !detail.hidden;
     }
 
     _renderStatusOptions() {
@@ -455,23 +537,30 @@
         if (action === "select-section") this._selectSection(target.getAttribute("data-section-id"));
         if (action === "open-setup") this._openSetup();
         if (action === "new-invoice") this._openNewInvoice();
+        if (action === "toggle-included") this._toggleIncluded(target.getAttribute("data-included-index"));
         if (action === "select-card-template") this._selectCardTemplate(target.getAttribute("data-template-id"));
         if (action === "order-card-selection") this._orderSelectedCard();
         if (action === "back-to-templates") this._openBusinessCardTemplatePicker(this._getActiveSection());
         if (action === "submit-card-editor") this._submitCardEditor();
 
+        if (action === "email-invoice") {
+          this._publish("mtk-biab:email-invoice", {
+            sectionId: this.activeId,
+            nalaUID: this._businessPageId(),
+            invoiceId: target.getAttribute("data-invoice-id")
+          });
+        }
+
         if (action === "delete-invoice") {
           this._publish("mtk-biab:delete-invoice", {
             sectionId: this.activeId,
+            nalaUID: this._businessPageId(),
             invoiceId: target.getAttribute("data-invoice-id")
           });
         }
 
         if (action === "update-invoice") {
-          this._publish("mtk-biab:update-invoice", {
-            sectionId: this.activeId,
-            invoiceId: target.getAttribute("data-invoice-id")
-          });
+          this._openInvoiceForEdit(target.getAttribute("data-invoice-id"));
         }
 
         if (action === "close-setup") this._closeSetup();
@@ -501,6 +590,8 @@
     _selectSection(sectionId) {
       if (!this.sections.some((section) => section.id === sectionId)) return;
 
+      this._closeSetup();
+      this._closeInvoicePage();
       this.activeId = sectionId;
       this._render();
 
@@ -526,8 +617,9 @@
       this._openGenericSetup(section);
     }
 
-    _openNewInvoice() {
+    _openNewInvoice(invoiceData) {
       const section = this._getActiveSection();
+      const values = invoiceData || this._defaultInvoiceValues();
 
       this._closeSetup();
       this._closeInvoicePage();
@@ -544,7 +636,7 @@
           <div class="mtk-biab__invoice-page-header-inner">
             <div>
               <p class="mtk-biab__invoice-page-kicker">${this._escape(this._text("Current selection"))}</p>
-              <h2 class="mtk-biab__invoice-page-title" id="mtk-biab-invoice-page-title">${this._escape(this._text("New Invoice"))}</h2>
+              <h2 class="mtk-biab__invoice-page-title" id="mtk-biab-invoice-page-title">${this._escape(this._text(invoiceData ? "Edit Invoice" : "New Invoice"))}</h2>
             </div>
 
             <button class="mtk-biab__invoice-page-close" type="button" data-action="close-invoice-page" aria-label="Close invoice">
@@ -563,7 +655,7 @@
       this.root.appendChild(page);
       document.body.classList.add("mtk-biab-invoice-page-open");
 
-      this._cleanInvoiceInclude(page);
+      this._cleanInvoiceInclude(page, values);
 
       const closeButton = page.querySelector(".mtk-biab__invoice-page-close");
       if (closeButton) closeButton.focus();
@@ -598,7 +690,7 @@
       document.body.appendChild(script);
     }
 
-    _cleanInvoiceInclude(page) {
+    _cleanInvoiceInclude(page, values) {
       const clean = () => {
         const shell = page.querySelector(".mtk-invoice__shell");
         if (shell) shell.style.display = "contents";
@@ -627,7 +719,33 @@
         if (window.MtkInvoice && typeof window.MtkInvoice.initWhenReady === "function") {
           window.MtkInvoice.initWhenReady();
         }
+        this._pushInvoiceValues(values);
       });
+
+      window.setTimeout(() => this._pushInvoiceValues(values), 250);
+    }
+
+    _openInvoiceForEdit(invoiceId) {
+      const row = this._getInvoiceById(invoiceId);
+      if (!row) return;
+      this._openNewInvoice(row.invoice || row);
+    }
+
+    _getInvoiceById(invoiceId) {
+      const rows = this.invoices.length ? this.invoices : (this._getActiveSection().invoices || []);
+      const normalized = rows.map((invoice) => this._normalizeInvoiceRow(invoice));
+      return normalized.find((invoice) => invoice.id === invoiceId);
+    }
+
+    _pushInvoiceValues(values) {
+      const payload = Object.assign({}, values || {});
+      if (window.wc && typeof window.wc.publish === "function") {
+        window.wc.publish("4-mtk-invoice:set-data", payload);
+      }
+      const root = this.root.querySelector("mtk-invoice.mtk-invoice");
+      if (root && root.__mtkInvoiceInstance && typeof root.__mtkInvoiceInstance.setValues === "function") {
+        root.__mtkInvoiceInstance.setValues(payload);
+      }
     }
 
     _closeInvoicePage() {
@@ -681,6 +799,22 @@
 
     _openBusinessCardTemplatePicker(section) {
       const templates = this._getCardTemplates(section);
+      if (this.orderedCard && this.orderedCard.templateId) {
+        const orderedTemplate = this.orderedCard.template || templates.find((template) => template.id === this.orderedCard.templateId) || templates[0];
+        this.selectedTemplate = orderedTemplate;
+        this._closeSetup();
+        this._showSetupView(section, `
+          <div class="mtk-biab__setup-card">
+            <h3 class="mtk-biab__template-heading">${this._escape(this._text("Current selection"))}</h3>
+            <div class="mtk-biab__template-grid mtk-biab__template-grid--locked" role="list" aria-label="Ordered business card">
+              ${orderedTemplate ? this._renderCardTemplateButton(orderedTemplate) : ""}
+            </div>
+            <p class="mtk-biab__template-text">This business card has been ordered and can no longer be changed.</p>
+          </div>
+        `);
+        return;
+      }
+
       const defaultTemplate = templates.find((template) => template.isDefault) || templates[0] || null;
 
       if (!this.selectedTemplate && defaultTemplate) {
@@ -737,6 +871,7 @@
     }
 
     _selectCardTemplate(templateId) {
+      if (this.orderedCard) return;
       const section = this._getActiveSection();
       const templates = this._getCardTemplates(section);
       const template = templates.find((item) => item.id === templateId);
@@ -833,11 +968,24 @@
 
       if (status) status.textContent = "Submitted.";
 
+      this.orderedCard = {
+        templateId: this.selectedTemplate ? this.selectedTemplate.id : "",
+        template: this.selectedTemplate,
+        values: data,
+        orderedAt: new Date().toISOString()
+      };
+      this._saveOrderedCard(this.orderedCard);
+
       this._publish("mtk-biab:business-card-submit", {
         sectionId: this.activeId,
+        nalaUID: this._businessPageId(),
         template: this.selectedTemplate,
-        values: data
+        templateId: this.orderedCard.templateId,
+        values: data,
+        orderedAt: this.orderedCard.orderedAt
       });
+
+      this._openBusinessCardTemplatePicker(this._getActiveSection());
     }
 
     _getCardTemplates(section) {
@@ -993,7 +1141,63 @@
     _businessCardFieldValue(section, fieldId) {
       const fields = Array.isArray(section.cardFields) ? section.cardFields : [];
       const field = fields.find((item) => item.id === fieldId);
-      return field && field.value ? String(field.value).trim() : "";
+      const configured = field && field.value ? String(field.value).trim() : "";
+      if (configured) return configured;
+
+      const settings = this.settingsProfile || {};
+      const business = settings.business || {};
+      const privacy = settings.privacy || {};
+      const services = settings.services || {};
+      const map = {
+        businessName: business.customerFacingBusinessName,
+        contactName: privacy.fullName || business.ownerOrResponsiblePartyName,
+        phone: business.businessPhone || privacy.contactPhoneNumber,
+        email: business.businessEmail || privacy.emailAddress,
+        website: this._defaultClientWebsite(),
+        serviceArea: services.serviceArea
+      };
+      return map[fieldId] ? String(map[fieldId]).trim() : "";
+    }
+
+    _loadStoredSettings() {
+      try {
+        this.settingsProfile = JSON.parse(window.localStorage.getItem("nala_profile_settings") || "{}") || {};
+      } catch (err) {
+        this.settingsProfile = {};
+      }
+    }
+
+    _defaultInvoiceValues() {
+      this._loadStoredSettings();
+      const settings = this.settingsProfile || {};
+      const business = settings.business || {};
+      const today = new Date().toISOString().slice(0, 10);
+      return {
+        businessName: business.customerFacingBusinessName || "Your Company Name",
+        businessPhone: business.businessPhone || "",
+        invoiceDate: today,
+        invoiceNumber: "INV-" + today.replace(/-/g, "")
+      };
+    }
+
+    _orderedCardKey() {
+      return "nala_biab_ordered_card_" + this._businessPageId();
+    }
+
+    _loadOrderedCard() {
+      try {
+        return JSON.parse(window.localStorage.getItem(this._orderedCardKey()) || "null");
+      } catch (err) {
+        return null;
+      }
+    }
+
+    _saveOrderedCard(card) {
+      try {
+        window.localStorage.setItem(this._orderedCardKey(), JSON.stringify(card || {}));
+      } catch (err) {
+        console.warn("Could not save ordered card state", err);
+      }
     }
 
     _pickCardTextPlacement(layout, shuffledPlacements, rules, allPlacements, index) {

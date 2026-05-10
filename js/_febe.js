@@ -40,7 +40,15 @@ class _febe {
 	    "mtk-biab:review-request",
 	    "mtk-biab:reviews-save",
 	    "mtk-biab:invoice-sent",
+	    "mtk-biab:invoices-load",
+	    "mtk-biab:email-invoice",
+	    "mtk-biab:delete-invoice",
+	    "mtk-biab:card-order-load",
+	    "mtk-biab:business-card-submit",
 	    "mtk-invoice:save",
+	    "mtk-settings:privacy-save",
+	    "mtk-settings:business-save",
+	    "mtk-settings:services-save",
 	    "mtk-settings:change-password"
 	];
 
@@ -95,7 +103,15 @@ class _febe {
 	    "mtk-biab:review-request": this.handleBiabReviewRequest,
 	    "mtk-biab:reviews-save": this.handleBiabReviewsSave,
 	    "mtk-biab:invoice-sent": this.handleBiabInvoiceSent,
+	    "mtk-biab:invoices-load": this.handleBiabInvoicesLoad,
+	    "mtk-biab:email-invoice": this.handleBiabInvoiceEmail,
+	    "mtk-biab:delete-invoice": this.handleBiabInvoiceDelete,
+	    "mtk-biab:card-order-load": this.handleBiabCardOrderLoad,
+	    "mtk-biab:business-card-submit": this.handleBiabCardSubmit,
 	    "mtk-invoice:save": this.handleInvoiceSave,
+	    "mtk-settings:privacy-save": this.handleSettingsSave,
+	    "mtk-settings:business-save": this.handleSettingsSave,
+	    "mtk-settings:services-save": this.handleSettingsSave,
 	    "mtk-settings:change-password": this.handleSettingsChangePassword,
 
 	};
@@ -341,6 +357,10 @@ class _febe {
 
 	    return this.postBiabJson("/api/business_in_a_box_review_request.php", reviewPayload, this.t("invoice.success.reviewSent", "Invoice saved. Review request email sent automatically."), this.t("biab.error.reviewRequest", "Could not send review request email.")).then(() => {
 		wc.publish("mtk-biab:invoice-sent", Object.assign({}, invoice, { id: savedId, nalaUID: uid }));
+		wc.publish("4-mtk-biab:invoice-saved", {
+		    invoice: Object.assign({}, invoice, { id: savedId, nalaUID: uid }),
+		    invoices: json.invoices || []
+		});
 		return json;
 	    });
 	});
@@ -382,6 +402,201 @@ class _febe {
 	}
 
 	return this.postBiabJson("/api/business_in_a_box_reviews.php", data || {}, "Review display settings saved.", this.t("biab.error.reviewsSave", "Could not save review display settings."));
+    }
+
+    readStoredSettings() {
+	try {
+	    return JSON.parse(localStorage.getItem("nala_profile_settings") || "{}") || {};
+	} catch (err) {
+	    return {};
+	}
+    }
+
+    writeStoredSettings(settings) {
+	try {
+	    localStorage.setItem("nala_profile_settings", JSON.stringify(settings || {}));
+	} catch (err) {
+	    wc.warn("Could not store settings locally", err);
+	}
+	window.nalaSettingsProfile = settings || {};
+    }
+
+    handleSettingsSave(data) {
+	const payload = data && data.payload ? data.payload : data || {};
+	const tabId = payload.tabId || "";
+	const values = payload.values || {};
+	const settings = this.readStoredSettings();
+	settings[tabId] = Object.assign({}, settings[tabId] || {}, values);
+	this.writeStoredSettings(settings);
+
+	if (window.MTKMsgs && typeof MTKMsgs.show === "function") {
+	    MTKMsgs.show({
+		type: "success",
+		icon: "success",
+		message: this.t("settings.success.saved", "Settings saved."),
+		closable: true,
+		timer: 5
+	    });
+	}
+
+	if (tabId !== "business" && tabId !== "services") {
+	    return Promise.resolve(settings);
+	}
+
+	return this.saveSettingsToBusinessProfile(settings).catch(err => {
+	    wc.warn("Could not sync settings to BIAB profile", err);
+	    return settings;
+	});
+    }
+
+    saveSettingsToBusinessProfile(settings) {
+	const uid = this.getBusinessPageId();
+	const business = settings.business || {};
+	const services = settings.services || {};
+	const privacy = settings.privacy || {};
+	const customServices = String(services.customServices || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+	const launchServices = Array.isArray(services.launchServices) ? services.launchServices : [];
+
+	const profile = {
+	    nalaUID: uid && uid.length >= 3 ? uid : "DEMO",
+	    business: {
+		name: business.customerFacingBusinessName || "Your Company Name",
+		logo: "img/clients/x.webp",
+		logoKind: "artwork",
+		rating: 4.6,
+		ratingText: "Excellent",
+		reviewCount: 0,
+		isTopPro: true,
+		isOnline: false
+	    },
+	    stats: [
+		{ icon: "verified_user", text: "Current Top Pro", type: "badge" },
+		{ icon: "verified", text: "Background checked", type: "verification" },
+		{ icon: "schedule", text: "New business", type: "experience" }
+	    ],
+	    contact: {
+		priceText: "Contact for estimate",
+		ctaButton: "Request estimate",
+		viewDetailsLink: ""
+	    },
+	    guarantee: {
+		title: (business.customerFacingBusinessName || "Our") + " Guarantee",
+		text: "Work is guaranteed or your money back. We stand behind every job.",
+		learnMoreLink: ""
+	    },
+	    tabs: [],
+	    about: {
+		description: "Local locksmith service for " + (services.serviceArea || "your area") + ".",
+		readMoreLink: ""
+	    },
+	    businessHours: {
+		title: "Business hours",
+		text: business.businessHours || "Call for current availability."
+	    },
+	    paymentMethods: {
+		title: "Payment methods",
+		methods: "This business accepts common payment methods. Confirm details when booking."
+	    },
+	    socialMedia: {
+		title: "Social media",
+		links: [
+		    { platform: "facebook", icon: "img/facebook.png", url: "" },
+		    { platform: "instagram", icon: "img/instagram.png", url: "" },
+		    { platform: "twitter", icon: "img/twitter.png", url: "" }
+		]
+	    },
+	    reviews: [],
+	    topProStatus: {
+		title: "Business profile",
+		description: [business.legalBusinessName, business.ownerOrResponsiblePartyName, business.businessPhone, business.businessEmail, launchServices.concat(customServices).join(", ")].filter(Boolean).join(" | "),
+		years: []
+	    }
+	};
+
+	return fetch(wc.apiURL + "/api/business_in_a_box_profile.php", {
+	    method: "POST",
+	    credentials: "include",
+	    headers: { "Content-Type": "application/json" },
+	    body: JSON.stringify(profile)
+	}).then(res => this.readBiabJsonResponse(res, this.t("biab.error.save", "Could not save Business in a Box changes.")));
+    }
+
+    getBiabJson(path, errorMessage) {
+	return fetch(this.getBiabApiUrl(path), {
+	    method: "GET",
+	    credentials: "include"
+	}).then(res => this.readBiabJsonResponse(res, errorMessage));
+    }
+
+    handleBiabInvoicesLoad(data) {
+	const uid = (data && data.nalaUID) || this.getBusinessPageId();
+	return this.getBiabJson("/api/business_in_a_box_invoices.php?nalaUID=" + encodeURIComponent(uid), this.t("biab.error.generic", "Could not complete that request. Please try again.")).then(json => {
+	    wc.publish("4-mtk-biab:invoices-loaded", {
+		nalaUID: uid,
+		invoices: json.invoices || []
+	    });
+	    return json;
+	});
+    }
+
+    handleBiabInvoiceEmail(data) {
+	const uid = (data && data.nalaUID) || this.getBusinessPageId();
+	return this.postBiabJson("/api/business_in_a_box_invoice_email.php", {
+	    nalaUID: uid,
+	    invoiceId: data && data.invoiceId
+	}, this.t("invoice.success.reviewSent", "Invoice saved. Review request email sent automatically."), this.t("biab.error.reviewRequest", "Could not send review request email.")).then(json => {
+	    wc.publish("4-mtk-biab:invoice-emailed", json);
+	    return json;
+	});
+    }
+
+    handleBiabInvoiceDelete(data) {
+	const uid = (data && data.nalaUID) || this.getBusinessPageId();
+	return this.postBiabJson("/api/business_in_a_box_invoices.php", {
+	    action: "delete",
+	    nalaUID: uid,
+	    invoiceId: data && data.invoiceId
+	}, "Invoice deleted.", this.t("biab.error.generic", "Could not complete that request. Please try again.")).then(json => {
+	    wc.publish("4-mtk-biab:invoices-loaded", {
+		nalaUID: uid,
+		invoices: json.invoices || []
+	    });
+	    return json;
+	});
+    }
+
+    handleBiabCardOrderLoad(data) {
+	const uid = (data && data.nalaUID) || this.getBusinessPageId();
+	return this.getBiabJson("/api/business_in_a_box_card_order.php?nalaUID=" + encodeURIComponent(uid), this.t("biab.error.generic", "Could not complete that request. Please try again.")).then(json => {
+	    wc.publish("4-mtk-biab:card-order-loaded", {
+		nalaUID: uid,
+		order: json.order || null
+	    });
+	    return json;
+	});
+    }
+
+    handleBiabCardSubmit(data) {
+	const payload = data || {};
+	const uid = payload.nalaUID || this.getBusinessPageId();
+	const template = payload.template || {};
+	const order = {
+	    templateId: payload.templateId || template.id || "",
+	    template,
+	    values: payload.values || {},
+	    orderedAt: payload.orderedAt || new Date().toISOString()
+	};
+
+	return this.postBiabJson("/api/business_in_a_box_card_order.php", {
+	    nalaUID: uid,
+	    order
+	}, "", this.t("biab.error.generic", "Could not complete that request. Please try again.")).then(json => {
+	    wc.publish("4-mtk-biab:card-order-loaded", {
+		nalaUID: uid,
+		order: json.order || order
+	    });
+	    return json;
+	});
     }
 
     handleSettingsChangePassword(data) {

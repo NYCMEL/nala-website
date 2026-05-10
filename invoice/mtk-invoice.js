@@ -32,9 +32,36 @@ class MtkInvoice {
       const fields = Array.isArray(groups[groupName]) ? groups[groupName] : [];
 
       fields.forEach((field) => {
-        this.values[field.id] = field.value || "";
+        this.values[field.id] = this.defaultValue(field) || field.value || "";
       });
     });
+  }
+
+  defaultValue(field) {
+    const today = new Date().toISOString().slice(0, 10);
+    const settings = this.readStoredSettings();
+    const business = settings.business || {};
+
+    if (field.id === "businessName") return business.customerFacingBusinessName || "";
+    if (field.id === "businessPhone") return business.businessPhone || "";
+    if (field.id === "invoiceDate") return today;
+    if (field.id === "invoiceNumber") return "INV-" + today.replace(/-/g, "");
+    return "";
+  }
+
+  readStoredSettings() {
+    try {
+      return JSON.parse(window.localStorage.getItem("nala_profile_settings") || "{}") || {};
+    } catch (err) {
+      return {};
+    }
+  }
+
+  setValues(values) {
+    Object.assign(this.values, values || {});
+    this.render();
+    this.bind();
+    this.updateTotals();
   }
 
   subscribe() {
@@ -166,6 +193,7 @@ class MtkInvoice {
     const fieldClass = field.full ? "mtk-invoice__field mtk-invoice__field--full" : "mtk-invoice__field";
     const value = this.values[field.id] || "";
     const required = field.required ? " required" : "";
+    const readonly = field.readonly ? " readonly" : "";
     const label = this.escape(field.label || "");
     const fieldId = this.escape(field.id);
     const placeholder = this.escape(field.placeholder || "");
@@ -218,12 +246,16 @@ class MtkInvoice {
           value="${this.escape(value)}"
           placeholder="${placeholder}"
           ${required}
+          ${readonly}
         >
       </div>
     `;
   }
 
   bind() {
+    if (this.bound) return;
+    this.bound = true;
+
     this.root.addEventListener("input", (event) => {
       const field = event.target.closest("[data-field]");
       if (!field || !this.root.contains(field)) return;
@@ -353,7 +385,7 @@ class MtkInvoice {
       }
 
       root.dataset.mtkInvoiceReady = "true";
-      new MtkInvoice(root, window.MTK_INVOICE_CONFIG || {});
+      root.__mtkInvoiceInstance = new MtkInvoice(root, window.MTK_INVOICE_CONFIG || {});
       return true;
     };
 

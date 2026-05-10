@@ -15,6 +15,15 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $data = biab_invoice_read_json_body();
 $uid = biab_invoice_uid($data['nalaUID'] ?? '');
+
+if (($data['action'] ?? '') === 'delete') {
+    biab_invoice_delete($uid, $data['invoiceId'] ?? '');
+    biab_invoice_json_response(200, array(
+        'ok' => true,
+        'invoices' => biab_invoice_list($uid)
+    ));
+}
+
 $invoice = is_array($data['invoice'] ?? null) ? $data['invoice'] : array();
 
 $id = biab_invoice_save($uid, $invoice);

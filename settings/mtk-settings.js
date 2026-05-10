@@ -23,6 +23,18 @@
     return config && Array.isArray(config.tabs) ? config.tabs : [];
   }
 
+  function readStoredSettings() {
+    try {
+      return JSON.parse(window.localStorage.getItem("nala_profile_settings") || "{}") || {};
+    } catch (err) {
+      return {};
+    }
+  }
+
+  function getSessionUser() {
+    return (window.wc && wc.session && wc.session.user) ? wc.session.user : {};
+  }
+
   function iconMarkup(iconName) {
     if (!iconName) {
       return "";
@@ -84,6 +96,8 @@
 
   MTKSettings.prototype.cacheInitialValues = function () {
     var self = this;
+    var stored = readStoredSettings();
+    var user = getSessionUser();
 
     this.tabs.forEach(function (tab) {
       self.formState[tab.id] = {};
@@ -93,14 +107,27 @@
       }
 
       tab.fields.forEach(function (field) {
+        var storedValue = stored[tab.id] ? stored[tab.id][field.id] : undefined;
+        var userValue = self.sessionValue(tab.id, field.id, user);
+
         if (field.type === "checkboxGroup") {
-          self.formState[tab.id][field.id] = [];
+          self.formState[tab.id][field.id] = Array.isArray(storedValue) ? storedValue : [];
           return;
         }
 
-        self.formState[tab.id][field.id] = field.value || "";
+        self.formState[tab.id][field.id] = storedValue !== undefined ? storedValue : (userValue !== undefined ? userValue : (field.value || ""));
       });
     });
+  };
+
+  MTKSettings.prototype.sessionValue = function (tabId, fieldId, user) {
+    user = user || {};
+    if (tabId === "privacy") {
+      if (fieldId === "fullName") return user.name || user.full_name || "";
+      if (fieldId === "emailAddress") return user.email || "";
+      if (fieldId === "contactPhoneNumber") return user.phone || user.phone_number || "";
+    }
+    return undefined;
   };
 
   MTKSettings.prototype.onMessage = function (message) {

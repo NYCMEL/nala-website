@@ -19,7 +19,11 @@ window.MTK_BIAB_CONFIG = {
       "4-mtk-biab",
       "4-mtk-biab:select",
       "4-mtk-biab:setup-open",
-      "4-mtk-biab:setup-close"
+      "4-mtk-biab:setup-close",
+      "4-mtk-biab:invoices-loaded",
+      "4-mtk-biab:invoice-saved",
+      "4-mtk-biab:invoice-emailed",
+      "4-mtk-biab:card-order-loaded"
     ]
   },
   sections: [
@@ -32,11 +36,13 @@ window.MTK_BIAB_CONFIG = {
       description: "A guided overview of your Business in a Box setup.",
       includedHeading: "Included by default — <small>no action required</small>",
       includedItems: [
-        "Business profile setup",
-        "Basic website structure",
-        "Contact information configuration",
-        "Service listing template",
-        "Customer review workflow"
+        { label: "Business profile setup", description: "Save the business name, phone, email, service area, hours, and launch services once so the website, cards, invoices, and review flow can reuse the same profile data." },
+        { label: "Basic website structure", description: "The client website is generated with a homepage, service positioning, contact details, reviews, and trust sections." },
+        { label: "Contact information configuration", description: "Public contact fields flow from Profile & Settings into the website, cards, and invoices." },
+        { label: "Service listing template", description: "Locksmith services are organized for residential, commercial, rekey, lock change, deadbolt, lockout, and emergency-service pages." },
+        { label: "Customer review workflow", description: "Invoices and customer follow-up send customers to the hosted review page so reviews can be collected and displayed." },
+        { label: "SEO setup", description: "On-site SEO can be generated automatically for hosted client pages: titles, descriptions, service-area copy, internal links, review schema, local business schema, sitemap entries, and Google-ready profile data exports." },
+        { label: "Local listings checklist", description: "Prepare consistent name, address/service area, phone, website, hours, services, photos, and description for Google Business Profile, Bing Places, Apple Business Connect, Yelp, BBB, Angi, Thumbtack, Nextdoor, and local citation sites." }
       ],
       hideStartSetup: true
     },

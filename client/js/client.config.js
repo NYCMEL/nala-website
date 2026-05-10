@@ -8,7 +8,7 @@ var config = {
 
     business: {
 	name:        "Your Company Name",
-	logo:        "img/home/client-face-d.jpg",
+	logo:        "img/clients/x.webp",
 	rating:      4.6,
 	ratingText:  "Excellent",
 	reviewCount: 612,
@@ -30,7 +30,7 @@ var config = {
     guarantee: {
 	title:         "Our Guarantee",
 	text:          "Work is guaranteed or your money back. We stand behind every job — residential, commercial, and automotive.",
-	learnMoreLink: "Learn more about our guarantee",
+	learnMoreLink: "",
     },
     tabs: [],
     about: {

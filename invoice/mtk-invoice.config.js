@@ -29,9 +29,9 @@ window.MTK_INVOICE_CONFIG = {
 
   fields: {
     business: [
-      { id: "businessName", label: "Business Name", type: "text", value: "", placeholder: "ABC Locksmith Services", required: true },
+      { id: "businessName", label: "Business Name", type: "text", value: "", placeholder: "ABC Locksmith Services", required: true, readonly: true },
       { id: "invoiceNumber", label: "Invoice #", type: "text", value: "", placeholder: "INV-1001", required: true },
-      { id: "businessPhone", label: "Business Phone", type: "tel", value: "", placeholder: "(555) 555-5555", required: true },
+      { id: "businessPhone", label: "Business Phone", type: "tel", value: "", placeholder: "(555) 555-5555", required: true, readonly: true },
       { id: "invoiceDate", label: "Invoice Date", type: "date", value: "", placeholder: "2026-04-29", required: true }
     ],
 

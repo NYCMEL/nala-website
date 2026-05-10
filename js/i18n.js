@@ -886,6 +886,7 @@
     'settings.error.noEmail':    { en: 'Could not start password reset from this session.', es: 'No se pudo iniciar el restablecimiento de contraseña desde esta sesión.' },
     'settings.success.reset':    { en: 'Password reset email sent. Please check your inbox.', es: 'Correo de restablecimiento enviado. Por favor revisa tu bandeja de entrada.' },
     'settings.error.resetFail':  { en: 'Could not send reset link.',    es: 'No se pudo enviar el enlace de restablecimiento.' },
+    'settings.success.saved':    { en: 'Settings saved.',               es: 'Configuración guardada.' },
 
     // ── PURCHASE FLOW ────────────────────────────────────────────
     'purchase.loginRequired':    { en: 'Please log in before purchasing.', es: 'Por favor inicia sesión antes de comprar.' },

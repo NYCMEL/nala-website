@@ -839,7 +839,11 @@ class ClientProfile {
 	// Guarantee
 	document.getElementById("guaranteeTitle").textContent = this.data.guarantee.title
 	document.getElementById("guaranteeText").textContent = this.data.guarantee.text
-	document.getElementById("learnMoreLink").textContent = this.data.guarantee.learnMoreLink
+	const learnMore = document.getElementById("learnMoreLink")
+	if (learnMore) {
+	    learnMore.textContent = this.data.guarantee.learnMoreLink || ""
+	    learnMore.style.display = this.data.guarantee.learnMoreLink ? "" : "none"
+	}
     }
 
     attachEventListeners() {
