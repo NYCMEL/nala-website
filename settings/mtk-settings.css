@@ -259,6 +259,57 @@
   outline: 3px solid rgba(169, 130, 17, 0.35);
   outline-offset: 3px; }
 
+.mtk-settings__custom-service-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 0 0 12px; }
+
+.mtk-settings__custom-service-head .mtk-settings__field-label {
+  margin: 0; }
+
+.mtk-settings__add-service {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #4a3a08;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: border-color 160ms ease, box-shadow 160ms ease, color 160ms ease; }
+
+.mtk-settings__add-service:hover,
+.mtk-settings__add-service:focus-visible {
+  border-color: #a98211;
+  color: #0f172a;
+  box-shadow: 0 0 0 4px rgba(169, 130, 17, 0.12);
+  outline: none; }
+
+.mtk-settings__add-service .material-icons {
+  font-size: 20px; }
+
+.mtk-settings__custom-service-list {
+  display: grid;
+  gap: 12px; }
+
+.mtk-settings__custom-service-row {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px; }
+
+.mtk-settings__custom-service-row .mtk-settings__checkbox {
+  margin: 0; }
+
 .mtk-settings__check-label {
   min-width: 0; }
 

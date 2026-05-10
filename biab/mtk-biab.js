@@ -1433,11 +1433,13 @@
       const websiteUrl = business.businessWebsite || this._defaultClientWebsite();
       const sitemapUrl = this._sitemapUrlForWebsite(websiteUrl);
       const serviceArea = services.serviceArea || business.serviceArea || "";
+      const customServices = this._customServiceLabels(services.customServices);
       const serviceList = [
         services.primaryService,
         services.secondaryService,
         services.launchServices,
-        services.servicesOffered
+        services.servicesOffered,
+        customServices
       ].filter(Boolean).join(", ");
 
       return {
@@ -1458,6 +1460,17 @@
           description: business.businessDescription || "Professional locksmith services for local residential and commercial customers."
         }
       };
+    }
+
+    _customServiceLabels(value) {
+      if (Array.isArray(value)) {
+        return value.map((item) => {
+          if (typeof item === "string") return item.trim();
+          if (item && item.checked === false) return "";
+          return String((item && item.label) || "").trim();
+        }).filter(Boolean).join(", ");
+      }
+      return String(value || "").split(/\r?\n/).map((item) => item.trim()).filter(Boolean).join(", ");
     }
 
     _sitemapUrlForWebsite(websiteUrl) {

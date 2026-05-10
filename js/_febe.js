@@ -466,7 +466,7 @@ class _febe {
 	const business = settings.business || {};
 	const services = settings.services || {};
 	const privacy = settings.privacy || {};
-	const customServices = String(services.customServices || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+	const customServices = this.normalizeCustomServices(services.customServices);
 	const launchServices = Array.isArray(services.launchServices) ? services.launchServices : [];
 	const allServices = launchServices.concat(customServices).filter(Boolean);
 	const businessName = business.customerFacingBusinessName || business.legalBusinessName || "Your Company Name";
@@ -620,6 +620,21 @@ class _febe {
 	    });
 	    return json;
 	});
+    }
+
+    normalizeCustomServices(value) {
+	if (Array.isArray(value)) {
+	    return value.map(item => {
+		if (typeof item === "string") {
+		    return item.trim();
+		}
+		if (item && item.checked === false) {
+		    return "";
+		}
+		return String((item && item.label) || "").trim();
+	    }).filter(Boolean);
+	}
+	return String(value || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean);
     }
 
     handleBiabGoogleSeoStatusLoad(data) {

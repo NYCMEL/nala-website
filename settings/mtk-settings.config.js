@@ -178,11 +178,11 @@ window.mtkSettingsConfig = {
         {
           id: "customServices",
           label: "Add custom services",
-          type: "textarea",
+          type: "customServiceList",
           required: false,
           fullWidth: true,
-          rows: 4,
-          placeholder: "Enter additional services, one per line"
+          buttonLabel: "Add service",
+          placeholder: "Service name"
         }
       ],
       actions: [

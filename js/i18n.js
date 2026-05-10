@@ -1058,6 +1058,8 @@
     'settings.serviceArea': { en: 'Service area', es: 'Área de servicio' },
     'settings.launchServices': { en: 'Launch services', es: 'Servicios iniciales' },
     'settings.customServices': { en: 'Add custom services', es: 'Agregar servicios personalizados' },
+    'settings.addService': { en: 'Add service', es: 'Agregar servicio' },
+    'settings.serviceName': { en: 'Service name', es: 'Nombre del servicio' },
     'invoice.title': { en: 'Locksmith Invoice', es: 'Factura de cerrajería' },
     'invoice.subtitle': { en: 'Create a quick service invoice.', es: 'Crea una factura rápida de servicio.' },
     'invoice.print': { en: 'Print', es: 'Imprimir' },

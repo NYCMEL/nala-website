@@ -31,6 +31,30 @@
     }
   }
 
+  function normalizeCustomServices(value) {
+    if (Array.isArray(value)) {
+      return value.map(function (item) {
+        if (typeof item === "string") {
+          return { label: item, checked: true };
+        }
+        return {
+          label: item && item.label ? String(item.label) : "",
+          checked: item && item.checked === false ? false : true
+        };
+      }).filter(function (item) {
+        return item.label || item.checked;
+      });
+    }
+
+    return String(value || "")
+      .split(/\r?\n/)
+      .map(function (item) { return item.trim(); })
+      .filter(Boolean)
+      .map(function (item) {
+        return { label: item, checked: true };
+      });
+  }
+
   function getSessionUser() {
     return (window.wc && wc.session && wc.session.user) ? wc.session.user : {};
   }
@@ -112,6 +136,11 @@
 
         if (field.type === "checkboxGroup") {
           self.formState[tab.id][field.id] = Array.isArray(storedValue) ? storedValue : [];
+          return;
+        }
+
+        if (field.type === "customServiceList") {
+          self.formState[tab.id][field.id] = normalizeCustomServices(storedValue);
           return;
         }
 
@@ -269,6 +298,10 @@
       return this.renderCheckboxGroup(tab, field);
     }
 
+    if (field.type === "customServiceList") {
+      return this.renderCustomServiceList(tab, field);
+    }
+
     return this.renderInput(tab, field);
   };
 
@@ -332,6 +365,32 @@
       '</fieldset>';
   };
 
+  MTKSettings.prototype.renderCustomServiceList = function (tab, field) {
+    var fullWidthClass = field.fullWidth ? " mtk-settings__field--full" : "";
+    var rows = normalizeCustomServices(this.formState[tab.id] ? this.formState[tab.id][field.id] : []);
+    this.formState[tab.id][field.id] = rows;
+
+    var rowMarkup = rows.map(function (row, index) {
+      return '' +
+        '<label class="mtk-settings__custom-service-row" data-custom-service-row="' + escapeHTML(index) + '">' +
+          '<input class="mtk-settings__checkbox mtk-settings__custom-service-checkbox" type="checkbox"' + (row.checked ? " checked" : "") + '>' +
+          '<input class="mtk-settings__input mtk-settings__custom-service-input" type="text" value="' + escapeHTML(row.label || "") + '" placeholder="' + escapeHTML(field.placeholder || "Service name") + '">' +
+        '</label>';
+    }).join("");
+
+    return '' +
+      '<div class="mtk-settings__field' + fullWidthClass + '" data-custom-service-list="' + escapeHTML(field.id) + '">' +
+        '<div class="mtk-settings__custom-service-head">' +
+          '<label class="mtk-settings__field-label">' + escapeHTML(field.label || "Add custom services") + '</label>' +
+          '<button class="mtk-settings__add-service" type="button" data-custom-service-add="' + escapeHTML(field.id) + '">' +
+            '<span class="material-icons" aria-hidden="true">add</span>' +
+            '<span>' + escapeHTML(field.buttonLabel || "Add service") + '</span>' +
+          '</button>' +
+        '</div>' +
+        '<div class="mtk-settings__custom-service-list">' + rowMarkup + '</div>' +
+      '</div>';
+  };
+
   MTKSettings.prototype.bindForm = function (tab) {
     var self = this;
     var form = this.panelEl.querySelector(".mtk-settings__form");
@@ -378,6 +437,28 @@
       });
     });
 
+    Array.prototype.forEach.call(form.querySelectorAll("[data-custom-service-list]"), function (list) {
+      var fieldId = list.getAttribute("data-custom-service-list");
+      var sync = function () {
+        self.updateCustomServiceState(tab.id, fieldId, list);
+      };
+
+      Array.prototype.forEach.call(list.querySelectorAll(".mtk-settings__custom-service-checkbox"), function (checkbox) {
+        checkbox.addEventListener("change", sync);
+      });
+
+      Array.prototype.forEach.call(list.querySelectorAll(".mtk-settings__custom-service-input"), function (input) {
+        input.addEventListener("input", sync);
+      });
+    });
+
+    Array.prototype.forEach.call(form.querySelectorAll("[data-custom-service-add]"), function (button) {
+      button.addEventListener("click", function () {
+        var fieldId = button.getAttribute("data-custom-service-add");
+        self.addCustomServiceRow(tab.id, fieldId);
+      });
+    });
+
     Array.prototype.forEach.call(form.querySelectorAll("[data-password-toggle]"), function (button) {
       button.addEventListener("click", function () {
         var wrap = button.closest(".mtk-settings__password-wrap");
@@ -389,6 +470,69 @@
         button.querySelector(".material-icons").textContent = show ? "visibility_off" : "visibility";
       });
     });
+  };
+
+  MTKSettings.prototype.updateCustomServiceState = function (tabId, fieldId, list) {
+    var rows = Array.prototype.map.call(list.querySelectorAll("[data-custom-service-row]"), function (row) {
+      var checkbox = row.querySelector(".mtk-settings__custom-service-checkbox");
+      var input = row.querySelector(".mtk-settings__custom-service-input");
+      return {
+        label: input ? input.value : "",
+        checked: checkbox ? checkbox.checked : true
+      };
+    }).filter(function (row) {
+      return row.label.trim() || row.checked;
+    });
+
+    this.formState[tabId][fieldId] = rows;
+  };
+
+  MTKSettings.prototype.addCustomServiceRow = function (tabId, fieldId) {
+    var currentList = this.panelEl.querySelector('[data-custom-service-list="' + fieldId + '"]');
+    var currentRows = currentList ? currentList.querySelectorAll("[data-custom-service-row]") : [];
+    for (var rowIndex = 0; rowIndex < currentRows.length; rowIndex += 1) {
+      var currentInput = currentRows[rowIndex].querySelector(".mtk-settings__custom-service-input");
+      if (currentInput && !currentInput.value.trim()) {
+        currentInput.focus();
+        return;
+      }
+    }
+
+    if (currentList) {
+      this.updateCustomServiceState(tabId, fieldId, currentList);
+    }
+
+    var rows = normalizeCustomServices(this.formState[tabId] ? this.formState[tabId][fieldId] : []);
+    var blankIndex = -1;
+
+    rows.forEach(function (row, index) {
+      if (!String(row.label || "").trim()) {
+        blankIndex = index;
+      }
+    });
+
+    if (blankIndex > -1) {
+      this.focusCustomServiceRow(fieldId, blankIndex);
+      return;
+    }
+
+    rows.push({ label: "", checked: true });
+    this.formState[tabId][fieldId] = rows;
+    this.renderPanel();
+    this.focusCustomServiceRow(fieldId, rows.length - 1);
+  };
+
+  MTKSettings.prototype.focusCustomServiceRow = function (fieldId, index) {
+    var self = this;
+    window.setTimeout(function () {
+      var list = self.panelEl.querySelector('[data-custom-service-list="' + fieldId + '"]');
+      var rows = list ? list.querySelectorAll("[data-custom-service-row]") : [];
+      var row = rows[index];
+      var input = row ? row.querySelector(".mtk-settings__custom-service-input") : null;
+      if (input) {
+        input.focus();
+      }
+    }, 0);
   };
 
   MTKSettings.prototype.validateTab = function (tab, form) {
