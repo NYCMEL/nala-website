@@ -62,7 +62,7 @@ I want to create a new page for "Business in a box":
 
 Update my UI. I am explaining each content by numbers:
 1) Introduction
-  - heading: "“Included by default — <small>no action required</small>"
+  - heading: "Included by default - no action required"
   - display a numbered dummy list of 5 items
   - Remove "Start setup"
 
