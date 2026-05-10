@@ -656,8 +656,12 @@ class MTKHierarchy {
         if (this._vimeoApiLoading) return;
         this._vimeoApiLoading = true;
 
-        const existing = document.querySelector('script[data-vimeo-player-api="1"]');
-        if (existing) return;
+        const existing = document.querySelector('script[data-vimeo-player-api="1"], script[src*="player.vimeo.com/api/player.js"]');
+        if (existing) {
+            existing.addEventListener('load', () => this.flushVimeoApiCallbacks());
+            existing.addEventListener('error', () => this.clearVimeoApiCallbacks());
+            return;
+        }
 
         const script = document.createElement('script');
         script.src = 'https://player.vimeo.com/api/player.js';
@@ -665,21 +669,29 @@ class MTKHierarchy {
         script.setAttribute('data-vimeo-player-api', '1');
 
         script.onload = () => {
-            this._vimeoApiLoading = false;
-            const callbacks = this._vimeoApiCallbacks.slice();
-            this._vimeoApiCallbacks = [];
-            callbacks.forEach(fn => {
-                try { fn(); } catch (e) { wc.warn('MTKHierarchy: Vimeo callback error', e); }
-            });
+            this.flushVimeoApiCallbacks();
         };
 
         script.onerror = () => {
-            this._vimeoApiLoading = false;
-            this._vimeoApiCallbacks = [];
+            this.clearVimeoApiCallbacks();
             wc.warn('MTKHierarchy: failed to load Vimeo API');
         };
 
         document.head.appendChild(script);
+    }
+
+    flushVimeoApiCallbacks() {
+        this._vimeoApiLoading = false;
+        const callbacks = this._vimeoApiCallbacks.slice();
+        this._vimeoApiCallbacks = [];
+        callbacks.forEach(fn => {
+            try { fn(); } catch (e) { wc.warn('MTKHierarchy: Vimeo callback error', e); }
+        });
+    }
+
+    clearVimeoApiCallbacks() {
+        this._vimeoApiLoading = false;
+        this._vimeoApiCallbacks = [];
     }
 
     /**
@@ -732,23 +744,39 @@ class MTKHierarchy {
 
         this.ensureVimeoApi(() => {
             if (!(window.Vimeo && window.Vimeo.Player)) return;
-            const player = new window.Vimeo.Player(iframe);
-            player.on('ended', () => {
+            let completed = false;
+            const completeLesson = (source) => {
+                if (completed) return;
+                completed = true;
                 const current = Number(wc.session.user.current_lesson);
-                if (!Number.isFinite(current)) return;
-                wc.lessonComplete(Number(lessonNo), current, (err, result) => {
+                const previousCurrent = Number.isFinite(current) ? current : Number(lessonNo);
+                wc.lessonComplete(Number(lessonNo), Number(lessonNo), (err, result) => {
                     if (err) {
                         wc.warn('MTKHierarchy: lessonComplete failed on video end', err);
+                        completed = false;
                         return;
                     }
-                    this.syncProgressAfterCompletion(moduleId, lessonId, current, result);
+                    this.syncProgressAfterCompletion(moduleId, lessonId, previousCurrent, result);
                     wc.log('MTKHierarchy: video-ended progress sync', {
                         lesson_no: Number(lessonNo),
-                        previous_current: current,
+                        source,
+                        previous_current: previousCurrent,
                         response: result
                     });
                 });
-            });
+            };
+
+            try {
+                const player = new window.Vimeo.Player(iframe);
+                player.on('ended', () => completeLesson('ended'));
+                player.on('timeupdate', (data) => {
+                    if (data && Number(data.percent) >= 0.98) {
+                        completeLesson('timeupdate');
+                    }
+                });
+            } catch (err) {
+                wc.warn('MTKHierarchy: could not attach Vimeo completion tracking', err);
+            }
         });
     }
 
