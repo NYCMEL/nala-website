@@ -151,8 +151,9 @@
     width: 0;
 
     &:checked ~ .mtk-quiz__option-label {
-      background-color: rgba(98, 0, 234, 0.08);
+      background-color: #fff8e1;
       border-color: var(--mtk-primary);
+      box-shadow: inset 4px 0 0 var(--mtk-primary), 0 1px 3px rgba(169, 130, 18, 0.16);
     }
 
     &:checked ~ .mtk-quiz__option-label .mtk-quiz__option-radio::after { transform: scale(1); }
@@ -170,7 +171,7 @@
     transition: var(--mtk-transition);
     cursor: pointer;
 
-    &:hover { background-color: rgba(98, 0, 234, 0.04); border-color: var(--mtk-primary-light); }
+    &:hover { background-color: #fbf4e5; border-color: var(--mtk-primary-light); }
   }
 
   .mtk-quiz__option-radio {

@@ -423,8 +423,9 @@ h1.title::after {
   width: 0; }
 
 .mtk-quiz .mtk-quiz__option-input:checked ~ .mtk-quiz__option-label {
-  background-color: rgba(98, 0, 234, 0.08);
-  border-color: var(--mtk-primary); }
+  background-color: #fff8e1;
+  border-color: var(--mtk-primary);
+  box-shadow: inset 4px 0 0 var(--mtk-primary), 0 1px 3px rgba(169, 130, 18, 0.16); }
 
 .mtk-quiz .mtk-quiz__option-input:checked ~ .mtk-quiz__option-label .mtk-quiz__option-radio::after {
   transform: scale(1); }
@@ -445,7 +446,7 @@ h1.title::after {
   cursor: pointer; }
 
 .mtk-quiz .mtk-quiz__option-label:hover {
-  background-color: rgba(98, 0, 234, 0.04);
+  background-color: #fbf4e5;
   border-color: var(--mtk-primary-light); }
 
 .mtk-quiz .mtk-quiz__option-radio {
