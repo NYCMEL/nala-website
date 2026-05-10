@@ -8,6 +8,10 @@
 (function () {
   "use strict";
 
+  const BIAB_SCRIPT_BASE = document.currentScript && document.currentScript.src
+    ? new URL(".", document.currentScript.src).href
+    : "";
+
   if (window.MtkBiab && typeof window.MtkBiab.initWhenReady === "function") {
     window.MtkBiab.initWhenReady();
     return;
@@ -647,7 +651,7 @@
 
         <div class="mtk-biab__invoice-page-body">
           <div class="mtk-biab__invoice-page-body-inner">
-            <wc-include href="invoice/mtk-invoice.html"></wc-include>
+            ${this._invoiceHostMarkup()}
           </div>
         </div>
       `;
@@ -656,6 +660,7 @@
       document.body.classList.add("mtk-biab-invoice-page-open");
 
       this._cleanInvoiceInclude(page, values);
+      this._initInvoiceWhenReady(values, page);
 
       const closeButton = page.querySelector(".mtk-biab__invoice-page-close");
       if (closeButton) closeButton.focus();
@@ -668,9 +673,17 @@
     }
 
     _loadInvoiceAssets() {
-      this._loadStylesheetOnce("mtk-invoice-css", "invoice/mtk-invoice.css");
-      this._loadScriptOnce("mtk-invoice-config-js", "invoice/mtk-invoice.config.js");
-      this._loadScriptOnce("mtk-invoice-js", "invoice/mtk-invoice.js");
+      this._loadStylesheetOnce("mtk-invoice-css", this._repoAssetUrl("invoice/mtk-invoice.css"));
+      this._loadScriptOnce("mtk-invoice-config-js", this._repoAssetUrl("invoice/mtk-invoice.config.js"));
+      this._loadScriptOnce("mtk-invoice-js", this._repoAssetUrl("invoice/mtk-invoice.js"));
+    }
+
+    _repoAssetUrl(path) {
+      try {
+        return new URL("../" + String(path || "").replace(/^\/+/, ""), BIAB_SCRIPT_BASE || window.location.href).href;
+      } catch (err) {
+        return String(path || "");
+      }
     }
 
     _loadStylesheetOnce(id, href) {
@@ -687,7 +700,31 @@
       const script = document.createElement("script");
       script.id = id;
       script.src = src;
+      script.addEventListener("load", () => this._initInvoiceWhenReady());
       document.body.appendChild(script);
+    }
+
+    _invoiceHostMarkup() {
+      return `
+        <mtk-invoice class="mtk-invoice">
+          <div class="mtk-invoice__loading" aria-live="polite">Loading invoice...</div>
+        </mtk-invoice>
+      `;
+    }
+
+    _initInvoiceWhenReady(values, page) {
+      if (page && !page.isConnected) {
+        return false;
+      }
+
+      if (window.MtkInvoice && typeof window.MtkInvoice.initWhenReady === "function") {
+        window.MtkInvoice.initWhenReady();
+        this._pushInvoiceValues(values || this._defaultInvoiceValues());
+        return true;
+      }
+
+      window.setTimeout(() => this._initInvoiceWhenReady(values, page), 50);
+      return false;
     }
 
     _cleanInvoiceInclude(page, values) {
