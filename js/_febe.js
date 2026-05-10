@@ -436,8 +436,11 @@ class _febe {
     handleSettingsSave(data) {
 	const payload = data && data.payload ? data.payload : data || {};
 	const tabId = payload.tabId || "";
-	const values = payload.values || {};
+	const values = Object.assign({}, payload.values || {});
 	const settings = this.readStoredSettings();
+	if (tabId === "privacy" && (!values.password || /^[*•]+$/.test(String(values.password)))) {
+	    delete values.password;
+	}
 	settings[tabId] = Object.assign({}, settings[tabId] || {}, values);
 	this.writeStoredSettings(settings);
 

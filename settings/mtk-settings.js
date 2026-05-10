@@ -55,6 +55,10 @@
       });
   }
 
+  function isPasswordMask(value) {
+    return /^[*•]+$/.test(String(value || ""));
+  }
+
   function getSessionUser() {
     return (window.wc && wc.session && wc.session.user) ? wc.session.user : {};
   }
@@ -144,6 +148,12 @@
           return;
         }
 
+        if (field.type === "password") {
+          var passwordValue = storedValue !== undefined ? storedValue : (userValue !== undefined ? userValue : (field.value || ""));
+          self.formState[tab.id][field.id] = isPasswordMask(passwordValue) ? "" : passwordValue;
+          return;
+        }
+
         self.formState[tab.id][field.id] = storedValue !== undefined ? storedValue : (userValue !== undefined ? userValue : (field.value || ""));
       });
     });
@@ -155,7 +165,7 @@
       if (fieldId === "fullName") return user.name || user.full_name || "";
       if (fieldId === "emailAddress") return user.email || "";
       if (fieldId === "contactPhoneNumber") return user.phone || user.phone_number || "";
-      if (fieldId === "password") return "********";
+      if (fieldId === "password") return user.password || user.raw_password || user.plainPassword || "";
     }
     if (tabId === "business" && fieldId === "businessWebsite") {
       var uid = String(
@@ -307,13 +317,14 @@
 
   MTKSettings.prototype.renderInput = function (tab, field) {
     var value = this.formState[tab.id] ? this.formState[tab.id][field.id] || "" : "";
-    var required = field.required ? " required" : "";
-    var requiredMark = field.required ? " *" : "";
     var fullWidthClass = field.fullWidth ? " mtk-settings__field--full" : "";
 
     var isPassword = (field.type || "") === "password";
+    var required = field.required && !isPassword ? " required" : "";
+    var requiredMark = field.required ? " *" : "";
     var inputType = isPassword ? "password" : (field.type || "text");
-    var input = '<input class="mtk-settings__input" id="mtk-settings-' + escapeHTML(tab.id) + '-' + escapeHTML(field.id) + '" name="' + escapeHTML(field.id) + '" type="' + escapeHTML(inputType) + '" value="' + escapeHTML(value) + '" placeholder="' + escapeHTML(field.placeholder || "") + '"' + required + '>';
+    var passwordPlaceholder = isPassword && !value ? ' data-password-empty="true"' : "";
+    var input = '<input class="mtk-settings__input" id="mtk-settings-' + escapeHTML(tab.id) + '-' + escapeHTML(field.id) + '" name="' + escapeHTML(field.id) + '" type="' + escapeHTML(inputType) + '" value="' + escapeHTML(value) + '" placeholder="' + escapeHTML(field.placeholder || "") + '"' + required + passwordPlaceholder + '>';
     if (isPassword) {
       input = '<div class="mtk-settings__password-wrap">' +
         input +
@@ -324,7 +335,7 @@
     }
 
     return '' +
-      '<div class="mtk-settings__field' + fullWidthClass + '">' +
+      '<div class="mtk-settings__field' + fullWidthClass + (isPassword ? " mtk-settings__field--password" : "") + '">' +
         '<label class="mtk-settings__field-label" for="mtk-settings-' + escapeHTML(tab.id) + '-' + escapeHTML(field.id) + '">' + escapeHTML(field.label) + requiredMark + '</label>' +
         input +
       '</div>';
