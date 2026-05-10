@@ -36,8 +36,8 @@ window.MTK_BIAB_CONFIG = {
       description: "A guided overview of your Business in a Box setup.",
       includedHeading: "Included by default - no action required",
       includedItems: [
-        { label: "Business profile setup", actionRequired: true, description: "Save the business name, phone, email, service area, hours, and launch services once so the website, cards, invoices, and review flow can reuse the same profile data." },
-        { label: "Business card choice", actionRequired: true, description: "Choose one business card design. Once ordered, the card choice is locked so the print workflow stays consistent." },
+        { label: "Business profile setup", actionRequired: true, page: "settings", settingsTab: "business", description: "Save the business name, phone, email, service area, hours, and launch services once so the website, cards, invoices, and review flow can reuse the same profile data." },
+        { label: "Business card choice", actionRequired: true, sectionId: "business-card-logo", openSetup: true, description: "Choose one business card design. Once ordered, the card choice is locked so the print workflow stays consistent." },
         { label: "Basic website structure", done: true, description: "The client website is generated with a homepage, service positioning, contact details, reviews, and trust sections." },
         { label: "Contact information configuration", done: true, description: "Public contact fields flow from Profile & Settings into the website, cards, and invoices." },
         { label: "Service listing template", done: true, description: "Locksmith services are organized for residential, commercial, rekey, lock change, deadbolt, lockout, and emergency-service pages." },

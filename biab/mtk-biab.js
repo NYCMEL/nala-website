@@ -364,11 +364,25 @@
         return `<li>${this._escape(item)}</li>`;
       }
 
+      const label = item.actionRequired && (item.page || item.sectionId)
+        ? `
+            <button
+              class="mtk-biab__included-link"
+              type="button"
+              data-action="go-to-included-setup"
+              data-page="${this._escape(item.page || "")}"
+              data-settings-tab="${this._escape(item.settingsTab || "")}"
+              data-section-id="${this._escape(item.sectionId || "")}"
+              data-open-setup="${item.openSetup ? "true" : "false"}"
+            >${this._escape(item.label || "")}</button>
+          `
+        : `<strong class="mtk-biab__included-label">${this._escape(item.label || "")}</strong>`;
+
       return `
         <li class="${item.done ? "is-done" : ""}">
           <span class="material-icons mtk-biab__included-check" aria-hidden="true">${item.done ? "check_circle" : "radio_button_unchecked"}</span>
           <div>
-            <strong class="mtk-biab__included-label">${this._escape(item.label || "")}</strong>
+            ${label}
             <p class="mtk-biab__included-detail" data-included-detail="${index}">
               ${this._escape(item.description || "")}
             </p>
@@ -587,6 +601,32 @@
       if (detail) detail.hidden = !detail.hidden;
     }
 
+    _goToIncludedSetup(target) {
+      const page = target.getAttribute("data-page") || "";
+      const settingsTab = target.getAttribute("data-settings-tab") || "";
+      const sectionId = target.getAttribute("data-section-id") || "";
+      const openSetup = target.getAttribute("data-open-setup") === "true";
+
+      if (page && window.wc && wc.pages && typeof wc.pages.show === "function") {
+        wc.pages.show(page);
+        if (page === "settings" && settingsTab && typeof wc.publish === "function") {
+          [80, 300, 800].forEach((delay) => {
+            window.setTimeout(() => {
+              wc.publish("4-mtk-settings", { type: "select-tab", tabId: settingsTab });
+            }, delay);
+          });
+        }
+        return;
+      }
+
+      if (sectionId) {
+        this._selectSection(sectionId);
+        if (openSetup) {
+          window.setTimeout(() => this._openSetup(), 0);
+        }
+      }
+    }
+
     _renderStatusOptions() {
       return ["All", "Open", "Paid", "Draft"].map((status) => `
         <option value="${this._escape(status)}"${this.invoiceStatus === status ? " selected" : ""}>
@@ -603,6 +643,7 @@
         const action = target.getAttribute("data-action");
 
         if (action === "select-section") this._selectSection(target.getAttribute("data-section-id"));
+        if (action === "go-to-included-setup") this._goToIncludedSetup(target);
         if (action === "open-setup") this._openSetup();
         if (action === "new-invoice") this._openNewInvoice();
         if (action === "toggle-included") this._toggleIncluded(target.getAttribute("data-included-index"));
