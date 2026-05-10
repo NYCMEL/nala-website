@@ -17,6 +17,8 @@
             this.elements = {};
             this.subscriptions = [];
             this.dashboardElement = null;
+            this.onResetBiabClick = this.onResetBiabClick.bind(this);
+            this.onVisibilityChange = this.onVisibilityChange.bind(this);
 
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', () => this.init(), { once: true });
@@ -437,20 +439,42 @@
             if (this.elements.resetBiabButton) {
                 const isTestMode = String(window.wcENV || '').toLowerCase() === 'dev' || String(window.wcENV || '').toLowerCase() === 'test';
                 this.elements.resetBiabButton.hidden = !isTestMode;
-                this.elements.resetBiabButton.addEventListener('click', () => this.resetBusinessInABox());
+                if (this.elements.resetBiabButton.__mtkDashboardResetHandler) {
+                    this.elements.resetBiabButton.removeEventListener('click', this.elements.resetBiabButton.__mtkDashboardResetHandler);
+                }
+                this.elements.resetBiabButton.__mtkDashboardResetHandler = this.onResetBiabClick;
+                this.elements.resetBiabButton.addEventListener('click', this.onResetBiabClick);
             }
 
-            document.addEventListener('visibilitychange', () => {
-                if (!document.hidden) {
-                    wc.publish('mtk-dashboard:visible', {
-                        timestamp: new Date().toISOString()
-                    });
-                }
-            });
+            if (document.__mtkDashboardVisibilityHandler) {
+                document.removeEventListener('visibilitychange', document.__mtkDashboardVisibilityHandler);
+            }
+            document.__mtkDashboardVisibilityHandler = this.onVisibilityChange;
+            document.addEventListener('visibilitychange', this.onVisibilityChange);
+        }
+
+        onResetBiabClick(event) {
+            if (event) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+            }
+            this.resetBusinessInABox();
+        }
+
+        onVisibilityChange() {
+            if (!document.hidden) {
+                wc.publish('mtk-dashboard:visible', {
+                    timestamp: new Date().toISOString()
+                });
+            }
         }
 
         resetBusinessInABox() {
+            if (this.resetBiabInProgress) return;
+
+            this.resetBiabInProgress = true;
             if (!window.confirm('Reset Business in a Box to a new-purchase state for this test account? This clears local setup data and the selected business card.')) {
+                this.resetBiabInProgress = false;
                 return;
             }
 
@@ -474,6 +498,10 @@
                     timer: 8
                 });
             }
+
+            window.setTimeout(() => {
+                this.resetBiabInProgress = false;
+            }, 500);
         }
 
         maybePromptBusinessSetup() {
@@ -566,6 +594,16 @@
         destroy() {
             this.subscriptions.forEach(unsubscribe => unsubscribe());
             this.subscriptions = [];
+
+            if (this.elements.resetBiabButton && this.elements.resetBiabButton.__mtkDashboardResetHandler === this.onResetBiabClick) {
+                this.elements.resetBiabButton.removeEventListener('click', this.onResetBiabClick);
+                delete this.elements.resetBiabButton.__mtkDashboardResetHandler;
+            }
+
+            if (document.__mtkDashboardVisibilityHandler === this.onVisibilityChange) {
+                document.removeEventListener('visibilitychange', this.onVisibilityChange);
+                delete document.__mtkDashboardVisibilityHandler;
+            }
 
             wc.publish('mtk-dashboard:destroyed', {
                 timestamp: new Date().toISOString()
