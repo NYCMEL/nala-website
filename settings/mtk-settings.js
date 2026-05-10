@@ -380,6 +380,7 @@
     var fullWidthClass = field.fullWidth ? " mtk-settings__field--full" : "";
     var rows = normalizeCustomServices(this.formState[tab.id] ? this.formState[tab.id][field.id] : []);
     this.formState[tab.id][field.id] = rows;
+    var hasCheckedRows = rows.some(function (row) { return row.checked !== false; });
 
     var rowMarkup = rows.map(function (row, index) {
       return '' +
@@ -393,10 +394,16 @@
       '<div class="mtk-settings__field' + fullWidthClass + '" data-custom-service-list="' + escapeHTML(field.id) + '">' +
         '<div class="mtk-settings__custom-service-head">' +
           '<label class="mtk-settings__field-label">' + escapeHTML(field.label || "Add custom services") + '</label>' +
-          '<button class="mtk-settings__add-service" type="button" data-custom-service-add="' + escapeHTML(field.id) + '">' +
-            '<span class="material-icons" aria-hidden="true">add</span>' +
-            '<span>' + escapeHTML(field.buttonLabel || "Add service") + '</span>' +
-          '</button>' +
+          '<div class="mtk-settings__custom-service-actions">' +
+            '<button class="mtk-settings__add-service" type="button" data-custom-service-add="' + escapeHTML(field.id) + '">' +
+              '<span class="material-icons" aria-hidden="true">add</span>' +
+              '<span>' + escapeHTML(field.buttonLabel || "Add service") + '</span>' +
+            '</button>' +
+            '<button class="mtk-settings__remove-service" type="button" data-custom-service-remove="' + escapeHTML(field.id) + '"' + (hasCheckedRows ? "" : " disabled") + '>' +
+              '<span class="material-icons" aria-hidden="true">delete</span>' +
+              '<span>' + escapeHTML(field.removeButtonLabel || "Remove service") + '</span>' +
+            '</button>' +
+          '</div>' +
         '</div>' +
         '<div class="mtk-settings__custom-service-list">' + rowMarkup + '</div>' +
       '</div>';
@@ -452,6 +459,7 @@
       var fieldId = list.getAttribute("data-custom-service-list");
       var sync = function () {
         self.updateCustomServiceState(tab.id, fieldId, list);
+        self.updateCustomServiceRemoveButton(form, fieldId);
       };
 
       Array.prototype.forEach.call(list.querySelectorAll(".mtk-settings__custom-service-checkbox"), function (checkbox) {
@@ -467,6 +475,13 @@
       button.addEventListener("click", function () {
         var fieldId = button.getAttribute("data-custom-service-add");
         self.addCustomServiceRow(tab.id, fieldId);
+      });
+    });
+
+    Array.prototype.forEach.call(form.querySelectorAll("[data-custom-service-remove]"), function (button) {
+      button.addEventListener("click", function () {
+        var fieldId = button.getAttribute("data-custom-service-remove");
+        self.removeCheckedCustomServiceRows(tab.id, fieldId);
       });
     });
 
@@ -496,6 +511,34 @@
     });
 
     this.formState[tabId][fieldId] = rows;
+  };
+
+  MTKSettings.prototype.updateCustomServiceRemoveButton = function (form, fieldId) {
+    var button = form ? form.querySelector('[data-custom-service-remove="' + fieldId + '"]') : null;
+    if (!button) return;
+    var rows = normalizeCustomServices(this.formState[this.activeTabId] ? this.formState[this.activeTabId][fieldId] : []);
+    button.disabled = !rows.some(function (row) {
+      return row.checked !== false;
+    });
+  };
+
+  MTKSettings.prototype.removeCheckedCustomServiceRows = function (tabId, fieldId) {
+    var currentList = this.panelEl.querySelector('[data-custom-service-list="' + fieldId + '"]');
+    if (currentList) {
+      this.updateCustomServiceState(tabId, fieldId, currentList);
+    }
+
+    var rows = normalizeCustomServices(this.formState[tabId] ? this.formState[tabId][fieldId] : []);
+    var remainingRows = rows.filter(function (row) {
+      return row.checked === false;
+    });
+
+    if (remainingRows.length === rows.length) {
+      return;
+    }
+
+    this.formState[tabId][fieldId] = remainingRows;
+    this.renderPanel();
   };
 
   MTKSettings.prototype.addCustomServiceRow = function (tabId, fieldId) {

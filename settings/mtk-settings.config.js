@@ -182,6 +182,7 @@ window.mtkSettingsConfig = {
           required: false,
           fullWidth: true,
           buttonLabel: "Add service",
+          removeButtonLabel: "Remove service",
           placeholder: "Service name"
         }
       ],

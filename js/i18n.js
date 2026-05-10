@@ -1059,6 +1059,7 @@
     'settings.launchServices': { en: 'Services offered', es: 'Servicios ofrecidos' },
     'settings.customServices': { en: 'Add custom services', es: 'Agregar servicios personalizados' },
     'settings.addService': { en: 'Add service', es: 'Agregar servicio' },
+    'settings.removeService': { en: 'Remove service', es: 'Eliminar servicio' },
     'settings.serviceName': { en: 'Service name', es: 'Nombre del servicio' },
     'invoice.title': { en: 'Locksmith Invoice', es: 'Factura de cerrajería' },
     'invoice.subtitle': { en: 'Create a quick service invoice.', es: 'Crea una factura rápida de servicio.' },
