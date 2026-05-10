@@ -141,8 +141,9 @@ class Pages extends HTMLElement {
     /**
      * Show a page by ID. Creates content on first visit, respects cache setting.
      * @param {string} page - The page ID to display
+     * @param {object} [options] - Navigation options
      */
-    show(page) {
+    show(page, options) {
         wc.group("mtk-pages.show:", page);
 
 	switch(page) 
@@ -213,8 +214,14 @@ class Pages extends HTMLElement {
         // from _process() initial load, so the browser stack never gets
         // duplicate or ghost entries.
         if (!this._isPopping) {
-            history.pushState({ mtkPage: page }, obj.label || page, this._pageUrl(page));
-            wc.log("mtk-pages: pushState →", page);
+            const navOptions = options || {};
+            if (navOptions.replaceHistory) {
+                history.replaceState({ mtkPage: page }, obj.label || page, this._pageUrl(page));
+                wc.log("mtk-pages: replaceState →", page);
+            } else {
+                history.pushState({ mtkPage: page }, obj.label || page, this._pageUrl(page));
+                wc.log("mtk-pages: pushState →", page);
+            }
         }
 
         // Track current page
