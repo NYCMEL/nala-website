@@ -308,11 +308,17 @@ class MTKMsgs {
 
     // Public API
     static show(messageData) {
+	let shown = 0;
 	document.querySelectorAll('.mtk-msgs').forEach((element) => {
+	    if (element && !element._mtkMsgsInstance) {
+		element._mtkMsgsInstance = new MTKMsgs(element);
+	    }
 	    if (element && element._mtkMsgsInstance) {
 		element._mtkMsgsInstance.show(messageData);
+		shown += 1;
 	    }
 	});
+	return shown > 0;
     }
 
     static hide() {
@@ -338,16 +344,18 @@ class MTKMsgs {
 	    }
 	});
     }
+
 }
 
 window.MTKMsgs = MTKMsgs;
 
 // Wait for DOM and initialize
 function initMtkMsgs() {
-    const element = document.querySelector('.mtk-msgs');
-    if (element && !element._mtkMsgsInstance) {
-	element._mtkMsgsInstance = new MTKMsgs(element);
-    }
+    document.querySelectorAll('.mtk-msgs').forEach((element) => {
+	if (element && !element._mtkMsgsInstance) {
+	    element._mtkMsgsInstance = new MTKMsgs(element);
+	}
+    });
 }
 
 window.initMtkMsgs = initMtkMsgs;
