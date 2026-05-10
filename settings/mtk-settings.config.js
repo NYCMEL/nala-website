@@ -5,9 +5,9 @@ window.mtkSettingsConfig = {
   tabs: [
     {
       id: "privacy",
-      label: "Privacy",
-      icon: "lock",
-      title: "Privacy Settings",
+      label: "Personal Information",
+      icon: "account_circle",
+      title: "Personal Information",
       description: "Manage contact details used only for internal communications.",
       fields: [
         {

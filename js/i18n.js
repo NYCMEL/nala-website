@@ -902,7 +902,7 @@
 
     // ── SETTINGS ──────────────────────────────────────────────────
     'settings.title':            { en: 'Profile Settings',              es: 'Configuración del perfil' },
-    'settings.privacyTitle':     { en: 'Privacy Settings',              es: 'Configuración de privacidad' },
+    'settings.privacyTitle':     { en: 'Personal Information',          es: 'Información personal' },
     'settings.userName':         { en: 'Full Name',                     es: 'Nombre completo' },
     'settings.userEmail':        { en: 'Email Address',                 es: 'Correo electrónico' },
     'settings.currentPassword':  { en: 'Current Password',              es: 'Contraseña actual' },
@@ -1033,7 +1033,7 @@
     'biab.reviews.body': { en: 'Review recent customer feedback and ratings.', es: 'Revisa comentarios y calificaciones recientes de clientes.' },
     'settings.accountManagement': { en: 'Account Management', es: 'Administración de cuenta' },
     'settings.profileAndSettings': { en: 'Profile & Settings', es: 'Perfil y configuración' },
-    'settings.privacy': { en: 'Privacy', es: 'Privacidad' },
+    'settings.privacy': { en: 'Personal Information', es: 'Información personal' },
     'settings.privacyDesc': { en: 'Manage contact details used only for internal communications.', es: 'Administra datos de contacto usados solo para comunicaciones internas.' },
     'settings.fullName': { en: 'Full Name', es: 'Nombre completo' },
     'settings.emailAddress': { en: 'Email Address', es: 'Correo electrónico' },
