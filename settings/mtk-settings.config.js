@@ -98,6 +98,13 @@ window.mtkSettingsConfig = {
           placeholder: "service@example.com"
         },
         {
+          id: "businessWebsite",
+          label: "Business website",
+          type: "url",
+          required: false,
+          placeholder: "Your NALA business webpage"
+        },
+        {
           id: "businessHours",
           label: "Business hours",
           type: "text",

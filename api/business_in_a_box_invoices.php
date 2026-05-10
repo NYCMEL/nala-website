@@ -24,6 +24,14 @@ if (($data['action'] ?? '') === 'delete') {
     ));
 }
 
+if (($data['action'] ?? '') === 'reset') {
+    biab_invoice_reset($uid);
+    biab_invoice_json_response(200, array(
+        'ok' => true,
+        'invoices' => array()
+    ));
+}
+
 $invoice = is_array($data['invoice'] ?? null) ? $data['invoice'] : array();
 
 $id = biab_invoice_save($uid, $invoice);

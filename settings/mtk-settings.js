@@ -126,6 +126,20 @@
       if (fieldId === "fullName") return user.name || user.full_name || "";
       if (fieldId === "emailAddress") return user.email || "";
       if (fieldId === "contactPhoneNumber") return user.phone || user.phone_number || "";
+      if (fieldId === "password") return "********";
+    }
+    if (tabId === "business" && fieldId === "businessWebsite") {
+      var uid = String(
+        (window.wc && wc.session && wc.session.nalaUID) ||
+        user.nalaUID ||
+        user.id ||
+        user.user_id ||
+        user.email ||
+        ""
+      ).replace(/[^a-zA-Z0-9_-]/g, "");
+      if (uid) {
+        return window.location.origin + "/repo_deploy/client/index.html?nalaUID=" + encodeURIComponent(uid);
+      }
     }
     return undefined;
   };
@@ -234,8 +248,13 @@
         '</button>';
     }).join("");
 
+    var requiredNote = tab.fields && tab.fields.some(function (field) { return field.required; })
+      ? '<p class="mtk-settings__required-note">Fields marked with an asterisk (*) are required.</p>'
+      : '';
+
     return '' +
       '<form class="mtk-settings__form" novalidate>' +
+        requiredNote +
         '<div class="mtk-settings__grid">' + fields + '</div>' +
         '<div class="mtk-settings__actions">' + actions + '</div>' +
       '</form>';
@@ -259,10 +278,22 @@
     var requiredMark = field.required ? " *" : "";
     var fullWidthClass = field.fullWidth ? " mtk-settings__field--full" : "";
 
+    var isPassword = (field.type || "") === "password";
+    var inputType = isPassword ? "password" : (field.type || "text");
+    var input = '<input class="mtk-settings__input" id="mtk-settings-' + escapeHTML(tab.id) + '-' + escapeHTML(field.id) + '" name="' + escapeHTML(field.id) + '" type="' + escapeHTML(inputType) + '" value="' + escapeHTML(value) + '" placeholder="' + escapeHTML(field.placeholder || "") + '"' + required + '>';
+    if (isPassword) {
+      input = '<div class="mtk-settings__password-wrap">' +
+        input +
+        '<button class="mtk-settings__password-toggle" type="button" data-password-toggle aria-label="Show password">' +
+          '<span class="material-icons" aria-hidden="true">visibility</span>' +
+        '</button>' +
+      '</div>';
+    }
+
     return '' +
       '<div class="mtk-settings__field' + fullWidthClass + '">' +
         '<label class="mtk-settings__field-label" for="mtk-settings-' + escapeHTML(tab.id) + '-' + escapeHTML(field.id) + '">' + escapeHTML(field.label) + requiredMark + '</label>' +
-        '<input class="mtk-settings__input" id="mtk-settings-' + escapeHTML(tab.id) + '-' + escapeHTML(field.id) + '" name="' + escapeHTML(field.id) + '" type="' + escapeHTML(field.type || "text") + '" value="' + escapeHTML(value) + '" placeholder="' + escapeHTML(field.placeholder || "") + '"' + required + '>' +
+        input +
       '</div>';
   };
 
@@ -344,6 +375,18 @@
           actionId: actionId,
           values: self.formState[tab.id]
         });
+      });
+    });
+
+    Array.prototype.forEach.call(form.querySelectorAll("[data-password-toggle]"), function (button) {
+      button.addEventListener("click", function () {
+        var wrap = button.closest(".mtk-settings__password-wrap");
+        var input = wrap ? wrap.querySelector("input") : null;
+        if (!input) return;
+        var show = input.type === "password";
+        input.type = show ? "text" : "password";
+        button.setAttribute("aria-label", show ? "Hide password" : "Show password");
+        button.querySelector(".material-icons").textContent = show ? "visibility_off" : "visibility";
       });
     });
   };

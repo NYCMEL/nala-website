@@ -183,6 +183,10 @@
       en: 'About',
       es: 'Acerca de'
     },
+    'nav.contact': {
+      en: 'Contact',
+      es: 'Contacto'
+    },
     'nav.toggle': {
       en: 'Toggle navigation',
       es: 'Alternar navegación'
@@ -212,6 +216,41 @@
     'nav.businessAccessOnly': {
       en: 'Business in a Box is only available for users with Business access.',
       es: 'Negocio en una Caja solo está disponible para usuarios con acceso Business.'
+    },
+    'alerts.title': { en: 'Alerts', es: 'Alertas' },
+    'alerts.unread': { en: 'Unread', es: 'No leídas' },
+    'alerts.archived': { en: 'Archived', es: 'Archivadas' },
+    'alerts.markRead': { en: 'Mark as Read', es: 'Marcar como leída' },
+    'alerts.archive': { en: 'Archive', es: 'Archivar' },
+    'alerts.delete': { en: 'Delete', es: 'Eliminar' },
+    'alerts.noUnread': { en: 'No unread alerts', es: 'No hay alertas sin leer' },
+    'alerts.noArchived': { en: 'No archived alerts', es: 'No hay alertas archivadas' },
+    'alerts.confirmDelete': { en: 'Delete this alert?', es: '¿Eliminar esta alerta?' },
+    'alerts.back': { en: 'Back to Alerts', es: 'Volver a alertas' },
+    'alerts.viewArchived': { en: 'View Archived', es: 'Ver archivadas' },
+    'alerts.viewUnread': { en: 'View Unread', es: 'Ver no leídas' },
+    'alerts.date': { en: 'Date', es: 'Fecha' },
+    'alerts.message': { en: 'Message', es: 'Mensaje' },
+    'alerts.actions': { en: 'Actions', es: 'Acciones' },
+    'contact.success': {
+      en: 'Your message was sent. We will get back to you shortly.',
+      es: 'Tu mensaje fue enviado. Te responderemos pronto.'
+    },
+    'contact.error': {
+      en: 'Could not send your message. Please try again.',
+      es: 'No se pudo enviar tu mensaje. Inténtalo de nuevo.'
+    },
+    'dashboard.biabSetupTitle': {
+      en: 'Complete Business in a Box setup',
+      es: 'Completa la configuración de Negocio en una Caja'
+    },
+    'dashboard.biabSetupPrompt': {
+      en: 'Your Business in a Box setup still needs a few details before your website and tools are ready.',
+      es: 'Tu configuración de Negocio en una Caja todavía necesita algunos detalles antes de que tu sitio web y herramientas estén listos.'
+    },
+    'dashboard.biabSetupButton': {
+      en: 'Continue setup',
+      es: 'Continuar configuración'
     },
 
     // ── HERO ──────────────────────────────────────────────────────
@@ -926,7 +965,7 @@
     'biab.currentSelection': { en: 'Current selection', es: 'Selección actual' },
     'biab.closeSetup': { en: 'Close setup', es: 'Cerrar configuración' },
     'biab.introduction.desc': { en: 'A guided overview of your Business in a Box setup.', es: 'Una guía general de tu configuración de Negocio en una Caja.' },
-    'biab.includedHeading': { en: 'Included by default — <small>no action required</small>', es: 'Incluido por defecto — <small>no requiere acción</small>' },
+    'biab.includedHeading': { en: 'Included by default - no action required', es: 'Incluido por defecto - no requiere acción' },
     'biab.website.title': { en: 'Website Builder', es: 'Creador de sitio web' },
     'biab.website.body': { en: 'Click Start setup to open the website builder using content from the client folder.', es: 'Haz clic en Comenzar configuración para abrir el creador de sitio web con el contenido del cliente.' },
     'biab.card.title': { en: 'Business Card & Logo', es: 'Tarjeta de presentación y logo' },

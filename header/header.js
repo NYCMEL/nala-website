@@ -91,6 +91,7 @@ $(document).on("click", "#header-dd-logout", function(e) {
 var pageToHeaderId = {
     "home":      "mtk-header-home",
     "news":      "mtk-header-news",
+    "contact":   "mtk-header-contact",
     "register":  "mtk-header-register",
     "login":     "mtk-header-login",
     "dashboard": "mtk-header-dashboard",
@@ -113,6 +114,7 @@ function headerSelect(id) {
     var pageLinks = [
         "mtk-header-home",
         "mtk-header-news",
+        "mtk-header-contact",
         "mtk-header-register",
         "mtk-header-login",
         "mtk-header-dashboard",
@@ -246,6 +248,7 @@ function toggleNavbar() {
     var pageToHeaderId = {
         'home':      'mtk-header-home',
         'news':      'mtk-header-news',
+        'contact':   'mtk-header-contact',
         'register':  'mtk-header-register',
         'login':     'mtk-header-login',
         'dashboard': 'mtk-header-dashboard',

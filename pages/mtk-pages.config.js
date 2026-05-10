@@ -24,6 +24,12 @@ window.app.pages = [
         "url":   "<wc-include href='news/index.inc.html' />"
     },
     {
+        "cache": "true",
+        "page":  "contact",
+        "label": "Contact",
+        "url":   "<wc-include href='contact/index.inc.html' />"
+    },
+    {
         "cache": "false",
         "page":  "dashboard",
         "label": "Dashboard",

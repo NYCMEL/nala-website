@@ -131,6 +131,12 @@ function biab_invoice_delete($uid, $id) {
     return $stmt->rowCount() > 0;
 }
 
+function biab_invoice_reset($uid) {
+    $stmt = biab_invoice_db()->prepare('DELETE FROM invoices WHERE nala_uid = :uid');
+    $stmt->execute(array(':uid' => $uid));
+    return true;
+}
+
 function biab_invoice_save($uid, $invoice) {
     if (!is_array($invoice)) {
         biab_invoice_json_response(400, array('error' => 'Invoice data is required.'));

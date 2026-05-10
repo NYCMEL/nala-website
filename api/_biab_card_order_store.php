@@ -70,6 +70,12 @@ function biab_card_get_order($uid) {
     return biab_card_order_from_row($stmt->fetch(PDO::FETCH_ASSOC));
 }
 
+function biab_card_reset_order($uid) {
+    $stmt = biab_card_db()->prepare('DELETE FROM card_orders WHERE nala_uid = :uid');
+    $stmt->execute(array(':uid' => $uid));
+    return true;
+}
+
 function biab_card_save_first_order($uid, $order) {
     $existing = biab_card_get_order($uid);
     if ($existing) {

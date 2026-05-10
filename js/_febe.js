@@ -13,6 +13,7 @@ class _febe {
 	    "mtk-header-logout",
 	    "mtk-header-home",
 	    "mtk-header-news",
+	    "mtk-header-contact",
 	    "mtk-header-hierarchy",
 	    "mtk-header-register",
 	    "mtk-header-settings",
@@ -45,11 +46,14 @@ class _febe {
 	    "mtk-biab:delete-invoice",
 	    "mtk-biab:card-order-load",
 	    "mtk-biab:business-card-submit",
+	    "mtk-biab:reset",
+	    "mtk-dashboard:reset-biab",
 	    "mtk-invoice:save",
 	    "mtk-settings:privacy-save",
 	    "mtk-settings:business-save",
 	    "mtk-settings:services-save",
-	    "mtk-settings:change-password"
+	    "mtk-settings:change-password",
+	    "mtk-contact:submit"
 	];
 
 	// create handlers mapping
@@ -78,6 +82,7 @@ class _febe {
 	    "mtk-register-submit": this.handleRegisterSubmit,
 	    "mtk-header-home": this.handleHome,
 	    "mtk-header-news": this.handleNews,
+	    "mtk-header-contact": this.handleContact,
 	    "mtk-login-submit": this.handleLoginSubmit.bind(this),
 	    "mtk-login-success": this.handleLoginSuccess.bind(this),
 	    "mtk-dashboard:continue": this.handleCourse,
@@ -108,11 +113,14 @@ class _febe {
 	    "mtk-biab:delete-invoice": this.handleBiabInvoiceDelete,
 	    "mtk-biab:card-order-load": this.handleBiabCardOrderLoad,
 	    "mtk-biab:business-card-submit": this.handleBiabCardSubmit,
+	    "mtk-biab:reset": this.handleBiabReset,
+	    "mtk-dashboard:reset-biab": this.handleBiabReset,
 	    "mtk-invoice:save": this.handleInvoiceSave,
 	    "mtk-settings:privacy-save": this.handleSettingsSave,
 	    "mtk-settings:business-save": this.handleSettingsSave,
 	    "mtk-settings:services-save": this.handleSettingsSave,
 	    "mtk-settings:change-password": this.handleSettingsChangePassword,
+	    "mtk-contact:submit": this.handleContactSubmit,
 
 	};
     }
@@ -456,25 +464,36 @@ class _febe {
 	const privacy = settings.privacy || {};
 	const customServices = String(services.customServices || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean);
 	const launchServices = Array.isArray(services.launchServices) ? services.launchServices : [];
+	const allServices = launchServices.concat(customServices).filter(Boolean);
+	const businessName = business.customerFacingBusinessName || business.legalBusinessName || "Your Company Name";
+	const phone = business.businessPhone || privacy.phone || "";
+	const email = business.businessEmail || privacy.emailAddress || "";
+	const website = business.businessWebsite || business.website || "";
+	const serviceArea = services.serviceArea || "";
 
 	const profile = {
 	    nalaUID: uid && uid.length >= 3 ? uid : "DEMO",
 	    business: {
-		name: business.customerFacingBusinessName || "Your Company Name",
+		name: businessName,
 		logo: "img/clients/x.webp",
 		logoKind: "artwork",
-		rating: 4.6,
-		ratingText: "Excellent",
+		phone: phone,
+		email: email,
+		website: website,
+		serviceArea: serviceArea,
+		services: allServices.join(", "),
+		rating: 0,
+		ratingText: "",
 		reviewCount: 0,
-		isTopPro: true,
+		isTopPro: false,
 		isOnline: false
 	    },
-	    stats: [
-		{ icon: "verified_user", text: "Current Top Pro", type: "badge" },
-		{ icon: "verified", text: "Background checked", type: "verification" },
-		{ icon: "schedule", text: "New business", type: "experience" }
-	    ],
+	    stats: [],
 	    contact: {
+		phone: phone,
+		email: email,
+		website: website,
+		serviceArea: serviceArea,
 		priceText: "Contact for estimate",
 		ctaButton: "Request estimate",
 		viewDetailsLink: ""
@@ -486,7 +505,7 @@ class _febe {
 	    },
 	    tabs: [],
 	    about: {
-		description: "Local locksmith service for " + (services.serviceArea || "your area") + ".",
+		description: "Local locksmith service for " + (serviceArea || "your area") + ".",
 		readMoreLink: ""
 	    },
 	    businessHours: {
@@ -507,8 +526,8 @@ class _febe {
 	    },
 	    reviews: [],
 	    topProStatus: {
-		title: "Business profile",
-		description: [business.legalBusinessName, business.ownerOrResponsiblePartyName, business.businessPhone, business.businessEmail, launchServices.concat(customServices).join(", ")].filter(Boolean).join(" | "),
+		title: "",
+		description: "",
 		years: []
 	    }
 	};
@@ -596,6 +615,35 @@ class _febe {
 		order: json.order || order
 	    });
 	    return json;
+	});
+    }
+
+    handleBiabReset(data) {
+	const uid = (data && data.nalaUID) || this.getBusinessPageId();
+	try {
+	    window.localStorage.removeItem("nala_profile_settings");
+	    window.localStorage.removeItem("nala_biab_ordered_card_" + uid);
+	    window.localStorage.removeItem("nala_biab_setup_prompt_seen_" + uid);
+	} catch (err) {}
+
+	const requests = [
+	    this.postBiabJson("/api/business_in_a_box_card_order.php", {
+		action: "reset",
+		nalaUID: uid
+	    }, "", this.t("biab.error.generic", "Could not complete that request. Please try again.")),
+	    this.postBiabJson("/api/business_in_a_box_invoices.php", {
+		action: "reset",
+		nalaUID: uid
+	    }, "", this.t("biab.error.generic", "Could not complete that request. Please try again.")),
+	    this.postBiabJson("/api/business_in_a_box_reviews.php", {
+		action: "reset",
+		nalaUID: uid
+	    }, "", this.t("biab.error.generic", "Could not complete that request. Please try again."))
+	];
+
+	return Promise.allSettled(requests).then(() => {
+	    wc.publish("4-mtk-biab:card-order-loaded", { nalaUID: uid, order: null });
+	    wc.publish("4-mtk-biab:invoices-loaded", { nalaUID: uid, invoices: [] });
 	});
     }
 
@@ -962,6 +1010,50 @@ class _febe {
 
     handleNews() {
 	wc.pages.show("news");
+    }
+
+    handleContact() {
+	wc.pages.show("contact");
+    }
+
+    handleContactSubmit(data) {
+	return fetch(wc.apiURL + "/api/contact.php", {
+	    method: "POST",
+	    credentials: "include",
+	    headers: { "Content-Type": "application/json" },
+	    body: JSON.stringify(data || {})
+	}).then(res => {
+	    return res.json().then(json => {
+		if (!res.ok) {
+		    throw new Error((json && (json.error || json.message)) || "Could not send your message.");
+		}
+		return json;
+	    });
+	}).then(json => {
+	    if (window.MTKMsgs && typeof MTKMsgs.show === "function") {
+		MTKMsgs.show({
+		    type: "success",
+		    icon: "mark_email_read",
+		    message: this.t("contact.success", "Your message was sent. We will get back to you shortly."),
+		    closable: true,
+		    timer: 8
+		});
+	    }
+	    wc.publish("4-mtk-contact:sent", json || {});
+	    return json;
+	}).catch(err => {
+	    wc.error("Contact submit failed", err);
+	    if (window.MTKMsgs && typeof MTKMsgs.show === "function") {
+		MTKMsgs.show({
+		    type: "error",
+		    icon: "error",
+		    message: this.customerMessage(err, this.t("contact.error", "Could not send your message. Please try again.")),
+		    closable: true,
+		    timer: 10
+		});
+	    }
+	    wc.publish("4-mtk-contact:error", { message: err.message || "" });
+	});
     }
 
     handleLoginSuccess(data) {

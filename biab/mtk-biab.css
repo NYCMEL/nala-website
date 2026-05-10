@@ -156,11 +156,39 @@ mtk-biab.mtk-biab .mtk-biab__included-heading small {
   font-weight: 800; }
 
 mtk-biab.mtk-biab .mtk-biab__included-list {
-  margin: 0;
-  padding-left: 24px;
+  margin: 0 0 16px;
+  padding-left: 0;
+  list-style: none;
   color: #334155;
   font-size: 15px;
   line-height: 1.7; }
+
+mtk-biab.mtk-biab .mtk-biab__included-group h4 {
+  margin: 18px 0 10px;
+  color: #4a3a08;
+  font-size: 15px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em; }
+
+mtk-biab.mtk-biab .mtk-biab__included-list li {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 10px;
+  margin: 0 0 12px; }
+
+mtk-biab.mtk-biab .mtk-biab__included-check {
+  color: #64748b;
+  font-size: 20px;
+  margin-top: 2px; }
+
+mtk-biab.mtk-biab .mtk-biab__included-list li.is-done .mtk-biab__included-check {
+  color: #138a3d; }
+
+mtk-biab.mtk-biab .mtk-biab__included-label {
+  display: block;
+  color: #0f172a;
+  font-weight: 900; }
 
 mtk-biab.mtk-biab .mtk-biab__included-link {
   appearance: none;
@@ -179,10 +207,22 @@ mtk-biab.mtk-biab .mtk-biab__included-link:focus-visible {
   outline: none; }
 
 mtk-biab.mtk-biab .mtk-biab__included-detail {
-  margin: 8px 0 0;
+  margin: 3px 0 0;
   color: #475569;
   font-size: 14px;
   line-height: 1.55; }
+
+mtk-biab.mtk-biab .mtk-biab__locked-note {
+  display: inline-flex;
+  max-width: 760px;
+  margin: 18px 0 0;
+  padding: 12px 14px;
+  border: 1px solid #d8c18a;
+  border-radius: 6px;
+  background: #fffaf0;
+  color: #4a3a08;
+  font-size: 14px;
+  font-weight: 800; }
 
 mtk-biab.mtk-biab .mtk-biab__start-btn,
 mtk-biab.mtk-biab .mtk-biab__submit-btn,
@@ -278,6 +318,26 @@ mtk-biab.mtk-biab .mtk-biab__invoice-table th {
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.04em; }
+
+mtk-biab.mtk-biab .mtk-biab__sort-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 900;
+  text-align: left;
+  cursor: pointer;
+  text-transform: inherit;
+  letter-spacing: inherit; }
+
+mtk-biab.mtk-biab .mtk-biab__sort-btn .material-icons {
+  font-size: 16px; }
 
 mtk-biab.mtk-biab .mtk-biab__invoice-table th:nth-child(1),
 mtk-biab.mtk-biab .mtk-biab__invoice-table th:nth-child(2),

@@ -28,7 +28,8 @@
       this.labels = this.config.labels || {};
       this.events = this.config.events || { publish: {}, subscribe: [] };
       this.activeId = this.sections[0] ? this.sections[0].id : "";
-      this.invoiceStatus = "Open";
+      this.invoiceStatus = "All";
+      this.invoiceSort = { key: "date", direction: "desc" };
       this.invoices = [];
       this.selectedTemplate = null;
       this.generatedCardTemplates = null;
@@ -233,12 +234,14 @@
         this._requestInvoices();
       }
 
-      if (eventName === "4-mtk-biab:card-order-loaded" && data && data.order) {
-        this.orderedCard = data.order;
-        this._saveOrderedCard(this.orderedCard);
-        if (this.setupOverlay && this._getActiveSection().setupType === "businessCard") {
-          this._openBusinessCardTemplatePicker(this._getActiveSection());
+      if (eventName === "4-mtk-biab:card-order-loaded" && data) {
+        this.orderedCard = data.order || null;
+        if (this.orderedCard) {
+          this._saveOrderedCard(this.orderedCard);
+        } else {
+          try { window.localStorage.removeItem(this._orderedCardStorageKey()); } catch (err) {}
         }
+        this._render();
       }
     }
 
@@ -302,6 +305,8 @@
       const safeSection = section || {};
       const included = this._renderIncluded(safeSection);
       const customContent = this._renderSectionContent(safeSection);
+      const orderedBusinessCard = safeSection.setupType === "businessCard" && this.orderedCard;
+      const showStartSetup = !safeSection.hideStartSetup && !orderedBusinessCard;
 
       return `
         <article class="mtk-biab__panel" aria-live="polite">
@@ -312,25 +317,44 @@
           ${included}
           ${customContent}
 
-          ${safeSection.hideStartSetup ? "" : `
+          ${orderedBusinessCard ? `
+            <p class="mtk-biab__locked-note">
+              ${this._escape(this._text("Your business card order is locked. This setup can no longer be changed."))}
+            </p>
+          ` : ""}
+
+          ${showStartSetup ? `
             <button class="mtk-biab__start-btn" type="button" data-action="open-setup">
               <span class="material-icons" aria-hidden="true">rocket_launch</span>
               <span>${this._escape(this.labels.startSetup || "Start setup")}</span>
             </button>
-          `}
+          ` : ""}
         </article>
       `;
     }
 
     _renderIncluded(section) {
       if (!section.includedHeading || !Array.isArray(section.includedItems)) return "";
+      const actionRequired = section.includedItems.filter((item) => item && item.actionRequired);
+      const noAction = section.includedItems.filter((item) => !item || !item.actionRequired);
 
       return `
         <section class="mtk-biab__included" aria-label="Included by default">
           <h3 class="mtk-biab__included-heading">${this._escape(section.includedHeading)}</h3>
-          <ol class="mtk-biab__included-list">
-            ${section.includedItems.map((item, index) => this._renderIncludedItem(item, index)).join("")}
-          </ol>
+          ${actionRequired.length ? `
+            <div class="mtk-biab__included-group">
+              <h4>${this._escape(this._text("Action required"))}</h4>
+              <ol class="mtk-biab__included-list mtk-biab__included-list--actions">
+                ${actionRequired.map((item, index) => this._renderIncludedItem(item, index)).join("")}
+              </ol>
+            </div>
+          ` : ""}
+          <div class="mtk-biab__included-group">
+            <h4>${this._escape(this._text("No action required"))}</h4>
+            <ol class="mtk-biab__included-list">
+              ${noAction.map((item, index) => this._renderIncludedItem(item, index)).join("")}
+            </ol>
+          </div>
         </section>
       `;
     }
@@ -341,13 +365,14 @@
       }
 
       return `
-        <li>
-          <button class="mtk-biab__included-link" type="button" data-action="toggle-included" data-included-index="${index}">
-            ${this._escape(item.label || "")}
-          </button>
-          <p class="mtk-biab__included-detail" data-included-detail="${index}" hidden>
-            ${this._escape(item.description || "")}
-          </p>
+        <li class="${item.done ? "is-done" : ""}">
+          <span class="material-icons mtk-biab__included-check" aria-hidden="true">${item.done ? "check_circle" : "radio_button_unchecked"}</span>
+          <div>
+            <strong class="mtk-biab__included-label">${this._escape(item.label || "")}</strong>
+            <p class="mtk-biab__included-detail" data-included-detail="${index}">
+              ${this._escape(item.description || "")}
+            </p>
+          </div>
         </li>
       `;
     }
@@ -386,12 +411,12 @@
                   <th scope="col"></th>
                   <th scope="col"></th>
                   <th scope="col"></th>
-                  <th scope="col">Invoice #</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Client</th>
-                  <th scope="col">Service</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Status</th>
+                  ${this._renderInvoiceSortHeader("id", "Invoice #")}
+                  ${this._renderInvoiceSortHeader("date", "Date")}
+                  ${this._renderInvoiceSortHeader("client", "Client")}
+                  ${this._renderInvoiceSortHeader("service", "Service")}
+                  ${this._renderInvoiceSortHeader("amount", "Amount")}
+                  ${this._renderInvoiceSortHeader("status", "Status")}
                 </tr>
               </thead>
               <tbody>
@@ -481,7 +506,30 @@
 
     _getFilteredInvoices(section) {
       const source = this.invoices.length ? this.invoices : (Array.isArray(section.invoices) ? section.invoices : []);
-      return source.map((invoice) => this._normalizeInvoiceRow(invoice)).filter((invoice) => invoice.status === this.invoiceStatus);
+      const rows = source.map((invoice) => this._normalizeInvoiceRow(invoice))
+        .filter((invoice) => this.invoiceStatus === "All" || invoice.status === this.invoiceStatus);
+      return this._sortInvoices(rows);
+    }
+
+    _sortInvoices(rows) {
+      const sort = this.invoiceSort || { key: "date", direction: "desc" };
+      const direction = sort.direction === "asc" ? 1 : -1;
+      const key = sort.key || "date";
+
+      return rows.slice().sort((a, b) => {
+        let av = a[key];
+        let bv = b[key];
+        if (key === "amount") {
+          av = Number(av) || 0;
+          bv = Number(bv) || 0;
+        } else {
+          av = String(av || "").toLowerCase();
+          bv = String(bv || "").toLowerCase();
+        }
+        if (av < bv) return -1 * direction;
+        if (av > bv) return 1 * direction;
+        return 0;
+      });
     }
 
     _normalizeInvoiceRow(invoice) {
@@ -510,6 +558,22 @@
       ).replace(/[^a-zA-Z0-9_-]/g, "");
     }
 
+    resetAll() {
+      this.invoiceStatus = "All";
+      this.invoiceSort = { key: "date", direction: "desc" };
+      this.invoices = [];
+      this.selectedTemplate = null;
+      this.generatedCardTemplates = null;
+      this.orderedCard = null;
+      try {
+        window.localStorage.removeItem(this._orderedCardStorageKey());
+        window.localStorage.removeItem("nala_profile_settings");
+      } catch (err) {}
+      this._publish("mtk-biab:reset", { nalaUID: this._businessPageId() });
+      this.activeId = this.sections[0] ? this.sections[0].id : "";
+      this._render();
+    }
+
     _requestInvoices() {
       this._publish("mtk-biab:invoices-load", { nalaUID: this._businessPageId() });
     }
@@ -524,7 +588,7 @@
     }
 
     _renderStatusOptions() {
-      return ["Open", "Paid", "Draft"].map((status) => `
+      return ["All", "Open", "Paid", "Draft"].map((status) => `
         <option value="${this._escape(status)}"${this.invoiceStatus === status ? " selected" : ""}>
           ${this._escape(this._text(status))}
         </option>
@@ -546,6 +610,7 @@
         if (action === "order-card-selection") this._orderSelectedCard();
         if (action === "back-to-templates") this._openBusinessCardTemplatePicker(this._getActiveSection());
         if (action === "submit-card-editor") this._submitCardEditor();
+        if (action === "sort-invoices") this._sortInvoiceBy(target.getAttribute("data-sort-key"));
 
         if (action === "email-invoice") {
           this._publish("mtk-biab:email-invoice", {
@@ -574,7 +639,7 @@
       this.root.addEventListener("change", (event) => {
         const filter = event.target.closest("[data-action='filter-invoices']");
         if (filter && this.root.contains(filter)) {
-          this.invoiceStatus = filter.value || "Open";
+          this.invoiceStatus = filter.value || "All";
           this._render();
           this._publish("mtk-biab:invoice-status-filter", {
             sectionId: this.activeId,
@@ -678,6 +743,16 @@
       this._loadScriptOnce("mtk-invoice-js", this._repoAssetUrl("invoice/mtk-invoice.js"));
     }
 
+    _sortInvoiceBy(key) {
+      if (!key) return;
+      if (this.invoiceSort && this.invoiceSort.key === key) {
+        this.invoiceSort.direction = this.invoiceSort.direction === "asc" ? "desc" : "asc";
+      } else {
+        this.invoiceSort = { key, direction: key === "date" ? "desc" : "asc" };
+      }
+      this._render();
+    }
+
     _repoAssetUrl(path) {
       try {
         return new URL("../" + String(path || "").replace(/^\/+/, ""), BIAB_SCRIPT_BASE || window.location.href).href;
@@ -696,10 +771,14 @@
     }
 
     _loadScriptOnce(id, src) {
-      if (document.getElementById(id)) return;
+      if (document.getElementById(id)) {
+        this._initInvoiceWhenReady();
+        return;
+      }
       const script = document.createElement("script");
       script.id = id;
       script.src = src;
+      script.async = false;
       script.addEventListener("load", () => this._initInvoiceWhenReady());
       document.body.appendChild(script);
     }
@@ -709,6 +788,20 @@
         <mtk-invoice class="mtk-invoice">
           <div class="mtk-invoice__loading" aria-live="polite">Loading invoice...</div>
         </mtk-invoice>
+      `;
+    }
+
+    _renderInvoiceSortHeader(key, label) {
+      const active = this.invoiceSort && this.invoiceSort.key === key;
+      const direction = active ? this.invoiceSort.direction : "none";
+      const icon = active && direction === "asc" ? "arrow_upward" : (active ? "arrow_downward" : "unfold_more");
+      return `
+        <th scope="col">
+          <button class="mtk-biab__sort-btn" type="button" data-action="sort-invoices" data-sort-key="${this._escape(key)}" aria-label="Sort by ${this._escape(label)} ${direction === "asc" ? "descending" : "ascending"}">
+            <span>${this._escape(label)}</span>
+            <span class="material-icons" aria-hidden="true">${icon}</span>
+          </button>
+        </th>
       `;
     }
 
@@ -1020,7 +1113,8 @@
         orderedAt: this.orderedCard.orderedAt
       });
 
-      this._openBusinessCardTemplatePicker(this._getActiveSection());
+      this._closeSetup();
+      this._render();
     }
 
     _getCardTemplates(section) {
@@ -1188,7 +1282,7 @@
         contactName: privacy.fullName || business.ownerOrResponsiblePartyName,
         phone: business.businessPhone || privacy.contactPhoneNumber,
         email: business.businessEmail || privacy.emailAddress,
-        website: this._defaultClientWebsite(),
+        website: business.businessWebsite || this._defaultClientWebsite(),
         serviceArea: services.serviceArea
       };
       return map[fieldId] ? String(map[fieldId]).trim() : "";

@@ -119,11 +119,21 @@
 .mtk-settings__panel-description {
   max-width: 760px;
   margin: 0;
-  color: #6b7280;
+  padding: 12px 14px;
+  border-left: 4px solid #a98211;
+  background: #fffaf0;
+  color: #4a3a08;
+  font-style: italic;
   line-height: 1.6; }
 
 .mtk-settings__form {
   max-width: 100%; }
+
+.mtk-settings__required-note {
+  margin: 0 0 18px;
+  color: #4b5563;
+  font-size: 0.95rem;
+  font-weight: 700; }
 
 .mtk-settings__grid {
   display: grid;
@@ -159,6 +169,34 @@
 .mtk-settings__input {
   min-height: 56px;
   padding: 0 14px; }
+
+.mtk-settings__password-wrap {
+  position: relative; }
+
+.mtk-settings__password-wrap .mtk-settings__input {
+  padding-right: 52px; }
+
+.mtk-settings__password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: #7a5f0c;
+  cursor: pointer;
+  transform: translateY(-50%); }
+
+.mtk-settings__password-toggle:focus-visible {
+  outline: 3px solid rgba(169, 130, 17, 0.35);
+  outline-offset: 2px; }
+
+.mtk-settings__password-toggle .material-icons {
+  font-size: 22px; }
 
 .mtk-settings__textarea {
   min-height: 96px;

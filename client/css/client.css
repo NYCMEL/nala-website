@@ -141,7 +141,7 @@ body {
 
 a {
   color: #a98212;
-  text-decoration: none;
+  text-decoration: underline;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 a:hover {
@@ -352,6 +352,7 @@ body {
 .client-rating .review-count {
   color: #757575;
   font-size: 14px;
+  text-decoration: underline;
 }
 
 .client-badges {
@@ -643,7 +644,7 @@ body {
 .contact-card .link-details {
   display: inline-block;
   color: #a98212;
-  text-decoration: none;
+  text-decoration: underline;
   font-size: 14px;
   margin-bottom: 16px;
   transition: color var(--client-motion-fast), transform var(--client-motion-fast);
@@ -655,11 +656,11 @@ body {
 .contact-card .btn-estimate {
   width: 100%;
   margin-bottom: 16px;
-  background-color: var(--client-surface);
-  color: var(--client-accent);
+  background-color: #a98212;
+  color: #ffffff;
 }
 .contact-card .btn-estimate:hover {
-  background-color: color-mix(in srgb, var(--client-surface), #ffffff 12%);
+  background-color: #7a5e0c;
 }
 .contact-card .online-status {
   display: flex;
@@ -737,13 +738,58 @@ body {
 }
 
 .client-sidebar .contact-card .btn-primary.btn-estimate {
-  background: var(--client-surface) !important;
-  background-color: var(--client-surface) !important;
-  color: var(--client-accent) !important;
+  background: #a98212 !important;
+  background-color: #a98212 !important;
+  color: #ffffff !important;
 }
 .client-sidebar .contact-card .btn-primary.btn-estimate:hover {
-  background: color-mix(in srgb, var(--client-surface), #ffffff 12%) !important;
-  background-color: color-mix(in srgb, var(--client-surface), #ffffff 12%) !important;
+  background: #7a5e0c !important;
+  background-color: #7a5e0c !important;
+}
+
+.client-contact-links {
+  display: grid;
+  gap: 10px;
+  margin: 4px 0 16px;
+}
+
+.client-contact-links a,
+.client-business-profile__row a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #7a5e0c;
+  text-decoration: underline;
+  overflow-wrap: anywhere;
+}
+
+.client-contact-links .material-icons,
+.client-business-profile__row .material-icons {
+  font-size: 20px;
+  color: #a98212;
+  flex: 0 0 auto;
+}
+
+.client-business-profile {
+  display: grid;
+  gap: 12px;
+}
+
+.client-business-profile__row {
+  display: grid;
+  grid-template-columns: 24px minmax(90px, 150px) minmax(0, 1fr);
+  gap: 8px 10px;
+  align-items: start;
+  color: #4a4439;
+}
+
+.client-business-profile__row span:last-child {
+  overflow-wrap: anywhere;
+}
+
+.client-reviews__empty {
+  color: #757575;
+  font-style: italic;
 }
 
 @media (max-width: 768px) {

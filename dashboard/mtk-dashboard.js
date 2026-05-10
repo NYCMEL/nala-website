@@ -32,6 +32,7 @@
                 this.subscribeToEvents();
                 this.render();
                 this.attachEventListeners();
+                this.maybePromptBusinessSetup();
 
                 wc.publish('mtk-dashboard:ready', {
                     timestamp: new Date().toISOString()
@@ -70,7 +71,8 @@
                 progressFill: document.getElementById('progressFill'),
                 progressBar: document.querySelector('.mtk-dashboard__progress-bar'),
                 subscriptionsTitle: document.getElementById('subscriptionsTitle'),
-                subscriptionGrid: document.getElementById('subscriptionGrid')
+                subscriptionGrid: document.getElementById('subscriptionGrid'),
+                resetBiabButton: document.getElementById('resetBiabButton')
             };
         }
 
@@ -432,6 +434,12 @@
         }
 
         attachEventListeners() {
+            if (this.elements.resetBiabButton) {
+                const isTestMode = String(window.wcENV || '').toLowerCase() === 'dev' || String(window.wcENV || '').toLowerCase() === 'test';
+                this.elements.resetBiabButton.hidden = !isTestMode;
+                this.elements.resetBiabButton.addEventListener('click', () => this.resetBusinessInABox());
+            }
+
             document.addEventListener('visibilitychange', () => {
                 if (!document.hidden) {
                     wc.publish('mtk-dashboard:visible', {
@@ -439,6 +447,120 @@
                     });
                 }
             });
+        }
+
+        resetBusinessInABox() {
+            if (!window.confirm('Reset Business in a Box to a new-purchase state for this test account? This clears local setup data and the selected business card.')) {
+                return;
+            }
+
+            const uid = this.businessPageId();
+            try {
+                window.localStorage.removeItem('nala_profile_settings');
+                window.localStorage.removeItem('nala_biab_ordered_card_' + uid);
+                window.localStorage.removeItem('nala_biab_setup_prompt_seen_' + uid);
+            } catch (err) {}
+
+            if (window.wc && typeof wc.publish === 'function') {
+                wc.publish('mtk-dashboard:reset-biab', { nalaUID: uid });
+            }
+
+            if (window.MTKMsgs && typeof MTKMsgs.show === 'function') {
+                MTKMsgs.show({
+                    type: 'success',
+                    icon: 'restart_alt',
+                    message: 'Business in a Box was reset for this test account.',
+                    closable: true,
+                    timer: 8
+                });
+            }
+        }
+
+        maybePromptBusinessSetup() {
+            if (window.__nalaBiabPromptShown) return;
+            const user = (window.wc && wc.session && wc.session.user) ? wc.session.user : {};
+            if (Number(user.has_business_in_a_box || 0) !== 1) return;
+            if (this.isBusinessSetupComplete()) return;
+
+            window.__nalaBiabPromptShown = true;
+            const message = _t(
+                'dashboard.biabSetupPrompt',
+                'Your Business in a Box setup still needs a few details before your website and tools are ready.'
+            );
+
+            if (window.mtkDialog && typeof window.mtkDialog.open === 'function') {
+                window.mtkDialog.open({
+                    id: 'biab-setup-needed',
+                    title: _t('dashboard.biabSetupTitle', 'Complete Business in a Box setup'),
+                    message: message,
+                    icon: 'work',
+                    iconColor: '#a98212',
+                    closeOnBackdrop: true,
+                    closeOnEscape: true,
+                    buttons: [
+                        {
+                            label: _t('dashboard.biabSetupButton', 'Continue setup'),
+                            action: 'biab-setup',
+                            classes: 'btn btn-primary'
+                        }
+                    ]
+                });
+                let token = null;
+                const handler = function(msg, data) {
+                    if (data && data.action === 'biab-setup') {
+                        if (token) PubSub.unsubscribe(token);
+                        if (window.mtkDialog && typeof window.mtkDialog.close === 'function') {
+                            window.mtkDialog.close();
+                        }
+                        window.__mtkDashboardInstance.navigateToBusinessInABox();
+                    }
+                };
+                token = PubSub.subscribe('mtk-dialog:action', handler);
+                return;
+            }
+
+            if (window.MTKMsgs && typeof MTKMsgs.show === 'function') {
+                MTKMsgs.show({
+                    type: 'warning',
+                    icon: 'work',
+                    message: message + ' Open Business in a Box to continue setup.',
+                    closable: true,
+                    timer: 12
+                });
+            }
+        }
+
+        isBusinessSetupComplete() {
+            let settings = {};
+            let cardOrder = null;
+            const uid = this.businessPageId();
+            try {
+                settings = JSON.parse(window.localStorage.getItem('nala_profile_settings') || '{}') || {};
+                cardOrder = JSON.parse(window.localStorage.getItem('nala_biab_ordered_card_' + uid) || 'null');
+            } catch (err) {}
+
+            const business = settings.business || {};
+            const services = settings.services || {};
+            const requiredValues = [
+                business.customerFacingBusinessName,
+                business.businessPhone,
+                business.businessEmail,
+                services.serviceArea
+            ];
+
+            return requiredValues.every((value) => String(value || '').trim()) && !!cardOrder;
+        }
+
+        businessPageId() {
+            const user = (window.wc && wc.session && wc.session.user) ? wc.session.user : {};
+            return String(
+                (window.wc && wc.session && wc.session.nalaUID) ||
+                user.nalaUID ||
+                user.id ||
+                user.user_id ||
+                user.email ||
+                'demo'
+            ).replace(/[^a-zA-Z0-9_-]/g, '');
         }
 
         destroy() {

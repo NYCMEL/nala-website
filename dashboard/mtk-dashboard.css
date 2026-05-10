@@ -337,6 +337,22 @@ h1.title::after {
   color: #a98212;
   margin: 0; }
 
+.mtk-dashboard .btn-continue-to-course,
+.mtk-dashboard__reset-biab {
+  border: 1px solid #a98212 !important;
+  background: #a98212 !important;
+  color: #ffffff !important;
+  font-weight: 800;
+  box-shadow: 0 8px 18px rgba(169, 130, 18, 0.22); }
+
+.mtk-dashboard .btn-continue-to-course:hover,
+.mtk-dashboard__reset-biab:hover {
+  background: #7a5e0c !important;
+  border-color: #7a5e0c !important; }
+
+.mtk-dashboard__reset-biab {
+  margin-left: 8px; }
+
 .mtk-dashboard__business-tools {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));

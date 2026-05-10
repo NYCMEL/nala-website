@@ -36,6 +36,9 @@ var client = window.client = function(config) {
 class ClientProfile {
     constructor(data) {
 	this.data = data
+	this.data.business = this.data.business || {}
+	this.data.contact = this.data.contact || {}
+	this.data.stats = Array.isArray(this.data.stats) ? this.data.stats : []
 	this.data.reviews = Array.isArray(this.data.reviews) ? this.data.reviews : []
 	this.init()
     }
@@ -421,6 +424,11 @@ class ClientProfile {
 	    '        logo:        "' + logo + '",',
 	    '        logoKind:    "' + logoKind + '",',
 	    '        theme:       ' + theme + ',',
+	    '        phone:       "' + (d.business.phone || '') + '",',
+	    '        email:       "' + (d.business.email || '') + '",',
+	    '        website:     "' + (d.business.website || '') + '",',
+	    '        serviceArea: "' + (d.business.serviceArea || '') + '",',
+	    '        services:    "' + (d.business.services || '') + '",',
 	    '        rating:      ' + d.business.rating + ',',
 	    '        ratingText:  "' + d.business.ratingText + '",',
 	    '        reviewCount: ' + d.business.reviewCount + ',',
@@ -431,6 +439,10 @@ class ClientProfile {
 	    stats,
 	    '    ],',
 	    '    contact: {',
+	    '        phone: "' + (d.contact.phone || d.business.phone || '') + '",',
+	    '        email: "' + (d.contact.email || d.business.email || '') + '",',
+	    '        website: "' + (d.contact.website || d.business.website || '') + '",',
+	    '        serviceArea: "' + (d.contact.serviceArea || d.business.serviceArea || '') + '",',
 	    '        priceText: "' + d.contact.priceText + '",',
 	    '        ctaButton: "' + d.contact.ctaButton + '",',
 	    '    },',
@@ -568,17 +580,23 @@ class ClientProfile {
 
 	// Rating
 	const rating = document.getElementById("clientRating")
-	const stars = "★".repeat(Math.floor(this.data.business.rating))
+	const ratingValue = Number(this.data.business.rating || 0)
+	const reviewCount = Number(this.data.business.reviewCount || 0)
+	const stars = ratingValue ? "★".repeat(Math.floor(ratingValue)) : ""
+	const reviewsUrl = this.getReviewsUrl()
 	rating.innerHTML = `
-      <span class="rating-text">${this.data.business.ratingText}</span>
-      <span class="rating-value">${this.data.business.rating}</span>
-      <span class="stars">${stars}</span>
-      <span class="review-count">(${this.data.business.reviewCount})</span>
+      ${this.data.business.ratingText ? `<span class="rating-text">${this._escapeHtml(this.data.business.ratingText)}</span>` : ""}
+      ${ratingValue ? `<span class="rating-value">${ratingValue}</span>` : ""}
+      ${stars ? `<span class="stars">${stars}</span>` : ""}
+      <a class="review-count client-review-link" href="${reviewsUrl}">Reviews (${reviewCount})</a>
     `
 
 	// Badges
-	if (this.data.business.isTopPro) {
-	    const badges = document.getElementById("clientBadges")
+	const badges = document.getElementById("clientBadges")
+	if (badges) {
+	    badges.innerHTML = ""
+	}
+	if (this.data.business.isTopPro && badges) {
 	    badges.innerHTML = `
         <span class="badge">
           <span class="material-icons">verified</span>
@@ -590,7 +608,14 @@ class ClientProfile {
 
     renderStats() {
 	const statsContainer = document.getElementById("clientStats")
-	const statsHTML = this.data.stats
+	const usableStats = (this.data.stats || []).filter((stat) => {
+	    const text = String(stat && stat.text ? stat.text : "").trim()
+	    if (!text) return false
+	    if (/^(0|0\s+)/.test(text)) return false
+	    if (/top pro/i.test(text) && !this.data.business.isTopPro) return false
+	    return true
+	})
+	const statsHTML = usableStats
 	      .map(
 		  (stat, i) => `
       <div class="stat-item stat-${stat.type}">
@@ -603,6 +628,7 @@ class ClientProfile {
 	      )
 	      .join("")
 	statsContainer.innerHTML = statsHTML
+	statsContainer.style.display = statsHTML ? "" : "none"
     }
 
     renderTabs() {
@@ -620,6 +646,14 @@ class ClientProfile {
     }
 
     renderContent() {
+	if (this.isReviewsPage()) {
+	    document.querySelectorAll(".client-content .content-section").forEach(function(section) {
+		section.style.display = section.id === "reviewsSection" ? "" : "none"
+	    })
+	    this.renderReviews()
+	    return
+	}
+
 	// About section
 	const aboutText = document.getElementById("aboutText")
 	aboutText.innerHTML = `
@@ -640,16 +674,17 @@ class ClientProfile {
 	this.renderSocialMedia()
 
 	this.renderReviews()
+	this.renderBusinessProfile()
 
 	// Top Pro status
 	// Only show Top Pro section if isTopPro is true
 	const topProSection = document.getElementById("topProSection")
 	if (topProSection) topProSection.style.display = this.data.business.isTopPro ? "" : "none"
-	document.getElementById("topProTitle").textContent = this.data.topProStatus.title
-	document.getElementById("topProDescription").textContent = this.data.topProStatus.description
+	document.getElementById("topProTitle").textContent = this.data.topProStatus && this.data.topProStatus.title ? this.data.topProStatus.title : ""
+	document.getElementById("topProDescription").textContent = this.data.topProStatus && this.data.topProStatus.description ? this.data.topProStatus.description : ""
 
 	const proBadges = document.getElementById("topProBadges")
-	proBadges.innerHTML = this.data.topProStatus.years
+	proBadges.innerHTML = ((this.data.topProStatus && this.data.topProStatus.years) || [])
 	    .map(
 		(year) => `
       <div class="pro-badge">
@@ -674,7 +709,11 @@ class ClientProfile {
 	})
 
 	const self = this
-	section.style.display = visible.length ? "" : "none"
+	section.style.display = visible.length || this.isReviewsPage() ? "" : "none"
+	if (!visible.length && this.isReviewsPage()) {
+	    list.innerHTML = `<p class="client-reviews__empty">No reviews have been published yet.</p>`
+	    return
+	}
 	list.innerHTML = visible.map(function(review) {
 	    const rating = Math.max(0, Math.min(5, Number(review.rating || 0)))
 	    const stars = "★".repeat(Math.round(rating))
@@ -689,6 +728,56 @@ class ClientProfile {
 		</article>
 	    `
 	}).join("")
+    }
+
+    isReviewsPage() {
+	const params = new URLSearchParams(window.location.search)
+	return params.get("view") === "reviews" || window.location.hash === "#reviews"
+    }
+
+    getReviewsUrl() {
+	const uid = this.data && this.data.nalaUID ? String(this.data.nalaUID) : (new URLSearchParams(window.location.search).get("nalaUID") || "")
+	const url = new URL(this.getPersonalUrl(uid))
+	url.searchParams.set("view", "reviews")
+	return url.toString()
+    }
+
+    renderBusinessProfile() {
+	const section = document.getElementById("businessProfileSection")
+	const container = document.getElementById("clientBusinessProfile")
+	if (!section || !container) return
+
+	const business = this.data.business || {}
+	const contact = this.data.contact || {}
+	const phone = business.phone || contact.phone || ""
+	const email = business.email || contact.email || ""
+	const website = business.website || contact.website || this.getPersonalUrl(this.data.nalaUID || "")
+	const serviceArea = business.serviceArea || contact.serviceArea || ""
+	const services = business.services || contact.services || ""
+	const rows = [
+	    { label: "Phone", icon: "phone", value: phone, href: phone ? "tel:" + phone.replace(/[^\d+]/g, "") : "" },
+	    { label: "Email", icon: "email", value: email, href: email ? "mailto:" + email : "" },
+	    { label: "Website", icon: "language", value: website, href: this.normalizeUrl(website) },
+	    { label: "Service area", icon: "location_on", value: serviceArea, href: "" },
+	    { label: "Services", icon: "build", value: services, href: "" }
+	].filter((row) => row.value)
+
+	section.style.display = rows.length ? "" : "none"
+	container.innerHTML = rows.map((row) => `
+	    <div class="client-business-profile__row">
+		<span class="material-icons" aria-hidden="true">${row.icon}</span>
+		<strong>${this._escapeHtml(row.label)}</strong>
+		${row.href
+		    ? `<a href="${this._escapeHtml(row.href)}">${this._escapeHtml(row.value)}</a>`
+		    : `<span>${this._escapeHtml(row.value)}</span>`}
+	    </div>
+	`).join("")
+    }
+
+    normalizeUrl(value) {
+	const url = String(value || "").trim()
+	if (!url) return ""
+	return /^https?:\/\//i.test(url) ? url : "https://" + url
     }
 
     _escapeHtml(value) {
@@ -830,6 +919,25 @@ class ClientProfile {
 	// Contact info
 	document.getElementById("contactPrice").textContent = this.data.contact.priceText
 	document.getElementById("btnEstimate").textContent = this.data.contact.ctaButton
+	const links = document.getElementById("clientContactLinks")
+	if (links) {
+	    const business = this.data.business || {}
+	    const contact = this.data.contact || {}
+	    const phone = business.phone || contact.phone || ""
+	    const email = business.email || contact.email || ""
+	    const website = business.website || contact.website || this.getPersonalUrl(this.data.nalaUID || "")
+	    const rows = [
+		{ icon: "phone", text: phone, href: phone ? "tel:" + phone.replace(/[^\d+]/g, "") : "" },
+		{ icon: "email", text: email, href: email ? "mailto:" + email : "" },
+		{ icon: "language", text: website, href: this.normalizeUrl(website) }
+	    ].filter((row) => row.text && row.href)
+	    links.innerHTML = rows.map((row) => `
+		<a href="${this._escapeHtml(row.href)}">
+		    <span class="material-icons" aria-hidden="true">${row.icon}</span>
+		    <span>${this._escapeHtml(row.text)}</span>
+		</a>
+	    `).join("")
+	}
 
 	// Online status
 	if (!this.data.business.isOnline) {

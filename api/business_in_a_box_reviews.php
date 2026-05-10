@@ -14,6 +14,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $data = biab_reviews_read_json_body();
 $uid = biab_reviews_uid($data['nalaUID'] ?? '');
+
+if (($data['action'] ?? '') === 'reset') {
+    biab_write_reviews($uid, array());
+    biab_write_pending($uid, array());
+    biab_reviews_json_response(200, array('ok' => true, 'reviews' => array(), 'rating' => 0, 'reviewCount' => 0));
+}
+
 $requested = is_array($data['reviews'] ?? null) ? $data['reviews'] : array();
 $saved = biab_read_reviews($uid);
 $publishedById = array();

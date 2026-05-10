@@ -15,6 +15,15 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $data = biab_card_read_json_body();
 $uid = biab_card_uid($data['nalaUID'] ?? '');
+
+if (($data['action'] ?? '') === 'reset') {
+    biab_card_reset_order($uid);
+    biab_card_json_response(200, array(
+        'ok' => true,
+        'order' => null
+    ));
+}
+
 $order = is_array($data['order'] ?? null) ? $data['order'] : array();
 
 biab_card_json_response(200, array(

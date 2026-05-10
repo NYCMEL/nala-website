@@ -34,15 +34,16 @@ window.MTK_BIAB_CONFIG = {
       eyebrow: "Getting started",
       title: "Introduction",
       description: "A guided overview of your Business in a Box setup.",
-      includedHeading: "Included by default — <small>no action required</small>",
+      includedHeading: "Included by default - no action required",
       includedItems: [
-        { label: "Business profile setup", description: "Save the business name, phone, email, service area, hours, and launch services once so the website, cards, invoices, and review flow can reuse the same profile data." },
-        { label: "Basic website structure", description: "The client website is generated with a homepage, service positioning, contact details, reviews, and trust sections." },
-        { label: "Contact information configuration", description: "Public contact fields flow from Profile & Settings into the website, cards, and invoices." },
-        { label: "Service listing template", description: "Locksmith services are organized for residential, commercial, rekey, lock change, deadbolt, lockout, and emergency-service pages." },
-        { label: "Customer review workflow", description: "Invoices and customer follow-up send customers to the hosted review page so reviews can be collected and displayed." },
-        { label: "SEO setup", description: "On-site SEO can be generated automatically for hosted client pages: titles, descriptions, service-area copy, internal links, review schema, local business schema, sitemap entries, and Google-ready profile data exports." },
-        { label: "Local listings checklist", description: "Prepare consistent name, address/service area, phone, website, hours, services, photos, and description for Google Business Profile, Bing Places, Apple Business Connect, Yelp, BBB, Angi, Thumbtack, Nextdoor, and local citation sites." }
+        { label: "Business profile setup", actionRequired: true, description: "Save the business name, phone, email, service area, hours, and launch services once so the website, cards, invoices, and review flow can reuse the same profile data." },
+        { label: "Business card choice", actionRequired: true, description: "Choose one business card design. Once ordered, the card choice is locked so the print workflow stays consistent." },
+        { label: "Basic website structure", done: true, description: "The client website is generated with a homepage, service positioning, contact details, reviews, and trust sections." },
+        { label: "Contact information configuration", done: true, description: "Public contact fields flow from Profile & Settings into the website, cards, and invoices." },
+        { label: "Service listing template", done: true, description: "Locksmith services are organized for residential, commercial, rekey, lock change, deadbolt, lockout, and emergency-service pages." },
+        { label: "Customer review workflow", done: true, description: "Invoices and customer follow-up send customers to the hosted review page so reviews can be collected and displayed automatically." },
+        { label: "SEO setup", done: true, description: "On-site SEO for hosted client pages is automatic. NALA generates titles, descriptions, service-area copy, internal links, review schema, local business schema, sitemap entries, and Google-ready profile data exports." },
+        { label: "Local listings checklist", done: true, description: "NALA prepares consistent name, address/service area, phone, website, hours, services, photos, and description for Google Business Profile, Bing Places, Apple Business Connect, Yelp, BBB, Angi, Thumbtack, Nextdoor, and local citation sites." }
       ],
       hideStartSetup: true
     },

@@ -39,10 +39,28 @@ class MTKAlerts {
     this.alerts = JSON.parse(JSON.stringify(config.alerts));
     this.events = config.events;
     this._bindElements();
+    this._applyLabels();
     this._bindSwitch();
     this._subscribeAll();
     this._render();
     this._loadRemoteAlerts();
+  }
+
+  _applyLabels() {
+    const labels = this.config.labels || {};
+    const title = this.root.querySelector('.mtka-header-title');
+    if (title) title.textContent = labels.title || 'Alerts';
+    const unread = this.root.querySelector('[data-tab="unread"]');
+    if (unread) unread.lastChild.textContent = labels.unread || 'Unread';
+    const archived = this.root.querySelector('[data-tab="archived"]');
+    if (archived) archived.lastChild.textContent = labels.archived || 'Archived';
+    const emptyUnread = this.root.querySelector('#mtk-empty-unread p');
+    if (emptyUnread) emptyUnread.textContent = labels.noUnread || 'No unread alerts';
+    const emptyArchived = this.root.querySelector('#mtk-empty-archived p');
+    if (emptyArchived) emptyArchived.textContent = labels.noArchived || 'No archived alerts';
+    this.root.querySelectorAll('th.col-date').forEach(th => th.textContent = labels.date || 'Date');
+    this.root.querySelectorAll('th.col-message').forEach(th => th.textContent = labels.message || 'Message');
+    this.root.querySelectorAll('th.col-actions').forEach(th => th.textContent = labels.actions || 'Actions');
   }
 
   _bindElements() {
@@ -215,16 +233,16 @@ class MTKAlerts {
     wrap.className  = 'mtka-tbl-actions';
 
     if (!alert.read) {
-      wrap.appendChild(this._btn('is-read', 'done', 'Mark Read', () =>
+      wrap.appendChild(this._btn('is-read', 'done', this.config.labels.markRead || 'Mark Read', () =>
         this._publish(this.events.alertRead, { id: alert.id, alert })
       ));
     }
     if (!alert.archived) {
-      wrap.appendChild(this._btn('is-archive', 'inventory_2', 'Archive', () =>
+      wrap.appendChild(this._btn('is-archive', 'inventory_2', this.config.labels.archive || 'Archive', () =>
         this._publish(this.events.alertArchive, { id: alert.id, alert })
       ));
     }
-    wrap.appendChild(this._btn('is-delete', 'delete', 'Delete', () => {
+    wrap.appendChild(this._btn('is-delete', 'delete', this.config.labels.delete || 'Delete', () => {
       if (window.confirm(this.config.labels.confirmDelete))
         this._publish(this.events.alertDelete, { id: alert.id, alert });
     }));
