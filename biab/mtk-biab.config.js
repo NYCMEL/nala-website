@@ -67,13 +67,13 @@ window.MTK_BIAB_CONFIG = {
       eyebrow: "Search",
       title: "Google SEO Automation",
       description: "Prepare the hosted website, Search Console submission, and Google Business Profile data from the same business profile.",
-      body: "NALA automatically prepares the on-site SEO and Google-ready business data. Google Search Console and Google Business Profile submissions require the client to authorize the correct Google account or add NALA as a manager first.",
+      body: "Click the button once to prepare the SEO package, email the client Google authorization instructions, notify NALA support, and start the Business Profile verification handoff.",
       viewType: "googleSeo",
       hideStartSetup: true,
       workflow: [
         { label: "Hosted website SEO", status: "Automatic", description: "Titles, descriptions, local business schema, review schema, internal links, and sitemap-ready URLs are generated from the business profile." },
-        { label: "Search Console sitemap", status: "Needs authorization", description: "After the Google account has access to the website property, NALA can submit the sitemap through the Search Console API." },
-        { label: "Google Business Profile", status: "Needs authorization", description: "The owner must claim or verify the profile, then NALA can prepare and manage eligible location details with approved access." },
+        { label: "Search Console sitemap", status: "Needs authorization", description: "The client authorizes the Google account; then NALA can submit the hosted sitemap through the Search Console API." },
+        { label: "Google Business Profile", status: "Needs owner verification", description: "The owner must claim or verify the profile and add NALA as a manager before eligible location details can be managed." },
         { label: "Local SEO data package", status: "Prepared", description: "Name, phone, website, service area, hours, services, and description are kept consistent for listings and citation work." }
       ]
     },

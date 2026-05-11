@@ -25,6 +25,13 @@ if ($action === 'reset') {
     ));
 }
 
+if ($action === 'start_authorization') {
+    biab_google_seo_json_response(200, array(
+        'ok' => true,
+        'status' => biab_google_seo_start_authorization($uid, $data)
+    ));
+}
+
 if ($action !== 'prepare') {
     biab_google_seo_json_response(400, array('error' => 'Unknown Google SEO action.'));
 }
