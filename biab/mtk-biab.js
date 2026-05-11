@@ -266,6 +266,8 @@
       const steps = Array.isArray(status.steps) && status.steps.length ? status.steps : (Array.isArray(section.workflow) ? section.workflow : []);
       const exportData = status.exportData || this._buildGoogleSeoPayload().exportData;
       const requestedAt = status.requestedAt ? new Date(status.requestedAt).toLocaleString() : "";
+      const authorizationEmailSentAt = status.authorizationEmailSentAt ? new Date(status.authorizationEmailSentAt).toLocaleString() : "";
+      const authorizationEmail = status.authorizationEmail || (exportData && exportData.email) || "";
 
       return `
         <section class="mtk-biab__google-seo" aria-label="${this._escape(section.title || "Google SEO Automation")}">
@@ -274,11 +276,12 @@
               <h3>${this._escape(section.title || "Google SEO Automation")}</h3>
               <p>${this._escape(section.body || "")}</p>
               ${requestedAt ? `<p class="mtk-biab__google-seo-note">${this._escape(this._text("Last prepared"))}: ${this._escape(requestedAt)}</p>` : ""}
+              ${authorizationEmailSentAt ? `<p class="mtk-biab__google-seo-note">${this._escape(this._text("Authorization email sent"))}: ${this._escape(authorizationEmailSentAt)}${authorizationEmail ? ` ${this._escape(this._text("to"))} ${this._escape(authorizationEmail)}` : ""}</p>` : ""}
             </div>
             <div class="mtk-biab__google-seo-actions">
-              <button class="mtk-biab__submit-btn" type="button" data-action="request-google-seo">
-                <span class="material-icons" aria-hidden="true">auto_fix_high</span>
-                <span>${this._escape(this._text("Prepare Google SEO"))}</span>
+              <button class="mtk-biab__submit-btn" type="button" data-action="start-google-seo-authorization">
+                <span class="material-icons" aria-hidden="true">mark_email_read</span>
+                <span>${this._escape(this._text("Send authorization email & start Google setup"))}</span>
               </button>
               <button class="mtk-biab__secondary-btn" type="button" data-action="refresh-google-seo">
                 <span class="material-icons" aria-hidden="true">refresh</span>
@@ -528,6 +531,12 @@
       this._publish("mtk-biab:google-seo-request", this._buildGoogleSeoPayload());
     }
 
+    _startGoogleSeoAuthorization() {
+      this._publish("mtk-biab:google-seo-request", Object.assign({}, this._buildGoogleSeoPayload(), {
+        action: "start_authorization"
+      }));
+    }
+
     _toggleIncluded(index) {
       const detail = this.root.querySelector('[data-included-detail="' + String(index).replace(/[^0-9]/g, "") + '"]');
       if (detail) detail.hidden = !detail.hidden;
@@ -586,6 +595,7 @@
         if (action === "sort-invoices") this._sortInvoiceBy(target.getAttribute("data-sort-key"));
         if (action === "refresh-google-seo") this._requestGoogleSeoStatus();
         if (action === "request-google-seo") this._requestGoogleSeoSetup();
+        if (action === "start-google-seo-authorization") this._startGoogleSeoAuthorization();
 
         if (action === "email-invoice") {
           this._publish("mtk-biab:email-invoice", {

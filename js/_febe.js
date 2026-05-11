@@ -656,8 +656,8 @@ class _febe {
 	const uid = payload.nalaUID || this.getBusinessPageId();
 	return this.postBiabJson("/api/business_in_a_box_google_seo.php", Object.assign({}, payload, {
 	    nalaUID: uid,
-	    action: "prepare"
-	}), this.t("biab.googleSeo.preparedSuccess", "Google SEO package prepared."), this.t("biab.error.generic", "Could not complete that request. Please try again.")).then(json => {
+	    action: payload.action || "prepare"
+	}), payload.action === "start_authorization" ? this.t("biab.googleSeo.authorizationSent", "Google SEO authorization email sent. NALA has the profile data ready for verification steps.") : this.t("biab.googleSeo.preparedSuccess", "Google SEO package prepared."), this.t("biab.error.generic", "Could not complete that request. Please try again.")).then(json => {
 	    wc.publish("4-mtk-biab:google-seo-status", {
 		nalaUID: uid,
 		status: json.status || {}
