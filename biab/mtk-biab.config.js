@@ -38,15 +38,15 @@ window.MTK_BIAB_CONFIG = {
       nextStep: "Start with Business profile setup. Click it, fill in your business name, phone number, email, website, service area, and services, then click Save.",
       includedHeading: "Your setup checklist",
       includedItems: [
-        { label: "Click here to enter your business information", actionRequired: true, page: "settings", settingsTab: "business", description: "Enter the information customers should see, such as your business name, phone number, email, website, hours, and service area. Click Save when you are done." },
-        { label: "Click here to choose your business card", actionRequired: true, sectionId: "business-card-logo", openSetup: true, description: "Choose the card you want, check the name, phone, email, website, and service area, then click Order this business card." },
-        { label: "Click here to send your Google setup email", actionRequired: true, sectionId: "google-seo", description: "Click the button in the Google section. You will receive step-by-step instructions for approving Google setup." },
-        { label: "Website pages", done: true, description: "NALA creates your website pages for you. After you save your business information, the website can use that information." },
-        { label: "Contact details shared across BIAB", done: true, description: "After you save your phone number, email, and website, NALA uses them on the website, business cards, invoices, and review requests." },
-        { label: "Service list", done: true, description: "Choose the locksmith services you offer in Profile & Settings. NALA uses that list on your website and business materials." },
-        { label: "Review requests", done: true, description: "When you save an invoice, NALA automatically asks the customer for a review. You do not need to check a box." },
-        { label: "Google website setup", done: true, description: "NALA prepares your website for Google. You only need to approve Google access when the email arrives." },
-        { label: "Local listing information", done: true, description: "NALA keeps your business name, phone, website, hours, service area, and services ready for local business listings." }
+        { setupKey: "business-info", label: "Click here to enter your business information", actionRequired: true, page: "settings", settingsTab: "business", description: "Enter the information customers should see, such as your business name, phone number, email, website, and hours. Click Save when you are done." },
+        { setupKey: "services-offered", label: "Click here to choose your services offered", actionRequired: true, page: "settings", settingsTab: "services", description: "Enter your service area, check every service you offer, then click Save services offered." },
+        { setupKey: "business-card", label: "Click here to choose your business card", actionRequired: true, sectionId: "business-card-logo", openSetup: true, description: "Choose the card you want, check the name, phone, email, website, and service area, then click Order this business card." },
+        { setupKey: "google-setup", label: "Click here to send your Google setup email", actionRequired: true, sectionId: "google-seo", description: "Click the button in the Google section. You will receive step-by-step instructions for approving Google setup." },
+        { setupKey: "website-pages", label: "Website pages", done: false, description: "NALA creates your website pages for you. This is checked after your business name, phone, email, and services are saved." },
+        { setupKey: "contact-details", label: "Contact details shared across BIAB", done: false, description: "After you save your phone number, email, and website, NALA uses them on the website, business cards, invoices, and review requests." },
+        { setupKey: "review-requests", label: "Review requests", done: true, description: "When you save an invoice, NALA automatically asks the customer for a review. You do not need to check a box." },
+        { setupKey: "google-website", label: "Google website setup", done: false, description: "NALA prepares your website for Google. This is checked after the Google setup email is sent." },
+        { setupKey: "local-listing-info", label: "Local listing information", done: false, description: "NALA keeps your business name, phone, website, hours, service area, and services ready for local business listings." }
       ],
       hideStartSetup: true
     },

@@ -253,8 +253,9 @@
 
     _renderIncluded(section) {
       if (!section.includedHeading || !Array.isArray(section.includedItems)) return "";
-      const actionRequired = section.includedItems.filter((item) => item && item.actionRequired);
-      const noAction = section.includedItems.filter((item) => !item || !item.actionRequired);
+      const items = section.includedItems.map((item) => this._setupChecklistItem(item));
+      const actionRequired = items.filter((item) => item && item.actionRequired);
+      const noAction = items.filter((item) => !item || !item.actionRequired);
 
       return `
         <section class="mtk-biab__included" aria-label="Included by default">
@@ -282,6 +283,7 @@
         return `<li>${this._escape(item)}</li>`;
       }
 
+      const done = this._setupChecklistDone(item);
       const label = item.actionRequired && (item.page || item.sectionId)
         ? `
             <button
@@ -297,16 +299,84 @@
         : `<strong class="mtk-biab__included-label">${this._escape(item.label || "")}</strong>`;
 
       return `
-        <li class="${item.done ? "is-done" : ""}">
-          <span class="material-icons mtk-biab__included-check" aria-hidden="true">${item.done ? "check_circle" : "radio_button_unchecked"}</span>
+        <li class="${done ? "is-done" : ""}">
+          <span class="material-icons mtk-biab__included-check" aria-hidden="true">${done ? "check_circle" : "radio_button_unchecked"}</span>
           <div>
             ${label}
+            <span class="mtk-biab__included-status">${this._escape(this._text(done ? "Done" : "Not done yet"))}</span>
             <p class="mtk-biab__included-detail" data-included-detail="${index}">
               ${this._escape(item.description || "")}
             </p>
           </div>
         </li>
       `;
+    }
+
+    _setupChecklistItem(item) {
+      if (!item || typeof item === "string") return item;
+      const copy = Object.assign({}, item);
+      copy.done = this._setupChecklistDone(copy);
+      return copy;
+    }
+
+    _setupChecklistDone(item) {
+      if (!item || typeof item === "string") return false;
+
+      const key = item.setupKey || "";
+      const settings = this._currentSettingsProfile();
+      const business = settings.business || {};
+      const privacy = settings.privacy || {};
+      const services = settings.services || {};
+      const hasBusinessInfo = this._hasBusinessInfo(business, privacy);
+      const hasContactInfo = this._hasContactInfo(business, privacy);
+      const hasServices = this._hasServicesOffered(services);
+      const hasCardOrder = !!(this.orderedCard && (this.orderedCard.templateId || this.orderedCard.orderedAt));
+      const hasGoogleStarted = !!(this.googleSeo && (this.googleSeo.authorizationEmailSentAt || this.googleSeo.authorizationEmailSent));
+
+      if (key === "business-info") return hasBusinessInfo;
+      if (key === "services-offered") return hasServices;
+      if (key === "business-card") return hasCardOrder;
+      if (key === "google-setup") return hasGoogleStarted;
+      if (key === "website-pages") return hasBusinessInfo && hasServices;
+      if (key === "contact-details") return hasContactInfo;
+      if (key === "review-requests") return true;
+      if (key === "google-website") return hasGoogleStarted;
+      if (key === "local-listing-info") return hasBusinessInfo && hasServices;
+
+      return !!item.done;
+    }
+
+    _currentSettingsProfile() {
+      this._loadStoredSettings();
+      return this.settingsProfile || {};
+    }
+
+    _hasBusinessInfo(business, privacy) {
+      return !!(
+        this._cleanValue(business.customerFacingBusinessName || business.legalBusinessName) &&
+        this._cleanValue(business.businessPhone || privacy.contactPhoneNumber) &&
+        this._cleanValue(business.businessEmail || privacy.emailAddress)
+      );
+    }
+
+    _hasContactInfo(business, privacy) {
+      return !!(
+        this._cleanValue(business.businessPhone || privacy.contactPhoneNumber) &&
+        this._cleanValue(business.businessEmail || privacy.emailAddress) &&
+        this._cleanValue(business.businessWebsite || this._defaultClientWebsite())
+      );
+    }
+
+    _hasServicesOffered(services) {
+      const launchServices = Array.isArray(services.launchServices) ? services.launchServices.filter(Boolean) : [];
+      return !!(
+        this._cleanValue(services.serviceArea) &&
+        (launchServices.length || this._cleanValue(this._customServiceLabels(services.customServices)))
+      );
+    }
+
+    _cleanValue(value) {
+      return String(value || "").trim();
     }
 
     _renderSectionContent(section) {
