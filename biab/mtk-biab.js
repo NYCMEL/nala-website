@@ -37,11 +37,13 @@
       this.orderedCard = this._loadOrderedCard();
       this.isPublishing = false;
       this.onMessage = this.onMessage.bind(this);
+      this.onLanguageChange = this.onLanguageChange.bind(this);
       this._init();
     }
 
     _init() {
       this._subscribe();
+      document.addEventListener("i18n:changed", this.onLanguageChange);
       this._loadStoredSettings();
       this._render();
       this._bind();
@@ -50,7 +52,7 @@
       this._requestGoogleSeoStatus();
       this._publish(this.events.publish.ready || "mtk-biab:ready", {
         component: this.config.component || "mtk-biab",
-        version: this.config.version || "1.0.16"
+        version: this.config.version || "1.0.17"
       });
     }
 
@@ -106,6 +108,15 @@
         this.googleSeo = data.status || data;
         this._render();
       }
+    }
+
+    onLanguageChange() {
+      if (window.i18n && typeof window.i18n.applyConfig === "function") {
+        window.i18n.applyConfig(this.config);
+      }
+      this.sections = Array.isArray(this.config.sections) ? this.config.sections : [];
+      this.labels = this.config.labels || {};
+      this._render();
     }
 
     _publish(eventName, data) {
@@ -170,6 +181,8 @@
       const customContent = this._renderSectionContent(safeSection);
       const orderedBusinessCard = safeSection.setupType === "businessCard" && this.orderedCard;
       const showStartSetup = !safeSection.hideStartSetup && !orderedBusinessCard;
+      const nextStep = this._renderNextStep(safeSection.nextStep);
+      const links = this._renderSectionLinks(safeSection);
 
       return `
         <article class="mtk-biab__panel" aria-live="polite">
@@ -177,6 +190,8 @@
           <h2 class="mtk-biab__panel-title">${this._escape(safeSection.title || safeSection.label || "")}</h2>
           <p class="mtk-biab__description">${this._escape(safeSection.description || "")}</p>
           ${safeSection.body ? `<p class="mtk-biab__body">${this._escape(safeSection.body)}</p>` : ""}
+          ${nextStep}
+          ${links}
           ${included}
           ${customContent}
 
@@ -196,6 +211,46 @@
       `;
     }
 
+    _renderNextStep(text) {
+      if (!text) return "";
+      return `
+        <p class="mtk-biab__next-step">
+          <span class="material-icons" aria-hidden="true">arrow_forward</span>
+          <span>${this._escape(this._text(text))}</span>
+        </p>
+      `;
+    }
+
+    _renderSectionLinks(section) {
+      const links = Array.isArray(section.links) ? section.links : [];
+      if (!links.length) return "";
+
+      return `
+        <div class="mtk-biab__quick-links" aria-label="${this._escape(this._text("Helpful links"))}">
+          ${links.map((link) => {
+            const href = this._sectionLinkHref(link);
+            const external = link.external ? ' target="_blank" rel="noopener noreferrer"' : "";
+            const externalText = link.external ? " " + this._text("(opens in a new tab)") : "";
+            return `<a class="mtk-biab__quick-link" href="${this._escape(href)}"${external}>${this._escape(this._text(link.label || "Open link") + externalText)}</a>`;
+          }).join("")}
+        </div>
+      `;
+    }
+
+    _sectionLinkHref(link) {
+      const rawHref = link && link.href ? String(link.href) : "#";
+      if (rawHref.indexOf("client/index.html") > -1) {
+        try {
+          const url = new URL(rawHref, window.location.href);
+          url.searchParams.set("nalaUID", this._businessPageId());
+          return url.href;
+        } catch (err) {
+          return rawHref + (rawHref.indexOf("?") > -1 ? "&" : "?") + "nalaUID=" + encodeURIComponent(this._businessPageId());
+        }
+      }
+      return rawHref;
+    }
+
     _renderIncluded(section) {
       if (!section.includedHeading || !Array.isArray(section.includedItems)) return "";
       const actionRequired = section.includedItems.filter((item) => item && item.actionRequired);
@@ -206,14 +261,14 @@
           <h3 class="mtk-biab__included-heading">${this._escape(section.includedHeading)}</h3>
           ${actionRequired.length ? `
             <div class="mtk-biab__included-group">
-              <h4>${this._escape(this._text("Action required"))}</h4>
+              <h4>${this._escape(this._text("Things you need to do"))}</h4>
               <ol class="mtk-biab__included-list mtk-biab__included-list--actions">
                 ${actionRequired.map((item, index) => this._renderIncludedItem(item, index)).join("")}
               </ol>
             </div>
           ` : ""}
           <div class="mtk-biab__included-group">
-            <h4>${this._escape(this._text("No action required"))}</h4>
+            <h4>${this._escape(this._text("Things NALA handles for you"))}</h4>
             <ol class="mtk-biab__included-list">
               ${noAction.map((item, index) => this._renderIncludedItem(item, index)).join("")}
             </ol>
@@ -263,25 +318,27 @@
 
     _renderGoogleSeo(section) {
       const status = this.googleSeo || {};
-      const steps = Array.isArray(status.steps) && status.steps.length ? status.steps : (Array.isArray(section.workflow) ? section.workflow : []);
+      const rawSteps = Array.isArray(status.steps) && status.steps.length ? status.steps : (Array.isArray(section.workflow) ? section.workflow : []);
+      const steps = rawSteps.map((step) => this._friendlyGoogleSeoStep(step));
       const exportData = status.exportData || this._buildGoogleSeoPayload().exportData;
       const requestedAt = status.requestedAt ? new Date(status.requestedAt).toLocaleString() : "";
       const authorizationEmailSentAt = status.authorizationEmailSentAt ? new Date(status.authorizationEmailSentAt).toLocaleString() : "";
       const authorizationEmail = status.authorizationEmail || (exportData && exportData.email) || "";
+      const visibleGoogleDataKeys = Object.keys(exportData).filter((key) => key !== "sitemapUrl");
 
       return `
         <section class="mtk-biab__google-seo" aria-label="${this._escape(section.title || "Google SEO Automation")}">
           <div class="mtk-biab__google-seo-head">
             <div>
-              <h3>${this._escape(section.title || "Google SEO Automation")}</h3>
-              <p>${this._escape(section.body || "")}</p>
+              <h3>${this._escape(this._text("Google setup status"))}</h3>
+              <p>${this._escape(this._text("After you click the email button, the status below shows what is ready and what the customer still needs to do."))}</p>
               ${requestedAt ? `<p class="mtk-biab__google-seo-note">${this._escape(this._text("Last prepared"))}: ${this._escape(requestedAt)}</p>` : ""}
               ${authorizationEmailSentAt ? `<p class="mtk-biab__google-seo-note">${this._escape(this._text("Authorization email sent"))}: ${this._escape(authorizationEmailSentAt)}${authorizationEmail ? ` ${this._escape(this._text("to"))} ${this._escape(authorizationEmail)}` : ""}</p>` : ""}
             </div>
             <div class="mtk-biab__google-seo-actions">
               <button class="mtk-biab__submit-btn" type="button" data-action="start-google-seo-authorization">
                 <span class="material-icons" aria-hidden="true">mark_email_read</span>
-                <span>${this._escape(this._text("Send authorization email & start Google setup"))}</span>
+                <span>${this._escape(this._text("Send Google setup email"))}</span>
               </button>
               <button class="mtk-biab__secondary-btn" type="button" data-action="refresh-google-seo">
                 <span class="material-icons" aria-hidden="true">refresh</span>
@@ -301,9 +358,9 @@
           </div>
 
           <div class="mtk-biab__google-seo-data">
-            <h4>${this._escape(this._text("Google-ready business data"))}</h4>
+            <h4>${this._escape(this._text("Business details NALA will use"))}</h4>
             <dl>
-              ${Object.keys(exportData).map((key) => `
+              ${visibleGoogleDataKeys.map((key) => `
                 <div>
                   <dt>${this._escape(this._text(this._humanizeKey(key)))}</dt>
                   <dd>${this._escape(exportData[key] || this._text("Not provided yet"))}</dd>
@@ -313,6 +370,47 @@
           </div>
         </section>
       `;
+    }
+
+    _friendlyGoogleSeoStep(step) {
+      const source = step || {};
+      const label = String(source.label || source.name || "");
+
+      if (label === "Hosted website SEO") {
+        return {
+          label: "Website information",
+          status: "Ready",
+          description: "NALA uses the saved business information to prepare the website for Google."
+        };
+      }
+
+      if (label === "Search Console sitemap") {
+        return {
+          label: "Google approval",
+          status: source.status === "Authorization email sent" ? "Authorization email sent" : "Needs customer action",
+          description: source.status === "Authorization email sent"
+            ? "The customer has been emailed the Google setup steps. Tell them to open the email from NALA and follow each step in order."
+            : "The customer must approve Google access before NALA can finish the Google steps."
+        };
+      }
+
+      if (label === "Google Business Profile") {
+        return {
+          label: "Business verification",
+          status: "Needs customer action",
+          description: "Google may ask the customer to verify by email, phone, text, video, or postcard. The email explains what to do."
+        };
+      }
+
+      if (label === "Local SEO data package") {
+        return {
+          label: "Local listing details",
+          status: "Ready",
+          description: "NALA keeps the business name, phone, website, service area, hours, services, and description ready for listings."
+        };
+      }
+
+      return source;
     }
 
     _renderInvoices(section) {
@@ -335,6 +433,8 @@
               <span>${this._escape(section.newInvoiceLabel || "New Invoice")}</span>
             </button>
           </div>
+
+          <p class="mtk-biab__invoice-help">${this._escape(this._text("Tip: click a column name to sort the invoices. Click the same column again to reverse the order."))}</p>
 
           <div class="mtk-biab__table-wrap">
             <table class="mtk-biab__invoice-table">
@@ -391,6 +491,7 @@
         <section class="mtk-biab__reviews-section" aria-label="${this._escape(section.reviewsHeading || "Reviews")}">
           <div class="mtk-biab__reviews-head">
             <h3>${this._escape(section.reviewsHeading || "Reviews")}</h3>
+            <p class="mtk-biab__reviews-help">${this._escape(this._text("New reviews appear here after customers answer the review request email."))}</p>
           </div>
 
           <div class="mtk-biab__reviews-table-wrap">
@@ -690,7 +791,8 @@
           <div class="mtk-biab__invoice-page-header-inner">
             <div>
               <p class="mtk-biab__invoice-page-kicker">${this._escape(this._text("Current selection"))}</p>
-              <h2 class="mtk-biab__invoice-page-title" id="mtk-biab-invoice-page-title">${this._escape(this._text(invoiceData ? "Edit Invoice" : "New Invoice"))}</h2>
+              <h2 class="mtk-biab__invoice-page-title" id="mtk-biab-invoice-page-title">${this._escape(this._text(invoiceData ? "Edit this invoice" : "Create a new invoice"))}</h2>
+              <p class="mtk-biab__invoice-page-help">${this._escape(this._text("Fill in the customer and job details, then click Save invoice. NALA sends the review request automatically."))}</p>
             </div>
 
             <button class="mtk-biab__invoice-page-close" type="button" data-action="close-invoice-page" aria-label="Close invoice">
@@ -861,8 +963,7 @@
 
       this._showSetupView(section, `
         <div class="mtk-biab__setup-card">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          <p>Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue.</p>
+          <p class="mtk-biab__setup-help">${this._escape(this._text("This step is ready. Follow the instructions on this page, then click the main button when you are done."))}</p>
         </div>
       `);
 
@@ -881,6 +982,7 @@
         this._showSetupView(section, `
           <div class="mtk-biab__setup-card">
             <h3 class="mtk-biab__template-heading">${this._escape(this._text("Current selection"))}</h3>
+            <p class="mtk-biab__setup-help">${this._escape(this._text("This is the business card that was already ordered. There is nothing else to click here."))}</p>
             <div class="mtk-biab__template-grid mtk-biab__template-grid--locked" role="list" aria-label="Ordered business card">
               ${orderedTemplate ? this._renderCardTemplateButton(orderedTemplate) : ""}
             </div>
@@ -900,14 +1002,15 @@
 
       this._showSetupView(section, `
         <div class="mtk-biab__setup-card">
-          <h3 class="mtk-biab__template-heading">${this._escape(this._text("Please select a card"))}</h3>
+          <h3 class="mtk-biab__template-heading">${this._escape(this._text("Choose one business card"))}</h3>
+          <p class="mtk-biab__setup-help">${this._escape(this._text("Click the card design you like. A check mark will show your choice. Then click Order this business card."))}</p>
           <div class="mtk-biab__template-grid" role="list" aria-label="Business card templates">
             ${templates.map((template) => this._renderCardTemplateButton(template)).join("")}
           </div>
 
           <div class="mtk-biab__template-actions">
             <button class="mtk-biab__submit-btn" type="button" data-action="order-card-selection">
-              ${this._escape(this._text("Order my Selection"))}
+              ${this._escape(this._text("Order this business card"))}
             </button>
           </div>
         </div>
@@ -995,6 +1098,7 @@
             </div>
 
             <form class="mtk-biab__editor-form" data-card-editor-form>
+              <p class="mtk-biab__setup-help">${this._escape(this._text("Check each line below. If something is wrong, type the correct information, then click Save and order this card."))}</p>
               ${fields.map((field) => `
                 <div class="mtk-biab__field">
                   <label for="mtk-biab-field-${this._escape(field.id)}">${this._escape(field.label)}</label>
@@ -1010,9 +1114,9 @@
               <div class="mtk-biab__editor-actions">
                 <button class="mtk-biab__back-btn" type="button" data-action="back-to-templates">
                   <span class="material-icons" aria-hidden="true">chevron_left</span>
-                  <span>Back</span>
+                  <span>${this._escape(this._text("Go back to card choices"))}</span>
                 </button>
-                <button class="mtk-biab__submit-btn" type="button" data-action="submit-card-editor">Submit</button>
+                <button class="mtk-biab__submit-btn" type="button" data-action="submit-card-editor">${this._escape(this._text("Save and order this card"))}</button>
               </div>
 
               <p class="mtk-biab__status" data-card-editor-status aria-live="polite"></p>
@@ -1039,7 +1143,7 @@
         if (field.name) data[field.name] = field.value;
       });
 
-      if (status) status.textContent = "Submitted.";
+      if (status) status.textContent = this._text("Saved. Your business card order is now locked.");
 
       this.orderedCard = {
         templateId: this.selectedTemplate ? this.selectedTemplate.id : "",

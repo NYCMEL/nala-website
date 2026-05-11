@@ -113,24 +113,24 @@ function biab_google_seo_default_status($uid) {
 function biab_google_seo_steps() {
     return array(
         array(
-            'label' => 'Hosted website SEO',
-            'status' => 'Automatic',
-            'description' => 'NALA prepares title tags, meta descriptions, local business schema, review schema, sitemap-ready URLs, and internal links from the saved profile.'
+            'label' => 'Website information',
+            'status' => 'Ready',
+            'description' => 'NALA uses the saved business information to prepare the website for Google.'
         ),
         array(
-            'label' => 'Search Console sitemap',
-            'status' => 'Needs Google authorization',
-            'description' => 'After the client authorizes the correct Google account or adds NALA to the property, NALA can submit the sitemap through the Search Console API.'
+            'label' => 'Google approval',
+            'status' => 'Needs customer action',
+            'description' => 'The customer must approve Google access before NALA can finish the Google steps.'
         ),
         array(
-            'label' => 'Google Business Profile',
-            'status' => 'Needs owner verification',
-            'description' => 'Google requires the owner to claim or verify the Business Profile. Once access is granted, NALA can prepare and manage eligible location details.'
+            'label' => 'Business verification',
+            'status' => 'Needs customer action',
+            'description' => 'Google may ask the customer to verify by email, phone, text, video, or postcard. The email explains what to do.'
         ),
         array(
-            'label' => 'Local SEO data package',
-            'status' => 'Prepared',
-            'description' => 'NALA keeps the public name, phone, website, service area, hours, services, and description consistent for Google and citation work.'
+            'label' => 'Local listing details',
+            'status' => 'Ready',
+            'description' => 'NALA keeps the business name, phone, website, service area, hours, services, and description ready for listings.'
         )
     );
 }
@@ -138,24 +138,24 @@ function biab_google_seo_steps() {
 function biab_google_seo_authorization_steps() {
     return array(
         array(
-            'label' => 'Hosted website SEO',
-            'status' => 'Prepared',
-            'description' => 'NALA has prepared title tags, meta descriptions, local business schema, review schema, sitemap-ready URLs, and internal links from the saved profile.'
+            'label' => 'Website information',
+            'status' => 'Ready',
+            'description' => 'NALA uses the saved business information to prepare the website for Google.'
         ),
         array(
-            'label' => 'Search Console sitemap',
+            'label' => 'Google approval',
             'status' => 'Authorization email sent',
-            'description' => 'The client has been emailed the Google authorization steps. After authorization, NALA can submit the hosted sitemap through Search Console.'
+            'description' => 'The customer has been emailed the Google setup steps. Tell them to open the email from NALA and follow each step in order.'
         ),
         array(
-            'label' => 'Google Business Profile',
-            'status' => 'Client verification requested',
-            'description' => 'The client has been asked to claim or verify the Business Profile and add NALA as a manager so eligible location details can be managed.'
+            'label' => 'Business verification',
+            'status' => 'Needs customer action',
+            'description' => 'Google may ask the customer to verify by email, phone, text, video, or postcard. The email explains what to do.'
         ),
         array(
-            'label' => 'Local SEO data package',
-            'status' => 'Prepared',
-            'description' => 'NALA keeps the public name, phone, website, service area, hours, services, and description consistent for Google and local citation work.'
+            'label' => 'Local listing details',
+            'status' => 'Ready',
+            'description' => 'NALA keeps the business name, phone, website, service area, hours, services, and description ready for listings.'
         )
     );
 }

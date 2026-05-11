@@ -135,6 +135,47 @@ mtk-biab.mtk-biab .mtk-biab__body {
   font-size: 15px;
   line-height: 1.7; }
 
+mtk-biab.mtk-biab .mtk-biab__next-step {
+  max-width: 820px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  border: 1px solid #d8c18a;
+  border-left: 4px solid #a98211;
+  border-radius: 6px;
+  background: #fffaf0;
+  color: #4a3a08;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.55; }
+
+mtk-biab.mtk-biab .mtk-biab__next-step .material-icons {
+  flex: 0 0 auto;
+  margin-top: 1px;
+  color: #a98211; }
+
+mtk-biab.mtk-biab .mtk-biab__quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 20px; }
+
+mtk-biab.mtk-biab .mtk-biab__quick-link {
+  color: #7a5e0c;
+  font-size: 14px;
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px; }
+
+mtk-biab.mtk-biab .mtk-biab__quick-link:hover,
+mtk-biab.mtk-biab .mtk-biab__quick-link:focus-visible {
+  color: #4a3a08;
+  outline: 3px solid rgba(169, 130, 17, 0.22);
+  outline-offset: 2px; }
+
 mtk-biab.mtk-biab .mtk-biab__included {
   max-width: 760px;
   margin: 24px 0;
@@ -477,6 +518,16 @@ mtk-biab.mtk-biab .mtk-biab__invoice-head {
   justify-content: space-between;
   gap: 18px;
   margin: 0 0 14px; }
+
+mtk-biab.mtk-biab .mtk-biab__invoice-help,
+mtk-biab.mtk-biab .mtk-biab__reviews-help,
+mtk-biab.mtk-biab .mtk-biab__setup-help,
+mtk-biab.mtk-biab .mtk-biab__invoice-page-help {
+  max-width: 760px;
+  margin: 0 0 14px;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.55; }
 
 mtk-biab.mtk-biab .mtk-biab__invoice-title-row {
   display: flex;

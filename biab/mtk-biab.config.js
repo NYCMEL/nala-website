@@ -1,10 +1,10 @@
 window.MTK_BIAB_CONFIG = {
   component: "mtk-biab",
-  version: "1.0.9",
+  version: "1.0.10",
   labels: {
     pageTitle: "Business in a Box",
-    pageSubtitle: "Launch, manage, and grow your business from one simple dashboard.",
-    startSetup: "Start setup",
+    pageSubtitle: "Follow the steps below. Each section tells you what to click, what to enter, and what happens next.",
+    startSetup: "Start this step",
     currentSelection: "Current selection",
     closeSetup: "Close setup"
   },
@@ -33,19 +33,20 @@ window.MTK_BIAB_CONFIG = {
       label: "Introduction",
       icon: "info",
       eyebrow: "Getting started",
-      title: "Introduction",
-      description: "A guided overview of your Business in a Box setup.",
-      includedHeading: "Included by default - no action required",
+      title: "Start here",
+      description: "Use this checklist first. Click each item under Things you need to do, finish that step, then come back here for the next one.",
+      nextStep: "Start with Business profile setup. Click it, fill in your business name, phone number, email, website, service area, and services, then click Save.",
+      includedHeading: "Your setup checklist",
       includedItems: [
-        { label: "Business profile setup", actionRequired: true, page: "settings", settingsTab: "business", description: "Save the business name, phone, email, service area, hours, and services offered once so the website, cards, invoices, and review flow can reuse the same profile data." },
-        { label: "Business card choice", actionRequired: true, sectionId: "business-card-logo", openSetup: true, description: "Choose one business card design. Once ordered, the card choice is locked so the print workflow stays consistent." },
-        { label: "Google authorization", actionRequired: true, sectionId: "google-seo", description: "Authorize or invite NALA to the business Google account when you want us to submit Search Console and Google Business Profile updates for you." },
-        { label: "Basic website structure", done: true, description: "The client website is generated with a homepage, service positioning, contact details, reviews, and trust sections." },
-        { label: "Contact information configuration", done: true, description: "Public contact fields flow from Profile & Settings into the website, cards, and invoices." },
-        { label: "Service listing template", done: true, description: "Locksmith services are organized for residential, commercial, rekey, lock change, deadbolt, lockout, and emergency-service pages." },
-        { label: "Customer review workflow", done: true, description: "Invoices and customer follow-up send customers to the hosted review page so reviews can be collected and displayed automatically." },
-        { label: "SEO setup", done: true, description: "On-site SEO for hosted client pages is automatic. NALA generates titles, descriptions, service-area copy, internal links, review schema, local business schema, sitemap entries, and Google-ready profile data exports." },
-        { label: "Local listings checklist", done: true, description: "NALA prepares consistent name, address/service area, phone, website, hours, services, photos, and description for Google Business Profile, Bing Places, Apple Business Connect, Yelp, BBB, Angi, Thumbtack, Nextdoor, and local citation sites." }
+        { label: "Click here to enter your business information", actionRequired: true, page: "settings", settingsTab: "business", description: "Enter the information customers should see, such as your business name, phone number, email, website, hours, and service area. Click Save when you are done." },
+        { label: "Click here to choose your business card", actionRequired: true, sectionId: "business-card-logo", openSetup: true, description: "Choose the card you want, check the name, phone, email, website, and service area, then click Order this business card." },
+        { label: "Click here to send your Google setup email", actionRequired: true, sectionId: "google-seo", description: "Click the button in the Google section. The customer receives step-by-step instructions for approving Google setup." },
+        { label: "Website pages", done: true, description: "NALA creates the customer website pages for you. After you save your business information, the website can use that information." },
+        { label: "Contact details shared across BIAB", done: true, description: "After you save your phone number, email, and website, NALA uses them on the website, business cards, invoices, and review requests." },
+        { label: "Service list", done: true, description: "Choose the locksmith services you offer in Profile & Settings. NALA uses that list on your website and customer materials." },
+        { label: "Review requests", done: true, description: "When you save an invoice, NALA automatically asks the customer for a review. You do not need to check a box." },
+        { label: "Google website setup", done: true, description: "NALA prepares your website for Google. The customer only needs to approve Google access when the email arrives." },
+        { label: "Local listing information", done: true, description: "NALA keeps your business name, phone, website, hours, service area, and services ready for local business listings." }
       ],
       hideStartSetup: true
     },
@@ -55,8 +56,12 @@ window.MTK_BIAB_CONFIG = {
       icon: "language",
       eyebrow: "Website",
       title: "Website Builder",
-      description: "Create the public website your customers will use.",
-      body: "Click Start setup to open the website builder using content from the client folder.",
+      description: "Preview the website your customers will see.",
+      body: "Click Start this step to open the website preview. If something is missing, go back to Profile & Settings and save the missing business information.",
+      nextStep: "Click Start this step to open the website. Review the phone number, email, website link, services, and service area.",
+      links: [
+        { label: "Open the customer website preview", href: "client/index.html" }
+      ],
       setupType: "websiteBuilder",
       clientUrl: "client/index.html"
     },
@@ -65,16 +70,20 @@ window.MTK_BIAB_CONFIG = {
       label: "Google SEO",
       icon: "travel_explore",
       eyebrow: "Search",
-      title: "Google SEO Automation",
-      description: "Prepare the hosted website, Search Console submission, and Google Business Profile data from the same business profile.",
-      body: "Click the button once to prepare the SEO package, email the client Google authorization instructions, notify NALA support, and start the Business Profile verification handoff.",
+      title: "Google Setup",
+      description: "Send the customer a simple email that tells them exactly how to approve Google setup.",
+      body: "Click Send Google setup email. The customer will get step-by-step instructions. NALA support will also get the business details needed for the next steps.",
+      nextStep: "Click Send Google setup email. Then tell the customer to open the email from NALA and follow the steps in order.",
+      links: [
+        { label: "Open Google Business Profile setup", href: "https://business.google.com/add", external: true }
+      ],
       viewType: "googleSeo",
       hideStartSetup: true,
       workflow: [
-        { label: "Hosted website SEO", status: "Automatic", description: "Titles, descriptions, local business schema, review schema, internal links, and sitemap-ready URLs are generated from the business profile." },
-        { label: "Search Console sitemap", status: "Needs authorization", description: "The client authorizes the Google account; then NALA can submit the hosted sitemap through the Search Console API." },
-        { label: "Google Business Profile", status: "Needs owner verification", description: "The owner must claim or verify the profile and add NALA as a manager before eligible location details can be managed." },
-        { label: "Local SEO data package", status: "Prepared", description: "Name, phone, website, service area, hours, services, and description are kept consistent for listings and citation work." }
+        { label: "Website information", status: "Ready", description: "NALA uses the saved business information to prepare the website for Google." },
+        { label: "Google approval", status: "Needs customer action", description: "The customer must approve Google access before NALA can finish the Google steps." },
+        { label: "Business verification", status: "Needs customer action", description: "Google may ask the customer to verify by email, phone, text, video, or postcard. The email explains what to do." },
+        { label: "Local listing details", status: "Ready", description: "NALA keeps the business name, phone, website, service area, hours, services, and description ready for listings." }
       ]
     },
     {
@@ -83,8 +92,9 @@ window.MTK_BIAB_CONFIG = {
       icon: "badge",
       eyebrow: "Brand",
       title: "Business Card & Logo",
-      description: "Create basic brand assets for print and digital use.",
-      body: "Click Start setup to choose a business card design and customize the fields.",
+      description: "Choose the business card your customer will receive.",
+      body: "Click Start this step. Pick one card design, check the contact details, then click Order this business card. After the card is ordered, this section is locked.",
+      nextStep: "Click Start this step, choose one design, then click Order this business card. On the next screen, check every field before you submit.",
       setupType: "businessCard",
       cardFields: [
         { id: "businessName", label: "Business name", type: "text", value: "" },
@@ -101,11 +111,12 @@ window.MTK_BIAB_CONFIG = {
       icon: "receipt_long",
       eyebrow: "Operations",
       title: "Invoices",
-      description: "Track invoices, clients, dates, status, and payment totals.",
-      body: "Use the invoice table to review and manage invoices.",
+      description: "Create invoices and send review requests.",
+      body: "Click Create a new invoice to enter the customer and job details. When you save the invoice, NALA automatically sends the customer a review request.",
+      nextStep: "Click Create a new invoice. Fill in the customer name, customer email, job details, and price, then click Save invoice.",
       viewType: "invoices",
       hideStartSetup: true,
-      newInvoiceLabel: "New Invoice",
+      newInvoiceLabel: "Create a new invoice",
       invoices: [
         { id: "INV-1005", date: "2026-05-05", client: "Maria Garcia", service: "Deadbolt installation", amount: 265.00, status: "Open" },
         { id: "INV-1002", date: "2026-05-02", client: "Acme Property Group", service: "Commercial lock change", amount: 540.00, status: "Open" },
@@ -120,8 +131,9 @@ window.MTK_BIAB_CONFIG = {
       icon: "reviews",
       eyebrow: "Reputation",
       title: "Customer Reviews",
-      description: "Build a simple review request workflow.",
-      body: "Review recent customer feedback and ratings.",
+      description: "See the reviews customers have sent in.",
+      body: "After an invoice is saved, NALA asks that customer for a review automatically. Check this page to see the reviews that came in.",
+      nextStep: "To get a new review, go to Invoices and click Create a new invoice. Saving the invoice sends the review request.",
       viewType: "reviews",
       hideStartSetup: true,
       reviewsHeading: "Reviews",

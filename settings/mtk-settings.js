@@ -106,6 +106,7 @@
     this.titleEl = root.querySelector("[data-title]");
     this.eyebrowEl = root.querySelector("[data-eyebrow]");
     this.onMessage = this.onMessage.bind(this);
+    this.onLanguageChange = this.onLanguageChange.bind(this);
     this.init();
   }
 
@@ -135,6 +136,23 @@
     if (window.wc && typeof window.wc.subscribe === "function") {
       window.wc.subscribe("4-mtk-settings", this.onMessage);
     }
+
+    document.addEventListener("i18n:changed", this.onLanguageChange);
+  };
+
+  MTKSettings.prototype.onLanguageChange = function () {
+    if (window.i18n && typeof window.i18n.applyConfig === "function") {
+      window.i18n.applyConfig(this.config);
+    }
+    this.tabs = getTabs(this.config);
+    if (this.titleEl) {
+      this.titleEl.textContent = this.config.title || "Profile & Settings";
+    }
+    if (this.eyebrowEl) {
+      this.eyebrowEl.textContent = this.config.eyebrow || "Account Management";
+    }
+    this.renderTabs();
+    this.renderPanel();
   };
 
   MTKSettings.prototype.cacheInitialValues = function () {
@@ -276,6 +294,7 @@
         '<p class="mtk-settings__eyebrow">' + escapeHTML(tab.eyebrow || "") + '</p>' +
         '<h3 class="mtk-settings__panel-title">' + escapeHTML(tab.title || tab.label || "") + '</h3>' +
         '<p class="mtk-settings__panel-description">' + escapeHTML(tab.description || "") + '</p>' +
+        (tab.nextStep ? '<p class="mtk-settings__next-step"><span class="material-icons" aria-hidden="true">arrow_forward</span><span>' + escapeHTML(tab.nextStep) + '</span></p>' : '') +
       '</div>';
 
     if (Array.isArray(tab.fields) && tab.fields.length) {
@@ -353,6 +372,7 @@
       '<div class="mtk-settings__field' + fullWidthClass + (isPassword ? " mtk-settings__field--password" : "") + '">' +
         '<label class="mtk-settings__field-label" for="mtk-settings-' + escapeHTML(tab.id) + '-' + escapeHTML(field.id) + '">' + escapeHTML(field.label) + requiredMark + '</label>' +
         input +
+        (field.helpText ? '<p class="mtk-settings__field-help">' + escapeHTML(field.helpText) + '</p>' : '') +
       '</div>';
   };
 
@@ -367,6 +387,7 @@
       '<div class="mtk-settings__field' + fullWidthClass + '">' +
         '<label class="mtk-settings__field-label" for="mtk-settings-' + escapeHTML(tab.id) + '-' + escapeHTML(field.id) + '">' + escapeHTML(field.label) + requiredMark + '</label>' +
         '<textarea class="mtk-settings__textarea" id="mtk-settings-' + escapeHTML(tab.id) + '-' + escapeHTML(field.id) + '" name="' + escapeHTML(field.id) + '" rows="' + escapeHTML(rows) + '" placeholder="' + escapeHTML(field.placeholder || "") + '"' + required + '>' + escapeHTML(value) + '</textarea>' +
+        (field.helpText ? '<p class="mtk-settings__field-help">' + escapeHTML(field.helpText) + '</p>' : '') +
       '</div>';
   };
 
@@ -387,6 +408,7 @@
     return '' +
       '<fieldset class="mtk-settings__checkbox-card' + fullWidthClass + '" data-checkbox-group="' + escapeHTML(field.id) + '">' +
         '<legend class="mtk-settings__checkbox-title">' + escapeHTML(field.label) + requiredMark + '</legend>' +
+        (field.helpText ? '<p class="mtk-settings__field-help mtk-settings__field-help--card">' + escapeHTML(field.helpText) + '</p>' : '') +
         '<div class="mtk-settings__checkbox-grid">' + options + '</div>' +
       '</fieldset>';
   };
@@ -420,6 +442,7 @@
             '</button>' +
           '</div>' +
         '</div>' +
+        (field.helpText ? '<p class="mtk-settings__field-help">' + escapeHTML(field.helpText) + '</p>' : '') +
         '<div class="mtk-settings__custom-service-list">' + rowMarkup + '</div>' +
       '</div>';
   };

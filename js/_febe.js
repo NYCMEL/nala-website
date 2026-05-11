@@ -445,10 +445,15 @@ class _febe {
 	this.writeStoredSettings(settings);
 
 	if (window.MTKMsgs && typeof MTKMsgs.show === "function") {
+	    const savedMessages = {
+		privacy: this.t("settings.success.personalSaved", "Saved. Next, open Business Information and enter the details customers should see."),
+		business: this.t("settings.success.businessSaved", "Saved. Next, open Services Offered and check the services you provide."),
+		services: this.t("settings.success.servicesSaved", "Saved. Next, return to Business in a Box and choose the next setup step.")
+	    };
 	    MTKMsgs.show({
 		type: "success",
 		icon: "success",
-		message: this.t("settings.success.saved", "Settings saved."),
+		message: savedMessages[tabId] || this.t("settings.success.saved", "Saved. Continue to the next step."),
 		closable: true,
 		timer: 5
 	    });
@@ -657,7 +662,7 @@ class _febe {
 	return this.postBiabJson("/api/business_in_a_box_google_seo.php", Object.assign({}, payload, {
 	    nalaUID: uid,
 	    action: payload.action || "prepare"
-	}), payload.action === "start_authorization" ? this.t("biab.googleSeo.authorizationSent", "Google SEO authorization email sent. NALA has the profile data ready for verification steps.") : this.t("biab.googleSeo.preparedSuccess", "Google SEO package prepared."), this.t("biab.error.generic", "Could not complete that request. Please try again.")).then(json => {
+	}), payload.action === "start_authorization" ? this.t("biab.googleSeo.authorizationSent", "Google setup email sent. Tell the customer to open the email from NALA and follow each step in order.") : this.t("biab.googleSeo.preparedSuccess", "Google setup information saved. Next, send the Google setup email."), this.t("biab.error.generic", "We could not finish that step. Check the information on the page, then try again.")).then(json => {
 	    wc.publish("4-mtk-biab:google-seo-status", {
 		nalaUID: uid,
 		status: json.status || {}
