@@ -662,7 +662,7 @@ class _febe {
 	return this.postBiabJson("/api/business_in_a_box_google_seo.php", Object.assign({}, payload, {
 	    nalaUID: uid,
 	    action: payload.action || "prepare"
-	}), payload.action === "start_authorization" ? this.t("biab.googleSeo.authorizationSent", "Google setup email sent. Tell the customer to open the email from NALA and follow each step in order.") : this.t("biab.googleSeo.preparedSuccess", "Google setup information saved. Next, send the Google setup email."), this.t("biab.error.generic", "We could not finish that step. Check the information on the page, then try again.")).then(json => {
+	}), payload.action === "start_authorization" ? this.t("biab.googleSeo.authorizationSent", "Google setup email sent. Open the email from NALA and follow each step in order.") : this.t("biab.googleSeo.preparedSuccess", "Google setup information saved. Next, send the Google setup email."), this.t("biab.error.generic", "We could not finish that step. Check the information on the page, then try again.")).then(json => {
 	    wc.publish("4-mtk-biab:google-seo-status", {
 		nalaUID: uid,
 		status: json.status || {}

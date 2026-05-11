@@ -40,12 +40,12 @@ window.MTK_BIAB_CONFIG = {
       includedItems: [
         { label: "Click here to enter your business information", actionRequired: true, page: "settings", settingsTab: "business", description: "Enter the information customers should see, such as your business name, phone number, email, website, hours, and service area. Click Save when you are done." },
         { label: "Click here to choose your business card", actionRequired: true, sectionId: "business-card-logo", openSetup: true, description: "Choose the card you want, check the name, phone, email, website, and service area, then click Order this business card." },
-        { label: "Click here to send your Google setup email", actionRequired: true, sectionId: "google-seo", description: "Click the button in the Google section. The customer receives step-by-step instructions for approving Google setup." },
-        { label: "Website pages", done: true, description: "NALA creates the customer website pages for you. After you save your business information, the website can use that information." },
+        { label: "Click here to send your Google setup email", actionRequired: true, sectionId: "google-seo", description: "Click the button in the Google section. You will receive step-by-step instructions for approving Google setup." },
+        { label: "Website pages", done: true, description: "NALA creates your website pages for you. After you save your business information, the website can use that information." },
         { label: "Contact details shared across BIAB", done: true, description: "After you save your phone number, email, and website, NALA uses them on the website, business cards, invoices, and review requests." },
-        { label: "Service list", done: true, description: "Choose the locksmith services you offer in Profile & Settings. NALA uses that list on your website and customer materials." },
+        { label: "Service list", done: true, description: "Choose the locksmith services you offer in Profile & Settings. NALA uses that list on your website and business materials." },
         { label: "Review requests", done: true, description: "When you save an invoice, NALA automatically asks the customer for a review. You do not need to check a box." },
-        { label: "Google website setup", done: true, description: "NALA prepares your website for Google. The customer only needs to approve Google access when the email arrives." },
+        { label: "Google website setup", done: true, description: "NALA prepares your website for Google. You only need to approve Google access when the email arrives." },
         { label: "Local listing information", done: true, description: "NALA keeps your business name, phone, website, hours, service area, and services ready for local business listings." }
       ],
       hideStartSetup: true
@@ -60,7 +60,7 @@ window.MTK_BIAB_CONFIG = {
       body: "Click Start this step to open the website preview. If something is missing, go back to Profile & Settings and save the missing business information.",
       nextStep: "Click Start this step to open the website. Review the phone number, email, website link, services, and service area.",
       links: [
-        { label: "Open the customer website preview", href: "client/index.html" }
+        { label: "Open your website preview", href: "client/index.html" }
       ],
       setupType: "websiteBuilder",
       clientUrl: "client/index.html"
@@ -71,9 +71,9 @@ window.MTK_BIAB_CONFIG = {
       icon: "travel_explore",
       eyebrow: "Search",
       title: "Google Setup",
-      description: "Send the customer a simple email that tells them exactly how to approve Google setup.",
-      body: "Click Send Google setup email. The customer will get step-by-step instructions. NALA support will also get the business details needed for the next steps.",
-      nextStep: "Click Send Google setup email. Then tell the customer to open the email from NALA and follow the steps in order.",
+      description: "Send yourself a simple email that tells you exactly how to approve Google setup.",
+      body: "Click Send Google setup email. You will get step-by-step instructions. NALA support will also get the business details needed for the next steps.",
+      nextStep: "Click Send Google setup email. Then open the email from NALA and follow the steps in order.",
       links: [
         { label: "Open Google Business Profile setup", href: "https://business.google.com/add", external: true }
       ],
@@ -81,8 +81,8 @@ window.MTK_BIAB_CONFIG = {
       hideStartSetup: true,
       workflow: [
         { label: "Website information", status: "Ready", description: "NALA uses the saved business information to prepare the website for Google." },
-        { label: "Google approval", status: "Needs customer action", description: "The customer must approve Google access before NALA can finish the Google steps." },
-        { label: "Business verification", status: "Needs customer action", description: "Google may ask the customer to verify by email, phone, text, video, or postcard. The email explains what to do." },
+        { label: "Google approval", status: "Needs your action", description: "You must approve Google access before NALA can finish the Google steps." },
+        { label: "Business verification", status: "Needs your action", description: "Google may ask you to verify by email, phone, text, video, or postcard. The email explains what to do." },
         { label: "Local listing details", status: "Ready", description: "NALA keeps the business name, phone, website, service area, hours, services, and description ready for listings." }
       ]
     },
@@ -92,7 +92,7 @@ window.MTK_BIAB_CONFIG = {
       icon: "badge",
       eyebrow: "Brand",
       title: "Business Card & Logo",
-      description: "Choose the business card your customer will receive.",
+      description: "Choose the business card you will receive.",
       body: "Click Start this step. Pick one card design, check the contact details, then click Order this business card. After the card is ordered, this section is locked.",
       nextStep: "Click Start this step, choose one design, then click Order this business card. On the next screen, check every field before you submit.",
       setupType: "businessCard",

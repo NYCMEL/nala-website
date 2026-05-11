@@ -119,13 +119,13 @@ function biab_google_seo_steps() {
         ),
         array(
             'label' => 'Google approval',
-            'status' => 'Needs customer action',
-            'description' => 'The customer must approve Google access before NALA can finish the Google steps.'
+            'status' => 'Needs your action',
+            'description' => 'You must approve Google access before NALA can finish the Google steps.'
         ),
         array(
             'label' => 'Business verification',
-            'status' => 'Needs customer action',
-            'description' => 'Google may ask the customer to verify by email, phone, text, video, or postcard. The email explains what to do.'
+            'status' => 'Needs your action',
+            'description' => 'Google may ask you to verify by email, phone, text, video, or postcard. The email explains what to do.'
         ),
         array(
             'label' => 'Local listing details',
@@ -145,12 +145,12 @@ function biab_google_seo_authorization_steps() {
         array(
             'label' => 'Google approval',
             'status' => 'Authorization email sent',
-            'description' => 'The customer has been emailed the Google setup steps. Tell them to open the email from NALA and follow each step in order.'
+            'description' => 'You have been emailed the Google setup steps. Open the email from NALA and follow each step in order.'
         ),
         array(
             'label' => 'Business verification',
-            'status' => 'Needs customer action',
-            'description' => 'Google may ask the customer to verify by email, phone, text, video, or postcard. The email explains what to do.'
+            'status' => 'Needs your action',
+            'description' => 'Google may ask you to verify by email, phone, text, video, or postcard. The email explains what to do.'
         ),
         array(
             'label' => 'Local listing details',

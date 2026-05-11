@@ -331,7 +331,7 @@
           <div class="mtk-biab__google-seo-head">
             <div>
               <h3>${this._escape(this._text("Google setup status"))}</h3>
-              <p>${this._escape(this._text("After you click the email button, the status below shows what is ready and what the customer still needs to do."))}</p>
+              <p>${this._escape(this._text("After you click the email button, the status below shows what is ready and what you still need to do."))}</p>
               ${requestedAt ? `<p class="mtk-biab__google-seo-note">${this._escape(this._text("Last prepared"))}: ${this._escape(requestedAt)}</p>` : ""}
               ${authorizationEmailSentAt ? `<p class="mtk-biab__google-seo-note">${this._escape(this._text("Authorization email sent"))}: ${this._escape(authorizationEmailSentAt)}${authorizationEmail ? ` ${this._escape(this._text("to"))} ${this._escape(authorizationEmail)}` : ""}</p>` : ""}
             </div>
@@ -387,18 +387,18 @@
       if (label === "Search Console sitemap") {
         return {
           label: "Google approval",
-          status: source.status === "Authorization email sent" ? "Authorization email sent" : "Needs customer action",
+          status: source.status === "Authorization email sent" ? "Authorization email sent" : "Needs your action",
           description: source.status === "Authorization email sent"
-            ? "The customer has been emailed the Google setup steps. Tell them to open the email from NALA and follow each step in order."
-            : "The customer must approve Google access before NALA can finish the Google steps."
+            ? "You have been emailed the Google setup steps. Open the email from NALA and follow each step in order."
+            : "You must approve Google access before NALA can finish the Google steps."
         };
       }
 
       if (label === "Google Business Profile") {
         return {
           label: "Business verification",
-          status: "Needs customer action",
-          description: "Google may ask the customer to verify by email, phone, text, video, or postcard. The email explains what to do."
+          status: "Needs your action",
+          description: "Google may ask you to verify by email, phone, text, video, or postcard. The email explains what to do."
         };
       }
 
