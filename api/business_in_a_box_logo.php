@@ -69,8 +69,18 @@ function biab_logo_zoviz_key() {
     )));
 }
 
-function biab_logo_zoviz_endpoint() {
-    $endpoint = trim((string)biab_logo_config_value(array(
+function biab_logo_zoviz_base_url() {
+    $baseUrl = trim((string)biab_logo_config_value(array(
+        'ZOVIZ_API_BASE_URL',
+        'ZOVIZ_BASE_URL',
+        'zoviz_api_base_url',
+        'zovizBaseUrl'
+    )));
+    if ($baseUrl !== '') {
+        return rtrim($baseUrl, '/');
+    }
+
+    $configuredEndpoint = trim((string)biab_logo_config_value(array(
         'ZOVIZ_LOGO_ENDPOINT',
         'ZOVIZ_API_ENDPOINT',
         'zoviz_logo_endpoint',
@@ -78,7 +88,14 @@ function biab_logo_zoviz_endpoint() {
         'zovizEndpoint',
         'zovizLogoEndpoint'
     )));
-    return $endpoint !== '' ? $endpoint : 'https://api.zoviz.com/api/v1/logo-generate';
+    if ($configuredEndpoint !== '') {
+        $parts = parse_url($configuredEndpoint);
+        if (is_array($parts) && !empty($parts['scheme']) && !empty($parts['host'])) {
+            return $parts['scheme'] . '://' . $parts['host'] . (empty($parts['port']) ? '' : ':' . $parts['port']);
+        }
+    }
+
+    return 'https://api.zoviz.com';
 }
 
 function biab_logo_provider_status($mode = null, $message = '') {
@@ -91,47 +108,31 @@ function biab_logo_provider_status($mode = null, $message = '') {
         'label' => 'Zoviz Logo Engine API',
         'mode' => $mode,
         'configured' => $configured,
-        'message' => $message !== '' ? $message : ($configured ? 'Zoviz API access is configured.' : 'Zoviz API key is missing.')
+        'message' => $message !== '' ? $message : ($configured ? 'Zoviz API access is configured for watermarked previews.' : 'Zoviz API key is missing.')
     );
 }
 
-function biab_logo_generate_zoviz($payload) {
-    $endpoint = biab_logo_zoviz_endpoint();
-    $apiKey = biab_logo_zoviz_key();
-    if ($apiKey === '') {
-        return array(
-            'options' => biab_logo_preview_options($payload),
-            'provider' => biab_logo_provider_status('preview')
-        );
-    }
-
+function biab_logo_zoviz_request($path, $payload) {
     if (!function_exists('curl_init')) {
         biab_logo_json_response(500, array('error' => 'Zoviz is configured, but cURL is not available on this server.'));
     }
 
-    $request = array(
-        'brand_name' => (string)($payload['businessName'] ?? ''),
-        'businessName' => (string)($payload['businessName'] ?? ''),
-        'industry' => 'locksmith',
-        'service_area' => (string)($payload['serviceArea'] ?? ''),
-        'serviceArea' => (string)($payload['serviceArea'] ?? ''),
-        'services' => (string)($payload['services'] ?? ''),
-        'style' => (string)($payload['style'] ?? 'professional vector logo'),
-        'colors' => is_array($payload['colors'] ?? null) ? $payload['colors'] : array('#111827', '#a98212', '#ffffff'),
-        'count' => 6,
-        'format' => 'svg'
+    $headers = array(
+        'Content-Type: application/json',
+        'Accept: application/json',
+        'User-Agent: NALA-BIAB/1.0'
     );
+    $apiKey = biab_logo_zoviz_key();
+    if ($apiKey !== '') {
+        $headers[] = 'Authorization: Bearer ' . $apiKey;
+    }
 
-    $curl = curl_init($endpoint);
+    $curl = curl_init(biab_logo_zoviz_base_url() . '/' . ltrim($path, '/'));
     curl_setopt_array($curl, array(
         CURLOPT_POST => true,
         CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_HTTPHEADER => array(
-            'Authorization: Bearer ' . $apiKey,
-            'Content-Type: application/json',
-            'Accept: application/json'
-        ),
-        CURLOPT_POSTFIELDS => json_encode($request, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_POSTFIELDS => json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
         CURLOPT_TIMEOUT => 45
     ));
     $body = curl_exec($curl);
@@ -140,9 +141,14 @@ function biab_logo_generate_zoviz($payload) {
     curl_close($curl);
 
     if ($body === false || $status < 200 || $status >= 300) {
+        $details = $error !== '' ? $error : ('HTTP ' . $status);
+        $json = is_string($body) ? json_decode($body, true) : null;
+        if (is_array($json) && !empty($json['description'])) {
+            $details = (string)$json['description'];
+        }
         biab_logo_json_response(502, array(
             'error' => 'Zoviz could not generate logos right now.',
-            'details' => $error !== '' ? $error : ('HTTP ' . $status)
+            'details' => $details
         ));
     }
 
@@ -151,41 +157,137 @@ function biab_logo_generate_zoviz($payload) {
         biab_logo_json_response(502, array('error' => 'Zoviz returned an unreadable response.'));
     }
 
-    $rawOptions = array();
-    foreach (array('options', 'logos', 'results', 'data') as $key) {
-        if (isset($json[$key]) && is_array($json[$key])) {
-            $rawOptions = $json[$key];
-            break;
+    if (isset($json['ok']) && !$json['ok']) {
+        biab_logo_json_response(502, array(
+            'error' => 'Zoviz could not generate logos right now.',
+            'details' => (string)($json['description'] ?? 'The Zoviz API rejected the request.')
+        ));
+    }
+
+    return $json;
+}
+
+function biab_logo_zoviz_url($url) {
+    $url = trim((string)$url);
+    if ($url === '') {
+        return '';
+    }
+    if (preg_match('/^https?:\/\//i', $url)) {
+        return $url;
+    }
+    if (strpos($url, '/') === 0) {
+        return biab_logo_zoviz_base_url() . $url;
+    }
+    return '';
+}
+
+function biab_logo_zoviz_best_file($record) {
+    $files = is_array($record['logo_files'] ?? null) ? $record['logo_files'] : array();
+    $fallback = null;
+    foreach ($files as $file) {
+        if (!is_array($file)) {
+            continue;
         }
+        if ($fallback === null) {
+            $fallback = $file;
+        }
+        $name = (string)($file['name'] ?? '');
+        $concepts = is_array($file['layout_concept'] ?? null) ? $file['layout_concept'] : array();
+        $isHorizontal = in_array('horizontal', $concepts, true) || stripos($name, 'horizontal') !== false;
+        if ($isHorizontal && empty($file['with_slogan'])) {
+            return $file;
+        }
+    }
+    return $fallback ?: array();
+}
+
+function biab_logo_zoviz_normalize_record($record, $index) {
+    if (!is_array($record)) {
+        return null;
+    }
+    $file = biab_logo_zoviz_best_file($record);
+    $previewUrl = biab_logo_zoviz_url($file['preview_url'] ?? ($record['preview_url'] ?? ''));
+    $recordId = (string)($record['id'] ?? '');
+    $fileId = (string)($file['id'] ?? '');
+    $id = $recordId !== '' ? $recordId : ('zoviz-logo-' . ($index + 1));
+    if ($fileId !== '') {
+        $id .= '-' . $fileId;
+    }
+
+    return biab_logo_normalize_logo(array(
+        'id' => $id,
+        'providerLogoId' => $recordId !== '' ? $recordId : $id,
+        'name' => ($record['label'] ?? 'Logo option') . ' #' . ($index + 1),
+        'svg' => '',
+        'previewUrl' => $previewUrl,
+        'image' => $previewUrl,
+        'provider' => 'zoviz',
+        'previewOnly' => true
+    ));
+}
+
+function biab_logo_generate_zoviz($payload) {
+    $apiKey = biab_logo_zoviz_key();
+    if ($apiKey === '') {
+        return array(
+            'options' => biab_logo_preview_options($payload),
+            'provider' => biab_logo_provider_status('preview')
+        );
+    }
+
+    $businessName = trim((string)($payload['businessName'] ?? ''));
+    if ($businessName === '') {
+        $businessName = 'Locksmith Business';
+    }
+    $descriptionParts = array_filter(array(
+        'Industry: locksmith',
+        trim((string)($payload['serviceArea'] ?? '')) !== '' ? 'Service area: ' . trim((string)$payload['serviceArea']) : '',
+        trim((string)($payload['services'] ?? '')) !== '' ? 'Services: ' . trim((string)$payload['services']) : '',
+        trim((string)($payload['description'] ?? ''))
+    ));
+
+    $registered = biab_logo_zoviz_request('/album/brand/register', array(
+        'brand_name' => array($businessName),
+        'filters' => array(
+            'industries' => array(),
+            'symbol_keywords' => array(),
+            'color_spectrum' => array(),
+            'description' => biab_logo_slice(implode('. ', $descriptionParts), 700)
+        )
+    ));
+    $albumId = (string)($registered['result']['id'] ?? '');
+    if ($albumId === '') {
+        biab_logo_json_response(502, array('error' => 'Zoviz did not return a generation ID.'));
     }
 
     $options = array();
-    foreach ($rawOptions as $index => $item) {
-        if (!is_array($item)) {
+    $seen = array();
+    for ($attempt = 0; $attempt < 4 && count($options) < 6; $attempt++) {
+        $generated = biab_logo_zoviz_request('/album/brand/generate', array('id' => $albumId));
+        $records = $generated['result']['records'] ?? array();
+        if (!is_array($records)) {
             continue;
         }
-        $normalized = biab_logo_normalize_logo(array(
-            'id' => $item['id'] ?? $item['logoId'] ?? $item['providerLogoId'] ?? ('zoviz-logo-' . ($index + 1)),
-            'providerLogoId' => $item['logoId'] ?? $item['providerLogoId'] ?? $item['id'] ?? '',
-            'name' => $item['name'] ?? $item['title'] ?? ('Logo option ' . ($index + 1)),
-            'svg' => $item['svg'] ?? $item['svgContent'] ?? '',
-            'previewUrl' => $item['previewUrl'] ?? $item['preview_url'] ?? $item['thumbnail'] ?? '',
-            'image' => $item['image'] ?? $item['imageUrl'] ?? $item['downloadUrl'] ?? '',
-            'provider' => 'zoviz',
-            'previewOnly' => false
-        ));
-        if ($normalized) {
-            $options[] = $normalized;
+        foreach ($records as $record) {
+            $option = biab_logo_zoviz_normalize_record($record, count($options));
+            if (!$option || isset($seen[$option['id']])) {
+                continue;
+            }
+            $seen[$option['id']] = true;
+            $options[] = $option;
+            if (count($options) === 6) {
+                break;
+            }
         }
     }
 
-    if (!$options) {
-        biab_logo_json_response(502, array('error' => 'Zoviz did not return usable logo options.'));
+    if (count($options) !== 6) {
+        biab_logo_json_response(502, array('error' => 'Zoviz did not return exactly 6 usable logo options.'));
     }
 
     return array(
-        'options' => array_slice($options, 0, 6),
-        'provider' => biab_logo_provider_status('zoviz')
+        'options' => $options,
+        'provider' => biab_logo_provider_status('zoviz', 'Zoviz returned 6 watermarked preview logos.')
     );
 }
 
