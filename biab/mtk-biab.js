@@ -38,6 +38,7 @@
       this.logoProviderStatus = null;
       this.selectedTemplate = null;
       this.generatedCardTemplates = null;
+      this.cardOptionsPersisted = false;
       this.orderedCard = this._loadOrderedCard();
       this.isPublishing = false;
       this.onMessage = this.onMessage.bind(this);
@@ -101,6 +102,21 @@
 
       if (eventName === "4-mtk-biab:card-order-loaded" && data) {
         this.orderedCard = data.order || null;
+        if (Array.isArray(data.options)) {
+          if (data.options.length) {
+            this.generatedCardTemplates = data.options.slice(0, 6);
+            this.cardOptionsPersisted = true;
+            if (!this.selectedTemplate) {
+              this.selectedTemplate = this.generatedCardTemplates.find((template) => template.isDefault) || this.generatedCardTemplates[0] || null;
+            }
+          } else {
+            this.generatedCardTemplates = null;
+            this.cardOptionsPersisted = false;
+            this.selectedTemplate = null;
+          }
+        } else if (!this.generatedCardTemplates) {
+          this.cardOptionsPersisted = false;
+        }
         if (this.orderedCard) {
           this._saveOrderedCard(this.orderedCard);
         } else {
@@ -111,12 +127,16 @@
 
       if (eventName === "4-mtk-biab:logo-loaded" && data) {
         this.logo = data.logo || null;
+        this.logoOptions = Array.isArray(data.options) ? data.options.slice(0, 6) : this.logoOptions;
+        this.logoProviderStatus = data.provider || this.logoProviderStatus;
         if (this.logo) {
           this._saveLogoLocal(this.logo);
         } else {
           try { window.localStorage.removeItem(this._logoStorageKey()); } catch (err) {}
         }
-        this.generatedCardTemplates = null;
+        if (!this.cardOptionsPersisted) {
+          this.generatedCardTemplates = null;
+        }
         this._render();
       }
 
@@ -130,7 +150,9 @@
       if (eventName === "4-mtk-biab:logo-saved" && data) {
         this.logo = data.logo || this.logo;
         if (this.logo) this._saveLogoLocal(this.logo);
-        this.generatedCardTemplates = null;
+        if (!this.cardOptionsPersisted) {
+          this.generatedCardTemplates = null;
+        }
         this._closeSetup();
         this._render();
       }
@@ -708,6 +730,7 @@
       this.invoices = [];
       this.selectedTemplate = null;
       this.generatedCardTemplates = null;
+      this.cardOptionsPersisted = false;
       this.orderedCard = null;
       this.logo = null;
       this.logoOptions = [];
@@ -1603,6 +1626,14 @@
           isDefault: index === 0
         };
       });
+
+      if (!this.cardOptionsPersisted) {
+        this.cardOptionsPersisted = true;
+        this._publish("mtk-biab:card-options-save", {
+          nalaUID: this._businessPageId(),
+          options: this.generatedCardTemplates
+        });
+      }
 
       return this.generatedCardTemplates;
     }

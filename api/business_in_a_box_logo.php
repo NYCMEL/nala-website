@@ -191,9 +191,11 @@ function biab_logo_generate_zoviz($payload) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $uid = biab_logo_uid($_GET['nalaUID'] ?? '');
+    $generated = biab_logo_get_options($uid);
     biab_logo_json_response(200, array(
         'ok' => true,
         'logo' => biab_logo_get($uid),
+        'options' => $generated ? $generated['options'] : array(),
         'provider' => biab_logo_provider_status()
     ));
 }
@@ -227,10 +229,20 @@ if ($action !== 'generate') {
     biab_logo_json_response(400, array('error' => 'Unknown logo action.'));
 }
 
+$existing = biab_logo_get_options($uid);
+if ($existing) {
+    biab_logo_json_response(200, array(
+        'ok' => true,
+        'options' => $existing['options'],
+        'provider' => $existing['provider']
+    ));
+}
+
 $generated = biab_logo_generate_zoviz($data);
+$stored = biab_logo_save_options($uid, $generated['options'], $generated['provider']);
 biab_logo_json_response(200, array(
     'ok' => true,
-    'options' => $generated['options'],
-    'provider' => $generated['provider']
+    'options' => $stored['options'],
+    'provider' => $stored['provider']
 ));
 ?>

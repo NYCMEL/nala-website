@@ -45,6 +45,12 @@ function biab_logo_db() {
             payload TEXT NOT NULL,
             updated_at TEXT NOT NULL
         )');
+        $pdo->exec('CREATE TABLE IF NOT EXISTS logo_options (
+            nala_uid TEXT PRIMARY KEY,
+            payload TEXT NOT NULL,
+            provider TEXT NOT NULL,
+            created_at TEXT NOT NULL
+        )');
     } catch (Exception $e) {
         biab_logo_json_response(500, array('error' => 'Could not open logo database.'));
     }
@@ -70,7 +76,56 @@ function biab_logo_get($uid) {
 function biab_logo_reset($uid) {
     $stmt = biab_logo_db()->prepare('DELETE FROM logos WHERE nala_uid = :uid');
     $stmt->execute(array(':uid' => $uid));
+    $stmt = biab_logo_db()->prepare('DELETE FROM logo_options WHERE nala_uid = :uid');
+    $stmt->execute(array(':uid' => $uid));
     return true;
+}
+
+function biab_logo_get_options($uid) {
+    $stmt = biab_logo_db()->prepare('SELECT * FROM logo_options WHERE nala_uid = :uid LIMIT 1');
+    $stmt->execute(array(':uid' => $uid));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$row) {
+        return null;
+    }
+    $options = json_decode($row['payload'] ?? '[]', true);
+    if (!is_array($options)) {
+        return null;
+    }
+    return array(
+        'options' => array_slice($options, 0, 6),
+        'provider' => json_decode($row['provider'] ?? '{}', true) ?: array(),
+        'createdAt' => $row['created_at'] ?? ''
+    );
+}
+
+function biab_logo_save_options($uid, $options, $provider) {
+    $cleanOptions = array();
+    foreach (array_slice(is_array($options) ? $options : array(), 0, 6) as $option) {
+        $normalized = biab_logo_normalize_logo(is_array($option) ? $option : array());
+        if ($normalized) {
+            $cleanOptions[] = $normalized;
+        }
+    }
+    if (count($cleanOptions) !== 6) {
+        biab_logo_json_response(502, array('error' => 'Exactly 6 logo options are required.'));
+    }
+    $now = gmdate('c');
+    $stmt = biab_logo_db()->prepare('INSERT OR REPLACE INTO logo_options
+        (nala_uid, payload, provider, created_at)
+        VALUES
+        (:uid, :payload, :provider, :created_at)');
+    $stmt->execute(array(
+        ':uid' => $uid,
+        ':payload' => json_encode($cleanOptions, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+        ':provider' => json_encode(is_array($provider) ? $provider : array(), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+        ':created_at' => $now
+    ));
+    return array(
+        'options' => $cleanOptions,
+        'provider' => is_array($provider) ? $provider : array(),
+        'createdAt' => $now
+    );
 }
 
 function biab_logo_save($uid, $logo) {

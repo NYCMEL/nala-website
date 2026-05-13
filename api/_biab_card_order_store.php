@@ -45,6 +45,11 @@ function biab_card_db() {
             payload TEXT NOT NULL,
             created_at TEXT NOT NULL
         )');
+        $pdo->exec('CREATE TABLE IF NOT EXISTS card_options (
+            nala_uid TEXT PRIMARY KEY,
+            payload TEXT NOT NULL,
+            created_at TEXT NOT NULL
+        )');
     } catch (Exception $e) {
         biab_card_json_response(500, array('error' => 'Could not open card order database.'));
     }
@@ -73,7 +78,56 @@ function biab_card_get_order($uid) {
 function biab_card_reset_order($uid) {
     $stmt = biab_card_db()->prepare('DELETE FROM card_orders WHERE nala_uid = :uid');
     $stmt->execute(array(':uid' => $uid));
+    $stmt = biab_card_db()->prepare('DELETE FROM card_options WHERE nala_uid = :uid');
+    $stmt->execute(array(':uid' => $uid));
     return true;
+}
+
+function biab_card_get_options($uid) {
+    $stmt = biab_card_db()->prepare('SELECT * FROM card_options WHERE nala_uid = :uid LIMIT 1');
+    $stmt->execute(array(':uid' => $uid));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$row) {
+        return null;
+    }
+    $options = json_decode($row['payload'] ?? '[]', true);
+    if (!is_array($options)) {
+        return null;
+    }
+    return array_slice($options, 0, 6);
+}
+
+function biab_card_save_options($uid, $options) {
+    $cleanOptions = array();
+    foreach (array_slice(is_array($options) ? $options : array(), 0, 6) as $option) {
+        if (!is_array($option)) {
+            continue;
+        }
+        $id = preg_replace('/[^a-zA-Z0-9_-]/', '', (string)($option['id'] ?? ''));
+        if ($id === '') {
+            continue;
+        }
+        $option['id'] = $id;
+        $option['label'] = trim((string)($option['label'] ?? ('Business Card ' . (count($cleanOptions) + 1))));
+        $option['isDefault'] = !empty($option['isDefault']);
+        $cleanOptions[] = $option;
+    }
+    if (count($cleanOptions) !== 6) {
+        biab_card_json_response(400, array('error' => 'Exactly 6 business card options are required.'));
+    }
+
+    $now = gmdate('c');
+    $stmt = biab_card_db()->prepare('INSERT OR IGNORE INTO card_options
+        (nala_uid, payload, created_at)
+        VALUES
+        (:uid, :payload, :created_at)');
+    $stmt->execute(array(
+        ':uid' => $uid,
+        ':payload' => json_encode($cleanOptions, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+        ':created_at' => $now
+    ));
+
+    return biab_card_get_options($uid) ?: $cleanOptions;
 }
 
 function biab_card_save_first_order($uid, $order) {

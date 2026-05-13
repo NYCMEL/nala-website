@@ -45,6 +45,7 @@ class _febe {
 	    "mtk-biab:email-invoice",
 	    "mtk-biab:delete-invoice",
 	    "mtk-biab:card-order-load",
+	    "mtk-biab:card-options-save",
 	    "mtk-biab:business-card-submit",
 	    "mtk-biab:logo-load",
 	    "mtk-biab:logo-generate",
@@ -117,6 +118,7 @@ class _febe {
 	    "mtk-biab:email-invoice": this.handleBiabInvoiceEmail,
 	    "mtk-biab:delete-invoice": this.handleBiabInvoiceDelete,
 	    "mtk-biab:card-order-load": this.handleBiabCardOrderLoad,
+	    "mtk-biab:card-options-save": this.handleBiabCardOptionsSave,
 	    "mtk-biab:business-card-submit": this.handleBiabCardSubmit,
 	    "mtk-biab:logo-load": this.handleBiabLogoLoad,
 	    "mtk-biab:logo-generate": this.handleBiabLogoGenerate,
@@ -607,7 +609,8 @@ class _febe {
 	return this.getBiabJson("/api/business_in_a_box_card_order.php?nalaUID=" + encodeURIComponent(uid), this.t("biab.error.generic", "Could not complete that request. Please try again.")).then(json => {
 	    wc.publish("4-mtk-biab:card-order-loaded", {
 		nalaUID: uid,
-		order: json.order || null
+		order: json.order || null,
+		options: json.options || []
 	    });
 	    return json;
 	});
@@ -636,12 +639,30 @@ class _febe {
 	});
     }
 
+    handleBiabCardOptionsSave(data) {
+	const payload = data || {};
+	const uid = payload.nalaUID || this.getBusinessPageId();
+	return this.postBiabJson("/api/business_in_a_box_card_order.php", {
+	    nalaUID: uid,
+	    action: "save_options",
+	    options: payload.options || []
+	}, "", this.t("biab.error.generic", "Could not complete that request. Please try again.")).then(json => {
+	    wc.publish("4-mtk-biab:card-order-loaded", {
+		nalaUID: uid,
+		order: json.order || null,
+		options: json.options || []
+	    });
+	    return json;
+	});
+    }
+
     handleBiabLogoLoad(data) {
 	const uid = (data && data.nalaUID) || this.getBusinessPageId();
 	return this.getBiabJson("/api/business_in_a_box_logo.php?nalaUID=" + encodeURIComponent(uid), this.t("biab.error.generic", "Could not complete that request. Please try again.")).then(json => {
 	    wc.publish("4-mtk-biab:logo-loaded", {
 		nalaUID: uid,
 		logo: json.logo || null,
+		options: json.options || [],
 		provider: json.provider || null
 	    });
 	    return json;
@@ -755,7 +776,7 @@ class _febe {
 	];
 
 	return Promise.allSettled(requests).then(() => {
-	    wc.publish("4-mtk-biab:card-order-loaded", { nalaUID: uid, order: null });
+	    wc.publish("4-mtk-biab:card-order-loaded", { nalaUID: uid, order: null, options: [] });
 	    wc.publish("4-mtk-biab:logo-loaded", { nalaUID: uid, logo: null });
 	    wc.publish("4-mtk-biab:invoices-loaded", { nalaUID: uid, invoices: [] });
 	    wc.publish("4-mtk-biab:google-seo-status", { nalaUID: uid, status: {} });
