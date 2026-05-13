@@ -47,8 +47,8 @@
 		    <h1 class="MTK-hero-title animate-fade-up">${heroData.title}</h1>
 		    <p class="MTK-hero-description animate-fade-up">${heroData.description}</p>
 
-		    <button class="btn btn-primary">Start Learning Today</button>
-		    <button class="btn btn-outline-primary">Explore Courses</button>
+		    <button class="btn nala-btn-primary">Start Learning Today</button>
+		    <button class="btn nala-btn-outline-primary">Explore Courses</button>
 		</div>
             </div>
 

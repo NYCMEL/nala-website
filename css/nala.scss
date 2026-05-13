@@ -691,6 +691,44 @@ a {
   text-overflow: ellipsis;
 }
 
+.nala-btn-primary {
+  background-color: $color-primary;
+  border-color: $color-primary;
+  color: $color-white;
+
+  &:hover,
+  &:focus {
+    background-color: $color-primary-dark;
+    border-color: $color-primary-dark;
+    color: $color-white;
+  }
+
+  &:active {
+    background-color: $color-primary-darker;
+    border-color: $color-primary-darker;
+    color: $color-white;
+  }
+}
+
+.nala-btn-outline-primary {
+  background-color: transparent;
+  border-color: $color-primary;
+  color: $color-primary;
+
+  &:hover,
+  &:focus {
+    background-color: $color-primary;
+    border-color: $color-primary;
+    color: $color-white;
+  }
+
+  &:active {
+    background-color: $color-primary-dark;
+    border-color: $color-primary-dark;
+    color: $color-white;
+  }
+}
+
 
 // ────────────────────────────────────────────────────────────
 //  TYPOGRAPHY — Global heading overrides

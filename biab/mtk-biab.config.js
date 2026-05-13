@@ -24,6 +24,9 @@ window.MTK_BIAB_CONFIG = {
       "4-mtk-biab:invoice-saved",
       "4-mtk-biab:invoice-emailed",
       "4-mtk-biab:card-order-loaded",
+      "4-mtk-biab:logo-loaded",
+      "4-mtk-biab:logo-options",
+      "4-mtk-biab:logo-saved",
       "4-mtk-biab:google-seo-status"
     ]
   },
@@ -40,7 +43,8 @@ window.MTK_BIAB_CONFIG = {
       includedItems: [
         { setupKey: "business-info", label: "Click here to enter your business information", actionRequired: true, page: "settings", settingsTab: "business", description: "Enter the information customers should see, such as your business name, phone number, email, website, and hours. Click Save when you are done." },
         { setupKey: "services-offered", label: "Click here to choose your services offered", actionRequired: true, page: "settings", settingsTab: "services", description: "Enter your service area, check every service you offer, then click Save services offered." },
-        { setupKey: "business-card", label: "Click here to choose your business card", actionRequired: true, sectionId: "business-card-logo", openSetup: true, description: "Choose the card you want, check the name, phone, email, website, and service area, then click Order this business card." },
+        { setupKey: "logo", label: "Click here to create your logo", actionRequired: true, sectionId: "logo", openSetup: true, description: "Generate logo options, choose the one you like, then click Save this logo. Your business card and website will use the saved logo." },
+        { setupKey: "business-card", label: "Click here to choose your business card", actionRequired: true, sectionId: "business-card", openSetup: true, description: "Choose the card you want, check the name, phone, email, website, and service area, then click Order this business card." },
         { setupKey: "google-setup", label: "Click here to send your Google setup email", actionRequired: true, sectionId: "google-seo", description: "Click the button in the Google section. You will receive step-by-step instructions for approving Google setup." },
         { setupKey: "website-pages", label: "Website pages", done: false, description: "NALA creates your website pages for you. This is checked after your business name, phone, email, and services are saved." },
         { setupKey: "contact-details", label: "Contact details shared across BIAB", done: false, description: "After you save your phone number, email, and website, NALA uses them on the website, business cards, invoices, and review requests." },
@@ -87,13 +91,29 @@ window.MTK_BIAB_CONFIG = {
       ]
     },
     {
-      id: "business-card-logo",
-      label: "Business Card & Logo",
+      id: "logo",
+      label: "Logo",
+      icon: "auto_awesome",
+      eyebrow: "Brand",
+      title: "Logo",
+      description: "Create logo options for your business before you choose a business card.",
+      body: "Click Start this step, check the business information, generate logo options with Zoviz, choose one, then click Save this logo.",
+      nextStep: "Click Start this step. If your business name or service area is missing, go back to Profile & Settings first. Then generate options and save the logo you want.",
+      setupType: "logo",
+      provider: {
+        id: "zoviz",
+        label: "Zoviz Logo Engine API",
+        testingNote: "The Zoviz key is loaded from the site config file."
+      }
+    },
+    {
+      id: "business-card",
+      label: "Business Card",
       icon: "badge",
       eyebrow: "Brand",
-      title: "Business Card & Logo",
+      title: "Business Card",
       description: "Choose the business card you will receive.",
-      body: "Click Start this step. Pick one card design, check the contact details, then click Order this business card. After the card is ordered, this section is locked.",
+      body: "Click Start this step. Pick one card design, check the contact details, then click Order this business card. If you saved a logo in the Logo step, it will appear on the card. After the card is ordered, this section is locked.",
       nextStep: "Click Start this step, choose one design, then click Order this business card. On the next screen, check every field before you submit.",
       setupType: "businessCard",
       cardFields: [

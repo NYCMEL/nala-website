@@ -1141,6 +1141,7 @@ wc.logout = async function () {
     wc.log('logout');
 
     wc.session = wc.user = null;
+    wc.stopInactivityTracking();
 
     // REMOVE USER NAME
     wc.deleteCookie("user");
@@ -1188,6 +1189,10 @@ wc.getSession = function (callback) {
 	
 	wc.log("wc.getSession:", data);
 
+        if (!data.logged_in) {
+            wc.stopInactivityTracking();
+        }
+
         if (typeof callback === 'function') {
             callback(data.logged_in, data);
         }
@@ -1214,6 +1219,11 @@ wc.getSession = function (callback) {
  * INACTIVITY LOGIC
  ************************************************************/
 wc.resetInactivity = function () {
+    if (!wc.isLoggedIn()) {
+        wc.stopInactivityTracking();
+        return;
+    }
+
     clearTimeout(wc.inactivity.idleTimer);
 
     wc.inactivity.idleTimer = setTimeout(
@@ -1223,6 +1233,11 @@ wc.resetInactivity = function () {
 };
 
 wc.showInactivityModal = function () {
+    if (!wc.isLoggedIn()) {
+        wc.stopInactivityTracking();
+        return;
+    }
+
     let seconds = wc.inactivity.countdown;
 
     if (document.getElementById('wc-idle-modal')) return;
@@ -1256,7 +1271,13 @@ wc.showInactivityModal = function () {
     // Countdown
     wc.inactivity.countdownTimer = setInterval(() => {
         seconds--;
-        document.getElementById('wc-idle-seconds').textContent = seconds;
+        if (!wc.isLoggedIn()) {
+            wc.closeIdleModal();
+            return;
+        }
+
+        const secondsEl = document.getElementById('wc-idle-seconds');
+        if (secondsEl) secondsEl.textContent = seconds;
 
         if (seconds <= 0) {
             wc.closeIdleModal();
@@ -1288,7 +1309,20 @@ wc.closeIdleModal = function () {
 /************************************************************
  * START / STOP
  ************************************************************/
+wc.isLoggedIn = function () {
+    return !!(wc.session && wc.session.logged_in);
+};
+
 wc.startInactivityTracking = function () {
+    if (!wc.isLoggedIn()) return;
+
+    if (wc.inactivity.isTracking) {
+        wc.resetInactivity();
+        return;
+    }
+
+    wc.inactivity.isTracking = true;
+
     ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart']
         .forEach(evt =>
             window.addEventListener(evt, wc.resetInactivity, { passive: true })
@@ -1298,7 +1332,16 @@ wc.startInactivityTracking = function () {
 };
 
 wc.stopInactivityTracking = function () {
+    if (wc.inactivity.isTracking) {
+        ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart']
+            .forEach(evt =>
+                window.removeEventListener(evt, wc.resetInactivity, { passive: true })
+            );
+    }
+
+    wc.inactivity.isTracking = false;
     clearTimeout(wc.inactivity.idleTimer);
+    wc.inactivity.idleTimer = null;
     wc.closeIdleModal();
 };
 

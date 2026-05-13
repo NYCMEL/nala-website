@@ -473,7 +473,7 @@
             if (this.resetBiabInProgress) return;
 
             this.resetBiabInProgress = true;
-            if (!window.confirm('Reset Business in a Box to a new-purchase state for this test account? This clears local setup data and the selected business card.')) {
+            if (!window.confirm('Reset Business in a Box to a new-purchase state for this test account? This clears local setup data, the saved logo, and the selected business card.')) {
                 this.resetBiabInProgress = false;
                 return;
             }
@@ -481,6 +481,7 @@
             const uid = this.businessPageId();
             try {
                 window.localStorage.removeItem('nala_profile_settings');
+                window.localStorage.removeItem('nala_biab_logo_' + uid);
                 window.localStorage.removeItem('nala_biab_ordered_card_' + uid);
                 window.localStorage.removeItem('nala_biab_setup_prompt_seen_' + uid);
             } catch (err) {}

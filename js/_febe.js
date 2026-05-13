@@ -46,6 +46,9 @@ class _febe {
 	    "mtk-biab:delete-invoice",
 	    "mtk-biab:card-order-load",
 	    "mtk-biab:business-card-submit",
+	    "mtk-biab:logo-load",
+	    "mtk-biab:logo-generate",
+	    "mtk-biab:logo-save",
 	    "mtk-biab:google-seo-status-load",
 	    "mtk-biab:google-seo-request",
 	    "mtk-biab:reset",
@@ -115,6 +118,9 @@ class _febe {
 	    "mtk-biab:delete-invoice": this.handleBiabInvoiceDelete,
 	    "mtk-biab:card-order-load": this.handleBiabCardOrderLoad,
 	    "mtk-biab:business-card-submit": this.handleBiabCardSubmit,
+	    "mtk-biab:logo-load": this.handleBiabLogoLoad,
+	    "mtk-biab:logo-generate": this.handleBiabLogoGenerate,
+	    "mtk-biab:logo-save": this.handleBiabLogoSave,
 	    "mtk-biab:google-seo-status-load": this.handleBiabGoogleSeoStatusLoad,
 	    "mtk-biab:google-seo-request": this.handleBiabGoogleSeoRequest,
 	    "mtk-biab:reset": this.handleBiabReset,
@@ -630,6 +636,51 @@ class _febe {
 	});
     }
 
+    handleBiabLogoLoad(data) {
+	const uid = (data && data.nalaUID) || this.getBusinessPageId();
+	return this.getBiabJson("/api/business_in_a_box_logo.php?nalaUID=" + encodeURIComponent(uid), this.t("biab.error.generic", "Could not complete that request. Please try again.")).then(json => {
+	    wc.publish("4-mtk-biab:logo-loaded", {
+		nalaUID: uid,
+		logo: json.logo || null,
+		provider: json.provider || null
+	    });
+	    return json;
+	});
+    }
+
+    handleBiabLogoGenerate(data) {
+	const payload = data || {};
+	const uid = payload.nalaUID || this.getBusinessPageId();
+	return this.postBiabJson("/api/business_in_a_box_logo.php", Object.assign({}, payload, {
+	    nalaUID: uid,
+	    action: "generate"
+	}), "", this.t("biab.error.generic", "Could not complete that request. Please try again.")).then(json => {
+	    wc.publish("4-mtk-biab:logo-options", {
+		nalaUID: uid,
+		options: json.options || [],
+		provider: json.provider || null
+	    });
+	    return json;
+	});
+    }
+
+    handleBiabLogoSave(data) {
+	const payload = data || {};
+	const uid = payload.nalaUID || this.getBusinessPageId();
+	return this.postBiabJson("/api/business_in_a_box_logo.php", {
+	    nalaUID: uid,
+	    action: "save",
+	    logo: payload.logo || {}
+	}, this.t("biab.logo.saved", "Logo saved. Your business card will use this logo."), this.t("biab.error.generic", "Could not complete that request. Please try again.")).then(json => {
+	    wc.publish("4-mtk-biab:logo-saved", {
+		nalaUID: uid,
+		logo: json.logo || payload.logo || null,
+		provider: json.provider || null
+	    });
+	    return json;
+	});
+    }
+
     normalizeCustomServices(value) {
 	if (Array.isArray(value)) {
 	    return value.map(item => {
@@ -676,11 +727,16 @@ class _febe {
 	try {
 	    window.localStorage.removeItem("nala_profile_settings");
 	    window.localStorage.removeItem("nala_biab_ordered_card_" + uid);
+	    window.localStorage.removeItem("nala_biab_logo_" + uid);
 	    window.localStorage.removeItem("nala_biab_setup_prompt_seen_" + uid);
 	} catch (err) {}
 
 	const requests = [
 	    this.postBiabJson("/api/business_in_a_box_card_order.php", {
+		action: "reset",
+		nalaUID: uid
+	    }, "", this.t("biab.error.generic", "Could not complete that request. Please try again.")),
+	    this.postBiabJson("/api/business_in_a_box_logo.php", {
 		action: "reset",
 		nalaUID: uid
 	    }, "", this.t("biab.error.generic", "Could not complete that request. Please try again.")),
@@ -700,6 +756,7 @@ class _febe {
 
 	return Promise.allSettled(requests).then(() => {
 	    wc.publish("4-mtk-biab:card-order-loaded", { nalaUID: uid, order: null });
+	    wc.publish("4-mtk-biab:logo-loaded", { nalaUID: uid, logo: null });
 	    wc.publish("4-mtk-biab:invoices-loaded", { nalaUID: uid, invoices: [] });
 	    wc.publish("4-mtk-biab:google-seo-status", { nalaUID: uid, status: {} });
 	});

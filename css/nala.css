@@ -169,6 +169,32 @@ a:hover {
   overflow: hidden;
   text-overflow: ellipsis; }
 
+.nala-btn-primary {
+  background-color: #a98212;
+  border-color: #a98212;
+  color: #ffffff; }
+.nala-btn-primary:hover, .nala-btn-primary:focus {
+  background-color: #7a5e0c;
+  border-color: #7a5e0c;
+  color: #ffffff; }
+.nala-btn-primary:active {
+  background-color: #4a3a08;
+  border-color: #4a3a08;
+  color: #ffffff; }
+
+.nala-btn-outline-primary {
+  background-color: transparent;
+  border-color: #a98212;
+  color: #a98212; }
+.nala-btn-outline-primary:hover, .nala-btn-outline-primary:focus {
+  background-color: #a98212;
+  border-color: #a98212;
+  color: #ffffff; }
+.nala-btn-outline-primary:active {
+  background-color: #7a5e0c;
+  border-color: #7a5e0c;
+  color: #ffffff; }
+
 h1 {
   font-family: fb;
   border: none; }

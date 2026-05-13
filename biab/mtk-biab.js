@@ -32,6 +32,10 @@
       this.invoiceSort = { key: "date", direction: "desc" };
       this.invoices = [];
       this.googleSeo = null;
+      this.logo = this._loadSavedLogo();
+      this.logoOptions = [];
+      this.selectedLogoId = "";
+      this.logoProviderStatus = null;
       this.selectedTemplate = null;
       this.generatedCardTemplates = null;
       this.orderedCard = this._loadOrderedCard();
@@ -49,6 +53,7 @@
       this._bind();
       this._requestInvoices();
       this._requestCardOrder();
+      this._requestLogo();
       this._requestGoogleSeoStatus();
       this._publish(this.events.publish.ready || "mtk-biab:ready", {
         component: this.config.component || "mtk-biab",
@@ -101,6 +106,32 @@
         } else {
           try { window.localStorage.removeItem(this._orderedCardStorageKey()); } catch (err) {}
         }
+        this._render();
+      }
+
+      if (eventName === "4-mtk-biab:logo-loaded" && data) {
+        this.logo = data.logo || null;
+        if (this.logo) {
+          this._saveLogoLocal(this.logo);
+        } else {
+          try { window.localStorage.removeItem(this._logoStorageKey()); } catch (err) {}
+        }
+        this.generatedCardTemplates = null;
+        this._render();
+      }
+
+      if (eventName === "4-mtk-biab:logo-options" && data) {
+        this.logoOptions = Array.isArray(data.options) ? data.options.slice(0, 6) : [];
+        this.logoProviderStatus = data.provider || null;
+        this.selectedLogoId = this.logoOptions[0] ? this.logoOptions[0].id : "";
+        this._openLogoSetup(this._getActiveSection());
+      }
+
+      if (eventName === "4-mtk-biab:logo-saved" && data) {
+        this.logo = data.logo || this.logo;
+        if (this.logo) this._saveLogoLocal(this.logo);
+        this.generatedCardTemplates = null;
+        this._closeSetup();
         this._render();
       }
 
@@ -330,11 +361,13 @@
       const hasBusinessInfo = this._hasBusinessInfo(business, privacy);
       const hasContactInfo = this._hasContactInfo(business, privacy);
       const hasServices = this._hasServicesOffered(services);
+      const hasLogo = !!(this.logo && (this.logo.svg || this.logo.image || this.logo.previewUrl || this.logo.providerLogoId));
       const hasCardOrder = !!(this.orderedCard && (this.orderedCard.templateId || this.orderedCard.orderedAt));
       const hasGoogleStarted = !!(this.googleSeo && (this.googleSeo.authorizationEmailSentAt || this.googleSeo.authorizationEmailSent));
 
       if (key === "business-info") return hasBusinessInfo;
       if (key === "services-offered") return hasServices;
+      if (key === "logo") return hasLogo;
       if (key === "business-card") return hasCardOrder;
       if (key === "google-setup") return hasGoogleStarted;
       if (key === "website-pages") return hasBusinessInfo && hasServices;
@@ -676,9 +709,14 @@
       this.selectedTemplate = null;
       this.generatedCardTemplates = null;
       this.orderedCard = null;
+      this.logo = null;
+      this.logoOptions = [];
+      this.selectedLogoId = "";
+      this.logoProviderStatus = null;
       this.googleSeo = null;
       try {
         window.localStorage.removeItem(this._orderedCardStorageKey());
+        window.localStorage.removeItem(this._logoStorageKey());
         window.localStorage.removeItem("nala_profile_settings");
       } catch (err) {}
       this._publish("mtk-biab:reset", { nalaUID: this._businessPageId() });
@@ -692,6 +730,10 @@
 
     _requestCardOrder() {
       this._publish("mtk-biab:card-order-load", { nalaUID: this._businessPageId() });
+    }
+
+    _requestLogo() {
+      this._publish("mtk-biab:logo-load", { nalaUID: this._businessPageId() });
     }
 
     _requestGoogleSeoStatus() {
@@ -763,6 +805,9 @@
         if (action === "order-card-selection") this._orderSelectedCard();
         if (action === "back-to-templates") this._openBusinessCardTemplatePicker(this._getActiveSection());
         if (action === "submit-card-editor") this._submitCardEditor();
+        if (action === "generate-logo-options") this._generateLogoOptions();
+        if (action === "select-logo-option") this._selectLogoOption(target.getAttribute("data-logo-id"));
+        if (action === "save-logo-option") this._saveSelectedLogo();
         if (action === "sort-invoices") this._sortInvoiceBy(target.getAttribute("data-sort-key"));
         if (action === "refresh-google-seo") this._requestGoogleSeoStatus();
         if (action === "request-google-seo") this._requestGoogleSeoSetup();
@@ -831,6 +876,11 @@
 
       if (section.setupType === "businessCard") {
         this._openBusinessCardTemplatePicker(section);
+        return;
+      }
+
+      if (section.setupType === "logo") {
+        this._openLogoSetup(section);
         return;
       }
 
@@ -1041,6 +1091,177 @@
         sectionId: this.activeId,
         section
       });
+    }
+
+    _openLogoSetup(section) {
+      const payload = this._buildLogoPayload();
+      const hasBusinessName = !!this._cleanValue(payload.businessName);
+      const hasServiceArea = !!this._cleanValue(payload.serviceArea);
+      const status = this._logoProviderStatusText();
+      const options = Array.isArray(this.logoOptions) ? this.logoOptions : [];
+
+      this._closeSetup();
+
+      this._showSetupView(section, `
+        <div class="mtk-biab__setup-card">
+          <div class="mtk-biab__logo-workflow">
+            <section class="mtk-biab__logo-readiness" aria-label="Logo readiness">
+              <h3>${this._escape(this._text("1. Check the business details"))}</h3>
+              <p class="mtk-biab__setup-help">${this._escape(this._text("These details are sent to the logo engine so the options match your business."))}</p>
+              <dl>
+                <div class="${hasBusinessName ? "is-ready" : "is-missing"}">
+                  <dt>${this._escape(this._text("Business name"))}</dt>
+                  <dd>${this._escape(payload.businessName || this._text("Missing - go to Profile & Settings first"))}</dd>
+                </div>
+                <div class="${hasServiceArea ? "is-ready" : "is-missing"}">
+                  <dt>${this._escape(this._text("Service area"))}</dt>
+                  <dd>${this._escape(payload.serviceArea || this._text("Missing - add your service area first"))}</dd>
+                </div>
+                <div class="is-ready">
+                  <dt>${this._escape(this._text("Services"))}</dt>
+                  <dd>${this._escape(payload.services || this._text("Locksmith services"))}</dd>
+                </div>
+              </dl>
+            </section>
+
+            <section class="mtk-biab__logo-provider" aria-label="Logo provider">
+              <h3>${this._escape(this._text("2. Generate logo options"))}</h3>
+              <p>${this._escape(status)}</p>
+              <button class="mtk-biab__submit-btn" type="button" data-action="generate-logo-options" ${hasBusinessName ? "" : "disabled"}>
+                ${this._escape(this._text(options.length ? "Generate new logo options" : "Generate 6 logo options"))}
+              </button>
+              ${!hasBusinessName ? `<p class="mtk-biab__status">${this._escape(this._text("Add your business name before generating logos."))}</p>` : ""}
+            </section>
+
+            ${this.logo ? `
+              <section class="mtk-biab__logo-saved" aria-label="Saved logo">
+                <h3>${this._escape(this._text("Saved logo"))}</h3>
+                <div class="mtk-biab__logo-card mtk-biab__logo-card--saved">
+                  ${this._logoPreviewMarkup(this.logo)}
+                  <strong>${this._escape(this.logo.name || payload.businessName || this._text("Saved logo"))}</strong>
+                  <span>${this._escape(this._text("This logo will be used on your business card."))}</span>
+                </div>
+              </section>
+            ` : ""}
+
+            <section class="mtk-biab__logo-options" aria-label="Logo options">
+              <h3>${this._escape(this._text("3. Choose one logo"))}</h3>
+              ${options.length ? `
+                <div class="mtk-biab__logo-grid">
+                  ${options.map((option) => this._renderLogoOption(option)).join("")}
+                </div>
+                <div class="mtk-biab__template-actions">
+                  <button class="mtk-biab__submit-btn" type="button" data-action="save-logo-option" ${this.selectedLogoId ? "" : "disabled"}>
+                    ${this._escape(this._text("Save this logo"))}
+                  </button>
+                </div>
+              ` : `
+                <p class="mtk-biab__setup-help">${this._escape(this._text("No logo options yet. Click Generate 6 logo options and then pick your favorite."))}</p>
+              `}
+            </section>
+          </div>
+        </div>
+      `);
+
+      this._publish(this.events.publish.setupOpen || "mtk-biab:setup-open", {
+        sectionId: this.activeId,
+        section,
+        mode: "logo"
+      });
+    }
+
+    _logoProviderStatusText() {
+      const provider = this.logoProviderStatus || {};
+      if (provider.mode === "zoviz") {
+        return this._text("Zoviz is connected. Generated options come from the Zoviz Logo Engine API.");
+      }
+      if (provider.mode === "preview") {
+        return this._text("Zoviz API access is not configured yet. These are safe preview options so you can test the step before production access is added.");
+      }
+      return this._text("This step is ready for Zoviz. Until API access is configured, the Generate button returns clearly marked preview options for testing.");
+    }
+
+    _renderLogoOption(option) {
+      const isSelected = option && option.id === this.selectedLogoId;
+      return `
+        <button
+          class="mtk-biab__logo-option${isSelected ? " is-selected" : ""}"
+          type="button"
+          data-action="select-logo-option"
+          data-logo-id="${this._escape(option.id || "")}"
+          aria-pressed="${isSelected ? "true" : "false"}"
+        >
+          ${this._logoPreviewMarkup(option)}
+          <span class="mtk-biab__logo-option-name">${this._escape(option.name || option.label || this._text("Logo option"))}</span>
+          ${option.previewOnly ? `<span class="mtk-biab__logo-preview-badge">${this._escape(this._text("Preview"))}</span>` : ""}
+          <span class="mtk-biab__template-check" aria-hidden="true">✓</span>
+        </button>
+      `;
+    }
+
+    _logoPreviewMarkup(logo) {
+      if (logo && logo.svg) {
+        return `<span class="mtk-biab__logo-preview">${logo.svg}</span>`;
+      }
+      const src = (logo && (logo.previewUrl || logo.image)) || "";
+      if (src) {
+        return `<span class="mtk-biab__logo-preview"><img src="${this._escape(src)}" alt=""></span>`;
+      }
+      return `<span class="mtk-biab__logo-preview">${this._fallbackLogoSvg(this._buildLogoPayload().businessName || "Logo", "#0f172a", "#a98212", "key")}</span>`;
+    }
+
+    _generateLogoOptions() {
+      const payload = this._buildLogoPayload();
+      this.logoProviderStatus = { mode: "loading" };
+      this._publish("mtk-biab:logo-generate", payload);
+    }
+
+    _selectLogoOption(logoId) {
+      if (!logoId) return;
+      if (!this.logoOptions.some((option) => option.id === logoId)) return;
+      this.selectedLogoId = logoId;
+      this._openLogoSetup(this._getActiveSection());
+    }
+
+    _saveSelectedLogo() {
+      const selected = this.logoOptions.find((option) => option.id === this.selectedLogoId);
+      if (!selected) return;
+      const logo = Object.assign({}, selected, {
+        selectedAt: new Date().toISOString()
+      });
+      this.logo = logo;
+      this._saveLogoLocal(logo);
+      this.generatedCardTemplates = null;
+      this._publish("mtk-biab:logo-save", {
+        nalaUID: this._businessPageId(),
+        logo
+      });
+    }
+
+    _buildLogoPayload() {
+      this._loadStoredSettings();
+      const settings = this.settingsProfile || {};
+      const business = settings.business || {};
+      const services = settings.services || {};
+      const privacy = settings.privacy || {};
+      const serviceList = [
+        services.primaryService,
+        services.secondaryService,
+        Array.isArray(services.launchServices) ? services.launchServices.join(", ") : services.launchServices,
+        this._customServiceLabels(services.customServices)
+      ].filter(Boolean).join(", ");
+
+      return {
+        nalaUID: this._businessPageId(),
+        provider: "zoviz",
+        businessName: business.customerFacingBusinessName || business.legalBusinessName || "",
+        ownerName: privacy.fullName || business.ownerOrResponsiblePartyName || "",
+        serviceArea: services.serviceArea || business.serviceArea || "",
+        services: serviceList || "Residential, commercial, automotive, and emergency locksmith services",
+        style: "professional locksmith logo, clean vector, readable, trustworthy, modern, works on business cards and websites",
+        colors: ["#111827", "#a98212", "#ffffff"],
+        count: 6
+      };
     }
 
     _openBusinessCardTemplatePicker(section) {
@@ -1372,7 +1593,7 @@
         const layout = layoutChoices[index % layoutChoices.length];
         const size = sizes[(index + website.length) % sizes.length];
         const textPlacement = this._pickCardTextPlacement(layout, textPlacementChoices, textPlacementRules, textPlacements, index);
-        const design = { palette, font, icon, layout, textPlacement, size, businessName, contactName, phone, email, website, area };
+        const design = { palette, font, icon, layout, textPlacement, size, businessName, contactName, phone, email, website, area, logo: this.logo };
 
         return {
           id: "generated-card-" + (index + 1),
@@ -1497,6 +1718,26 @@
       return "nala_biab_ordered_card_" + this._businessPageId();
     }
 
+    _logoStorageKey() {
+      return "nala_biab_logo_" + this._businessPageId();
+    }
+
+    _loadSavedLogo() {
+      try {
+        return JSON.parse(window.localStorage.getItem(this._logoStorageKey()) || "null");
+      } catch (err) {
+        return null;
+      }
+    }
+
+    _saveLogoLocal(logo) {
+      try {
+        window.localStorage.setItem(this._logoStorageKey(), JSON.stringify(logo || {}));
+      } catch (err) {
+        console.warn("Could not save logo state", err);
+      }
+    }
+
     _loadOrderedCard() {
       try {
         return JSON.parse(window.localStorage.getItem(this._orderedCardKey()) || "null");
@@ -1531,7 +1772,7 @@
     _businessCardDataUri(design) {
       const p = design.palette;
       const safe = (value) => this._escape(value);
-      const icon = this._placedIcon(design.icon, p.accent, 82, 82, 68);
+      const icon = this._placedLogoOrIcon(design.logo, design.icon, p.accent, 82, 82, 68);
       const font = design.font || {};
       const headingSize = font.headingSize || 28;
       const contactSize = Math.max(16, headingSize - 11);
@@ -1556,17 +1797,17 @@
       });
       const variants = {
         "left-mark": `<rect width="560" height="350" fill="${p.bg}"/><rect width="150" height="350" fill="${p.accent}" opacity=".16"/>${icon}${text}`,
-        "top-band": `<rect width="560" height="350" fill="${p.bg}"/><rect width="560" height="92" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 74, 46, 52)}${text}`,
-        "split": `<rect width="560" height="350" fill="${p.bg}"/><rect x="352" width="208" height="350" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 456, 132, 84)}${text}`,
-        "corner-badge": `<rect width="560" height="350" fill="${p.bg}"/><circle cx="464" cy="84" r="54" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 464, 84, 58)}${text}`,
-        "centered": `<rect width="560" height="350" fill="${p.bg}"/>${this._placedIcon(design.icon, p.accent, 280, 76, 62)}${text}`,
-        "vertical-accent": `<rect width="560" height="350" fill="${p.bg}"/><rect x="512" width="48" height="350" fill="${p.accent}"/>${this._placedIcon(design.icon, p.accent, 82, 84, 64)}${text}`,
-        "bottom-rule": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="332" width="480" height="5" rx="2.5" fill="${p.accent}"/>${this._placedIcon(design.icon, p.accent, 82, 82, 62)}${text}`,
-        "right-mark": `<rect width="560" height="350" fill="${p.bg}"/><rect x="392" y="0" width="168" height="350" fill="${p.accent}" opacity=".14"/>${this._placedIcon(design.icon, p.accent, 454, 86, 74)}${text}`,
-        "framed": `<rect width="560" height="350" fill="${p.bg}"/><rect x="24" y="18" width="512" height="314" rx="10" fill="none" stroke="${p.accent}" stroke-width="4"/>${this._placedIcon(design.icon, p.accent, 84, 84, 58)}${text}`,
-        "badge-left": `<rect width="560" height="350" fill="${p.bg}"/><circle cx="86" cy="86" r="52" fill="${p.accent}"/>${this._placedIcon(design.icon, p.bg, 86, 86, 56)}${text}`,
-        "double-rule": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="40" width="480" height="4" rx="2" fill="${p.accent}"/><rect x="40" y="332" width="480" height="4" rx="2" fill="${p.accent}"/>${this._placedIcon(design.icon, p.accent, 86, 91, 58)}${text}`,
-        "top-left-icon": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="40" width="88" height="88" rx="18" fill="${p.accent}" opacity=".16"/>${this._placedIcon(design.icon, p.accent, 84, 84, 58)}${text}`
+        "top-band": `<rect width="560" height="350" fill="${p.bg}"/><rect width="560" height="92" fill="${p.accent}"/>${this._placedLogoOrIcon(design.logo, design.icon, p.bg, 74, 46, 52)}${text}`,
+        "split": `<rect width="560" height="350" fill="${p.bg}"/><rect x="352" width="208" height="350" fill="${p.accent}"/>${this._placedLogoOrIcon(design.logo, design.icon, p.bg, 456, 132, 84)}${text}`,
+        "corner-badge": `<rect width="560" height="350" fill="${p.bg}"/><circle cx="464" cy="84" r="54" fill="${p.accent}"/>${this._placedLogoOrIcon(design.logo, design.icon, p.bg, 464, 84, 58)}${text}`,
+        "centered": `<rect width="560" height="350" fill="${p.bg}"/>${this._placedLogoOrIcon(design.logo, design.icon, p.accent, 280, 76, 62)}${text}`,
+        "vertical-accent": `<rect width="560" height="350" fill="${p.bg}"/><rect x="512" width="48" height="350" fill="${p.accent}"/>${this._placedLogoOrIcon(design.logo, design.icon, p.accent, 82, 84, 64)}${text}`,
+        "bottom-rule": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="332" width="480" height="5" rx="2.5" fill="${p.accent}"/>${this._placedLogoOrIcon(design.logo, design.icon, p.accent, 82, 82, 62)}${text}`,
+        "right-mark": `<rect width="560" height="350" fill="${p.bg}"/><rect x="392" y="0" width="168" height="350" fill="${p.accent}" opacity=".14"/>${this._placedLogoOrIcon(design.logo, design.icon, p.accent, 454, 86, 74)}${text}`,
+        "framed": `<rect width="560" height="350" fill="${p.bg}"/><rect x="24" y="18" width="512" height="314" rx="10" fill="none" stroke="${p.accent}" stroke-width="4"/>${this._placedLogoOrIcon(design.logo, design.icon, p.accent, 84, 84, 58)}${text}`,
+        "badge-left": `<rect width="560" height="350" fill="${p.bg}"/><circle cx="86" cy="86" r="52" fill="${p.accent}"/>${this._placedLogoOrIcon(design.logo, design.icon, p.bg, 86, 86, 56)}${text}`,
+        "double-rule": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="40" width="480" height="4" rx="2" fill="${p.accent}"/><rect x="40" y="332" width="480" height="4" rx="2" fill="${p.accent}"/>${this._placedLogoOrIcon(design.logo, design.icon, p.accent, 86, 91, 58)}${text}`,
+        "top-left-icon": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="40" width="88" height="88" rx="18" fill="${p.accent}" opacity=".16"/>${this._placedLogoOrIcon(design.logo, design.icon, p.accent, 84, 84, 58)}${text}`
       };
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="560" height="350" viewBox="0 0 560 350">${variants[design.layout] || variants["left-mark"]}</svg>`;
       return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
@@ -1606,9 +1847,36 @@
       }
     }
 
+    _placedLogoOrIcon(logo, iconName, color, centerX, centerY, size) {
+      if (logo && logo.svg) {
+        const href = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(logo.svg);
+        return `<image href="${href}" x="${centerX - size / 2}" y="${centerY - size / 2}" width="${size}" height="${size}" preserveAspectRatio="xMidYMid meet"/>`;
+      }
+      if (logo && (logo.previewUrl || logo.image)) {
+        const href = this._escape(logo.previewUrl || logo.image);
+        return `<image href="${href}" x="${centerX - size / 2}" y="${centerY - size / 2}" width="${size}" height="${size}" preserveAspectRatio="xMidYMid meet"/>`;
+      }
+      return this._placedIcon(iconName, color, centerX, centerY, size);
+    }
+
     _placedIcon(name, color, centerX, centerY, size) {
       const scale = size / 24;
       return `<g transform="translate(${centerX - size / 2} ${centerY - size / 2}) scale(${scale})">${this._iconSvg(name, color)}</g>`;
+    }
+
+    _fallbackLogoSvg(name, primary, accent, iconName) {
+      const cleanName = this._escape(this._cardText(name || "Locksmith", 24));
+      const initials = this._escape(String(name || "L").trim().split(/\s+/).map((part) => part.charAt(0)).join("").slice(0, 3).toUpperCase() || "L");
+      return `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" role="img" aria-label="${cleanName} logo">
+          <rect width="360" height="240" rx="18" fill="#ffffff"/>
+          <circle cx="96" cy="96" r="54" fill="${this._escape(accent || "#a98212")}"/>
+          <g transform="translate(62 62) scale(2.85)">${this._iconSvg(iconName || "key", "#ffffff")}</g>
+          <text x="176" y="94" fill="${this._escape(primary || "#111827")}" font-family="Arial, sans-serif" font-size="30" font-weight="800">${cleanName}</text>
+          <text x="178" y="130" fill="${this._escape(accent || "#a98212")}" font-family="Arial, sans-serif" font-size="22" font-weight="800">${initials}</text>
+          <rect x="176" y="145" width="118" height="5" rx="2.5" fill="${this._escape(accent || "#a98212")}"/>
+        </svg>
+      `;
     }
 
     _shuffleCardOptions(options) {

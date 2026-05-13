@@ -737,14 +737,14 @@ mtk-biab.mtk-biab .mtk-biab__template-btn {
   appearance: none;
   display: block;
   width: 100%;
-  padding: 12px;
-  border: 2px solid #e5e7eb;
+  padding: 16px;
+  border: 2px solid transparent;
   border-radius: 4px;
-  background: #ffffff;
+  background: #f8fafc;
   color: #0f172a;
   cursor: pointer;
   text-align: left;
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  box-shadow: none;
 }
 
 mtk-biab.mtk-biab .mtk-biab__template-btn img,
@@ -898,6 +898,41 @@ mtk-biab.mtk-biab .mtk-biab__template-image-wrap {
   position: relative;
   display: block;
   width: 100%;
+  aspect-ratio: 560 / 350;
+  border-radius: 10px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0) 32%),
+    #ffffff;
+  box-shadow:
+    0 2px 0 #d7dce3,
+    0 5px 0 #bfc6d1,
+    0 18px 34px rgba(15, 23, 42, 0.18);
+  transform: perspective(900px) rotateX(1deg);
+  transform-origin: center bottom;
+  overflow: visible;
+}
+
+mtk-biab.mtk-biab .mtk-biab__template-image-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -10px -10px -16px;
+  z-index: 0;
+  border-radius: 14px;
+  background: radial-gradient(ellipse at center, rgba(15, 23, 42, 0.18), rgba(15, 23, 42, 0) 68%);
+  transform: translateY(14px) scaleX(0.96);
+  pointer-events: none;
+}
+
+mtk-biab.mtk-biab .mtk-biab__template-image-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: 10px;
+  box-shadow:
+    inset 0 0 0 1px rgba(15, 23, 42, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  pointer-events: none;
 }
 
 mtk-biab.mtk-biab .mtk-biab__template-check {
@@ -917,11 +952,38 @@ mtk-biab.mtk-biab .mtk-biab__template-check {
   line-height: 1;
   box-shadow: 0 12px 28px rgba(22, 163, 74, 0.35);
   pointer-events: none;
+  z-index: 3;
+}
+
+mtk-biab.mtk-biab .mtk-biab__template-image-wrap img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background: #ffffff;
+  object-fit: cover;
+}
+
+mtk-biab.mtk-biab .mtk-biab__template-btn:hover .mtk-biab__template-image-wrap,
+mtk-biab.mtk-biab .mtk-biab__template-btn:focus-visible .mtk-biab__template-image-wrap {
+  box-shadow:
+    0 2px 0 #d7dce3,
+    0 5px 0 #bfc6d1,
+    0 22px 40px rgba(15, 23, 42, 0.24);
+  transform: perspective(900px) rotateX(0deg) translateY(-2px);
 }
 
 mtk-biab.mtk-biab .mtk-biab__template-btn.is-selected {
   border-color: #16a34a;
-  box-shadow: 0 14px 30px rgba(22, 163, 74, 0.18);
+  background: #f0fdf4;
+}
+
+mtk-biab.mtk-biab .mtk-biab__template-btn.is-selected .mtk-biab__template-image-wrap {
+  box-shadow:
+    0 2px 0 #86efac,
+    0 5px 0 #22c55e,
+    0 20px 38px rgba(22, 163, 74, 0.22);
 }
 
 mtk-biab.mtk-biab .mtk-biab__template-btn.is-selected .mtk-biab__template-check {
@@ -938,14 +1000,173 @@ mtk-biab.mtk-biab .mtk-biab__template-actions .mtk-biab__submit-btn {
   min-width: 190px;
 }
 
+mtk-biab.mtk-biab .mtk-biab__submit-btn:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+
+mtk-biab.mtk-biab .mtk-biab__logo-workflow {
+  display: grid;
+  gap: 22px;
+}
+
+mtk-biab.mtk-biab .mtk-biab__logo-readiness,
+mtk-biab.mtk-biab .mtk-biab__logo-provider,
+mtk-biab.mtk-biab .mtk-biab__logo-saved,
+mtk-biab.mtk-biab .mtk-biab__logo-options {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+mtk-biab.mtk-biab .mtk-biab__logo-readiness h3,
+mtk-biab.mtk-biab .mtk-biab__logo-provider h3,
+mtk-biab.mtk-biab .mtk-biab__logo-saved h3,
+mtk-biab.mtk-biab .mtk-biab__logo-options h3 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+mtk-biab.mtk-biab .mtk-biab__logo-provider p {
+  margin: 0;
+  color: #475569;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+mtk-biab.mtk-biab .mtk-biab__logo-readiness dl {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+mtk-biab.mtk-biab .mtk-biab__logo-readiness dl > div {
+  display: grid;
+  grid-template-columns: minmax(140px, 0.35fr) 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-left: 5px solid #16a34a;
+  border-radius: 4px;
+  background: #f8fafc;
+}
+
+mtk-biab.mtk-biab .mtk-biab__logo-readiness dl > div.is-missing {
+  border-left-color: #dc2626;
+  background: #fef2f2;
+}
+
+mtk-biab.mtk-biab .mtk-biab__logo-readiness dt {
+  color: #0f172a;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+mtk-biab.mtk-biab .mtk-biab__logo-readiness dd {
+  margin: 0;
+  color: #334155;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+mtk-biab.mtk-biab .mtk-biab__logo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+mtk-biab.mtk-biab .mtk-biab__logo-option,
+mtk-biab.mtk-biab .mtk-biab__logo-card {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #0f172a;
+  text-align: left;
+}
+
+mtk-biab.mtk-biab .mtk-biab__logo-option {
+  cursor: pointer;
+}
+
+mtk-biab.mtk-biab .mtk-biab__logo-option.is-selected {
+  border-color: #16a34a;
+  box-shadow: 0 14px 30px rgba(22, 163, 74, 0.18);
+}
+
+mtk-biab.mtk-biab .mtk-biab__logo-option.is-selected .mtk-biab__template-check {
+  display: inline-flex;
+}
+
+mtk-biab.mtk-biab .mtk-biab__logo-preview {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  background: #f8fafc;
+  overflow: hidden;
+}
+
+mtk-biab.mtk-biab .mtk-biab__logo-preview svg,
+mtk-biab.mtk-biab .mtk-biab__logo-preview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+mtk-biab.mtk-biab .mtk-biab__logo-option-name,
+mtk-biab.mtk-biab .mtk-biab__logo-card strong {
+  color: #0f172a;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+mtk-biab.mtk-biab .mtk-biab__logo-card span:not(.mtk-biab__logo-preview) {
+  color: #475569;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+mtk-biab.mtk-biab .mtk-biab__logo-preview-badge {
+  justify-self: start;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+mtk-biab.mtk-biab .mtk-biab__logo-card--saved {
+  max-width: 360px;
+  border-color: #16a34a;
+}
+
 @media (max-width: 991.98px) {
-  mtk-biab.mtk-biab .mtk-biab__template-grid {
+  mtk-biab.mtk-biab .mtk-biab__template-grid,
+  mtk-biab.mtk-biab .mtk-biab__logo-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 767.98px) {
-  mtk-biab.mtk-biab .mtk-biab__template-grid {
+  mtk-biab.mtk-biab .mtk-biab__template-grid,
+  mtk-biab.mtk-biab .mtk-biab__logo-grid,
+  mtk-biab.mtk-biab .mtk-biab__logo-readiness dl > div {
     grid-template-columns: 1fr;
   }
 }

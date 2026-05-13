@@ -974,7 +974,7 @@
     'biab.website.body': { en: 'Click Start this step to open the website preview. If something is missing, go back to Profile & Settings and save the missing business information.', es: 'Haz clic en Comenzar este paso para abrir la vista previa del sitio web. Si falta algo, vuelve a Perfil y configuración y guarda la información que falta.' },
     'biab.website.next': { en: 'Click Start this step to open the website. Review the phone number, email, website link, services, and service area.', es: 'Haz clic en Comenzar este paso para abrir el sitio web. Revisa el teléfono, correo, enlace del sitio, servicios y área de servicio.' },
     'biab.website.previewLink': { en: 'Open your website preview', es: 'Abrir la vista previa de tu sitio' },
-    'biab.card.title': { en: 'Business Card & Logo', es: 'Tarjeta de presentación y logo' },
+    'biab.card.title': { en: 'Business Card', es: 'Tarjeta de presentación' },
     'biab.card.desc': { en: 'Choose the business card you will receive.', es: 'Elige la tarjeta de presentación que recibirás.' },
     'biab.card.body': { en: 'Click Start this step. Pick one card design, check the contact details, then click Order this business card. After the card is ordered, this section is locked.', es: 'Haz clic en Comenzar este paso. Elige un diseño, revisa los datos de contacto y luego haz clic en Pedir esta tarjeta. Después de pedirla, esta sección queda bloqueada.' },
     'biab.card.next': { en: 'Click Start this step, choose one design, then click Order this business card. On the next screen, check every field before you submit.', es: 'Haz clic en Comenzar este paso, elige un diseño y luego haz clic en Pedir esta tarjeta. En la siguiente pantalla, revisa cada campo antes de enviarlo.' },
