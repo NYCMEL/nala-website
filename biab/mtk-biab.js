@@ -475,7 +475,8 @@
           <div class="mtk-biab__google-seo-head">
             <div>
               <h3>${this._escape(this._text("Google setup status"))}</h3>
-              <p>${this._escape(this._text("After you click the email button, the status below shows what is ready and what you still need to do."))}</p>
+              <p>${this._escape(this._text("Google setup helps customers find this business on Google. NALA prepares the website and business details, then the owner follows the email steps to approve Google access or verification when Google asks for it."))}</p>
+              <p>${this._escape(this._text("You do not need to understand the technical pieces. The email tells you exactly what to click, and NALA uses the approved access to finish the Google website setup."))}</p>
               ${requestedAt ? `<p class="mtk-biab__google-seo-note">${this._escape(this._text("Last prepared"))}: ${this._escape(requestedAt)}</p>` : ""}
               ${authorizationEmailSentAt ? `<p class="mtk-biab__google-seo-note">${this._escape(this._text("Authorization email sent"))}: ${this._escape(authorizationEmailSentAt)}${authorizationEmail ? ` ${this._escape(this._text("to"))} ${this._escape(authorizationEmail)}` : ""}</p>` : ""}
             </div>

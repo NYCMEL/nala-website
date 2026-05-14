@@ -87,8 +87,8 @@ window.MTK_BIAB_CONFIG = {
       icon: "travel_explore",
       eyebrow: "Search",
       title: "Google Setup",
-      description: "Send yourself a simple email that tells you exactly how to approve Google setup.",
-      body: "Click Send Google setup email. You will get step-by-step instructions. NALA support will also get the business details needed for the next steps.",
+      description: "Send yourself a simple email that explains how to approve the Google steps so customers can find the business more easily.",
+      body: "Google setup helps connect the business website and business details to Google. Click Send Google setup email, then follow the simple instructions. NALA support will also get the business details needed for the next steps.",
       nextStep: "Click Send Google setup email. Then open the email from NALA and follow the steps in order.",
       links: [
         { label: "Open Google Business Profile setup", href: "https://business.google.com/add", external: true }
