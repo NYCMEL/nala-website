@@ -1120,6 +1120,40 @@ mtk-biab.mtk-biab .mtk-biab__logo-card {
 mtk-biab.mtk-biab .mtk-biab__logo-option {
   cursor: pointer; }
 
+mtk-biab.mtk-biab .mtk-biab__logo-expand {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: zoom-in; }
+
+mtk-biab.mtk-biab .mtk-biab__logo-expand:focus-visible {
+  outline: 3px solid rgba(169, 130, 17, 0.35);
+  outline-offset: 3px; }
+
+mtk-biab.mtk-biab .mtk-biab__logo-expand-label {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.82);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 160ms ease, transform 160ms ease; }
+
+mtk-biab.mtk-biab .mtk-biab__logo-expand:hover .mtk-biab__logo-expand-label,
+mtk-biab.mtk-biab .mtk-biab__logo-expand:focus-visible .mtk-biab__logo-expand-label {
+  opacity: 1;
+  transform: translateY(0); }
+
 mtk-biab.mtk-biab .mtk-biab__logo-option.is-selected {
   border-color: #16a34a;
   box-shadow: 0 14px 30px rgba(22, 163, 74, 0.18); }
@@ -1150,6 +1184,57 @@ mtk-biab.mtk-biab .mtk-biab__logo-preview--empty {
   font-size: 13px;
   font-weight: 800;
   text-align: center; }
+
+mtk-biab.mtk-biab .mtk-biab__logo-preview--large {
+  aspect-ratio: 16 / 9;
+  min-height: 360px;
+  padding: 34px; }
+
+mtk-biab.mtk-biab .mtk-biab__logo-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10040;
+  display: grid;
+  place-items: center;
+  padding: 28px; }
+
+mtk-biab.mtk-biab .mtk-biab__logo-lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(15, 23, 42, 0.68); }
+
+mtk-biab.mtk-biab .mtk-biab__logo-lightbox-dialog {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 16px;
+  width: min(920px, calc(100vw - 48px));
+  padding: 24px;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.35); }
+
+mtk-biab.mtk-biab .mtk-biab__logo-lightbox-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #0f172a;
+  cursor: pointer; }
+
+mtk-biab.mtk-biab .mtk-biab__logo-lightbox-dialog strong {
+  color: #0f172a;
+  font-size: 18px;
+  font-weight: 900; }
 
 mtk-biab.mtk-biab .mtk-biab__logo-option-name,
 mtk-biab.mtk-biab .mtk-biab__logo-card strong {

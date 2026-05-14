@@ -837,6 +837,8 @@
         if (action === "back-to-templates") this._openBusinessCardTemplatePicker(this._getActiveSection());
         if (action === "submit-card-editor") this._submitCardEditor();
         if (action === "generate-logo-options") this._generateLogoOptions();
+        if (action === "view-logo-option") this._openLogoPreview(target.getAttribute("data-logo-id"));
+        if (action === "close-logo-preview") this._closeLogoPreview();
         if (action === "select-logo-option") this._selectLogoOption(target.getAttribute("data-logo-id"));
         if (action === "save-logo-option") this._saveSelectedLogo();
         if (action === "sort-invoices") this._sortInvoiceBy(target.getAttribute("data-sort-key"));
@@ -866,6 +868,14 @@
 
         if (action === "close-setup") this._closeSetup();
         if (action === "close-invoice-page") this._closeInvoicePage();
+      });
+
+      this.root.addEventListener("keydown", (event) => {
+        const target = event.target.closest("[data-action='select-logo-option']");
+        if (!target || !this.root.contains(target)) return;
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        this._selectLogoOption(target.getAttribute("data-logo-id"));
       });
 
       this.root.addEventListener("change", (event) => {
@@ -1215,33 +1225,78 @@
     _renderLogoOption(option) {
       const isSelected = option && option.id === this.selectedLogoId;
       return `
-        <button
+        <div
           class="mtk-biab__logo-option${isSelected ? " is-selected" : ""}"
-          type="button"
           data-action="select-logo-option"
           data-logo-id="${this._escape(option.id || "")}"
+          role="button"
+          tabindex="0"
           aria-pressed="${isSelected ? "true" : "false"}"
         >
-          ${this._logoPreviewMarkup(option)}
+          <button
+            class="mtk-biab__logo-expand"
+            type="button"
+            data-action="view-logo-option"
+            data-logo-id="${this._escape(option.id || "")}"
+            aria-label="${this._escape(this._text("View this logo larger"))}"
+          >
+            ${this._logoPreviewMarkup(option)}
+            <span class="mtk-biab__logo-expand-label">${this._escape(this._text("View larger"))}</span>
+          </button>
           <span class="mtk-biab__logo-option-name">${this._escape(option.name || option.label || this._text("Logo option"))}</span>
           ${option.previewOnly ? `<span class="mtk-biab__logo-preview-badge">${this._escape(this._text("Preview"))}</span>` : ""}
           <span class="mtk-biab__template-check" aria-hidden="true">✓</span>
-        </button>
+        </div>
       `;
     }
 
-    _logoPreviewMarkup(logo) {
+    _logoPreviewMarkup(logo, isLarge = false) {
+      const sizeClass = isLarge ? " mtk-biab__logo-preview--large" : "";
       if (this._isJunkLogo(logo)) {
-        return `<span class="mtk-biab__logo-preview mtk-biab__logo-preview--empty">${this._escape(this._text("Generate a new Zoviz logo"))}</span>`;
+        return `<span class="mtk-biab__logo-preview${sizeClass} mtk-biab__logo-preview--empty">${this._escape(this._text("Generate a new Zoviz logo"))}</span>`;
       }
       if (logo && logo.svg) {
-        return `<span class="mtk-biab__logo-preview">${logo.svg}</span>`;
+        return `<span class="mtk-biab__logo-preview${sizeClass}">${logo.svg}</span>`;
       }
       const src = (logo && (logo.previewUrl || logo.image)) || "";
       if (src) {
-        return `<span class="mtk-biab__logo-preview"><img src="${this._escape(src)}" alt=""></span>`;
+        return `<span class="mtk-biab__logo-preview${sizeClass}"><img src="${this._escape(src)}" alt=""></span>`;
       }
-      return `<span class="mtk-biab__logo-preview mtk-biab__logo-preview--empty">${this._escape(this._text("No logo preview available"))}</span>`;
+      return `<span class="mtk-biab__logo-preview${sizeClass} mtk-biab__logo-preview--empty">${this._escape(this._text("No logo preview available"))}</span>`;
+    }
+
+    _openLogoPreview(logoId) {
+      const logo = this.logoOptions.find((option) => option.id === logoId);
+      if (!logo) return;
+      this._closeLogoPreview();
+
+      const overlay = document.createElement("div");
+      overlay.className = "mtk-biab__logo-lightbox";
+      overlay.setAttribute("role", "dialog");
+      overlay.setAttribute("aria-modal", "true");
+      overlay.setAttribute("aria-label", this._text("Logo preview"));
+      overlay.innerHTML = `
+        <button class="mtk-biab__logo-lightbox-backdrop" type="button" data-action="close-logo-preview" aria-label="${this._escape(this._text("Close preview"))}"></button>
+        <div class="mtk-biab__logo-lightbox-dialog">
+          <button class="mtk-biab__logo-lightbox-close" type="button" data-action="close-logo-preview" aria-label="${this._escape(this._text("Close preview"))}">
+            <span class="material-icons" aria-hidden="true">close</span>
+          </button>
+          ${this._logoPreviewMarkup(logo, true)}
+          <strong>${this._escape(logo.name || logo.label || this._text("Logo option"))}</strong>
+          <button class="mtk-biab__submit-btn" type="button" data-action="select-logo-option" data-logo-id="${this._escape(logo.id || "")}">
+            ${this._escape(this._text("Choose this logo"))}
+          </button>
+        </div>
+      `;
+
+      this.root.appendChild(overlay);
+      const closeButton = overlay.querySelector(".mtk-biab__logo-lightbox-close");
+      if (closeButton) closeButton.focus();
+    }
+
+    _closeLogoPreview() {
+      const overlay = this.root.querySelector(".mtk-biab__logo-lightbox");
+      if (overlay) overlay.remove();
     }
 
     _generateLogoOptions() {
