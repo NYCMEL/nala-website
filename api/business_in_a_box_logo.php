@@ -115,7 +115,7 @@ function biab_logo_provider_status($mode = null, $message = '') {
 }
 
 function biab_logo_generation_version() {
-    return 3;
+    return 4;
 }
 
 function biab_logo_options_are_stale($generated) {
@@ -276,6 +276,94 @@ function biab_logo_zoviz_record_colors($record) {
     }
 
     return array_values(array_unique($colors));
+}
+
+function biab_logo_preview_signature($url) {
+    $url = trim((string)$url);
+    if ($url === '' || !function_exists('imagecreatefromstring') || !function_exists('imagecreatetruecolor')) {
+        return '';
+    }
+
+    $curl = curl_init($url);
+    curl_setopt_array($curl, array(
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_TIMEOUT => 8,
+        CURLOPT_HTTPHEADER => array('Accept: image/*', 'User-Agent: NALA-BIAB/1.0')
+    ));
+    $body = curl_exec($curl);
+    $status = (int)curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    curl_close($curl);
+    if (!is_string($body) || $body === '' || $status < 200 || $status >= 300) {
+        return '';
+    }
+
+    $image = @imagecreatefromstring($body);
+    if (!$image) {
+        return '';
+    }
+    $width = imagesx($image);
+    $height = imagesy($image);
+    if ($width < 8 || $height < 8) {
+        imagedestroy($image);
+        return '';
+    }
+
+    $cropWidth = max(8, (int)round($width * 0.34));
+    $crop = imagecreatetruecolor(8, 8);
+    imagecopyresampled($crop, $image, 0, 0, 0, 0, 8, 8, $cropWidth, $height);
+
+    $values = array();
+    $sum = 0;
+    for ($y = 0; $y < 8; $y++) {
+        for ($x = 0; $x < 8; $x++) {
+            $rgb = imagecolorat($crop, $x, $y);
+            $r = ($rgb >> 16) & 255;
+            $g = ($rgb >> 8) & 255;
+            $b = $rgb & 255;
+            $gray = (int)round(($r * 0.299) + ($g * 0.587) + ($b * 0.114));
+            $values[] = $gray;
+            $sum += $gray;
+        }
+    }
+    imagedestroy($crop);
+    imagedestroy($image);
+
+    $average = $sum / max(1, count($values));
+    $bits = '';
+    foreach ($values as $value) {
+        $bits .= $value >= $average ? '1' : '0';
+    }
+    return $bits;
+}
+
+function biab_logo_signature_distance($a, $b) {
+    $a = (string)$a;
+    $b = (string)$b;
+    if (strlen($a) !== strlen($b) || $a === '' || $b === '') {
+        return 64;
+    }
+    $distance = 0;
+    $length = strlen($a);
+    for ($index = 0; $index < $length; $index++) {
+        if ($a[$index] !== $b[$index]) {
+            $distance++;
+        }
+    }
+    return $distance;
+}
+
+function biab_logo_option_too_similar($option, $signatures) {
+    $signature = biab_logo_preview_signature($option['previewUrl'] ?? ($option['image'] ?? ''));
+    if ($signature === '') {
+        return array(false, '');
+    }
+    foreach ($signatures as $existing) {
+        if (biab_logo_signature_distance($signature, $existing) < 12) {
+            return array(true, $signature);
+        }
+    }
+    return array(false, $signature);
 }
 
 function biab_logo_color_is_pink_or_purple($color) {
@@ -452,6 +540,8 @@ function biab_logo_generate_zoviz($payload) {
     $concepts = biab_logo_zoviz_concepts($businessName, $serviceArea, $services);
     $options = array();
     $seen = array();
+    $visualSignatures = array();
+    $similarBackups = array();
 
     foreach ($concepts as $conceptIndex => $concept) {
         if (count($options) >= 6) {
@@ -480,9 +570,19 @@ function biab_logo_generate_zoviz($payload) {
                 if (!$option || isset($seen[$option['id']])) {
                     continue;
                 }
+                list($tooSimilar, $signature) = biab_logo_option_too_similar($option, $visualSignatures);
+                if ($tooSimilar) {
+                    $option['concept'] = (string)($concept['label'] ?? ('Concept ' . ($conceptIndex + 1)));
+                    $option['generationVersion'] = biab_logo_generation_version();
+                    $similarBackups[] = $option;
+                    continue;
+                }
                 $option['concept'] = (string)($concept['label'] ?? ('Concept ' . ($conceptIndex + 1)));
                 $option['generationVersion'] = biab_logo_generation_version();
                 $seen[$option['id']] = true;
+                if ($signature !== '') {
+                    $visualSignatures[] = $signature;
+                }
                 $options[] = $option;
                 $pickedConcept = true;
                 break;
@@ -508,15 +608,36 @@ function biab_logo_generate_zoviz($payload) {
                 if (!$option || isset($seen[$option['id']])) {
                     continue;
                 }
+                list($tooSimilar, $signature) = biab_logo_option_too_similar($option, $visualSignatures);
+                if ($tooSimilar) {
+                    $option['concept'] = 'Backup Distinct';
+                    $option['generationVersion'] = biab_logo_generation_version();
+                    $similarBackups[] = $option;
+                    continue;
+                }
                 $option['concept'] = 'Backup Distinct';
                 $option['generationVersion'] = biab_logo_generation_version();
                 $seen[$option['id']] = true;
+                if ($signature !== '') {
+                    $visualSignatures[] = $signature;
+                }
                 $options[] = $option;
                 if (count($options) === 6) {
                     break;
                 }
             }
         }
+    }
+
+    foreach ($similarBackups as $option) {
+        if (count($options) >= 6) {
+            break;
+        }
+        if (!$option || isset($seen[$option['id']])) {
+            continue;
+        }
+        $seen[$option['id']] = true;
+        $options[] = $option;
     }
 
     if (count($options) !== 6) {
