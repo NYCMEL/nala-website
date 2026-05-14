@@ -1261,13 +1261,86 @@ mtk-biab.mtk-biab .mtk-biab__logo-card--saved {
   max-width: 360px;
   border-color: #16a34a; }
 
+mtk-biab.mtk-biab .mtk-biab__url-workflow {
+  display: grid;
+  gap: 22px; }
+
+mtk-biab.mtk-biab .mtk-biab__url-current,
+mtk-biab.mtk-biab .mtk-biab__url-options {
+  padding: 18px;
+  border: 1px solid #dfe3e8;
+  border-radius: 6px;
+  background: #ffffff; }
+
+mtk-biab.mtk-biab .mtk-biab__url-current h3,
+mtk-biab.mtk-biab .mtk-biab__url-options h3 {
+  margin: 0 0 12px;
+  color: #03173c;
+  font-size: 20px;
+  font-weight: 900; }
+
+mtk-biab.mtk-biab .mtk-biab__url-current-value {
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid #dbe3ea;
+  border-left: 5px solid #16a34a;
+  border-radius: 4px;
+  background: #f8fafc;
+  color: #0f172a;
+  font-size: 18px;
+  font-weight: 900;
+  overflow-wrap: anywhere; }
+
+mtk-biab.mtk-biab .mtk-biab__url-current-value.is-empty {
+  color: #64748b;
+  font-weight: 800; }
+
+mtk-biab.mtk-biab .mtk-biab__url-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px; }
+
+mtk-biab.mtk-biab .mtk-biab__url-option {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  min-height: 82px;
+  padding: 14px 42px 14px 14px;
+  border: 2px solid #e5e7eb;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #0f172a;
+  text-align: left;
+  cursor: pointer; }
+
+mtk-biab.mtk-biab .mtk-biab__url-option.is-selected {
+  border-color: #16a34a;
+  box-shadow: 0 14px 30px rgba(22, 163, 74, 0.16); }
+
+mtk-biab.mtk-biab .mtk-biab__url-option.is-selected .mtk-biab__template-check {
+  display: inline-flex; }
+
+mtk-biab.mtk-biab .mtk-biab__url-host {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 800; }
+
+mtk-biab.mtk-biab .mtk-biab__url-option strong {
+  color: #03173c;
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1.2;
+  overflow-wrap: anywhere; }
+
 @media (max-width: 991.98px) {
   mtk-biab.mtk-biab .mtk-biab__template-grid,
-  mtk-biab.mtk-biab .mtk-biab__logo-grid {
+  mtk-biab.mtk-biab .mtk-biab__logo-grid,
+  mtk-biab.mtk-biab .mtk-biab__url-grid {
     grid-template-columns: repeat(2, 1fr); } }
 
 @media (max-width: 767.98px) {
   mtk-biab.mtk-biab .mtk-biab__template-grid,
   mtk-biab.mtk-biab .mtk-biab__logo-grid,
+  mtk-biab.mtk-biab .mtk-biab__url-grid,
   mtk-biab.mtk-biab .mtk-biab__logo-readiness dl > div {
     grid-template-columns: 1fr; } }

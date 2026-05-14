@@ -114,7 +114,7 @@ window.mtkSettingsConfig = {
           type: "url",
           required: false,
           placeholder: "https://pro.nalanetwork.com/your-locksmith",
-          helpText: "Choose a short NALA client URL, or type a different website if you already use one."
+          helpText: "The BIAB Client URL step will save the short NALA URL here. Type a different website only if you already use one."
         },
         {
           id: "businessHours",

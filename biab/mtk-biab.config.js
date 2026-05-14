@@ -43,6 +43,7 @@ window.MTK_BIAB_CONFIG = {
       includedItems: [
         { setupKey: "business-info", label: "Click here to enter your business information", actionRequired: true, page: "settings", settingsTab: "business", description: "Enter the information customers should see, such as your business name, phone number, email, website, and hours. Click Save when you are done." },
         { setupKey: "services-offered", label: "Click here to choose your services offered", actionRequired: true, page: "settings", settingsTab: "services", description: "Enter your service area, check every service you offer, then click Save services offered." },
+        { setupKey: "client-url", label: "Click here to choose your client URL", actionRequired: true, sectionId: "client-url", openSetup: true, description: "Choose the short website URL customers will use, then click Save this URL." },
         { setupKey: "logo", label: "Click here to create your logo", actionRequired: true, sectionId: "logo", openSetup: true, description: "Generate logo options, choose the one you like, then click Save this logo. Your business card and website will use the saved logo." },
         { setupKey: "business-card", label: "Click here to choose your business card", actionRequired: true, sectionId: "business-card", openSetup: true, description: "Choose the card you want, check the name, phone, email, website, and service area, then click Order this business card." },
         { setupKey: "google-setup", label: "Click here to send your Google setup email", actionRequired: true, sectionId: "google-seo", description: "Click the button in the Google section. You will receive step-by-step instructions for approving Google setup." },
@@ -68,6 +69,17 @@ window.MTK_BIAB_CONFIG = {
       ],
       setupType: "websiteBuilder",
       clientUrl: "client/index.html"
+    },
+    {
+      id: "client-url",
+      label: "Client URL",
+      icon: "link",
+      eyebrow: "Website",
+      title: "Client URL",
+      description: "Choose the short URL customers will use for this business.",
+      body: "Click Start this step, review the URL options, choose one, then click Save this URL.",
+      nextStep: "Pick the URL that is easiest to say, type, and remember. The business card, website, and Google setup will use the saved URL.",
+      setupType: "clientUrl"
     },
     {
       id: "google-seo",

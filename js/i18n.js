@@ -1151,7 +1151,7 @@
     'settings.help.ownerName': { en: 'Enter the person responsible for this business.', es: 'Ingresa la persona responsable de este negocio.' },
     'settings.help.businessPhone': { en: 'Enter the phone number customers should call.', es: 'Ingresa el teléfono al que deben llamar los clientes.' },
     'settings.help.businessEmail': { en: 'Enter the email customers and Google should use for this business.', es: 'Ingresa el correo que los clientes y Google deben usar para este negocio.' },
-    'settings.help.businessWebsite': { en: 'Choose a short NALA client URL, or type a different website if you already use one.', es: 'Elige un enlace corto de cliente de NALA, o escribe otro sitio web si ya usas uno.' },
+    'settings.help.businessWebsite': { en: 'The BIAB Client URL step will save the short NALA URL here. Type a different website only if you already use one.', es: 'El paso de URL del cliente de BIAB guardará aquí el enlace corto de NALA. Escribe otro sitio web solo si ya usas uno.' },
     'settings.help.businessHours': { en: 'Enter the hours customers should expect, for example: Mon-Fri 8am-6pm.', es: 'Ingresa el horario que deben esperar los clientes, por ejemplo: Lun-Vie 8am-6pm.' },
     'settings.help.serviceArea': { en: 'List the cities, neighborhoods, or counties where you want customers to call you.', es: 'Escribe las ciudades, vecindarios o condados donde quieres que te llamen los clientes.' },
     'settings.help.launchServices': { en: 'Check every service you want customers to see. If a service is missing, click Add service below.', es: 'Marca cada servicio que quieres que vean los clientes. Si falta un servicio, haz clic en Agregar servicio abajo.' },

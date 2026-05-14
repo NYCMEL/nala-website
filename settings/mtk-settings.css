@@ -259,44 +259,6 @@
   box-shadow: 0 0 0 4px rgba(169, 130, 17, 0.15);
   outline: none; }
 
-.mtk-settings__slug-picker {
-  margin-top: 12px;
-  padding: 14px;
-  border: 1px solid #d7dce2;
-  background: #f8fafc; }
-
-.mtk-settings__slug-title {
-  margin: 0 0 10px;
-  color: #334155;
-  font-size: 0.85rem;
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  text-transform: uppercase; }
-
-.mtk-settings__slug-options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px; }
-
-.mtk-settings__slug-option {
-  min-height: 36px;
-  padding: 0 12px;
-  border: 1px solid #cbd5e1;
-  background: #ffffff;
-  color: #1f2937;
-  font-size: 0.9rem;
-  font-weight: 800;
-  line-height: 1.1;
-  cursor: pointer;
-  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease; }
-
-.mtk-settings__slug-option:hover,
-.mtk-settings__slug-option:focus-visible {
-  border-color: #a98211;
-  box-shadow: 0 4px 12px rgba(31, 41, 55, 0.12);
-  outline: none;
-  transform: translateY(-1px); }
-
 .mtk-settings__checkbox-card {
   margin: 8px 0 0;
   padding: 26px 24px;

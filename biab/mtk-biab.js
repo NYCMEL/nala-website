@@ -383,12 +383,15 @@
       const hasBusinessInfo = this._hasBusinessInfo(business, privacy);
       const hasContactInfo = this._hasContactInfo(business, privacy);
       const hasServices = this._hasServicesOffered(services);
+      const savedClientUrl = this._cleanValue(business.businessWebsite || business.website);
+      const hasClientUrl = !!(savedClientUrl && !(window.nalaClientUrl && typeof window.nalaClientUrl.isLegacyUrl === "function" && window.nalaClientUrl.isLegacyUrl(savedClientUrl)));
       const hasLogo = !!(this.logo && (this.logo.svg || this.logo.image || this.logo.previewUrl || this.logo.providerLogoId));
       const hasCardOrder = !!(this.orderedCard && (this.orderedCard.templateId || this.orderedCard.orderedAt));
       const hasGoogleStarted = !!(this.googleSeo && (this.googleSeo.authorizationEmailSentAt || this.googleSeo.authorizationEmailSent));
 
       if (key === "business-info") return hasBusinessInfo;
       if (key === "services-offered") return hasServices;
+      if (key === "client-url") return hasClientUrl;
       if (key === "logo") return hasLogo;
       if (key === "business-card") return hasCardOrder;
       if (key === "google-setup") return hasGoogleStarted;
@@ -836,6 +839,8 @@
         if (action === "order-card-selection") this._orderSelectedCard();
         if (action === "back-to-templates") this._openBusinessCardTemplatePicker(this._getActiveSection());
         if (action === "submit-card-editor") this._submitCardEditor();
+        if (action === "select-client-url") this._selectClientUrl(target.getAttribute("data-client-url"));
+        if (action === "save-client-url") this._saveClientUrl();
         if (action === "generate-logo-options") this._generateLogoOptions();
         if (action === "view-logo-option") this._openLogoPreview(target.getAttribute("data-logo-id"));
         if (action === "close-logo-preview") this._closeLogoPreview();
@@ -922,6 +927,11 @@
 
       if (section.setupType === "logo") {
         this._openLogoSetup(section);
+        return;
+      }
+
+      if (section.setupType === "clientUrl") {
+        this._openClientUrlSetup(section);
         return;
       }
 
@@ -1209,6 +1219,139 @@
         section,
         mode: "logo"
       });
+    }
+
+    _clientUrlPayload() {
+      this._loadStoredSettings();
+      const settings = this.settingsProfile || {};
+      const business = settings.business || {};
+      const services = settings.services || {};
+      const privacy = settings.privacy || {};
+      const user = (window.wc && wc.session && wc.session.user) ? wc.session.user : {};
+
+      return {
+        uid: this._businessPageId(),
+        businessName: business.customerFacingBusinessName || business.legalBusinessName || "",
+        legalName: business.legalBusinessName || "",
+        ownerName: business.ownerOrResponsiblePartyName || privacy.fullName || user.name || "",
+        serviceArea: services.serviceArea || business.serviceArea || "",
+        email: business.businessEmail || privacy.emailAddress || user.email || "",
+        phone: business.businessPhone || privacy.contactPhoneNumber || user.phone || ""
+      };
+    }
+
+    _clientUrlOptions() {
+      if (window.nalaClientUrl && typeof window.nalaClientUrl.options === "function") {
+        return window.nalaClientUrl.options(this._clientUrlPayload(), 18);
+      }
+      return [];
+    }
+
+    _currentClientUrl() {
+      const saved = this._savedClientUrl();
+      if (saved) return saved;
+      this._loadStoredSettings();
+      const business = (this.settingsProfile && this.settingsProfile.business) || {};
+      return this._businessWebsiteOrDefault(business);
+    }
+
+    _savedClientUrl() {
+      this._loadStoredSettings();
+      const business = (this.settingsProfile && this.settingsProfile.business) || {};
+      const saved = this._cleanValue(business.businessWebsite || business.website);
+      if (!saved) return "";
+      if (window.nalaClientUrl && typeof window.nalaClientUrl.isLegacyUrl === "function" && window.nalaClientUrl.isLegacyUrl(saved)) return "";
+      return saved;
+    }
+
+    _openClientUrlSetup(section) {
+      const options = this._clientUrlOptions();
+      const savedUrl = this._savedClientUrl();
+      const selectedUrl = this.selectedClientUrl || savedUrl || (options[0] && options[0].url) || "";
+      this.selectedClientUrl = selectedUrl;
+      this._closeSetup();
+
+      this._showSetupView(section, `
+        <div class="mtk-biab__setup-card">
+          <div class="mtk-biab__url-workflow">
+            <section class="mtk-biab__url-current" aria-label="Saved client URL">
+              <h3>${this._escape(this._text("1. Saved URL"))}</h3>
+              <p class="mtk-biab__url-current-value${savedUrl ? "" : " is-empty"}">${this._escape(savedUrl || this._text("No URL saved yet"))}</p>
+            </section>
+            <section class="mtk-biab__url-options" aria-label="Client URL options">
+              <h3>${this._escape(this._text("2. Choose one URL"))}</h3>
+              <p class="mtk-biab__setup-help">${this._escape(this._text("Pick the option that will be easiest for customers to remember and type."))}</p>
+              ${options.length ? `
+                <div class="mtk-biab__url-grid">
+                  ${options.map((option) => this._renderClientUrlOption(option, selectedUrl)).join("")}
+                </div>
+                <div class="mtk-biab__template-actions">
+                  <button class="mtk-biab__submit-btn" type="button" data-action="save-client-url" ${selectedUrl ? "" : "disabled"}>
+                    ${this._escape(this._text("Save this URL"))}
+                  </button>
+                </div>
+              ` : `
+                <p class="mtk-biab__setup-help">${this._escape(this._text("Add the business name first, then come back to choose a URL."))}</p>
+              `}
+            </section>
+          </div>
+        </div>
+      `);
+
+      this._publish(this.events.publish.setupOpen || "mtk-biab:setup-open", {
+        sectionId: this.activeId,
+        section,
+        mode: "client-url"
+      });
+    }
+
+    _renderClientUrlOption(option, selectedUrl) {
+      const isSelected = option && option.url === selectedUrl;
+      const base = (window.nalaClientUrl && window.nalaClientUrl.baseUrl) || "https://pro.nalanetwork.com";
+      return `
+        <button
+          class="mtk-biab__url-option${isSelected ? " is-selected" : ""}"
+          type="button"
+          data-action="select-client-url"
+          data-client-url="${this._escape(option.url || "")}"
+          aria-pressed="${isSelected ? "true" : "false"}"
+        >
+          <span class="mtk-biab__url-host">${this._escape(base)}/</span>
+          <strong>${this._escape(option.slug || option.label || "")}</strong>
+          <span class="mtk-biab__template-check" aria-hidden="true">✓</span>
+        </button>
+      `;
+    }
+
+    _selectClientUrl(url) {
+      if (!url) return;
+      this.selectedClientUrl = url;
+      this._openClientUrlSetup(this._getActiveSection());
+    }
+
+    _saveClientUrl() {
+      const url = this.selectedClientUrl || this._currentClientUrl();
+      if (!url) return;
+      this._loadStoredSettings();
+      const settings = this.settingsProfile || {};
+      settings.business = Object.assign({}, settings.business || {}, {
+        businessWebsite: url
+      });
+      this.settingsProfile = settings;
+      try {
+        window.localStorage.setItem("nala_profile_settings", JSON.stringify(settings));
+      } catch (err) {
+        console.warn("Could not save client URL", err);
+      }
+      if (window.wc && typeof window.wc.publish === "function") {
+        window.wc.publish("mtk-settings:business-save", {
+          tabId: "business",
+          actionId: "saveBusiness",
+          values: settings.business
+        });
+      }
+      this._closeSetup();
+      this._render();
     }
 
     _logoProviderStatusText() {
