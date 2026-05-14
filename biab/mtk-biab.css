@@ -35,7 +35,7 @@ mtk-biab.mtk-biab .mtk-biab__page {
   width: 100%;
   max-width: 1320px;
   margin: 0 auto;
-  padding: 32px 12px 72px; }
+  padding: 36px clamp(24px, 3vw, 44px) 72px; }
 
 mtk-biab.mtk-biab .mtk-biab__hero {
   margin: 0 0 22px; }
@@ -917,7 +917,7 @@ mtk-biab.mtk-biab .mtk-biab__client-frame {
 
 @media (max-width: 767.98px) {
   mtk-biab.mtk-biab .mtk-biab__page {
-    padding: 24px 12px 64px; }
+    padding: 24px 16px 64px; }
   mtk-biab.mtk-biab .mtk-biab__panel {
     padding: 22px; }
   mtk-biab.mtk-biab .mtk-biab__template-grid,
