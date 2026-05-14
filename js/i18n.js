@@ -288,68 +288,68 @@
       es: 'Configura las herramientas principales que necesita tu negocio de cerrajería.'
     },
     'home.biab.body': {
-      en: 'Business in a Box guides you through business information, services, website setup, Google setup, logo choices, business cards, invoices, and review requests.',
-      es: 'Negocio en una Caja te guía por la información del negocio, servicios, sitio web, configuración de Google, opciones de logo, tarjetas de presentación, facturas y solicitudes de reseña.'
+      en: 'Launch your locksmith business with a website, logo, cards, Google setup, invoices, and reviews.',
+      es: 'Lanza tu negocio de cerrajería con sitio web, logo, tarjetas, Google, facturas y reseñas.'
     },
     'home.biab.benefitWebsiteTitle': {
-      en: 'Free website',
+      en: 'Free Website',
       es: 'Sitio web gratis'
     },
     'home.biab.benefitWebsiteBody': {
-      en: 'Your website is built from the business details and services you save.',
-      es: 'Tu sitio web se crea con los datos del negocio y los servicios que guardas.'
+      en: 'Launch a website built from your business details.',
+      es: 'Lanza un sitio web con los datos de tu negocio.'
     },
     'home.biab.benefitLogoTitle': {
-      en: 'Logo options',
-      es: 'Opciones de logo'
+      en: 'Custom Logo',
+      es: 'Logo personalizado'
     },
     'home.biab.benefitLogoBody': {
-      en: 'Receive a custom logo for your business from six saved options.',
-      es: 'Recibe un logo personalizado para tu negocio entre seis opciones guardadas.'
+      en: 'Receive a custom logo for your business.',
+      es: 'Recibe un logo personalizado para tu negocio.'
     },
     'home.biab.benefitInvoiceTitle': {
-      en: 'Business cards',
+      en: 'Business Cards',
       es: 'Tarjetas de presentación'
     },
     'home.biab.benefitInvoiceBody': {
-      en: 'Choose from six saved card designs using your business details and logo.',
-      es: 'Elige entre seis diseños de tarjeta guardados con los datos y el logo de tu negocio.'
+      en: 'Get cards with your logo and contact details.',
+      es: 'Recibe tarjetas con tu logo y datos de contacto.'
     },
     'home.biab.benefitSetupTitle': {
-      en: 'Google setup',
+      en: 'Google Setup',
       es: 'Configuración de Google'
     },
     'home.biab.benefitSetupBody': {
-      en: 'Send a step-by-step email that explains how to approve Google setup.',
-      es: 'Envía un correo paso a paso que explica cómo aprobar la configuración de Google.'
+      en: 'Get clear instructions for Google approval.',
+      es: 'Recibe instrucciones claras para aprobar Google.'
     },
     'home.biab.benefitLockpickTitle': {
-      en: 'Invoices and reviews',
+      en: 'Invoices & Reviews',
       es: 'Facturas y reseñas'
     },
     'home.biab.benefitLockpickBody': {
-      en: 'Create invoices and automatically send review requests after jobs.',
-      es: 'Crea facturas y envía automáticamente solicitudes de reseña después de los trabajos.'
+      en: 'Send invoices and request reviews after jobs.',
+      es: 'Envía facturas y solicita reseñas después de trabajos.'
     },
     'home.biab.benefitDiscountTitle': {
-      en: 'Lockpick kit included',
-      es: 'Kit de ganzúas incluido'
+      en: 'Lockpick Kit',
+      es: 'Kit de ganzúas'
     },
     'home.biab.benefitDiscountBody': {
-      en: 'A lockpick tool set is included with the Business in a Box purchase.',
-      es: 'Un set de herramientas de ganzúas está incluido con la compra de Negocio en una Caja.'
+      en: 'A lockpick tool set is included.',
+      es: 'Incluye un set de herramientas de ganzúas.'
     },
     'home.biab.point1': {
-      en: 'Enter business information once and reuse it across tools.',
-      es: 'Ingresa la información del negocio una vez y reutilízala en todas las herramientas.'
+      en: 'Enter your business details once.',
+      es: 'Ingresa los datos de tu negocio una vez.'
     },
     'home.biab.point2': {
-      en: 'Receive exactly six saved logo options and six saved card options for your business.',
-      es: 'Recibe exactamente seis opciones de logo guardadas y seis opciones de tarjeta guardadas para tu negocio.'
+      en: 'Get logo and card choices built for your business.',
+      es: 'Recibe opciones de logo y tarjeta para tu negocio.'
     },
     'home.biab.point3': {
-      en: 'Use the website, Google setup, logo, business card, invoices, and review workflow after setup.',
-      es: 'Usa el sitio web, la configuración de Google, el logo, la tarjeta de presentación, las facturas y el flujo de reseñas después de la configuración.'
+      en: 'Use your launch tools as soon as setup is done.',
+      es: 'Usa tus herramientas cuando termine la configuración.'
     },
     'home.biab.cta': {
       en: 'Make it your own',
