@@ -945,12 +945,12 @@ mtk-biab.mtk-biab .mtk-biab__template-check {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: #16a34a;
+  background: #a98212;
   color: #ffffff;
   font-size: 54px;
   font-weight: 900;
   line-height: 1;
-  box-shadow: 0 12px 28px rgba(22, 163, 74, 0.35);
+  box-shadow: 0 12px 28px rgba(169, 130, 18, 0.35);
   pointer-events: none;
   z-index: 3;
 }
@@ -975,15 +975,15 @@ mtk-biab.mtk-biab .mtk-biab__template-btn:focus-visible .mtk-biab__template-imag
 }
 
 mtk-biab.mtk-biab .mtk-biab__template-btn.is-selected {
-  border-color: #16a34a;
-  background: #f0fdf4;
+  border-color: #a98212;
+  background: #fff8ea;
 }
 
 mtk-biab.mtk-biab .mtk-biab__template-btn.is-selected .mtk-biab__template-image-wrap {
   box-shadow:
-    0 2px 0 #86efac,
-    0 5px 0 #22c55e,
-    0 20px 38px rgba(22, 163, 74, 0.22);
+    0 2px 0 #f3d982,
+    0 5px 0 #a98212,
+    0 20px 38px rgba(169, 130, 18, 0.22);
 }
 
 mtk-biab.mtk-biab .mtk-biab__template-btn.is-selected .mtk-biab__template-check {
@@ -1052,7 +1052,7 @@ mtk-biab.mtk-biab .mtk-biab__logo-readiness dl > div {
   align-items: center;
   padding: 12px;
   border: 1px solid #e5e7eb;
-  border-left: 5px solid #16a34a;
+  border-left: 5px solid #a98212;
   border-radius: 4px;
   background: #f8fafc;
 }
@@ -1138,8 +1138,8 @@ mtk-biab.mtk-biab .mtk-biab__logo-expand:focus-visible .mtk-biab__logo-expand-la
 }
 
 mtk-biab.mtk-biab .mtk-biab__logo-option.is-selected {
-  border-color: #16a34a;
-  box-shadow: 0 14px 30px rgba(22, 163, 74, 0.18);
+  border-color: #a98212;
+  box-shadow: 0 14px 30px rgba(169, 130, 18, 0.18);
 }
 
 mtk-biab.mtk-biab .mtk-biab__logo-option.is-selected .mtk-biab__template-check {
@@ -1256,7 +1256,7 @@ mtk-biab.mtk-biab .mtk-biab__logo-preview-badge {
 
 mtk-biab.mtk-biab .mtk-biab__logo-card--saved {
   max-width: 360px;
-  border-color: #16a34a;
+  border-color: #a98212;
 }
 
 mtk-biab.mtk-biab .mtk-biab__url-workflow {
@@ -1284,7 +1284,7 @@ mtk-biab.mtk-biab .mtk-biab__url-current-value {
   margin: 0;
   padding: 14px 16px;
   border: 1px solid #dbe3ea;
-  border-left: 5px solid #16a34a;
+  border-left: 5px solid #a98212;
   border-radius: 4px;
   background: #f8fafc;
   color: #0f172a;
@@ -1319,8 +1319,8 @@ mtk-biab.mtk-biab .mtk-biab__url-option {
 }
 
 mtk-biab.mtk-biab .mtk-biab__url-option.is-selected {
-  border-color: #16a34a;
-  box-shadow: 0 14px 30px rgba(22, 163, 74, 0.16);
+  border-color: #a98212;
+  box-shadow: 0 14px 30px rgba(169, 130, 18, 0.16);
 }
 
 mtk-biab.mtk-biab .mtk-biab__url-option.is-selected .mtk-biab__template-check {

@@ -73,7 +73,7 @@
   transition: background 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease; }
 
 .mtk-settings__tab:hover {
-  background: #eef2ff;
+  background: #fff8ea;
   color: #111827; }
 
 .mtk-settings__tab:active {

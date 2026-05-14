@@ -162,7 +162,7 @@
     transition: var(--mtk-transition);
     position: relative;
 
-    &:hover  { background-color: #e8f5e9; }
+    &:hover  { background-color: #fff8ea; }
     &:focus  { outline: 2px solid var(--mtk-success); outline-offset: -2px; }
 
     &.mtk-resource--active  { background-color: #c8e6c9; border-left: 3px solid var(--mtk-success); }

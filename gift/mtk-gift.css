@@ -604,12 +604,12 @@ mtk-gift .mtk-gift__snackbar.is-visible,
 mtk-gift .mtk-gift__snackbar--success,
 .mtk-gift .mtk-gift__snackbar--success {
   background: #f5fbf5;
-  color: #2e7d32;
+  color: #a98212;
   border: 1px solid #b5dfb7; }
 
 mtk-gift .mtk-gift__snackbar--success .material-icons,
 .mtk-gift .mtk-gift__snackbar--success .material-icons {
-  color: #2e7d32; }
+  color: #a98212; }
 
 mtk-gift .mtk-gift__snackbar--error,
 .mtk-gift .mtk-gift__snackbar--error {

@@ -920,7 +920,7 @@ class MTKHierarchy {
             const moduleHeader = moduleElement.querySelector('.mtk-module__header');
 
             if (moduleHeader) {
-                moduleHeader.style.background = '#198754';
+                moduleHeader.style.background = '#a98212';
                 moduleHeader.style.backgroundImage = 'none';
 
                 if (typeof wc !== 'undefined') {

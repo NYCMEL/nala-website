@@ -1526,7 +1526,7 @@
         serviceArea: services.serviceArea || business.serviceArea || "",
         services: serviceList || "Residential, commercial, automotive, and emergency locksmith services",
         style: "professional locksmith and security services logo, strong trade-service look, clean vector, readable, trustworthy, modern, relevant lock/key/shield/door/home/security symbol only, no glasses, no eyewear, no beauty/fashion styling, no script fonts, no pink or pastel palette",
-        colors: ["#111827", "#1e3a8a", "#166534", "#a98212", "#ffffff"],
+        colors: ["#151a1f", "#a98212", "#7a5e0c", "#f8f4ea", "#ffffff"],
         count: 6
       };
     }
@@ -1734,24 +1734,24 @@
       }
 
       const palettes = [
-        { bg: "#0f172a", fg: "#f8fafc", accent: "#38bdf8", muted: "#cbd5e1" },
-        { bg: "#ffffff", fg: "#111827", accent: "#b45309", muted: "#475569" },
-        { bg: "#12372a", fg: "#f7fee7", accent: "#facc15", muted: "#d9f99d" },
-        { bg: "#1f2937", fg: "#f9fafb", accent: "#f97316", muted: "#d1d5db" },
-        { bg: "#f8fafc", fg: "#0f172a", accent: "#0f766e", muted: "#475569" },
-        { bg: "#27272a", fg: "#fafafa", accent: "#eab308", muted: "#d4d4d8" },
-        { bg: "#0b3b4a", fg: "#f0fdfa", accent: "#f59e0b", muted: "#ccfbf1" },
-        { bg: "#faf7f2", fg: "#1f2937", accent: "#991b1b", muted: "#57534e" },
-        { bg: "#111827", fg: "#f9fafb", accent: "#22c55e", muted: "#d1d5db" },
-        { bg: "#f9fafb", fg: "#172554", accent: "#2563eb", muted: "#475569" },
+        { bg: "#151a1f", fg: "#fffaf0", accent: "#a98212", muted: "#ded8c8" },
+        { bg: "#ffffff", fg: "#151a1f", accent: "#a98212", muted: "#596662" },
+        { bg: "#4a3a08", fg: "#fff8ea", accent: "#e5c35d", muted: "#f3d982" },
+        { bg: "#1f2428", fg: "#ffffff", accent: "#c6952d", muted: "#ded8c8" },
+        { bg: "#fbf4e5", fg: "#151a1f", accent: "#7a5e0c", muted: "#596662" },
+        { bg: "#2f3033", fg: "#fff8ea", accent: "#b89662", muted: "#ded8c8" },
+        { bg: "#6d1f2f", fg: "#fff8ea", accent: "#b89662", muted: "#f3d982" },
+        { bg: "#f8f4ea", fg: "#1f2428", accent: "#a98212", muted: "#596662" },
         { bg: "#0c0a09", fg: "#fafaf9", accent: "#d97706", muted: "#d6d3d1" },
-        { bg: "#ecfeff", fg: "#164e63", accent: "#0891b2", muted: "#475569" },
-        { bg: "#18181b", fg: "#fafafa", accent: "#a3e635", muted: "#d4d4d8" },
+        { bg: "#fff8ea", fg: "#4a3a08", accent: "#a98212", muted: "#7a5e0c" },
+        { bg: "#24272d", fg: "#f7f2ec", accent: "#b66a38", muted: "#ded8c8" },
+        { bg: "#f3d982", fg: "#151a1f", accent: "#7a5e0c", muted: "#4a3a08" },
+        { bg: "#ffffff", fg: "#4a3a08", accent: "#b89662", muted: "#596662" },
+        { bg: "#151a1f", fg: "#f8f4ea", accent: "#e5c35d", muted: "#ded8c8" },
+        { bg: "#faf7f2", fg: "#1f2937", accent: "#991b1b", muted: "#57534e" },
         { bg: "#fefce8", fg: "#1f2937", accent: "#ca8a04", muted: "#4b5563" },
-        { bg: "#eef2ff", fg: "#1e1b4b", accent: "#4f46e5", muted: "#475569" },
-        { bg: "#052e16", fg: "#f0fdf4", accent: "#86efac", muted: "#bbf7d0" },
         { bg: "#fff7ed", fg: "#1f2937", accent: "#c2410c", muted: "#57534e" },
-        { bg: "#f1f5f9", fg: "#0f172a", accent: "#334155", muted: "#475569" }
+        { bg: "#f1f0ec", fg: "#151a1f", accent: "#334155", muted: "#596662" }
       ];
 
       const fonts = [
@@ -2133,11 +2133,11 @@
         (logo.svg.match(/#[0-9a-fA-F]{3,6}\b/g) || []).forEach(pushColor);
         (logo.svg.match(/rgb\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*\)/g) || []).forEach(pushColor);
       }
-      const fallback = ["#111827", "#1e3a8a", "#a98212", "#ffffff", "#475569"];
+      const fallback = ["#151a1f", "#a98212", "#7a5e0c", "#ffffff", "#596662"];
       fallback.forEach(pushColor);
       const sorted = raw.slice().sort((a, b) => this._colorLuminance(a) - this._colorLuminance(b));
-      const surface = sorted.find((color) => this._colorLuminance(color) < 0.24) || "#111827";
-      const primary = raw.find((color) => color !== surface && this._colorLuminance(color) >= 0.12 && this._colorLuminance(color) <= 0.72) || "#1e3a8a";
+      const surface = sorted.find((color) => this._colorLuminance(color) < 0.24) || "#151a1f";
+      const primary = raw.find((color) => color !== surface && this._colorLuminance(color) >= 0.12 && this._colorLuminance(color) <= 0.72) || "#a98212";
       const accent = raw.find((color) => color !== surface && color !== primary && this._colorLuminance(color) >= 0.32 && this._colorLuminance(color) <= 0.86) || "#a98212";
       const light = sorted.slice().reverse().find((color) => this._colorLuminance(color) > 0.82) || "#ffffff";
       const muted = raw.find((color) => color !== surface && color !== primary && color !== accent && this._colorLuminance(color) > 0.24 && this._colorLuminance(color) < 0.78) || "#475569";
@@ -2204,8 +2204,8 @@
 
     _brandCardPalettes(brand, fallbackPalettes) {
       const colors = brand && brand.colors ? brand.colors : {};
-      const surface = colors.surface || "#111827";
-      const primary = colors.primary || "#1e3a8a";
+      const surface = colors.surface || "#151a1f";
+      const primary = colors.primary || "#a98212";
       const accent = colors.accent || "#a98212";
       const light = colors.light || "#ffffff";
       const muted = colors.muted || "#475569";

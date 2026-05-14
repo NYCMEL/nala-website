@@ -113,17 +113,17 @@ class ClientProfile {
     resolveBrandTheme(paletteId) {
 	const palettes = {
 	    'midnight-brass':      { id:'midnight-brass', surface:'#0f172a', primary:'#c6952d', accent:'#f8fafc', muted:'#d9dee8' },
-	    'professional-steel':  { id:'professional-steel', surface:'#123a63', primary:'#4f7fa8', accent:'#f7f9fb', muted:'#b9c4cf' },
+	    'professional-steel':  { id:'professional-steel', surface:'#1f2428', primary:'#c6952d', accent:'#f7f2ec', muted:'#596662' },
 	    'charcoal-signal':    { id:'charcoal-signal', surface:'#20242a', primary:'#f2c94c', accent:'#ffffff', muted:'#6b7280' },
-	    'forest-slate':       { id:'forest-slate', surface:'#163126', primary:'#7dbb8b', accent:'#f7fbf8', muted:'#475569' },
+	    'forest-slate':       { id:'forest-slate', surface:'#151a1f', primary:'#a98212', accent:'#fff8ea', muted:'#596662' },
 	    'security-metal':     { id:'security-metal', surface:'#111111', primary:'#9ca3af', accent:'#f59e0b', muted:'#ffffff' },
 	    'heritage-burgundy':  { id:'heritage-burgundy', surface:'#6d1f2f', primary:'#b89662', accent:'#fff8ea', muted:'#2f3033' },
-	    'coastal-teal':       { id:'coastal-teal', surface:'#0f3f46', primary:'#2fb7a8', accent:'#f5fbfa', muted:'#334155' },
+	    'coastal-teal':       { id:'coastal-teal', surface:'#4a3a08', primary:'#e5c35d', accent:'#fff8ea', muted:'#596662' },
 	    'graphite-copper':    { id:'graphite-copper', surface:'#24272d', primary:'#b66a38', accent:'#f7f2ec', muted:'#6b7280' },
-	    'royal-lime':         { id:'royal-lime', surface:'#173d8f', primary:'#a3d635', accent:'#f8fafc', muted:'#1f2937' },
-	    'evergreen-gold':     { id:'evergreen-gold', surface:'#12352f', primary:'#d6b35a', accent:'#fbfaf4', muted:'#4b5563' },
+	    'royal-lime':         { id:'royal-lime', surface:'#151a1f', primary:'#f3d982', accent:'#fff8ea', muted:'#4a3a08' },
+	    'evergreen-gold':     { id:'evergreen-gold', surface:'#4a3a08', primary:'#d6b35a', accent:'#fbfaf4', muted:'#596662' },
 	    'black-red':          { id:'black-red', surface:'#0b0b0c', primary:'#d62828', accent:'#ffffff', muted:'#7b8794' },
-	    'sky-slate':          { id:'sky-slate', surface:'#075985', primary:'#38bdf8', accent:'#f8fafc', muted:'#475569' }
+	    'sky-slate':          { id:'sky-slate', surface:'#1f2428', primary:'#e5c35d', accent:'#f8f4ea', muted:'#596662' }
 	}
 	return palettes[paletteId] || null
     }
@@ -279,7 +279,7 @@ class ClientProfile {
 
 		// Visual feedback
 		newSaveBtn.textContent = 'Saved ✓'
-		newSaveBtn.style.background = '#2e7d32'
+		newSaveBtn.style.background = '#a98212'
 		setTimeout(function() {
 		    newSaveBtn.style.display = 'none'
 		    newSaveBtn.textContent = 'Save Changes'

@@ -234,7 +234,7 @@ h1.title::after {
   --mtk-primary-dark: #7a5e0c;
   --mtk-primary-light: #c6952d;
   --mtk-accent: #ff4081;
-  --mtk-success: #4caf50;
+  --mtk-success: #a98212;
   --mtk-warning: #ff9800;
   --mtk-text-primary: #212121;
   --mtk-text-secondary: #757575;
@@ -458,7 +458,7 @@ h1.title::after {
   position: relative;
 }
 .mtk-hierarchy .mtk-resource:hover {
-  background-color: #e8f5e9;
+  background-color: #fff8ea;
 }
 .mtk-hierarchy .mtk-resource:focus {
   outline: 2px solid var(--mtk-success);

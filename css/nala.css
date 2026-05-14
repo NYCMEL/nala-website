@@ -226,7 +226,7 @@ h1.title::after {
   --nala-muted: #596662;
   --nala-gold: #a98212;
   --nala-gold-bright: #e5c35d;
-  --nala-teal: #4fb3a5;
+  --nala-bronze: #7a5e0c;
   --nala-surface: #f8f4ea;
   --nala-border: #ded8c8;
   --nala-shadow: 0 18px 42px rgba(17, 24, 39, 0.1);
@@ -234,7 +234,7 @@ h1.title::after {
 
 body {
   background:
-    linear-gradient(180deg, #f8f4ea 0%, #ffffff 22%, #f4f7f6 100%);
+    linear-gradient(180deg, #f8f4ea 0%, #ffffff 22%, #fbf8f0 100%);
 }
 
 .app-header .navbar {
@@ -282,7 +282,7 @@ body {
   position: relative;
   overflow: hidden;
   background:
-    linear-gradient(135deg, #f8f4ea 0%, #ffffff 46%, #eef8f6 100%) !important;
+    linear-gradient(135deg, #f8f4ea 0%, #ffffff 46%, #fff8ea 100%) !important;
 }
 
 #MTK-hero::before {
@@ -322,7 +322,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  border-bottom: 5px solid var(--nala-teal);
+  border-bottom: 5px solid var(--nala-bronze);
   pointer-events: none;
 }
 
@@ -356,7 +356,7 @@ h1.title::after {
   width: min(180px, 28%);
   height: 4px;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--nala-gold), var(--nala-teal));
+  background: linear-gradient(90deg, var(--nala-gold), var(--nala-gold-bright));
 }
 
 .course-card,
@@ -372,7 +372,7 @@ h1.title::after {
 
 .mtk-courses {
   background:
-    linear-gradient(180deg, #ffffff 0%, #f4f7f6 100%) !important;
+    linear-gradient(180deg, #ffffff 0%, #fbf8f0 100%) !important;
 }
 
 .mtk-courses .course-card,
@@ -387,7 +387,7 @@ h1.title::after {
   position: absolute;
   inset: 0 0 auto;
   height: 5px;
-  background: linear-gradient(90deg, var(--nala-gold), var(--nala-teal));
+  background: linear-gradient(90deg, var(--nala-gold), var(--nala-gold-bright));
 }
 
 .mtk-courses .course-card:hover,
@@ -398,7 +398,7 @@ h1.title::after {
 }
 
 .mtk-tile-face {
-  background: linear-gradient(135deg, #1f2428, #3a4a46) !important;
+  background: linear-gradient(135deg, #1f2428, #151a1f) !important;
 }
 
 .mtk-tile-front {
@@ -406,14 +406,14 @@ h1.title::after {
 }
 
 .mtk-tile-back {
-  background: linear-gradient(135deg, #20302d, #1f2428) !important;
+  background: linear-gradient(135deg, #151a1f, #1f2428) !important;
 }
 
 #business-in-a-box {
   position: relative;
   overflow: hidden;
   background:
-    linear-gradient(180deg, #ffffff 0%, #f8f4ea 52%, #edf7f5 100%) !important;
+    linear-gradient(180deg, #ffffff 0%, #f8f4ea 52%, #fbf4e5 100%) !important;
 }
 
 #business-in-a-box::before {
@@ -421,7 +421,7 @@ h1.title::after {
   position: absolute;
   inset: 0;
   background:
-    repeating-linear-gradient(90deg, rgba(79, 179, 165, 0.08) 0 1px, transparent 1px 34px);
+    repeating-linear-gradient(90deg, rgba(169, 130, 18, 0.08) 0 1px, transparent 1px 34px);
   pointer-events: none;
 }
 
@@ -430,7 +430,7 @@ h1.title::after {
 }
 
 .biab-home-copy {
-  border-left: 5px solid var(--nala-teal) !important;
+  border-left: 5px solid var(--nala-bronze) !important;
 }
 
 .biab-home-benefits div {
@@ -439,7 +439,7 @@ h1.title::after {
 
 .biab-home-benefits div:hover {
   transform: translateY(-3px);
-  border-color: rgba(79, 179, 165, 0.42);
+  border-color: rgba(169, 130, 18, 0.42);
   box-shadow: 0 14px 28px rgba(17, 24, 39, 0.1);
 }
 
@@ -449,7 +449,7 @@ h1.title::after {
 
 .mtk-ready {
   background:
-    linear-gradient(135deg, #1f2428 0%, #20302d 58%, #4a3a08 100%) !important;
+    linear-gradient(135deg, #1f2428 0%, #151a1f 58%, #4a3a08 100%) !important;
   border-top: 5px solid var(--nala-gold-bright);
 }
 

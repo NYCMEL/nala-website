@@ -205,10 +205,10 @@ h1.title::after {
   --_primary-container:   #f7e7b8;
   --_on-primary:          #ffffff;
   --_on-primary-cont:     #4a3a08;
-  --_success:             #1b7d37;
+  --_success:             #7a5e0c;
   --_success-container:   #eef8ee;
   --_on-success:          #ffffff;
-  --_on-success-cont:     #2e7d32;
+  --_on-success-cont:     #a98212;
   --_error:               #b3261e;
   --_error-container:     #fee6e4;
   --_on-error-cont:       #b71c1c;
@@ -725,7 +725,7 @@ h1.title::after {
 
 .mtk-final__toast .material-icons {
   font-size: 18px;
-  color: #16a34a;
+  color: #a98212;
   flex-shrink: 0; }
 
 .mtk-final__toast--show {
