@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: $font-primary;
+  font-family: var(--client-body-font, #{$font-primary});
   color: $color-text-primary;
   background-color: $color-bg-light;
   line-height: $line-height-loose;
@@ -24,6 +24,7 @@ body {
   background-color: $color-white;
   min-height: 100vh;
   box-sizing: border-box;
+  font-family: var(--client-body-font, #{$font-primary});
 }
 
 .breadcrumb {
@@ -87,6 +88,7 @@ body {
 .client-info { flex: 1; }
 
 .client-name {
+  font-family: var(--client-heading-font, #{$font-primary});
   font-size: 32px;
   font-weight: $font-weight-medium;
   margin-bottom: 12px;
@@ -148,6 +150,13 @@ body {
 
   &:active { transform: translateY(0); }
   .material-icons { font-size: $font-size-2xl; }
+}
+
+.client-section-title,
+.client-sidebar-title,
+.client-cta h3,
+.client-business-profile__title {
+  font-family: var(--client-heading-font, #{$font-primary});
 }
 
 .client-stats {

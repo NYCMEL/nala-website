@@ -109,13 +109,13 @@ window.MTK_BIAB_CONFIG = {
       eyebrow: "Brand",
       title: "Logo",
       description: "Create logo options for your business before you choose a business card.",
-      body: "Click Start this step, check the business information, generate logo options with Zoviz, choose one, then click Save this logo.",
+      body: "Click Start this step, check the business information, generate logo options, choose one, then click Save this logo.",
       nextStep: "Click Start this step. If your business name or service area is missing, go back to Profile & Settings first. Then generate options and save the logo you want.",
       setupType: "logo",
       provider: {
         id: "zoviz",
-        label: "Zoviz Logo Engine API",
-        testingNote: "The Zoviz key is loaded from the site config file."
+        label: "Logo Generator",
+        testingNote: "The logo generator key is loaded from the site config file."
       }
     },
     {

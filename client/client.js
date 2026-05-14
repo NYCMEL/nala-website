@@ -84,6 +84,7 @@ class ClientProfile {
 	    if (event.data.payload.businessName) this.data.business.name = event.data.payload.businessName
 	    if (event.data.payload.theme) {
 		this.data.business.theme = event.data.payload.theme
+		this.data.business.typography = event.data.payload.typography || this.data.business.typography
 		this.applyBrandTheme()
 	    }
 	    this.renderHeader()
@@ -96,6 +97,7 @@ class ClientProfile {
 	    const storedBrand = JSON.parse(localStorage.getItem('nalaBiabBrand') || 'null')
 	    if (storedBrand && storedBrand.theme) {
 		this.data.business.theme = storedBrand.theme
+		this.data.business.typography = storedBrand.typography || this.data.business.typography
 		return
 	    }
 
@@ -128,12 +130,15 @@ class ClientProfile {
 
     applyBrandTheme() {
 	const theme = this.data && this.data.business && this.data.business.theme
-	if (!theme) return
+	const typography = (this.data && this.data.business && this.data.business.typography) || (theme && theme.typography) || {}
+	if (!theme && !typography) return
 	const root = document.querySelector('.client-container') || document.documentElement
-	root.style.setProperty('--client-surface', theme.surface || '#0f172a')
-	root.style.setProperty('--client-primary', theme.primary || '#a98212')
-	root.style.setProperty('--client-accent', theme.accent || '#ffffff')
-	root.style.setProperty('--client-muted', theme.muted || '#757575')
+	root.style.setProperty('--client-surface', (theme && theme.surface) || '#0f172a')
+	root.style.setProperty('--client-primary', (theme && theme.primary) || '#a98212')
+	root.style.setProperty('--client-accent', (theme && theme.accent) || '#ffffff')
+	root.style.setProperty('--client-muted', (theme && theme.muted) || '#757575')
+	root.style.setProperty('--client-heading-font', typography.headingFont || (theme && theme.headingFont) || '"Roboto", Arial, sans-serif')
+	root.style.setProperty('--client-body-font', typography.bodyFont || (theme && theme.bodyFont) || '"Roboto", Arial, sans-serif')
     }
 
     loadSavedReviews() {

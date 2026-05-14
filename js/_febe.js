@@ -494,6 +494,9 @@ class _febe {
 	const phone = business.businessPhone || privacy.phone || "";
 	const email = business.businessEmail || privacy.emailAddress || "";
 	const serviceArea = services.serviceArea || "";
+	const brand = this.readStoredBiabBrand(uid);
+	const storedLogo = this.readStoredBiabLogo(uid);
+	const logoSrc = this.logoSourceFromStoredLogo(storedLogo) || "img/clients/x.webp";
 	let website = business.businessWebsite || business.website || "";
 	if ((!website || (window.nalaClientUrl && typeof window.nalaClientUrl.isLegacyUrl === "function" && window.nalaClientUrl.isLegacyUrl(website))) && window.nalaClientUrl && typeof window.nalaClientUrl.best === "function") {
 	    website = window.nalaClientUrl.best({
@@ -512,8 +515,9 @@ class _febe {
 	    nalaUID: uid && uid.length >= 3 ? uid : "DEMO",
 	    business: {
 		name: businessName,
-		logo: "img/clients/x.webp",
+		logo: logoSrc,
 		logoKind: "artwork",
+		theme: brand && brand.theme ? brand.theme : null,
 		phone: phone,
 		email: email,
 		website: website,
@@ -575,6 +579,30 @@ class _febe {
 	    headers: { "Content-Type": "application/json" },
 	    body: JSON.stringify(profile)
 	}).then(res => this.readBiabJsonResponse(res, this.t("biab.error.save", "Could not save Business in a Box changes.")));
+    }
+
+    readStoredBiabBrand(uid) {
+	try {
+	    return JSON.parse(localStorage.getItem("nala_biab_brand_" + uid) || localStorage.getItem("nalaBiabBrand") || "null");
+	} catch (err) {
+	    return null;
+	}
+    }
+
+    readStoredBiabLogo(uid) {
+	try {
+	    return JSON.parse(localStorage.getItem("nala_biab_logo_" + uid) || "null");
+	} catch (err) {
+	    return null;
+	}
+    }
+
+    logoSourceFromStoredLogo(logo) {
+	if (!logo || typeof logo !== "object") return "";
+	if (logo.svg) {
+	    return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(logo.svg);
+	}
+	return logo.previewUrl || logo.image || "";
     }
 
     getBiabJson(path, errorMessage) {

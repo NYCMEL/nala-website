@@ -127,7 +127,7 @@ html {
 }
 
 body {
-  font-family: "Roboto", Arial, sans-serif;
+  font-family: var(--client-body-font, "Roboto", Arial, sans-serif);
   font-size: 16px;
   line-height: 1.6;
   color: #212121;
@@ -253,6 +253,7 @@ body {
   background-color: #ffffff;
   min-height: 100vh;
   box-sizing: border-box;
+  font-family: var(--client-body-font, "Roboto", Arial, sans-serif);
 }
 
 .breadcrumb {
@@ -323,10 +324,18 @@ body {
 }
 
 .client-name {
+  font-family: var(--client-heading-font, "Roboto", Arial, sans-serif);
   font-size: 32px;
   font-weight: 500;
   margin-bottom: 12px;
   color: #212121;
+}
+
+.client-section-title,
+.client-sidebar-title,
+.client-cta h3,
+.client-business-profile__title {
+  font-family: var(--client-heading-font, "Roboto", Arial, sans-serif);
 }
 
 .client-rating {

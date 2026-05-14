@@ -105,16 +105,16 @@ function biab_logo_provider_status($mode = null, $message = '') {
     }
     return array(
         'id' => 'zoviz',
-        'label' => 'Zoviz Logo Engine API',
+        'label' => 'Logo Generator',
         'mode' => $mode,
         'configured' => $configured,
-        'message' => $message !== '' ? $message : ($configured ? 'Zoviz API access is configured for watermarked previews.' : 'Zoviz API key is missing.')
+        'message' => $message !== '' ? $message : ($configured ? 'Logo generation is configured for preview logos.' : 'Logo generation is not configured yet.')
     );
 }
 
 function biab_logo_zoviz_request($path, $payload) {
     if (!function_exists('curl_init')) {
-        biab_logo_json_response(500, array('error' => 'Zoviz is configured, but cURL is not available on this server.'));
+        biab_logo_json_response(500, array('error' => 'Logo generation is configured, but this server cannot connect to the generator.'));
     }
 
     $headers = array(
@@ -147,20 +147,20 @@ function biab_logo_zoviz_request($path, $payload) {
             $details = (string)$json['description'];
         }
         biab_logo_json_response(502, array(
-            'error' => 'Zoviz could not generate logos right now.',
+            'error' => 'The logo generator could not create logos right now.',
             'details' => $details
         ));
     }
 
     $json = json_decode($body, true);
     if (!is_array($json)) {
-        biab_logo_json_response(502, array('error' => 'Zoviz returned an unreadable response.'));
+        biab_logo_json_response(502, array('error' => 'The logo generator returned an unreadable response.'));
     }
 
     if (isset($json['ok']) && !$json['ok']) {
         biab_logo_json_response(502, array(
-            'error' => 'Zoviz could not generate logos right now.',
-            'details' => (string)($json['description'] ?? 'The Zoviz API rejected the request.')
+            'error' => 'The logo generator could not create logos right now.',
+            'details' => (string)($json['description'] ?? 'The logo generator rejected the request.')
         ));
     }
 
@@ -224,6 +224,7 @@ function biab_logo_zoviz_normalize_record($record, $index) {
         'svg' => '',
         'previewUrl' => $previewUrl,
         'image' => $previewUrl,
+        'colors' => biab_logo_zoviz_record_colors($record),
         'provider' => 'zoviz',
         'previewOnly' => true
     ));
@@ -335,7 +336,7 @@ function biab_logo_generate_zoviz($payload) {
     $apiKey = biab_logo_zoviz_key();
     if ($apiKey === '') {
         biab_logo_json_response(503, array(
-            'error' => 'Zoviz API key is missing. Logo generation must use Zoviz watermarked previews.'
+            'error' => 'Logo generation is not configured yet.'
         ));
     }
 
@@ -364,7 +365,7 @@ function biab_logo_generate_zoviz($payload) {
     ));
     $albumId = (string)($registered['result']['id'] ?? '');
     if ($albumId === '') {
-        biab_logo_json_response(502, array('error' => 'Zoviz did not return a generation ID.'));
+        biab_logo_json_response(502, array('error' => 'The logo generator did not return a generation ID.'));
     }
 
     $options = array();
@@ -389,12 +390,12 @@ function biab_logo_generate_zoviz($payload) {
     }
 
     if (count($options) !== 6) {
-        biab_logo_json_response(502, array('error' => 'Zoviz did not return exactly 6 usable logo options.'));
+        biab_logo_json_response(502, array('error' => 'The logo generator did not return exactly 6 usable logo options.'));
     }
 
     return array(
         'options' => $options,
-        'provider' => biab_logo_provider_status('zoviz', 'Zoviz returned 6 watermarked preview logos.')
+        'provider' => biab_logo_provider_status('zoviz', 'Generated 6 logo previews.')
     );
 }
 

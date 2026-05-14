@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: $font-primary;
+  font-family: var(--client-body-font, #{$font-primary});
   color: $color-text-primary;
   background-color: $color-bg-light;
   line-height: $line-height-loose;
@@ -17,6 +17,7 @@ body {
   padding: $spacing-xl;
   background-color: $color-white;
   min-height: 100vh;
+  font-family: var(--client-body-font, #{$font-primary});
 }
 
 .breadcrumb {
@@ -80,6 +81,7 @@ body {
 .client-info { flex: 1; }
 
 .client-name {
+  font-family: var(--client-heading-font, #{$font-primary});
   font-size: 32px;
   font-weight: $font-weight-medium;
   margin-bottom: 12px;
@@ -428,6 +430,13 @@ body {
 
   &:hover  { background-color: $color-client-hover; box-shadow: $shadow-md; transform: translateY(-1px); }
   &:active { transform: translateY(0); }
+}
+
+.client-section-title,
+.client-sidebar-title,
+.client-cta h3,
+.client-business-profile__title {
+  font-family: var(--client-heading-font, #{$font-primary});
 }
 
 .client-sidebar .contact-card .btn-primary.btn-estimate {

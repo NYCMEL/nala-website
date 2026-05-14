@@ -33,6 +33,7 @@
       this.invoices = [];
       this.googleSeo = null;
       this.logo = this._loadSavedLogo();
+      this.brand = this._loadSavedBrand();
       this.logoOptions = [];
       this.selectedLogoId = "";
       this.logoProviderStatus = null;
@@ -130,6 +131,8 @@
         this.logoOptions = Array.isArray(data.options) ? this._cleanLogoOptions(data.options) : this.logoOptions;
         this.logoProviderStatus = data.provider || this.logoProviderStatus;
         if (this.logo) {
+          this.brand = this._brandFromLogo(this.logo);
+          this.logo.brand = this.brand;
           this._saveLogoLocal(this.logo);
         } else {
           try { window.localStorage.removeItem(this._logoStorageKey()); } catch (err) {}
@@ -149,7 +152,11 @@
 
       if (eventName === "4-mtk-biab:logo-saved" && data) {
         this.logo = this._cleanLogo(data.logo) || this.logo;
-        if (this.logo) this._saveLogoLocal(this.logo);
+        if (this.logo) {
+          this.brand = this._brandFromLogo(this.logo);
+          this.logo.brand = this.brand;
+          this._saveLogoLocal(this.logo);
+        }
         if (!this.cardOptionsPersisted) {
           this.generatedCardTemplates = null;
         }
@@ -744,6 +751,7 @@
       this.cardOptionsPersisted = false;
       this.orderedCard = null;
       this.logo = null;
+      this.brand = null;
       this.logoOptions = [];
       this.selectedLogoId = "";
       this.logoProviderStatus = null;
@@ -751,6 +759,9 @@
       try {
         window.localStorage.removeItem(this._orderedCardStorageKey());
         window.localStorage.removeItem(this._logoStorageKey());
+        window.localStorage.removeItem(this._brandStorageKey());
+        window.localStorage.removeItem("nalaBiabBrand");
+        window.localStorage.removeItem("nalaBiabLogo");
         window.localStorage.removeItem("nala_profile_settings");
       } catch (err) {}
       this._publish("mtk-biab:reset", { nalaUID: this._businessPageId() });
@@ -1357,12 +1368,12 @@
     _logoProviderStatusText() {
       const provider = this.logoProviderStatus || {};
       if (provider.mode === "zoviz") {
-        return this._text("Zoviz is connected. Generated options come from the Zoviz Logo Engine API.");
+        return this._text("The logo generator is connected and ready.");
       }
       if (provider.mode === "preview") {
-        return this._text("Zoviz API access is not configured yet. Add the key before generating logos.");
+        return this._text("Logo generation is not configured yet. Add the key before generating logos.");
       }
-      return this._text("This step is ready for Zoviz. The Generate button creates 6 watermarked logo previews.");
+      return this._text("This step is ready. The Generate button creates 6 logo previews.");
     }
 
     _renderLogoOption(option) {
@@ -1396,7 +1407,7 @@
     _logoPreviewMarkup(logo, isLarge = false) {
       const sizeClass = isLarge ? " mtk-biab__logo-preview--large" : "";
       if (this._isJunkLogo(logo)) {
-        return `<span class="mtk-biab__logo-preview${sizeClass} mtk-biab__logo-preview--empty">${this._escape(this._text("Generate a new Zoviz logo"))}</span>`;
+        return `<span class="mtk-biab__logo-preview${sizeClass} mtk-biab__logo-preview--empty">${this._escape(this._text("Generate a new logo"))}</span>`;
       }
       if (logo && logo.svg) {
         return `<span class="mtk-biab__logo-preview${sizeClass}">${logo.svg}</span>`;
@@ -1461,10 +1472,13 @@
     _saveSelectedLogo() {
       const selected = this.logoOptions.find((option) => option.id === this.selectedLogoId);
       if (!selected) return;
+      const brand = this._brandFromLogo(selected);
       const logo = Object.assign({}, selected, {
+        brand,
         selectedAt: new Date().toISOString()
       });
       this.logo = logo;
+      this.brand = brand;
       this._saveLogoLocal(logo);
       this.generatedCardTemplates = null;
       this._publish("mtk-biab:logo-save", {
@@ -1814,10 +1828,11 @@
       const area = this._businessCardFieldValue(section, "serviceArea") || "24/7 Locksmith Service";
       const isSpanish = window.i18n && typeof window.i18n.getLang === "function" && window.i18n.getLang() === "es";
       const labelBase = isSpanish ? "Tarjeta" : "Business Card";
+      const brand = this._currentBrand();
 
       const iconChoices = this._shuffleCardOptions(icons);
-      const fontChoices = this._shuffleCardOptions(fonts);
-      const paletteChoices = this._shuffleCardOptions(palettes);
+      const fontChoices = brand ? this._brandCardFonts(brand, fonts) : this._shuffleCardOptions(fonts);
+      const paletteChoices = brand ? this._brandCardPalettes(brand, palettes) : this._shuffleCardOptions(palettes);
       const layoutChoices = this._shuffleCardOptions(layouts);
       const textPlacementChoices = this._shuffleCardOptions(textPlacements);
 
@@ -1973,6 +1988,10 @@
       return "nala_biab_logo_" + this._businessPageId();
     }
 
+    _brandStorageKey() {
+      return "nala_biab_brand_" + this._businessPageId();
+    }
+
     _loadSavedLogo() {
       try {
         const logo = JSON.parse(window.localStorage.getItem(this._logoStorageKey()) || "null");
@@ -1992,10 +2011,194 @@
         return;
       }
       try {
-        window.localStorage.setItem(this._logoStorageKey(), JSON.stringify(logo || {}));
+        const savedLogo = logo || {};
+        const brand = savedLogo.brand || this._brandFromLogo(savedLogo);
+        if (brand) {
+          savedLogo.brand = brand;
+          this.brand = brand;
+          this._saveBrandLocal(brand, savedLogo);
+        }
+        window.localStorage.setItem(this._logoStorageKey(), JSON.stringify(savedLogo));
       } catch (err) {
         console.warn("Could not save logo state", err);
       }
+    }
+
+    _loadSavedBrand() {
+      try {
+        return JSON.parse(window.localStorage.getItem(this._brandStorageKey()) || window.localStorage.getItem("nalaBiabBrand") || "null");
+      } catch (err) {
+        return null;
+      }
+    }
+
+    _saveBrandLocal(brand, logo) {
+      if (!brand) return;
+      const payload = {
+        logoId: logo && (logo.id || logo.providerLogoId || ""),
+        theme: brand.theme || {},
+        colors: brand.colors || {},
+        typography: brand.typography || {},
+        updatedAt: new Date().toISOString()
+      };
+      const business = this._currentSettingsProfile().business || {};
+      const logoSrc = this._logoSourceForBrand(logo);
+      try {
+        window.localStorage.setItem(this._brandStorageKey(), JSON.stringify(payload));
+        window.localStorage.setItem("nalaBiabBrand", JSON.stringify(payload));
+        window.localStorage.setItem("nalaBiabLogo", JSON.stringify({
+          logo: logoSrc,
+          logoKind: "artwork",
+          businessName: business.customerFacingBusinessName || business.legalBusinessName || "",
+          theme: payload.theme,
+          typography: payload.typography
+        }));
+      } catch (err) {
+        console.warn("Could not save brand state", err);
+      }
+    }
+
+    _logoSourceForBrand(logo) {
+      if (!logo) return "";
+      if (logo.svg) {
+        return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(logo.svg);
+      }
+      return logo.previewUrl || logo.image || "";
+    }
+
+    _currentBrand() {
+      if (this.brand) return this.brand;
+      const saved = this._loadSavedBrand();
+      if (saved && (saved.theme || saved.colors || saved.typography)) {
+        this.brand = {
+          theme: saved.theme || {},
+          colors: saved.colors || {},
+          typography: saved.typography || {}
+        };
+        return this.brand;
+      }
+      if (this.logo) {
+        this.brand = this._brandFromLogo(this.logo);
+        return this.brand;
+      }
+      return null;
+    }
+
+    _brandFromLogo(logo) {
+      const colors = this._brandColorsFromLogo(logo);
+      const typography = this._brandTypographyFromLogo(logo);
+      return {
+        source: "selected-logo",
+        colors,
+        typography,
+        theme: {
+          id: "selected-logo",
+          surface: colors.surface,
+          primary: colors.primary,
+          accent: colors.light,
+          muted: colors.muted,
+          headingFont: typography.headingFont,
+          bodyFont: typography.bodyFont
+        }
+      };
+    }
+
+    _brandColorsFromLogo(logo) {
+      const raw = [];
+      const pushColor = (value) => {
+        const color = this._normalizeBrandColor(value);
+        if (color && !raw.includes(color)) raw.push(color);
+      };
+      if (logo && Array.isArray(logo.colors)) logo.colors.forEach(pushColor);
+      if (logo && logo.brand && logo.brand.colors) Object.keys(logo.brand.colors).forEach((key) => pushColor(logo.brand.colors[key]));
+      if (logo && logo.svg) {
+        (logo.svg.match(/#[0-9a-fA-F]{3,6}\b/g) || []).forEach(pushColor);
+        (logo.svg.match(/rgb\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*\)/g) || []).forEach(pushColor);
+      }
+      const fallback = ["#111827", "#1e3a8a", "#a98212", "#ffffff", "#475569"];
+      fallback.forEach(pushColor);
+      const sorted = raw.slice().sort((a, b) => this._colorLuminance(a) - this._colorLuminance(b));
+      const surface = sorted.find((color) => this._colorLuminance(color) < 0.24) || "#111827";
+      const primary = raw.find((color) => color !== surface && this._colorLuminance(color) >= 0.12 && this._colorLuminance(color) <= 0.72) || "#1e3a8a";
+      const accent = raw.find((color) => color !== surface && color !== primary && this._colorLuminance(color) >= 0.32 && this._colorLuminance(color) <= 0.86) || "#a98212";
+      const light = sorted.slice().reverse().find((color) => this._colorLuminance(color) > 0.82) || "#ffffff";
+      const muted = raw.find((color) => color !== surface && color !== primary && color !== accent && this._colorLuminance(color) > 0.24 && this._colorLuminance(color) < 0.78) || "#475569";
+      return { surface, primary, secondary: surface, accent, light, muted };
+    }
+
+    _brandTypographyFromLogo(logo) {
+      const familyMatch = logo && logo.svg ? logo.svg.match(/font-family=["']([^"']+)["']/i) : null;
+      const detectedFamily = familyMatch && familyMatch[1] ? familyMatch[1].replace(/[<>]/g, "").trim() : "";
+      if (detectedFamily) {
+        return {
+          style: "detected",
+          headingFont: detectedFamily + ", Arial, sans-serif",
+          bodyFont: "Arial, Helvetica, sans-serif"
+        };
+      }
+      return {
+        style: "bold-sans",
+        headingFont: "Arial Black, Arial, Helvetica, sans-serif",
+        bodyFont: "Arial, Helvetica, sans-serif"
+      };
+    }
+
+    _normalizeBrandColor(value) {
+      let text = String(value || "").trim();
+      if (!text || text === "none" || text === "transparent" || text.indexOf("url(") === 0) return "";
+      const rgb = text.match(/^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/i);
+      if (rgb) {
+        return "#" + [rgb[1], rgb[2], rgb[3]].map((part) => {
+          const hex = Math.max(0, Math.min(255, parseInt(part, 10) || 0)).toString(16);
+          return hex.length === 1 ? "0" + hex : hex;
+        }).join("");
+      }
+      const hex = text.match(/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/);
+      if (!hex) return "";
+      text = hex[1].toLowerCase();
+      if (text.length === 3) text = text.split("").map((char) => char + char).join("");
+      return "#" + text;
+    }
+
+    _colorLuminance(color) {
+      const normalized = this._normalizeBrandColor(color);
+      if (!normalized) return 0;
+      const rgb = [1, 3, 5].map((start) => parseInt(normalized.slice(start, start + 2), 16) / 255).map((value) => {
+        return value <= 0.03928 ? value / 12.92 : Math.pow((value + 0.055) / 1.055, 2.4);
+      });
+      return 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
+    }
+
+    _brandCardFonts(brand, fallbackFonts) {
+      const typography = brand && brand.typography ? brand.typography : {};
+      const heading = typography.headingFont || "Arial Black, Arial, Helvetica, sans-serif";
+      const body = typography.bodyFont || "Arial, Helvetica, sans-serif";
+      const base = [
+        { heading, body, headingSize: 26, bodySize: 13 },
+        { heading, body, headingSize: 28, bodySize: 13 },
+        { heading, body, headingSize: 25, bodySize: 14 },
+        { heading, body, headingSize: 29, bodySize: 13 },
+        { heading, body, headingSize: 27, bodySize: 14 },
+        { heading, body, headingSize: 26, bodySize: 14 }
+      ];
+      return base.length ? base : fallbackFonts;
+    }
+
+    _brandCardPalettes(brand, fallbackPalettes) {
+      const colors = brand && brand.colors ? brand.colors : {};
+      const surface = colors.surface || "#111827";
+      const primary = colors.primary || "#1e3a8a";
+      const accent = colors.accent || "#a98212";
+      const light = colors.light || "#ffffff";
+      const muted = colors.muted || "#475569";
+      return [
+        { bg: surface, fg: light, accent, muted: "#d1d5db" },
+        { bg: light, fg: surface, accent: primary, muted },
+        { bg: "#f8fafc", fg: surface, accent, muted },
+        { bg: surface, fg: light, accent: primary, muted: "#d1d5db" },
+        { bg: "#ffffff", fg: surface, accent, muted },
+        { bg: primary, fg: light, accent, muted: "#e5e7eb" }
+      ].filter((palette) => palette && palette.bg && palette.fg) || fallbackPalettes;
     }
 
     _cleanLogo(logo) {

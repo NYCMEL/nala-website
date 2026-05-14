@@ -197,6 +197,9 @@ function biab_logo_normalize_logo($logo) {
         return null;
     }
 
+    $colors = biab_logo_normalize_colors($logo['colors'] ?? array());
+    $brand = is_array($logo['brand'] ?? null) ? $logo['brand'] : array();
+
     return array(
         'id' => $id,
         'providerLogoId' => (string)($logo['providerLogoId'] ?? $id),
@@ -204,10 +207,29 @@ function biab_logo_normalize_logo($logo) {
         'svg' => $svg,
         'previewUrl' => $previewUrl,
         'image' => $image,
+        'colors' => $colors,
+        'brand' => $brand,
         'provider' => preg_replace('/[^a-zA-Z0-9_-]/', '', (string)($logo['provider'] ?? 'zoviz')),
         'previewOnly' => !empty($logo['previewOnly']),
         'selectedAt' => (string)($logo['selectedAt'] ?? gmdate('c'))
     );
+}
+
+function biab_logo_normalize_colors($colors) {
+    if (!is_array($colors)) {
+        return array();
+    }
+    $out = array();
+    foreach ($colors as $color) {
+        if (is_array($color)) {
+            $color = $color['color'] ?? $color['hex'] ?? $color['value'] ?? '';
+        }
+        $color = trim((string)$color);
+        if (preg_match('/^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/', $color)) {
+            $out[] = strtolower($color);
+        }
+    }
+    return array_values(array_unique($out));
 }
 
 function biab_logo_is_preview_test_logo($id, $name, $svg, $previewUrl, $image) {

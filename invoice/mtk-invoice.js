@@ -15,6 +15,7 @@ class MtkInvoice {
 
   init() {
     this.hydrateValues();
+    this.applyBrand();
     this.subscribe();
     this.render();
     this.bind();
@@ -55,6 +56,34 @@ class MtkInvoice {
     } catch (err) {
       return {};
     }
+  }
+
+  readStoredBrand() {
+    try {
+      return JSON.parse(window.localStorage.getItem("nalaBiabBrand") || "null");
+    } catch (err) {
+      return null;
+    }
+  }
+
+  readStoredLogo() {
+    try {
+      return JSON.parse(window.localStorage.getItem("nalaBiabLogo") || "null");
+    } catch (err) {
+      return null;
+    }
+  }
+
+  applyBrand() {
+    const stored = this.readStoredBrand();
+    const theme = stored && stored.theme ? stored.theme : {};
+    const typography = stored && stored.typography ? stored.typography : {};
+    this.root.style.setProperty("--invoice-surface", theme.surface || "#0f172a");
+    this.root.style.setProperty("--invoice-primary", theme.primary || "#a98212");
+    this.root.style.setProperty("--invoice-accent", theme.accent || "#ffffff");
+    this.root.style.setProperty("--invoice-muted", theme.muted || "#64748b");
+    this.root.style.setProperty("--invoice-heading-font", typography.headingFont || theme.headingFont || "\"Roboto\", \"Segoe UI\", Arial, sans-serif");
+    this.root.style.setProperty("--invoice-body-font", typography.bodyFont || theme.bodyFont || "\"Roboto\", \"Segoe UI\", Arial, sans-serif");
   }
 
   setValues(values) {
@@ -113,12 +142,17 @@ class MtkInvoice {
   }
 
   render() {
+    const logo = this.readStoredLogo();
+    const logoMarkup = logo && logo.logo ? `<img class="mtk-invoice__brand-logo" src="${this.escape(logo.logo)}" alt="">` : "";
     this.root.innerHTML = `
       <section class="mtk-invoice__shell" aria-labelledby="mtk-invoice-title">
         <div class="mtk-invoice__card">
           <header class="mtk-invoice__header">
-            <h1 class="mtk-invoice__title" id="mtk-invoice-title">${this.escape(this.labels.title || "Locksmith Invoice")}</h1>
-            <p class="mtk-invoice__subtitle">${this.escape(this.labels.subtitle || "")}</p>
+            ${logoMarkup}
+            <div class="mtk-invoice__brand-copy">
+              <h1 class="mtk-invoice__title" id="mtk-invoice-title">${this.escape(this.labels.title || "Locksmith Invoice")}</h1>
+              <p class="mtk-invoice__subtitle">${this.escape(this.labels.subtitle || "")}</p>
+            </div>
           </header>
 
           <div class="mtk-invoice__divider" aria-hidden="true"></div>
