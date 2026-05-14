@@ -562,13 +562,13 @@ function nala_mxchat_signup_fast_answer(string $message): string
         if ($lang === 'es') {
             $lines = ['Respuesta corta:'];
             if ($asks_course_length) {
-                $lines[] = '- Tiempo: el curso es a tu propio ritmo. Puedes empezar gratis ahora y avanzar tan rapido como puedas estudiar y practicar. La certificacion requiere terminar las lecciones, aprobar los examenes requeridos y completar el paso final de certificacion en tu panel.';
+                $lines[] = '- Tiempo: el curso es a tu propio ritmo. Algunos estudiantes pueden completar las lecciones principales en unas pocas semanas si estudian intensivamente; otros tardan 2 o 3 meses con un ritmo mas tranquilo. La certificacion requiere terminar las lecciones, aprobar los examenes requeridos y completar el paso final de certificacion en tu panel.';
             }
             if ($asks_tools_needed) {
                 $lines[] = '- Herramientas: Premium incluye un kit de apertura de autos, pero si, debes esperar comprar herramientas adicionales a medida que avances y decidas que servicios quieres ofrecer. Business in a Box incluye un set de lock pick, pero no reemplaza una caja profesional completa.';
             }
             if ($asks_earnings) {
-                $lines[] = '- Ingresos: NALA no puede prometer cuanto ganaras. Depende de tu ubicacion, reglas de licencia, servicios, precios, demanda local, rapidez de respuesta y constancia para conseguir clientes.';
+                $lines[] = '- Ingresos: muchos puestos de cerrajero en EE. UU. se ubican aproximadamente en $24-$26 por hora, o cerca de $50k-$55k al ano. Un negocio propio puede ganar mas o menos segun la ubicacion, licencia, servicios, precios, demanda local, rapidez de respuesta y constancia para conseguir clientes. NALA no promete ingresos.';
             }
             $lines[] = '';
             $lines[] = 'El mejor primer paso es probar las lecciones gratis y ver si el entrenamiento encaja contigo: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
@@ -577,13 +577,13 @@ function nala_mxchat_signup_fast_answer(string $message): string
 
         $lines = ['Short answer:'];
         if ($asks_course_length) {
-            $lines[] = '- Time: the course is self-paced. You can start free now and move as quickly as you can study and practice. Certification requires finishing the lessons, passing the required exams, and completing the final certification step in your dashboard.';
+            $lines[] = '- Time: the course is self-paced. Some students can complete the core lessons in a few weeks with intensive study; others take 2 or 3 months at a more relaxed pace. Certification requires finishing the lessons, passing the required exams, and completing the final certification step in your dashboard.';
         }
         if ($asks_tools_needed) {
             $lines[] = '- Tools: Premium includes a car lockout kit, but yes, you should expect to buy additional locksmith tools as you progress and decide which services you want to offer. Business in a Box includes a lock pick tool set, but it is not a complete professional toolbox.';
         }
         if ($asks_earnings) {
-            $lines[] = '- Earnings: NALA cannot promise how much you will make. It depends on your location, licensing rules, services offered, pricing, local demand, response time, and how consistently you get customers.';
+            $lines[] = '- Earnings: many U.S. locksmith jobs are around $24-$26 per hour, or roughly $50k-$55k per year. Running your own locksmith business can be higher or lower depending on your location, licensing rules, services, pricing, local demand, response time, and how consistently you get customers. NALA cannot promise income.';
         }
         $lines[] = '';
         $lines[] = 'The best first step is to try the free lessons and see if the training fits you: [Start free lessons / Register](' . $register_link . ').';
@@ -592,10 +592,10 @@ function nala_mxchat_signup_fast_answer(string $message): string
 
     if ($asks_course_length) {
         if ($lang === 'es') {
-            return 'Termina tan rapido o con tanta calma como necesites; el curso es completamente a tu propio ritmo. Eso importa porque empiezas a construir habilidades utiles de inmediato, sin esperar meses para dar el primer paso. La certificacion requiere terminar las lecciones, aprobar los examenes requeridos y completar el paso final de certificacion en tu panel.' . $personal('time') . nala_mxchat_signup_skill_investment_phrase($lang) . "\n\n" . 'Empieza las lecciones ahora: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
+            return 'El curso es a tu propio ritmo. Algunos estudiantes pueden completar las lecciones principales en unas pocas semanas si estudian intensivamente; otros tardan 2 o 3 meses con un ritmo mas tranquilo. La certificacion requiere terminar las lecciones, aprobar los examenes requeridos y completar el paso final de certificacion en tu panel.' . $personal('time') . nala_mxchat_signup_skill_investment_phrase($lang) . "\n\n" . 'Empieza las lecciones ahora: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
         }
 
-        return 'Finish as fast or as slowly as you need - the course is fully self-paced. That matters because you start building useful skills right away, without waiting months to take the first step. Certification requires finishing the lessons, passing the required exams, and completing the final certification step in your dashboard.' . $personal('time') . nala_mxchat_signup_skill_investment_phrase($lang) . "\n\n" . 'Start the lessons now: [Start free lessons / Register](' . $register_link . ').';
+        return 'The course is self-paced. Some students can complete the core lessons in a few weeks with intensive study; others take 2 or 3 months at a more relaxed pace. Certification requires finishing the lessons, passing the required exams, and completing the final certification step in your dashboard.' . $personal('time') . nala_mxchat_signup_skill_investment_phrase($lang) . "\n\n" . 'Start the lessons now: [Start free lessons / Register](' . $register_link . ').';
     }
 
     if ($asks_start) {
