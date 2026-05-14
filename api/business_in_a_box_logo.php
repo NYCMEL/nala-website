@@ -115,7 +115,7 @@ function biab_logo_provider_status($mode = null, $message = '') {
 }
 
 function biab_logo_generation_version() {
-    return 4;
+    return 5;
 }
 
 function biab_logo_options_are_stale($generated) {
@@ -309,7 +309,7 @@ function biab_logo_preview_signature($url) {
         return '';
     }
 
-    $cropWidth = max(8, (int)round($width * 0.34));
+    $cropWidth = max(8, (int)round($width * 0.24));
     $crop = imagecreatetruecolor(8, 8);
     imagecopyresampled($crop, $image, 0, 0, 0, 0, 8, 8, $cropWidth, $height);
 
@@ -329,10 +329,9 @@ function biab_logo_preview_signature($url) {
     imagedestroy($crop);
     imagedestroy($image);
 
-    $average = $sum / max(1, count($values));
     $bits = '';
     foreach ($values as $value) {
-        $bits .= $value >= $average ? '1' : '0';
+        $bits .= $value < 245 ? '1' : '0';
     }
     return $bits;
 }
@@ -359,7 +358,7 @@ function biab_logo_option_too_similar($option, $signatures) {
         return array(false, '');
     }
     foreach ($signatures as $existing) {
-        if (biab_logo_signature_distance($signature, $existing) < 12) {
+        if (biab_logo_signature_distance($signature, $existing) < 18) {
             return array(true, $signature);
         }
     }
