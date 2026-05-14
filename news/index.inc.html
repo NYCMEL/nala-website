@@ -218,7 +218,7 @@
                         title="Master Safe Lockout Skills"></iframe>
                 </div>
                 <div class="about-video-cta">
-                    <button type="button" class="btn about-video-join-btn" data-i18n-aria="aboutPage.video.cta" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (window.wc && wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } else if (window.wc && typeof wc.publish === 'function') { wc.publish('mtk-ready:click'); } return false;">
+                    <button type="button" class="btn about-video-join-btn" data-i18n-aria="aboutPage.video.cta">
                         <span class="material-icons" aria-hidden="true">person_add</span>
                         <span data-i18n="aboutPage.video.cta">Join Now</span>
                     </button>
@@ -274,11 +274,60 @@
 <script src="news/news.js"></script>
 <script>
     (function () {
+        function stopAboutFeaturedVideo() {
+            var iframe = document.getElementById("aboutFeaturedVideo");
+            if (!iframe) return;
+
+            try {
+                iframe.contentWindow.postMessage(JSON.stringify({ method: "pause" }), "*");
+                iframe.contentWindow.postMessage({ method: "pause" }, "*");
+            } catch (error) {}
+
+            var currentSrc = iframe.getAttribute("src") || iframe.src;
+            if (!currentSrc) return;
+
+            var pausedSrc = currentSrc;
+            try {
+                var url = new URL(currentSrc, window.location.href);
+                url.searchParams.delete("autoplay");
+                pausedSrc = url.toString();
+            } catch (error) {
+                pausedSrc = currentSrc.replace(/([?&])autoplay=1(&?)/, function (match, prefix, suffix) {
+                    return suffix ? prefix : "";
+                }).replace(/[?&]$/, "");
+            }
+
+            iframe.src = "about:blank";
+            window.setTimeout(function () {
+                if (iframe.isConnected) iframe.src = pausedSrc;
+            }, 50);
+        }
+
+        function openRegister() {
+            stopAboutFeaturedVideo();
+
+            if (typeof nalaShowRegister === "function") {
+                nalaShowRegister();
+            } else if (window.wc && wc.pages && typeof wc.pages.show === "function") {
+                wc.pages.show("register");
+            } else if (window.wc && typeof wc.publish === "function") {
+                wc.publish("mtk-ready:click");
+            }
+        }
+
         function initAboutVideoGallery() {
             var iframe = document.getElementById("aboutFeaturedVideo");
             var caption = document.getElementById("aboutFeaturedVideoTitle");
             var thumbs = Array.prototype.slice.call(document.querySelectorAll(".about-video-thumb"));
+            var joinButton = document.querySelector(".about-video-join-btn");
             if (!iframe || !caption || !thumbs.length) return;
+
+            if (joinButton && joinButton.dataset.joinBound !== "1") {
+                joinButton.dataset.joinBound = "1";
+                joinButton.addEventListener("click", function () {
+                    openRegister();
+                });
+            }
 
             thumbs.forEach(function (thumb) {
                 thumb.addEventListener("click", function () {
