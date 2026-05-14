@@ -304,6 +304,33 @@ function biab_logo_color_is_pink_or_purple($color) {
     );
 }
 
+function biab_logo_contextual_direction($businessName, $serviceArea) {
+    $text = strtolower((string)$businessName . ' ' . (string)$serviceArea);
+    $directions = array();
+
+    if (preg_match('/\b(harbo[u]?r|marina|marine|bay|port|dock|coast|coastal|ocean|sea|beach|venice)\b/', $text)) {
+        $directions[] = 'For the harbor/coastal name, some concepts may tastefully combine a lock/key/security mark with an anchor, dock, wave, lighthouse, simple boat silhouette, rope knot, or compass.';
+    }
+    if (preg_match('/\b(mountain|summit|peak|ridge|alpine|rocky)\b/', $text)) {
+        $directions[] = 'For mountain-themed names, some concepts may combine a lock/key/security mark with a mountain peak or ridge line.';
+    }
+    if (preg_match('/\b(river|lake|creek|falls|water)\b/', $text)) {
+        $directions[] = 'For water-themed names, some concepts may combine a lock/key/security mark with a river line, lake wave, or simple water shape.';
+    }
+    if (preg_match('/\b(city|metro|urban|downtown|street)\b/', $text)) {
+        $directions[] = 'For city-themed names, some concepts may combine a lock/key/security mark with a skyline, building, street, or door shape.';
+    }
+    if (preg_match('/\b(desert|valley|canyon|mesa)\b/', $text)) {
+        $directions[] = 'For regional desert or valley names, some concepts may combine a lock/key/security mark with a restrained landscape line.';
+    }
+
+    if (!$directions) {
+        return 'Use the business name and service area for tasteful local relevance, but keep every option clearly locksmith/security related.';
+    }
+
+    return implode(' ', $directions) . ' These contextual symbols must stay secondary and must be integrated with locksmith/security imagery.';
+}
+
 function biab_logo_generate_zoviz($payload) {
     $apiKey = biab_logo_zoviz_key();
     if ($apiKey === '') {
@@ -316,15 +343,13 @@ function biab_logo_generate_zoviz($payload) {
     if ($businessName === '') {
         $businessName = 'Locksmith Business';
     }
+    $serviceArea = trim((string)($payload['serviceArea'] ?? ''));
     $descriptionParts = array_filter(array(
-        'Industry: locksmith, access control, and local security services',
-        'Audience: homeowners, property managers, business owners, drivers, and emergency lockout customers',
-        'Brand direction: professional, strong, practical, trustworthy, modern trade-service logo, clean vector mark, readable on websites, invoices, vans, uniforms, storefronts, and business cards',
-        'Use only relevant locksmith/security symbols such as keys, locks, keyholes, shields, doors, houses, buildings, vans, safes, or simple geometric security marks',
-        'Typography: bold sans serif, slab, or restrained professional serif; avoid script, handwritten, thin decorative, luxury, fashion, or beauty fonts',
-        'Colors: sober professional trade colors such as black, charcoal, navy, steel blue, forest green, gold, white, and silver',
-        'Avoid: pink, magenta, pastel, feminine boutique styling, beauty salon styling, glasses, eyewear, eyes, lashes, hearts, flowers, stars, crowns, cartoon mascots, novelty fonts, overly bright colors, cluttered illustrations, and low contrast text',
-        trim((string)($payload['serviceArea'] ?? '')) !== '' ? 'Service area: ' . trim((string)$payload['serviceArea']) : '',
+        'Strict: locksmith/security-first logo only. No glasses, eyewear, eyes, lashes, hearts, flowers, beauty, fashion, boutique styling, pink, purple, magenta, pastel, script, cursive, or handwritten fonts',
+        'Use strong professional trade-service styling, bold sans serif, slab, or restrained serif type, clean vector marks, and sober colors such as black, charcoal, navy, steel blue, forest green, gold, white, or silver',
+        'Core symbols: keys, locks, keyholes, shields, doors, houses, buildings, vans, safes, or geometric security marks',
+        biab_logo_contextual_direction($businessName, $serviceArea),
+        $serviceArea !== '' ? 'Service area: ' . $serviceArea : '',
         trim((string)($payload['services'] ?? '')) !== '' ? 'Services: ' . trim((string)$payload['services']) : '',
         trim((string)($payload['description'] ?? ''))
     ));
