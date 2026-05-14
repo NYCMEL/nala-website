@@ -550,7 +550,7 @@
     'aboutPage.video.career': { en: 'Build Your Locksmith Career Online', es: 'Construye tu carrera de cerrajería en línea' },
     'aboutPage.video.pace': { en: 'Learn at Your Own Pace', es: 'Aprende a tu propio ritmo' },
     'aboutPage.video.work': { en: 'Train for Real Locksmith Work', es: 'Prepárate para trabajos reales de cerrajería' },
-    'aboutPage.video.cta': { en: 'Get Started', es: 'Comenzar' },
+    'aboutPage.video.cta': { en: 'Join Now', es: 'Únete ahora' },
     'aboutPage.video.prev': { en: 'Previous video', es: 'Video anterior' },
     'aboutPage.video.next': { en: 'Next video', es: 'Video siguiente' },
     'aboutPage.article.prev': { en: 'Previous article', es: 'Artículo anterior' },
