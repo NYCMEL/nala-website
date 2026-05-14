@@ -444,8 +444,8 @@
       es: 'Entrenamiento en cerrajería'
     },
     'about.body1': {
-      en: 'Professional locksmith training online: structured, measurable, and practical. This step-by-step program covers residential, commercial, safe, and automotive fundamentals, supported by US-style exams and checkpoints throughout the course.',
-      es: 'Entrenamiento profesional en cerrajería en línea: estructurado y medible. Un programa paso a paso que cubre los fundamentos de cerrajería residencial, comercial, cajas fuertes y automotriz, con exámenes al estilo estadounidense y puntos de control a lo largo del curso.'
+      en: 'Professional locksmith training online: structured, measurable, and practical. This step-by-step program covers residential, commercial, safe, and automotive fundamentals, with US-style exams throughout the course.',
+      es: 'Entrenamiento profesional en cerrajería en línea: estructurado y medible. Un programa paso a paso que cubre los fundamentos de cerrajería residencial, comercial, cajas fuertes y automotriz, con exámenes al estilo estadounidense a lo largo del curso.'
     },
     'about.cta.start': {
       en: 'Get Started',
@@ -460,8 +460,8 @@
       es: '¿Quién se beneficia?'
     },
     'about.body2a': {
-      en: 'This program is designed for beginners and learners who want a clear, structured path to professional growth. Progress is measured through US-style exams and checkpoints built directly into the course, ensuring real understanding along the way.',
-      es: 'Este programa está diseñado para principiantes y personas que desean un camino claro y estructurado hacia el crecimiento profesional. El progreso se mide a través de exámenes al estilo estadounidense y puntos de control integrados directamente en el curso, asegurando una comprensión real en cada etapa.'
+      en: 'This program is designed for beginners and learners who want a clear, structured path to professional growth. Progress is measured through US-style exams built directly into the course, confirming real understanding along the way.',
+      es: 'Este programa está diseñado para principiantes y personas que desean un camino claro y estructurado hacia el crecimiento profesional. El progreso se mide a través de exámenes al estilo estadounidense integrados directamente en el curso, confirmando una comprensión real en cada etapa.'
     },
     'about.body2b': {
       en: 'The entire program is fully online and self-paced, allowing you to learn at your own speed and replay lessons anytime. Please note that the program does not replace licensing requirements, which vary by state or city, so it is important to verify your local regulations.',
@@ -719,16 +719,16 @@
       es: 'Cómo obtienes tu certificación NALA'
     },
     'cert.path.lead': {
-      en: 'Your certification is earned by completing the training path, passing the required lesson checks, and finishing the final certification step inside your student dashboard.',
-      es: 'Obtienes tu certificación al completar la ruta de entrenamiento, aprobar las evaluaciones requeridas de las lecciones y finalizar el paso de certificación dentro de tu panel de estudiante.'
+      en: 'Your certification is earned by completing the training path, passing the required exams, and finishing the final certification step inside your student dashboard.',
+      es: 'Obtienes tu certificación al completar la ruta de entrenamiento, aprobar los exámenes requeridos y finalizar el paso de certificación dentro de tu panel de estudiante.'
     },
     'cert.path.step1.title': {
       en: 'Complete the program',
       es: 'Completa el programa'
     },
     'cert.path.step1.body': {
-      en: 'Work through the locksmith lessons, practice material, and required quizzes at your own pace.',
-      es: 'Avanza por las lecciones de cerrajería, el material de práctica y los cuestionarios requeridos a tu propio ritmo.'
+      en: 'Work through the locksmith lessons, practice material, and required exams at your own pace.',
+      es: 'Avanza por las lecciones de cerrajería, el material de práctica y los exámenes requeridos a tu propio ritmo.'
     },
     'cert.path.step2.title': {
       en: 'Confirm your completion details',
@@ -1198,7 +1198,7 @@
     'final.error.certificate':   { en: 'Could not send certificate. Please try again.', es: 'No se pudo enviar el certificado. Inténtalo de nuevo.' },
 
     // ── QUIZ ──────────────────────────────────────────────────────
-    'quiz.title':     { en: 'Quiz',     es: 'Examen' },
+    'quiz.title':     { en: 'Exam',     es: 'Examen' },
     'quiz.module':    { en: 'Module:',  es: 'Módulo:' },
       'quiz.questions': { en: 'Questions', es: 'Preguntas' },
       'quiz.session':   { en: 'Session:', es: 'Sesión:' },
@@ -1211,10 +1211,10 @@
       'quiz.cancel':    { en: 'Cancel',   es: 'Cancelar' },
     'quiz.clearAll':  { en: 'Clear All', es: 'Borrar Todo' },
     'quiz.testFirst': { en: 'Test (Select First)', es: 'Probar (Seleccionar Primero)' },
-    'quiz.submit':    { en: 'Submit Quiz', es: 'Enviar Examen' },
-    'quiz.error.submit': { en: 'Could not submit quiz. Please try again.', es: 'No se pudo enviar el examen. Inténtalo de nuevo.' },
-    'quiz.error.submissionFailed': { en: 'Quiz submission failed. Please try again.', es: 'Falló el envío del examen. Inténtalo de nuevo.' },
-    'quiz.error.load': { en: 'Could not load quiz. Please try again.', es: 'No se pudo cargar el examen. Inténtalo de nuevo.' },
+    'quiz.submit':    { en: 'Submit Exam', es: 'Enviar Examen' },
+    'quiz.error.submit': { en: 'Could not submit exam. Please try again.', es: 'No se pudo enviar el examen. Inténtalo de nuevo.' },
+    'quiz.error.submissionFailed': { en: 'Exam submission failed. Please try again.', es: 'Falló el envío del examen. Inténtalo de nuevo.' },
+    'quiz.error.load': { en: 'Could not load exam. Please try again.', es: 'No se pudo cargar el examen. Inténtalo de nuevo.' },
 
     // ── DIALOG ────────────────────────────────────────────────────
     'dialog.title':   { en: 'Confirm Action', es: 'Confirmar Acción' },

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MTK Hierarchy - Quiz Test</title>
+  <title>MTK Hierarchy - Exam Test</title>
   
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -49,8 +49,8 @@
   <!-- Debug Panel -->
   <div class="debug-panel">
     <h3>🔧 Debug Controls</h3>
-    <button class="btn btn-sm btn-primary" onclick="unlockQuiz()">Unlock Quiz (Module 1)</button>
-    <button class="btn btn-sm btn-success" onclick="checkQuizStatus()">Check Quiz Status</button>
+    <button class="btn btn-sm btn-primary" onclick="unlockQuiz()">Unlock Exam (Module 1)</button>
+    <button class="btn btn-sm btn-success" onclick="checkQuizStatus()">Check Exam Status</button>
     <div id="debug-output" style="margin-top: 10px; font-size: 12px; color: #666;"></div>
   </div>
 
@@ -157,19 +157,19 @@
             // Force re-render
             if (window.MTKHierarchy) {
               window.MTKHierarchy.renderCourses();
-              updateDebug('✅ Quiz unlocked and re-rendered! Expand Module 1 to see it.');
+              updateDebug('✅ Exam unlocked and re-rendered! Expand Module 1 to see it.');
             } else {
               // Update UI manually
               const quizElement = document.querySelector('[data-quiz-id="quiz-module-1"]');
               if (quizElement) {
                 quizElement.classList.remove('mtk-quiz--disabled');
-                updateDebug('✅ Quiz unlocked! Click on the quiz link.');
+                updateDebug('✅ Quiz unlocked! Click on the exam link.');
               } else {
-                updateDebug('❌ Quiz element not found. Module may be collapsed.');
+                updateDebug('❌ Exam element not found. Module may be collapsed.');
               }
             }
           } else {
-            updateDebug('❌ Quiz not found in module config');
+            updateDebug('❌ Exam not found in module config');
           }
         }
       }
@@ -185,7 +185,7 @@
           if (module1 && module1.quiz) {
             const status = module1.quiz.access ? '🟢 UNLOCKED' : '🔴 LOCKED';
             debugMsg += `<strong>Config Status:</strong><br>`;
-            debugMsg += `Quiz: ${status}<br>`;
+            debugMsg += `Exam: ${status}<br>`;
             debugMsg += `ID: ${module1.quiz.id}<br>`;
             debugMsg += `Access: ${module1.quiz.access}<br><br>`;
           }
@@ -217,7 +217,7 @@
       const quiz = e.target.closest('.mtk-quiz');
       if (quiz) {
         wc.log('🖱️ Quiz element clicked:', quiz);
-        wc.log('Quiz ID:', quiz.dataset.quizId);
+        wc.log('Exam ID:', quiz.dataset.quizId);
         wc.log('Module ID:', quiz.dataset.moduleId);
         wc.log('Disabled:', quiz.classList.contains('mtk-quiz--disabled'));
       }
@@ -225,8 +225,8 @@
     
     // Log quiz clicks
     wc.subscribe('mtk-hierarchy:quiz-clicked', function(msg, data) {
-      wc.info('🎯 Quiz Clicked Event:', data);
-      updateDebug('✅ Quiz clicked! Check RHS for Start Quiz button.');
+      wc.info('🎯 Exam Clicked Event:', data);
+      updateDebug('✅ Exam clicked! Check RHS for Start Exam button.');
     });
     
     wc.subscribe('mtk-hierarchy:module-completed', function(msg, data) {

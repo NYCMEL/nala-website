@@ -12,7 +12,7 @@ wc.emsgs = [
     { id: 1001, text: "Could not create the account. Please try again.", key: "account.error.create" },
     { id: 1002, text: "No questions found for module" },
     { id: 1003, text: "Registration failed. Please try again.", key: "register.error.server" },
-    { id: 1004, text: 'You have successfully completed this quiz.' },
+    { id: 1004, text: 'You have successfully completed this exam.' },
 ];
 
 wc.t = function (key, fallback) {
@@ -1614,7 +1614,7 @@ wc.setDasbboardProgress = function(percentage) {
 }
 
 /************************************************************
- * SUBMIT QUIZ API
+ * SUBMIT EXAM API
  * answersMap format: { "29":"a", "37":"c", ... }
  ************************************************************/
 wc.submitQuiz = function (quizSessionId, moduleId, answersMap, callback) {
@@ -1658,7 +1658,7 @@ wc.submitQuiz = function (quizSessionId, moduleId, answersMap, callback) {
 
         if (!res.ok || (data && data.ok === false)) {
             const msg = (data && (data.error || data.message)) ? (data.error || data.message) : ("HTTP " + res.status);
-            const err = new Error(msg || "Failed to submit quiz");
+            const err = new Error(msg || "Failed to submit exam");
             err.status = res.status;
             err.data = data;
             throw err;
@@ -1678,7 +1678,7 @@ wc.submitQuiz = function (quizSessionId, moduleId, answersMap, callback) {
         }
 
         if (err && err.name === "AbortError") {
-            err = new Error("Quiz submission timed out after 15 seconds.");
+            err = new Error("Exam submission timed out after 15 seconds.");
         }
 
         wc.error("submitQuiz error:", err);

@@ -404,7 +404,7 @@ class MTKHierarchy {
            data-testid="quiz-${quiz.id}"
            role="button"
            tabindex="0"
-           aria-label="Quiz: ${quizTitle}">
+           aria-label="Exam: ${quizTitle}">
         <span class="mtk-quiz__icon material-icons">quiz</span>
         <span class="mtk-quiz__title">${quizTitle}</span>
         <span class="mtk-quiz__badge material-icons">arrow_forward</span>

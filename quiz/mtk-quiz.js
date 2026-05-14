@@ -105,7 +105,7 @@
 		const moduleEl = this.element.querySelector('#moduleId');
 		const countEl = this.element.querySelector('#questionCount');
 
-		if (titleEl) titleEl.textContent = 'Locksmith Knowledge Quiz';
+		if (titleEl) titleEl.textContent = 'Locksmith Knowledge Exam';
 		if (moduleEl) moduleEl.textContent = this.config.module_id || '--';
 		if (countEl) countEl.textContent = this.config.count || this.config.questions.length;
 	    }
@@ -353,7 +353,7 @@
 		    };
 
 		    if (!window.wc || typeof window.wc.submitQuiz !== 'function') {
-			this.showMessage('error', 'Quiz submission is not available right now.');
+			this.showMessage('error', 'Exam submission is not available right now.');
 			return;
 		    }
 
@@ -363,7 +363,7 @@
 			this.elements.submitBtn.disabled = true;
 		    }
 
-		    this.showMessage('info', 'Submitting your quiz...');
+		    this.showMessage('info', 'Submitting your exam...');
 
 		    window.wc.submitQuiz(
 			this.config.quiz_session_id,
@@ -377,10 +377,10 @@
 			    }
 
 			    if (err) {
-				wc.error('❌ Quiz submission failed:', err);
+				wc.error('Exam submission failed:', err);
 				const quizSubmissionFallback = window.wc && typeof wc.t === 'function'
-				    ? wc.t('quiz.error.submissionFailed', 'Quiz submission failed. Please try again.')
-				    : 'Quiz submission failed. Please try again.';
+				    ? wc.t('quiz.error.submissionFailed', 'Exam submission failed. Please try again.')
+				    : 'Exam submission failed. Please try again.';
 				const friendlyError = window.wc && typeof wc.customerMessage === 'function'
 				    ? wc.customerMessage(err, quizSubmissionFallback)
 				    : quizSubmissionFallback;
@@ -407,12 +407,12 @@
 
 			    let successMessage = (result && result.message)
 				? result.message
-				: 'Quiz submitted successfully!';
+				: 'Exam submitted successfully!';
 
 			    if (scorePercent !== null && passPercent !== null) {
 				successMessage = passed
-				    ? `Quiz submitted. Score: ${scorePercent}%. You passed${advanced ? ' and unlocked the next lesson.' : '.'}`
-				    : `Quiz submitted. Score: ${scorePercent}%. Passing score is ${passPercent}%.`;
+				    ? `Exam submitted. Score: ${scorePercent}%. You passed${advanced ? ' and unlocked the next lesson.' : '.'}`
+				    : `Exam submitted. Score: ${scorePercent}%. Passing score is ${passPercent}%.`;
 			    }
 
 			    if (window.wc && window.wc.publish) {
@@ -486,8 +486,8 @@
 		    }
 		    wc.error('❌ Quiz submit handler crashed:', error);
 		    const quizSubmitFallback = window.wc && typeof wc.t === 'function'
-			? wc.t('quiz.error.submit', 'Could not submit quiz. Please try again.')
-			: 'Could not submit quiz. Please try again.';
+			? wc.t('quiz.error.submit', 'Could not submit exam. Please try again.')
+			: 'Could not submit exam. Please try again.';
 		    const friendlyError = window.wc && typeof wc.customerMessage === 'function'
 			? wc.customerMessage(error, quizSubmitFallback)
 			: quizSubmitFallback;
@@ -976,8 +976,8 @@
 	    wc.getQuiz(wc.quizModule, function(err, data) {
 		if (err) {
 		    const quizLoadFallback = window.wc && typeof wc.t === 'function'
-			? wc.t('quiz.error.load', 'Could not load quiz. Please try again.')
-			: 'Could not load quiz. Please try again.';
+			? wc.t('quiz.error.load', 'Could not load exam. Please try again.')
+			: 'Could not load exam. Please try again.';
 		    alert(window.wc && typeof wc.customerMessage === 'function'
 			? wc.customerMessage(err, quizLoadFallback)
 			: quizLoadFallback);

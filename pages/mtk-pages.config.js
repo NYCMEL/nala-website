@@ -62,7 +62,7 @@ window.app.pages = [
     {
         "cache": "false",
         "page":  "quiz",
-        "label": "Quiz",
+        "label": "Exam",
         "url":   "<wc-include href='quiz/index.inc.html' />"
     },
     {

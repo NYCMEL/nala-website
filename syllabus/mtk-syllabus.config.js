@@ -280,11 +280,11 @@ window.app.syllabus = [
                 ],
                 "quiz": {
                     "lesson_no": 101,
-                    "title": "Module Quiz: Foundations of Locksmithing",
+                    "title": "Module Exam: Foundations of Locksmithing",
                     "module_id": "M1",
                     "access": true,
                     "badge": {
-                        "text": "Quiz Locked",
+                        "text": "Exam Locked",
                         "color": "gray"
                     },
                     "rules": {
@@ -293,7 +293,7 @@ window.app.syllabus = [
                         "pass_percent": 80
                     },
                     "type": "quiz",
-                    "description": "Module Quiz: Foundations of Locksmithing"
+                    "description": "Module Exam: Foundations of Locksmithing"
                 }
             }
         ]
@@ -546,11 +546,11 @@ window.app.syllabus = [
                 ],
                 "quiz": {
                     "lesson_no": 102,
-                    "title": "Module Quiz: Residential Lock Cylinders",
+                    "title": "Module Exam: Residential Lock Cylinders",
                     "module_id": "M2",
                     "access": true,
                     "badge": {
-                        "text": "Quiz Locked",
+                        "text": "Exam Locked",
                         "color": "gray"
                     },
                     "rules": {
@@ -559,7 +559,7 @@ window.app.syllabus = [
                         "pass_percent": 80
                     },
                     "type": "quiz",
-                    "description": "Module Quiz: Residential Lock Cylinders"
+                    "description": "Module Exam: Residential Lock Cylinders"
                 }
             },
             {
@@ -714,11 +714,11 @@ window.app.syllabus = [
                 ],
                 "quiz": {
                     "lesson_no": 103,
-                    "title": "Module Quiz: Keys and Key Machines",
+                    "title": "Module Exam: Keys and Key Machines",
                     "module_id": "M3",
                     "access": false,
                     "badge": {
-                        "text": "Quiz Locked",
+                        "text": "Exam Locked",
                         "color": "gray"
                     },
                     "rules": {
@@ -727,7 +727,7 @@ window.app.syllabus = [
                         "pass_percent": 80
                     },
                     "type": "quiz",
-                    "description": "Module Quiz: Keys and Key Machines"
+                    "description": "Module Exam: Keys and Key Machines"
                 }
             },
             {
@@ -847,11 +847,11 @@ window.app.syllabus = [
                 ],
                 "quiz": {
                     "lesson_no": 104,
-                    "title": "Module Quiz: Commercial Hardware and High-Security Locks",
+                    "title": "Module Exam: Commercial Hardware and High-Security Locks",
                     "module_id": "M4",
                     "access": false,
                     "badge": {
-                        "text": "Quiz Locked",
+                        "text": "Exam Locked",
                         "color": "gray"
                     },
                     "rules": {
@@ -860,7 +860,7 @@ window.app.syllabus = [
                         "pass_percent": 80
                     },
                     "type": "quiz",
-                    "description": "Module Quiz: Commercial Hardware and High-Security Locks"
+                    "description": "Module Exam: Commercial Hardware and High-Security Locks"
                 }
             }
         ]
@@ -987,11 +987,11 @@ window.app.syllabus = [
                 ],
                 "quiz": {
                     "lesson_no": 105,
-                    "title": "Module Quiz: Rekeying Fundamentals",
+                    "title": "Module Exam: Rekeying Fundamentals",
                     "module_id": "M5",
                     "access": false,
                     "badge": {
-                        "text": "Quiz Locked",
+                        "text": "Exam Locked",
                         "color": "gray"
                     },
                     "rules": {
@@ -1000,7 +1000,7 @@ window.app.syllabus = [
                         "pass_percent": 80
                     },
                     "type": "quiz",
-                    "description": "Module Quiz: Rekeying Fundamentals"
+                    "description": "Module Exam: Rekeying Fundamentals"
                 }
             },
             {
@@ -1140,11 +1140,11 @@ window.app.syllabus = [
                 ],
                 "quiz": {
                     "lesson_no": 106,
-                    "title": "Module Quiz: Advanced Rekeying",
+                    "title": "Module Exam: Advanced Rekeying",
                     "module_id": "M6",
                     "access": false,
                     "badge": {
-                        "text": "Quiz Locked",
+                        "text": "Exam Locked",
                         "color": "gray"
                     },
                     "rules": {
@@ -1153,7 +1153,7 @@ window.app.syllabus = [
                         "pass_percent": 80
                     },
                     "type": "quiz",
-                    "description": "Module Quiz: Advanced Rekeying"
+                    "description": "Module Exam: Advanced Rekeying"
                 }
             },
             {
@@ -1228,11 +1228,11 @@ window.app.syllabus = [
                 ],
                 "quiz": {
                     "lesson_no": 107,
-                    "title": "Module Quiz: Impressioning and Lockout Service",
+                    "title": "Module Exam: Impressioning and Lockout Service",
                     "module_id": "M7",
                     "access": false,
                     "badge": {
-                        "text": "Quiz Locked",
+                        "text": "Exam Locked",
                         "color": "gray"
                     },
                     "rules": {
@@ -1241,7 +1241,7 @@ window.app.syllabus = [
                         "pass_percent": 80
                     },
                     "type": "quiz",
-                    "description": "Module Quiz: Impressioning and Lockout Service"
+                    "description": "Module Exam: Impressioning and Lockout Service"
                 }
             }
         ]
@@ -1322,11 +1322,11 @@ window.app.syllabus = [
                 ],
                 "quiz": {
                     "lesson_no": 108,
-                    "title": "Module Quiz: Lockout, Safe, and Auto Entry",
+                    "title": "Module Exam: Lockout, Safe, and Auto Entry",
                     "module_id": "M8",
                     "access": false,
                     "badge": {
-                        "text": "Quiz Locked",
+                        "text": "Exam Locked",
                         "color": "gray"
                     },
                     "rules": {
@@ -1335,7 +1335,7 @@ window.app.syllabus = [
                         "pass_percent": 80
                     },
                     "type": "quiz",
-                    "description": "Module Quiz: Lockout, Safe, and Auto Entry"
+                    "description": "Module Exam: Lockout, Safe, and Auto Entry"
                 }
             },
             {
@@ -1408,11 +1408,11 @@ window.app.syllabus = [
                 ],
                 "quiz": {
                     "lesson_no": 109,
-                    "title": "Module Quiz: Automotive Electronics",
+                    "title": "Module Exam: Automotive Electronics",
                     "module_id": "M9",
                     "access": false,
                     "badge": {
-                        "text": "Quiz Locked",
+                        "text": "Exam Locked",
                         "color": "gray"
                     },
                     "rules": {
@@ -1421,7 +1421,7 @@ window.app.syllabus = [
                         "pass_percent": 80
                     },
                     "type": "quiz",
-                    "description": "Module Quiz: Automotive Electronics"
+                    "description": "Module Exam: Automotive Electronics"
                 }
             }
         ]
@@ -1502,11 +1502,11 @@ window.app.syllabus = [
                 ],
                 "quiz": {
                     "lesson_no": 110,
-                    "title": "Module Quiz: Automotive Codes, Wafers, and Programming",
+                    "title": "Module Exam: Automotive Codes, Wafers, and Programming",
                     "module_id": "M10",
                     "access": false,
                     "badge": {
-                        "text": "Quiz Locked",
+                        "text": "Exam Locked",
                         "color": "gray"
                     },
                     "rules": {
@@ -1515,7 +1515,7 @@ window.app.syllabus = [
                         "pass_percent": 80
                     },
                     "type": "quiz",
-                    "description": "Module Quiz: Automotive Codes, Wafers, and Programming"
+                    "description": "Module Exam: Automotive Codes, Wafers, and Programming"
                 }
             }
         ]
