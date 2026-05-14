@@ -253,10 +253,10 @@ function biab_logo_generate_zoviz($payload) {
     $registered = biab_logo_zoviz_request('/album/brand/register', array(
         'brand_name' => array($businessName),
         'filters' => array(
-            'industries' => array('locksmith', 'security services', 'home services'),
-            'symbol_keywords' => array('lock', 'key', 'keyhole', 'shield', 'door', 'house', 'building', 'safe', 'security'),
-            'color_spectrum' => array('black', 'navy', 'blue', 'green', 'gold', 'gray', 'white'),
-            'description' => biab_logo_slice(implode('. ', $descriptionParts), 1200)
+            'industries' => array(),
+            'symbol_keywords' => array(),
+            'color_spectrum' => array(),
+            'description' => biab_logo_slice(implode('. ', $descriptionParts), 900)
         )
     ));
     $albumId = (string)($registered['result']['id'] ?? '');
