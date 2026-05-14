@@ -332,10 +332,22 @@ class ClientProfile {
     }
 
     getPersonalUrl(uid) {
-	const origin = window.location.origin || ''
-	const basePath = '/repo_deploy/client/index.html'
-	const query = uid ? '?nalaUID=' + encodeURIComponent(uid) : ''
-	return origin + basePath + query
+	const d = this.data || {}
+	const business = d.business || {}
+	const contact = d.contact || {}
+	if (window.nalaClientUrl && typeof window.nalaClientUrl.best === 'function') {
+	    return window.nalaClientUrl.best({
+		uid: uid || d.nalaUID || '',
+		businessName: business.name || '',
+		legalName: business.legalName || '',
+		ownerName: contact.name || '',
+		serviceArea: business.serviceArea || contact.serviceArea || '',
+		email: business.email || contact.email || '',
+		phone: business.phone || contact.phone || ''
+	    })
+	}
+	const slug = uid ? String(uid).toLowerCase().replace(/[^a-z0-9-]+/g, '-') : 'local-locksmith'
+	return 'https://pro.nalanetwork.com/' + slug
     }
 
     _generateConfigJs(changes) {

@@ -113,8 +113,8 @@ window.mtkSettingsConfig = {
           label: "Business website",
           type: "url",
           required: false,
-          placeholder: "Your NALA business webpage",
-          helpText: "This is usually filled in automatically with your NALA website link."
+          placeholder: "https://pro.nalanetwork.com/your-locksmith",
+          helpText: "Choose a short NALA client URL, or type a different website if you already use one."
         },
         {
           id: "businessHours",

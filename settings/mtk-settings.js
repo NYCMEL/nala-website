@@ -210,10 +210,98 @@
         ""
       ).replace(/[^a-zA-Z0-9_-]/g, "");
       if (uid) {
-        return window.location.origin + "/repo_deploy/client/index.html?nalaUID=" + encodeURIComponent(uid);
+        return this.defaultBusinessWebsite();
       }
     }
     return undefined;
+  };
+
+  MTKSettings.prototype.clientUrlPayload = function () {
+    var user = getSessionUser();
+    var business = this.formState.business || {};
+    var services = this.formState.services || {};
+    var privacy = this.formState.privacy || {};
+
+    return {
+      uid: String(
+        (window.wc && wc.session && wc.session.nalaUID) ||
+        user.nalaUID ||
+        user.id ||
+        user.user_id ||
+        user.email ||
+        ""
+      ).replace(/[^a-zA-Z0-9_-]/g, ""),
+      businessName: business.customerFacingBusinessName || business.legalBusinessName || "",
+      legalName: business.legalBusinessName || "",
+      ownerName: business.ownerOrResponsiblePartyName || privacy.fullName || user.name || "",
+      serviceArea: services.serviceArea || "",
+      email: business.businessEmail || privacy.emailAddress || user.email || "",
+      phone: business.businessPhone || privacy.contactPhoneNumber || user.phone || ""
+    };
+  };
+
+  MTKSettings.prototype.clientUrlOptions = function (count) {
+    if (!window.nalaClientUrl || typeof window.nalaClientUrl.options !== "function") {
+      return [];
+    }
+    return window.nalaClientUrl.options(this.clientUrlPayload(), count || 12);
+  };
+
+  MTKSettings.prototype.defaultBusinessWebsite = function () {
+    if (window.nalaClientUrl && typeof window.nalaClientUrl.best === "function") {
+      return window.nalaClientUrl.best(this.clientUrlPayload());
+    }
+    return "https://pro.nalanetwork.com/local-locksmith";
+  };
+
+  MTKSettings.prototype.shouldAutoFillBusinessWebsite = function (value) {
+    var current = String(value || "").trim();
+    if (!current) return true;
+    return !!(window.nalaClientUrl && typeof window.nalaClientUrl.isLegacyUrl === "function" && window.nalaClientUrl.isLegacyUrl(current));
+  };
+
+  MTKSettings.prototype.renderWebsiteSlugOptions = function () {
+    var options = this.clientUrlOptions(12);
+    if (!options.length) {
+      return "";
+    }
+
+    return '' +
+      '<div class="mtk-settings__slug-picker" data-website-slug-options>' +
+        '<p class="mtk-settings__slug-title">Client URL options</p>' +
+        '<div class="mtk-settings__slug-options">' +
+          options.map(function (option) {
+            return '<button class="mtk-settings__slug-option" type="button" data-website-url="' + escapeHTML(option.url) + '">' + escapeHTML(option.slug) + '</button>';
+          }).join("") +
+        '</div>' +
+      '</div>';
+  };
+
+  MTKSettings.prototype.syncBusinessWebsiteOptions = function (form, autoFill) {
+    form = form || this.panelEl.querySelector(".mtk-settings__form");
+    if (!form || this.activeTabId !== "business") return;
+
+    var input = form.querySelector('[name="businessWebsite"]');
+    var picker = form.querySelector("[data-website-slug-options]");
+    var options = this.clientUrlOptions(12);
+    if (!input || !options.length) return;
+
+    if (autoFill && this.shouldAutoFillBusinessWebsite(input.value)) {
+      input.value = options[0].url;
+      this.formState.business.businessWebsite = input.value;
+    }
+
+    input.placeholder = options[0].url;
+
+    if (picker) {
+      picker.innerHTML =
+        '<p class="mtk-settings__slug-title">Client URL options</p>' +
+        '<div class="mtk-settings__slug-options">' +
+          options.map(function (option) {
+            return '<button class="mtk-settings__slug-option" type="button" data-website-url="' + escapeHTML(option.url) + '">' + escapeHTML(option.slug) + '</button>';
+          }).join("") +
+        '</div>';
+    }
   };
 
   MTKSettings.prototype.onMessage = function (message) {
@@ -359,6 +447,7 @@
     var inputType = isPassword ? "password" : (field.type || "text");
     var passwordPlaceholder = isPassword && !value ? ' data-password-empty="true"' : "";
     var input = '<input class="mtk-settings__input" id="mtk-settings-' + escapeHTML(tab.id) + '-' + escapeHTML(field.id) + '" name="' + escapeHTML(field.id) + '" type="' + escapeHTML(inputType) + '" value="' + escapeHTML(value) + '" placeholder="' + escapeHTML(field.placeholder || "") + '"' + required + passwordPlaceholder + '>';
+    var websiteSlugOptions = tab.id === "business" && field.id === "businessWebsite" ? this.renderWebsiteSlugOptions() : "";
     if (isPassword) {
       input = '<div class="mtk-settings__password-wrap">' +
         input +
@@ -373,6 +462,7 @@
         '<label class="mtk-settings__field-label" for="mtk-settings-' + escapeHTML(tab.id) + '-' + escapeHTML(field.id) + '">' + escapeHTML(field.label) + requiredMark + '</label>' +
         input +
         (field.helpText ? '<p class="mtk-settings__field-help">' + escapeHTML(field.helpText) + '</p>' : '') +
+        websiteSlugOptions +
       '</div>';
   };
 
@@ -461,8 +551,25 @@
           input.value = window.nalaPhone.format(input.value);
         }
         self.formState[tab.id][input.name] = input.value;
+        if (tab.id === "business" && input.name !== "businessWebsite") {
+          self.syncBusinessWebsiteOptions(form, true);
+        }
       });
     });
+
+    form.addEventListener("click", function (event) {
+      var slugButton = event.target.closest("[data-website-url]");
+      if (!slugButton) return;
+      var input = form.querySelector('[name="businessWebsite"]');
+      if (!input) return;
+      input.value = slugButton.getAttribute("data-website-url") || "";
+      self.formState.business.businessWebsite = input.value;
+      self.syncBusinessWebsiteOptions(form, false);
+    });
+
+    if (tab.id === "business") {
+      this.syncBusinessWebsiteOptions(form, true);
+    }
 
     Array.prototype.forEach.call(form.querySelectorAll("[data-checkbox-group]"), function (group) {
       var fieldId = group.getAttribute("data-checkbox-group");

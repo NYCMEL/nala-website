@@ -418,8 +418,16 @@
       return !!(
         this._cleanValue(business.businessPhone || privacy.contactPhoneNumber) &&
         this._cleanValue(business.businessEmail || privacy.emailAddress) &&
-        this._cleanValue(business.businessWebsite || this._defaultClientWebsite())
+        this._cleanValue(this._businessWebsiteOrDefault(business))
       );
+    }
+
+    _businessWebsiteOrDefault(business = {}) {
+      const configured = this._cleanValue(business.businessWebsite || business.website);
+      if (configured && !(window.nalaClientUrl && typeof window.nalaClientUrl.isLegacyUrl === "function" && window.nalaClientUrl.isLegacyUrl(configured))) {
+        return configured;
+      }
+      return this._defaultClientWebsite();
     }
 
     _hasServicesOffered(services) {
@@ -1657,7 +1665,7 @@
         contactName: privacy.fullName || business.ownerOrResponsiblePartyName,
         phone: business.businessPhone || privacy.contactPhoneNumber,
         email: business.businessEmail || privacy.emailAddress,
-        website: business.businessWebsite || this._defaultClientWebsite(),
+        website: this._businessWebsiteOrDefault(business),
         serviceArea: services.serviceArea
       };
       const value = map[fieldId] ? String(map[fieldId]).trim() : "";
@@ -1682,7 +1690,7 @@
       const privacy = settings.privacy || {};
       const services = settings.services || {};
       const businessName = business.customerFacingBusinessName || business.legalBusinessName || "";
-      const websiteUrl = business.businessWebsite || this._defaultClientWebsite();
+      const websiteUrl = this._businessWebsiteOrDefault(business);
       const sitemapUrl = this._sitemapUrlForWebsite(websiteUrl);
       const serviceArea = services.serviceArea || business.serviceArea || "";
       const customServices = this._customServiceLabels(services.customServices);
@@ -1958,15 +1966,24 @@
 
     _defaultClientWebsite() {
       const uid = this._businessPageId();
-      const clientUrl = "/repo_deploy/client/index.html";
+      const profile = this._currentSettingsProfile();
+      const business = profile.business || {};
+      const services = profile.services || {};
+      const privacy = profile.privacy || {};
 
-      try {
-        const url = new URL(clientUrl, window.location.origin || window.location.href);
-        if (uid) url.searchParams.set("nalaUID", uid);
-        return url.href;
-      } catch (err) {
-        return clientUrl + (uid ? "?nalaUID=" + encodeURIComponent(uid) : "");
+      if (window.nalaClientUrl && typeof window.nalaClientUrl.best === "function") {
+        return window.nalaClientUrl.best({
+          uid,
+          businessName: business.customerFacingBusinessName || business.legalBusinessName || "",
+          legalName: business.legalBusinessName || "",
+          ownerName: business.ownerOrResponsiblePartyName || privacy.fullName || "",
+          serviceArea: services.serviceArea || "",
+          email: business.businessEmail || privacy.emailAddress || "",
+          phone: business.businessPhone || privacy.contactPhoneNumber || ""
+        });
       }
+
+      return "https://pro.nalanetwork.com/" + (uid ? String(uid).toLowerCase().replace(/[^a-z0-9-]+/g, "-") : "local-locksmith");
     }
 
     _showSetupView(section, bodyHTML) {

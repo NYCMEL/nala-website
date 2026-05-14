@@ -493,8 +493,20 @@ class _febe {
 	const businessName = business.customerFacingBusinessName || business.legalBusinessName || "Your Company Name";
 	const phone = business.businessPhone || privacy.phone || "";
 	const email = business.businessEmail || privacy.emailAddress || "";
-	const website = business.businessWebsite || business.website || "";
 	const serviceArea = services.serviceArea || "";
+	let website = business.businessWebsite || business.website || "";
+	if ((!website || (window.nalaClientUrl && typeof window.nalaClientUrl.isLegacyUrl === "function" && window.nalaClientUrl.isLegacyUrl(website))) && window.nalaClientUrl && typeof window.nalaClientUrl.best === "function") {
+	    website = window.nalaClientUrl.best({
+		uid: uid,
+		businessName: business.customerFacingBusinessName || business.legalBusinessName || "",
+		legalName: business.legalBusinessName || "",
+		ownerName: business.ownerOrResponsiblePartyName || privacy.fullName || "",
+		serviceArea: serviceArea,
+		email: business.businessEmail || privacy.emailAddress || "",
+		phone: business.businessPhone || privacy.contactPhoneNumber || ""
+	    });
+	    business.businessWebsite = website;
+	}
 
 	const profile = {
 	    nalaUID: uid && uid.length >= 3 ? uid : "DEMO",

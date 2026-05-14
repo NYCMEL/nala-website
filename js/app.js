@@ -131,6 +131,172 @@ document.addEventListener("click", function (e) {
     }
 })();
 
+// Client website URLs: short public URLs for Business in a Box customers.
+(function setupClientUrlHelper() {
+    const BASE_URL = "https://pro.nalanetwork.com";
+    const FALLBACK_SLUG = "local-locksmith";
+
+    function cleanText(value) {
+        let text = String(value || "").toLowerCase();
+        if (text.normalize) {
+            text = text.normalize("NFKD").replace(/[\u0300-\u036f]/g, "");
+        }
+        return text
+            .replace(/&/g, " and ")
+            .replace(/['’]s\b/g, "s")
+            .replace(/['’]/g, "")
+            .replace(/[^a-z0-9]+/g, " ")
+            .trim();
+    }
+
+    function toSlug(value) {
+        return cleanText(value)
+            .replace(/\s+/g, "-")
+            .replace(/^-+|-+$/g, "")
+            .slice(0, 58)
+            .replace(/-+$/g, "");
+    }
+
+    function compactName(value) {
+        const dropWords = {
+            the: true,
+            a: true,
+            an: true,
+            llc: true,
+            inc: true,
+            incorporated: true,
+            corp: true,
+            corporation: true,
+            co: true,
+            company: true,
+            ltd: true,
+            limited: true,
+            service: true,
+            services: true,
+            solutions: true,
+            enterprise: true,
+            enterprises: true
+        };
+        const words = cleanText(value).split(/\s+/).filter(function (word) {
+            return word && !dropWords[word];
+        });
+        return words.join(" ");
+    }
+
+    function hasTradeWord(slug) {
+        return /(^|-)(locksmith|lock|locks|key|keys|security)(-|$)/.test(slug || "");
+    }
+
+    function withTrade(slug) {
+        if (!slug) return FALLBACK_SLUG;
+        return hasTradeWord(slug) ? slug : slug + "-locksmith";
+    }
+
+    function cityFromServiceArea(value) {
+        const first = cleanText(String(value || "").split(/[,\n|/]+/)[0] || "");
+        const words = first.split(/\s+/).filter(function (word) {
+            return word && word !== "greater" && word !== "metro" && word.length > 1;
+        });
+        return toSlug(words.slice(0, 3).join(" "));
+    }
+
+    function hashString(value) {
+        const text = String(value || FALLBACK_SLUG);
+        let hash = 5381;
+        for (let i = 0; i < text.length; i += 1) {
+            hash = ((hash << 5) + hash) + text.charCodeAt(i);
+            hash = hash >>> 0;
+        }
+        return hash;
+    }
+
+    function shortCode(payload) {
+        const seed = [
+            payload.uid,
+            payload.email,
+            payload.phone,
+            payload.businessName,
+            payload.legalName,
+            payload.serviceArea
+        ].filter(Boolean).join("|");
+        return hashString(seed).toString(36).slice(-4);
+    }
+
+    function digitCode(payload) {
+        const value = String(hashString(shortCode(payload) + "|" + (payload.businessName || "")) % 900 + 100);
+        return value;
+    }
+
+    function addUnique(list, slug) {
+        slug = toSlug(slug);
+        if (!slug || slug.length < 3) return;
+        if (list.indexOf(slug) > -1) return;
+        list.push(slug);
+    }
+
+    function options(payload, count) {
+        payload = payload || {};
+        count = count || 12;
+
+        const rawName = payload.businessName || payload.legalName || payload.ownerName || "";
+        const base = withTrade(toSlug(compactName(rawName)));
+        const city = cityFromServiceArea(payload.serviceArea);
+        const owner = withTrade(toSlug(compactName(payload.ownerName || "")));
+        const code = shortCode(payload);
+        const digits = digitCode(payload);
+        const firstWord = toSlug((compactName(rawName).split(/\s+/)[0] || "").trim());
+        const list = [];
+
+        addUnique(list, base);
+        if (city) addUnique(list, base + "-" + city);
+        addUnique(list, base + "-" + code);
+        addUnique(list, base + digits);
+        addUnique(list, base + "-pro");
+        addUnique(list, base + "-local");
+        addUnique(list, base + "-247");
+        if (city) addUnique(list, city + "-" + base);
+        if (city) addUnique(list, base + "-" + city + "-" + code.slice(-3));
+        if (owner && owner !== base) addUnique(list, owner);
+        if (owner && city) addUnique(list, owner + "-" + city);
+        if (firstWord) addUnique(list, firstWord + digits);
+        if (firstWord) addUnique(list, firstWord + "-locks");
+        if (firstWord && city) addUnique(list, firstWord + "-locks-" + city);
+        addUnique(list, base + "-service");
+        addUnique(list, base + "-now");
+        addUnique(list, base + "-team");
+        addUnique(list, base + "-hq");
+
+        while (list.length < count) {
+            addUnique(list, base + "-" + (hashString(list.length + "|" + code + "|" + base) % 9000 + 1000));
+        }
+
+        return list.slice(0, count).map(function (slug) {
+            return {
+                slug: slug,
+                url: BASE_URL + "/" + slug,
+                label: slug
+            };
+        });
+    }
+
+    function best(payload) {
+        const first = options(payload || {}, 1)[0];
+        return first ? first.url : BASE_URL + "/" + FALLBACK_SLUG;
+    }
+
+    function isLegacyUrl(value) {
+        return /\/repo_deploy\/client\/index\.html/i.test(String(value || ""));
+    }
+
+    window.nalaClientUrl = {
+        baseUrl: BASE_URL,
+        toSlug: toSlug,
+        options: options,
+        best: best,
+        isLegacyUrl: isLegacyUrl
+    };
+})();
+
 // Phone fields: format US numbers as (123) 245-1234 while keeping foreign numbers usable.
 (function setupPhoneFormatting() {
     function clean(value) {
