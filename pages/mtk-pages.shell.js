@@ -1,6 +1,8 @@
 (function () {
     "use strict";
 
+    window.__nalaSessionBootComplete = false;
+
     const PRIVATE_PAGES = ["dashboard", "final", "hierarchy", "settings", "biab", "quiz", "alerts"];
 
     function getPagesRef() {
@@ -54,12 +56,14 @@
         if (shell) shell.style.visibility = "hidden";
 
         if (!window.wc || typeof wc.getSession !== "function") {
+            window.__nalaSessionBootComplete = true;
             if (shell) shell.style.visibility = "visible";
             return;
         }
 
         wc.getSession(function (loggedIn, session, err) {
             if (err) {
+                window.__nalaSessionBootComplete = true;
                 if (shell) shell.style.visibility = "visible";
                 return;
             }
@@ -67,6 +71,7 @@
             withPagesRef(function (pagesRef) {
                 const requestedPage = getRequestedPage();
                 const reveal = function () {
+                    window.__nalaSessionBootComplete = true;
                     pagesRef.style.visibility = "visible";
                 };
 

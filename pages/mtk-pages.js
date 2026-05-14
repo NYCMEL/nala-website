@@ -5,8 +5,8 @@
  */
 class Pages extends HTMLElement {
     _isLoggedIn() {
-        const sessionUser = window.wc && wc.session && wc.session.user;
-        return !!(sessionUser || (window.wc && (wc.user || wc.currentUser)));
+        const session = window.wc && wc.session ? wc.session : null;
+        return !!((session && (session.logged_in || session.user)) || (window.wc && (wc.user || wc.currentUser)));
     };
 
     _privateTargetFor(page) {
@@ -19,6 +19,7 @@ class Pages extends HTMLElement {
 
     connectedCallback() {
         wc.group("mtk-pages.connectedCallback");
+        this.style.visibility = "hidden";
 
         if (!this.id) {
             this.id = "mtk-pages";
@@ -114,7 +115,9 @@ class Pages extends HTMLElement {
             this._dev();
         }
 
-        this.style.visibility = "visible";
+        if (window.__nalaSessionBootComplete !== false) {
+            this.style.visibility = "visible";
+        }
 
         wc.groupEnd();
     };
