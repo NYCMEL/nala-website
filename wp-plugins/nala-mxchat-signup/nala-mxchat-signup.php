@@ -450,6 +450,8 @@ function nala_mxchat_signup_fast_answer(string $message): string
         'completion time', 'how long to complete', 'how long to finish',
         'how long does it take', 'how long will it take', 'how fast can i finish',
         'how quickly can i finish', 'time to complete', 'time to finish',
+        'how much time', 'how much time does it take', 'how much time is it take',
+        'how much time will it take', 'time does it take', 'time is it take',
         'how long is the course', 'how long is the program',
         'finish fast', 'complete fast', 'finish quickly', 'complete quickly',
         'how many lessons', 'lesson count', 'how many modules', 'module count',
@@ -459,6 +461,23 @@ function nala_mxchat_signup_fast_answer(string $message): string
         str_contains($normalized, 'how long') &&
         nala_mxchat_signup_contains_any($normalized, ['course', 'program', 'training', 'finish', 'complete', 'take', 'takes'])
     );
+    $asks_tools_needed = nala_mxchat_signup_contains_any($normalized, [
+        'buy my own tools', 'buy tools', 'need tools', 'need my own tools',
+        'need to buy tools', 'do i need tools', 'do i need my own tools',
+        'will i need tools', 'will i need to buy tools', 'own tools',
+        'what tools', 'tools do i need', 'tools will i need',
+        'comprar herramientas', 'necesito herramientas', 'mis propias herramientas',
+        'que herramientas'
+    ]);
+    $asks_earnings = nala_mxchat_signup_contains_any($normalized, [
+        'how much can i make', 'how much cna i make', 'how much could i make',
+        'how much will i make', 'how much money can i make', 'how much money could i make',
+        'what can i make', 'what could i make', 'what will i make',
+        'how much can i earn', 'how much could i earn', 'what can i earn',
+        'earning potential', 'income potential', 'salary', 'pay',
+        'cuanto puedo ganar', 'cuanto ganaria', 'cuanto dinero puedo ganar',
+        'potencial de ingresos', 'salario'
+    ]);
     $asks_price = nala_mxchat_signup_message_asks_pricing($message);
     $asks_start = nala_mxchat_signup_contains_any($normalized, [
         'how do i start', 'how to start', 'start learning', 'start the course',
@@ -539,12 +558,44 @@ function nala_mxchat_signup_fast_answer(string $message): string
         'estudiantes', 'alumnos', 'cuantos'
     ]);
 
-    if ($asks_course_length) {
+    if ($asks_tools_needed || $asks_earnings || (($asks_course_length || $asks_tools_needed) && $asks_price)) {
         if ($lang === 'es') {
-            return 'Termina tan rapido o con tanta calma como necesites; el curso es completamente a tu propio ritmo. Eso importa porque empiezas a construir habilidades utiles de inmediato, sin esperar meses para dar el primer paso. La certificacion requiere terminar las lecciones, aprobar quizzes/verificaciones y completar el paso final de certificacion en tu panel.' . $personal('time') . nala_mxchat_signup_skill_investment_phrase($lang) . "\n\n" . 'Empieza las lecciones ahora: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
+            $lines = ['Respuesta corta:'];
+            if ($asks_course_length) {
+                $lines[] = '- Tiempo: el curso es a tu propio ritmo. Puedes empezar gratis ahora y avanzar tan rapido como puedas estudiar y practicar. La certificacion requiere terminar las lecciones, aprobar los examenes requeridos y completar el paso final de certificacion en tu panel.';
+            }
+            if ($asks_tools_needed) {
+                $lines[] = '- Herramientas: Premium incluye un kit de apertura de autos, pero si, debes esperar comprar herramientas adicionales a medida que avances y decidas que servicios quieres ofrecer. Business in a Box incluye un set de lock pick, pero no reemplaza una caja profesional completa.';
+            }
+            if ($asks_earnings) {
+                $lines[] = '- Ingresos: NALA no puede prometer cuanto ganaras. Depende de tu ubicacion, reglas de licencia, servicios, precios, demanda local, rapidez de respuesta y constancia para conseguir clientes.';
+            }
+            $lines[] = '';
+            $lines[] = 'El mejor primer paso es probar las lecciones gratis y ver si el entrenamiento encaja contigo: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
+            return implode("\n", $lines);
         }
 
-        return 'Finish as fast or as slowly as you need - the course is fully self-paced. That matters because you start building useful skills right away, without waiting months to take the first step. Certification requires finishing the lessons, passing quizzes/checks, and completing the final certification step in your dashboard.' . $personal('time') . nala_mxchat_signup_skill_investment_phrase($lang) . "\n\n" . 'Start the lessons now: [Start free lessons / Register](' . $register_link . ').';
+        $lines = ['Short answer:'];
+        if ($asks_course_length) {
+            $lines[] = '- Time: the course is self-paced. You can start free now and move as quickly as you can study and practice. Certification requires finishing the lessons, passing the required exams, and completing the final certification step in your dashboard.';
+        }
+        if ($asks_tools_needed) {
+            $lines[] = '- Tools: Premium includes a car lockout kit, but yes, you should expect to buy additional locksmith tools as you progress and decide which services you want to offer. Business in a Box includes a lock pick tool set, but it is not a complete professional toolbox.';
+        }
+        if ($asks_earnings) {
+            $lines[] = '- Earnings: NALA cannot promise how much you will make. It depends on your location, licensing rules, services offered, pricing, local demand, response time, and how consistently you get customers.';
+        }
+        $lines[] = '';
+        $lines[] = 'The best first step is to try the free lessons and see if the training fits you: [Start free lessons / Register](' . $register_link . ').';
+        return implode("\n", $lines);
+    }
+
+    if ($asks_course_length) {
+        if ($lang === 'es') {
+            return 'Termina tan rapido o con tanta calma como necesites; el curso es completamente a tu propio ritmo. Eso importa porque empiezas a construir habilidades utiles de inmediato, sin esperar meses para dar el primer paso. La certificacion requiere terminar las lecciones, aprobar los examenes requeridos y completar el paso final de certificacion en tu panel.' . $personal('time') . nala_mxchat_signup_skill_investment_phrase($lang) . "\n\n" . 'Empieza las lecciones ahora: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
+        }
+
+        return 'Finish as fast or as slowly as you need - the course is fully self-paced. That matters because you start building useful skills right away, without waiting months to take the first step. Certification requires finishing the lessons, passing the required exams, and completing the final certification step in your dashboard.' . $personal('time') . nala_mxchat_signup_skill_investment_phrase($lang) . "\n\n" . 'Start the lessons now: [Start free lessons / Register](' . $register_link . ').';
     }
 
     if ($asks_start) {
@@ -552,15 +603,15 @@ function nala_mxchat_signup_fast_answer(string $message): string
             return 'Empieza con las lecciones gratis ahora. Ese es el mejor primer movimiento si quieres probar una habilidad que se vuelve valiosa con practica. Crea tu cuenta, mira si el entrenamiento te engancha y luego actualiza a Premium para el curso completo, certificacion y kit de apertura de autos.' . $personal('start') . "\n\n" . 'Empieza aqui: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
         }
 
-        return 'Start with the free lessons right now. That is the smartest first move if you want to test a skill that becomes valuable with practice. Create your account, see if the training clicks, then upgrade to Premium for the full course, certification path, and car lockout kit.' . $personal('start') . "\n\n" . 'Start here: [Start free lessons / Register](' . $register_link . ').';
+        return 'Start with the free lessons right now. That is the smartest first move if you want to test a skill that becomes valuable with practice. Create your account, see if the training clicks, then upgrade to Premium for the full course, certification path, and car lockout kit. As you progress, expect to buy additional tools for the services you choose to offer.' . $personal('start') . "\n\n" . 'Start here: [Start free lessons / Register](' . $register_link . ').';
     }
 
     if ($asks_premium) {
         if ($lang === 'es') {
-            return 'Premium incluye acceso completo al entrenamiento, el camino de certificacion y un kit de apertura de autos con la compra. Es el upgrade que convierte la curiosidad en entrenamiento serio para trabajo real de cerrajeria.' . $personal('premium') . nala_mxchat_signup_skill_investment_phrase($lang) . nala_mxchat_signup_klarna_payment_phrase($lang) . "\n\n" . 'Empieza gratis aqui y actualiza cuando estes listo: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
+            return 'Premium incluye acceso completo al entrenamiento, el camino de certificacion y un kit de apertura de autos con la compra. Aun asi, los estudiantes deben esperar comprar herramientas adicionales a medida que avancen y elijan los servicios que quieren ofrecer. Es el upgrade que convierte la curiosidad en entrenamiento serio para trabajo real de cerrajeria.' . $personal('premium') . nala_mxchat_signup_skill_investment_phrase($lang) . nala_mxchat_signup_klarna_payment_phrase($lang) . "\n\n" . 'Empieza gratis aqui y actualiza cuando estes listo: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
         }
 
-        return 'Premium includes full training access, the certification path, and a car lockout kit with purchase. It is the upgrade that turns curiosity into serious training for real locksmith work.' . $personal('premium') . nala_mxchat_signup_skill_investment_phrase($lang) . nala_mxchat_signup_klarna_payment_phrase($lang) . "\n\n" . 'Start free here and upgrade when you are ready: [Start free lessons / Register](' . $register_link . ').';
+        return 'Premium includes full training access, the certification path, and a car lockout kit with purchase. Students should still expect to buy additional tools as they progress and choose which services they want to offer. It is the upgrade that turns curiosity into serious training for real locksmith work.' . $personal('premium') . nala_mxchat_signup_skill_investment_phrase($lang) . nala_mxchat_signup_klarna_payment_phrase($lang) . "\n\n" . 'Start free here and upgrade when you are ready: [Start free lessons / Register](' . $register_link . ').';
     }
 
     if ($asks_price_objection) {
@@ -604,10 +655,10 @@ function nala_mxchat_signup_fast_answer(string $message): string
 
     if ($asks_kit) {
         if ($lang === 'es') {
-            return 'Premium incluye un kit de apertura de autos con la compra, y Business in a Box incluye un set de herramientas de lockpick. La idea es darte mas que videos: entrenamiento, herramientas y un camino para practicar habilidades que se convierten en servicios pagados.' . "\n\n" . 'Los contenidos exactos y el tiempo de envio aun se estan finalizando, pero los kits estan planificados para entrega en cualquier lugar de EE. UU.' . $personal('kit') . "\n\n" . 'Empieza gratis y actualiza cuando quieras el kit: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
+            return 'Premium incluye un kit de apertura de autos con la compra, y Business in a Box incluye un set de lock pick. Esos kits ayudan a empezar, pero no reemplazan todas las herramientas que podrias necesitar; debes esperar comprar herramientas adicionales a medida que avances y elijas tus servicios.' . "\n\n" . 'Los contenidos exactos y el tiempo de envio aun se estan finalizando, pero los kits estan planificados para entrega en cualquier lugar de EE. UU.' . $personal('kit') . "\n\n" . 'Empieza gratis y actualiza cuando quieras el kit: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
         }
 
-        return 'Premium includes a car lockout kit with purchase, and Business in a Box includes a lock pick tool set. The point is to give you more than videos: training, tools, and a path to practice skills that become paid services.' . "\n\n" . 'Exact contents and shipping timing are still being finalized, but kits are planned for delivery anywhere in the U.S.' . $personal('kit') . "\n\n" . 'Start free and upgrade when you want the kit: [Start free lessons / Register](' . $register_link . ').';
+        return 'Premium includes a car lockout kit with purchase, and Business in a Box includes a lock pick tool set. Those kits help you get started, but they do not replace every tool you may need; students should expect to buy additional tools as they progress and choose their services.' . "\n\n" . 'Exact contents and shipping timing are still being finalized, but kits are planned for delivery anywhere in the U.S.' . $personal('kit') . "\n\n" . 'Start free and upgrade when you want the kit: [Start free lessons / Register](' . $register_link . ').';
     }
 
     if ($asks_refund) {
@@ -666,10 +717,10 @@ function nala_mxchat_signup_fast_answer(string $message): string
 
     if (nala_mxchat_signup_contains_any($normalized, ['business in a box', 'bib', 'business-in-a-box', 'negocio en una caja'])) {
         if ($lang === 'es') {
-            return 'Business in a Box es el lado de lanzamiento del negocio: te guia paso a paso con sitio web gratis, logo personalizado gratis, generador de facturas gratis, pagos, SEO/local, resenas y materiales de lanzamiento. Tambien incluye un set de herramientas de lockpick con la compra.' . $personal('bib') . "\n\n" . 'Si quieres clientes y no solo lecciones, este es el upgrade mas completo para convertir el entrenamiento en un negocio real.';
+            return 'Business in a Box es el lado de lanzamiento del negocio: te guia paso a paso con sitio web gratis, logo personalizado gratis, generador de facturas gratis, pagos, SEO/local, resenas y materiales de lanzamiento. Tambien incluye un set de lock pick con la compra. Ayuda a empezar, pero no reemplaza una caja profesional completa.' . $personal('bib') . "\n\n" . 'Si quieres clientes y no solo lecciones, este es el upgrade mas completo para convertir el entrenamiento en un negocio real.';
         }
 
-        return 'Business in a Box is the business-launch side of NALA. It guides you step by step with a free website, free custom logo, free invoice creator, payment setup, SEO/local setup, reviews, launch materials, and a lock pick tool set with purchase.' . $personal('bib') . "\n\n" . 'If you want customers, not just lessons, this is the most complete upgrade for turning training into a real business.';
+        return 'Business in a Box is the business-launch side of NALA. It guides you step by step with a free website, free custom logo, free invoice creator, payment setup, SEO/local setup, reviews, launch materials, and a lock pick tool set with purchase. It helps you start, but it is not a complete professional toolbox.' . $personal('bib') . "\n\n" . 'If you want customers, not just lessons, this is the most complete upgrade for turning training into a real business.';
     }
 
     if (nala_mxchat_signup_contains_any($normalized, ['certification', 'certificate', 'certified', 'certificacion', 'certificado'])) {
@@ -769,16 +820,16 @@ function nala_mxchat_signup_pricing_answer(string $lang, string $register_link, 
 
     if (!$premium && !$business) {
         if ($lang === 'es') {
-            return 'NALA empieza con lecciones gratis y se vuelve mas valioso cuando actualizas para convertir la curiosidad en una habilidad practica. Cuando Klarna esta disponible, el pago mensual se calcula sobre 24 meses. Premium desbloquea el entrenamiento completo, certificacion y kit; Business in a Box agrega herramientas para lanzar el negocio.' . $personal . nala_mxchat_signup_skill_investment_phrase($lang) . "\n\n" . 'Empieza gratis y mira las opciones de compra: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
+            return 'NALA empieza con lecciones gratis y se vuelve mas valioso cuando actualizas para convertir la curiosidad en una habilidad practica. Cuando Klarna esta disponible, el pago mensual se calcula sobre 24 meses. Premium desbloquea el entrenamiento completo, certificacion y kit de apertura de autos; los estudiantes deben esperar comprar herramientas adicionales con el tiempo. Business in a Box agrega herramientas para lanzar el negocio.' . $personal . nala_mxchat_signup_skill_investment_phrase($lang) . "\n\n" . 'Empieza gratis y mira las opciones de compra: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
         }
 
-        return 'NALA starts with free lessons and becomes more valuable when you upgrade to turn curiosity into a practical skill. When Klarna is available, monthly pricing is calculated over 24 months. Premium unlocks the full training, certification path, and kit; Business in a Box adds tools to launch the business.' . $personal . nala_mxchat_signup_skill_investment_phrase($lang) . "\n\n" . 'Start free and see the purchase options: [Start free lessons / Register](' . $register_link . ').';
+        return 'NALA starts with free lessons and becomes more valuable when you upgrade to turn curiosity into a practical skill. When Klarna is available, monthly pricing is calculated over 24 months. Premium unlocks the full training, certification path, and car lockout kit; students should expect to buy additional tools over time. Business in a Box adds tools to launch the business.' . $personal . nala_mxchat_signup_skill_investment_phrase($lang) . "\n\n" . 'Start free and see the purchase options: [Start free lessons / Register](' . $register_link . ').';
     }
 
     if ($lang === 'es') {
         $lines = ['NALA empieza gratis, pero el valor esta en actualizar cuando quieras convertir el interes en una habilidad practica.', '', 'Las opciones son:'];
         if ($premium) {
-            $lines[] = '- Premium: ' . $premium['monthly'] . ' por mes durante 24 meses con Klarna. Total: ' . $premium['total'] . '. Incluye entrenamiento completo, certificacion y kit de apertura de autos.';
+            $lines[] = '- Premium: ' . $premium['monthly'] . ' por mes durante 24 meses con Klarna. Total: ' . $premium['total'] . '. Incluye entrenamiento completo, certificacion y kit de apertura de autos. Debes esperar comprar herramientas adicionales con el tiempo.';
         }
         if ($business) {
             $lines[] = '- Premium + Business in a Box: ' . $business['monthly'] . ' por mes durante 24 meses con Klarna. Total: ' . $business['total'] . ' despues del descuento de paquete de ' . $business['discount'] . ' (regular ' . $business['regular'] . '). Agrega sitio web, logo, facturas, resenas y herramientas de lanzamiento.';
@@ -797,7 +848,7 @@ function nala_mxchat_signup_pricing_answer(string $lang, string $register_link, 
 
     $lines = ['NALA starts free, but the value is upgrading when you want to turn interest into a practical skill.', '', 'The options are:'];
     if ($premium) {
-        $lines[] = '- Premium: ' . $premium['monthly'] . ' per month for 24 months with Klarna. Total: ' . $premium['total'] . '. Includes full training, certification path, and car lockout kit.';
+        $lines[] = '- Premium: ' . $premium['monthly'] . ' per month for 24 months with Klarna. Total: ' . $premium['total'] . '. Includes full training, certification path, and car lockout kit. Expect to buy additional tools over time.';
     }
     if ($business) {
         $lines[] = '- Premium + Business in a Box: ' . $business['monthly'] . ' per month for 24 months with Klarna. Total: ' . $business['total'] . ' after the ' . $business['discount'] . ' bundle discount (regular ' . $business['regular'] . '). Adds website, logo, invoices, reviews, and launch tools.';
