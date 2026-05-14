@@ -355,7 +355,7 @@ h1.title::after {
 
 .mtk-dashboard__business-tools {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
   gap: 8px;
   margin-top: 16px; }
 
@@ -363,6 +363,8 @@ h1.title::after {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  min-width: 0;
+  width: 100%;
   border: 1px solid #d8c18a;
   border-radius: 6px;
   padding: 8px 10px;
@@ -374,6 +376,12 @@ h1.title::after {
   text-align: left;
   cursor: inherit;
   pointer-events: none; }
+
+.mtk-dashboard__business-tool > span:not(.material-icons) {
+  min-width: 0;
+  line-height: 1.25;
+  white-space: normal;
+  overflow-wrap: anywhere; }
 
 .mtk-dashboard__business-tool .material-icons {
   display: inline-flex;
@@ -750,7 +758,7 @@ h1.title::after {
 }
 
 .mtk-dashboard__business-tools {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
   gap: 9px;
   margin-top: 18px;
 }
