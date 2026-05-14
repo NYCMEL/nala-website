@@ -376,7 +376,17 @@ h1.title::after {
   pointer-events: none; }
 
 .mtk-dashboard__business-tool .material-icons {
-  font-size: 18px; }
+  display: inline-flex;
+  flex: 0 0 24px;
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  min-height: 24px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-size: 15px;
+  line-height: 1; }
 
 .mtk-dashboard__message-card {
   background: #ffffff;
@@ -756,14 +766,19 @@ h1.title::after {
 
 .mtk-dashboard__business-tool .material-icons {
   display: inline-flex;
+  flex: 0 0 24px;
   width: 24px;
+  min-width: 24px;
   height: 24px;
+  min-height: 24px;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   border-radius: 50%;
   background: #1f2428;
   color: #f3d982;
   font-size: 15px;
+  line-height: 1;
 }
 
 .mtk-dashboard__business-tool[data-tool="auto_awesome"] .material-icons,
