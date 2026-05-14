@@ -144,6 +144,7 @@
             bonus.appendChild(icon);
 
             var copy = document.createElement("div");
+            copy.className = "included-bonus__copy";
             if (plan.bonusLabel) {
                 var label = document.createElement("strong");
                 label.textContent = plan.bonusLabel;
@@ -151,6 +152,7 @@
             }
 
             var text = document.createElement("span");
+            text.className = "included-bonus__text";
             text.textContent = plan.bonusText;
             copy.appendChild(text);
             bonus.appendChild(copy);
