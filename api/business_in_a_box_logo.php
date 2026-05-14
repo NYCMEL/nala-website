@@ -11,7 +11,8 @@ function biab_logo_load_config() {
     foreach (array(
         $documentRoot !== '' ? $documentRoot . '/config.php' : '',
         __DIR__ . '/../config.php',
-        __DIR__ . '/../../config.php'
+        __DIR__ . '/../../config.php',
+        __DIR__ . '/../../../config.php'
     ) as $path) {
         if (is_file($path)) {
             require_once $path;
