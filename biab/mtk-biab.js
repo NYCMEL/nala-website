@@ -1245,7 +1245,9 @@
     }
 
     _generateLogoOptions() {
-      const payload = this._buildLogoPayload();
+      const payload = Object.assign({}, this._buildLogoPayload(), {
+        replaceExisting: this.logoOptions.length > 0 || !!this.logo
+      });
       this.logoProviderStatus = { mode: "loading" };
       this._publish("mtk-biab:logo-generate", payload);
     }
@@ -1292,8 +1294,8 @@
         ownerName: privacy.fullName || business.ownerOrResponsiblePartyName || "",
         serviceArea: services.serviceArea || business.serviceArea || "",
         services: serviceList || "Residential, commercial, automotive, and emergency locksmith services",
-        style: "professional locksmith logo, clean vector, readable, trustworthy, modern, works on business cards and websites",
-        colors: ["#111827", "#a98212", "#ffffff"],
+        style: "professional locksmith and security services logo, strong trade-service look, clean vector, readable, trustworthy, modern, relevant lock/key/shield/door/home/security symbol only, no glasses, no eyewear, no beauty/fashion styling, no script fonts, no pink or pastel palette",
+        colors: ["#111827", "#1e3a8a", "#166534", "#a98212", "#ffffff"],
         count: 6
       };
     }

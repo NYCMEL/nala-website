@@ -239,9 +239,13 @@ function biab_logo_generate_zoviz($payload) {
         $businessName = 'Locksmith Business';
     }
     $descriptionParts = array_filter(array(
-        'Industry: locksmith and local security services',
-        'Brand direction: professional, trustworthy, modern, clean vector mark, readable on websites, invoices, vans, and business cards',
-        'Avoid: cartoon mascots, novelty fonts, overly bright colors, cluttered illustrations, low contrast text',
+        'Industry: locksmith, access control, and local security services',
+        'Audience: homeowners, property managers, business owners, drivers, and emergency lockout customers',
+        'Brand direction: professional, strong, practical, trustworthy, modern trade-service logo, clean vector mark, readable on websites, invoices, vans, uniforms, storefronts, and business cards',
+        'Use only relevant locksmith/security symbols such as keys, locks, keyholes, shields, doors, houses, buildings, vans, safes, or simple geometric security marks',
+        'Typography: bold sans serif, slab, or restrained professional serif; avoid script, handwritten, thin decorative, luxury, fashion, or beauty fonts',
+        'Colors: sober professional trade colors such as black, charcoal, navy, steel blue, forest green, gold, white, and silver',
+        'Avoid: pink, magenta, pastel, feminine boutique styling, beauty salon styling, glasses, eyewear, eyes, lashes, hearts, flowers, stars, crowns, cartoon mascots, novelty fonts, overly bright colors, cluttered illustrations, and low contrast text',
         trim((string)($payload['serviceArea'] ?? '')) !== '' ? 'Service area: ' . trim((string)$payload['serviceArea']) : '',
         trim((string)($payload['services'] ?? '')) !== '' ? 'Services: ' . trim((string)$payload['services']) : '',
         trim((string)($payload['description'] ?? ''))
@@ -249,10 +253,10 @@ function biab_logo_generate_zoviz($payload) {
     $registered = biab_logo_zoviz_request('/album/brand/register', array(
         'brand_name' => array($businessName),
         'filters' => array(
-            'industries' => array(),
-            'symbol_keywords' => array(),
-            'color_spectrum' => array(),
-            'description' => biab_logo_slice(implode('. ', $descriptionParts), 900)
+            'industries' => array('locksmith', 'security services', 'home services'),
+            'symbol_keywords' => array('lock', 'key', 'keyhole', 'shield', 'door', 'house', 'building', 'safe', 'security'),
+            'color_spectrum' => array('black', 'navy', 'blue', 'green', 'gold', 'gray', 'white'),
+            'description' => biab_logo_slice(implode('. ', $descriptionParts), 1200)
         )
     ));
     $albumId = (string)($registered['result']['id'] ?? '');
@@ -331,13 +335,19 @@ if ($action !== 'generate') {
     biab_logo_json_response(400, array('error' => 'Unknown logo action.'));
 }
 
-$existing = biab_logo_get_options($uid);
+$replaceExisting = !empty($data['replaceExisting']) || !empty($data['force']) || !empty($data['regenerate']);
+$existing = $replaceExisting ? null : biab_logo_get_options($uid);
 if ($existing) {
     biab_logo_json_response(200, array(
         'ok' => true,
         'options' => $existing['options'],
         'provider' => $existing['provider']
     ));
+}
+
+if ($replaceExisting) {
+    biab_logo_delete_logo($uid);
+    biab_logo_delete_options($uid);
 }
 
 $generated = biab_logo_generate_zoviz($data);
