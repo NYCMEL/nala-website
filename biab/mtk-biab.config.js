@@ -3,7 +3,7 @@ window.MTK_BIAB_CONFIG = {
   version: "1.0.10",
   labels: {
     pageTitle: "Business in a Box",
-    pageSubtitle: "Follow the steps below. Each section tells you what to click, what to enter, and what happens next.",
+    pageSubtitle: "Complete each setup step in order.",
     startSetup: "Start this step",
     currentSelection: "Current selection",
     closeSetup: "Close setup"
@@ -37,16 +37,16 @@ window.MTK_BIAB_CONFIG = {
       icon: "info",
       eyebrow: "Getting started",
       title: "Start here",
-      description: "Use this checklist first. Click each item under Things you need to do, finish that step, then come back here for the next one.",
-      nextStep: "Start with Business profile setup. Click it, fill in your business name, phone number, email, website, service area, and services, then click Save.",
+      description: "Complete the checklist in order. Finish one item, then come back for the next.",
+      nextStep: "Start with Business profile setup. Add your business name, phone number, email, website, service area, and services, then click Save.",
       includedHeading: "Your setup checklist",
       includedItems: [
-        { setupKey: "business-info", label: "Click here to enter your business information", actionRequired: true, page: "settings", settingsTab: "business", description: "Enter the information customers should see, such as your business name, phone number, email, website, and hours. Click Save when you are done." },
-        { setupKey: "services-offered", label: "Click here to choose your services offered", actionRequired: true, page: "settings", settingsTab: "services", description: "Enter your service area, check every service you offer, then click Save services offered." },
-        { setupKey: "client-url", label: "Click here to choose your website URL", actionRequired: true, sectionId: "client-url", openSetup: true, description: "Choose the short website URL customers will use, then click Save this URL." },
-        { setupKey: "logo", label: "Click here to create your logo", actionRequired: true, sectionId: "logo", openSetup: true, description: "Logo options generate automatically. Choose the one you like, then click Save this logo. Your business card and website will use the saved logo." },
-        { setupKey: "business-card", label: "Click here to choose your business card", actionRequired: true, sectionId: "business-card", openSetup: true, description: "Choose the card you want, check the name, phone, email, website, and service area, then click Order this business card." },
-        { setupKey: "google-setup", label: "Click here to send your Google setup email", actionRequired: true, sectionId: "google-seo", description: "Click the button in the Google section. You will receive step-by-step instructions for approving Google setup." },
+        { setupKey: "business-info", label: "Enter your business information", actionRequired: true, page: "settings", settingsTab: "business", description: "Enter the information customers should see, such as your business name, phone number, email, website, and hours. Click Save when you are done." },
+        { setupKey: "services-offered", label: "Choose your services", actionRequired: true, page: "settings", settingsTab: "services", description: "Enter your service area, check every service you offer, then click Save services offered." },
+        { setupKey: "client-url", label: "Choose your website URL", actionRequired: true, sectionId: "client-url", openSetup: true, description: "Choose the short website URL customers will use, then click Save this URL." },
+        { setupKey: "logo", label: "Create your logo", actionRequired: true, sectionId: "logo", openSetup: true, description: "Logo options generate automatically. Choose the one you like, then click Save this logo. Your business card and website will use the saved logo." },
+        { setupKey: "business-card", label: "Choose your business card", actionRequired: true, sectionId: "business-card", openSetup: true, description: "Choose the card you want, check the name, phone, email, website, and service area, then click Order this business card." },
+        { setupKey: "google-setup", label: "Send your Google setup email", actionRequired: true, sectionId: "google-seo", description: "Click the button in the Google section. You will receive step-by-step instructions for approving Google setup." },
         { setupKey: "website-pages", label: "Website pages", done: false, description: "NALA creates your website pages for you. This is checked after your business name, phone, email, and services are saved." },
         { setupKey: "contact-details", label: "Contact details shared across BIAB", done: false, description: "After you save your phone number, email, and website, NALA uses them on the website, business cards, invoices, and review requests." },
         { setupKey: "review-requests", label: "Review requests", done: true, description: "When you save an invoice, NALA automatically asks the customer for a review. You do not need to check a box." },
@@ -97,7 +97,7 @@ window.MTK_BIAB_CONFIG = {
       hideStartSetup: true,
       workflow: [
         { label: "Website information", status: "Ready", description: "NALA uses the saved business information to prepare the website for Google." },
-        { label: "Google approval", status: "Needs your action", description: "You must approve Google access before NALA can finish the Google steps." },
+        { label: "Google access", status: "Needs your action", description: "You must approve Google access before NALA can finish the Google steps." },
         { label: "Business verification", status: "Needs your action", description: "Google may ask you to verify by email, phone, text, video, or postcard. The email explains what to do." },
         { label: "Local listing details", status: "Ready", description: "NALA keeps the business name, phone, website, service area, hours, services, and description ready for listings." }
       ]

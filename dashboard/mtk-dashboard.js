@@ -258,7 +258,7 @@
             if (isActive) {
                 const cta = document.createElement('span');
                 cta.className = 'mtk-dashboard__card-cta';
-                cta.textContent = ' ' + _t('dashboard.option.business.viewCta', 'Click here to view Business in a Box.');
+                cta.textContent = ' ' + _t('dashboard.option.business.viewCta', 'View Business in a Box.');
                 cta.style.cssText = 'display:block;margin-top:6px;font-size:0.85em;font-style:italic;opacity:0.8;cursor:pointer';
                 description.appendChild(cta);
             }
@@ -706,7 +706,7 @@
                     variant: 'message',
                     icon: 'storefront',
                     title: _t('dashboard.option.business.title', 'Business in a Box'),
-                    description: _t('dashboard.option.business.purchaseOnly', 'To purchase Business in a Box services, click here.'),
+                    description: _t('dashboard.option.business.purchaseOnly', 'Purchase Business in a Box services.'),
                     buttons: [
                         {
                             plan: 'business',
@@ -732,7 +732,7 @@
                     variant: 'message',
                     icon: 'storefront',
                     title: _t('dashboard.option.business.title', 'Business in a Box'),
-                    description: _t('dashboard.option.business.purchaseWithPremium', 'To gain access to the full course and Business in a Box services, click here.'),
+                    description: _t('dashboard.option.business.purchaseWithPremium', 'Add Premium and Business in a Box together and save $200.'),
                     buttons: [
                         {
                             plan: 'premium',

@@ -284,20 +284,20 @@
       es: 'Sistema de lanzamiento guiado'
     },
     'home.biab.heading': {
-      en: 'Set up the core tools your locksmith business needs.',
-      es: 'Configura las herramientas principales que necesita tu negocio de cerrajería.'
+      en: 'Everything to launch your locksmith business.',
+      es: 'Todo para lanzar tu negocio de cerrajería.'
     },
     'home.biab.body': {
-      en: 'Launch your locksmith business with a website, logo, cards, Google setup, invoices, and reviews.',
-      es: 'Lanza tu negocio de cerrajería con sitio web, logo, tarjetas, Google, facturas y reseñas.'
+      en: 'Website, logo, cards, Google setup, invoices, and reviews in one place.',
+      es: 'Sitio web, logo, tarjetas, Google, facturas y reseñas en un solo lugar.'
     },
     'home.biab.benefitWebsiteTitle': {
       en: 'Free Website',
       es: 'Sitio web gratis'
     },
     'home.biab.benefitWebsiteBody': {
-      en: 'Launch a website built from your business details.',
-      es: 'Lanza un sitio web con los datos de tu negocio.'
+      en: 'Website customized for your business.',
+      es: 'Sitio web personalizado para tu negocio.'
     },
     'home.biab.benefitLogoTitle': {
       en: 'Custom Logo',
@@ -312,52 +312,52 @@
       es: 'Tarjetas de presentación'
     },
     'home.biab.benefitInvoiceBody': {
-      en: 'Get cards with your logo and contact details.',
-      es: 'Recibe tarjetas con tu logo y datos de contacto.'
+      en: 'Cards with your logo and contact details.',
+      es: 'Tarjetas con tu logo y datos de contacto.'
     },
     'home.biab.benefitSetupTitle': {
       en: 'Google Setup',
       es: 'Configuración de Google'
     },
     'home.biab.benefitSetupBody': {
-      en: 'Get clear instructions for Google approval.',
-      es: 'Recibe instrucciones claras para aprobar Google.'
+      en: 'Step-by-step Google setup.',
+      es: 'Configuración de Google paso a paso.'
     },
     'home.biab.benefitLockpickTitle': {
       en: 'Invoices & Reviews',
       es: 'Facturas y reseñas'
     },
     'home.biab.benefitLockpickBody': {
-      en: 'Send invoices and request reviews after jobs.',
-      es: 'Envía facturas y solicita reseñas después de trabajos.'
+      en: 'Send invoices and request reviews.',
+      es: 'Envía facturas y solicita reseñas.'
     },
     'home.biab.benefitDiscountTitle': {
       en: 'Lockpick Kit',
       es: 'Kit de ganzúas'
     },
     'home.biab.benefitDiscountBody': {
-      en: 'A lockpick tool set is included.',
-      es: 'Incluye un set de herramientas de ganzúas.'
+      en: 'Lockpick tool set included.',
+      es: 'Set de ganzúas incluido.'
     },
     'home.biab.point1': {
-      en: 'Enter your business details once.',
-      es: 'Ingresa los datos de tu negocio una vez.'
+      en: 'Save your business details once.',
+      es: 'Guarda los datos de tu negocio una vez.'
     },
     'home.biab.point2': {
-      en: 'Get logo and card choices built for your business.',
-      es: 'Recibe opciones de logo y tarjeta para tu negocio.'
+      en: 'Choose your logo and business card.',
+      es: 'Elige tu logo y tarjeta de presentación.'
     },
     'home.biab.point3': {
-      en: 'Use your launch tools as soon as setup is done.',
-      es: 'Usa tus herramientas cuando termine la configuración.'
+      en: 'Start using your tools right away.',
+      es: 'Empieza a usar tus herramientas de inmediato.'
     },
     'home.biab.cta': {
       en: 'Make it your own',
       es: 'Hazlo tuyo'
     },
     'home.biab.caption': {
-      en: 'Actual Business in a Box setup screen.',
-      es: 'Pantalla real de configuración de Negocio en una Caja.'
+      en: 'Business in a Box setup preview.',
+      es: 'Vista previa de configuración de Negocio en una Caja.'
     },
     'home.biab.imageAlt': {
       en: 'Business in a Box guided setup sample',
@@ -884,11 +884,11 @@
     'dashboard.option.business.description': { en: 'Premium plus the Business in a Box add-on.', es: 'Premium más el complemento Negocio en una Caja.' },
     'dashboard.option.business.active': { en: 'Your Business in a Box package is active.', es: 'Tu paquete Negocio en una Caja está activo.' },
     'dashboard.option.business.addOn': { en: 'Add Business in a Box to your Premium access.', es: 'Agrega Negocio en una Caja a tu acceso Premium.' },
-    'dashboard.option.business.purchaseOnly': { en: 'To purchase Business in a Box services, click here.', es: 'Para comprar los servicios de Negocio en una Caja, haz clic aquí.' },
-    'dashboard.option.business.purchaseWithPremium': { en: 'Buy Premium + Business in a Box together and save $200 on the bundle.', es: 'Compra Premium + Negocio en una Caja juntos y ahorra $200 en el paquete.' },
+    'dashboard.option.business.purchaseOnly': { en: 'Purchase Business in a Box services.', es: 'Compra los servicios de Negocio en una Caja.' },
+    'dashboard.option.business.purchaseWithPremium': { en: 'Add Premium and Business in a Box together and save $200.', es: 'Agrega Premium y Negocio en una Caja juntos y ahorra $200.' },
     'dashboard.option.business.buttonOnly': { en: 'Purchase Business in a Box', es: 'Comprar Negocio en una Caja' },
     'dashboard.option.business.buttonBundle': { en: 'Purchase Premium + Business in a Box', es: 'Comprar Premium + Negocio en una Caja' },
-    'dashboard.option.business.viewCta': { en: 'Click here to view Business in a Box.', es: 'Haz clic aquí para ver Negocio en una Caja.' },
+    'dashboard.option.business.viewCta': { en: 'View Business in a Box.', es: 'Ver Negocio en una Caja.' },
     'dashboard.hero.eyebrow':   { en: 'NALA Operator Dashboard', es: 'Panel de Operaciones NALA' },
     'dashboard.hero.text':      { en: 'Training progress, business launch tools, and customer-ready assets in one guided workspace.', es: 'Progreso de capacitación, herramientas de lanzamiento y materiales listos para tus clientes en un solo espacio guiado.' },
     'dashboard.signal.tools':   { en: 'BIAB launch tools', es: 'herramientas BIAB' },
@@ -968,12 +968,12 @@
 
     // BIAB, settings, invoice, and business card literals
     'biab.pageTitle': { en: 'Business in a Box', es: 'Negocio en una Caja' },
-    'biab.pageSubtitle': { en: 'Follow the steps below. Each section tells you what to click, what to enter, and what happens next.', es: 'Sigue los pasos de abajo. Cada sección te dice qué hacer clic, qué escribir y qué pasa después.' },
+    'biab.pageSubtitle': { en: 'Complete each setup step in order.', es: 'Completa cada paso de configuración en orden.' },
     'biab.startSetup': { en: 'Start this step', es: 'Comenzar este paso' },
     'biab.currentSelection': { en: 'Current selection', es: 'Selección actual' },
     'biab.closeSetup': { en: 'Close setup', es: 'Cerrar configuración' },
-    'biab.introduction.desc': { en: 'Use this checklist first. Click each item under Things you need to do, finish that step, then come back here for the next one.', es: 'Usa esta lista primero. Haz clic en cada elemento de Cosas que debes hacer, termina ese paso y vuelve aquí para el siguiente.' },
-    'biab.introduction.next': { en: 'Start with Business profile setup. Click it, fill in your business name, phone number, email, website, service area, and services, then click Save.', es: 'Empieza con la información del negocio. Haz clic allí, completa el nombre del negocio, teléfono, correo, sitio web, área de servicio y servicios, y luego haz clic en Guardar.' },
+    'biab.introduction.desc': { en: 'Complete the checklist in order. Finish one item, then come back for the next.', es: 'Completa la lista en orden. Termina un elemento y vuelve para el siguiente.' },
+    'biab.introduction.next': { en: 'Start with Business profile setup. Add your business name, phone number, email, website, service area, and services, then click Save.', es: 'Empieza con la información del negocio. Agrega el nombre del negocio, teléfono, correo, sitio web, área de servicio y servicios, y luego haz clic en Guardar.' },
     'biab.includedHeading': { en: 'Your setup checklist', es: 'Tu lista de configuración' },
     'biab.website.title': { en: 'Website Builder', es: 'Creador de sitio web' },
     'biab.website.desc': { en: 'Preview the website your customers will see.', es: 'Revisa el sitio web que verán tus clientes.' },
@@ -990,7 +990,7 @@
     'biab.card.editorHelp': { en: 'Check each line below. If something is wrong, type the correct information, then click Save and order this card.', es: 'Revisa cada línea abajo. Si algo está mal, escribe la información correcta y luego haz clic en Guardar y pedir esta tarjeta.' },
     'biab.card.backChoices': { en: 'Go back to card choices', es: 'Volver a las opciones de tarjeta' },
     'biab.card.saveOrder': { en: 'Save and order this card', es: 'Guardar y pedir esta tarjeta' },
-    'biab.card.lockedHelp': { en: 'This is the business card that was already ordered. There is nothing else to click here.', es: 'Esta es la tarjeta que ya se pidió. Aquí no necesitas hacer nada más.' },
+    'biab.card.lockedHelp': { en: 'This business card was already ordered. No more action is needed.', es: 'Esta tarjeta ya se pidió. No necesitas hacer nada más.' },
     'biab.card.savedLocked': { en: 'Saved. Your business card order is now locked.', es: 'Guardado. Tu pedido de tarjeta ya está bloqueado.' },
     'biab.googleSeo.title': { en: 'Google Setup', es: 'Configuración de Google' },
     'biab.googleSeo.label': { en: 'Google SEO', es: 'SEO de Google' },
@@ -1044,7 +1044,7 @@
     'biab.opensNewTab': { en: '(opens in a new tab)', es: '(se abre en una pestaña nueva)' },
     'biab.googleStepWebsite': { en: 'Website information', es: 'Información del sitio web' },
     'biab.googleStepWebsiteDesc': { en: 'NALA uses the saved business information to prepare the website for Google.', es: 'NALA usa la información guardada del negocio para preparar el sitio web para Google.' },
-    'biab.googleStepApproval': { en: 'Google approval', es: 'Aprobación de Google' },
+    'biab.googleStepApproval': { en: 'Google access', es: 'Acceso de Google' },
     'biab.googleStepApprovalDesc': { en: 'You must approve Google access before NALA can finish the Google steps.', es: 'Debes aprobar el acceso de Google antes de que NALA pueda terminar los pasos de Google.' },
     'biab.googleStepVerification': { en: 'Business verification', es: 'Verificación del negocio' },
     'biab.googleStepVerificationDesc': { en: 'Google may ask you to verify by email, phone, text, video, or postcard. The email explains what to do.', es: 'Google puede pedirte que verifiques por correo, teléfono, texto, video o postal. El correo explica qué hacer.' },
@@ -1066,13 +1066,13 @@
     'biab.brand': { en: 'Brand', es: 'Marca' },
     'biab.website.eyebrow': { en: 'Website', es: 'Sitio web' },
     'biab.operations': { en: 'Operations', es: 'Operaciones' },
-    'biab.businessProfileSetup': { en: 'Click here to enter your business information', es: 'Haz clic aquí para ingresar la información del negocio' },
+    'biab.businessProfileSetup': { en: 'Enter your business information', es: 'Ingresa la información del negocio' },
     'biab.businessProfileSetupDesc': { en: 'Enter the information customers should see, such as your business name, phone number, email, website, and hours. Click Save when you are done.', es: 'Ingresa la información que los clientes deben ver, como el nombre del negocio, teléfono, correo, sitio web y horario. Haz clic en Guardar cuando termines.' },
-    'biab.servicesOfferedSetup': { en: 'Click here to choose your services offered', es: 'Haz clic aquí para elegir los servicios que ofreces' },
+    'biab.servicesOfferedSetup': { en: 'Choose your services', es: 'Elige tus servicios' },
     'biab.servicesOfferedSetupDesc': { en: 'Enter your service area, check every service you offer, then click Save services offered.', es: 'Ingresa tu área de servicio, marca cada servicio que ofreces y luego haz clic en Guardar servicios ofrecidos.' },
-    'biab.businessCardChoice': { en: 'Click here to choose your business card', es: 'Haz clic aquí para elegir tu tarjeta de presentación' },
+    'biab.businessCardChoice': { en: 'Choose your business card', es: 'Elige tu tarjeta de presentación' },
     'biab.businessCardChoiceDesc': { en: 'Choose the card you want, check the name, phone, email, website, and service area, then click Order this business card.', es: 'Elige la tarjeta que quieres, revisa el nombre, teléfono, correo, sitio web y área de servicio, y luego haz clic en Pedir esta tarjeta.' },
-    'biab.googleAuthorizationAction': { en: 'Click here to send your Google setup email', es: 'Haz clic aquí para enviar tu correo de configuración de Google' },
+    'biab.googleAuthorizationAction': { en: 'Send your Google setup email', es: 'Envía tu correo de configuración de Google' },
     'biab.googleAuthorizationActionDesc': { en: 'Click the button in the Google section. You will receive step-by-step instructions for approving Google setup.', es: 'Haz clic en el botón de la sección de Google. Recibirás instrucciones paso a paso para aprobar la configuración de Google.' },
     'biab.basicWebsiteStructure': { en: 'Website pages', es: 'Páginas del sitio web' },
     'biab.basicWebsiteStructureDesc': { en: 'NALA creates your website pages for you. This is checked after your business name, phone, email, and services are saved.', es: 'NALA crea las páginas de tu sitio para ti. Esto se marca después de guardar el nombre del negocio, teléfono, correo y servicios.' },

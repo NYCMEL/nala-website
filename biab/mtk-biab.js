@@ -531,7 +531,7 @@
 
       if (label === "Search Console sitemap") {
         return {
-          label: "Google approval",
+          label: "Google access",
           status: source.status === "Authorization email sent" ? "Authorization email sent" : "Needs your action",
           description: source.status === "Authorization email sent"
             ? "You have been emailed the Google setup steps. Open the email from NALA and follow each step in order."
@@ -1540,7 +1540,7 @@
         this._showSetupView(section, `
           <div class="mtk-biab__setup-card">
             <h3 class="mtk-biab__template-heading">${this._escape(this._text("Current selection"))}</h3>
-            <p class="mtk-biab__setup-help">${this._escape(this._text("This is the business card that was already ordered. There is nothing else to click here."))}</p>
+            <p class="mtk-biab__setup-help">${this._escape(this._text("This business card was already ordered. No more action is needed."))}</p>
             <div class="mtk-biab__template-grid mtk-biab__template-grid--locked" role="list" aria-label="Ordered business card">
               ${orderedTemplate ? this._renderCardTemplateButton(orderedTemplate) : ""}
             </div>
