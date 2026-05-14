@@ -467,21 +467,25 @@ function biab_logo_generate_zoviz($payload) {
             continue;
         }
 
-        $generated = biab_logo_zoviz_request('/album/brand/generate', array('id' => $albumId));
-        $records = $generated['result']['records'] ?? array();
-        if (!is_array($records)) {
-            continue;
-        }
-        foreach ($records as $record) {
-            $option = biab_logo_zoviz_normalize_record($record, count($options));
-            if (!$option || isset($seen[$option['id']])) {
+        $pickedConcept = false;
+        for ($attempt = 0; $attempt < 3 && !$pickedConcept; $attempt++) {
+            $generated = biab_logo_zoviz_request('/album/brand/generate', array('id' => $albumId));
+            $records = $generated['result']['records'] ?? array();
+            if (!is_array($records)) {
                 continue;
             }
-            $option['concept'] = (string)($concept['label'] ?? ('Concept ' . ($conceptIndex + 1)));
-            $option['generationVersion'] = biab_logo_generation_version();
-            $seen[$option['id']] = true;
-            $options[] = $option;
-            break;
+            foreach ($records as $record) {
+                $option = biab_logo_zoviz_normalize_record($record, count($options));
+                if (!$option || isset($seen[$option['id']])) {
+                    continue;
+                }
+                $option['concept'] = (string)($concept['label'] ?? ('Concept ' . ($conceptIndex + 1)));
+                $option['generationVersion'] = biab_logo_generation_version();
+                $seen[$option['id']] = true;
+                $options[] = $option;
+                $pickedConcept = true;
+                break;
+            }
         }
     }
 
