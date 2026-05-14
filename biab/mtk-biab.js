@@ -37,6 +37,7 @@
       this.logoOptions = [];
       this.selectedLogoId = "";
       this.logoProviderStatus = null;
+      this.logoAutoGenerateRequested = false;
       this.selectedTemplate = null;
       this.generatedCardTemplates = null;
       this.cardOptionsPersisted = false;
@@ -755,6 +756,7 @@
       this.logoOptions = [];
       this.selectedLogoId = "";
       this.logoProviderStatus = null;
+      this.logoAutoGenerateRequested = false;
       this.googleSeo = null;
       try {
         window.localStorage.removeItem(this._orderedCardStorageKey());
@@ -852,7 +854,6 @@
         if (action === "submit-card-editor") this._submitCardEditor();
         if (action === "select-client-url") this._selectClientUrl(target.getAttribute("data-client-url"));
         if (action === "save-client-url") this._saveClientUrl();
-        if (action === "generate-logo-options") this._generateLogoOptions();
         if (action === "view-logo-option") this._openLogoPreview(target.getAttribute("data-logo-id"));
         if (action === "close-logo-preview") this._closeLogoPreview();
         if (action === "select-logo-option") this._selectLogoOption(target.getAttribute("data-logo-id"));
@@ -1161,6 +1162,8 @@
       const hasServiceArea = !!this._cleanValue(payload.serviceArea);
       const status = this._logoProviderStatusText();
       const options = Array.isArray(this.logoOptions) ? this.logoOptions : [];
+      const isGenerating = this.logoProviderStatus && this.logoProviderStatus.mode === "loading";
+      const shouldAutoGenerate = hasBusinessName && !this.logo && !options.length && !isGenerating;
 
       this._closeSetup();
 
@@ -1189,9 +1192,6 @@
             <section class="mtk-biab__logo-provider" aria-label="Logo provider">
               <h3>${this._escape(this._text("2. Generate logo options"))}</h3>
               <p>${this._escape(status)}</p>
-              <button class="mtk-biab__submit-btn" type="button" data-action="generate-logo-options" ${hasBusinessName ? "" : "disabled"}>
-                ${this._escape(this._text(options.length ? "Generate new logo options" : "Generate 6 logo options"))}
-              </button>
               ${!hasBusinessName ? `<p class="mtk-biab__status">${this._escape(this._text("Add your business name before generating logos."))}</p>` : ""}
             </section>
 
@@ -1218,7 +1218,7 @@
                   </button>
                 </div>
               ` : `
-                <p class="mtk-biab__setup-help">${this._escape(this._text("No logo options yet. Click Generate 6 logo options and then pick your favorite."))}</p>
+                <p class="mtk-biab__setup-help">${this._escape(this._text(isGenerating ? "Generating 6 logo options now. This can take a moment." : "Logo options will appear here automatically once the business name is ready."))}</p>
               `}
             </section>
           </div>
@@ -1230,6 +1230,10 @@
         section,
         mode: "logo"
       });
+
+      if (shouldAutoGenerate) {
+        this._autoGenerateLogoOptions();
+      }
     }
 
     _clientUrlPayload() {
@@ -1367,6 +1371,9 @@
 
     _logoProviderStatusText() {
       const provider = this.logoProviderStatus || {};
+      if (provider.mode === "loading") {
+        return this._text("Generating 6 logo options now. This can take a moment.");
+      }
       if (provider.mode === "zoviz") {
         return this._text("The logo generator is connected and ready.");
       }
@@ -1453,11 +1460,21 @@
       if (overlay) overlay.remove();
     }
 
-    _generateLogoOptions() {
+    _autoGenerateLogoOptions() {
+      if (this.logoAutoGenerateRequested) return;
+      if (this.logo || (Array.isArray(this.logoOptions) && this.logoOptions.length)) return;
+      const payload = this._buildLogoPayload();
+      if (!this._cleanValue(payload.businessName)) return;
+      this.logoAutoGenerateRequested = true;
+      window.setTimeout(() => this._generateLogoOptions(false), 0);
+    }
+
+    _generateLogoOptions(replaceExisting = false) {
       const payload = Object.assign({}, this._buildLogoPayload(), {
-        replaceExisting: this.logoOptions.length > 0 || !!this.logo
+        replaceExisting: !!replaceExisting
       });
       this.logoProviderStatus = { mode: "loading" };
+      this._openLogoSetup(this._getActiveSection());
       this._publish("mtk-biab:logo-generate", payload);
     }
 
