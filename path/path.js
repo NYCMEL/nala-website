@@ -76,6 +76,7 @@
         });
 
         container.appendChild(row);
+        schedulePathCardAlignment(container);
     }
 
     function buildPlanCard(plan) {
@@ -102,6 +103,7 @@
         card.appendChild(title);
 
         var priceWrap = document.createElement("div");
+        priceWrap.className = "mtk-path__price-block";
 
         var price = document.createElement("span");
         price.className = "price";
@@ -130,6 +132,7 @@
         card.appendChild(priceWrap);
 
         var desc = document.createElement("p");
+        desc.className = "mtk-path__description";
         desc.textContent = plan.description || "";
         card.appendChild(desc);
 
@@ -157,6 +160,11 @@
             copy.appendChild(text);
             bonus.appendChild(copy);
             card.appendChild(bonus);
+        } else {
+            var bonusSpacer = document.createElement("div");
+            bonusSpacer.className = "included-bonus included-bonus--empty";
+            bonusSpacer.setAttribute("aria-hidden", "true");
+            card.appendChild(bonusSpacer);
         }
 
         card.appendChild(buildFeatureList(plan.features));
@@ -200,4 +208,74 @@
 
         return btn;
     }
+
+    function alignPathCardSections(container) {
+        var cards = Array.prototype.slice.call(container.querySelectorAll(".mtk-card"));
+        if (!cards.length) return;
+
+        var selectors = ["h4", ".mtk-path__price-block", ".mtk-path__description", ".included-bonus"];
+
+        cards.forEach(function (card) {
+            var emptyBonus = card.querySelector(".included-bonus--empty");
+            if (emptyBonus) emptyBonus.style.display = "";
+
+            selectors.forEach(function (selector) {
+                var el = card.querySelector(selector);
+                if (el) el.style.minHeight = "";
+            });
+        });
+
+        var rows = [];
+        cards.forEach(function (card) {
+            var top = Math.round(card.getBoundingClientRect().top);
+            var row = rows.find(function (item) {
+                return Math.abs(item.top - top) < 4;
+            });
+
+            if (!row) {
+                row = { top: top, cards: [] };
+                rows.push(row);
+            }
+
+            row.cards.push(card);
+        });
+
+        rows.forEach(function (row) {
+            if (row.cards.length < 2) {
+                row.cards.forEach(function (card) {
+                    var emptyBonus = card.querySelector(".included-bonus--empty");
+                    if (emptyBonus) emptyBonus.style.display = "none";
+                });
+                return;
+            }
+
+            selectors.forEach(function (selector) {
+                var maxHeight = 0;
+
+                row.cards.forEach(function (card) {
+                    var el = card.querySelector(selector);
+                    if (el) maxHeight = Math.max(maxHeight, el.getBoundingClientRect().height);
+                });
+
+                if (!maxHeight) return;
+
+                row.cards.forEach(function (card) {
+                    var el = card.querySelector(selector);
+                    if (el) el.style.minHeight = Math.ceil(maxHeight) + "px";
+                });
+            });
+        });
+    }
+
+    function schedulePathCardAlignment(container) {
+        requestAnimationFrame(function () {
+            alignPathCardSections(container);
+        });
+    }
+
+    window.addEventListener("resize", function () {
+        var root = document.getElementById("MTK-path");
+        var container = root && root.querySelector(".container");
+        if (container) schedulePathCardAlignment(container);
+    });
 })();
