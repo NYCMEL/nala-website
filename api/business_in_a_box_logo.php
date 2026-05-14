@@ -229,10 +229,9 @@ function biab_logo_zoviz_normalize_record($record, $index) {
 function biab_logo_generate_zoviz($payload) {
     $apiKey = biab_logo_zoviz_key();
     if ($apiKey === '') {
-        return array(
-            'options' => biab_logo_preview_options($payload),
-            'provider' => biab_logo_provider_status('preview')
-        );
+        biab_logo_json_response(503, array(
+            'error' => 'Zoviz API key is missing. Logo generation must use Zoviz watermarked previews.'
+        ));
     }
 
     $businessName = trim((string)($payload['businessName'] ?? ''));

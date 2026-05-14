@@ -306,6 +306,7 @@
             const tools = [
                 { label: 'Default Offerings', icon: 'list_alt' },
                 { label: 'Website Builder', icon: 'language' },
+                { label: 'Logo Generator', icon: 'auto_awesome' },
                 { label: 'Business Card', icon: 'badge' },
                 { label: 'Invoices', icon: 'receipt_long' },
                 { label: 'Customer Reviews', icon: 'reviews' }

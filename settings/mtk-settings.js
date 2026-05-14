@@ -457,6 +457,9 @@
 
     Array.prototype.forEach.call(form.querySelectorAll(".mtk-settings__input, .mtk-settings__textarea"), function (input) {
       input.addEventListener("input", function () {
+        if (input.type === "tel" && window.nalaPhone && typeof window.nalaPhone.format === "function") {
+          input.value = window.nalaPhone.format(input.value);
+        }
         self.formState[tab.id][input.name] = input.value;
       });
     });

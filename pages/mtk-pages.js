@@ -4,6 +4,18 @@
  * Reads config from window.app.pages
  */
 class Pages extends HTMLElement {
+    _isLoggedIn() {
+        const sessionUser = window.wc && wc.session && wc.session.user;
+        return !!(sessionUser || (window.wc && (wc.user || wc.currentUser)));
+    };
+
+    _privateTargetFor(page) {
+        const publicPages = ["home", "login", "register"];
+        if (this._isLoggedIn() && publicPages.includes(page)) {
+            return "dashboard";
+        }
+        return page;
+    };
 
     connectedCallback() {
         wc.group("mtk-pages.connectedCallback");
@@ -144,6 +156,7 @@ class Pages extends HTMLElement {
      * @param {object} [options] - Navigation options
      */
     show(page, options) {
+        page = this._privateTargetFor(page);
         wc.group("mtk-pages.show:", page);
 
 	switch(page) 

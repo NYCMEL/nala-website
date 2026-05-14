@@ -23,9 +23,19 @@
     const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const PHONE_REGEX = /^\+?[0-9().\-\s]{7,20}$/;
 
+    function formatPhone(value) {
+	if (window.nalaPhone && typeof window.nalaPhone.format === "function") {
+	    return window.nalaPhone.format(value);
+	}
+	return value;
+    }
+
     function isValidPhone(value) {
-	const raw = value.trim();
+	const raw = formatPhone(value.trim());
 	const digits = raw.replace(/\D/g, "");
+	if (window.nalaPhone && typeof window.nalaPhone.isValid === "function") {
+	    return window.nalaPhone.isValid(raw);
+	}
 	return PHONE_REGEX.test(raw) && digits.length >= 7 && digits.length <= 15;
     }
 
@@ -100,6 +110,7 @@
     });
 
     phone.addEventListener("input", () => {
+	phone.value = formatPhone(phone.value);
 	if (isValidPhone(phone.value.trim())) clearPhoneError();
     });
 
@@ -172,7 +183,7 @@
 
 	const payload = {};
 	fields.forEach(id => {
-	    payload[id] = document.getElementById(id).value.trim();
+	    payload[id] = id === "phone" ? formatPhone(document.getElementById(id).value.trim()) : document.getElementById(id).value.trim();
 	});
 
 	wc.publish("mtk-register-submit", payload);

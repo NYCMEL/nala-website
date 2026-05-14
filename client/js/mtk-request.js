@@ -198,7 +198,13 @@ class MtkRequest {
       }
 
       const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const PHONE_REGEX = /^(?:\+1\s?)?(?:\(\d{3}\)|\d{3})[\s.\-]?\d{3}[\s.\-]?\d{4}$/;
+      const isValidPhone = (value) => {
+        if (window.nalaPhone && typeof window.nalaPhone.isValid === 'function') {
+          return window.nalaPhone.isValid(value);
+        }
+        const digits = String(value || '').replace(/\D/g, '');
+        return digits.length >= 7 && digits.length <= 15 && /^[+\d().\-\s]+$/.test(String(value || '').trim());
+      };
 
       // 2. Contact method drives which field is required + format validation
       if (contactType === 'phone' && !phoneInput.value.trim()) {
@@ -227,7 +233,7 @@ class MtkRequest {
         return;
       }
 
-      if (phoneInput.value.trim() && !PHONE_REGEX.test(phoneInput.value.trim())) {
+      if (phoneInput.value.trim() && !isValidPhone(phoneInput.value.trim())) {
         wc.log('[mtk-request] Validation failed — invalid phone format');
         flagField(phoneInput, 'Please enter a valid phone number.');
         return;

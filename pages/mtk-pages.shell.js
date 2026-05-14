@@ -50,13 +50,25 @@
     }
 
     function bootstrapInitialPage() {
-        if (!window.wc || typeof wc.getSession !== "function") return;
+        const shell = document.querySelector("mtk-pages");
+        if (shell) shell.style.visibility = "hidden";
+
+        if (!window.wc || typeof wc.getSession !== "function") {
+            if (shell) shell.style.visibility = "visible";
+            return;
+        }
 
         wc.getSession(function (loggedIn, session, err) {
-            if (err) return;
+            if (err) {
+                if (shell) shell.style.visibility = "visible";
+                return;
+            }
 
             withPagesRef(function (pagesRef) {
                 const requestedPage = getRequestedPage();
+                const reveal = function () {
+                    pagesRef.style.visibility = "visible";
+                };
 
                 if (loggedIn) {
                     const targetPage = PRIVATE_PAGES.includes(requestedPage) ? requestedPage : "dashboard";
@@ -64,6 +76,7 @@
                     wc.timeout(function () {
                         pagesRef.show(targetPage, { replaceHistory: true });
                         syncHeader(true);
+                        reveal();
                     }, 100, 1);
                     wc.log("IS LOGGED IN");
                     return;
@@ -76,11 +89,15 @@
                     pagesRef.show("login", { replaceHistory: true });
                 }
                 syncHeader(false);
+                reveal();
             });
         });
     }
 
     window.nalaShowRegister = showRegisterPage;
+
+    const initialShell = document.querySelector("mtk-pages");
+    if (initialShell) initialShell.style.visibility = "hidden";
 
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", bootstrapInitialPage);

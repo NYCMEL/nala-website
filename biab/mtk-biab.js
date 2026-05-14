@@ -1199,9 +1199,9 @@
         return this._text("Zoviz is connected. Generated options come from the Zoviz Logo Engine API.");
       }
       if (provider.mode === "preview") {
-        return this._text("Zoviz API access is not configured yet. These are safe preview options so you can test the step before production access is added.");
+        return this._text("Zoviz API access is not configured yet. Add the key before generating logos.");
       }
-      return this._text("This step is ready for Zoviz. Until API access is configured, the Generate button returns clearly marked preview options for testing.");
+      return this._text("This step is ready for Zoviz. The Generate button creates 6 watermarked logo previews.");
     }
 
     _renderLogoOption(option) {
@@ -1642,7 +1642,11 @@
       const fields = Array.isArray(section.cardFields) ? section.cardFields : [];
       const field = fields.find((item) => item.id === fieldId);
       const configured = field && field.value ? String(field.value).trim() : "";
-      if (configured) return configured;
+      if (configured) {
+        return fieldId === "phone" && window.nalaPhone && typeof window.nalaPhone.format === "function"
+          ? window.nalaPhone.format(configured)
+          : configured;
+      }
 
       const settings = this.settingsProfile || {};
       const business = settings.business || {};
@@ -1656,7 +1660,11 @@
         website: business.businessWebsite || this._defaultClientWebsite(),
         serviceArea: services.serviceArea
       };
-      return map[fieldId] ? String(map[fieldId]).trim() : "";
+      const value = map[fieldId] ? String(map[fieldId]).trim() : "";
+      if (fieldId === "phone" && window.nalaPhone && typeof window.nalaPhone.format === "function") {
+        return window.nalaPhone.format(value);
+      }
+      return value;
     }
 
     _loadStoredSettings() {
@@ -1796,6 +1804,9 @@
       if (!field) return "";
       if (field.id === "website" && !field.value) {
         return this._defaultClientWebsite();
+      }
+      if (field.id === "phone" && window.nalaPhone && typeof window.nalaPhone.format === "function") {
+        return window.nalaPhone.format(field.value || "");
       }
       return field.value || "";
     }

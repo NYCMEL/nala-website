@@ -445,6 +445,11 @@ class _febe {
 	const payload = data && data.payload ? data.payload : data || {};
 	const tabId = payload.tabId || "";
 	const values = Object.assign({}, payload.values || {});
+	if (window.nalaPhone && typeof window.nalaPhone.format === "function") {
+	    ["contactPhoneNumber", "businessPhone", "customerPhone", "phone"].forEach(key => {
+		if (values[key]) values[key] = window.nalaPhone.format(values[key]);
+	    });
+	}
 	const settings = this.readStoredSettings();
 	if (tabId === "privacy" && (!values.password || /^[*•]+$/.test(String(values.password)))) {
 	    delete values.password;
