@@ -1760,7 +1760,10 @@
 
     _getCardTemplates(section) {
       if (Array.isArray(section.cardTemplates) && section.cardTemplates.length) {
-        return section.cardTemplates;
+        if (this._cardTemplatesUseCurrentLogo(section.cardTemplates)) {
+          return section.cardTemplates;
+        }
+        this.cardOptionsPersisted = false;
       }
 
       if (this.generatedCardTemplates && !this._cardTemplatesUseCurrentLogo(this.generatedCardTemplates)) {
@@ -1847,6 +1850,14 @@
         "double-rule",
         "top-left-icon"
       ];
+      const logoLayouts = [
+        "logo-header",
+        "logo-left-panel",
+        "logo-signature",
+        "logo-watermark",
+        "logo-right-panel",
+        "logo-framed"
+      ];
       const textPlacements = [
         { id: "left-standard", anchor: "start", x: 48, ys: [174, 209, 268, 298, 323] },
         { id: "left-raised", anchor: "start", x: 48, ys: [154, 188, 254, 286, 314] },
@@ -1855,9 +1866,18 @@
         { id: "center-lower", anchor: "middle", x: 280, ys: [170, 204, 266, 296, 321] },
         { id: "center-raised", anchor: "middle", x: 280, ys: [142, 176, 246, 276, 304] },
         { id: "right-standard", anchor: "end", x: 512, ys: [174, 209, 268, 298, 323] },
-        { id: "right-raised", anchor: "end", x: 512, ys: [154, 188, 254, 286, 314] }
+        { id: "right-raised", anchor: "end", x: 512, ys: [154, 188, 254, 286, 314] },
+        { id: "logo-left-text", anchor: "start", x: 214, ys: [146, 180, 250, 282, 312] },
+        { id: "logo-header-text", anchor: "start", x: 48, ys: [166, 200, 266, 296, 323] },
+        { id: "logo-signature-text", anchor: "start", x: 48, ys: [166, 200, 264, 294, 320] }
       ];
       const textPlacementRules = {
+        "logo-header": ["logo-header-text", "center-lower"],
+        "logo-left-panel": ["logo-left-text"],
+        "logo-signature": ["logo-signature-text", "left-standard"],
+        "logo-watermark": ["left-standard", "logo-signature-text"],
+        "logo-right-panel": ["left-standard", "left-raised", "logo-signature-text"],
+        "logo-framed": ["logo-signature-text", "center-lower"],
         split: ["left-standard", "left-raised", "left-lower"],
         "right-mark": ["left-standard", "left-raised", "left-lower"],
         "vertical-accent": ["left-standard", "left-raised", "left-lower", "center-lower"],
@@ -1890,7 +1910,7 @@
       const iconChoices = this._shuffleCardOptions(icons);
       const fontChoices = brand ? this._brandCardFonts(brand, fonts) : this._shuffleCardOptions(fonts);
       const paletteChoices = brand ? this._brandCardPalettes(brand, palettes) : this._shuffleCardOptions(palettes);
-      const layoutChoices = this._shuffleCardOptions(layouts);
+      const layoutChoices = this.logo ? logoLayouts : this._shuffleCardOptions(layouts);
       const textPlacementChoices = this._shuffleCardOptions(textPlacements);
 
       this.generatedCardTemplates = Array.from({ length: 6 }).map((_, index) => {
@@ -1900,7 +1920,7 @@
         const layout = layoutChoices[index % layoutChoices.length];
         const size = sizes[(index + website.length) % sizes.length];
         const textPlacement = this._pickCardTextPlacement(layout, textPlacementChoices, textPlacementRules, textPlacements, index);
-        const design = { palette, font, icon, layout, textPlacement, size, businessName, contactName, phone, email, website, area, logo: this.logo };
+        const design = { cardDesignVersion: this._cardDesignVersion(), palette, font, icon, layout, textPlacement, size, businessName, contactName, phone, email, website, area, logo: this.logo };
 
         return {
           id: "generated-card-" + (index + 1),
@@ -2348,6 +2368,12 @@
         website
       });
       const variants = {
+        "logo-header": `<rect width="560" height="350" fill="${p.bg}"/><rect width="560" height="118" fill="${p.accent}" opacity="${this._cardLogoHasArtwork(design.logo) ? ".12" : "1"}"/>${this._placedLogoOrIcon(design.logo, design.icon, p.accent, 178, 64, { maxWidth: 260, maxHeight: 72 })}${text}`,
+        "logo-left-panel": `<rect width="560" height="350" fill="${p.bg}"/><rect width="184" height="350" fill="${p.accent}" opacity=".16"/>${this._placedLogoOrIcon(design.logo, design.icon, p.accent, 100, 95, { maxWidth: 160, maxHeight: 96 })}${text}`,
+        "logo-signature": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="44" width="480" height="1.5" fill="${p.accent}" opacity=".7"/>${this._placedLogoOrIcon(design.logo, design.icon, p.accent, 180, 88, { maxWidth: 280, maxHeight: 76 })}${text}`,
+        "logo-watermark": `<rect width="560" height="350" fill="${p.bg}"/><g opacity=".12">${this._placedLogoOrIcon(design.logo, design.icon, p.accent, 382, 116, { maxWidth: 300, maxHeight: 128 })}</g>${this._placedLogoOrIcon(design.logo, design.icon, p.accent, 144, 78, { maxWidth: 216, maxHeight: 66 })}${text}`,
+        "logo-right-panel": `<rect width="560" height="350" fill="${p.bg}"/><rect x="376" width="184" height="350" fill="${p.accent}" opacity=".15"/>${this._placedLogoOrIcon(design.logo, design.icon, p.accent, 468, 88, { maxWidth: 166, maxHeight: 96 })}${text}`,
+        "logo-framed": `<rect width="560" height="350" fill="${p.bg}"/><rect x="24" y="18" width="512" height="314" rx="10" fill="none" stroke="${p.accent}" stroke-width="4"/>${this._placedLogoOrIcon(design.logo, design.icon, p.accent, 184, 82, { maxWidth: 270, maxHeight: 76 })}${text}`,
         "left-mark": `<rect width="560" height="350" fill="${p.bg}"/><rect width="150" height="350" fill="${p.accent}" opacity=".16"/>${icon}${text}`,
         "top-band": `<rect width="560" height="350" fill="${p.bg}"/><rect width="560" height="92" fill="${p.accent}"/>${this._placedLogoOrIcon(design.logo, design.icon, p.bg, 74, 46, 52)}${text}`,
         "split": `<rect width="560" height="350" fill="${p.bg}"/><rect x="352" width="208" height="350" fill="${p.accent}"/>${this._placedLogoOrIcon(design.logo, design.icon, p.bg, 456, 132, 84)}${text}`,
@@ -2399,15 +2425,74 @@
     }
 
     _placedLogoOrIcon(logo, iconName, color, centerX, centerY, size) {
+      const box = this._logoPlacementBox(logo, centerX, centerY, size);
       if (logo && logo.svg) {
-        const inlineLogo = this._inlineLogoSvg(logo.svg, centerX - size / 2, centerY - size / 2, size, size);
+        const inlineLogo = this._inlineLogoSvg(logo.svg, box.x, box.y, box.width, box.height);
         if (inlineLogo) return inlineLogo;
       }
       if (logo && (logo.previewUrl || logo.image)) {
         const href = this._escape(logo.previewUrl || logo.image);
-        return `<image href="${href}" x="${centerX - size / 2}" y="${centerY - size / 2}" width="${size}" height="${size}" preserveAspectRatio="xMidYMid meet"/>`;
+        return `<image href="${href}" x="${box.x}" y="${box.y}" width="${box.width}" height="${box.height}" preserveAspectRatio="xMidYMid meet"/>`;
       }
-      return this._placedIcon(iconName, color, centerX, centerY, size);
+      return this._placedIcon(iconName, color, centerX, centerY, box.iconSize || 68);
+    }
+
+    _cardLogoHasArtwork(logo) {
+      return !!(logo && (logo.svg || logo.previewUrl || logo.image));
+    }
+
+    _logoPlacementBox(logo, centerX, centerY, size) {
+      if (!this._cardLogoHasArtwork(logo)) {
+        const iconSize = typeof size === "number" ? size : Math.min(size && size.maxWidth ? size.maxWidth : 68, size && size.maxHeight ? size.maxHeight : 68);
+        return {
+          x: centerX - iconSize / 2,
+          y: centerY - iconSize / 2,
+          width: iconSize,
+          height: iconSize,
+          iconSize
+        };
+      }
+
+      const ratio = this._logoAspectRatio(logo);
+      const maxWidth = typeof size === "number" ? size * (ratio > 1.2 ? 2.75 : 1.2) : (size.maxWidth || 160);
+      const maxHeight = typeof size === "number" ? size * (ratio > 1.2 ? 1.05 : 1.35) : (size.maxHeight || 72);
+      let width = maxWidth;
+      let height = width / ratio;
+      if (height > maxHeight) {
+        height = maxHeight;
+        width = height * ratio;
+      }
+      width = Math.max(44, Math.min(maxWidth, width));
+      height = Math.max(24, Math.min(maxHeight, height));
+      return {
+        x: centerX - width / 2,
+        y: centerY - height / 2,
+        width,
+        height
+      };
+    }
+
+    _logoAspectRatio(logo) {
+      if (!logo || typeof logo !== "object") return 1;
+      const readRatioFromSvg = (svg) => {
+        const source = String(svg || "");
+        const viewBox = source.match(/\bviewBox=(["'])(.*?)\1/i);
+        if (viewBox && viewBox[2]) {
+          const parts = viewBox[2].trim().split(/[\s,]+/).map(Number);
+          if (parts.length >= 4 && parts[2] > 0 && parts[3] > 0) return parts[2] / parts[3];
+        }
+        const width = source.match(/\bwidth=(["'])([\d.]+).*?\1/i);
+        const height = source.match(/\bheight=(["'])([\d.]+).*?\1/i);
+        const w = width ? Number(width[2]) : 0;
+        const h = height ? Number(height[2]) : 0;
+        return w > 0 && h > 0 ? w / h : 0;
+      };
+      const fromSvg = readRatioFromSvg(logo.svg);
+      if (fromSvg > 0) return Math.max(0.35, Math.min(7, fromSvg));
+      const width = Number(logo.width || logo.logoWidth || (logo.meta && logo.meta.width) || 0);
+      const height = Number(logo.height || logo.logoHeight || (logo.meta && logo.meta.height) || 0);
+      if (width > 0 && height > 0) return Math.max(0.35, Math.min(7, width / height));
+      return 3.4;
     }
 
     _inlineLogoSvg(svg, x, y, width, height) {
@@ -2438,11 +2523,16 @@
       return String(logo.id || logo.providerLogoId || logo.previewUrl || logo.image || logo.svg || "").slice(0, 180);
     }
 
+    _cardDesignVersion() {
+      return 3;
+    }
+
     _cardTemplatesUseCurrentLogo(templates) {
       if (!this.logo) return true;
       if (!Array.isArray(templates) || !templates.length) return true;
       const current = this._logoSignature(this.logo);
       return templates.every((template) => {
+        if (!template || !template.design || template.design.cardDesignVersion !== this._cardDesignVersion()) return false;
         const templateLogo = template && template.design && template.design.logo;
         return this._logoSignature(templateLogo) === current;
       });
