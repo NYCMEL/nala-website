@@ -200,7 +200,7 @@ function biab_logo_normalize_logo($logo) {
     $colors = biab_logo_normalize_colors($logo['colors'] ?? array());
     $brand = is_array($logo['brand'] ?? null) ? $logo['brand'] : array();
 
-    return array(
+    $normalized = array(
         'id' => $id,
         'providerLogoId' => (string)($logo['providerLogoId'] ?? $id),
         'name' => $name !== '' ? biab_logo_slice($name, 120) : 'Logo',
@@ -213,6 +213,13 @@ function biab_logo_normalize_logo($logo) {
         'previewOnly' => !empty($logo['previewOnly']),
         'selectedAt' => (string)($logo['selectedAt'] ?? gmdate('c'))
     );
+    if (!empty($logo['concept'])) {
+        $normalized['concept'] = biab_logo_slice(preg_replace('/[^a-zA-Z0-9 &_-]/', '', (string)$logo['concept']), 80);
+    }
+    if (!empty($logo['generationVersion'])) {
+        $normalized['generationVersion'] = (int)$logo['generationVersion'];
+    }
+    return $normalized;
 }
 
 function biab_logo_normalize_colors($colors) {

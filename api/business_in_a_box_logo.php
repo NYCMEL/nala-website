@@ -108,8 +108,22 @@ function biab_logo_provider_status($mode = null, $message = '') {
         'label' => 'Logo Generator',
         'mode' => $mode,
         'configured' => $configured,
+        'generatorVersion' => biab_logo_generation_version(),
         'message' => $message !== '' ? $message : ($configured ? 'Logo generation is configured for preview logos.' : 'Logo generation is not configured yet.')
     );
+}
+
+function biab_logo_generation_version() {
+    return 2;
+}
+
+function biab_logo_options_are_stale($generated) {
+    if (!is_array($generated)) {
+        return false;
+    }
+    $provider = is_array($generated['provider'] ?? null) ? $generated['provider'] : array();
+    $version = (int)($provider['generatorVersion'] ?? 0);
+    return $version < biab_logo_generation_version();
 }
 
 function biab_logo_zoviz_request($path, $payload) {
@@ -309,6 +323,9 @@ function biab_logo_contextual_direction($businessName, $serviceArea) {
     $text = strtolower((string)$businessName . ' ' . (string)$serviceArea);
     $directions = array();
 
+    if (preg_match('/\b(ranch|farm|farms|rural|country|pasture|stable|barn|cattle|horse)\b/', $text)) {
+        $directions[] = 'For ranch, farm, rural, or country names, some concepts may tastefully combine a lock/key/security mark with a ranch gate, fence rail, barn silhouette, horizon line, or simple property boundary shape.';
+    }
     if (preg_match('/\b(harbo[u]?r|marina|marine|bay|port|dock|coast|coastal|ocean|sea|beach|venice)\b/', $text)) {
         $directions[] = 'For the harbor/coastal name, some concepts may tastefully combine a lock/key/security mark with an anchor, dock, wave, lighthouse, simple boat silhouette, rope knot, or compass.';
     }
@@ -332,6 +349,77 @@ function biab_logo_contextual_direction($businessName, $serviceArea) {
     return implode(' ', $directions) . ' These contextual symbols must stay secondary and must be integrated with locksmith/security imagery.';
 }
 
+function biab_logo_contextual_symbol_keywords($businessName, $serviceArea) {
+    $text = strtolower((string)$businessName . ' ' . (string)$serviceArea);
+    if (preg_match('/\b(ranch|farm|farms|rural|country|pasture|stable|barn|cattle|horse)\b/', $text)) {
+        return array('ranch gate', 'fence', 'barn', 'property security');
+    }
+    if (preg_match('/\b(harbo[u]?r|marina|marine|bay|port|dock|coast|coastal|ocean|sea|beach|venice)\b/', $text)) {
+        return array('anchor', 'wave', 'dock', 'compass');
+    }
+    if (preg_match('/\b(mountain|summit|peak|ridge|alpine|rocky)\b/', $text)) {
+        return array('mountain', 'ridge', 'peak', 'security');
+    }
+    if (preg_match('/\b(river|lake|creek|falls|water)\b/', $text)) {
+        return array('river', 'wave', 'water', 'security');
+    }
+    if (preg_match('/\b(city|metro|urban|downtown|street)\b/', $text)) {
+        return array('city', 'building', 'street', 'security');
+    }
+    if (preg_match('/\b(desert|valley|canyon|mesa)\b/', $text)) {
+        return array('valley', 'canyon', 'horizon', 'security');
+    }
+    return array('local service', 'security', 'trust');
+}
+
+function biab_logo_zoviz_concepts($businessName, $serviceArea, $services) {
+    $contextKeywords = biab_logo_contextual_symbol_keywords($businessName, $serviceArea);
+    return array(
+        array(
+            'label' => 'Shield Security',
+            'keywords' => array('shield', 'keyhole', 'security badge'),
+            'description' => 'Concept 1 of 6: use a shield, keyhole, or security badge. Do not use a house, ranch gate, van, safe, or generic repeated building icon.'
+        ),
+        array(
+            'label' => 'Entry Door',
+            'keywords' => array('door', 'key', 'entry lock'),
+            'description' => 'Concept 2 of 6: use a door, doorway, entry lock, or key-turn shape. Do not use a shield, vehicle, ranch gate, safe, or generic house mark.'
+        ),
+        array(
+            'label' => 'Mobile Service',
+            'keywords' => array('service van', 'road', 'key'),
+            'description' => 'Concept 3 of 6: use a service van, road line, map pin, or mobile locksmith cue integrated with a key or lock. Do not use a house or shield.'
+        ),
+        array(
+            'label' => 'Safe and Commercial',
+            'keywords' => array('safe', 'vault', 'commercial lock'),
+            'description' => 'Concept 4 of 6: use a safe, vault dial, commercial door hardware, or heavy-duty lock. Do not use a house, ranch gate, vehicle, or shield.'
+        ),
+        array(
+            'label' => 'Local Name Cue',
+            'keywords' => $contextKeywords,
+            'description' => 'Concept 5 of 6: use a tasteful local cue from the business name or service area, integrated with a locksmith/security symbol. Avoid repeating the same house/lock icon used in other concepts.'
+        ),
+        array(
+            'label' => 'Modern Key Mark',
+            'keywords' => array('abstract key', 'monogram', 'geometric keyhole'),
+            'description' => 'Concept 6 of 6: use a minimal geometric key, keyhole, initials, or abstract security mark. Do not use a house, shield, vehicle, safe, or local scenery.'
+        )
+    );
+}
+
+function biab_logo_zoviz_register_payload($businessName, $description, $keywords) {
+    return array(
+        'brand_name' => array($businessName),
+        'filters' => array(
+            'industries' => array('Locksmith', 'Security Services'),
+            'symbol_keywords' => array_values(array_unique(array_filter(array_map('strval', $keywords)))),
+            'color_spectrum' => array('black', 'charcoal', 'navy', 'steel blue', 'forest green', 'gold', 'white', 'silver'),
+            'description' => biab_logo_slice($description, 900)
+        )
+    );
+}
+
 function biab_logo_generate_zoviz($payload) {
     $apiKey = biab_logo_zoviz_key();
     if ($apiKey === '') {
@@ -345,32 +433,37 @@ function biab_logo_generate_zoviz($payload) {
         $businessName = 'Locksmith Business';
     }
     $serviceArea = trim((string)($payload['serviceArea'] ?? ''));
+    $services = trim((string)($payload['services'] ?? ''));
     $descriptionParts = array_filter(array(
         'Strict: locksmith/security-first logo only. No glasses, eyewear, eyes, lashes, hearts, flowers, beauty, fashion, boutique styling, pink, purple, magenta, pastel, script, cursive, or handwritten fonts',
         'Use strong professional trade-service styling, bold sans serif, slab, or restrained serif type, clean vector marks, and sober colors such as black, charcoal, navy, steel blue, forest green, gold, white, or silver',
-        'Core symbols: keys, locks, keyholes, shields, doors, houses, buildings, vans, safes, or geometric security marks',
+        'Every option must use a different main symbol family. Do not return six versions of the same house, lock, or key icon with different colors',
+        'Allowed core symbols: keys, locks, keyholes, shields, doors, houses, buildings, vans, safes, ranch/local cues, or geometric security marks',
         biab_logo_contextual_direction($businessName, $serviceArea),
         $serviceArea !== '' ? 'Service area: ' . $serviceArea : '',
-        trim((string)($payload['services'] ?? '')) !== '' ? 'Services: ' . trim((string)$payload['services']) : '',
+        $services !== '' ? 'Services: ' . $services : '',
         trim((string)($payload['description'] ?? ''))
     ));
-    $registered = biab_logo_zoviz_request('/album/brand/register', array(
-        'brand_name' => array($businessName),
-        'filters' => array(
-            'industries' => array(),
-            'symbol_keywords' => array(),
-            'color_spectrum' => array(),
-            'description' => biab_logo_slice(implode('. ', $descriptionParts), 900)
-        )
-    ));
-    $albumId = (string)($registered['result']['id'] ?? '');
-    if ($albumId === '') {
-        biab_logo_json_response(502, array('error' => 'The logo generator did not return a generation ID.'));
-    }
-
+    $baseDescription = implode('. ', $descriptionParts);
+    $concepts = biab_logo_zoviz_concepts($businessName, $serviceArea, $services);
     $options = array();
     $seen = array();
-    for ($attempt = 0; $attempt < 10 && count($options) < 6; $attempt++) {
+
+    foreach ($concepts as $conceptIndex => $concept) {
+        if (count($options) >= 6) {
+            break;
+        }
+        $conceptDescription = $baseDescription . '. ' . (string)$concept['description'];
+        $registered = biab_logo_zoviz_request('/album/brand/register', biab_logo_zoviz_register_payload(
+            $businessName,
+            $conceptDescription,
+            $concept['keywords'] ?? array()
+        ));
+        $albumId = (string)($registered['result']['id'] ?? '');
+        if ($albumId === '') {
+            continue;
+        }
+
         $generated = biab_logo_zoviz_request('/album/brand/generate', array('id' => $albumId));
         $records = $generated['result']['records'] ?? array();
         if (!is_array($records)) {
@@ -381,10 +474,39 @@ function biab_logo_generate_zoviz($payload) {
             if (!$option || isset($seen[$option['id']])) {
                 continue;
             }
+            $option['concept'] = (string)($concept['label'] ?? ('Concept ' . ($conceptIndex + 1)));
+            $option['generationVersion'] = biab_logo_generation_version();
             $seen[$option['id']] = true;
             $options[] = $option;
-            if (count($options) === 6) {
-                break;
+            break;
+        }
+    }
+
+    if (count($options) < 6) {
+        $registered = biab_logo_zoviz_request('/album/brand/register', biab_logo_zoviz_register_payload(
+            $businessName,
+            $baseDescription . '. Generate backup concepts only if needed, and avoid reusing icon families already selected.',
+            array('key', 'lock', 'shield', 'door', 'van', 'safe', 'security')
+        ));
+        $albumId = (string)($registered['result']['id'] ?? '');
+        for ($attempt = 0; $albumId !== '' && $attempt < 4 && count($options) < 6; $attempt++) {
+            $generated = biab_logo_zoviz_request('/album/brand/generate', array('id' => $albumId));
+            $records = $generated['result']['records'] ?? array();
+            if (!is_array($records)) {
+                continue;
+            }
+            foreach ($records as $record) {
+                $option = biab_logo_zoviz_normalize_record($record, count($options));
+                if (!$option || isset($seen[$option['id']])) {
+                    continue;
+                }
+                $option['concept'] = 'Backup Distinct';
+                $option['generationVersion'] = biab_logo_generation_version();
+                $seen[$option['id']] = true;
+                $options[] = $option;
+                if (count($options) === 6) {
+                    break;
+                }
             }
         }
     }
@@ -401,10 +523,15 @@ function biab_logo_generate_zoviz($payload) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $uid = biab_logo_uid($_GET['nalaUID'] ?? '');
+    $savedLogo = biab_logo_get($uid);
     $generated = biab_logo_get_options($uid);
+    if ($generated && biab_logo_options_are_stale($generated) && !$savedLogo) {
+        biab_logo_delete_options($uid);
+        $generated = null;
+    }
     biab_logo_json_response(200, array(
         'ok' => true,
-        'logo' => biab_logo_get($uid),
+        'logo' => $savedLogo,
         'options' => $generated ? $generated['options'] : array(),
         'provider' => biab_logo_provider_status()
     ));
@@ -441,6 +568,10 @@ if ($action !== 'generate') {
 
 $replaceExisting = !empty($data['replaceExisting']) || !empty($data['force']) || !empty($data['regenerate']);
 $existing = $replaceExisting ? null : biab_logo_get_options($uid);
+if ($existing && biab_logo_options_are_stale($existing)) {
+    biab_logo_delete_options($uid);
+    $existing = null;
+}
 if ($existing) {
     biab_logo_json_response(200, array(
         'ok' => true,
