@@ -115,7 +115,7 @@ function biab_logo_provider_status($mode = null, $message = '') {
 }
 
 function biab_logo_generation_version() {
-    return 2;
+    return 3;
 }
 
 function biab_logo_options_are_stale($generated) {
@@ -379,22 +379,22 @@ function biab_logo_zoviz_concepts($businessName, $serviceArea, $services) {
         array(
             'label' => 'Shield Security',
             'keywords' => array('shield', 'keyhole', 'security badge'),
-            'description' => 'Concept 1 of 6: use a shield, keyhole, or security badge. Do not use a house, ranch gate, van, safe, or generic repeated building icon.'
+            'description' => 'Concept 1 of 6: use a shield, keyhole, or security badge. Do not use a house, ranch gate, van, safe, generic repeated building icon, letter K, initials, or monogram.'
         ),
         array(
             'label' => 'Entry Door',
             'keywords' => array('door', 'key', 'entry lock'),
-            'description' => 'Concept 2 of 6: use a door, doorway, entry lock, or key-turn shape. Do not use a shield, vehicle, ranch gate, safe, or generic house mark.'
+            'description' => 'Concept 2 of 6: use a clear door, doorway, entry lock, deadbolt, or key-turn shape. Do not use a shield, vehicle, ranch gate, safe, generic house mark, letter K, initials, or monogram.'
         ),
         array(
             'label' => 'Mobile Service',
             'keywords' => array('service van', 'road', 'key'),
-            'description' => 'Concept 3 of 6: use a service van, road line, map pin, or mobile locksmith cue integrated with a key or lock. Do not use a house or shield.'
+            'description' => 'Concept 3 of 6: use a service van, road line, map pin, or mobile locksmith cue integrated with a key or lock. Do not use a house, shield, letter K, initials, or monogram.'
         ),
         array(
             'label' => 'Safe and Commercial',
             'keywords' => array('safe', 'vault', 'commercial lock'),
-            'description' => 'Concept 4 of 6: use a safe, vault dial, commercial door hardware, or heavy-duty lock. Do not use a house, ranch gate, vehicle, or shield.'
+            'description' => 'Concept 4 of 6: use a safe, vault dial, commercial door hardware, or heavy-duty lock. Do not use a house, ranch gate, vehicle, shield, letter K, initials, or monogram.'
         ),
         array(
             'label' => 'Local Name Cue',
@@ -441,6 +441,7 @@ function biab_logo_generate_zoviz($payload) {
         'Strict: locksmith/security-first logo only. No glasses, eyewear, eyes, lashes, hearts, flowers, beauty, fashion, boutique styling, pink, purple, magenta, pastel, script, cursive, or handwritten fonts',
         'Use strong professional trade-service styling, bold sans serif, slab, or restrained serif type, clean vector marks, and sober colors such as black, charcoal, navy, steel blue, forest green, gold, white, or silver',
         'Every option must use a different main symbol family. Do not return six versions of the same house, lock, or key icon with different colors',
+        'Avoid lettermark-only logos and do not use a letter K, initials, or monogram unless the concept specifically asks for a modern abstract key mark',
         'Allowed core symbols: keys, locks, keyholes, shields, doors, houses, buildings, vans, safes, ranch/local cues, or geometric security marks',
         biab_logo_contextual_direction($businessName, $serviceArea),
         $serviceArea !== '' ? 'Service area: ' . $serviceArea : '',
