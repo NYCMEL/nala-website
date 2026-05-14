@@ -288,8 +288,8 @@
       es: 'Configura las herramientas principales que necesita tu negocio de cerrajería.'
     },
     'home.biab.body': {
-      en: 'Business in a Box now guides each client through business information, services, website setup, Google setup, logo choices, business cards, invoices, and review requests.',
-      es: 'Negocio en una Caja ahora guía a cada cliente por la información del negocio, servicios, sitio web, configuración de Google, opciones de logo, tarjetas de presentación, facturas y solicitudes de reseña.'
+      en: 'Business in a Box guides you through business information, services, website setup, Google setup, logo choices, business cards, invoices, and review requests.',
+      es: 'Negocio en una Caja te guía por la información del negocio, servicios, sitio web, configuración de Google, opciones de logo, tarjetas de presentación, facturas y solicitudes de reseña.'
     },
     'home.biab.benefitWebsiteTitle': {
       en: 'Free website',
@@ -304,16 +304,16 @@
       es: 'Opciones de logo'
     },
     'home.biab.benefitLogoBody': {
-      en: 'Generate six logo options for the client and save the one they choose.',
-      es: 'Genera seis opciones de logo para el cliente y guarda la que elija.'
+      en: 'Receive a custom logo for your business from six saved options.',
+      es: 'Recibe un logo personalizado para tu negocio entre seis opciones guardadas.'
     },
     'home.biab.benefitInvoiceTitle': {
       en: 'Business cards',
       es: 'Tarjetas de presentación'
     },
     'home.biab.benefitInvoiceBody': {
-      en: 'Choose from six saved card designs using the client details and logo.',
-      es: 'Elige entre seis diseños de tarjeta guardados con los datos y logo del cliente.'
+      en: 'Choose from six saved card designs using your business details and logo.',
+      es: 'Elige entre seis diseños de tarjeta guardados con los datos y el logo de tu negocio.'
     },
     'home.biab.benefitSetupTitle': {
       en: 'Google setup',
@@ -344,8 +344,8 @@
       es: 'Ingresa la información del negocio una vez y reutilízala en todas las herramientas.'
     },
     'home.biab.point2': {
-      en: 'Generate exactly six saved logo options and six saved card options per client.',
-      es: 'Genera exactamente seis opciones de logo guardadas y seis opciones de tarjeta guardadas por cliente.'
+      en: 'Receive exactly six saved logo options and six saved card options for your business.',
+      es: 'Recibe exactamente seis opciones de logo guardadas y seis opciones de tarjeta guardadas para tu negocio.'
     },
     'home.biab.point3': {
       en: 'Use the website, Google setup, logo, business card, invoices, and review workflow after setup.',
@@ -890,11 +890,11 @@
     'dashboard.option.business.buttonBundle': { en: 'Purchase Premium + Business in a Box', es: 'Comprar Premium + Negocio en una Caja' },
     'dashboard.option.business.viewCta': { en: 'Click here to view Business in a Box.', es: 'Haz clic aquí para ver Negocio en una Caja.' },
     'dashboard.hero.eyebrow':   { en: 'NALA Operator Dashboard', es: 'Panel de Operaciones NALA' },
-    'dashboard.hero.text':      { en: 'Training progress, business launch tools, and client-ready assets in one guided workspace.', es: 'Progreso de capacitación, herramientas de lanzamiento y materiales listos para clientes en un solo espacio guiado.' },
+    'dashboard.hero.text':      { en: 'Training progress, business launch tools, and customer-ready assets in one guided workspace.', es: 'Progreso de capacitación, herramientas de lanzamiento y materiales listos para tus clientes en un solo espacio guiado.' },
     'dashboard.signal.tools':   { en: 'BIAB launch tools', es: 'herramientas BIAB' },
     'dashboard.signal.logos':   { en: 'logo choices', es: 'opciones de logo' },
     'dashboard.signal.setup':   { en: 'guided setup', es: 'configuración guiada' },
-    'dashboard.sectionHint':    { en: 'Pick up exactly where the client journey needs attention.', es: 'Continúa justo donde el recorrido del cliente necesita atención.' },
+    'dashboard.sectionHint':    { en: 'Pick up exactly where your business launch needs attention.', es: 'Continúa justo donde tu lanzamiento de negocio necesita atención.' },
     'dashboard.subs.title':      { en: 'You can also subscribe to our premium features:', es: 'También puedes suscribirte a nuestras funciones premium:' },
     'dashboard.sub1.title':      { en: 'Premium Courses',               es: 'Cursos Premium' },
     'dashboard.sub1.description':{ en: 'Access advanced courses and certifications', es: 'Accede a cursos avanzados y certificaciones' },
@@ -1031,7 +1031,7 @@
     'biab.needsGoogleAuthorization': { en: 'Needs Google authorization', es: 'Requiere autorización de Google' },
     'biab.needsOwnerVerification': { en: 'Needs owner verification', es: 'Requiere verificación del dueño' },
     'biab.authorizationEmailSentStatus': { en: 'Authorization email sent', es: 'Correo de autorización enviado' },
-    'biab.clientVerificationRequested': { en: 'Client verification requested', es: 'Verificación solicitada al cliente' },
+    'biab.clientVerificationRequested': { en: 'Google verification requested', es: 'Verificación de Google solicitada' },
     'biab.googleSetupEmailedDesc': { en: 'You have been emailed the Google setup steps. Open the email from NALA and follow each step in order.', es: 'Recibiste por correo los pasos de configuración de Google. Abre el correo de NALA y sigue cada paso en orden.' },
     'biab.prepared': { en: 'Prepared', es: 'Preparado' },
     'biab.ready': { en: 'Ready', es: 'Listo' },
@@ -1057,7 +1057,7 @@
     'biab.sitemapUrl': { en: 'Sitemap Url', es: 'Enlace interno para Google' },
     'biab.serviceAreaLabel': { en: 'Service Area', es: 'Área de servicio' },
     'biab.googleApiHostedSeoDesc': { en: 'NALA prepares title tags, meta descriptions, local business schema, review schema, sitemap-ready URLs, and internal links from the saved profile.', es: 'NALA prepara etiquetas de título, metadescripciones, esquema de negocio local, esquema de reseñas, URL listas para el mapa del sitio y enlaces internos desde el perfil guardado.' },
-    'biab.googleApiSearchConsoleDesc': { en: 'After the client authorizes the correct Google account or adds NALA to the property, NALA can submit the sitemap through the Search Console API.', es: 'Después de que el cliente autorice la cuenta de Google correcta o agregue a NALA a la propiedad, NALA puede enviar el mapa del sitio mediante la API de Search Console.' },
+    'biab.googleApiSearchConsoleDesc': { en: 'After you authorize the correct Google account or add NALA to the property, NALA can submit the sitemap through the Search Console API.', es: 'Después de que autorices la cuenta de Google correcta o agregues a NALA a la propiedad, NALA puede enviar el mapa del sitio mediante la API de Search Console.' },
     'biab.googleApiBusinessProfileDesc': { en: 'Google requires the owner to claim or verify the Business Profile. Once access is granted, NALA can prepare and manage eligible location details.', es: 'Google requiere que el dueño reclame o verifique el Perfil de Negocio. Una vez aprobado el acceso, NALA puede preparar y administrar los datos de ubicación elegibles.' },
     'biab.googleApiLocalSeoDesc': { en: 'NALA keeps the public name, phone, website, service area, hours, services, and description consistent for Google and citation work.', es: 'NALA mantiene el nombre público, teléfono, sitio web, área de servicio, horario, servicios y descripción consistentes para Google y el trabajo de citas.' },
     'biab.introduction': { en: 'Introduction', es: 'Introducción' },
@@ -1151,7 +1151,7 @@
     'settings.help.ownerName': { en: 'Enter the person responsible for this business.', es: 'Ingresa la persona responsable de este negocio.' },
     'settings.help.businessPhone': { en: 'Enter the phone number customers should call.', es: 'Ingresa el teléfono al que deben llamar los clientes.' },
     'settings.help.businessEmail': { en: 'Enter the email customers and Google should use for this business.', es: 'Ingresa el correo que los clientes y Google deben usar para este negocio.' },
-    'settings.help.businessWebsite': { en: 'The BIAB Client URL step will save the short NALA URL here. Type a different website only if you already use one.', es: 'El paso de URL del cliente de BIAB guardará aquí el enlace corto de NALA. Escribe otro sitio web solo si ya usas uno.' },
+    'settings.help.businessWebsite': { en: 'The BIAB Website URL step will save the short NALA URL here. Type a different website only if you already use one.', es: 'El paso de URL del sitio web de BIAB guardará aquí el enlace corto de NALA. Escribe otro sitio web solo si ya usas uno.' },
     'settings.help.businessHours': { en: 'Enter the hours customers should expect, for example: Mon-Fri 8am-6pm.', es: 'Ingresa el horario que deben esperar los clientes, por ejemplo: Lun-Vie 8am-6pm.' },
     'settings.help.serviceArea': { en: 'List the cities, neighborhoods, or counties where you want customers to call you.', es: 'Escribe las ciudades, vecindarios o condados donde quieres que te llamen los clientes.' },
     'settings.help.launchServices': { en: 'Check every service you want customers to see. If a service is missing, click Add service below.', es: 'Marca cada servicio que quieres que vean los clientes. Si falta un servicio, haz clic en Agregar servicio abajo.' },

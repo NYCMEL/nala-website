@@ -590,7 +590,7 @@
                   <th scope="col"></th>
                   ${this._renderInvoiceSortHeader("id", "Invoice #")}
                   ${this._renderInvoiceSortHeader("date", "Date")}
-                  ${this._renderInvoiceSortHeader("client", "Client")}
+                  ${this._renderInvoiceSortHeader("client", "Customer")}
                   ${this._renderInvoiceSortHeader("service", "Service")}
                   ${this._renderInvoiceSortHeader("amount", "Amount")}
                   ${this._renderInvoiceSortHeader("status", "Status")}
@@ -1290,11 +1290,11 @@
       this._showSetupView(section, `
         <div class="mtk-biab__setup-card">
           <div class="mtk-biab__url-workflow">
-            <section class="mtk-biab__url-current" aria-label="Saved client URL">
+            <section class="mtk-biab__url-current" aria-label="Saved website URL">
               <h3>${this._escape(this._text("1. Saved URL"))}</h3>
               <p class="mtk-biab__url-current-value${savedUrl ? "" : " is-empty"}">${this._escape(savedUrl || this._text("No URL saved yet"))}</p>
             </section>
-            <section class="mtk-biab__url-options" aria-label="Client URL options">
+            <section class="mtk-biab__url-options" aria-label="Website URL options">
               <h3>${this._escape(this._text("2. Choose one URL"))}</h3>
               <p class="mtk-biab__setup-help">${this._escape(this._text("Pick the option that will be easiest for customers to remember and type."))}</p>
               ${options.length ? `
