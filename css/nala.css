@@ -218,4 +218,282 @@ h1.title::after {
 
 ::placeholder {
   color: var(--nala-placeholder) !important; }
-lder) !important; }
+
+/* Site-wide presentation polish to match the dashboard: high contrast, clear hierarchy, and brief purposeful motion. */
+:root {
+  --nala-ink: #151a1f;
+  --nala-panel: #ffffff;
+  --nala-muted: #596662;
+  --nala-gold: #a98212;
+  --nala-gold-bright: #e5c35d;
+  --nala-teal: #4fb3a5;
+  --nala-surface: #f8f4ea;
+  --nala-border: #ded8c8;
+  --nala-shadow: 0 18px 42px rgba(17, 24, 39, 0.1);
+}
+
+body {
+  background:
+    linear-gradient(180deg, #f8f4ea 0%, #ffffff 22%, #f4f7f6 100%);
+}
+
+.app-header .navbar {
+  box-shadow: 0 12px 28px rgba(17, 24, 39, 0.22);
+  border-bottom: 1px solid rgba(229, 195, 93, 0.18);
+}
+
+.navbar-brand img {
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.32));
+}
+
+.navbar-nav .nav-link {
+  position: relative;
+  transition: color 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.navbar-nav .nav-link:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.btn-primary,
+.nala-btn-primary,
+.btn-continue-to-course,
+.mtk-ready .mtk-ready-btn {
+  border-radius: 6px !important;
+  box-shadow: 0 12px 24px rgba(169, 130, 18, 0.2);
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, border-color 180ms ease;
+}
+
+.btn-primary {
+  background: var(--nala-gold) !important;
+  border-color: var(--nala-gold) !important;
+}
+
+.btn-primary:hover,
+.nala-btn-primary:hover,
+.btn-continue-to-course:hover,
+.mtk-ready .mtk-ready-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 34px rgba(169, 130, 18, 0.26);
+}
+
+#MTK-hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, #f8f4ea 0%, #ffffff 46%, #eef8f6 100%) !important;
+}
+
+#MTK-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(135deg, rgba(169, 130, 18, 0.08) 0 1px, transparent 1px 24px);
+  pointer-events: none;
+}
+
+#MTK-hero .container {
+  position: relative;
+}
+
+#MTK-hero .MTK-hero-title {
+  max-width: 520px;
+  color: var(--nala-ink);
+  font-size: clamp(38px, 5vw, 64px) !important;
+  line-height: 1.02;
+  font-weight: 900 !important;
+  letter-spacing: 0;
+}
+
+#MTK-hero .MTK-hero-description {
+  max-width: 540px;
+  color: #33413e;
+}
+
+#MTK-hero .MTK-hero-carousel {
+  border: 1px solid rgba(169, 130, 18, 0.26);
+  border-radius: 8px;
+  box-shadow: 0 26px 60px rgba(17, 24, 39, 0.18);
+}
+
+#MTK-hero .MTK-hero-carousel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-bottom: 5px solid var(--nala-teal);
+  pointer-events: none;
+}
+
+#_stats {
+  position: relative;
+  background: #ffffff;
+  border-block: 1px solid #ece3d3;
+}
+
+#_stats ._stats-item {
+  position: relative;
+  min-height: 132px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #ffffff 0%, #fbf8f0 100%);
+  border: 1px solid #eadfca;
+  box-shadow: 0 12px 26px rgba(17, 24, 39, 0.07);
+}
+
+#_stats ._stats-value {
+  color: var(--nala-gold) !important;
+  text-shadow: 0 8px 18px rgba(169, 130, 18, 0.14);
+}
+
+h1.title {
+  color: var(--nala-ink);
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+h1.title::after {
+  width: min(180px, 28%);
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--nala-gold), var(--nala-teal));
+}
+
+.course-card,
+.mtk-courses .course-card,
+.mtk-path .mtk-card,
+.biab-home-copy,
+.biab-home-sample,
+.mtk-tile-face {
+  border-radius: 8px !important;
+  border-color: var(--nala-border) !important;
+  box-shadow: var(--nala-shadow) !important;
+}
+
+.mtk-courses {
+  background:
+    linear-gradient(180deg, #ffffff 0%, #f4f7f6 100%) !important;
+}
+
+.mtk-courses .course-card,
+.mtk-path .mtk-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.mtk-courses .course-card::before,
+.mtk-path .mtk-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 5px;
+  background: linear-gradient(90deg, var(--nala-gold), var(--nala-teal));
+}
+
+.mtk-courses .course-card:hover,
+.mtk-path .mtk-card:hover,
+.biab-home-sample:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 22px 46px rgba(17, 24, 39, 0.14) !important;
+}
+
+.mtk-tile-face {
+  background: linear-gradient(135deg, #1f2428, #3a4a46) !important;
+}
+
+.mtk-tile-front {
+  background: linear-gradient(135deg, var(--nala-gold), #7a5e0c) !important;
+}
+
+.mtk-tile-back {
+  background: linear-gradient(135deg, #20302d, #1f2428) !important;
+}
+
+#business-in-a-box {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, #ffffff 0%, #f8f4ea 52%, #edf7f5 100%) !important;
+}
+
+#business-in-a-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(90deg, rgba(79, 179, 165, 0.08) 0 1px, transparent 1px 34px);
+  pointer-events: none;
+}
+
+#business-in-a-box > * {
+  position: relative;
+}
+
+.biab-home-copy {
+  border-left: 5px solid var(--nala-teal) !important;
+}
+
+.biab-home-benefits div {
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.biab-home-benefits div:hover {
+  transform: translateY(-3px);
+  border-color: rgba(79, 179, 165, 0.42);
+  box-shadow: 0 14px 28px rgba(17, 24, 39, 0.1);
+}
+
+.biab-home-sample {
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.mtk-ready {
+  background:
+    linear-gradient(135deg, #1f2428 0%, #20302d 58%, #4a3a08 100%) !important;
+  border-top: 5px solid var(--nala-gold-bright);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  #MTK-hero .MTK-hero-card,
+  #MTK-hero .MTK-hero-carousel,
+  #_stats ._stats-item,
+  .mtk-courses .course-card,
+  .mtk-path .mtk-card,
+  .biab-home-copy,
+  .biab-home-sample {
+    animation: nala-site-rise 560ms ease both;
+  }
+
+  #_stats .col-md-4:nth-child(2) ._stats-item,
+  .mtk-courses .col-md-4:nth-child(2) .course-card,
+  .mtk-path .col-md-4:nth-child(2) .mtk-card {
+    animation-delay: 90ms;
+  }
+
+  #_stats .col-md-4:nth-child(3) ._stats-item,
+  .mtk-courses .col-md-4:nth-child(3) .course-card,
+  .mtk-path .col-md-4:nth-child(3) .mtk-card {
+    animation-delay: 160ms;
+  }
+}
+
+@keyframes nala-site-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 767px) {
+  #MTK-hero .MTK-hero-title {
+    font-size: clamp(34px, 11vw, 46px) !important;
+  }
+
+  #_stats ._stats-item {
+    min-height: auto;
+  }
+}

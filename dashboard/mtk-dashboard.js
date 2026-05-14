@@ -230,6 +230,9 @@
 
             const card = document.createElement('div');
             card.className = 'mtk-dashboard__subscription-card';
+            if ((option.id || '') === 'active-business-in-a-box') {
+                card.classList.add('mtk-dashboard__subscription-card--biab');
+            }
             card.setAttribute('role', option.clickable === false ? 'group' : 'button');
             card.setAttribute('tabindex', option.clickable === false ? '-1' : '0');
             card.setAttribute('aria-label', `${option.title || ''}${option.price ? ', ' + option.price : ''}`);
@@ -316,6 +319,7 @@
                 const button = document.createElement('button');
                 button.type = 'button';
                 button.className = 'mtk-dashboard__business-tool';
+                button.dataset.tool = tool.icon;
                 button.setAttribute('tabindex', '-1');
                 button.setAttribute('aria-hidden', 'true');
                 button.innerHTML = `<span class="material-icons" aria-hidden="true">${tool.icon}</span><span>${tool.label}</span>`;

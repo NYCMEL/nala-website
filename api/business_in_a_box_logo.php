@@ -239,19 +239,25 @@ function biab_logo_generate_zoviz($payload) {
         $businessName = 'Locksmith Business';
     }
     $descriptionParts = array_filter(array(
-        'Industry: locksmith',
+        'Industry: locksmith and local security services',
+        'Brand direction: professional, trustworthy, modern, clean vector mark, readable on websites, invoices, vans, and business cards',
+        'Avoid: cartoon mascots, novelty fonts, overly bright colors, cluttered illustrations, low contrast text',
         trim((string)($payload['serviceArea'] ?? '')) !== '' ? 'Service area: ' . trim((string)$payload['serviceArea']) : '',
         trim((string)($payload['services'] ?? '')) !== '' ? 'Services: ' . trim((string)$payload['services']) : '',
         trim((string)($payload['description'] ?? ''))
     ));
+    $colors = is_array($payload['colors'] ?? null) ? array_values(array_filter(array_map('strval', $payload['colors']))) : array();
+    if (!$colors) {
+        $colors = array('#111827', '#a98212', '#ffffff');
+    }
 
     $registered = biab_logo_zoviz_request('/album/brand/register', array(
         'brand_name' => array($businessName),
         'filters' => array(
-            'industries' => array(),
-            'symbol_keywords' => array(),
-            'color_spectrum' => array(),
-            'description' => biab_logo_slice(implode('. ', $descriptionParts), 700)
+            'industries' => array('Locksmith', 'Security', 'Home Services'),
+            'symbol_keywords' => array('key', 'lock', 'shield', 'door', 'security'),
+            'color_spectrum' => array_slice($colors, 0, 4),
+            'description' => biab_logo_slice(implode('. ', $descriptionParts), 900)
         )
     ));
     $albumId = (string)($registered['result']['id'] ?? '');

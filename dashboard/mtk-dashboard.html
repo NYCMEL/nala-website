@@ -1,35 +1,49 @@
 <link href="dashboard/mtk-dashboard.css" rel="stylesheet">
-<mtk-dashboard class="mtk-dashboard container" role="main">
-    <div class="pull-right m-5">
-	<button class="btn btn-primary btn-continue-to-course" data-i18n="dashboard.continue" onclick="wc.pages.show('hierarchy')">Continue with Program</button>
-	<button class="btn mtk-dashboard__reset-biab" id="resetBiabButton" type="button" hidden>Reset Business in a Box</button>
-    </div>
-    
-    <!-- Row 1: User Info and Progress -->
-    <div class="mtk-dashboard__header">
-	<h1 class="mtk-dashboard__user-name" id="userName"></h1>
-	
-	<div class="mtk-dashboard__progress-section">
-            <label class="mtk-dashboard__progress-label" id="progressLabel"></label>
-            
-            <div class="mtk-dashboard__progress-info">
-		<span class="mtk-dashboard__course-title" id="courseTitle"></span>
-		<span class="mtk-dashboard__progress-percentage" id="progressPercentage" aria-live="polite"></span>
-            </div>
-            
-            <div class="mtk-dashboard__progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-		<div class="mtk-dashboard__progress-fill" id="progressFill"></div>
-            </div>
-	</div>
-    </div>
-    
-    <!-- Row 2: Subscription Options -->
-    <div class="mtk-dashboard__subscriptions">
-	<h2 class="mtk-dashboard__subscriptions-title" id="subscriptionsTitle"></h2>
-	
-	<div class="mtk-dashboard__subscription-grid" id="subscriptionGrid">
-            <!-- Subscription cards will be generated dynamically -->
-	</div>
+<mtk-dashboard class="mtk-dashboard" role="main">
+    <div class="mtk-dashboard__canvas">
+	<!-- Row 1: User Info and Progress -->
+	<section class="mtk-dashboard__header" aria-label="Dashboard overview">
+	    <div class="mtk-dashboard__hero-copy">
+		<p class="mtk-dashboard__eyebrow" data-i18n="dashboard.hero.eyebrow">NALA Operator Dashboard</p>
+		<h1 class="mtk-dashboard__user-name" id="userName"></h1>
+		<p class="mtk-dashboard__hero-text" data-i18n="dashboard.hero.text">Training progress, business launch tools, and client-ready assets in one guided workspace.</p>
+		<div class="mtk-dashboard__hero-actions">
+		    <button class="btn btn-primary btn-continue-to-course" data-i18n="dashboard.continue" onclick="wc.pages.show('hierarchy')">Continue with Program</button>
+		    <button class="btn mtk-dashboard__reset-biab" id="resetBiabButton" type="button" hidden>Reset Business in a Box</button>
+		</div>
+	    </div>
+
+	    <div class="mtk-dashboard__progress-section">
+		<label class="mtk-dashboard__progress-label" id="progressLabel"></label>
+
+		<div class="mtk-dashboard__progress-info">
+		    <span class="mtk-dashboard__course-title" id="courseTitle"></span>
+		    <span class="mtk-dashboard__progress-percentage" id="progressPercentage" aria-live="polite"></span>
+		</div>
+
+		<div class="mtk-dashboard__progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+		    <div class="mtk-dashboard__progress-fill" id="progressFill"></div>
+		</div>
+
+		<div class="mtk-dashboard__signal-row" aria-label="Dashboard highlights">
+		    <span><strong>6</strong> <span data-i18n="dashboard.signal.tools">BIAB launch tools</span></span>
+		    <span><strong>6</strong> <span data-i18n="dashboard.signal.logos">logo choices</span></span>
+		    <span><strong>1</strong> <span data-i18n="dashboard.signal.setup">guided setup</span></span>
+		</div>
+	    </div>
+	</section>
+
+	<!-- Row 2: Subscription Options -->
+	<section class="mtk-dashboard__subscriptions" aria-label="Products and next steps">
+	    <div class="mtk-dashboard__section-heading">
+		<h2 class="mtk-dashboard__subscriptions-title" id="subscriptionsTitle"></h2>
+		<p data-i18n="dashboard.sectionHint">Pick up exactly where the client journey needs attention.</p>
+	    </div>
+
+	    <div class="mtk-dashboard__subscription-grid" id="subscriptionGrid">
+		<!-- Subscription cards will be generated dynamically -->
+	    </div>
+	</section>
     </div>
 </mtk-dashboard>
 <script src="dashboard/mtk-dashboard.config.js"></script>
