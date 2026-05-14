@@ -410,13 +410,15 @@ function biab_logo_zoviz_concepts($businessName, $serviceArea, $services) {
 }
 
 function biab_logo_zoviz_register_payload($businessName, $description, $keywords) {
+    $keywordText = implode(', ', array_values(array_unique(array_filter(array_map('strval', $keywords)))));
+    $fullDescription = $description . ($keywordText !== '' ? '. Preferred symbol direction: ' . $keywordText : '');
     return array(
         'brand_name' => array($businessName),
         'filters' => array(
-            'industries' => array('Locksmith', 'Security Services'),
-            'symbol_keywords' => array_values(array_unique(array_filter(array_map('strval', $keywords)))),
-            'color_spectrum' => array('black', 'charcoal', 'navy', 'steel blue', 'forest green', 'gold', 'white', 'silver'),
-            'description' => biab_logo_slice($description, 900)
+            'industries' => array(),
+            'symbol_keywords' => array(),
+            'color_spectrum' => array(),
+            'description' => biab_logo_slice($fullDescription, 900)
         )
     );
 }
