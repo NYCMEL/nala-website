@@ -1310,6 +1310,7 @@
     _selectLogoOption(logoId) {
       if (!logoId) return;
       if (!this.logoOptions.some((option) => option.id === logoId)) return;
+      this._closeLogoPreview();
       this.selectedLogoId = logoId;
       this._openLogoSetup(this._getActiveSection());
     }
