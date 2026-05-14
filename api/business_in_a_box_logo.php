@@ -246,17 +246,12 @@ function biab_logo_generate_zoviz($payload) {
         trim((string)($payload['services'] ?? '')) !== '' ? 'Services: ' . trim((string)$payload['services']) : '',
         trim((string)($payload['description'] ?? ''))
     ));
-    $colors = is_array($payload['colors'] ?? null) ? array_values(array_filter(array_map('strval', $payload['colors']))) : array();
-    if (!$colors) {
-        $colors = array('#111827', '#a98212', '#ffffff');
-    }
-
     $registered = biab_logo_zoviz_request('/album/brand/register', array(
         'brand_name' => array($businessName),
         'filters' => array(
-            'industries' => array('Locksmith', 'Security', 'Home Services'),
-            'symbol_keywords' => array('key', 'lock', 'shield', 'door', 'security'),
-            'color_spectrum' => array_slice($colors, 0, 4),
+            'industries' => array(),
+            'symbol_keywords' => array(),
+            'color_spectrum' => array(),
             'description' => biab_logo_slice(implode('. ', $descriptionParts), 900)
         )
     ));
