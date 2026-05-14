@@ -466,7 +466,7 @@ h1.title::after {
   margin-bottom: 0;
   padding: 28px 0 56px;
   background:
-    linear-gradient(180deg, #f8f4ea 0%, #ffffff 34%, #f4f7f6 100%);
+    linear-gradient(180deg, #f8f4ea 0%, #ffffff 34%, #fbf8f0 100%);
 }
 
 .mtk-dashboard__canvas {
