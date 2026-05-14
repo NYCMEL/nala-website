@@ -846,6 +846,11 @@ class _febe {
 
     getBiabApiUrl(path) {
 	const normalizedPath = path && path.charAt(0) === "/" ? path : "/" + path;
+	const apiRoot = wc && wc.apiURL ? String(wc.apiURL).replace(/\/$/, "") : "";
+	if (apiRoot && normalizedPath.indexOf("/api/") === 0) {
+	    return apiRoot + normalizedPath;
+	}
+
 	const base = document.querySelector("base[href]");
 
 	if (base) {
@@ -860,7 +865,6 @@ class _febe {
 	    }
 	}
 
-	const apiRoot = wc && wc.apiURL ? String(wc.apiURL).replace(/\/$/, "") : "";
 	return apiRoot + normalizedPath;
     }
 
