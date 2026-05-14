@@ -267,6 +267,9 @@
             card.appendChild(title);
             card.appendChild(description);
             card.appendChild(price);
+            if (option.kitTracking) {
+                card.appendChild(this.createKitTrackingPanel(option.kitTracking));
+            }
 
             if ((option.id || '') === 'active-business-in-a-box') {
                 const tools = this.createBusinessToolActions();
@@ -327,6 +330,51 @@
             });
 
             return actions;
+        }
+
+        createKitTrackingPanel(config) {
+            const panel = document.createElement('div');
+            panel.className = 'mtk-dashboard__kit-tracking';
+            panel.addEventListener('click', (event) => event.stopPropagation());
+
+            const header = document.createElement('div');
+            header.className = 'mtk-dashboard__kit-tracking-header';
+
+            const icon = document.createElement('span');
+            icon.className = 'material-icons';
+            icon.setAttribute('aria-hidden', 'true');
+            icon.textContent = config.icon || 'inventory_2';
+
+            const title = document.createElement('strong');
+            title.textContent = config.title || '';
+
+            header.appendChild(icon);
+            header.appendChild(title);
+
+            const description = document.createElement('p');
+            description.textContent = config.description || '';
+
+            panel.appendChild(header);
+            panel.appendChild(description);
+
+            const buttons = Array.isArray(config.buttons) ? config.buttons : [];
+            if (buttons.length) {
+                const actions = document.createElement('div');
+                actions.className = 'mtk-dashboard__kit-tracking-actions';
+                buttons.forEach((buttonConfig) => {
+                    const link = document.createElement('a');
+                    link.className = buttonConfig.className || 'btn btn-primary';
+                    link.href = buttonConfig.href || '#';
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+                    link.textContent = buttonConfig.label || '';
+                    link.addEventListener('click', (event) => event.stopPropagation());
+                    actions.appendChild(link);
+                });
+                panel.appendChild(actions);
+            }
+
+            return panel;
         }
 
         createMessageCard(option) {
@@ -623,46 +671,73 @@
         subscriptions: { title: _t('dashboard.chooseNext', 'Choose your next step:'), options: [] }
     }));
 
-    function getDashboardPurchaseOptions() {
-        const user = (window.wc && wc.session && wc.session.user) ? wc.session.user : {};
-        const giftTracking = (window.wc && wc.session && (wc.session.gift_tracking || user.gift_tracking))
-            ? (wc.session.gift_tracking || user.gift_tracking)
-            : null;
-        const hasPremium = Number(user.has_premium || 0) === 1;
-        const hasBusiness = Number(user.has_business_in_a_box || 0) === 1;
-        const giftTrackingCard = (giftTracking && giftTracking.available)
-            ? {
-                id: 'lockout-kit-tracking',
-                variant: 'message',
-                icon: giftTracking.status === 'shipped' ? 'local_shipping' : 'inventory_2',
-                title: _t('dashboard.gift.title', 'Track your lockout kit'),
-                description: giftTracking.message || _t('dashboard.gift.description', 'View the status of your complimentary lockout kit order.'),
+    function buildKitTrackingConfig(kind, tracking, isPendingAllowed) {
+        const isLockpick = kind === 'lockpick';
+        const titleKey = isLockpick ? 'dashboard.lockpick.title' : 'dashboard.gift.title';
+        const descriptionKey = isLockpick ? 'dashboard.lockpick.description' : 'dashboard.gift.description';
+        const pendingKey = isLockpick ? 'dashboard.lockpick.pending' : 'dashboard.gift.pending';
+        const titleFallback = isLockpick ? 'Track your lockpick kit' : 'Track your lockout kit';
+        const descriptionFallback = isLockpick
+            ? 'View the status of your Business in a Box lock pick tool set.'
+            : 'View the status of your complimentary lockout kit order.';
+        const pendingFallback = isLockpick
+            ? 'Your lock pick tool set is tied to your Business in a Box purchase. Tracking will appear here after the order is created.'
+            : 'Your complimentary lockout kit is tied to your Premium purchase. Tracking will appear here after the order is created.';
+
+        const hasTrackingDetails = tracking && (
+            tracking.available ||
+            tracking.tracking_url ||
+            tracking.order_status_url ||
+            tracking.message
+        );
+
+        if (hasTrackingDetails) {
+            return {
+                icon: tracking.status === 'shipped' ? 'local_shipping' : 'inventory_2',
+                title: _t(titleKey, titleFallback),
+                description: tracking.message || _t(descriptionKey, descriptionFallback),
                 buttons: [
-                    giftTracking.tracking_url ? {
+                    tracking.tracking_url ? {
                         label: _t('dashboard.gift.trackShipment', 'Track Shipment'),
-                        href: giftTracking.tracking_url,
+                        href: tracking.tracking_url,
                         className: 'btn btn-primary'
                     } : null,
-                    giftTracking.order_status_url ? {
+                    tracking.order_status_url ? {
                         label: _t('dashboard.gift.viewOrder', 'View Order Status'),
-                        href: giftTracking.order_status_url,
-                        className: giftTracking.tracking_url ? 'btn btn-outline-primary' : 'btn btn-primary'
+                        href: tracking.order_status_url,
+                        className: tracking.tracking_url ? 'btn btn-outline-primary' : 'btn btn-primary'
                     } : null
                 ].filter(Boolean)
-            }
-            : (hasPremium || hasBusiness)
-                ? {
-                    id: 'lockout-kit-tracking-pending',
-                    variant: 'message',
-                    icon: 'inventory_2',
-                    title: _t('dashboard.gift.title', 'Track your lockout kit'),
-                    description: _t(
-                        'dashboard.gift.pending',
-                        'Your complimentary lockout kit is tied to your Premium purchase. Tracking will appear here after the order is created.'
-                    ),
-                    buttons: []
-                }
-                : null;
+            };
+        }
+
+        if (!isPendingAllowed) {
+            return null;
+        }
+
+        return {
+            icon: 'inventory_2',
+            title: _t(titleKey, titleFallback),
+            description: _t(pendingKey, pendingFallback),
+            buttons: []
+        };
+    }
+
+    function getDashboardPurchaseOptions() {
+        const user = (window.wc && wc.session && wc.session.user) ? wc.session.user : {};
+        const session = (window.wc && wc.session) ? wc.session : {};
+        const giftTracking = session.gift_tracking || user.gift_tracking || null;
+        const lockpickTracking = session.lockpick_tracking
+            || session.lock_pick_tracking
+            || session.business_kit_tracking
+            || user.lockpick_tracking
+            || user.lock_pick_tracking
+            || user.business_kit_tracking
+            || null;
+        const hasPremium = Number(user.has_premium || 0) === 1;
+        const hasBusiness = Number(user.has_business_in_a_box || 0) === 1;
+        const lockoutTracking = buildKitTrackingConfig('lockout', giftTracking, hasPremium || hasBusiness);
+        const biabLockpickTracking = buildKitTrackingConfig('lockpick', lockpickTracking, hasBusiness);
 
         if (hasBusiness) {
             const options = [
@@ -672,6 +747,7 @@
                     title: _t('dashboard.option.premium.title', 'Premium'),
                     description: _t('dashboard.option.premium.active', 'Your Premium locksmith training access is active.'),
                     price: _t('dashboard.price.active', 'Active'),
+                    kitTracking: lockoutTracking,
                     clickable: false
                 },
                 {
@@ -680,10 +756,10 @@
                     title: _t('dashboard.option.business.title', 'Business in a Box'),
                     description: _t('dashboard.option.business.active', 'Your Business in a Box package is active.'),
                     price: _t('dashboard.price.active', 'Active'),
+                    kitTracking: biabLockpickTracking,
                     clickable: false
                 }
             ];
-            if (giftTrackingCard) options.push(giftTrackingCard);
 
             return {
                 title: _t('dashboard.activeProducts', 'Your active products'),
@@ -699,6 +775,7 @@
                     title: _t('dashboard.option.premium.title', 'Premium'),
                     description: _t('dashboard.option.premium.active', 'Your Premium locksmith training access is active.'),
                     price: _t('dashboard.price.active', 'Active'),
+                    kitTracking: lockoutTracking,
                     clickable: false
                 },
                 {
@@ -716,7 +793,6 @@
                     ]
                 }
             ];
-            if (giftTrackingCard) options.push(giftTrackingCard);
 
             return {
                 title: _t('dashboard.activeProducts', 'Your active products'),

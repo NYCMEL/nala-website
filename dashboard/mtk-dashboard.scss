@@ -188,6 +188,64 @@
     }
   }
 
+  &__kit-tracking {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    margin-top: 14px;
+    padding: 12px;
+    border: 1px solid #e6dcc7;
+    border-radius: $radius-sm;
+    background: #fffaf0;
+    color: #1f2428;
+    cursor: default;
+  }
+
+  &__kit-tracking-header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    .material-icons {
+      display: inline-flex;
+      flex: 0 0 24px;
+      width: 24px;
+      height: 24px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #a98212;
+      color: #ffffff;
+      font-size: 15px;
+      line-height: 1;
+    }
+
+    strong {
+      min-width: 0;
+      font-size: 13px;
+      line-height: 1.25;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  &__kit-tracking p {
+    margin: 0;
+    color: $color-text-secondary;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  &__kit-tracking-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-sm;
+
+    .btn {
+      margin: 0;
+      white-space: normal;
+    }
+  }
+
   &__message-card {
     background: $color-bg-lighter;
     border: 1px solid $color-border;
