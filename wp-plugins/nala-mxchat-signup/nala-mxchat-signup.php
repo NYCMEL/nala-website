@@ -281,6 +281,10 @@ function nala_mxchat_signup_personal_context(string $normalized): array
             'starting from scratch', 'sin experiencia',
             'principiante', 'nuevo en', 'desde cero'
         ]),
+        'woman' => nala_mxchat_signup_contains_any($normalized, [
+            'woman', 'female', 'girl', 'lady', 'mom', 'mother', 'mujer',
+            'mujeres', 'femenino', 'madre'
+        ]),
         'career_change' => nala_mxchat_signup_contains_any($normalized, [
             'career change', 'change careers', 'changing careers', 'new career', 'second career',
             'salary worker', 'different career', 'cambio de carrera',
@@ -318,7 +322,7 @@ function nala_mxchat_signup_personal_context(string $normalized): array
             'computadora', 'presencial'
         ]),
         'physical_concern' => nala_mxchat_signup_contains_any($normalized, [
-            'physical', 'strength', 'back', 'arthritis', 'disabled', 'disability',
+            'physical', 'strength', 'back pain', 'bad back', 'arthritis', 'disabled', 'disability',
             'body', 'fisico', 'fuerza', 'espalda', 'artritis', 'discapacidad'
         ]),
         'local_rules' => nala_mxchat_signup_contains_any($normalized, [
@@ -344,6 +348,9 @@ function nala_mxchat_signup_personalized_context_line(array $context, string $la
         }
         if (!empty($context['beginner'])) {
             return 'Si empiezas sin experiencia, la estructura paso a paso ayuda a construir la base y repetir lo necesario hasta que se sienta familiar.';
+        }
+        if (!empty($context['woman'])) {
+            return 'La cerrajeria premia habilidad, criterio, confianza y trato profesional, asi que puede ser una muy buena opcion para mujeres que buscan una habilidad practica.';
         }
         if (!empty($context['career_change'])) {
             return 'Si buscas cambiar de carrera, NALA te da un camino practico para crear habilidades reales antes de dar el siguiente paso profesional.';
@@ -390,6 +397,9 @@ function nala_mxchat_signup_personalized_context_line(array $context, string $la
     }
     if (!empty($context['beginner'])) {
         return 'Since you are starting without experience, the step-by-step structure helps you build the basics and replay lessons until the work feels familiar.';
+    }
+    if (!empty($context['woman'])) {
+        return 'Locksmithing rewards skill, judgment, reliability, and customer trust, so it can be a strong fit for women who want a practical trade path.';
     }
     if (!empty($context['career_change'])) {
         return 'If you are changing careers, NALA gives you a practical path to build real skills before taking the next professional step.';
@@ -472,9 +482,13 @@ function nala_mxchat_signup_fast_answer(string $message): string
     $asks_earnings = nala_mxchat_signup_contains_any($normalized, [
         'how much can i make', 'how much cna i make', 'how much could i make',
         'how much will i make', 'how much money can i make', 'how much money could i make',
+        'how much do locksmiths make', 'how much does a locksmith make',
         'what can i make', 'what could i make', 'what will i make',
         'how much can i earn', 'how much could i earn', 'what can i earn',
-        'earning potential', 'income potential', 'salary', 'pay',
+        'earn as a locksmith', 'earnings as a locksmith',
+        'earning potential', 'income potential', 'income', 'make money',
+        'salary', 'locksmith salary', 'locksmith pay', 'pay as a locksmith', 'average pay',
+        'hourly wage', 'hourly rate',
         'cuanto puedo ganar', 'cuanto ganaria', 'cuanto dinero puedo ganar',
         'potencial de ingresos', 'salario'
     ]);
@@ -557,6 +571,46 @@ function nala_mxchat_signup_fast_answer(string $message): string
         'students', 'student count', 'how many people', 'how many trained',
         'estudiantes', 'alumnos', 'cuantos'
     ]);
+    $asks_license = nala_mxchat_signup_contains_any($normalized, [
+        'license', 'licensing', 'licensed', 'state requirement', 'city requirement',
+        'do i need a license', 'legal to work', 'licencia', 'licencias',
+        'requisitos del estado', 'requisitos locales'
+    ]);
+    $asks_criminal = nala_mxchat_signup_contains_any($normalized, [
+        'criminal record', 'felony', 'misdemeanor', 'background check',
+        'record', 'conviction', 'antecedentes', 'delito', 'felonia'
+    ]);
+    $asks_online_hands_on = nala_mxchat_signup_contains_any($normalized, [
+        'online only', 'online course', 'learn online', 'from home',
+        'hands on', 'hands-on', 'practical practice', 'practice at home',
+        'in person', 'presencial', 'en linea', 'desde casa', 'practica'
+    ]);
+    $asks_trust = nala_mxchat_signup_contains_any($normalized, [
+        'is this legit', 'legit', 'scam', 'real school', 'is nala real',
+        'can i trust', 'trustworthy', 'is this real', 'estafa', 'confiable',
+        'es real'
+    ]);
+    $asks_woman_fit = nala_mxchat_signup_contains_any($normalized, [
+        'as a woman', 'woman locksmith', 'female locksmith', 'for women',
+        'can women', 'can a woman', 'mujer cerrajera', 'para mujeres'
+    ]);
+    $asks_beginner_fit = !empty($personal_context['beginner']) && nala_mxchat_signup_contains_any($normalized, [
+        'can i learn', 'is it for me', 'will i be able', 'can i do this',
+        'is this good for beginners', 'puedo aprender', 'es para mi',
+        'principiantes'
+    ]);
+    $asks_business_launch = nala_mxchat_signup_contains_any($normalized, [
+        'start a locksmith business', 'start my locksmith business',
+        'start my own locksmith business',
+        'open a locksmith business', 'launch a locksmith business',
+        'start my own business', 'run my own business', 'get customers',
+        'empezar un negocio de cerrajeria', 'abrir un negocio de cerrajeria'
+    ]);
+    $asks_job_guarantee = nala_mxchat_signup_contains_any($normalized, [
+        'guarantee a job', 'guaranteed job', 'promise a job',
+        'guarantee employment', 'guarantee income', 'guaranteed income',
+        'garantizan trabajo', 'garantia de trabajo', 'garantizan ingresos'
+    ]);
 
     if ($asks_tools_needed || $asks_earnings || (($asks_course_length || $asks_tools_needed) && $asks_price)) {
         if ($lang === 'es') {
@@ -631,11 +685,23 @@ function nala_mxchat_signup_fast_answer(string $message): string
     }
 
     if ($asks_success) {
+        $asks_pass_difficulty = nala_mxchat_signup_contains_any($normalized, [
+            'hard to pass', 'is it hard', 'too hard', 'difficult to pass',
+            'hard course', 'course hard', 'is the course hard',
+            'dificil', 'muy dificil'
+        ]);
         if ($lang === 'es') {
-            return 'Si, si eres constante y practicas. NALA esta disenado para convertir motivacion en habilidades reales: lecciones a tu ritmo, contenido repetible, quizzes y practica.' . "\n\n" . 'Este es exactamente el tipo de habilidad practica que abre oportunidades cuando la trabajas en serio.' . $personal('success') . "\n\n" . 'Empieza gratis y comprueba tu ritmo: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
+            if ($asks_pass_difficulty) {
+                return 'No esta pensado para ser imposible; esta pensado para que avances con practica constante. NALA ayuda porque puedes repetir lecciones, estudiar a tu ritmo y construir confianza antes de los examenes.' . "\n\n" . 'Si tomas el entrenamiento en serio, este es un camino practico para convertir interes en una habilidad real.' . $personal('success') . "\n\n" . 'Empieza gratis y comprueba tu ritmo: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
+            }
+            return 'Si, si eres constante y practicas. NALA esta disenado para convertir motivacion en habilidades reales: lecciones a tu ritmo, contenido repetible, examenes y practica.' . "\n\n" . 'Este es exactamente el tipo de habilidad practica que abre oportunidades cuando la trabajas en serio.' . $personal('success') . "\n\n" . 'Empieza gratis y comprueba tu ritmo: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
         }
 
-        return 'Yes, if you stay consistent and practice. NALA is built to turn motivation into real skills: self-paced lessons, replayable training, quizzes, and practical work.' . "\n\n" . 'This is exactly the kind of practical skill that opens opportunities when you work it seriously.' . $personal('success') . "\n\n" . 'Start free and see your pace: [Start free lessons / Register](' . $register_link . ').';
+        if ($asks_pass_difficulty) {
+            return 'It is not meant to be impossible; it is meant to reward steady practice. NALA helps because you can replay lessons, study at your own pace, and build confidence before the exams.' . "\n\n" . 'If you take the training seriously, this is a practical path for turning interest into a real skill.' . $personal('success') . "\n\n" . 'Start free and see your pace: [Start free lessons / Register](' . $register_link . ').';
+        }
+
+        return 'Yes, if you stay consistent and practice. NALA is built to turn motivation into real skills: self-paced lessons, replayable training, exams, and practical work.' . "\n\n" . 'This is exactly the kind of practical skill that opens opportunities when you work it seriously.' . $personal('success') . "\n\n" . 'Start free and see your pace: [Start free lessons / Register](' . $register_link . ').';
     }
 
     if ($asks_age_objection) {
@@ -647,6 +713,62 @@ function nala_mxchat_signup_fast_answer(string $message): string
 
         $age_intro = $age ? $age . ' is a strong age' : 'a mature age is a real advantage';
         return 'Not at all - ' . $age_intro . ' for learning locksmithing. NALA fits older learners because the lessons are online, replayable, and fully self-paced, so training fits around work, family, or retirement without rushing.' . "\n\n" . 'Your life experience helps too: customers value patience, reliability, judgment, and professionalism, which are strong advantages in paid service work.' . nala_mxchat_signup_skill_investment_phrase($lang) . "\n\n" . 'Test the fit here: [Start free lessons / Register](' . $register_link . ').';
+    }
+
+    if ($asks_woman_fit) {
+        if ($lang === 'es') {
+            return 'Si. La cerrajeria no es solo fuerza; premia habilidad, criterio, paciencia, confianza y trato profesional. Para una mujer que quiere una habilidad practica, NALA puede ser una buena forma de aprender desde casa y avanzar a su propio ritmo.' . nala_mxchat_signup_skill_investment_phrase($lang) . "\n\n" . 'Pruebalo gratis aqui: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
+        }
+
+        return 'Yes. Locksmithing is not just about strength; it rewards skill, judgment, patience, trust, and professional customer service. For a woman who wants a practical trade path, NALA is a strong way to learn from home and move at your own pace.' . nala_mxchat_signup_skill_investment_phrase($lang) . "\n\n" . 'Try it free here: [Start free lessons / Register](' . $register_link . ').';
+    }
+
+    if ($asks_beginner_fit) {
+        if ($lang === 'es') {
+            return 'Si. NALA esta hecho para ayudarte a empezar aunque no tengas experiencia. Las lecciones a tu ritmo y repetibles te ayudan a construir la base antes de avanzar a temas mas practicos.' . nala_mxchat_signup_skill_investment_phrase($lang) . "\n\n" . 'Empieza con las lecciones gratis: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
+        }
+
+        return 'Yes. NALA is built to help you start even if you have no locksmith experience. The self-paced, replayable lessons help you build the basics before moving into more practical topics.' . nala_mxchat_signup_skill_investment_phrase($lang) . "\n\n" . 'Start with the free lessons: [Start free lessons / Register](' . $register_link . ').';
+    }
+
+    if ($asks_online_hands_on) {
+        if ($lang === 'es') {
+            return 'Si, puedes empezar online. El valor es que puedes pausar, repetir y practicar a tu ritmo; despues combinas las lecciones con practica real usando herramientas y locks permitidos. Practica solo en cerraduras tuyas o con permiso, y revisa las reglas locales antes de ofrecer servicios.' . "\n\n" . 'Empieza gratis y mira si el formato encaja contigo: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
+        }
+
+        return 'Yes, you can start online. The value is that you can pause, replay, and practice at your pace; then you pair the lessons with real practice using appropriate tools and locks. Practice only on locks you own or have permission to work on, and check local rules before offering services.' . "\n\n" . 'Start free and see if the format fits you: [Start free lessons / Register](' . $register_link . ').';
+    }
+
+    if ($asks_license || $asks_criminal) {
+        if ($lang === 'es') {
+            return 'Los requisitos cambian por estado y ciudad, asi que debes verificar licencias, antecedentes, seguro y reglas comerciales donde planeas trabajar. NALA te da educacion y una ruta de entrenamiento; no puede prometer licencia, aprobacion legal o resultados de antecedentes.' . $personal('terms') . "\n\n" . 'Puedes empezar el entrenamiento gratis mientras revisas tus reglas locales: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
+        }
+
+        return 'Requirements vary by state and city, so you should check licensing, background, insurance, and business rules where you plan to work. NALA gives you education and a training path; it cannot promise licensing, legal approval, or a background-check outcome.' . $personal('terms') . "\n\n" . 'You can start the training free while you check your local rules: [Start free lessons / Register](' . $register_link . ').';
+    }
+
+    if ($asks_trust) {
+        if ($lang === 'es') {
+            return 'Si, NALA es un programa real de capacitacion en cerrajeria. Tiene mas de 10 anos de experiencia, mas de 20K estudiantes capacitados, lecciones gratis antes de comprar y una muestra de certificado en la pagina principal.' . "\n\n" . 'La forma inteligente de comprobarlo es empezar gratis y ver el entrenamiento: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
+        }
+
+        return 'Yes, NALA is a real locksmith training program. It has 10+ years of experience, 20K+ students trained, free lessons before purchase, and a sample certificate on the homepage.' . "\n\n" . 'The smart way to check the fit is to start free and see the training: [Start free lessons / Register](' . $register_link . ').';
+    }
+
+    if ($asks_business_launch) {
+        if ($lang === 'es') {
+            return 'Si. NALA puede ayudarte a aprender la habilidad, y Business in a Box esta pensado para el lado de lanzamiento: sitio web, logo personalizado, facturas, resenas, preparacion local/SEO y materiales de inicio. Es para quien quiere clientes, no solo lecciones.' . $personal('bib') . "\n\n" . 'Empieza gratis y luego elige Business in a Box si tu meta es lanzar el servicio: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
+        }
+
+        return 'Yes. NALA helps you build the skill, and Business in a Box is built for the launch side: website, custom logo, invoices, reviews, local/SEO setup, and launch materials. It is for people who want customers, not just lessons.' . $personal('bib') . "\n\n" . 'Start free, then choose Business in a Box if your goal is to launch the service: [Start free lessons / Register](' . $register_link . ').';
+    }
+
+    if ($asks_job_guarantee) {
+        if ($lang === 'es') {
+            return 'NALA no debe prometer un trabajo o ingresos garantizados. Lo valioso es la preparacion: habilidades practicas, certificacion, practica repetible y Business in a Box si quieres lanzar tu propio servicio. NALA tambien destaca 95% de colocacion laboral como una senal fuerte de enfoque practico.' . "\n\n" . 'Empieza gratis y mira si el camino te motiva: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
+        }
+
+        return 'NALA should not promise a guaranteed job or guaranteed income. The value is preparation: practical skills, certification, replayable training, and Business in a Box if you want to launch your own service. NALA also highlights 95% job placement as a strong signal that the program is built around practical outcomes.' . "\n\n" . 'Start free and see if the path motivates you: [Start free lessons / Register](' . $register_link . ').';
     }
 
     if ($asks_price) {
@@ -687,10 +809,10 @@ function nala_mxchat_signup_fast_answer(string $message): string
 
     if ($asks_placement) {
         if ($lang === 'es') {
-            return 'NALA destaca un 95% de colocacion laboral, una senal fuerte de que el programa esta orientado a resultados practicos: habilidades reales, certificacion y preparacion para oportunidades.' . "\n\n" . 'Si tu meta es trabajar, enfocate en el camino: aprende las habilidades, practica en serio, completa las verificaciones y gana confianza para servicios reales.' . $personal('placement') . nala_mxchat_signup_skill_investment_phrase($lang) . "\n\n" . 'Empieza gratis y mira si este camino te motiva: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
+            return 'NALA destaca un 95% de colocacion laboral, una senal fuerte de que el programa esta orientado a resultados practicos: habilidades reales, certificacion y preparacion para oportunidades.' . "\n\n" . 'Si tu meta es trabajar, enfocate en el camino: aprende las habilidades, practica en serio, aprueba los examenes requeridos y gana confianza para servicios reales.' . $personal('placement') . nala_mxchat_signup_skill_investment_phrase($lang) . "\n\n" . 'Empieza gratis y mira si este camino te motiva: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
         }
 
-        return 'NALA highlights 95% job placement, which is a strong signal that the program is built around practical outcomes: real skills, certification, and preparation for opportunities.' . "\n\n" . 'If your goal is work, focus on the path: learn the skills, practice seriously, complete the checks, and build confidence for real service opportunities.' . $personal('placement') . nala_mxchat_signup_skill_investment_phrase($lang) . "\n\n" . 'Start free and see if this path motivates you: [Start free lessons / Register](' . $register_link . ').';
+        return 'NALA highlights 95% job placement, which is a strong signal that the program is built around practical outcomes: real skills, certification, and preparation for opportunities.' . "\n\n" . 'If your goal is work, focus on the path: learn the skills, practice seriously, pass the required exams, and build confidence for real service opportunities.' . $personal('placement') . nala_mxchat_signup_skill_investment_phrase($lang) . "\n\n" . 'Start free and see if this path motivates you: [Start free lessons / Register](' . $register_link . ').';
     }
 
     if ($asks_origin) {
@@ -717,10 +839,10 @@ function nala_mxchat_signup_fast_answer(string $message): string
 
     if (nala_mxchat_signup_contains_any($normalized, ['business in a box', 'bib', 'business-in-a-box', 'negocio en una caja'])) {
         if ($lang === 'es') {
-            return 'Business in a Box es el lado de lanzamiento del negocio: te guia paso a paso con sitio web gratis, logo personalizado gratis, generador de facturas gratis, pagos, SEO/local, resenas y materiales de lanzamiento. Tambien incluye un set de lock pick con la compra. Ayuda a empezar, pero no reemplaza una caja profesional completa.' . $personal('bib') . "\n\n" . 'Si quieres clientes y no solo lecciones, este es el upgrade mas completo para convertir el entrenamiento en un negocio real.';
+            return 'Business in a Box es el lado de lanzamiento del negocio: te guia paso a paso con sitio web gratis, logo personalizado gratis, generador de facturas gratis, pagos, SEO/local, resenas y materiales de lanzamiento. Tambien incluye un set de lock pick con la compra. Ayuda a empezar, pero no reemplaza una caja profesional completa.' . $personal('bib') . "\n\n" . 'Si quieres clientes y no solo lecciones, este es el upgrade mas completo para convertir el entrenamiento en un negocio real.' . "\n\n" . 'Empieza gratis aqui: [Empezar lecciones gratis / Registrarte](' . $register_link . ').';
         }
 
-        return 'Business in a Box is the business-launch side of NALA. It guides you step by step with a free website, free custom logo, free invoice creator, payment setup, SEO/local setup, reviews, launch materials, and a lock pick tool set with purchase. It helps you start, but it is not a complete professional toolbox.' . $personal('bib') . "\n\n" . 'If you want customers, not just lessons, this is the most complete upgrade for turning training into a real business.';
+        return 'Business in a Box is the business-launch side of NALA. It guides you step by step with a free website, free custom logo, free invoice creator, payment setup, SEO/local setup, reviews, launch materials, and a lock pick tool set with purchase. It helps you start, but it is not a complete professional toolbox.' . $personal('bib') . "\n\n" . 'If you want customers, not just lessons, this is the most complete upgrade for turning training into a real business.' . "\n\n" . 'Start free here: [Start free lessons / Register](' . $register_link . ').';
     }
 
     if (nala_mxchat_signup_contains_any($normalized, ['certification', 'certificate', 'certified', 'certificacion', 'certificado'])) {
