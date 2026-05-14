@@ -205,6 +205,9 @@ function biab_logo_zoviz_normalize_record($record, $index) {
     if (!is_array($record)) {
         return null;
     }
+    if (!biab_logo_zoviz_record_allowed($record)) {
+        return null;
+    }
     $file = biab_logo_zoviz_best_file($record);
     $previewUrl = biab_logo_zoviz_url($file['preview_url'] ?? ($record['preview_url'] ?? ''));
     $recordId = (string)($record['id'] ?? '');
@@ -224,6 +227,81 @@ function biab_logo_zoviz_normalize_record($record, $index) {
         'provider' => 'zoviz',
         'previewOnly' => true
     ));
+}
+
+function biab_logo_zoviz_record_allowed($record) {
+    foreach (biab_logo_zoviz_record_colors($record) as $color) {
+        if (biab_logo_color_is_pink_or_purple($color)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function biab_logo_zoviz_record_colors($record) {
+    $colors = array();
+    $stack = array(
+        $record['primary_color'] ?? null,
+        $record['logo_materials'] ?? null
+    );
+
+    while ($stack) {
+        $item = array_pop($stack);
+        if (!is_array($item)) {
+            continue;
+        }
+        foreach ($item as $key => $value) {
+            if ($key === 'color' && is_string($value)) {
+                $colors[] = $value;
+            } elseif (is_array($value)) {
+                $stack[] = $value;
+            }
+        }
+    }
+
+    return array_values(array_unique($colors));
+}
+
+function biab_logo_color_is_pink_or_purple($color) {
+    $color = trim((string)$color);
+    if (!preg_match('/^#?([0-9a-f]{3}|[0-9a-f]{6})$/i', $color, $matches)) {
+        return false;
+    }
+
+    $hex = $matches[1];
+    if (strlen($hex) === 3) {
+        $hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
+    }
+
+    $r = hexdec(substr($hex, 0, 2)) / 255;
+    $g = hexdec(substr($hex, 2, 2)) / 255;
+    $b = hexdec(substr($hex, 4, 2)) / 255;
+    $max = max($r, $g, $b);
+    $min = min($r, $g, $b);
+    $delta = $max - $min;
+
+    if ($delta <= 0.001) {
+        return false;
+    }
+
+    if ($max === $r) {
+        $hue = 60 * fmod((($g - $b) / $delta), 6);
+    } elseif ($max === $g) {
+        $hue = 60 * ((($b - $r) / $delta) + 2);
+    } else {
+        $hue = 60 * ((($r - $g) / $delta) + 4);
+    }
+    if ($hue < 0) {
+        $hue += 360;
+    }
+
+    $lightness = ($max + $min) / 2;
+    $saturation = $delta / (1 - abs(2 * $lightness - 1));
+
+    return $saturation > 0.35 && (
+        ($hue >= 255 && $hue <= 350) ||
+        ($hue >= 335 && $lightness > 0.38)
+    );
 }
 
 function biab_logo_generate_zoviz($payload) {
@@ -266,7 +344,7 @@ function biab_logo_generate_zoviz($payload) {
 
     $options = array();
     $seen = array();
-    for ($attempt = 0; $attempt < 4 && count($options) < 6; $attempt++) {
+    for ($attempt = 0; $attempt < 10 && count($options) < 6; $attempt++) {
         $generated = biab_logo_zoviz_request('/album/brand/generate', array('id' => $albumId));
         $records = $generated['result']['records'] ?? array();
         if (!is_array($records)) {
