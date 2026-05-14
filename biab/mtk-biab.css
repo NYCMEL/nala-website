@@ -732,9 +732,8 @@ mtk-biab.mtk-biab .mtk-biab__setup {
   inset: 0;
   z-index: 99999;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto 1fr auto;
   overflow: hidden;
-  padding-bottom: 40px;
   background: #f8fafc;
   color: #0f172a; }
 
@@ -795,9 +794,32 @@ mtk-biab.mtk-biab .mtk-biab__setup-body {
   overflow-y: auto;
   width: 100%;
   max-width: 1320px;
-  max-height: calc(100vh - 120px);
+  max-height: calc(100vh - 184px);
   margin: 0 auto;
   padding: 64px 12px; }
+
+mtk-biab.mtk-biab .mtk-biab__setup-footer {
+  width: 100%;
+  border-top: 1px solid #e5e7eb;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 -10px 24px rgba(15, 23, 42, 0.08); }
+
+mtk-biab.mtk-biab .mtk-biab__setup-footer-inner {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 14px 12px; }
+
+mtk-biab.mtk-biab .mtk-biab__setup-next {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 178px; }
 
 mtk-biab.mtk-biab .mtk-biab__setup-card {
   width: 100%;
@@ -832,8 +854,10 @@ mtk-biab.mtk-biab .mtk-biab__template-btn {
   text-align: left;
   box-shadow: none; }
 
-mtk-biab.mtk-biab .mtk-biab__template-btn img,
-mtk-biab.mtk-biab .mtk-biab__editor-preview img {
+mtk-biab.mtk-biab .mtk-biab__template-image-wrap > img,
+mtk-biab.mtk-biab .mtk-biab__template-image-wrap > svg,
+mtk-biab.mtk-biab .mtk-biab__editor-preview > img,
+mtk-biab.mtk-biab .mtk-biab__editor-preview > svg {
   display: block;
   width: 100%;
   height: auto;
@@ -946,7 +970,13 @@ mtk-biab.mtk-biab .mtk-biab__client-frame {
     align-items: stretch;
     flex-direction: column; }
   mtk-biab.mtk-biab .mtk-biab__google-seo-actions {
-    justify-content: flex-start; } }
+    justify-content: flex-start; }
+  mtk-biab.mtk-biab .mtk-biab__setup-footer-inner {
+    align-items: stretch;
+    flex-direction: column-reverse; }
+  mtk-biab.mtk-biab .mtk-biab__setup-next,
+  mtk-biab.mtk-biab .mtk-biab__setup-footer .mtk-biab__back-btn {
+    width: 100%; } }
 
 /* Business card template selection */
 mtk-biab.mtk-biab .mtk-biab__template-grid {
@@ -1002,7 +1032,8 @@ mtk-biab.mtk-biab .mtk-biab__template-check {
   pointer-events: none;
   z-index: 3; }
 
-mtk-biab.mtk-biab .mtk-biab__template-image-wrap img {
+mtk-biab.mtk-biab .mtk-biab__template-image-wrap > img,
+mtk-biab.mtk-biab .mtk-biab__template-image-wrap > svg {
   position: relative;
   z-index: 1;
   width: 100%;

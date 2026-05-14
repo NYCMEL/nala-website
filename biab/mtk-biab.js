@@ -138,8 +138,9 @@
         } else {
           try { window.localStorage.removeItem(this._logoStorageKey()); } catch (err) {}
         }
-        if (!this.cardOptionsPersisted) {
+        if (!this._cardTemplatesUseCurrentLogo(this.generatedCardTemplates)) {
           this.generatedCardTemplates = null;
+          this.cardOptionsPersisted = false;
         }
         this._render();
       }
@@ -158,11 +159,9 @@
           this.logo.brand = this.brand;
           this._saveLogoLocal(this.logo);
         }
-        if (!this.cardOptionsPersisted) {
-          this.generatedCardTemplates = null;
-        }
-        this._closeSetup();
-        this._render();
+        this.generatedCardTemplates = null;
+        this.cardOptionsPersisted = false;
+        this._goToNextSection({ openSetup: true });
       }
 
       if (eventName === "4-mtk-biab:google-seo-status" && data) {
@@ -863,6 +862,7 @@
         if (action === "refresh-google-seo") this._requestGoogleSeoStatus();
         if (action === "request-google-seo") this._requestGoogleSeoSetup();
         if (action === "start-google-seo-authorization") this._startGoogleSeoAuthorization();
+        if (action === "next-setup-step") this._goToNextSection({ openSetup: true });
 
         if (action === "email-invoice") {
           this._publish("mtk-biab:email-invoice", {
@@ -928,6 +928,33 @@
         sectionId: this.activeId,
         section: this._getActiveSection()
       });
+    }
+
+    _goToNextSection(options) {
+      const currentIndex = this.sections.findIndex((section) => section.id === this.activeId);
+      const nextSection = currentIndex > -1 ? this.sections[currentIndex + 1] : null;
+
+      if (!nextSection) {
+        this._closeSetup();
+        this._closeInvoicePage();
+        this._render();
+        return;
+      }
+
+      this._selectSection(nextSection.id);
+
+      if (options && options.openSetup && this._sectionHasSetup(nextSection)) {
+        window.setTimeout(() => this._openSetup(), 0);
+      }
+    }
+
+    _sectionHasSetup(section) {
+      return !!(section && section.setupType);
+    }
+
+    _nextSection() {
+      const currentIndex = this.sections.findIndex((section) => section.id === this.activeId);
+      return currentIndex > -1 ? this.sections[currentIndex + 1] || null : null;
     }
 
     _openSetup() {
@@ -1366,8 +1393,7 @@
           values: settings.business
         });
       }
-      this._closeSetup();
-      this._render();
+      this._goToNextSection({ openSetup: true });
     }
 
     _logoProviderStatusText() {
@@ -1499,6 +1525,7 @@
       this.brand = brand;
       this._saveLogoLocal(logo);
       this.generatedCardTemplates = null;
+      this.cardOptionsPersisted = false;
       this._publish("mtk-biab:logo-save", {
         nalaUID: this._businessPageId(),
         logo
@@ -1585,6 +1612,7 @@
     _renderCardTemplateButton(template) {
       const selectedId = this.selectedTemplate ? this.selectedTemplate.id : "";
       const isSelected = template.id === selectedId;
+      const artwork = this._renderCardArtwork(template);
 
       return `
         <button
@@ -1596,12 +1624,19 @@
           aria-pressed="${isSelected ? "true" : "false"}"
         >
           <span class="mtk-biab__template-image-wrap">
-            <img src="${this._escape(template.image)}" alt="${this._escape(template.label)}">
+            ${artwork}
             <span class="mtk-biab__template-check" aria-hidden="true">✓</span>
           </span>
           <span class="mtk-biab__template-label">${this._escape(template.label)}</span>
         </button>
       `;
+    }
+
+    _renderCardArtwork(template) {
+      if (template && template.design) {
+        return this._businessCardSvg(template.design);
+      }
+      return `<img src="${this._escape(template && template.image ? template.image : "")}" alt="${this._escape(template && template.label ? template.label : "Business card")}">`;
     }
 
     _selectCardTemplate(templateId) {
@@ -1652,7 +1687,7 @@
         <div class="mtk-biab__setup-card">
           <div class="mtk-biab__editor">
             <div class="mtk-biab__editor-preview">
-              <img src="${this._escape(template.image)}" alt="${this._escape(template.label)}">
+              ${this._renderCardArtwork(template)}
             </div>
 
             <form class="mtk-biab__editor-form" data-card-editor-form>
@@ -1720,13 +1755,17 @@
         orderedAt: this.orderedCard.orderedAt
       });
 
-      this._closeSetup();
-      this._render();
+      this._goToNextSection({ openSetup: false });
     }
 
     _getCardTemplates(section) {
       if (Array.isArray(section.cardTemplates) && section.cardTemplates.length) {
         return section.cardTemplates;
+      }
+
+      if (this.generatedCardTemplates && !this._cardTemplatesUseCurrentLogo(this.generatedCardTemplates)) {
+        this.generatedCardTemplates = null;
+        this.cardOptionsPersisted = false;
       }
 
       if (this.generatedCardTemplates) {
@@ -2278,6 +2317,11 @@
     }
 
     _businessCardDataUri(design) {
+      const svg = this._businessCardSvg(design);
+      return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+    }
+
+    _businessCardSvg(design) {
       const p = design.palette;
       const safe = (value) => this._escape(value);
       const icon = this._placedLogoOrIcon(design.logo, design.icon, p.accent, 82, 82, 68);
@@ -2317,8 +2361,7 @@
         "double-rule": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="40" width="480" height="4" rx="2" fill="${p.accent}"/><rect x="40" y="332" width="480" height="4" rx="2" fill="${p.accent}"/>${this._placedLogoOrIcon(design.logo, design.icon, p.accent, 86, 91, 58)}${text}`,
         "top-left-icon": `<rect width="560" height="350" fill="${p.bg}"/><rect x="40" y="40" width="88" height="88" rx="18" fill="${p.accent}" opacity=".16"/>${this._placedLogoOrIcon(design.logo, design.icon, p.accent, 84, 84, 58)}${text}`
       };
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="560" height="350" viewBox="0 0 560 350">${variants[design.layout] || variants["left-mark"]}</svg>`;
-      return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+      return `<svg class="mtk-biab__card-svg" xmlns="http://www.w3.org/2000/svg" width="560" height="350" viewBox="0 0 560 350" role="img" aria-label="${safe(design.businessName || "Business card")}">${variants[design.layout] || variants["left-mark"]}</svg>`;
     }
 
     _businessCardTextSvg(options) {
@@ -2357,14 +2400,52 @@
 
     _placedLogoOrIcon(logo, iconName, color, centerX, centerY, size) {
       if (logo && logo.svg) {
-        const href = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(logo.svg);
-        return `<image href="${href}" x="${centerX - size / 2}" y="${centerY - size / 2}" width="${size}" height="${size}" preserveAspectRatio="xMidYMid meet"/>`;
+        const inlineLogo = this._inlineLogoSvg(logo.svg, centerX - size / 2, centerY - size / 2, size, size);
+        if (inlineLogo) return inlineLogo;
       }
       if (logo && (logo.previewUrl || logo.image)) {
         const href = this._escape(logo.previewUrl || logo.image);
         return `<image href="${href}" x="${centerX - size / 2}" y="${centerY - size / 2}" width="${size}" height="${size}" preserveAspectRatio="xMidYMid meet"/>`;
       }
       return this._placedIcon(iconName, color, centerX, centerY, size);
+    }
+
+    _inlineLogoSvg(svg, x, y, width, height) {
+      const source = String(svg || "").trim();
+      if (!source) return "";
+      const openTag = source.match(/<svg\b([^>]*)>/i);
+      const inner = source.replace(/^[\s\S]*?<svg\b[^>]*>/i, "").replace(/<\/svg>\s*$/i, "");
+      if (!openTag || !inner.trim()) return "";
+
+      const attrs = openTag[1] || "";
+      let viewBox = "";
+      const viewBoxMatch = attrs.match(/\bviewBox=(["'])(.*?)\1/i);
+      if (viewBoxMatch) {
+        viewBox = viewBoxMatch[2];
+      } else {
+        const widthMatch = attrs.match(/\bwidth=(["'])([\d.]+).*?\1/i);
+        const heightMatch = attrs.match(/\bheight=(["'])([\d.]+).*?\1/i);
+        const logoWidth = widthMatch ? Number(widthMatch[2]) : 360;
+        const logoHeight = heightMatch ? Number(heightMatch[2]) : 240;
+        viewBox = `0 0 ${logoWidth || 360} ${logoHeight || 240}`;
+      }
+
+      return `<svg x="${x}" y="${y}" width="${width}" height="${height}" viewBox="${this._escape(viewBox)}" preserveAspectRatio="xMidYMid meet">${inner}</svg>`;
+    }
+
+    _logoSignature(logo) {
+      if (!logo) return "";
+      return String(logo.id || logo.providerLogoId || logo.previewUrl || logo.image || logo.svg || "").slice(0, 180);
+    }
+
+    _cardTemplatesUseCurrentLogo(templates) {
+      if (!this.logo) return true;
+      if (!Array.isArray(templates) || !templates.length) return true;
+      const current = this._logoSignature(this.logo);
+      return templates.every((template) => {
+        const templateLogo = template && template.design && template.design.logo;
+        return this._logoSignature(templateLogo) === current;
+      });
     }
 
     _placedIcon(name, color, centerX, centerY, size) {
@@ -2445,6 +2526,10 @@
     }
 
     _showSetupView(section, bodyHTML) {
+      const nextSection = this._nextSection();
+      const nextLabel = nextSection
+        ? this._text("Next") + ": " + this._text(nextSection.label || nextSection.title || "Next step")
+        : this._text("Done");
       const overlay = document.createElement("section");
       overlay.className = "mtk-biab__setup";
       overlay.setAttribute("role", "dialog");
@@ -2468,6 +2553,18 @@
         <div class="mtk-biab__setup-body">
           ${bodyHTML}
         </div>
+
+        <footer class="mtk-biab__setup-footer">
+          <div class="mtk-biab__setup-footer-inner">
+            <button class="mtk-biab__back-btn" type="button" data-action="close-setup">
+              ${this._escape(this._text("Close"))}
+            </button>
+            <button class="mtk-biab__submit-btn mtk-biab__setup-next" type="button" data-action="${nextSection ? "next-setup-step" : "close-setup"}">
+              <span>${this._escape(nextLabel)}</span>
+              ${nextSection ? `<span class="material-icons" aria-hidden="true">chevron_right</span>` : ""}
+            </button>
+          </div>
+        </footer>
       `;
 
       this.root.appendChild(overlay);
