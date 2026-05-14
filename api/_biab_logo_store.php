@@ -68,16 +68,31 @@ function biab_logo_get($uid) {
     if (!is_array($payload)) {
         return null;
     }
+    $payload = biab_logo_normalize_logo($payload);
+    if (!$payload) {
+        biab_logo_delete_logo($uid);
+        return null;
+    }
     $payload['providerLogoId'] = $payload['providerLogoId'] ?? ($row['provider_logo_id'] ?? '');
     $payload['updatedAt'] = $payload['updatedAt'] ?? ($row['updated_at'] ?? '');
     return $payload;
 }
 
-function biab_logo_reset($uid) {
+function biab_logo_delete_logo($uid) {
     $stmt = biab_logo_db()->prepare('DELETE FROM logos WHERE nala_uid = :uid');
     $stmt->execute(array(':uid' => $uid));
+    return true;
+}
+
+function biab_logo_delete_options($uid) {
     $stmt = biab_logo_db()->prepare('DELETE FROM logo_options WHERE nala_uid = :uid');
     $stmt->execute(array(':uid' => $uid));
+    return true;
+}
+
+function biab_logo_reset($uid) {
+    biab_logo_delete_logo($uid);
+    biab_logo_delete_options($uid);
     return true;
 }
 
@@ -92,8 +107,19 @@ function biab_logo_get_options($uid) {
     if (!is_array($options)) {
         return null;
     }
+    $cleanOptions = array();
+    foreach (array_slice($options, 0, 6) as $option) {
+        $normalized = biab_logo_normalize_logo(is_array($option) ? $option : array());
+        if ($normalized) {
+            $cleanOptions[] = $normalized;
+        }
+    }
+    if (count($cleanOptions) !== 6) {
+        biab_logo_delete_options($uid);
+        return null;
+    }
     return array(
-        'options' => array_slice($options, 0, 6),
+        'options' => $cleanOptions,
         'provider' => json_decode($row['provider'] ?? '{}', true) ?: array(),
         'createdAt' => $row['created_at'] ?? ''
     );
@@ -163,6 +189,10 @@ function biab_logo_normalize_logo($logo) {
     $previewUrl = biab_logo_clean_url($logo['previewUrl'] ?? '');
     $image = biab_logo_clean_url($logo['image'] ?? '');
 
+    if (biab_logo_is_preview_test_logo($id, $name, $svg, $previewUrl, $image)) {
+        return null;
+    }
+
     if ($id === '' || ($svg === '' && $previewUrl === '' && $image === '')) {
         return null;
     }
@@ -178,6 +208,17 @@ function biab_logo_normalize_logo($logo) {
         'previewOnly' => !empty($logo['previewOnly']),
         'selectedAt' => (string)($logo['selectedAt'] ?? gmdate('c'))
     );
+}
+
+function biab_logo_is_preview_test_logo($id, $name, $svg, $previewUrl, $image) {
+    $haystack = strtolower($id . ' ' . $name . ' ' . $svg . ' ' . $previewUrl . ' ' . $image);
+    if (strpos($haystack, 'zoviz preview test') !== false) {
+        return true;
+    }
+    if (strpos($haystack, 'preview-logo-') !== false) {
+        return true;
+    }
+    return false;
 }
 
 function biab_logo_sanitize_svg($svg) {
@@ -214,50 +255,4 @@ function biab_logo_slice($value, $length) {
     return substr($value, 0, $length);
 }
 
-function biab_logo_preview_options($payload) {
-    $businessName = trim((string)($payload['businessName'] ?? 'Locksmith'));
-    if ($businessName === '') {
-        $businessName = 'Locksmith';
-    }
-    $area = trim((string)($payload['serviceArea'] ?? 'Local service'));
-    $safeName = biab_logo_escape($businessName);
-    $safeArea = biab_logo_escape($area !== '' ? $area : 'Local service');
-    $initials = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $businessName), 0, 2));
-    if ($initials === '') {
-        $initials = 'L';
-    }
-
-    $themes = array(
-        array('Trust Mark', '#111827', '#a98212', 'M 130 74 h 58 a 30 30 0 0 1 30 30 v 8 h 13 a 13 13 0 0 1 13 13 v 50 a 13 13 0 0 1 -13 13 h -142 a 13 13 0 0 1 -13 -13 v -50 a 13 13 0 0 1 13 -13 h 13 v -8 a 30 30 0 0 1 30 -30 z M 124 112 h 72 v -8 a 36 36 0 0 0 -72 0 z'),
-        array('Keyline', '#0f172a', '#2563eb', 'M 108 142 a 34 34 0 1 1 19 31 l -21 21 h -21 v 21 h -21 v 21 h -34 v -34 l 67 -67 a 34 34 0 0 1 11 7 z M 137 111 a 10 10 0 1 0 0 -20 a 10 10 0 0 0 0 20 z'),
-        array('Shield', '#172554', '#16a34a', 'M 160 58 l 84 30 v 58 c 0 56 -35 92 -84 112 c -49 -20 -84 -56 -84 -112 v -58 z M 128 154 l 22 22 l 46 -58'),
-        array('Precision', '#18181b', '#dc2626', 'M 160 54 l 26 52 l 58 8 l -42 41 l 10 58 l -52 -27 l -52 27 l 10 -58 l -42 -41 l 58 -8 z'),
-        array('Modern Lock', '#052e16', '#f59e0b', 'M 100 126 h 120 a 18 18 0 0 1 18 18 v 70 a 18 18 0 0 1 -18 18 h -120 a 18 18 0 0 1 -18 -18 v -70 a 18 18 0 0 1 18 -18 z M 118 126 v -28 a 42 42 0 0 1 84 0 v 28'),
-        array('Street Sign', '#0f172a', '#0891b2', 'M 62 93 h 196 l 34 45 l -34 45 h -196 l -34 -45 z M 78 138 h 164')
-    );
-
-    $options = array();
-    foreach ($themes as $index => $theme) {
-        $svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" role="img" aria-label="' . $safeName . ' logo">'
-            . '<rect width="360" height="240" rx="18" fill="#ffffff"/>'
-            . '<rect x="16" y="16" width="328" height="208" rx="16" fill="' . $theme[1] . '" opacity=".05"/>'
-            . '<path d="' . $theme[3] . '" fill="none" stroke="' . $theme[2] . '" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>'
-            . '<text x="176" y="83" fill="' . $theme[1] . '" font-family="Arial, sans-serif" font-size="30" font-weight="800">' . $safeName . '</text>'
-            . '<text x="178" y="119" fill="' . $theme[2] . '" font-family="Arial, sans-serif" font-size="19" font-weight="700">' . $safeArea . '</text>'
-            . '<text x="177" y="174" fill="' . $theme[1] . '" font-family="Arial, sans-serif" font-size="42" font-weight="900">' . biab_logo_escape($initials) . '</text>'
-            . '<text x="178" y="213" fill="' . $theme[1] . '" opacity=".45" font-family="Arial, sans-serif" font-size="12" font-weight="700">ZOVIZ PREVIEW TEST</text>'
-            . '</svg>';
-        $options[] = array(
-            'id' => 'preview-logo-' . ($index + 1),
-            'providerLogoId' => 'preview-logo-' . ($index + 1),
-            'provider' => 'zoviz',
-            'name' => $theme[0],
-            'svg' => $svg,
-            'previewUrl' => '',
-            'image' => '',
-            'previewOnly' => true
-        );
-    }
-    return $options;
-}
 ?>

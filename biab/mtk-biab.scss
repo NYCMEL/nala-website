@@ -1127,6 +1127,13 @@ mtk-biab.mtk-biab .mtk-biab__logo-preview img {
   object-fit: contain;
 }
 
+mtk-biab.mtk-biab .mtk-biab__logo-preview--empty {
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 800;
+  text-align: center;
+}
+
 mtk-biab.mtk-biab .mtk-biab__logo-option-name,
 mtk-biab.mtk-biab .mtk-biab__logo-card strong {
   color: #0f172a;

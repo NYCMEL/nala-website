@@ -126,8 +126,8 @@
       }
 
       if (eventName === "4-mtk-biab:logo-loaded" && data) {
-        this.logo = data.logo || null;
-        this.logoOptions = Array.isArray(data.options) ? data.options.slice(0, 6) : this.logoOptions;
+        this.logo = this._cleanLogo(data.logo);
+        this.logoOptions = Array.isArray(data.options) ? this._cleanLogoOptions(data.options) : this.logoOptions;
         this.logoProviderStatus = data.provider || this.logoProviderStatus;
         if (this.logo) {
           this._saveLogoLocal(this.logo);
@@ -141,14 +141,14 @@
       }
 
       if (eventName === "4-mtk-biab:logo-options" && data) {
-        this.logoOptions = Array.isArray(data.options) ? data.options.slice(0, 6) : [];
+        this.logoOptions = Array.isArray(data.options) ? this._cleanLogoOptions(data.options) : [];
         this.logoProviderStatus = data.provider || null;
         this.selectedLogoId = this.logoOptions[0] ? this.logoOptions[0].id : "";
         this._openLogoSetup(this._getActiveSection());
       }
 
       if (eventName === "4-mtk-biab:logo-saved" && data) {
-        this.logo = data.logo || this.logo;
+        this.logo = this._cleanLogo(data.logo) || this.logo;
         if (this.logo) this._saveLogoLocal(this.logo);
         if (!this.cardOptionsPersisted) {
           this.generatedCardTemplates = null;
@@ -1231,6 +1231,9 @@
     }
 
     _logoPreviewMarkup(logo) {
+      if (this._isJunkLogo(logo)) {
+        return `<span class="mtk-biab__logo-preview mtk-biab__logo-preview--empty">${this._escape(this._text("Generate a new Zoviz logo"))}</span>`;
+      }
       if (logo && logo.svg) {
         return `<span class="mtk-biab__logo-preview">${logo.svg}</span>`;
       }
@@ -1238,7 +1241,7 @@
       if (src) {
         return `<span class="mtk-biab__logo-preview"><img src="${this._escape(src)}" alt=""></span>`;
       }
-      return `<span class="mtk-biab__logo-preview">${this._fallbackLogoSvg(this._buildLogoPayload().businessName || "Logo", "#0f172a", "#a98212", "key")}</span>`;
+      return `<span class="mtk-biab__logo-preview mtk-biab__logo-preview--empty">${this._escape(this._text("No logo preview available"))}</span>`;
     }
 
     _generateLogoOptions() {
@@ -1771,18 +1774,51 @@
 
     _loadSavedLogo() {
       try {
-        return JSON.parse(window.localStorage.getItem(this._logoStorageKey()) || "null");
+        const logo = JSON.parse(window.localStorage.getItem(this._logoStorageKey()) || "null");
+        if (this._isJunkLogo(logo)) {
+          window.localStorage.removeItem(this._logoStorageKey());
+          return null;
+        }
+        return logo;
       } catch (err) {
         return null;
       }
     }
 
     _saveLogoLocal(logo) {
+      if (this._isJunkLogo(logo)) {
+        try { window.localStorage.removeItem(this._logoStorageKey()); } catch (err) {}
+        return;
+      }
       try {
         window.localStorage.setItem(this._logoStorageKey(), JSON.stringify(logo || {}));
       } catch (err) {
         console.warn("Could not save logo state", err);
       }
+    }
+
+    _cleanLogo(logo) {
+      return this._isJunkLogo(logo) ? null : (logo || null);
+    }
+
+    _cleanLogoOptions(options) {
+      return (Array.isArray(options) ? options : [])
+        .filter((option) => !this._isJunkLogo(option))
+        .slice(0, 6);
+    }
+
+    _isJunkLogo(logo) {
+      if (!logo || typeof logo !== "object") return false;
+      const haystack = [
+        logo.id,
+        logo.providerLogoId,
+        logo.name,
+        logo.label,
+        logo.svg,
+        logo.previewUrl,
+        logo.image
+      ].filter(Boolean).join(" ").toLowerCase();
+      return haystack.indexOf("zoviz preview test") > -1 || haystack.indexOf("preview-logo-") > -1;
     }
 
     _loadOrderedCard() {
