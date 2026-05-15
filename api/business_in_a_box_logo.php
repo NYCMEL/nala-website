@@ -115,7 +115,7 @@ function biab_logo_provider_status($mode = null, $message = '') {
 }
 
 function biab_logo_generation_version() {
-    return 5;
+    return 6;
 }
 
 function biab_logo_options_are_stale($generated) {
@@ -196,7 +196,7 @@ function biab_logo_zoviz_url($url) {
     return '';
 }
 
-function biab_logo_zoviz_best_file($record) {
+function biab_logo_zoviz_best_file($record, $preferredLayout = 'horizontal') {
     $files = is_array($record['logo_files'] ?? null) ? $record['logo_files'] : array();
     $fallback = null;
     foreach ($files as $file) {
@@ -205,6 +205,17 @@ function biab_logo_zoviz_best_file($record) {
         }
         if ($fallback === null) {
             $fallback = $file;
+        }
+        $concepts = is_array($file['layout_concept'] ?? null) ? $file['layout_concept'] : array();
+        $name = (string)($file['name'] ?? '');
+        $matchesPreferred = $preferredLayout !== '' && (in_array($preferredLayout, $concepts, true) || stripos($name, $preferredLayout) !== false);
+        if ($matchesPreferred && empty($file['with_slogan'])) {
+            return $file;
+        }
+    }
+    foreach ($files as $file) {
+        if (!is_array($file)) {
+            continue;
         }
         $name = (string)($file['name'] ?? '');
         $concepts = is_array($file['layout_concept'] ?? null) ? $file['layout_concept'] : array();
@@ -216,14 +227,14 @@ function biab_logo_zoviz_best_file($record) {
     return $fallback ?: array();
 }
 
-function biab_logo_zoviz_normalize_record($record, $index) {
+function biab_logo_zoviz_normalize_record($record, $index, $preferredLayout = 'horizontal') {
     if (!is_array($record)) {
         return null;
     }
     if (!biab_logo_zoviz_record_allowed($record)) {
         return null;
     }
-    $file = biab_logo_zoviz_best_file($record);
+    $file = biab_logo_zoviz_best_file($record, $preferredLayout);
     $previewUrl = biab_logo_zoviz_url($file['preview_url'] ?? ($record['preview_url'] ?? ''));
     $recordId = (string)($record['id'] ?? '');
     $fileId = (string)($file['id'] ?? '');
@@ -464,41 +475,50 @@ function biab_logo_zoviz_concepts($businessName, $serviceArea, $services) {
     $contextKeywords = biab_logo_contextual_symbol_keywords($businessName, $serviceArea);
     return array(
         array(
-            'label' => 'Shield Security',
+            'label' => 'Industrial Badge',
             'keywords' => array('shield', 'keyhole', 'security badge'),
-            'description' => 'Concept 1 of 6: use a shield, keyhole, or security badge. Do not use a house, ranch gate, van, safe, generic repeated building icon, letter K, initials, or monogram.'
+            'layout' => 'horizontal',
+            'description' => 'Concept 1 of 6: industrial badge logo. Use a shield, keyhole, or security badge. Typography must be bold condensed sans serif or square trade lettering, not script or thin serif. Do not use a house, ranch gate, van, safe, generic repeated building icon, letter K, initials, or monogram.'
         ),
         array(
-            'label' => 'Entry Door',
-            'keywords' => array('door', 'key', 'entry lock'),
-            'description' => 'Concept 2 of 6: use a clear door, doorway, entry lock, deadbolt, or key-turn shape. Do not use a shield, vehicle, ranch gate, safe, generic house mark, letter K, initials, or monogram.'
+            'label' => 'Classic Wordmark',
+            'keywords' => array('wordmark', 'key separator', 'locksmith lettering'),
+            'layout' => 'text',
+            'description' => 'Concept 2 of 6: mostly typography, a professional locksmith wordmark with no large left icon. Use a classic slab serif, strong serif, or engraved workwear lettering. At most use a small keyhole or key separator inside the text. Do not use script, handwriting, a house, shield, van, safe, letter K, initials, or monogram.'
         ),
         array(
             'label' => 'Mobile Service',
             'keywords' => array('service van', 'road', 'key'),
-            'description' => 'Concept 3 of 6: use a service van, road line, map pin, or mobile locksmith cue integrated with a key or lock. Do not use a house, shield, letter K, initials, or monogram.'
+            'layout' => 'horizontal',
+            'description' => 'Concept 3 of 6: mobile service logo. Use a service van, road line, map pin, or mobile locksmith cue integrated with a key or lock. Typography must be clean geometric sans serif or technical sans. Do not use a house, shield, script font, thin serif, letter K, initials, or monogram.'
         ),
         array(
             'label' => 'Safe and Commercial',
             'keywords' => array('safe', 'vault', 'commercial lock'),
-            'description' => 'Concept 4 of 6: use a safe, vault dial, commercial door hardware, or heavy-duty lock. Do not use a house, ranch gate, vehicle, shield, letter K, initials, or monogram.'
+            'layout' => 'sign',
+            'description' => 'Concept 4 of 6: commercial/security sign logo. Use a safe, vault dial, commercial door hardware, or heavy-duty lock. Typography must be slab serif, stencil, or rugged sign lettering. Do not use a house, ranch gate, vehicle, shield, script font, letter K, initials, or monogram.'
         ),
         array(
             'label' => 'Local Name Cue',
             'keywords' => $contextKeywords,
-            'description' => 'Concept 5 of 6: use a tasteful local cue from the business name or service area, integrated with a locksmith/security symbol. Avoid repeating the same house/lock icon used in other concepts.'
+            'layout' => 'horizontal',
+            'description' => 'Concept 5 of 6: local cue logo. Use a tasteful local cue from the business name or service area, integrated with a locksmith/security symbol. For harbor names, prefer anchor, wave, dock, rope, compass, lighthouse, or boat cue. Typography must be sturdy sans serif or nautical/workwear serif. Avoid repeating the same house, padlock, keyhole, or script style used in other concepts.'
         ),
         array(
-            'label' => 'Modern Key Mark',
-            'keywords' => array('abstract key', 'monogram', 'geometric keyhole'),
-            'description' => 'Concept 6 of 6: use a minimal geometric key, keyhole, initials, or abstract security mark. Do not use a house, shield, vehicle, safe, or local scenery.'
+            'label' => 'Modern Minimal',
+            'keywords' => array('abstract key', 'geometric keyhole', 'minimal security mark'),
+            'layout' => 'text',
+            'description' => 'Concept 6 of 6: modern minimal logo. Use a small abstract key, geometric keyhole, or clean security mark with a contemporary geometric sans wordmark. Do not use script, handwriting, house, shield, vehicle, safe, local scenery, or a large repeated padlock icon.'
         )
     );
 }
 
-function biab_logo_zoviz_register_payload($businessName, $description, $keywords) {
+function biab_logo_zoviz_register_payload($businessName, $description, $keywords, $seed = '') {
     $keywordText = implode(', ', array_values(array_unique(array_filter(array_map('strval', $keywords)))));
     $fullDescription = $description . ($keywordText !== '' ? '. Preferred symbol direction: ' . $keywordText : '');
+    if ($seed !== '') {
+        $fullDescription .= '. Creative variation seed: ' . preg_replace('/[^a-zA-Z0-9 _-]/', '', (string)$seed);
+    }
     return array(
         'brand_name' => array($businessName),
         'filters' => array(
@@ -524,10 +544,12 @@ function biab_logo_generate_zoviz($payload) {
     }
     $serviceArea = trim((string)($payload['serviceArea'] ?? ''));
     $services = trim((string)($payload['services'] ?? ''));
+    $uidSeed = preg_replace('/[^a-zA-Z0-9_-]/', '', (string)($payload['nalaUID'] ?? ''));
+    $creativeSeed = substr(hash('sha256', $businessName . '|' . $serviceArea . '|' . $uidSeed . '|' . gmdate('Ymd')), 0, 10);
     $descriptionParts = array_filter(array(
-        'Strict: locksmith/security-first logo only. No glasses, eyewear, eyes, lashes, hearts, flowers, beauty, fashion, boutique styling, pink, purple, magenta, pastel, script, cursive, or handwritten fonts',
+        'Strict: locksmith/security-first logo only. No glasses, eyewear, eyes, lashes, hearts, flowers, beauty, fashion, boutique styling, pink, purple, magenta, pastel, script, cursive, handwritten fonts, playful fonts, or delicate boutique typography',
         'Use strong professional trade-service styling, bold sans serif, slab, or restrained serif type, clean vector marks, and sober colors such as black, charcoal, navy, steel blue, forest green, gold, white, or silver',
-        'Every option must use a different main symbol family. Do not return six versions of the same house, lock, or key icon with different colors',
+        'Every option must use a different main symbol family and a different typography family. Do not return six versions of the same house, lock, keyhole, padlock, font, or wordmark with different colors',
         'Avoid lettermark-only logos and do not use a letter K, initials, or monogram unless the concept specifically asks for a modern abstract key mark',
         'Allowed core symbols: keys, locks, keyholes, shields, doors, houses, buildings, vans, safes, ranch/local cues, or geometric security marks',
         biab_logo_contextual_direction($businessName, $serviceArea),
@@ -550,7 +572,8 @@ function biab_logo_generate_zoviz($payload) {
         $registered = biab_logo_zoviz_request('/album/brand/register', biab_logo_zoviz_register_payload(
             $businessName,
             $conceptDescription,
-            $concept['keywords'] ?? array()
+            $concept['keywords'] ?? array(),
+            $creativeSeed . '-' . ($conceptIndex + 1)
         ));
         $albumId = (string)($registered['result']['id'] ?? '');
         if ($albumId === '') {
@@ -565,7 +588,7 @@ function biab_logo_generate_zoviz($payload) {
                 continue;
             }
             foreach ($records as $record) {
-                $option = biab_logo_zoviz_normalize_record($record, count($options));
+                $option = biab_logo_zoviz_normalize_record($record, count($options), (string)($concept['layout'] ?? 'horizontal'));
                 if (!$option || isset($seen[$option['id']])) {
                     continue;
                 }
@@ -593,7 +616,8 @@ function biab_logo_generate_zoviz($payload) {
         $registered = biab_logo_zoviz_request('/album/brand/register', biab_logo_zoviz_register_payload(
             $businessName,
             $baseDescription . '. Generate backup concepts only if needed, and avoid reusing icon families already selected.',
-            array('key', 'lock', 'shield', 'door', 'van', 'safe', 'security')
+            array('key', 'lock', 'shield', 'door', 'van', 'safe', 'security'),
+            $creativeSeed . '-backup'
         ));
         $albumId = (string)($registered['result']['id'] ?? '');
         for ($attempt = 0; $albumId !== '' && $attempt < 4 && count($options) < 6; $attempt++) {
@@ -603,7 +627,7 @@ function biab_logo_generate_zoviz($payload) {
                 continue;
             }
             foreach ($records as $record) {
-                $option = biab_logo_zoviz_normalize_record($record, count($options));
+                $option = biab_logo_zoviz_normalize_record($record, count($options), 'sign');
                 if (!$option || isset($seen[$option['id']])) {
                     continue;
                 }
