@@ -50,6 +50,7 @@ class _febe {
 	    "mtk-biab:logo-load",
 	    "mtk-biab:logo-generate",
 	    "mtk-biab:logo-save",
+	    "mtk-biab:logo-reset-test",
 	    "mtk-biab:google-seo-status-load",
 	    "mtk-biab:google-seo-request",
 	    "mtk-biab:reset",

@@ -70,6 +70,49 @@ function biab_logo_zoviz_key() {
     )));
 }
 
+function biab_logo_recraft_key() {
+    return trim((string)biab_logo_config_value(array(
+        'RECRAFT_API_KEY',
+        'RECRAFT_API_TOKEN',
+        'RECRAFT_KEY',
+        'RECRAFT_TOKEN',
+        'recraft_api_key',
+        'recraftApiKey'
+    )));
+}
+
+function biab_logo_recraft_model() {
+    $model = trim((string)biab_logo_config_value(array(
+        'RECRAFT_LOGO_MODEL',
+        'RECRAFT_MODEL',
+        'recraft_logo_model',
+        'recraftModel'
+    )));
+    return $model !== '' ? $model : 'recraftv4_1_vector';
+}
+
+function biab_logo_logotype_key() {
+    return trim((string)biab_logo_config_value(array(
+        'LOGOTYPE_API_KEY',
+        'LOGOTYPE_API_TOKEN',
+        'LOGOTYPE_KEY',
+        'LOGOTYPE_TOKEN',
+        'logotype_api_key',
+        'logotypeApiKey'
+    )));
+}
+
+function biab_logo_logotype_endpoint() {
+    $endpoint = trim((string)biab_logo_config_value(array(
+        'LOGOTYPE_API_ENDPOINT',
+        'LOGOTYPE_LOGO_ENDPOINT',
+        'LOGOTYPE_ENDPOINT',
+        'logotype_api_endpoint',
+        'logotypeEndpoint'
+    )));
+    return $endpoint !== '' ? $endpoint : 'https://api.logotype.ai/v1/logos/generate';
+}
+
 function biab_logo_zoviz_base_url() {
     $baseUrl = trim((string)biab_logo_config_value(array(
         'ZOVIZ_API_BASE_URL',
@@ -100,22 +143,25 @@ function biab_logo_zoviz_base_url() {
 }
 
 function biab_logo_provider_status($mode = null, $message = '') {
-    $configured = biab_logo_zoviz_key() !== '';
+    $configured = biab_logo_recraft_key() !== '';
+    $logotypeConfigured = biab_logo_logotype_key() !== '' && biab_logo_logotype_endpoint() !== '';
     if ($mode === null) {
-        $mode = $configured ? 'zoviz' : 'preview';
+        $mode = $configured ? 'recraft' : 'preview';
     }
     return array(
-        'id' => 'zoviz',
+        'id' => $mode === 'comparison' ? 'comparison' : 'recraft',
         'label' => 'Logo Generator',
         'mode' => $mode,
         'configured' => $configured,
+        'recraftConfigured' => $configured,
+        'logotypeConfigured' => $logotypeConfigured,
         'generatorVersion' => biab_logo_generation_version(),
-        'message' => $message !== '' ? $message : ($configured ? 'Logo generation is configured for preview logos.' : 'Logo generation is not configured yet.')
+        'message' => $message !== '' ? $message : ($configured ? 'Logo generation is configured.' : 'Logo generation is not configured yet.')
     );
 }
 
 function biab_logo_generation_version() {
-    return 9;
+    return 10;
 }
 
 function biab_logo_options_are_stale($generated) {
@@ -129,7 +175,7 @@ function biab_logo_options_are_stale($generated) {
     }
     $options = is_array($generated['options'] ?? null) ? $generated['options'] : array();
     foreach ($options as $option) {
-        if (!is_array($option) || ($option['provider'] ?? '') !== 'nala') {
+        if (!is_array($option) || !in_array(($option['provider'] ?? ''), array('recraft', 'logotype'), true)) {
             return true;
         }
         if ((int)($option['generationVersion'] ?? 0) < biab_logo_generation_version()) {
@@ -143,7 +189,7 @@ function biab_logo_saved_logo_is_stale($logo) {
     if (!is_array($logo) || !$logo) {
         return false;
     }
-    if (($logo['provider'] ?? '') !== 'nala') {
+    if (!in_array(($logo['provider'] ?? ''), array('recraft', 'logotype'), true)) {
         return true;
     }
     return (int)($logo['generationVersion'] ?? 0) < biab_logo_generation_version();
@@ -902,6 +948,238 @@ function biab_logo_generate_zoviz($payload) {
     );
 }
 
+function biab_logo_logo_prompt($payload, $providerName = '') {
+    $businessName = trim((string)($payload['businessName'] ?? 'Locksmith Business'));
+    if ($businessName === '') {
+        $businessName = 'Locksmith Business';
+    }
+    $serviceArea = trim((string)($payload['serviceArea'] ?? ''));
+    $services = trim((string)($payload['services'] ?? ''));
+    $providerHint = $providerName !== '' ? ' Provider test lane: ' . $providerName . '.' : '';
+    return implode(' ', array_filter(array(
+        'Create professional, production-quality vector logo concepts for a locksmith/security business named "' . $businessName . '".',
+        $serviceArea !== '' ? 'Service area: ' . $serviceArea . '.' : '',
+        $services !== '' ? 'Services: ' . $services . '.' : '',
+        'Use a clean horizontal logo or balanced icon-plus-wordmark layout on a plain white or transparent background.',
+        'The text must read exactly "' . $businessName . '" with no misspellings and no extra slogan.',
+        'Make the logo suitable for business cards, uniforms, invoices, vehicles, and a local service website.',
+        'Use strong trade-service styling: locksmith, security, keys, locks, doors, safes, shields, vans, commercial hardware, or local cues only when relevant.',
+        biab_logo_contextual_direction($businessName, $serviceArea),
+        'Avoid glasses, eyewear, faces, hearts, flowers, boutique styling, pink, purple, childish marks, thin decorative script, and generic clipart.',
+        'Use sober professional colors compatible with NALA: black, charcoal, white, gold, steel gray, navy, or restrained deep green.',
+        'Each option must be a distinct concept with different symbol structure and typography, not recolors.',
+        $providerHint
+    )));
+}
+
+function biab_logo_http_json($url, $payload, $headers, $timeout = 90) {
+    if (!function_exists('curl_init')) {
+        biab_logo_json_response(500, array('error' => 'This server cannot connect to the logo provider.'));
+    }
+    $curl = curl_init($url);
+    curl_setopt_array($curl, array(
+        CURLOPT_POST => true,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_POSTFIELDS => json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+        CURLOPT_TIMEOUT => $timeout
+    ));
+    $body = curl_exec($curl);
+    $status = (int)curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    $error = curl_error($curl);
+    curl_close($curl);
+
+    if ($body === false || $status < 200 || $status >= 300) {
+        $json = is_string($body) ? json_decode($body, true) : null;
+        $details = $error !== '' ? $error : ('HTTP ' . $status);
+        if (is_array($json)) {
+            $details = (string)($json['error']['message'] ?? $json['message'] ?? $json['error'] ?? $details);
+        }
+        biab_logo_json_response(502, array(
+            'error' => 'The logo provider could not create logos right now.',
+            'details' => $details
+        ));
+    }
+
+    $json = json_decode((string)$body, true);
+    if (!is_array($json)) {
+        biab_logo_json_response(502, array('error' => 'The logo provider returned an unreadable response.'));
+    }
+    return $json;
+}
+
+function biab_logo_recraft_generate($payload, $count = 6) {
+    $apiKey = biab_logo_recraft_key();
+    if ($apiKey === '') {
+        biab_logo_json_response(503, array('error' => 'Recraft API access is not configured yet.'));
+    }
+    $businessName = trim((string)($payload['businessName'] ?? 'Locksmith Business'));
+    if ($businessName === '') {
+        $businessName = 'Locksmith Business';
+    }
+    $json = biab_logo_http_json(
+        'https://external.api.recraft.ai/v1/images/generations',
+        array(
+            'prompt' => biab_logo_logo_prompt($payload, 'Recraft'),
+            'n' => max(1, min(6, (int)$count)),
+            'model' => biab_logo_recraft_model(),
+            'response_format' => 'url'
+        ),
+        array(
+            'Content-Type: application/json',
+            'Accept: application/json',
+            'Authorization: Bearer ' . $apiKey,
+            'User-Agent: NALA-BIAB/1.0'
+        )
+    );
+    $records = is_array($json['data'] ?? null) ? $json['data'] : array();
+    return biab_logo_normalize_provider_records($records, 'recraft', 'Recraft', $businessName, $count);
+}
+
+function biab_logo_logotype_generate($payload, $count = 6) {
+    $apiKey = biab_logo_logotype_key();
+    if ($apiKey === '') {
+        biab_logo_json_response(503, array('error' => 'Logotype.ai API access is not configured yet.'));
+    }
+    $businessName = trim((string)($payload['businessName'] ?? 'Locksmith Business'));
+    if ($businessName === '') {
+        $businessName = 'Locksmith Business';
+    }
+    $records = array();
+    for ($attempt = 0; $attempt < 3 && count($records) < $count; $attempt++) {
+        $json = biab_logo_http_json(
+            biab_logo_logotype_endpoint(),
+            array(
+                'brandName' => $businessName,
+                'businessName' => $businessName,
+                'industry' => 'Locksmith and security services',
+                'description' => biab_logo_logo_prompt($payload, 'Logotype.ai') . ' Batch variation ' . ($attempt + 1) . '.',
+                'style' => 'professional trade-service logo, clean vector, readable typography',
+                'colors' => array('#151a1f', '#a98212', '#ffffff', '#596662'),
+                'count' => max(1, min(6, (int)$count)),
+                'variants' => max(1, min(6, (int)$count)),
+                'format' => 'svg'
+            ),
+            array(
+                'Content-Type: application/json',
+                'Accept: application/json',
+                'Authorization: Bearer ' . $apiKey,
+                'X-API-Key: ' . $apiKey,
+                'User-Agent: NALA-BIAB/1.0'
+            )
+        );
+        $records = array_merge($records, biab_logo_extract_records($json));
+    }
+    return biab_logo_normalize_provider_records($records, 'logotype', 'Logotype.ai', $businessName, $count);
+}
+
+function biab_logo_extract_records($json) {
+    foreach (array('data', 'logos', 'variants', 'results', 'options') as $key) {
+        if (is_array($json[$key] ?? null)) {
+            return $json[$key];
+        }
+    }
+    if (is_array($json['result']['logos'] ?? null)) {
+        return $json['result']['logos'];
+    }
+    if (is_array($json['result']['variants'] ?? null)) {
+        return $json['result']['variants'];
+    }
+    if (is_array($json['result']['data'] ?? null)) {
+        return $json['result']['data'];
+    }
+    if (isset($json['svg']) || isset($json['url']) || isset($json['image'])) {
+        return array($json);
+    }
+    return array();
+}
+
+function biab_logo_normalize_provider_records($records, $provider, $providerLabel, $businessName, $expectedCount) {
+    $options = array();
+    foreach ($records as $index => $record) {
+        if (count($options) >= $expectedCount) {
+            break;
+        }
+        if (!is_array($record)) {
+            continue;
+        }
+        $svg = '';
+        if (!empty($record['b64_json'])) {
+            $decoded = base64_decode((string)$record['b64_json'], true);
+            if (is_string($decoded) && stripos(trim($decoded), '<svg') === 0) {
+                $svg = $decoded;
+            }
+        }
+        foreach (array('svg', 'svgContent', 'svg_content') as $svgKey) {
+            if ($svg === '' && !empty($record[$svgKey])) {
+                $svg = (string)$record[$svgKey];
+            }
+        }
+        $url = '';
+        foreach (array('url', 'image_url', 'imageUrl', 'preview_url', 'previewUrl', 'downloadUrl', 'download_url') as $urlKey) {
+            if (!empty($record[$urlKey])) {
+                $url = (string)$record[$urlKey];
+                break;
+            }
+        }
+        $id = preg_replace('/[^a-zA-Z0-9_.:-]/', '', (string)($record['id'] ?? $record['logoId'] ?? ''));
+        if ($id === '') {
+            $id = $provider . '-' . substr(sha1($provider . '|' . $businessName . '|' . $index . '|' . $url . '|' . $svg), 0, 14);
+        }
+        $colors = array();
+        foreach (array('colors', 'palette', 'colorPalette') as $colorKey) {
+            if (is_array($record[$colorKey] ?? null)) {
+                $colors = $record[$colorKey];
+                break;
+            }
+        }
+        $option = biab_logo_normalize_logo(array(
+            'id' => $id,
+            'providerLogoId' => (string)($record['id'] ?? $id),
+            'name' => $providerLabel . ' #' . (count($options) + 1),
+            'svg' => $svg,
+            'previewUrl' => $url,
+            'image' => $url,
+            'colors' => $colors,
+            'provider' => $provider,
+            'previewOnly' => false,
+            'concept' => (string)($record['concept'] ?? $record['style'] ?? $providerLabel),
+            'generationVersion' => biab_logo_generation_version()
+        ));
+        if ($option) {
+            $options[] = $option;
+        }
+    }
+    if (count($options) !== $expectedCount) {
+        biab_logo_json_response(502, array('error' => $providerLabel . ' did not return exactly ' . $expectedCount . ' usable logo options.'));
+    }
+    return $options;
+}
+
+function biab_logo_generate_provider_options($payload) {
+    $testComparison = !empty($payload['testMode']) || !empty($payload['compareProviders']) || (($payload['provider'] ?? '') === 'comparison');
+    if ($testComparison) {
+        $recraft = biab_logo_recraft_generate($payload, 6);
+        $logotype = biab_logo_logotype_generate($payload, 6);
+        return array(
+            'options' => array_merge($recraft, $logotype),
+            'provider' => array_merge(biab_logo_provider_status('comparison', 'Generated 12 logo options for testing.'), array(
+                'expectedCount' => 12,
+                'testComparison' => true,
+                'providers' => array('Recraft', 'Logotype.ai')
+            ))
+        );
+    }
+
+    $options = biab_logo_recraft_generate($payload, 6);
+    return array(
+        'options' => $options,
+        'provider' => array_merge(biab_logo_provider_status('recraft', 'Generated 6 logo options.'), array(
+            'expectedCount' => 6
+        ))
+    );
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $uid = biab_logo_uid($_GET['nalaUID'] ?? '');
     $savedLogo = biab_logo_get($uid);
@@ -970,7 +1248,7 @@ if ($replaceExisting) {
     biab_logo_delete_options($uid);
 }
 
-$generated = biab_logo_generate_curated($data);
+$generated = biab_logo_generate_provider_options($data);
 $stored = biab_logo_save_options($uid, $generated['options'], $generated['provider']);
 biab_logo_json_response(200, array(
     'ok' => true,

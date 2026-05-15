@@ -1288,6 +1288,18 @@ mtk-biab.mtk-biab .mtk-biab__logo-preview-badge {
   font-weight: 900;
   text-transform: uppercase; }
 
+mtk-biab.mtk-biab .mtk-biab__logo-provider-badge {
+  justify-self: start;
+  padding: 4px 8px;
+  border: 1px solid rgba(169, 130, 18, 0.35);
+  border-radius: 999px;
+  background: #fffaf0;
+  color: #7a5e0c;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase; }
+
 mtk-biab.mtk-biab .mtk-biab__logo-card--saved {
   max-width: 360px;
   border-color: #a98212; }

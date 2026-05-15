@@ -108,13 +108,14 @@ function biab_logo_get_options($uid) {
         return null;
     }
     $cleanOptions = array();
-    foreach (array_slice($options, 0, 6) as $option) {
+    $expectedCount = biab_logo_expected_option_count(json_decode($row['provider'] ?? '{}', true) ?: array());
+    foreach (array_slice($options, 0, $expectedCount) as $option) {
         $normalized = biab_logo_normalize_logo(is_array($option) ? $option : array());
         if ($normalized) {
             $cleanOptions[] = $normalized;
         }
     }
-    if (count($cleanOptions) !== 6) {
+    if (count($cleanOptions) !== $expectedCount) {
         biab_logo_delete_options($uid);
         return null;
     }
@@ -127,14 +128,15 @@ function biab_logo_get_options($uid) {
 
 function biab_logo_save_options($uid, $options, $provider) {
     $cleanOptions = array();
-    foreach (array_slice(is_array($options) ? $options : array(), 0, 6) as $option) {
+    $expectedCount = biab_logo_expected_option_count(is_array($provider) ? $provider : array());
+    foreach (array_slice(is_array($options) ? $options : array(), 0, $expectedCount) as $option) {
         $normalized = biab_logo_normalize_logo(is_array($option) ? $option : array());
         if ($normalized) {
             $cleanOptions[] = $normalized;
         }
     }
-    if (count($cleanOptions) !== 6) {
-        biab_logo_json_response(502, array('error' => 'Exactly 6 logo options are required.'));
+    if (count($cleanOptions) !== $expectedCount) {
+        biab_logo_json_response(502, array('error' => 'Exactly ' . $expectedCount . ' logo options are required.'));
     }
     $now = gmdate('c');
     $stmt = biab_logo_db()->prepare('INSERT OR REPLACE INTO logo_options
@@ -152,6 +154,17 @@ function biab_logo_save_options($uid, $options, $provider) {
         'provider' => is_array($provider) ? $provider : array(),
         'createdAt' => $now
     );
+}
+
+function biab_logo_expected_option_count($provider) {
+    if (is_array($provider) && !empty($provider['testComparison'])) {
+        return 12;
+    }
+    $count = is_array($provider) ? (int)($provider['expectedCount'] ?? 0) : 0;
+    if ($count === 12) {
+        return 12;
+    }
+    return 6;
 }
 
 function biab_logo_save($uid, $logo) {

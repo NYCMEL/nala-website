@@ -1405,20 +1405,26 @@
 
     _logoProviderStatusText() {
       const provider = this.logoProviderStatus || {};
+      const count = this._isTestMode() ? 12 : 6;
       if (provider.mode === "loading") {
-        return this._text("Generating 6 logo options now. This can take a moment.");
+        return this._text(`Generating ${count} logo options now. This can take a moment.`);
       }
-      if (provider.mode === "zoviz") {
+      if (provider.mode === "comparison") {
+        return this._text("Testing Recraft and Logotype.ai side by side.");
+      }
+      if (provider.mode === "recraft") {
         return this._text("The logo generator is connected and ready.");
       }
       if (provider.mode === "preview") {
-        return this._text("Logo generation is not configured yet. Add the key before generating logos.");
+        return this._text("Logo generation is not configured yet. Add the API keys before generating logos.");
       }
-      return this._text("This step is ready. The Generate button creates 6 logo previews.");
+      return this._text(`This step is ready. Logo options generate automatically.`);
     }
 
     _renderLogoOption(option) {
       const isSelected = option && option.id === this.selectedLogoId;
+      const showProvider = this._isTestMode();
+      const providerName = this._logoProviderLabel(option);
       return `
         <div
           class="mtk-biab__logo-option${isSelected ? " is-selected" : ""}"
@@ -1439,10 +1445,18 @@
             <span class="mtk-biab__logo-expand-label">${this._escape(this._text("View larger"))}</span>
           </button>
           <span class="mtk-biab__logo-option-name">${this._escape(option.name || option.label || this._text("Logo option"))}</span>
+          ${showProvider && providerName ? `<span class="mtk-biab__logo-provider-badge">${this._escape(providerName)}</span>` : ""}
           ${option.previewOnly ? `<span class="mtk-biab__logo-preview-badge">${this._escape(this._text("Preview"))}</span>` : ""}
           <span class="mtk-biab__template-check" aria-hidden="true">✓</span>
         </div>
       `;
+    }
+
+    _logoProviderLabel(option) {
+      const provider = String((option && option.provider) || "").toLowerCase();
+      if (provider === "recraft") return "Recraft";
+      if (provider === "logotype") return "Logotype.ai";
+      return "";
     }
 
     _logoPreviewMarkup(logo, isLarge = false) {
@@ -1505,7 +1519,9 @@
 
     _generateLogoOptions(replaceExisting = false) {
       const payload = Object.assign({}, this._buildLogoPayload(), {
-        replaceExisting: !!replaceExisting
+        replaceExisting: !!replaceExisting,
+        testMode: this._isTestMode(),
+        compareProviders: this._isTestMode()
       });
       this.logoProviderStatus = { mode: "loading" };
       this._openLogoSetup(this._getActiveSection());
@@ -1574,14 +1590,14 @@
 
       return {
         nalaUID: this._businessPageId(),
-        provider: "zoviz",
+        provider: this._isTestMode() ? "comparison" : "recraft",
         businessName: business.customerFacingBusinessName || business.legalBusinessName || "",
         ownerName: privacy.fullName || business.ownerOrResponsiblePartyName || "",
         serviceArea: services.serviceArea || business.serviceArea || "",
         services: serviceList || "Residential, commercial, automotive, and emergency locksmith services",
         style: "professional locksmith and security services logo, strong trade-service look, clean vector, readable, trustworthy, modern, relevant lock/key/shield/door/home/security symbol only, no glasses, no eyewear, no beauty/fashion styling, no script fonts, no pink or pastel palette",
         colors: ["#151a1f", "#a98212", "#7a5e0c", "#f8f4ea", "#ffffff"],
-        count: 6
+        count: this._isTestMode() ? 12 : 6
       };
     }
 
@@ -2310,9 +2326,10 @@
     }
 
     _cleanLogoOptions(options) {
+      const limit = this._isTestMode() ? 12 : 6;
       return (Array.isArray(options) ? options : [])
         .filter((option) => !this._isJunkLogo(option))
-        .slice(0, 6);
+        .slice(0, limit);
     }
 
     _isJunkLogo(logo) {
