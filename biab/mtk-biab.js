@@ -858,6 +858,7 @@
         if (action === "close-logo-preview") this._closeLogoPreview();
         if (action === "select-logo-option") this._selectLogoOption(target.getAttribute("data-logo-id"));
         if (action === "save-logo-option") this._saveSelectedLogo();
+        if (action === "reset-logo-test") this._resetLogoForTest();
         if (action === "sort-invoices") this._sortInvoiceBy(target.getAttribute("data-sort-key"));
         if (action === "refresh-google-seo") this._requestGoogleSeoStatus();
         if (action === "request-google-seo") this._requestGoogleSeoSetup();
@@ -1192,6 +1193,7 @@
       const options = Array.isArray(this.logoOptions) ? this.logoOptions : [];
       const isGenerating = this.logoProviderStatus && this.logoProviderStatus.mode === "loading";
       const shouldAutoGenerate = hasBusinessName && !this.logo && !options.length && !isGenerating;
+      const showTestReset = this._isTestMode();
 
       this._closeSetup();
 
@@ -1221,6 +1223,11 @@
               <h3>${this._escape(this._text("2. Generate logo options"))}</h3>
               <p>${this._escape(status)}</p>
               ${!hasBusinessName ? `<p class="mtk-biab__status">${this._escape(this._text("Add your business name before generating logos."))}</p>` : ""}
+              ${showTestReset ? `
+                <button class="mtk-biab__secondary-btn" type="button" data-action="reset-logo-test">
+                  ${this._escape(this._text("Reset logo test"))}
+                </button>
+              ` : ""}
             </section>
 
             ${this.logo ? `
@@ -1503,6 +1510,26 @@
       this.logoProviderStatus = { mode: "loading" };
       this._openLogoSetup(this._getActiveSection());
       this._publish("mtk-biab:logo-generate", payload);
+    }
+
+    _resetLogoForTest() {
+      if (!this._isTestMode()) return;
+      this.logo = null;
+      this.brand = null;
+      this.logoOptions = [];
+      this.selectedLogoId = "";
+      this.logoProviderStatus = null;
+      this.logoAutoGenerateRequested = false;
+      this.generatedCardTemplates = null;
+      this.cardOptionsPersisted = false;
+      try {
+        window.localStorage.removeItem(this._logoStorageKey());
+        window.localStorage.removeItem(this._brandStorageKey());
+        window.localStorage.removeItem("nalaBiabLogo");
+        window.localStorage.removeItem("nalaBiabBrand");
+      } catch (err) {}
+      this._publish("mtk-biab:logo-reset-test", { nalaUID: this._businessPageId() });
+      window.setTimeout(() => this._generateLogoOptions(true), 250);
     }
 
     _selectLogoOption(logoId) {
@@ -2698,6 +2725,11 @@
       return window.i18n && typeof window.i18n.translateLiteral === "function"
         ? window.i18n.translateLiteral(value)
         : value;
+    }
+
+    _isTestMode() {
+      const env = String(window.wcENV || "").toLowerCase();
+      return env === "dev" || env === "test";
     }
 
     static initWhenReady() {

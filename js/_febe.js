@@ -123,6 +123,7 @@ class _febe {
 	    "mtk-biab:logo-load": this.handleBiabLogoLoad,
 	    "mtk-biab:logo-generate": this.handleBiabLogoGenerate,
 	    "mtk-biab:logo-save": this.handleBiabLogoSave,
+	    "mtk-biab:logo-reset-test": this.handleBiabLogoResetTest,
 	    "mtk-biab:google-seo-status-load": this.handleBiabGoogleSeoStatusLoad,
 	    "mtk-biab:google-seo-request": this.handleBiabGoogleSeoRequest,
 	    "mtk-biab:reset": this.handleBiabReset,
@@ -741,6 +742,29 @@ class _febe {
 	    wc.publish("4-mtk-biab:logo-saved", {
 		nalaUID: uid,
 		logo: json.logo || payload.logo || null,
+		provider: json.provider || null
+	    });
+	    return json;
+	});
+    }
+
+    handleBiabLogoResetTest(data) {
+	const env = String(window.wcENV || "").toLowerCase();
+	if (env !== "dev" && env !== "test") {
+	    return Promise.resolve(null);
+	}
+	const uid = (data && data.nalaUID) || this.getBusinessPageId();
+	try {
+	    window.localStorage.removeItem("nala_biab_logo_" + uid);
+	} catch (err) {}
+	return this.postBiabJson("/api/business_in_a_box_logo.php", {
+	    nalaUID: uid,
+	    action: "reset"
+	}, "", this.t("biab.error.generic", "Could not complete that request. Please try again.")).then(json => {
+	    wc.publish("4-mtk-biab:logo-loaded", {
+		nalaUID: uid,
+		logo: null,
+		options: [],
 		provider: json.provider || null
 	    });
 	    return json;
