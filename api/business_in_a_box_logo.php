@@ -115,7 +115,7 @@ function biab_logo_provider_status($mode = null, $message = '') {
 }
 
 function biab_logo_generation_version() {
-    return 6;
+    return 7;
 }
 
 function biab_logo_options_are_stale($generated) {
@@ -530,6 +530,103 @@ function biab_logo_zoviz_register_payload($businessName, $description, $keywords
     );
 }
 
+function biab_logo_svg_escape($value) {
+    return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
+}
+
+function biab_logo_curated_symbol($type, $color, $accent) {
+    $color = biab_logo_svg_escape($color);
+    $accent = biab_logo_svg_escape($accent);
+    if ($type === 'anchor') {
+        return '<g fill="none" stroke="' . $color . '" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"><path d="M78 38v86"/><path d="M50 68h56"/><circle cx="78" cy="25" r="13"/><path d="M38 105c9 26 31 39 40 39s31-13 40-39"/><path d="M38 105l-17 5"/><path d="M118 105l17 5"/></g><path d="M58 91h40v42H58z" fill="' . $accent . '" opacity=".95"/><circle cx="78" cy="112" r="9" fill="#fff"/>';
+    }
+    if ($type === 'lighthouse') {
+        return '<path d="M52 145h72L108 54H68z" fill="' . $color . '"/><path d="M62 48h52l-9-22H71z" fill="' . $accent . '"/><path d="M72 74h32M69 99h38M65 124h46" stroke="#fff" stroke-width="6"/><path d="M28 149c24-12 47-12 70 0 20 9 38 8 54-2" fill="none" stroke="' . $accent . '" stroke-width="7" stroke-linecap="round"/>';
+    }
+    if ($type === 'van') {
+        return '<path d="M27 88h84l24 25v31H27z" fill="' . $color . '"/><path d="M86 96h22l17 18H86z" fill="#fff" opacity=".9"/><circle cx="55" cy="145" r="12" fill="' . $accent . '"/><circle cx="118" cy="145" r="12" fill="' . $accent . '"/><path d="M44 74h44" stroke="' . $accent . '" stroke-width="8" stroke-linecap="round"/><path d="M50 74c0-18 14-31 32-31s32 13 32 31" fill="none" stroke="' . $accent . '" stroke-width="8" stroke-linecap="round"/>';
+    }
+    if ($type === 'safe') {
+        return '<rect x="31" y="42" width="104" height="104" rx="14" fill="' . $color . '"/><rect x="48" y="58" width="70" height="72" rx="8" fill="#fff" opacity=".12"/><circle cx="83" cy="94" r="24" fill="none" stroke="' . $accent . '" stroke-width="8"/><path d="M83 70v19l15 10" stroke="#fff" stroke-width="7" stroke-linecap="round"/><circle cx="119" cy="94" r="7" fill="#fff"/>';
+    }
+    if ($type === 'shield') {
+        return '<path d="M82 24l57 22v39c0 37-23 63-57 78-34-15-57-41-57-78V46z" fill="' . $color . '"/><path d="M58 88h48v45H58z" fill="#fff"/><path d="M67 88V72c0-17 12-29 29-29s29 12 29 29v16" fill="none" stroke="' . $accent . '" stroke-width="9" stroke-linecap="round"/><circle cx="82" cy="109" r="8" fill="' . $color . '"/>';
+    }
+    if ($type === 'door') {
+        return '<path d="M45 35h74v120H45z" fill="' . $color . '"/><path d="M64 52h36v103H64z" fill="#fff" opacity=".18"/><circle cx="95" cy="103" r="7" fill="' . $accent . '"/><path d="M26 155h118" stroke="' . $accent . '" stroke-width="8" stroke-linecap="round"/><path d="M119 54l24 14v87h-24z" fill="' . $accent . '"/>';
+    }
+    return '<path d="M38 95h74" stroke="' . $color . '" stroke-width="18" stroke-linecap="round"/><circle cx="51" cy="95" r="26" fill="none" stroke="' . $accent . '" stroke-width="13"/><path d="M104 95v25h18V95h18v-18h-36z" fill="' . $color . '"/>';
+}
+
+function biab_logo_curated_context_symbol($businessName, $serviceArea) {
+    $text = strtolower((string)$businessName . ' ' . (string)$serviceArea);
+    if (preg_match('/\b(harbo[u]?r|marina|marine|bay|port|dock|coast|coastal|ocean|sea|beach|venice)\b/', $text)) {
+        return 'anchor';
+    }
+    if (preg_match('/\b(ranch|farm|farms|rural|country|pasture|stable|barn|cattle|horse)\b/', $text)) {
+        return 'door';
+    }
+    return 'shield';
+}
+
+function biab_logo_curated_svg($businessName, $concept, $symbol, $primary, $accent, $font, $weight = '800', $case = 'title') {
+    $name = trim((string)$businessName) !== '' ? trim((string)$businessName) : 'Locksmith Business';
+    $display = $case === 'upper' ? strtoupper($name) : $name;
+    $safeName = biab_logo_svg_escape($display);
+    $safeFont = biab_logo_svg_escape($font);
+    $primarySafe = biab_logo_svg_escape($primary);
+    $accentSafe = biab_logo_svg_escape($accent);
+    $symbolSvg = biab_logo_curated_symbol($symbol, $primary, $accent);
+
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 180" role="img" aria-label="' . biab_logo_svg_escape($name . ' logo') . '">'
+        . '<rect width="700" height="180" rx="18" fill="#f8fafc"/>'
+        . '<g transform="translate(34 16) scale(.92)">' . $symbolSvg . '</g>'
+        . '<text x="178" y="106" fill="' . $primarySafe . '" font-family="' . $safeFont . '" font-size="48" font-weight="' . biab_logo_svg_escape($weight) . '" letter-spacing="0">' . $safeName . '</text>'
+        . '<rect x="180" y="124" width="190" height="7" rx="3.5" fill="' . $accentSafe . '"/>'
+        . '<text x="180" y="150" fill="' . $accentSafe . '" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" letter-spacing="2">' . biab_logo_svg_escape(strtoupper($concept)) . '</text>'
+        . '</svg>';
+}
+
+function biab_logo_generate_curated($payload) {
+    $businessName = trim((string)($payload['businessName'] ?? ''));
+    if ($businessName === '') {
+        $businessName = 'Locksmith Business';
+    }
+    $serviceArea = trim((string)($payload['serviceArea'] ?? ''));
+    $contextSymbol = biab_logo_curated_context_symbol($businessName, $serviceArea);
+    $options = array(
+        array('Industrial Badge', 'shield', '#151a1f', '#a98212', 'Arial Black, Arial, Helvetica, sans-serif', '900', 'title'),
+        array('Classic Wordmark', 'key', '#3f3422', '#b89662', 'Georgia, Times New Roman, serif', '700', 'title'),
+        array('Mobile Service', 'van', '#0f4c5c', '#c6952d', 'Trebuchet MS, Arial, sans-serif', '800', 'title'),
+        array('Safe and Commercial', 'safe', '#262626', '#991b1b', 'Verdana, Arial, sans-serif', '800', 'title'),
+        array('Local Name Cue', $contextSymbol, '#0f766e', '#a98212', 'Gill Sans, Trebuchet MS, Arial, sans-serif', '800', 'title'),
+        array('Modern Minimal', 'door', '#1f2937', '#0ea5e9', 'Century Gothic, Arial, Helvetica, sans-serif', '800', 'upper')
+    );
+
+    $logos = array();
+    foreach ($options as $index => $option) {
+        $svg = biab_logo_curated_svg($businessName, $option[0], $option[1], $option[2], $option[3], $option[4], $option[5], $option[6]);
+        $logos[] = biab_logo_normalize_logo(array(
+            'id' => 'curated-logo-' . substr(sha1($businessName . '|' . $serviceArea . '|' . $option[0]), 0, 12) . '-' . ($index + 1),
+            'providerLogoId' => 'curated-' . ($index + 1),
+            'name' => $businessName . ' #' . ($index + 1),
+            'svg' => $svg,
+            'previewUrl' => '',
+            'image' => '',
+            'colors' => array($option[2], $option[3], '#f8fafc'),
+            'provider' => 'nala',
+            'previewOnly' => false,
+            'concept' => $option[0],
+            'generationVersion' => biab_logo_generation_version()
+        ));
+    }
+
+    return array(
+        'options' => $logos,
+        'provider' => biab_logo_provider_status('zoviz', 'Generated 6 logo previews.')
+    );
+}
+
 function biab_logo_generate_zoviz($payload) {
     $apiKey = biab_logo_zoviz_key();
     if ($apiKey === '') {
@@ -737,7 +834,7 @@ if ($replaceExisting) {
     biab_logo_delete_options($uid);
 }
 
-$generated = biab_logo_generate_zoviz($data);
+$generated = biab_logo_generate_curated($data);
 $stored = biab_logo_save_options($uid, $generated['options'], $generated['provider']);
 biab_logo_json_response(200, array(
     'ok' => true,
