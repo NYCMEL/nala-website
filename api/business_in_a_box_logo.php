@@ -115,7 +115,7 @@ function biab_logo_provider_status($mode = null, $message = '') {
 }
 
 function biab_logo_generation_version() {
-    return 7;
+    return 8;
 }
 
 function biab_logo_options_are_stale($generated) {
@@ -577,11 +577,12 @@ function biab_logo_curated_svg($businessName, $concept, $symbol, $primary, $acce
     $primarySafe = biab_logo_svg_escape($primary);
     $accentSafe = biab_logo_svg_escape($accent);
     $symbolSvg = biab_logo_curated_symbol($symbol, $primary, $accent);
+    $nameFit = strlen($display) > 15 ? ' textLength="458" lengthAdjust="spacingAndGlyphs"' : '';
 
     return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 180" role="img" aria-label="' . biab_logo_svg_escape($name . ' logo') . '">'
         . '<rect width="700" height="180" rx="18" fill="#f8fafc"/>'
         . '<g transform="translate(34 16) scale(.92)">' . $symbolSvg . '</g>'
-        . '<text x="178" y="106" fill="' . $primarySafe . '" font-family="' . $safeFont . '" font-size="48" font-weight="' . biab_logo_svg_escape($weight) . '" letter-spacing="0">' . $safeName . '</text>'
+        . '<text x="178" y="106"' . $nameFit . ' fill="' . $primarySafe . '" font-family="' . $safeFont . '" font-size="48" font-weight="' . biab_logo_svg_escape($weight) . '" letter-spacing="0">' . $safeName . '</text>'
         . '<rect x="180" y="124" width="190" height="7" rx="3.5" fill="' . $accentSafe . '"/>'
         . '<text x="180" y="150" fill="' . $accentSafe . '" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" letter-spacing="2">' . biab_logo_svg_escape(strtoupper($concept)) . '</text>'
         . '</svg>';
