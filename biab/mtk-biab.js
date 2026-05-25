@@ -94,7 +94,7 @@
 
       if (eventName === "4-mtk-biab:invoices-loaded" && data && Array.isArray(data.invoices)) {
         this.invoices = data.invoices;
-        this._render();
+        this._renderWhenSetupIsIdle();
       }
 
       if (eventName === "4-mtk-biab:invoice-saved") {
@@ -128,7 +128,7 @@
         } else {
           try { window.localStorage.removeItem(this._orderedCardStorageKey()); } catch (err) {}
         }
-        this._render();
+        this._renderWhenSetupIsIdle();
       }
 
       if (eventName === "4-mtk-biab:logo-loaded" && data) {
@@ -146,7 +146,7 @@
           this.generatedCardTemplates = null;
           this.cardOptionsPersisted = false;
         }
-        this._render();
+        this._renderWhenSetupIsIdle();
       }
 
       if (eventName === "4-mtk-biab:logo-options" && data) {
@@ -170,7 +170,7 @@
 
       if (eventName === "4-mtk-biab:google-seo-status" && data) {
         this.googleSeo = data.status || data;
-        this._render();
+        this._renderWhenSetupIsIdle();
       }
     }
 
@@ -284,6 +284,19 @@
           ` : ""}
         </article>
       `;
+    }
+
+    _renderWhenSetupIsIdle() {
+      if (this._isSetupOrInvoiceOpen()) {
+        return;
+      }
+
+      this._render();
+    }
+
+    _isSetupOrInvoiceOpen() {
+      if (!this.root) return false;
+      return !!this.root.querySelector(".mtk-biab__setup, .mtk-biab__invoice-page");
     }
 
     _renderNextStep(text) {
