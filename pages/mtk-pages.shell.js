@@ -57,12 +57,17 @@
         if (params.get("scroll") !== "buy" && storedTarget !== "buy") return;
         if (window.sessionStorage) window.sessionStorage.removeItem("nalaScrollTarget");
 
-        window.setTimeout(function () {
+        let attempts = 0;
+        const scrollWhenReady = function () {
             const buySection = document.getElementById("MTK-path");
             if (buySection && typeof buySection.scrollIntoView === "function") {
                 buySection.scrollIntoView({ behavior: "smooth", block: "start" });
+                return;
             }
-        }, 1000);
+            attempts += 1;
+            if (attempts < 20) window.setTimeout(scrollWhenReady, 300);
+        };
+        window.setTimeout(scrollWhenReady, 300);
     }
 
     function bootstrapInitialPage() {
