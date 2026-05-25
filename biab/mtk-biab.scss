@@ -312,7 +312,9 @@ mtk-biab.mtk-biab .mtk-biab__new-invoice-btn {
   align-items: center;
   justify-content: center;
   gap: 8px;
+  flex-wrap: wrap;
   min-height: 44px;
+  min-width: 128px;
   padding: 10px 16px;
   border: 1px solid #a98212;
   border-radius: 4px;
@@ -321,6 +323,8 @@ mtk-biab.mtk-biab .mtk-biab__new-invoice-btn {
   font: inherit;
   font-size: 14px;
   font-weight: 900;
+  line-height: 1.2;
+  text-align: center;
   cursor: pointer;
   box-shadow: 0 8px 18px rgba(169, 130, 18, 0.22);
 }
@@ -1109,7 +1113,7 @@ mtk-biab.mtk-biab .mtk-biab__setup-footer-inner {
   justify-content: flex-end;
   gap: 12px;
   width: 100%;
-  max-width: 1320px;
+  max-width: 1500px;
   min-height: 70px;
   margin: 0 auto;
   padding: 12px;
