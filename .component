@@ -1,49 +1,114 @@
-FORGET ALL PREVIOUS CONTEXT for mtk-component and remember this as mtk-component forever
+FORGET ALL PREVIOUS CONTEXT for mtk-component and remember this as mtk-component forever.
 
-Create a reusable UI component named mtk-component using:
+Create a reusable Web Component named `mtk-component`.
+
+Tech Stack:
 - HTML
-- SCSS
-- Vanilla JavaScript
-- Bootstrap 5 (layout only)
-- Modern Material Design, Material Design icons and styles
-- Always create a JS class for mtk-component and initialize it inside the JS file itself
+- SCSS only
+- Vanilla JavaScript only
+- Modern Material Design UI
+- Material Design icons/styles
+- Bootstrap 5 MAY ONLY be used for layout utilities/grid
+- No frameworks
+- No external libraries
+- Use this repository as the base: https://github.com/NYCMEL/nala-website.git
+- Use all wc code for include, publish, subscribe etc from this file: https://github.com/NYCMEL/nala-website/blob/main/js/_wc.js
 
-Rules:
-- The component is wrapped in a display:block element <mtk-component class="mtk-component">.
-- The root element uses .mtk-component.
-- All styles must be scoped to .mtk-component.
-- No global styles or IDs.
-- publish click events using wc.publish
-- subscribe to all 4-mtk-component everns using wc.subscribe
-- create a onMessage function to be passed to wc.subscribe function
+Component Architecture:
+- Root element:
+  <mtk-component class="mtk-component"></mtk-component>
 
-Data:
-- The component is JSON driven.
-  - any and all data must come from mtk-component.config.js file
+- Root CSS namespace:
+  .mtk-component
 
-Restrictions:
-- No inline styles. All styles in  "*.scss" file
-- No inline Javascript. (All scripts in "*.js" file)
-- No frameworks.
-- No external libraries.
-- Vanilla Javascript
-- Use styles, colors, fonts etc from css/nala.scss file
+- ALL styles MUST be fully scoped to:
+  .mtk-component
 
-Accessibility:
-- Use semantic HTML.
-- Keyboard accessible.
-- Visible focus states.
+- NEVER use:
+  - global styles
+  - global selectors
+  - IDs
+  - inline styles
+  - inline JavaScript
+  - iframes
+
+- MUST use:
+  <wc-include href="..." />
+
+Configuration:
+- Component MUST be fully JSON-driven
+- ALL data MUST come from:
+  `mtk-component.config.js`
+
+JavaScript Requirements:
+- Create a dedicated ES6 class named:
+  `MtkComponent`
+
+- Automatically initialize the component inside:
+  `mtk-component.js`
+
+- MUST wait for DOM availability because the component will be dynamically injected using:
+  `<wc-include>`
+
+Event System:
+- Subscribe to:
+  `4-mtk-component`
+  using:
+  `wc.subscribe`
+
+- Create:
+  `onMessage(message)`
+  handler function
+
+- Publish all click/actions using:
+  `wc.publish`
+
+- BEFORE every publish:
+  log the payload using:
+  `wc.log`
+
+Styling Rules:
+- Use styles, colors, spacing, typography, elevation, and motion patterns from:
+  `css/nala.scss`
+
+- Use Material Design:
+  - floating labels
+  - cards
+  - buttons
+  - focus states
+  - transitions
+  - accessibility patterns
+
+Accessibility Requirements:
+- Semantic HTML only
 - ADA compliant
+- Keyboard accessible
+- Visible focus states
+- Proper ARIA usage where appropriate
 
-Output! Create exactly these files:
-- mtk-component.config.js (JSON FILE)
+Code Quality:
+- Modular
+- Reusable
+- Maintainable
+- Production-ready
+- Mobile responsive
+- No duplicated logic
+
+Output Requirements:
+Create EXACTLY these files:
+
+- mtk-component.config.js
 - mtk-component.scss
 - mtk-component.html
 - mtk-component.js
 
-Behavior:
-- MUST WAIT for element to be available inside DOM, since i will be using <wc-include> for dynamic inclusion
-- all published (wc.publish) messages should be logged using wc.log to console before being published
+DO NOT:
+- generate partial snippets
+- generate patch files
+- generate explanations
+- generate markdown code blocks
 
-What I want:
-- EXPLAIN WHAT YOU WANT THIS PROMPT TO DO
+ONLY generate complete files.
+
+Goal:
+Create a reusable, scalable, JSON-driven Material Design Web Component system that integrates with the wc event ecosystem and supports dynamic loading through wc-include.
