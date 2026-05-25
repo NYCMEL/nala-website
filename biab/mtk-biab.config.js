@@ -1,6 +1,6 @@
 window.MTK_BIAB_CONFIG = {
   component: "mtk-biab",
-  version: "1.0.11",
+  version: "1.0.12",
   labels: {
     pageTitle: "Business in a Box",
     pageSubtitle: "Follow each setup step in order.",
@@ -116,7 +116,21 @@ window.MTK_BIAB_CONFIG = {
         id: "logo-generator",
         label: "Logo Generator",
         testingNote: "The logo generator keys are loaded from the site config file."
-      }
+      },
+      customizationTags: [
+        { id: "bold", label: "Bold" },
+        { id: "classic", label: "Classic" },
+        { id: "modern", label: "Modern" },
+        { id: "premium", label: "Premium" },
+        { id: "rugged", label: "Rugged" },
+        { id: "local", label: "Local" },
+        { id: "shield", label: "Shield" },
+        { id: "key", label: "Key" },
+        { id: "lock", label: "Lock" },
+        { id: "truck", label: "Mobile service" },
+        { id: "commercial", label: "Commercial" },
+        { id: "minimal", label: "Minimal" }
+      ]
     },
     {
       id: "business-card",

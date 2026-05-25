@@ -161,7 +161,7 @@ function biab_logo_provider_status($mode = null, $message = '') {
 }
 
 function biab_logo_generation_version() {
-    return 11;
+    return 12;
 }
 
 function biab_logo_options_are_stale($generated) {
@@ -973,6 +973,7 @@ function biab_logo_logo_prompt($payload, $providerName = '', $optionIndex = 0, $
         'Make the logo suitable for business cards, uniforms, invoices, vehicles, and a local service website.',
         'Professional locksmith/security look: strong, trustworthy, practical, local service business.',
         biab_logo_contextual_direction($businessName, $serviceArea),
+        biab_logo_customization_prompt($payload),
         $brief['prompt'],
         'Originality brief: concept ' . ($optionIndex + 1) . ', unique design code ' . $creativeSeed . '.',
         'Generate the icon from scratch for this exact business. The mark should feel custom and polished, not clipart, stock art, icon-library art, template art, emoji art, or a recolored version of another logo.',
@@ -987,6 +988,35 @@ function biab_logo_logo_prompt($payload, $providerName = '', $optionIndex = 0, $
         'Output: 1 polished vector/SVG-style logo option.',
         $providerHint
     )));
+}
+
+function biab_logo_customization_prompt($payload) {
+    $rawTags = is_array($payload['logoTags'] ?? null) ? $payload['logoTags'] : array();
+    $allowed = array(
+        'bold' => 'bold, strong, high-confidence trade-service branding',
+        'classic' => 'classic, established, traditional locksmith business styling',
+        'modern' => 'modern, clean, current, sharp professional styling',
+        'premium' => 'premium, polished, higher-end local service branding',
+        'rugged' => 'rugged, sturdy, practical, field-service styling',
+        'local' => 'local neighborhood service feel with relevant place/name cues',
+        'shield' => 'shield or security emblem direction',
+        'key' => 'custom key element direction',
+        'lock' => 'custom lock or keyhole element direction',
+        'truck' => 'mobile locksmith service cue such as van, road, or fast response',
+        'commercial' => 'commercial doors, hardware, facilities, or property-security cue',
+        'minimal' => 'minimal, simple, highly readable, no clutter'
+    );
+    $selected = array();
+    foreach ($rawTags as $tag) {
+        $id = strtolower(preg_replace('/[^a-z0-9_-]/', '', (string)$tag));
+        if (isset($allowed[$id])) {
+            $selected[$id] = $allowed[$id];
+        }
+    }
+    if (!count($selected)) {
+        return '';
+    }
+    return 'Client-selected customization tags: ' . implode('; ', array_values($selected)) . '. Use these tags as guidance, but keep the logo appropriate for a professional locksmith/security business.';
 }
 
 function biab_logo_creative_seed($businessName, $optionIndex) {

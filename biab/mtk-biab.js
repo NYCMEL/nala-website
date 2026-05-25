@@ -38,6 +38,8 @@
       this.selectedLogoId = "";
       this.logoProviderStatus = null;
       this.logoAutoGenerateRequested = false;
+      this.logoTags = this._loadLogoTags();
+      this.logoCustomizationReady = this._loadLogoCustomizationReady();
       this.selectedTemplate = null;
       this.generatedCardTemplates = null;
       this.cardOptionsPersisted = false;
@@ -757,11 +759,15 @@
       this.selectedLogoId = "";
       this.logoProviderStatus = null;
       this.logoAutoGenerateRequested = false;
+      this.logoTags = [];
+      this.logoCustomizationReady = false;
       this.googleSeo = null;
       try {
         window.localStorage.removeItem(this._orderedCardStorageKey());
         window.localStorage.removeItem(this._logoStorageKey());
         window.localStorage.removeItem(this._brandStorageKey());
+        window.localStorage.removeItem(this._logoTagsStorageKey());
+        window.localStorage.removeItem(this._logoCustomizationReadyStorageKey());
         window.localStorage.removeItem("nalaBiabBrand");
         window.localStorage.removeItem("nalaBiabLogo");
         window.localStorage.removeItem("nala_profile_settings");
@@ -856,6 +862,9 @@
         if (action === "save-client-url") this._saveClientUrl();
         if (action === "view-logo-option") this._openLogoPreview(target.getAttribute("data-logo-id"));
         if (action === "close-logo-preview") this._closeLogoPreview();
+        if (action === "toggle-logo-tag") this._toggleLogoTag(target.getAttribute("data-logo-tag"));
+        if (action === "apply-logo-tags") this._applyLogoTags();
+        if (action === "skip-logo-tags") this._skipLogoTags();
         if (action === "select-logo-option") this._selectLogoOption(target.getAttribute("data-logo-id"));
         if (action === "save-logo-option") this._saveSelectedLogo();
         if (action === "reset-logo-test") this._resetLogoForTest();
@@ -1251,8 +1260,10 @@
       const status = this._logoProviderStatusText();
       const options = Array.isArray(this.logoOptions) ? this.logoOptions : [];
       const isGenerating = this.logoProviderStatus && this.logoProviderStatus.mode === "loading";
-      const shouldAutoGenerate = hasBusinessName && !this.logo && !options.length && !isGenerating;
+      const shouldAutoGenerate = hasBusinessName && this.logoCustomizationReady && !this.logo && !options.length && !isGenerating;
       const showTestReset = this._isTestMode();
+      const tagSummary = this._selectedLogoTagLabels().join(", ");
+      const tagsLocked = !!(this.logo || options.length || isGenerating);
 
       this._closeSetup();
 
@@ -1278,10 +1289,34 @@
               </dl>
             </section>
 
+            <section class="mtk-biab__logo-customize" aria-label="Logo customization">
+              <h3>${this._escape(this._text("2. Customize logo"))}</h3>
+              <p class="mtk-biab__setup-help">${this._escape(this._text("Optional: choose any tags you want the logo options to follow."))}</p>
+              <div class="mtk-biab__logo-tags" aria-label="${this._escape(this._text("Logo style tags"))}">
+                ${this._renderLogoTagButtons(tagsLocked)}
+              </div>
+              <p class="mtk-biab__logo-tag-summary">
+                ${this._escape(tagSummary ? this._text("Selected") + ": " + tagSummary : this._text("No tags selected"))}
+              </p>
+              ${tagsLocked ? `
+                <p class="mtk-biab__status">${this._escape(this._text(tagSummary ? "These tags were used before the logo options were created." : "Customization was skipped before the logo options were created."))}</p>
+              ` : `
+                <div class="mtk-biab__template-actions mtk-biab__template-actions--split">
+                  <button class="mtk-biab__secondary-btn" type="button" data-action="skip-logo-tags">
+                    ${this._escape(this._text("Skip customization"))}
+                  </button>
+                  <button class="mtk-biab__submit-btn" type="button" data-action="apply-logo-tags">
+                    ${this._escape(this._text("Use these choices"))}
+                  </button>
+                </div>
+              `}
+            </section>
+
             <section class="mtk-biab__logo-provider" aria-label="Logo provider">
-              <h3>${this._escape(this._text("2. Generate logo options"))}</h3>
+              <h3>${this._escape(this._text("3. Create logo options"))}</h3>
               <p>${this._escape(status)}</p>
               ${!hasBusinessName ? `<p class="mtk-biab__status">${this._escape(this._text("Add your business name before generating logos."))}</p>` : ""}
+              ${hasBusinessName && !this.logoCustomizationReady && !options.length && !this.logo ? `<p class="mtk-biab__status">${this._escape(this._text("Choose tags or skip customization first."))}</p>` : ""}
               ${showTestReset ? `
                 <button class="mtk-biab__secondary-btn" type="button" data-action="reset-logo-test">
                   ${this._escape(this._text("Reset logo test"))}
@@ -1301,7 +1336,7 @@
             ` : ""}
 
             <section class="mtk-biab__logo-options" aria-label="Logo options">
-              <h3>${this._escape(this._text("3. Choose one logo"))}</h3>
+              <h3>${this._escape(this._text("4. Choose one logo"))}</h3>
               ${options.length ? `
                 <div class="mtk-biab__logo-grid">
                   ${options.map((option) => this._renderLogoOption(option)).join("")}
@@ -1312,7 +1347,7 @@
                   </button>
                 </div>
               ` : `
-                <p class="mtk-biab__setup-help">${this._escape(this._text(isGenerating ? "Generating 6 logo options now. This can take a moment." : "Logo options will appear here automatically once the business name is ready."))}</p>
+                <p class="mtk-biab__setup-help">${this._escape(this._text(isGenerating ? "Generating 6 logo options now. This can take a moment." : (this.logoCustomizationReady ? "Logo options will appear here automatically once the business name is ready." : "Choose tags or skip customization, then logo options will appear here automatically.")))}</p>
               `}
             </section>
           </div>
@@ -1478,6 +1513,68 @@
         return this._text("Logo generation is not configured yet. Add the API keys before generating logos.");
       }
       return this._text(`This step is ready. Logo options generate automatically.`);
+    }
+
+    _logoCustomizationTags() {
+      const section = this.sections.find((item) => item && item.setupType === "logo") || {};
+      const tags = Array.isArray(section.customizationTags) ? section.customizationTags : [];
+      return tags.filter((tag) => tag && tag.id && tag.label);
+    }
+
+    _renderLogoTagButtons(disabled) {
+      const selected = new Set(this.logoTags || []);
+      return this._logoCustomizationTags().map((tag) => {
+        const isSelected = selected.has(tag.id);
+        return `
+          <button
+            class="mtk-biab__logo-tag${isSelected ? " is-selected" : ""}"
+            type="button"
+            data-action="toggle-logo-tag"
+            data-logo-tag="${this._escape(tag.id)}"
+            aria-pressed="${isSelected ? "true" : "false"}"
+            ${disabled ? "disabled" : ""}
+          >
+            ${this._escape(this._text(tag.label))}
+          </button>
+        `;
+      }).join("");
+    }
+
+    _toggleLogoTag(tagId) {
+      const allowed = new Set(this._logoCustomizationTags().map((tag) => tag.id));
+      if (!allowed.has(tagId)) return;
+      if (this.logo || (Array.isArray(this.logoOptions) && this.logoOptions.length)) return;
+      const selected = new Set(this.logoTags || []);
+      if (selected.has(tagId)) {
+        selected.delete(tagId);
+      } else {
+        selected.add(tagId);
+      }
+      this.logoTags = Array.from(selected);
+      this.logoCustomizationReady = false;
+      this._saveLogoCustomization();
+      this._openLogoSetup(this._getActiveSection());
+    }
+
+    _applyLogoTags() {
+      this.logoCustomizationReady = true;
+      this._saveLogoCustomization();
+      this._openLogoSetup(this._getActiveSection());
+    }
+
+    _skipLogoTags() {
+      if (this.logo || (Array.isArray(this.logoOptions) && this.logoOptions.length)) return;
+      this.logoTags = [];
+      this.logoCustomizationReady = true;
+      this._saveLogoCustomization();
+      this._openLogoSetup(this._getActiveSection());
+    }
+
+    _selectedLogoTagLabels() {
+      const selected = new Set(this.logoTags || []);
+      return this._logoCustomizationTags()
+        .filter((tag) => selected.has(tag.id))
+        .map((tag) => this._text(tag.label));
     }
 
     _renderLogoOption(option) {
@@ -1654,6 +1751,7 @@
         ownerName: privacy.fullName || business.ownerOrResponsiblePartyName || "",
         serviceArea: services.serviceArea || business.serviceArea || "",
         services: serviceList || "Residential, commercial, automotive, and emergency locksmith services",
+        logoTags: Array.isArray(this.logoTags) ? this.logoTags.slice(0, 8) : [],
         style: "professional locksmith and security services logo, strong trade-service look, clean vector, readable, trustworthy, modern, relevant lock/key/shield/door/home/security symbol only, no glasses, no eyewear, no beauty/fashion styling, no script fonts, no pink or pastel palette",
         colors: ["#151a1f", "#a98212", "#7a5e0c", "#f8f4ea", "#ffffff"],
         count: this._isTestMode() ? 12 : 6
@@ -2169,6 +2267,41 @@
 
     _brandStorageKey() {
       return "nala_biab_brand_" + this._businessPageId();
+    }
+
+    _logoTagsStorageKey() {
+      return "nala_biab_logo_tags_" + this._businessPageId();
+    }
+
+    _logoCustomizationReadyStorageKey() {
+      return "nala_biab_logo_customization_ready_" + this._businessPageId();
+    }
+
+    _loadLogoTags() {
+      try {
+        const tags = JSON.parse(window.localStorage.getItem(this._logoTagsStorageKey()) || "[]");
+        if (!Array.isArray(tags)) return [];
+        return tags.map((tag) => String(tag || "").trim()).filter(Boolean).slice(0, 8);
+      } catch (err) {
+        return [];
+      }
+    }
+
+    _loadLogoCustomizationReady() {
+      try {
+        return window.localStorage.getItem(this._logoCustomizationReadyStorageKey()) === "true";
+      } catch (err) {
+        return false;
+      }
+    }
+
+    _saveLogoCustomization() {
+      try {
+        window.localStorage.setItem(this._logoTagsStorageKey(), JSON.stringify(Array.isArray(this.logoTags) ? this.logoTags : []));
+        window.localStorage.setItem(this._logoCustomizationReadyStorageKey(), this.logoCustomizationReady ? "true" : "false");
+      } catch (err) {
+        console.warn("Could not save logo customization", err);
+      }
     }
 
     _loadSavedLogo() {
