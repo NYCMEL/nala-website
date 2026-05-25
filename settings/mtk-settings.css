@@ -46,24 +46,27 @@
 
 .mtk-settings__tabs {
   display: flex;
+  flex-wrap: wrap;
   align-items: stretch;
-  gap: 0;
+  gap: 6px;
   width: 100%;
-  padding: 0 18px;
+  padding: 8px 14px 0;
   border-bottom: 1px solid #e5e7eb;
   background: #f9fafb;
-  overflow-x: auto; }
+  overflow-x: visible; }
 
 .mtk-settings__tab {
-  min-width: max-content;
-  min-height: 58px;
+  flex: 1 1 150px;
+  min-width: 132px;
+  min-height: 56px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 9px;
-  padding: 0 22px;
+  padding: 8px 14px;
   border: 0;
   border-bottom: 4px solid transparent;
+  border-radius: 6px 6px 0 0;
   background: transparent;
   color: #374151;
   cursor: pointer;
@@ -89,13 +92,17 @@
   color: #111827; }
 
 .mtk-settings__tab-icon {
+  flex: 0 0 auto;
   font-family: "Material Icons", "Material Symbols Outlined", sans-serif;
   font-size: 1.25rem;
   font-weight: normal;
   line-height: 1; }
 
 .mtk-settings__tab-label {
-  white-space: nowrap; }
+  min-width: 0;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+  white-space: normal; }
 
 .mtk-settings__biab-tab {
   margin-top: 10px; }
@@ -538,10 +545,13 @@
   .mtk-settings__title {
     font-size: 1.55rem; }
   .mtk-settings__tabs {
-    padding: 0 8px; }
+    gap: 6px;
+    padding: 8px 8px 0; }
   .mtk-settings__tab {
+    flex-basis: 128px;
+    min-width: 118px;
     min-height: 52px;
-    padding: 0 16px;
+    padding: 8px 10px;
     font-size: 0.95rem; }
   .mtk-settings__panel {
     padding: 20px; }
