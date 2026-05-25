@@ -53,7 +53,9 @@
 
     function maybeScrollToBuySection() {
         const params = new URLSearchParams(window.location.search);
-        if (params.get("scroll") !== "buy") return;
+        const storedTarget = window.sessionStorage ? window.sessionStorage.getItem("nalaScrollTarget") : "";
+        if (params.get("scroll") !== "buy" && storedTarget !== "buy") return;
+        if (window.sessionStorage) window.sessionStorage.removeItem("nalaScrollTarget");
 
         window.setTimeout(function () {
             const buySection = document.getElementById("MTK-path");
