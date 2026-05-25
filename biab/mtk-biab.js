@@ -772,15 +772,12 @@
       this.selectedLogoId = "";
       this.logoProviderStatus = null;
       this.logoAutoGenerateRequested = false;
-      this.logoTags = [];
-      this.logoCustomizationReady = false;
+      this._resetLogoCustomizationState();
       this.googleSeo = null;
       try {
         window.localStorage.removeItem(this._orderedCardStorageKey());
         window.localStorage.removeItem(this._logoStorageKey());
         window.localStorage.removeItem(this._brandStorageKey());
-        window.localStorage.removeItem(this._logoTagsStorageKey());
-        window.localStorage.removeItem(this._logoCustomizationReadyStorageKey());
         window.localStorage.removeItem("nalaBiabBrand");
         window.localStorage.removeItem("nalaBiabLogo");
         window.localStorage.removeItem("nala_profile_settings");
@@ -1788,6 +1785,7 @@
       this.selectedLogoId = "";
       this.logoProviderStatus = null;
       this.logoAutoGenerateRequested = false;
+      this._resetLogoCustomizationState();
       this.generatedCardTemplates = null;
       this.cardOptionsPersisted = false;
       try {
@@ -1797,7 +1795,16 @@
         window.localStorage.removeItem("nalaBiabBrand");
       } catch (err) {}
       this._publish("mtk-biab:logo-reset-test", { nalaUID: this._businessPageId() });
-      window.setTimeout(() => this._generateLogoOptions(true), 250);
+      this._openLogoSetup(this._getActiveSection());
+    }
+
+    _resetLogoCustomizationState() {
+      this.logoTags = [];
+      this.logoCustomizationReady = false;
+      try {
+        window.localStorage.removeItem(this._logoTagsStorageKey());
+        window.localStorage.removeItem(this._logoCustomizationReadyStorageKey());
+      } catch (err) {}
     }
 
     _selectLogoOption(logoId) {
