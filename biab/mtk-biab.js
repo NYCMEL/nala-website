@@ -1265,7 +1265,7 @@
               <dl>
                 <div class="${hasBusinessName ? "is-ready" : "is-missing"}">
                   <dt>${this._escape(this._text("Business name"))}</dt>
-                  <dd>${this._escape(payload.businessName || this._text("Missing - go to Profile & Settings first"))}</dd>
+                  <dd>${this._escape(payload.businessName || this._text("Missing - complete Business profile setup first"))}</dd>
                 </div>
                 <div class="${hasServiceArea ? "is-ready" : "is-missing"}">
                   <dt>${this._escape(this._text("Service area"))}</dt>
@@ -1400,7 +1400,7 @@
                   </button>
                 </div>
               ` : `
-                <p class="mtk-biab__setup-help">${this._escape(this._text("Add the business name first, then come back to choose a URL."))}</p>
+                <p class="mtk-biab__setup-help">${this._escape(this._text("Complete Business profile setup before choosing a URL."))}</p>
               `}
             </section>
           </div>
