@@ -56,8 +56,8 @@
   overflow-x: visible; }
 
 .mtk-settings__tab {
-  flex: 1 1 205px;
-  min-width: 178px;
+  flex: 1 1 250px;
+  min-width: 238px;
   min-height: 56px;
   display: inline-flex;
   align-items: center;
