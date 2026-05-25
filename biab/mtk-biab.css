@@ -7,6 +7,10 @@ mtk-biab.mtk-biab {
   color: #0f172a;
   font-family: "Roboto", "Segoe UI", Arial, sans-serif; }
 
+mtk-biab.mtk-biab.mtk-biab--settings {
+  min-height: 0;
+  background: transparent; }
+
 mtk-biab.mtk-biab *,
 mtk-biab.mtk-biab *::before,
 mtk-biab.mtk-biab *::after {
@@ -36,6 +40,25 @@ mtk-biab.mtk-biab .mtk-biab__page {
   max-width: 1320px;
   margin: 0 auto;
   padding: 36px clamp(24px, 3vw, 44px) 72px; }
+
+mtk-biab.mtk-biab .mtk-biab__page--embedded {
+  max-width: none;
+  padding: 0; }
+
+mtk-biab.mtk-biab.mtk-biab--settings .mtk-biab__panel {
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none; }
+
+mtk-biab.mtk-biab.mtk-biab--settings .mtk-biab__panel > .mtk-biab__eyebrow,
+mtk-biab.mtk-biab.mtk-biab--settings .mtk-biab__panel > .mtk-biab__panel-title,
+mtk-biab.mtk-biab.mtk-biab--settings .mtk-biab__panel > .mtk-biab__description,
+mtk-biab.mtk-biab.mtk-biab--settings .mtk-biab__panel > .mtk-biab__body,
+mtk-biab.mtk-biab.mtk-biab--settings .mtk-biab__panel > .mtk-biab__next-step {
+  display: none; }
 
 mtk-biab.mtk-biab .mtk-biab__hero {
   margin: 0 0 22px; }
@@ -922,6 +945,34 @@ mtk-biab.mtk-biab .mtk-biab__back-btn {
   color: #0f172a;
   font-weight: 900;
   cursor: pointer; }
+
+mtk-biab.mtk-biab .mtk-biab__back-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed; }
+
+mtk-biab.mtk-biab .mtk-biab__setup-footer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  border-top: 1px solid #eadfca;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 -12px 28px rgba(15, 23, 42, 0.1); }
+
+mtk-biab.mtk-biab .mtk-biab__setup-footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  width: 100%;
+  max-width: 1320px;
+  min-height: 70px;
+  margin: 0 auto;
+  padding: 12px; }
+
+mtk-biab.mtk-biab .mtk-biab__setup-previous {
+  margin-left: auto; }
 
 mtk-biab.mtk-biab .mtk-biab__client-wrap {
   width: 100%;

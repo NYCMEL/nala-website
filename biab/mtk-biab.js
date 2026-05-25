@@ -25,9 +25,11 @@
         window.i18n.applyConfig(this.config);
       }
       this.sections = Array.isArray(this.config.sections) ? this.config.sections : [];
+      this.embeddedMode = this.root && this.root.getAttribute("data-embedded") === "settings";
+      this.embeddedSectionId = this.root ? (this.root.getAttribute("data-embedded-section") || "") : "";
       this.labels = this.config.labels || {};
       this.events = this.config.events || { publish: {}, subscribe: [] };
-      this.activeId = this.sections[0] ? this.sections[0].id : "";
+      this.activeId = this.embeddedSectionId || (this.sections[0] ? this.sections[0].id : "");
       this.invoiceStatus = "All";
       this.invoiceSort = { key: "date", direction: "desc" };
       this.invoices = [];
@@ -163,7 +165,7 @@
         }
         this.generatedCardTemplates = null;
         this.cardOptionsPersisted = false;
-        this._goToNextSection({ openSetup: true });
+        this._completeStepAndAdvance();
       }
 
       if (eventName === "4-mtk-biab:google-seo-status" && data) {
@@ -199,6 +201,17 @@
 
     _render() {
       const active = this._getActiveSection();
+
+      if (this.embeddedMode) {
+        this.root.innerHTML = `
+          <section class="mtk-biab__page mtk-biab__page--embedded" aria-label="${this._escape(active.title || active.label || "Business in a Box")}">
+            <div class="mtk-biab__tab-panel" role="tabpanel">
+              ${this._renderPanel(active)}
+            </div>
+          </section>
+        `;
+        return;
+      }
 
       this.root.innerHTML = `
         <section class="mtk-biab__page" aria-labelledby="mtk-biab-title">
@@ -801,6 +814,7 @@
       this._publish("mtk-biab:google-seo-request", Object.assign({}, this._buildGoogleSeoPayload(), {
         action: "start_authorization"
       }));
+      this._completeStepAndAdvance();
     }
 
     _toggleIncluded(index) {
@@ -872,6 +886,7 @@
         if (action === "refresh-google-seo") this._requestGoogleSeoStatus();
         if (action === "request-google-seo") this._requestGoogleSeoSetup();
         if (action === "start-google-seo-authorization") this._startGoogleSeoAuthorization();
+        if (action === "previous-setup-step") this._goToPreviousSection();
         if (action === "next-setup-step") this._goToNextSection({ openSetup: true });
 
         if (action === "email-invoice") {
@@ -929,6 +944,11 @@
     _selectSection(sectionId) {
       if (!this.sections.some((section) => section.id === sectionId)) return;
 
+      if (this.embeddedMode) {
+        this._requestSettingsTab("biab-" + sectionId);
+        return;
+      }
+
       this._closeSetup();
       this._closeInvoicePage();
       this.activeId = sectionId;
@@ -941,10 +961,15 @@
     }
 
     _goToNextSection(options) {
-      const currentIndex = this.sections.findIndex((section) => section.id === this.activeId);
-      const nextSection = currentIndex > -1 ? this.sections[currentIndex + 1] : null;
+      const orderedSections = this._orderedSetupSections();
+      const currentIndex = orderedSections.findIndex((section) => section.id === this.activeId);
+      const nextSection = currentIndex > -1 ? orderedSections[currentIndex + 1] : null;
 
       if (!nextSection) {
+        if (this.embeddedMode) {
+          this._requestSettingsStep("next");
+          return;
+        }
         this._closeSetup();
         this._closeInvoicePage();
         this._render();
@@ -958,13 +983,87 @@
       }
     }
 
+    _goToPreviousSection() {
+      const orderedSections = this._orderedSetupSections();
+      const currentIndex = orderedSections.findIndex((section) => section.id === this.activeId);
+      const previousSection = currentIndex > -1 ? orderedSections[currentIndex - 1] : null;
+
+      if (!previousSection) {
+        if (this.embeddedMode) {
+          this._requestSettingsStep("previous");
+        }
+        return;
+      }
+
+      this._selectSection(previousSection.id);
+    }
+
+    _completeStepAndAdvance() {
+      const currentId = this.activeId;
+      const nextSection = this._nextSection();
+      const nextLabel = nextSection ? (nextSection.label || nextSection.title || "next step") : "";
+      const message = nextLabel
+        ? "Step saved. Moving to " + nextLabel + " setup..."
+        : "Step saved. Setup is complete.";
+
+      if (window.MTKMsgs && typeof window.MTKMsgs.show === "function") {
+        window.MTKMsgs.show({
+          type: "success",
+          icon: "check_circle",
+          message,
+          closable: true,
+          timer: 4
+        });
+      }
+
+      window.clearTimeout(this.stepAdvanceTimer);
+      this.stepAdvanceTimer = window.setTimeout(() => {
+        if (this.activeId === currentId) {
+          this._goToNextSection({ openSetup: true });
+        }
+      }, 2200);
+    }
+
+    _orderedSetupSections() {
+      const order = ["client-url", "logo", "business-card", "website-builder", "google-seo", "invoices", "customer-reviews"];
+      return this.sections
+        .filter((section) => section && section.id !== "introduction")
+        .slice()
+        .sort((a, b) => {
+          let aIndex = order.indexOf(a && a.id);
+          let bIndex = order.indexOf(b && b.id);
+          if (aIndex === -1) aIndex = order.length + 1;
+          if (bIndex === -1) bIndex = order.length + 1;
+          return aIndex - bIndex;
+        });
+    }
+
+    _requestSettingsTab(tabId) {
+      document.dispatchEvent(new CustomEvent("mtk-settings:select-tab", {
+        detail: { tabId }
+      }));
+    }
+
+    _requestSettingsStep(direction) {
+      document.dispatchEvent(new CustomEvent("mtk-settings:select-tab", {
+        detail: { direction: direction || "next" }
+      }));
+    }
+
     _sectionHasSetup(section) {
       return !!(section && section.id !== "introduction");
     }
 
     _nextSection() {
-      const currentIndex = this.sections.findIndex((section) => section.id === this.activeId);
-      return currentIndex > -1 ? this.sections[currentIndex + 1] || null : null;
+      const orderedSections = this._orderedSetupSections();
+      const currentIndex = orderedSections.findIndex((section) => section.id === this.activeId);
+      return currentIndex > -1 ? orderedSections[currentIndex + 1] || null : null;
+    }
+
+    _previousSection() {
+      const orderedSections = this._orderedSetupSections();
+      const currentIndex = orderedSections.findIndex((section) => section.id === this.activeId);
+      return currentIndex > -1 ? orderedSections[currentIndex - 1] || null : null;
     }
 
     _openSetup() {
@@ -1494,7 +1593,7 @@
           values: settings.business
         });
       }
-      this._goToNextSection({ openSetup: true });
+      this._completeStepAndAdvance();
     }
 
     _logoProviderStatusText() {
@@ -1955,7 +2054,7 @@
         orderedAt: this.orderedCard.orderedAt
       });
 
-      this._goToNextSection({ openSetup: true });
+      this._completeStepAndAdvance();
     }
 
     _getCardTemplates(section) {
@@ -2852,10 +2951,14 @@
     }
 
     _showSetupView(section, bodyHTML) {
+      const previousSection = this._previousSection();
       const nextSection = this._nextSection();
       const nextLabel = nextSection
         ? this._text("Next") + ": " + this._text(nextSection.label || nextSection.title || "Next step")
         : this._text("Done");
+      const previousLabel = previousSection
+        ? this._text("Previous") + ": " + this._text(previousSection.label || previousSection.title || "Previous step")
+        : this._text("Previous");
       const overlay = document.createElement("section");
       overlay.className = "mtk-biab__setup";
       overlay.setAttribute("role", "dialog");
@@ -2884,6 +2987,10 @@
           <div class="mtk-biab__setup-footer-inner">
             <button class="mtk-biab__back-btn" type="button" data-action="close-setup">
               ${this._escape(this._text("Pause setup"))}
+            </button>
+            <button class="mtk-biab__back-btn mtk-biab__setup-previous" type="button" data-action="previous-setup-step" ${previousSection || this.embeddedMode ? "" : "disabled"}>
+              <span class="material-icons" aria-hidden="true">chevron_left</span>
+              <span>${this._escape(previousLabel)}</span>
             </button>
             <button class="mtk-biab__submit-btn mtk-biab__setup-next" type="button" data-action="${nextSection ? "next-setup-step" : "close-setup"}">
               <span>${this._escape(nextLabel)}</span>

@@ -195,19 +195,26 @@ h1.title::after {
 
 .mtk-msgs {
   display: block;
-  width: 100%;
-  height: 0;
-  overflow: hidden;
-  transition: height 600ms cubic-bezier(0.4, 0, 0.2, 1), opacity 600ms ease;
+  width: min(760px, calc(100vw - 32px));
+  min-height: 0;
+  overflow: visible;
+  transition: opacity 600ms ease, transform 600ms cubic-bezier(0.4, 0, 0.2, 1), visibility 600ms ease;
   opacity: 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  position: relative;
-  margin-top: 5px; }
+  visibility: hidden;
+  box-shadow: 0 22px 50px rgba(15, 23, 42, 0.26);
+  z-index: 100200;
+  position: fixed;
+  top: 104px;
+  left: 50%;
+  margin: 0;
+  border: 2px solid #a98212;
+  border-radius: 8px;
+  transform: translate(-50%, -14px) scale(0.98); }
 
 .mtk-msgs.visible {
-  height: 40px;
-  opacity: 1; }
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0) scale(1); }
 
 .mtk-msgs__overlay {
   position: fixed;
@@ -232,8 +239,8 @@ h1.title::after {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 40px;
-  padding: 0 16px;
+  min-height: 68px;
+  padding: 14px 16px;
   gap: 12px;
   width: 100%; }
 
@@ -241,7 +248,8 @@ h1.title::after {
   display: flex;
   align-items: center;
   gap: 12px;
-  flex-shrink: 0; }
+  min-width: 0;
+  flex: 1 1 auto; }
 
 .mtk-msgs .mtk-msgs__icon {
   display: flex;
@@ -269,12 +277,11 @@ h1.title::after {
 
 .mtk-msgs .mtk-msgs__message {
   font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
+  font-weight: 700;
+  line-height: 1.45;
   margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; }
+  white-space: normal;
+  overflow-wrap: anywhere; }
 
 .mtk-msgs .mtk-msgs__buttons {
   display: flex;
@@ -282,7 +289,6 @@ h1.title::after {
   gap: 8px;
   margin-left: auto;
   flex-shrink: 0;
-  border: 1px yellow solid !important;
   border-radius: 8px; }
 
 .mtk-msgs .mtk-msgs__button {
@@ -337,21 +343,21 @@ h1.title::after {
   background-color: rgba(0, 0, 0, 0.12); }
 
 .mtk-msgs.mtk-msgs--info {
-  background-color: #fbf4e5;
+  background-color: #fffaf0;
   color: #4a3a08; }
 
 .mtk-msgs.mtk-msgs--info .mtk-msgs__button, .mtk-msgs.mtk-msgs--info .mtk-msgs__close {
   color: #4a3a08; }
 
 .mtk-msgs.mtk-msgs--warning {
-  background-color: #ffc107;
-  color: #664d03; }
+  background-color: #fff8e1;
+  color: #4a3a08; }
 
 .mtk-msgs.mtk-msgs--warning .mtk-msgs__button, .mtk-msgs.mtk-msgs--warning .mtk-msgs__close {
-  color: #664d03; }
+  color: #4a3a08; }
 
 .mtk-msgs.mtk-msgs--error {
-  background-color: #dc3545;
+  background-color: #151a1f;
   color: #ffffff; }
 
 .mtk-msgs.mtk-msgs--error .mtk-msgs__button, .mtk-msgs.mtk-msgs--error .mtk-msgs__close {
@@ -363,3 +369,10 @@ h1.title::after {
 
 .mtk-msgs.mtk-msgs--success .mtk-msgs__button, .mtk-msgs.mtk-msgs--success .mtk-msgs__close {
   color: #ffffff; }
+
+@media (max-width: 640px) {
+  .mtk-msgs {
+    top: 86px; }
+  .mtk-msgs .mtk-msgs__container {
+    align-items: flex-start;
+    gap: 10px; } }

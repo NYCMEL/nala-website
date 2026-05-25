@@ -123,8 +123,6 @@ class MTKMsgs {
     }
 
     show(messageData) {
-	window.scrollTo({top: 0});
-	
 	if (!messageData) return;
 
 	// Clear any existing timer

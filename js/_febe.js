@@ -459,7 +459,7 @@ class _febe {
 	settings[tabId] = Object.assign({}, settings[tabId] || {}, values);
 	this.writeStoredSettings(settings);
 
-	if (window.MTKMsgs && typeof MTKMsgs.show === "function") {
+	if (!payload.guidedAutoAdvance && window.MTKMsgs && typeof MTKMsgs.show === "function") {
 	    const savedMessages = {
 		privacy: this.t("settings.success.personalSaved", "Saved. Next, open Business Information and enter the details customers should see."),
 		business: this.t("settings.success.businessSaved", "Saved. Next, open Services Offered and check the services you provide."),

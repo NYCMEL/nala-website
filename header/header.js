@@ -39,47 +39,6 @@ $(document).on("click", "#header-dd-profile", function(e) {
     wc.publish("mtk-header-settings");
 });
 
-$(document).on("click", "#header-dd-client", function(e) {
-    e.preventDefault();
-    $("#nala-user-dd").hide();
-
-    var user = (window.wc && wc.session && wc.session.user) ? wc.session.user : {};
-    if (Number(user.has_business_in_a_box || 0) !== 1) {
-        var message = (window.i18n && typeof window.i18n.t === "function")
-            ? window.i18n.t("nav.businessAccessOnly")
-            : "Business in a Box is only available for users with Business access.";
-
-        if (window.MTKMsgs && typeof MTKMsgs.show === "function") {
-            MTKMsgs.show({
-                type: "warning",
-                icon: "warning",
-                message: message,
-                closable: true,
-                timer: 8
-            });
-        }
-        return;
-    }
-
-    headerSelect("mtk-header-settings");
-
-    wc.log("mtk-header-client → #biab");
-    wc.publish("mtk-header-client");
-
-    if (window.location.pathname !== "/repo_deploy/") {
-        window.location.href = "/repo_deploy/#biab";
-        return;
-    }
-
-    if (window.location.hash !== "#biab") {
-        window.location.hash = "biab";
-    } else if (window.wc && wc.pages && typeof wc.pages.show === "function") {
-        wc.pages.show("biab");
-    } else {
-        window.dispatchEvent(new HashChangeEvent("hashchange"));
-    }
-});
-
 $(document).on("click", "#header-dd-logout", function(e) {
     e.preventDefault();
     $("#nala-user-dd").hide();
@@ -220,26 +179,6 @@ function toggleNavbar() {
     } else {
         initState();
     }
-})();
-
-(function initBusinessInABoxAccess() {
-    function syncBusinessMenu() {
-        var user = (window.wc && wc.session && wc.session.user) ? wc.session.user : {};
-        var hasBusiness = Number(user.has_business_in_a_box || 0) === 1;
-        var menuItem = document.getElementById("header-dd-client");
-        if (!menuItem) return;
-
-        var listItem = menuItem.closest("li");
-        if (!listItem) return;
-
-        listItem.style.display = hasBusiness ? "" : "none";
-    }
-
-    document.addEventListener("DOMContentLoaded", syncBusinessMenu);
-    document.addEventListener("include:loaded", function () {
-        setTimeout(syncBusinessMenu, 50);
-    });
-    setTimeout(syncBusinessMenu, 250);
 })();
 
 // RESTORE ACTIVE HEADER LINK ON RELOAD

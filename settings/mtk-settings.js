@@ -23,6 +23,52 @@
     return config && Array.isArray(config.tabs) ? config.tabs : [];
   }
 
+  function hasBusinessInABox() {
+    var user = getSessionUser();
+    return Number(user.has_business_in_a_box || 0) === 1;
+  }
+
+  function getBiabSections() {
+    var config = window.MTK_BIAB_CONFIG || {};
+    return Array.isArray(config.sections) ? config.sections : [];
+  }
+
+  function orderedBiabSections() {
+    var order = ["client-url", "logo", "business-card", "website-builder", "google-seo", "invoices", "customer-reviews"];
+    return getBiabSections().slice().sort(function (a, b) {
+      var aIndex = order.indexOf(a && a.id);
+      var bIndex = order.indexOf(b && b.id);
+      if (aIndex === -1) aIndex = order.length + 1;
+      if (bIndex === -1) bIndex = order.length + 1;
+      return aIndex - bIndex;
+    });
+  }
+
+  function buildTabs(config) {
+    var tabs = getTabs(config).slice();
+    if (!hasBusinessInABox()) {
+      return tabs;
+    }
+
+    orderedBiabSections().forEach(function (section) {
+      if (!section || section.id === "introduction") {
+        return;
+      }
+      tabs.push({
+        id: "biab-" + section.id,
+        label: section.label || section.title || "BIAB",
+        icon: section.icon || "work",
+        title: section.title || section.label || "Business in a Box",
+        description: section.description || "",
+        nextStep: section.nextStep || section.body || "",
+        type: "biab",
+        biabSectionId: section.id
+      });
+    });
+
+    return tabs;
+  }
+
   function translate(key, fallback) {
     if (window.wc && typeof window.wc.t === "function") {
       return window.wc.t(key, fallback);
@@ -98,8 +144,8 @@
   function MTKSettings(root, config) {
     this.root = root;
     this.config = config || getConfig();
-    this.tabs = getTabs(this.config);
-    this.activeTabId = this.tabs.length ? this.tabs[0].id : "";
+    this.tabs = buildTabs(this.config);
+    this.activeTabId = this.initialTabId();
     this.formState = {};
     this.tabsEl = root.querySelector(".mtk-settings__tabs");
     this.panelEl = root.querySelector(".mtk-settings__panel");
@@ -107,6 +153,7 @@
     this.eyebrowEl = root.querySelector("[data-eyebrow]");
     this.onMessage = this.onMessage.bind(this);
     this.onLanguageChange = this.onLanguageChange.bind(this);
+    this.onBiabSettingsRequest = this.onBiabSettingsRequest.bind(this);
     this.init();
   }
 
@@ -138,13 +185,28 @@
     }
 
     document.addEventListener("i18n:changed", this.onLanguageChange);
+    document.addEventListener("mtk-settings:select-tab", this.onBiabSettingsRequest);
+  };
+
+  MTKSettings.prototype.onBiabSettingsRequest = function (event) {
+    var detail = event && event.detail ? event.detail : {};
+    if (detail.tabId) {
+      this.setActiveTab(detail.tabId);
+      return;
+    }
+    if (detail.direction) {
+      this.goAdjacentStep(detail.direction);
+    }
   };
 
   MTKSettings.prototype.onLanguageChange = function () {
     if (window.i18n && typeof window.i18n.applyConfig === "function") {
       window.i18n.applyConfig(this.config);
     }
-    this.tabs = getTabs(this.config);
+    this.tabs = buildTabs(this.config);
+    if (!this.findTab(this.activeTabId)) {
+      this.activeTabId = this.initialTabId();
+    }
     if (this.titleEl) {
       this.titleEl.textContent = this.config.title || "Profile & Settings";
     }
@@ -160,7 +222,7 @@
     var stored = readStoredSettings();
     var user = getSessionUser();
 
-    this.tabs.forEach(function (tab) {
+    getTabs(this.config).forEach(function (tab) {
       self.formState[tab.id] = {};
 
       if (!Array.isArray(tab.fields)) {
@@ -201,6 +263,53 @@
       if (fieldId === "password") return user.password || user.raw_password || user.plainPassword || "";
     }
     return undefined;
+  };
+
+  MTKSettings.prototype.initialTabId = function () {
+    var requested = window.__nalaSettingsTargetTab || "";
+    var hash = String(window.location.hash || "").replace(/^#\/?/, "");
+    if (!requested && hash.indexOf("settings:") === 0) {
+      requested = hash.slice("settings:".length);
+    }
+    if (!requested && hash === "biab") {
+      requested = this.firstIncompleteBiabTabId();
+    }
+    return this.findTab(requested) ? requested : (this.tabs.length ? this.tabs[0].id : "");
+  };
+
+  MTKSettings.prototype.firstIncompleteBiabTabId = function () {
+    var stored = readStoredSettings();
+    var uid = this.businessPageId();
+    var business = stored.business || {};
+    var services = stored.services || {};
+    var hasBusiness = !!(String(business.customerFacingBusinessName || business.legalBusinessName || "").trim() && String(business.businessPhone || "").trim() && String(business.businessEmail || "").trim());
+    var hasServices = !!(String(services.serviceArea || "").trim() && ((Array.isArray(services.launchServices) && services.launchServices.length) || normalizeCustomServices(services.customServices).some(function (row) { return row.checked !== false && String(row.label || "").trim(); })));
+    var hasUrl = !!String(business.businessWebsite || business.website || "").trim();
+    var hasLogo = false;
+    var hasCard = false;
+    try {
+      hasLogo = !!JSON.parse(window.localStorage.getItem("nala_biab_logo_" + uid) || "null");
+      hasCard = !!JSON.parse(window.localStorage.getItem("nala_biab_ordered_card_" + uid) || "null");
+    } catch (err) {}
+
+    if (!hasBusiness) return "business";
+    if (!hasServices) return "services";
+    if (!hasUrl) return "biab-client-url";
+    if (!hasLogo) return "biab-logo";
+    if (!hasCard) return "biab-business-card";
+    return "biab-website-builder";
+  };
+
+  MTKSettings.prototype.businessPageId = function () {
+    var user = getSessionUser();
+    return String(
+      (window.wc && wc.session && wc.session.nalaUID) ||
+      user.nalaUID ||
+      user.id ||
+      user.user_id ||
+      user.email ||
+      "demo"
+    ).replace(/[^a-zA-Z0-9_-]/g, "");
   };
 
   MTKSettings.prototype.clientUrlPayload = function () {
@@ -252,6 +361,10 @@
 
     if (message.type === "select-tab" && message.tabId) {
       this.setActiveTab(message.tabId);
+    }
+
+    if (message.type === "select-biab-step" && message.sectionId) {
+      this.setActiveTab("biab-" + message.sectionId);
     }
   };
 
@@ -327,12 +440,48 @@
       '</div>';
 
     if (Array.isArray(tab.fields) && tab.fields.length) {
-      this.panelEl.innerHTML = header + this.renderForm(tab);
+      this.panelEl.innerHTML = header + this.renderForm(tab) + this.renderStepNav(tab);
       this.bindForm(tab);
+      this.bindStepNav();
       return;
     }
 
-    this.panelEl.innerHTML = header + '<div class="mtk-settings__empty">This section is ready for fields, cards, or controls.</div>';
+    if (tab.type === "biab") {
+      this.panelEl.innerHTML = header + this.renderBiabTab(tab) + this.renderStepNav(tab);
+      if (window.MtkBiab && typeof window.MtkBiab.initWhenReady === "function") {
+        window.MtkBiab.initWhenReady();
+      }
+      this.bindStepNav();
+      return;
+    }
+
+    this.panelEl.innerHTML = header + '<div class="mtk-settings__empty">This section is ready for fields, cards, or controls.</div>' + this.renderStepNav(tab);
+    this.bindStepNav();
+  };
+
+  MTKSettings.prototype.renderBiabTab = function (tab) {
+    return '' +
+      '<div class="mtk-settings__biab-tab">' +
+        '<mtk-biab class="mtk-biab mtk-biab--settings" data-embedded="settings" data-embedded-section="' + escapeHTML(tab.biabSectionId || "") + '"></mtk-biab>' +
+      '</div>';
+  };
+
+  MTKSettings.prototype.renderStepNav = function (tab) {
+    var index = this.tabs.findIndex(function (item) { return item.id === tab.id; });
+    var previous = index > 0 ? this.tabs[index - 1] : null;
+    var next = index > -1 && index < this.tabs.length - 1 ? this.tabs[index + 1] : null;
+
+    return '' +
+      '<nav class="mtk-settings__step-nav" aria-label="Setup step navigation">' +
+        '<button class="mtk-settings__step-arrow" type="button" data-settings-step-direction="previous"' + (previous ? "" : " disabled") + '>' +
+          '<span class="material-icons" aria-hidden="true">chevron_left</span>' +
+          '<span>' + escapeHTML(previous ? "Previous: " + (previous.label || previous.title || "Step") : "Previous") + '</span>' +
+        '</button>' +
+        '<button class="mtk-settings__step-arrow mtk-settings__step-arrow--next" type="button" data-settings-step-direction="next"' + (next ? "" : " disabled") + '>' +
+          '<span>' + escapeHTML(next ? "Next: " + (next.label || next.title || "Step") : "Done") + '</span>' +
+          '<span class="material-icons" aria-hidden="true">chevron_right</span>' +
+        '</button>' +
+      '</nav>';
   };
 
   MTKSettings.prototype.renderForm = function (tab) {
@@ -527,8 +676,14 @@
         self.publish(eventName, {
           tabId: tab.id,
           actionId: actionId,
-          values: self.formState[tab.id]
+          values: self.formState[tab.id],
+          guidedAutoAdvance: actionId !== "changePassword",
+          nextTabLabel: self.nextTabLabel(tab.id)
         });
+
+        if (actionId !== "changePassword") {
+          self.announceSavedAndAdvance(tab.id);
+        }
       });
     });
 
@@ -651,6 +806,55 @@
     this.formState[tabId][fieldId] = rows;
     this.renderPanel();
     this.focusCustomServiceRow(fieldId, rows.length - 1);
+  };
+
+  MTKSettings.prototype.bindStepNav = function () {
+    var self = this;
+    Array.prototype.forEach.call(this.panelEl.querySelectorAll("[data-settings-step-direction]"), function (button) {
+      button.addEventListener("click", function () {
+        self.goAdjacentStep(button.getAttribute("data-settings-step-direction"));
+      });
+    });
+  };
+
+  MTKSettings.prototype.nextTabLabel = function (tabId) {
+    var index = this.tabs.findIndex(function (tab) { return tab.id === tabId; });
+    var next = index > -1 ? this.tabs[index + 1] : null;
+    return next ? (next.label || next.title || "next step") : "";
+  };
+
+  MTKSettings.prototype.goAdjacentStep = function (direction) {
+    var index = this.tabs.findIndex(function (tab) { return tab.id === this.activeTabId; }, this);
+    if (index < 0) return;
+    var nextIndex = direction === "previous" ? index - 1 : index + 1;
+    var next = this.tabs[nextIndex];
+    if (!next) return;
+    this.setActiveTab(next.id);
+  };
+
+  MTKSettings.prototype.announceSavedAndAdvance = function (tabId) {
+    var nextLabel = this.nextTabLabel(tabId);
+    var message = nextLabel
+      ? "Step saved. Moving to " + nextLabel + " setup..."
+      : "Step saved. Setup is complete.";
+
+    if (window.MTKMsgs && typeof window.MTKMsgs.show === "function") {
+      window.MTKMsgs.show({
+        type: "success",
+        icon: "check_circle",
+        message: message,
+        closable: true,
+        timer: 4
+      });
+    }
+
+    if (!nextLabel) return;
+    window.clearTimeout(this.autoAdvanceTimer);
+    this.autoAdvanceTimer = window.setTimeout(function () {
+      if (this.activeTabId === tabId) {
+        this.goAdjacentStep("next");
+      }
+    }.bind(this), 2200);
   };
 
   MTKSettings.prototype.focusCustomServiceRow = function (fieldId, index) {

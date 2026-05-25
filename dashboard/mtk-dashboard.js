@@ -206,21 +206,59 @@
         }
 
         navigateToBusinessInABox() {
-            wc.log("[dashboard] BIAB card clicked → #biab");
+            wc.log("[dashboard] BIAB card clicked → Profile & Settings");
+            window.__nalaSettingsTargetTab = this.firstIncompleteBiabSettingsTab();
 
             if (window.location.pathname !== "/repo_deploy/") {
-                window.location.href = "/repo_deploy/#biab";
+                window.location.href = "/repo_deploy/#settings";
                 return;
             }
 
             if (window.wc && wc.pages && typeof wc.pages.show === "function") {
-                window.history.pushState({ mtkPage: "biab" }, "", "#biab");
-                wc.pages.show("biab");
+                window.history.pushState({ mtkPage: "settings" }, "", "#settings");
+                wc.pages.show("settings");
+                window.setTimeout(() => {
+                    if (window.wc && typeof wc.publish === "function") {
+                        wc.publish("4-mtk-settings", {
+                            type: "select-tab",
+                            tabId: window.__nalaSettingsTargetTab || "business"
+                        });
+                    }
+                }, 250);
                 return;
             }
 
-            window.location.hash = "biab";
+            window.location.hash = "settings";
             window.dispatchEvent(new HashChangeEvent("hashchange"));
+        }
+
+        firstIncompleteBiabSettingsTab() {
+            let settings = {};
+            let logo = null;
+            let cardOrder = null;
+            const uid = this.businessPageId();
+            try {
+                settings = JSON.parse(window.localStorage.getItem('nala_profile_settings') || '{}') || {};
+                logo = JSON.parse(window.localStorage.getItem('nala_biab_logo_' + uid) || 'null');
+                cardOrder = JSON.parse(window.localStorage.getItem('nala_biab_ordered_card_' + uid) || 'null');
+            } catch (err) {}
+
+            const business = settings.business || {};
+            const services = settings.services || {};
+            const hasBusiness = !!(String(business.customerFacingBusinessName || business.legalBusinessName || '').trim() && String(business.businessPhone || '').trim() && String(business.businessEmail || '').trim());
+            const customServices = Array.isArray(services.customServices)
+                ? services.customServices
+                : String(services.customServices || '').split(/\r?\n/).map((label) => ({ label, checked: true }));
+            const hasCustomServices = customServices.some((row) => row && row.checked !== false && String(row.label || '').trim());
+            const hasServices = !!(String(services.serviceArea || '').trim() && ((Array.isArray(services.launchServices) && services.launchServices.length) || hasCustomServices));
+            const hasUrl = !!String(business.businessWebsite || business.website || '').trim();
+
+            if (!hasBusiness) return 'business';
+            if (!hasServices) return 'services';
+            if (!hasUrl) return 'biab-client-url';
+            if (!logo) return 'biab-logo';
+            if (!cardOrder) return 'biab-business-card';
+            return 'biab-website-builder';
         }
 
         createSubscriptionCard(option) {
@@ -605,7 +643,7 @@
                 MTKMsgs.show({
                     type: 'warning',
                     icon: 'work',
-                    message: message + ' Open Business in a Box to continue setup.',
+                    message: message + ' Open Profile & Settings to continue setup.',
                     closable: true,
                     timer: 12
                 });
