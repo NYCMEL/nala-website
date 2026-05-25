@@ -161,7 +161,7 @@ function biab_logo_provider_status($mode = null, $message = '') {
 }
 
 function biab_logo_generation_version() {
-    return 13;
+    return 14;
 }
 
 function biab_logo_options_are_stale($generated) {
@@ -388,47 +388,170 @@ function biab_logo_preview_signature($url) {
         return '';
     }
 
-    $cropWidth = max(8, (int)round($width * 0.24));
-    $crop = imagecreatetruecolor(8, 8);
-    imagecopyresampled($crop, $image, 0, 0, 0, 0, 8, 8, $cropWidth, $height);
-
-    $values = array();
-    $sum = 0;
-    for ($y = 0; $y < 8; $y++) {
-        for ($x = 0; $x < 8; $x++) {
-            $rgb = imagecolorat($crop, $x, $y);
-            $r = ($rgb >> 16) & 255;
-            $g = ($rgb >> 8) & 255;
-            $b = $rgb & 255;
-            $gray = (int)round(($r * 0.299) + ($g * 0.587) + ($b * 0.114));
-            $values[] = $gray;
-            $sum += $gray;
-        }
+    $bounds = biab_logo_foreground_bounds($image, $width, $height);
+    if (!$bounds) {
+        imagedestroy($image);
+        return '';
     }
-    imagedestroy($crop);
+
+    $boundsWidth = max(1, $bounds['x2'] - $bounds['x1'] + 1);
+    $boundsHeight = max(1, $bounds['y2'] - $bounds['y1'] + 1);
+    $iconX1 = $bounds['x1'];
+    $iconY1 = $bounds['y1'];
+    $iconX2 = min(
+        $bounds['x2'],
+        $bounds['x1'] + max(12, (int)round($boundsWidth * 0.38)),
+        (int)round($width * 0.42)
+    );
+    $iconY2 = $bounds['y2'];
+    $iconBounds = biab_logo_foreground_bounds($image, $width, $height, $iconX1, $iconY1, $iconX2, $iconY2);
+    if ($iconBounds) {
+        $iconX1 = $iconBounds['x1'];
+        $iconY1 = $iconBounds['y1'];
+        $iconX2 = $iconBounds['x2'];
+        $iconY2 = $iconBounds['y2'];
+    }
+
+    $signature = '';
+    $signature .= biab_logo_region_occupancy_signature($image, $iconX1, $iconY1, $iconX2, $iconY2, 16, 16);
+    $signature .= biab_logo_region_edge_signature($image, $iconX1, $iconY1, $iconX2, $iconY2, 8, 8);
+    $signature .= biab_logo_region_occupancy_signature($image, $bounds['x1'], $bounds['y1'], $bounds['x2'], $bounds['y2'], 8, 8);
+    $signature .= biab_logo_shape_descriptor_signature($iconX1, $iconY1, $iconX2, $iconY2, $boundsWidth, $boundsHeight);
     imagedestroy($image);
 
+    return $signature;
+}
+
+function biab_logo_foreground_bounds($image, $width, $height, $x1 = 0, $y1 = 0, $x2 = null, $y2 = null) {
+    $x2 = $x2 === null ? $width - 1 : min($width - 1, max(0, (int)$x2));
+    $y2 = $y2 === null ? $height - 1 : min($height - 1, max(0, (int)$y2));
+    $x1 = min($x2, max(0, (int)$x1));
+    $y1 = min($y2, max(0, (int)$y1));
+    $minX = $x2;
+    $minY = $y2;
+    $maxX = $x1;
+    $maxY = $y1;
+    $found = false;
+    for ($y = $y1; $y <= $y2; $y++) {
+        for ($x = $x1; $x <= $x2; $x++) {
+            if (!biab_logo_pixel_is_background($image, $x, $y)) {
+                $found = true;
+                if ($x < $minX) $minX = $x;
+                if ($y < $minY) $minY = $y;
+                if ($x > $maxX) $maxX = $x;
+                if ($y > $maxY) $maxY = $y;
+            }
+        }
+    }
+    if (!$found) {
+        return null;
+    }
+    return array('x1' => $minX, 'y1' => $minY, 'x2' => $maxX, 'y2' => $maxY);
+}
+
+function biab_logo_pixel_is_background($image, $x, $y) {
+    $rgb = imagecolorat($image, $x, $y);
+    $a = ($rgb & 0x7F000000) >> 24;
+    if ($a >= 120) {
+        return true;
+    }
+    $r = ($rgb >> 16) & 255;
+    $g = ($rgb >> 8) & 255;
+    $b = $rgb & 255;
+    return $r > 242 && $g > 242 && $b > 242;
+}
+
+function biab_logo_pixel_gray($image, $x, $y) {
+    $rgb = imagecolorat($image, $x, $y);
+    $r = ($rgb >> 16) & 255;
+    $g = ($rgb >> 8) & 255;
+    $b = $rgb & 255;
+    return (int)round(($r * 0.299) + ($g * 0.587) + ($b * 0.114));
+}
+
+function biab_logo_region_occupancy_signature($image, $x1, $y1, $x2, $y2, $cols, $rows) {
+    $x1 = (int)$x1;
+    $y1 = (int)$y1;
+    $x2 = max($x1, (int)$x2);
+    $y2 = max($y1, (int)$y2);
     $bits = '';
-    foreach ($values as $value) {
-        $bits .= $value < 245 ? '1' : '0';
+    $regionWidth = max(1, $x2 - $x1 + 1);
+    $regionHeight = max(1, $y2 - $y1 + 1);
+    for ($row = 0; $row < $rows; $row++) {
+        for ($col = 0; $col < $cols; $col++) {
+            $sampleX1 = $x1 + (int)floor($col * $regionWidth / $cols);
+            $sampleX2 = $x1 + (int)floor(($col + 1) * $regionWidth / $cols) - 1;
+            $sampleY1 = $y1 + (int)floor($row * $regionHeight / $rows);
+            $sampleY2 = $y1 + (int)floor(($row + 1) * $regionHeight / $rows) - 1;
+            $total = 0;
+            $foreground = 0;
+            for ($y = $sampleY1; $y <= max($sampleY1, $sampleY2); $y++) {
+                for ($x = $sampleX1; $x <= max($sampleX1, $sampleX2); $x++) {
+                    $total++;
+                    if (!biab_logo_pixel_is_background($image, $x, $y)) {
+                        $foreground++;
+                    }
+                }
+            }
+            $bits .= $total > 0 && ($foreground / $total) > 0.08 ? '1' : '0';
+        }
     }
     return $bits;
+}
+
+function biab_logo_region_edge_signature($image, $x1, $y1, $x2, $y2, $cols, $rows) {
+    $x1 = (int)$x1;
+    $y1 = (int)$y1;
+    $x2 = max($x1, (int)$x2);
+    $y2 = max($y1, (int)$y2);
+    if (($x2 - $x1) < 2 || ($y2 - $y1) < 2) {
+        return str_repeat('0', max(1, (int)$cols) * max(1, (int)$rows));
+    }
+    $bits = '';
+    $regionWidth = max(1, $x2 - $x1 + 1);
+    $regionHeight = max(1, $y2 - $y1 + 1);
+    for ($row = 0; $row < $rows; $row++) {
+        for ($col = 0; $col < $cols; $col++) {
+            $cx = min($x2 - 1, max($x1 + 1, $x1 + (int)round(($col + 0.5) * $regionWidth / $cols)));
+            $cy = min($y2 - 1, max($y1 + 1, $y1 + (int)round(($row + 0.5) * $regionHeight / $rows)));
+            $gx = abs(biab_logo_pixel_gray($image, $cx + 1, $cy) - biab_logo_pixel_gray($image, $cx - 1, $cy));
+            $gy = abs(biab_logo_pixel_gray($image, $cx, $cy + 1) - biab_logo_pixel_gray($image, $cx, $cy - 1));
+            $bits .= ($gx + $gy) > 36 ? '1' : '0';
+        }
+    }
+    return $bits;
+}
+
+function biab_logo_shape_descriptor_signature($x1, $y1, $x2, $y2, $fullWidth, $fullHeight) {
+    $width = max(1, (int)$x2 - (int)$x1 + 1);
+    $height = max(1, (int)$y2 - (int)$y1 + 1);
+    $ratioBucket = max(0, min(15, (int)round(($width / $height) * 4)));
+    $areaBucket = max(0, min(15, (int)round((($width * $height) / max(1, $fullWidth * $fullHeight)) * 16)));
+    return str_pad(decbin($ratioBucket), 4, '0', STR_PAD_LEFT) . str_pad(decbin($areaBucket), 4, '0', STR_PAD_LEFT);
 }
 
 function biab_logo_signature_distance($a, $b) {
     $a = (string)$a;
     $b = (string)$b;
-    if (strlen($a) !== strlen($b) || $a === '' || $b === '') {
+    if ($a === '' || $b === '') {
         return 64;
     }
     $distance = 0;
-    $length = strlen($a);
+    $length = min(strlen($a), strlen($b));
     for ($index = 0; $index < $length; $index++) {
         if ($a[$index] !== $b[$index]) {
             $distance++;
         }
     }
-    return $distance;
+    return $distance + (int)round(abs(strlen($a) - strlen($b)) * 0.22);
+}
+
+function biab_logo_signature_threshold($signature, $fallback = 18) {
+    $length = strlen((string)$signature);
+    if ($length <= 64) {
+        return (int)$fallback;
+    }
+    return max((int)$fallback, (int)round($length * 0.16));
 }
 
 function biab_logo_option_too_similar($option, $signatures) {
@@ -437,7 +560,7 @@ function biab_logo_option_too_similar($option, $signatures) {
         return array(false, '');
     }
     foreach ($signatures as $existing) {
-        if (biab_logo_signature_distance($signature, $existing) < 18) {
+        if (biab_logo_signature_distance($signature, $existing) < biab_logo_signature_threshold($signature, 18)) {
             return array(true, $signature);
         }
     }
@@ -457,7 +580,7 @@ function biab_logo_signature_seen($signature, $signatures, $threshold = 18) {
         return false;
     }
     foreach (is_array($signatures) ? $signatures : array() as $existing) {
-        if (biab_logo_signature_distance($signature, (string)$existing) < $threshold) {
+        if (biab_logo_signature_distance($signature, (string)$existing) < biab_logo_signature_threshold($signature, $threshold)) {
             return true;
         }
     }
@@ -1365,6 +1488,10 @@ $uid = biab_logo_uid($data['nalaUID'] ?? '');
 $action = $data['action'] ?? 'generate';
 
 if ($action === 'reset') {
+    $existing = biab_logo_get_options($uid);
+    if ($existing) {
+        biab_logo_remember_option_signatures($uid, $existing['options'] ?? array());
+    }
     biab_logo_reset($uid);
     biab_logo_json_response(200, array(
         'ok' => true,
@@ -1386,13 +1513,13 @@ if ($action !== 'generate') {
 }
 
 $replaceExisting = !empty($data['replaceExisting']) || !empty($data['force']) || !empty($data['regenerate']);
-$existing = $replaceExisting ? null : biab_logo_get_options($uid);
+$existing = biab_logo_get_options($uid);
 if ($existing && biab_logo_options_are_stale($existing)) {
     biab_logo_remember_option_signatures($uid, $existing['options'] ?? array());
     biab_logo_delete_options($uid);
     $existing = null;
 }
-if ($existing) {
+if ($existing && !$replaceExisting) {
     biab_logo_json_response(200, array(
         'ok' => true,
         'options' => $existing['options'],
@@ -1401,6 +1528,9 @@ if ($existing) {
 }
 
 if ($replaceExisting) {
+    if ($existing) {
+        biab_logo_remember_option_signatures($uid, $existing['options'] ?? array());
+    }
     biab_logo_delete_logo($uid);
     biab_logo_delete_options($uid);
 }
