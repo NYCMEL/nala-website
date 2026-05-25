@@ -662,9 +662,8 @@ mtk-biab.mtk-biab .mtk-biab__setup {
   inset: 0;
   z-index: 99999;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto minmax(0, 1fr) auto;
   overflow: hidden;
-  padding-bottom: 40px;
   background: #f8fafc;
   color: #0f172a;
 }
@@ -729,18 +728,19 @@ mtk-biab.mtk-biab .mtk-biab__setup-close .material-icons {
 }
 
 mtk-biab.mtk-biab .mtk-biab__setup-body {
+  min-height: 0;
   overflow-y: auto;
   width: 100%;
   max-width: 1320px;
-  max-height: calc(100vh - 120px);
+  height: 100%;
   margin: 0 auto;
-  padding: 64px 12px;
+  padding: 24px 12px;
 }
 
 mtk-biab.mtk-biab .mtk-biab__setup-card {
   width: 100%;
   margin: 0;
-  padding: 48px;
+  padding: 32px;
   border: 1px solid #e5e7eb;
   border-radius: 22px;
   background: #ffffff;
@@ -1096,10 +1096,7 @@ mtk-biab.mtk-biab .mtk-biab__back-btn:disabled {
 }
 
 mtk-biab.mtk-biab .mtk-biab__setup-footer {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  position: relative;
   z-index: 2;
   border-top: 1px solid #eadfca;
   background: rgba(255, 255, 255, 0.96);
