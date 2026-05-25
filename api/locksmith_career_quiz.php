@@ -27,6 +27,55 @@ function nala_lcq_answer($answers, $key, $fallback = '') {
     return nala_lcq_clean($answers[$key]['label'] ?? $answers[$key] ?? $fallback);
 }
 
+function nala_lcq_header_value($value, $limit = 160) {
+    return nala_lcq_clean(preg_replace('/[^\P{C}\t ]/u', '', (string) $value), $limit);
+}
+
+function nala_lcq_mail_attempt($to, $subject, $body, $replyTo, $fromEmail, $useEnvelopeSender) {
+    $fromName = 'NALA';
+    try {
+        $messageToken = bin2hex(random_bytes(8));
+    } catch (Exception $exception) {
+        $messageToken = substr(sha1(uniqid('', true)), 0, 16);
+    }
+    $headers = array(
+        'From: ' . $fromName . ' <' . $fromEmail . '>',
+        'MIME-Version: 1.0',
+        'Content-Type: text/plain; charset=UTF-8',
+        'X-Mailer: PHP/' . phpversion(),
+        'Message-ID: <nala-' . $messageToken . '@nalanetwork.com>'
+    );
+    if ($replyTo !== '') {
+        $headers[] = 'Reply-To: ' . nala_lcq_header_value($replyTo);
+    } else {
+        $headers[] = 'Reply-To: NALA <' . $fromEmail . '>';
+    }
+
+    $args = array($to, nala_lcq_header_value($subject, 180), $body, implode("\r\n", $headers));
+    if ($useEnvelopeSender) {
+        $args[] = '-f' . $fromEmail;
+    }
+    return call_user_func_array('mail', $args);
+}
+
+function nala_lcq_send_mail($to, $subject, $body, $replyTo = '') {
+    $host = strtolower(preg_replace('/[^a-z0-9.-]/', '', (string)($_SERVER['HTTP_HOST'] ?? 'nala-test.com')));
+    $host = $host !== '' ? $host : 'nala-test.com';
+    $hostSender = 'no-reply@' . $host;
+    $attempts = array(
+        array('support@nalanetwork.com', true),
+        array($hostSender, true),
+        array($hostSender, false)
+    );
+
+    foreach ($attempts as $attempt) {
+        if (@nala_lcq_mail_attempt($to, $subject, $body, $replyTo, $attempt[0], $attempt[1])) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function nala_lcq_hours($answers) {
     $value = nala_lcq_clean($answers['time']['value'] ?? '');
     return in_array($value, array('4', '8', '12', '20', '30'), true) ? (int) $value : 8;
@@ -106,17 +155,8 @@ foreach ($answers as $key => $answer) {
     $supportBody .= "- " . nala_lcq_clean($key, 80) . ': ' . nala_lcq_answer($answers, $key) . "\n";
 }
 
-$headers = array(
-    'From: NALA <no-reply@' . $host . '>',
-    'Reply-To: NALA <support@nalanetwork.com>'
-);
-$leadHeaders = array(
-    'From: NALA Quiz <no-reply@' . $host . '>',
-    'Reply-To: ' . $name . ' <' . $email . '>'
-);
-
-$sentToLead = @mail($email, 'Your NALA locksmith career fit plan', $body, implode("\r\n", $headers));
-$sentToSupport = @mail('support@nalanetwork.com', 'NALA locksmith quiz lead: ' . $name, $supportBody, implode("\r\n", $leadHeaders));
+$sentToLead = nala_lcq_send_mail($email, 'Your NALA locksmith career fit plan', $body, 'NALA <support@nalanetwork.com>');
+$sentToSupport = nala_lcq_send_mail('support@nalanetwork.com', 'NALA locksmith quiz lead: ' . $name, $supportBody, $name . ' <' . $email . '>');
 
 if (!$sentToLead) {
     http_response_code(500);
