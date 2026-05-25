@@ -161,7 +161,7 @@ function biab_logo_provider_status($mode = null, $message = '') {
 }
 
 function biab_logo_generation_version() {
-    return 12;
+    return 13;
 }
 
 function biab_logo_options_are_stale($generated) {
@@ -175,7 +175,7 @@ function biab_logo_options_are_stale($generated) {
     }
     $options = is_array($generated['options'] ?? null) ? $generated['options'] : array();
     foreach ($options as $option) {
-        if (!is_array($option) || !in_array(($option['provider'] ?? ''), array('recraft', 'logotype'), true)) {
+        if (!is_array($option) || ($option['provider'] ?? '') !== 'recraft') {
             return true;
         }
         if ((int)($option['generationVersion'] ?? 0) < biab_logo_generation_version()) {
@@ -189,7 +189,7 @@ function biab_logo_saved_logo_is_stale($logo) {
     if (!is_array($logo) || !$logo) {
         return false;
     }
-    if (!in_array(($logo['provider'] ?? ''), array('recraft', 'logotype'), true)) {
+    if (($logo['provider'] ?? '') !== 'recraft') {
         return true;
     }
     return (int)($logo['generationVersion'] ?? 0) < biab_logo_generation_version();
@@ -432,7 +432,7 @@ function biab_logo_signature_distance($a, $b) {
 }
 
 function biab_logo_option_too_similar($option, $signatures) {
-    $signature = biab_logo_preview_signature($option['previewUrl'] ?? ($option['image'] ?? ''));
+    $signature = biab_logo_option_signature($option);
     if ($signature === '') {
         return array(false, '');
     }
@@ -442,6 +442,26 @@ function biab_logo_option_too_similar($option, $signatures) {
         }
     }
     return array(false, $signature);
+}
+
+function biab_logo_option_signature($option) {
+    if (!is_array($option)) {
+        return '';
+    }
+    return biab_logo_preview_signature($option['previewUrl'] ?? ($option['image'] ?? ''));
+}
+
+function biab_logo_signature_seen($signature, $signatures, $threshold = 18) {
+    $signature = (string)$signature;
+    if ($signature === '') {
+        return false;
+    }
+    foreach (is_array($signatures) ? $signatures : array() as $existing) {
+        if (biab_logo_signature_distance($signature, (string)$existing) < $threshold) {
+            return true;
+        }
+    }
+    return false;
 }
 
 function biab_logo_color_is_pink_or_purple($color) {
@@ -1109,14 +1129,20 @@ function biab_logo_recraft_generate($payload, $count = 6) {
         $businessName = 'Locksmith Business';
     }
     $targetCount = max(1, min(6, (int)$count));
-    $records = array();
+    $uid = preg_replace('/[^a-zA-Z0-9_-]/', '', (string)($payload['nalaUID'] ?? ''));
+    $historySignatures = $uid !== '' ? biab_logo_get_history_signatures($uid, 160) : array();
+    $currentSignatures = array();
+    $options = array();
     $usedFamilies = array();
-    for ($index = 0; $index < $targetCount; $index++) {
-        $concept = biab_logo_concept_brief($payload, $index);
+    $maxAttempts = $targetCount * 3;
+    for ($attempt = 0; $attempt < $maxAttempts && count($options) < $targetCount; $attempt++) {
+        $optionIndex = count($options);
+        $conceptIndex = $attempt % $targetCount;
+        $concept = biab_logo_concept_brief($payload, $conceptIndex);
         $json = biab_logo_http_json(
             'https://external.api.recraft.ai/v1/images/generations',
             array(
-                'prompt' => biab_logo_logo_prompt($payload, 'Recraft', $index, $usedFamilies),
+                'prompt' => biab_logo_logo_prompt($payload, 'Recraft', $attempt, $usedFamilies),
                 'n' => 1,
                 'model' => biab_logo_recraft_model(),
                 'response_format' => 'url'
@@ -1132,14 +1158,34 @@ function biab_logo_recraft_generate($payload, $count = 6) {
         foreach ($batch as $record) {
             if (is_array($record)) {
                 $record['concept'] = $concept['family'];
-                $record['conceptIndex'] = $index;
-                $records[] = $record;
+                $record['conceptIndex'] = $conceptIndex;
+                $option = biab_logo_normalize_provider_record($record, 'recraft', 'Recraft', $businessName, $attempt, $optionIndex + 1);
+                if (!$option) {
+                    break;
+                }
+                $signature = biab_logo_option_signature($option);
+                if ($signature !== '' && (
+                    biab_logo_signature_seen($signature, $historySignatures, 18) ||
+                    biab_logo_signature_seen($signature, $currentSignatures, 18)
+                )) {
+                    break;
+                }
+                if ($signature !== '') {
+                    $currentSignatures[] = $signature;
+                }
+                $options[] = $option;
                 break;
             }
         }
         $usedFamilies[] = $concept['family'];
     }
-    return biab_logo_normalize_provider_records($records, 'recraft', 'Recraft', $businessName, $count);
+    if (count($options) !== $targetCount) {
+        biab_logo_json_response(502, array(
+            'error' => 'The logo generator reused a previous icon shape and could not create 6 fresh logo options.',
+            'details' => 'Try again later, or configure a different image-generation provider.'
+        ));
+    }
+    return $options;
 }
 
 function biab_logo_logotype_generate($payload, $count = 6) {
@@ -1210,60 +1256,64 @@ function biab_logo_extract_records($json) {
     return array();
 }
 
+function biab_logo_normalize_provider_record($record, $provider, $providerLabel, $businessName, $index, $optionNumber = 1) {
+    if (!is_array($record)) {
+        return null;
+    }
+    $svg = '';
+    if (!empty($record['b64_json'])) {
+        $decoded = base64_decode((string)$record['b64_json'], true);
+        if (is_string($decoded) && stripos(trim($decoded), '<svg') === 0) {
+            $svg = $decoded;
+        }
+    }
+    foreach (array('svg', 'svgContent', 'svg_content') as $svgKey) {
+        if ($svg === '' && !empty($record[$svgKey])) {
+            $svg = (string)$record[$svgKey];
+        }
+    }
+    $url = '';
+    foreach (array('url', 'image_url', 'imageUrl', 'preview_url', 'previewUrl', 'downloadUrl', 'download_url') as $urlKey) {
+        if (!empty($record[$urlKey])) {
+            $url = (string)$record[$urlKey];
+            break;
+        }
+    }
+    $rawId = preg_replace('/[^a-zA-Z0-9_.:-]/', '', (string)($record['id'] ?? $record['logoId'] ?? ''));
+    $conceptIndex = (int)($record['conceptIndex'] ?? $index);
+    $id = $rawId !== '' ? ($provider . '-' . $conceptIndex . '-' . $rawId) : '';
+    if ($id === '') {
+        $id = $provider . '-' . substr(sha1($provider . '|' . $businessName . '|' . $index . '|' . $url . '|' . $svg), 0, 14);
+    }
+    $colors = array();
+    foreach (array('colors', 'palette', 'colorPalette') as $colorKey) {
+        if (is_array($record[$colorKey] ?? null)) {
+            $colors = $record[$colorKey];
+            break;
+        }
+    }
+    return biab_logo_normalize_logo(array(
+        'id' => $id,
+        'providerLogoId' => (string)($record['id'] ?? $id),
+        'name' => $providerLabel . ' #' . $optionNumber,
+        'svg' => $svg,
+        'previewUrl' => $url,
+        'image' => $url,
+        'colors' => $colors,
+        'provider' => $provider,
+        'previewOnly' => false,
+        'concept' => (string)($record['concept'] ?? $record['style'] ?? $providerLabel),
+        'generationVersion' => biab_logo_generation_version()
+    ));
+}
+
 function biab_logo_normalize_provider_records($records, $provider, $providerLabel, $businessName, $expectedCount) {
     $options = array();
     foreach ($records as $index => $record) {
         if (count($options) >= $expectedCount) {
             break;
         }
-        if (!is_array($record)) {
-            continue;
-        }
-        $svg = '';
-        if (!empty($record['b64_json'])) {
-            $decoded = base64_decode((string)$record['b64_json'], true);
-            if (is_string($decoded) && stripos(trim($decoded), '<svg') === 0) {
-                $svg = $decoded;
-            }
-        }
-        foreach (array('svg', 'svgContent', 'svg_content') as $svgKey) {
-            if ($svg === '' && !empty($record[$svgKey])) {
-                $svg = (string)$record[$svgKey];
-            }
-        }
-        $url = '';
-        foreach (array('url', 'image_url', 'imageUrl', 'preview_url', 'previewUrl', 'downloadUrl', 'download_url') as $urlKey) {
-            if (!empty($record[$urlKey])) {
-                $url = (string)$record[$urlKey];
-                break;
-            }
-        }
-        $rawId = preg_replace('/[^a-zA-Z0-9_.:-]/', '', (string)($record['id'] ?? $record['logoId'] ?? ''));
-        $conceptIndex = (int)($record['conceptIndex'] ?? $index);
-        $id = $rawId !== '' ? ($provider . '-' . $conceptIndex . '-' . $rawId) : '';
-        if ($id === '') {
-            $id = $provider . '-' . substr(sha1($provider . '|' . $businessName . '|' . $index . '|' . $url . '|' . $svg), 0, 14);
-        }
-        $colors = array();
-        foreach (array('colors', 'palette', 'colorPalette') as $colorKey) {
-            if (is_array($record[$colorKey] ?? null)) {
-                $colors = $record[$colorKey];
-                break;
-            }
-        }
-        $option = biab_logo_normalize_logo(array(
-            'id' => $id,
-            'providerLogoId' => (string)($record['id'] ?? $id),
-            'name' => $providerLabel . ' #' . (count($options) + 1),
-            'svg' => $svg,
-            'previewUrl' => $url,
-            'image' => $url,
-            'colors' => $colors,
-            'provider' => $provider,
-            'previewOnly' => false,
-            'concept' => (string)($record['concept'] ?? $record['style'] ?? $providerLabel),
-            'generationVersion' => biab_logo_generation_version()
-        ));
+        $option = biab_logo_normalize_provider_record($record, $provider, $providerLabel, $businessName, $index, count($options) + 1);
         if ($option) {
             $options[] = $option;
         }
@@ -1275,25 +1325,12 @@ function biab_logo_normalize_provider_records($records, $provider, $providerLabe
 }
 
 function biab_logo_generate_provider_options($payload) {
-    $testComparison = !empty($payload['testMode']) || !empty($payload['compareProviders']) || (($payload['provider'] ?? '') === 'comparison');
-    if ($testComparison) {
-        $recraft = biab_logo_recraft_generate($payload, 6);
-        $logotype = biab_logo_logotype_generate($payload, 6);
-        return array(
-            'options' => array_merge($recraft, $logotype),
-            'provider' => array_merge(biab_logo_provider_status('comparison', 'Generated 12 logo options for testing.'), array(
-                'expectedCount' => 12,
-                'testComparison' => true,
-                'providers' => array('Recraft', 'Logotype.ai')
-            ))
-        );
-    }
-
     $options = biab_logo_recraft_generate($payload, 6);
     return array(
         'options' => $options,
         'provider' => array_merge(biab_logo_provider_status('recraft', 'Generated 6 logo options.'), array(
-            'expectedCount' => 6
+            'expectedCount' => 6,
+            'fromScratchOnly' => true
         ))
     );
 }
@@ -1307,6 +1344,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
     $generated = biab_logo_get_options($uid);
     if ($generated && biab_logo_options_are_stale($generated)) {
+        biab_logo_remember_option_signatures($uid, $generated['options'] ?? array());
         biab_logo_delete_options($uid);
         $generated = null;
     }
@@ -1350,6 +1388,7 @@ if ($action !== 'generate') {
 $replaceExisting = !empty($data['replaceExisting']) || !empty($data['force']) || !empty($data['regenerate']);
 $existing = $replaceExisting ? null : biab_logo_get_options($uid);
 if ($existing && biab_logo_options_are_stale($existing)) {
+    biab_logo_remember_option_signatures($uid, $existing['options'] ?? array());
     biab_logo_delete_options($uid);
     $existing = null;
 }

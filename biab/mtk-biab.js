@@ -1598,18 +1598,15 @@
 
     _logoProviderStatusText() {
       const provider = this.logoProviderStatus || {};
-      const count = this._isTestMode() ? 12 : 6;
+      const count = 6;
       if (provider.mode === "loading") {
         return this._text(`Generating ${count} logo options now. This can take a moment.`);
-      }
-      if (provider.mode === "comparison") {
-        return this._text("Testing Recraft and Logotype.ai side by side.");
       }
       if (provider.mode === "recraft") {
         return this._text("The logo generator is connected and ready.");
       }
       if (provider.mode === "preview") {
-        return this._text("Logo generation is not configured yet. Add the API keys before generating logos.");
+        return this._text("Logo generation is not configured yet. Add the image-generation API key before generating logos.");
       }
       return this._text(`This step is ready. Logo options generate automatically.`);
     }
@@ -1776,7 +1773,7 @@
       const payload = Object.assign({}, this._buildLogoPayload(), {
         replaceExisting: !!replaceExisting,
         testMode: this._isTestMode(),
-        compareProviders: this._isTestMode()
+        compareProviders: false
       });
       this.logoProviderStatus = { mode: "loading" };
       this._openLogoSetup(this._getActiveSection());
@@ -1845,7 +1842,7 @@
 
       return {
         nalaUID: this._businessPageId(),
-        provider: this._isTestMode() ? "comparison" : "recraft",
+        provider: "recraft",
         businessName: business.customerFacingBusinessName || business.legalBusinessName || "",
         ownerName: privacy.fullName || business.ownerOrResponsiblePartyName || "",
         serviceArea: services.serviceArea || business.serviceArea || "",
@@ -1853,7 +1850,7 @@
         logoTags: Array.isArray(this.logoTags) ? this.logoTags.slice(0, 8) : [],
         style: "professional locksmith and security services logo, strong trade-service look, clean vector, readable, trustworthy, modern, relevant lock/key/shield/door/home/security symbol only, no glasses, no eyewear, no beauty/fashion styling, no script fonts, no pink or pastel palette",
         colors: ["#151a1f", "#a98212", "#7a5e0c", "#f8f4ea", "#ffffff"],
-        count: this._isTestMode() ? 12 : 6
+        count: 6
       };
     }
 

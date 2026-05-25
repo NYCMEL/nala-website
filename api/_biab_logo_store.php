@@ -51,6 +51,16 @@ function biab_logo_db() {
             provider TEXT NOT NULL,
             created_at TEXT NOT NULL
         )');
+        $pdo->exec('CREATE TABLE IF NOT EXISTS logo_option_history (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nala_uid TEXT NOT NULL,
+            signature TEXT NOT NULL,
+            provider TEXT NOT NULL,
+            concept TEXT,
+            created_at TEXT NOT NULL
+        )');
+        $pdo->exec('CREATE UNIQUE INDEX IF NOT EXISTS idx_logo_option_history_uid_signature
+            ON logo_option_history (nala_uid, signature)');
     } catch (Exception $e) {
         biab_logo_json_response(500, array('error' => 'Could not open logo database.'));
     }
@@ -116,6 +126,7 @@ function biab_logo_get_options($uid) {
         }
     }
     if (count($cleanOptions) !== $expectedCount) {
+        biab_logo_remember_option_signatures($uid, $cleanOptions);
         biab_logo_delete_options($uid);
         return null;
     }
@@ -149,11 +160,57 @@ function biab_logo_save_options($uid, $options, $provider) {
         ':provider' => json_encode(is_array($provider) ? $provider : array(), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
         ':created_at' => $now
     ));
+    biab_logo_remember_option_signatures($uid, $cleanOptions);
     return array(
         'options' => $cleanOptions,
         'provider' => is_array($provider) ? $provider : array(),
         'createdAt' => $now
     );
+}
+
+function biab_logo_get_history_signatures($uid, $limit = 120) {
+    $stmt = biab_logo_db()->prepare('SELECT signature FROM logo_option_history
+        WHERE nala_uid = :uid
+        ORDER BY id DESC
+        LIMIT :limit');
+    $stmt->bindValue(':uid', $uid, PDO::PARAM_STR);
+    $stmt->bindValue(':limit', max(1, (int)$limit), PDO::PARAM_INT);
+    $stmt->execute();
+    $signatures = array();
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $signature = trim((string)($row['signature'] ?? ''));
+        if ($signature !== '') {
+            $signatures[] = $signature;
+        }
+    }
+    return $signatures;
+}
+
+function biab_logo_remember_option_signatures($uid, $options) {
+    if (!function_exists('biab_logo_option_signature')) {
+        return;
+    }
+    $now = gmdate('c');
+    $stmt = biab_logo_db()->prepare('INSERT OR IGNORE INTO logo_option_history
+        (nala_uid, signature, provider, concept, created_at)
+        VALUES
+        (:uid, :signature, :provider, :concept, :created_at)');
+    foreach (is_array($options) ? $options : array() as $option) {
+        if (!is_array($option)) {
+            continue;
+        }
+        $signature = biab_logo_option_signature($option);
+        if ($signature === '') {
+            continue;
+        }
+        $stmt->execute(array(
+            ':uid' => $uid,
+            ':signature' => $signature,
+            ':provider' => preg_replace('/[^a-zA-Z0-9_-]/', '', (string)($option['provider'] ?? '')),
+            ':concept' => biab_logo_slice((string)($option['concept'] ?? ''), 80),
+            ':created_at' => $now
+        ));
+    }
 }
 
 function biab_logo_expected_option_count($provider) {
