@@ -62,10 +62,9 @@
             const buySection = document.getElementById("MTK-path");
             if (buySection && typeof buySection.scrollIntoView === "function") {
                 buySection.scrollIntoView({ behavior: "smooth", block: "start" });
-                return;
             }
             attempts += 1;
-            if (attempts < 20) window.setTimeout(scrollWhenReady, 300);
+            if (attempts < 40) window.setTimeout(scrollWhenReady, 300);
         };
         window.setTimeout(scrollWhenReady, 300);
     }
