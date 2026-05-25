@@ -1,10 +1,10 @@
 window.MTK_BIAB_CONFIG = {
   component: "mtk-biab",
-  version: "1.0.10",
+  version: "1.0.11",
   labels: {
     pageTitle: "Business in a Box",
-    pageSubtitle: "Complete each setup step in order.",
-    startSetup: "Start this step",
+    pageSubtitle: "Follow each setup step in order.",
+    startSetup: "Start step",
     currentSelection: "Current selection",
     closeSetup: "Close setup"
   },
@@ -37,7 +37,7 @@ window.MTK_BIAB_CONFIG = {
       icon: "info",
       eyebrow: "Getting started",
       title: "Start here",
-      description: "Complete the checklist in order. Finish one item, then come back for the next.",
+      description: "Follow the checklist in order. Each step tells you what to do and what to click next.",
       nextStep: "Start with Business profile setup. Add your business name, phone number, email, website, service area, and services, then click Save.",
       includedHeading: "Your setup checklist",
       includedItems: [
@@ -62,8 +62,8 @@ window.MTK_BIAB_CONFIG = {
       eyebrow: "Website",
       title: "Website Builder",
       description: "Preview the website your customers will see.",
-      body: "Click Start this step to open the website preview. If something is missing, go back to Profile & Settings and save the missing business information.",
-      nextStep: "Click Start this step to open the website. Review the phone number, email, website link, services, and service area.",
+      body: "Review the phone number, email, website link, services, and service area.",
+      nextStep: "Review the website, then click Next.",
       links: [
         { label: "Open your website preview", href: "client/index.html" }
       ],
@@ -77,7 +77,7 @@ window.MTK_BIAB_CONFIG = {
       eyebrow: "Website",
       title: "Website URL",
       description: "Choose the short URL customers will use for this business.",
-      body: "Click Start this step, review the URL options, choose one, then click Save this URL.",
+      body: "Review the URL options, choose one, then click Save this URL.",
       nextStep: "Pick the URL that is easiest to say, type, and remember. The business card, website, and Google setup will use the saved URL.",
       setupType: "clientUrl"
     },
@@ -88,13 +88,13 @@ window.MTK_BIAB_CONFIG = {
       eyebrow: "Search",
       title: "Google Setup",
       description: "Send yourself a simple email that explains how to approve the Google steps so customers can find the business more easily.",
-      body: "Google setup helps connect the business website and business details to Google. Click Send Google setup email, then follow the simple instructions. NALA support will also get the business details needed for the next steps.",
-      nextStep: "Click Send Google setup email. Then open the email from NALA and follow the steps in order.",
+      body: "Google setup helps connect the business website and business details to Google. Send the Google setup email, then click Next.",
+      nextStep: "Send the Google setup email. Then open the email from NALA and follow the steps in order.",
       links: [
         { label: "Open Google Business Profile setup", href: "https://business.google.com/add", external: true }
       ],
       viewType: "googleSeo",
-      hideStartSetup: true,
+      hideStartSetup: false,
       workflow: [
         { label: "Website information", status: "Ready", description: "NALA uses the saved business information to prepare the website for Google." },
         { label: "Google access", status: "Needs your action", description: "You must approve Google access before NALA can finish the Google steps." },
@@ -109,13 +109,13 @@ window.MTK_BIAB_CONFIG = {
       eyebrow: "Brand",
       title: "Logo",
       description: "Create logo options for your business before you choose a business card.",
-      body: "Click Start this step, check the business information, wait for the logo options to appear, choose one, then click Save this logo.",
-      nextStep: "Click Start this step. If your business name or service area is missing, go back to Profile & Settings first. The logo options generate automatically when the business name is ready.",
+      body: "Check the business information, wait for the logo options to appear, choose one, then click Save this logo.",
+      nextStep: "Logo options generate automatically when the business name is ready.",
       setupType: "logo",
       provider: {
-        id: "zoviz",
+        id: "logo-generator",
         label: "Logo Generator",
-        testingNote: "The logo generator key is loaded from the site config file."
+        testingNote: "The logo generator keys are loaded from the site config file."
       }
     },
     {
@@ -125,8 +125,8 @@ window.MTK_BIAB_CONFIG = {
       eyebrow: "Brand",
       title: "Business Card",
       description: "Choose the business card you will receive.",
-      body: "Click Start this step. Pick one card design, check the contact details, then click Order this business card. If you saved a logo in the Logo step, it will appear on the card. After the card is ordered, this section is locked.",
-      nextStep: "Click Start this step, choose one design, then click Order this business card. On the next screen, check every field before you submit.",
+      body: "Pick one card design, check the contact details, then click Order this business card. If you saved a logo in the Logo step, it will appear on the card. After the card is ordered, this section is locked.",
+      nextStep: "Choose one design, then click Order this business card. On the next screen, check every field before you submit.",
       setupType: "businessCard",
       cardFields: [
         { id: "businessName", label: "Business name", type: "text", value: "" },

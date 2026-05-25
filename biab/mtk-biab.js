@@ -950,7 +950,7 @@
     }
 
     _sectionHasSetup(section) {
-      return !!(section && section.setupType);
+      return !!(section && section.id !== "introduction");
     }
 
     _nextSection() {
@@ -978,6 +978,16 @@
 
       if (section.setupType === "websiteBuilder") {
         this._openWebsiteBuilder(section);
+        return;
+      }
+
+      if (section.viewType === "googleSeo") {
+        this._openGoogleSeoGuide(section);
+        return;
+      }
+
+      if (section.viewType === "invoices") {
+        this._openInvoiceGuide(section);
         return;
       }
 
@@ -1175,13 +1185,62 @@
 
       this._showSetupView(section, `
         <div class="mtk-biab__setup-card">
-          <p class="mtk-biab__setup-help">${this._escape(this._text("This step is ready. Follow the instructions on this page, then click the main button when you are done."))}</p>
+          <p class="mtk-biab__setup-help">${this._escape(this._text(section.body || section.nextStep || "This step is ready. Follow the instructions, then click Next."))}</p>
         </div>
       `);
 
       this._publish(this.events.publish.setupOpen || "mtk-biab:setup-open", {
         sectionId: this.activeId,
         section
+      });
+    }
+
+    _openGoogleSeoGuide(section) {
+      this._closeSetup();
+      const status = this.googleSeo || {};
+      const sentAt = status.authorizationEmailSentAt || status.authorizationEmailSent || "";
+
+      this._showSetupView(section, `
+        <div class="mtk-biab__setup-card">
+          <h3 class="mtk-biab__template-heading">${this._escape(this._text("Google setup"))}</h3>
+          <p class="mtk-biab__setup-help">${this._escape(this._text("Send the Google setup email. It tells you exactly what to approve so NALA can prepare the website and business details for Google."))}</p>
+          ${sentAt ? `<p class="mtk-biab__status">${this._escape(this._text("Google setup email sent"))}: ${this._escape(sentAt)}</p>` : ""}
+          <div class="mtk-biab__template-actions">
+            <button class="mtk-biab__submit-btn" type="button" data-action="start-google-seo-authorization">
+              <span class="material-icons" aria-hidden="true">mark_email_read</span>
+              <span>${this._escape(this._text("Send Google setup email"))}</span>
+            </button>
+          </div>
+        </div>
+      `);
+
+      this._publish(this.events.publish.setupOpen || "mtk-biab:setup-open", {
+        sectionId: this.activeId,
+        section,
+        mode: "google-seo"
+      });
+    }
+
+    _openInvoiceGuide(section) {
+      this._closeSetup();
+
+      this._showSetupView(section, `
+        <div class="mtk-biab__setup-card">
+          <h3 class="mtk-biab__template-heading">${this._escape(this._text("Create an invoice"))}</h3>
+          <p class="mtk-biab__setup-help">${this._escape(this._text("Enter the customer and job details, then click Save invoice. NALA sends the review request automatically."))}</p>
+          <div class="mtk-biab__template-actions">
+            <button class="mtk-biab__submit-btn" type="button" data-action="new-invoice">
+              <span class="material-icons" aria-hidden="true">add</span>
+              <span>${this._escape(this._text(section.newInvoiceLabel || "Create a new invoice"))}</span>
+            </button>
+          </div>
+        </div>
+      `);
+
+      this._publish(this.events.publish.setupOpen || "mtk-biab:setup-open", {
+        sectionId: this.activeId,
+        section,
+        mode: "invoice-guide"
       });
     }
 
@@ -1798,7 +1857,7 @@
         orderedAt: this.orderedCard.orderedAt
       });
 
-      this._goToNextSection({ openSetup: false });
+      this._goToNextSection({ openSetup: true });
     }
 
     _getCardTemplates(section) {
@@ -2691,7 +2750,7 @@
         <footer class="mtk-biab__setup-footer">
           <div class="mtk-biab__setup-footer-inner">
             <button class="mtk-biab__back-btn" type="button" data-action="close-setup">
-              ${this._escape(this._text("Close"))}
+              ${this._escape(this._text("Pause setup"))}
             </button>
             <button class="mtk-biab__submit-btn mtk-biab__setup-next" type="button" data-action="${nextSection ? "next-setup-step" : "close-setup"}">
               <span>${this._escape(nextLabel)}</span>

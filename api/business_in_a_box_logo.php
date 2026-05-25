@@ -161,7 +161,7 @@ function biab_logo_provider_status($mode = null, $message = '') {
 }
 
 function biab_logo_generation_version() {
-    return 10;
+    return 11;
 }
 
 function biab_logo_options_are_stale($generated) {
@@ -948,7 +948,7 @@ function biab_logo_generate_zoviz($payload) {
     );
 }
 
-function biab_logo_logo_prompt($payload, $providerName = '') {
+function biab_logo_logo_prompt($payload, $providerName = '', $optionIndex = 0, $avoidFamilies = array()) {
     $businessName = trim((string)($payload['businessName'] ?? 'Locksmith Business'));
     if ($businessName === '') {
         $businessName = 'Locksmith Business';
@@ -956,20 +956,81 @@ function biab_logo_logo_prompt($payload, $providerName = '') {
     $serviceArea = trim((string)($payload['serviceArea'] ?? ''));
     $services = trim((string)($payload['services'] ?? ''));
     $providerHint = $providerName !== '' ? ' Provider test lane: ' . $providerName . '.' : '';
+    $brief = biab_logo_concept_brief($payload, $optionIndex);
+    $creativeSeed = biab_logo_creative_seed($businessName, $optionIndex);
+    $avoidText = count($avoidFamilies)
+        ? 'Do not use or resemble these prior icon families in this generation: ' . implode(', ', array_values(array_unique($avoidFamilies))) . '.'
+        : '';
     return implode(' ', array_filter(array(
-        'Create professional, production-quality vector logo concepts for a locksmith/security business named "' . $businessName . '".',
+        'Create 1 professional vector logo concept for a locksmith/security business.',
+        'Business name: ' . $businessName . '.',
         $serviceArea !== '' ? 'Service area: ' . $serviceArea . '.' : '',
         $services !== '' ? 'Services: ' . $services . '.' : '',
-        'Use a clean horizontal logo or balanced icon-plus-wordmark layout on a plain white or transparent background.',
+        'Text must read exactly "' . $businessName . '".',
+        'Make this a polished, finished logo concept, not a sketch.',
+        'Use a clean horizontal logo or balanced emblem-plus-wordmark layout on a plain white or transparent background.',
         'The text must read exactly "' . $businessName . '" with no misspellings and no extra slogan.',
         'Make the logo suitable for business cards, uniforms, invoices, vehicles, and a local service website.',
-        'Use strong trade-service styling: locksmith, security, keys, locks, doors, safes, shields, vans, commercial hardware, or local cues only when relevant.',
+        'Professional locksmith/security look: strong, trustworthy, practical, local service business.',
         biab_logo_contextual_direction($businessName, $serviceArea),
+        $brief['prompt'],
+        'Originality brief: concept ' . ($optionIndex + 1) . ', unique design code ' . $creativeSeed . '.',
+        'Generate the icon from scratch for this exact business. The mark should feel custom and polished, not clipart, stock art, icon-library art, template art, emoji art, or a recolored version of another logo.',
+        'The icon silhouette, typography, lock/key/security treatment, spacing, and visual rhythm must be materially different from every other option.',
+        'Do not reuse standard lock icons, stock key icons, generic shield icons, or the same icon with different colors.',
+        $avoidText,
+        'Use a refined emblem, shield, badge, or custom trade-service mark when it fits the concept. Favor premium trade-service branding over playful illustration.',
         'Avoid glasses, eyewear, faces, hearts, flowers, boutique styling, pink, purple, childish marks, thin decorative script, and generic clipart.',
         'Use sober professional colors compatible with NALA: black, charcoal, white, gold, steel gray, navy, or restrained deep green.',
-        'Each option must be a distinct concept with different symbol structure and typography, not recolors.',
+        'Typography should feel sturdy and professional, not playful.',
+        'Do not make it look feminine, playful, luxury boutique, or tech-startup abstract.',
+        'Output: 1 polished vector/SVG-style logo option.',
         $providerHint
     )));
+}
+
+function biab_logo_creative_seed($businessName, $optionIndex) {
+    try {
+        $random = bin2hex(random_bytes(4));
+    } catch (Exception $exception) {
+        $random = substr(sha1(uniqid('', true)), 0, 8);
+    }
+    return strtoupper(substr(sha1($businessName . '|' . $optionIndex . '|' . $random), 0, 10));
+}
+
+function biab_logo_concept_brief($payload, $optionIndex = 0) {
+    $businessName = trim((string)($payload['businessName'] ?? ''));
+    $serviceArea = trim((string)($payload['serviceArea'] ?? ''));
+    $localSymbols = biab_logo_contextual_symbol_keywords($businessName, $serviceArea);
+    $localText = count($localSymbols) ? implode(', ', $localSymbols) : 'local service cue';
+    $concepts = array(
+        array(
+            'family' => 'custom shield emblem',
+            'prompt' => 'Use a custom shield or security emblem that integrates a lock, keyhole, or key with a strong locksmith/security cue.'
+        ),
+        array(
+            'family' => 'local cue mark',
+            'prompt' => 'Use a tasteful local/name cue integrated with locksmith/security, such as ' . $localText . '. The local cue must be secondary to the security idea.'
+        ),
+        array(
+            'family' => 'commercial hardware mark',
+            'prompt' => 'Use a custom commercial door hardware, deadbolt, safe, vault, or keyway mark. Make it sturdy and trade-service oriented.'
+        ),
+        array(
+            'family' => 'mobile service mark',
+            'prompt' => 'Use a custom mobile locksmith cue such as a service van, road line, map pin, or emergency-service shape integrated with a key or lock.'
+        ),
+        array(
+            'family' => 'premium wordmark with small mark',
+            'prompt' => 'Create a premium wordmark with a small custom key, keyhole, lock, or security separator. The typography must carry the design.'
+        ),
+        array(
+            'family' => 'badge or seal mark',
+            'prompt' => 'Use a custom badge, seal, or property-security mark. It should look established, trustworthy, and suitable for a uniform patch or business card.'
+        )
+    );
+    $index = max(0, (int)$optionIndex) % count($concepts);
+    return $concepts[$index];
 }
 
 function biab_logo_http_json($url, $payload, $headers, $timeout = 90) {
@@ -1017,22 +1078,37 @@ function biab_logo_recraft_generate($payload, $count = 6) {
     if ($businessName === '') {
         $businessName = 'Locksmith Business';
     }
-    $json = biab_logo_http_json(
-        'https://external.api.recraft.ai/v1/images/generations',
-        array(
-            'prompt' => biab_logo_logo_prompt($payload, 'Recraft'),
-            'n' => max(1, min(6, (int)$count)),
-            'model' => biab_logo_recraft_model(),
-            'response_format' => 'url'
-        ),
-        array(
-            'Content-Type: application/json',
-            'Accept: application/json',
-            'Authorization: Bearer ' . $apiKey,
-            'User-Agent: NALA-BIAB/1.0'
-        )
-    );
-    $records = is_array($json['data'] ?? null) ? $json['data'] : array();
+    $targetCount = max(1, min(6, (int)$count));
+    $records = array();
+    $usedFamilies = array();
+    for ($index = 0; $index < $targetCount; $index++) {
+        $concept = biab_logo_concept_brief($payload, $index);
+        $json = biab_logo_http_json(
+            'https://external.api.recraft.ai/v1/images/generations',
+            array(
+                'prompt' => biab_logo_logo_prompt($payload, 'Recraft', $index, $usedFamilies),
+                'n' => 1,
+                'model' => biab_logo_recraft_model(),
+                'response_format' => 'url'
+            ),
+            array(
+                'Content-Type: application/json',
+                'Accept: application/json',
+                'Authorization: Bearer ' . $apiKey,
+                'User-Agent: NALA-BIAB/1.0'
+            )
+        );
+        $batch = is_array($json['data'] ?? null) ? $json['data'] : array();
+        foreach ($batch as $record) {
+            if (is_array($record)) {
+                $record['concept'] = $concept['family'];
+                $record['conceptIndex'] = $index;
+                $records[] = $record;
+                break;
+            }
+        }
+        $usedFamilies[] = $concept['family'];
+    }
     return biab_logo_normalize_provider_records($records, 'recraft', 'Recraft', $businessName, $count);
 }
 
@@ -1046,18 +1122,20 @@ function biab_logo_logotype_generate($payload, $count = 6) {
         $businessName = 'Locksmith Business';
     }
     $records = array();
-    for ($attempt = 0; $attempt < 3 && count($records) < $count; $attempt++) {
+    $usedFamilies = array();
+    for ($attempt = 0; $attempt < $count && count($records) < $count; $attempt++) {
+        $concept = biab_logo_concept_brief($payload, $attempt);
         $json = biab_logo_http_json(
             biab_logo_logotype_endpoint(),
             array(
                 'brandName' => $businessName,
                 'businessName' => $businessName,
                 'industry' => 'Locksmith and security services',
-                'description' => biab_logo_logo_prompt($payload, 'Logotype.ai') . ' Batch variation ' . ($attempt + 1) . '.',
+                'description' => biab_logo_logo_prompt($payload, 'Logotype.ai', $attempt, $usedFamilies),
                 'style' => 'professional trade-service logo, clean vector, readable typography',
                 'colors' => array('#151a1f', '#a98212', '#ffffff', '#596662'),
-                'count' => max(1, min(6, (int)$count)),
-                'variants' => max(1, min(6, (int)$count)),
+                'count' => 1,
+                'variants' => 1,
                 'format' => 'svg'
             ),
             array(
@@ -1068,7 +1146,15 @@ function biab_logo_logotype_generate($payload, $count = 6) {
                 'User-Agent: NALA-BIAB/1.0'
             )
         );
-        $records = array_merge($records, biab_logo_extract_records($json));
+        foreach (biab_logo_extract_records($json) as $record) {
+            if (is_array($record)) {
+                $record['concept'] = $concept['family'];
+                $record['conceptIndex'] = $attempt;
+                $records[] = $record;
+                break;
+            }
+        }
+        $usedFamilies[] = $concept['family'];
     }
     return biab_logo_normalize_provider_records($records, 'logotype', 'Logotype.ai', $businessName, $count);
 }
@@ -1122,7 +1208,9 @@ function biab_logo_normalize_provider_records($records, $provider, $providerLabe
                 break;
             }
         }
-        $id = preg_replace('/[^a-zA-Z0-9_.:-]/', '', (string)($record['id'] ?? $record['logoId'] ?? ''));
+        $rawId = preg_replace('/[^a-zA-Z0-9_.:-]/', '', (string)($record['id'] ?? $record['logoId'] ?? ''));
+        $conceptIndex = (int)($record['conceptIndex'] ?? $index);
+        $id = $rawId !== '' ? ($provider . '-' . $conceptIndex . '-' . $rawId) : '';
         if ($id === '') {
             $id = $provider . '-' . substr(sha1($provider . '|' . $businessName . '|' . $index . '|' . $url . '|' . $svg), 0, 14);
         }
