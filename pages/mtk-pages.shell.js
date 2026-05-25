@@ -51,6 +51,18 @@
         return queryPage || hashPage || "";
     }
 
+    function maybeScrollToBuySection() {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("scroll") !== "buy") return;
+
+        window.setTimeout(function () {
+            const buySection = document.getElementById("MTK-path");
+            if (buySection && typeof buySection.scrollIntoView === "function") {
+                buySection.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+        }, 1000);
+    }
+
     function bootstrapInitialPage() {
         const shell = document.querySelector("mtk-pages");
         if (shell) shell.style.visibility = "hidden";
@@ -81,6 +93,7 @@
                     wc.timeout(function () {
                         pagesRef.show(targetPage, { replaceHistory: true });
                         syncHeader(true);
+                        maybeScrollToBuySection();
                         reveal();
                     }, 100, 1);
                     wc.log("IS LOGGED IN");
@@ -94,6 +107,7 @@
                     pagesRef.show("login", { replaceHistory: true });
                 }
                 syncHeader(false);
+                maybeScrollToBuySection();
                 reveal();
             });
         });
