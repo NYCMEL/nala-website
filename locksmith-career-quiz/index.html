@@ -3,73 +3,537 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NALA Locksmith Career Fit Quiz</title>
+  <title>NALA Locksmith Career Decision Engine</title>
   <meta name="robots" content="noindex,nofollow">
   <link rel="icon" href="../img/cropped-favicon-32x32.png" sizes="32x32">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
-    :root{--black:#151a1f;--gold:#a98212;--gold-dark:#735907;--cream:#fffaf0;--line:#eadfca;--muted:#5f6872;--white:#fff;--shadow:0 24px 70px rgba(15,23,42,.16)}
-    *{box-sizing:border-box} body{margin:0;font-family:Roboto,Arial,sans-serif;color:var(--black);background:linear-gradient(90deg,rgba(169,130,18,.07) 1px,transparent 1px),linear-gradient(180deg,rgba(169,130,18,.06) 1px,transparent 1px),#fbfaf6;background-size:44px 44px} button,input{font:inherit}
-    .page{min-height:100vh;display:grid;place-items:center;padding:24px}.shell{width:min(1120px,100%);min-height:min(760px,calc(100vh - 48px));border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.96);box-shadow:var(--shadow);overflow:hidden}
-    .brand{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px clamp(20px,4vw,48px);border-bottom:1px solid var(--line);background:var(--black);color:var(--white)}.brand img{width:190px;max-width:52vw;height:auto}.brand span{color:#f3d982;font-size:13px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;text-align:right}
-    .screen{display:none;min-height:630px;padding:clamp(28px,5vw,68px);animation:in .24s ease-out both}.screen.is-active{display:grid;align-content:center}@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-    .eyebrow{margin:0 0 12px;color:var(--gold);font-size:13px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}h1,h2,h3,p{margin-top:0}h1{max-width:860px;margin-bottom:18px;font-size:clamp(42px,7vw,76px);line-height:.96;font-weight:900;letter-spacing:0}h2{margin-bottom:12px;font-size:clamp(30px,5vw,48px);line-height:1.05;font-weight:900;letter-spacing:0}h3{margin-bottom:10px;font-size:22px;line-height:1.2;font-weight:900}.lead{max-width:720px;margin-bottom:28px;color:#39424c;font-size:20px;line-height:1.55}
-    .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:32px;align-items:end}.hero-proof{padding:22px;border:1px solid var(--line);border-radius:8px;background:var(--cream)}.hero-proof strong{display:block;margin-bottom:8px;font-size:28px;font-weight:900}.hero-proof small{color:var(--muted);font-size:14px;line-height:1.45}
-    .btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:14px 24px;border:1px solid var(--gold);border-radius:4px;background:var(--gold);color:#fff;font-weight:900;text-decoration:none;cursor:pointer;box-shadow:0 12px 26px rgba(169,130,18,.26)}.btn:hover,.btn:focus-visible{background:var(--gold-dark);outline:3px solid rgba(169,130,18,.28);outline-offset:3px}.btn--ghost{background:#fff;color:var(--gold-dark);box-shadow:none}.btn:disabled{opacity:.6;cursor:not-allowed}
-    .progress-wrap{margin-bottom:26px}.progress-meta{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px;color:var(--muted);font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.progress{height:10px;border-radius:999px;background:#efe7d5;overflow:hidden}.progress span{display:block;width:0;height:100%;border-radius:inherit;background:var(--gold);transition:width .22s ease}.question{max-width:860px}
-    .options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:26px}.option{min-height:84px;display:grid;align-content:center;gap:4px;padding:18px;border:2px solid #e5decf;border-radius:8px;background:#fff;color:var(--black);text-align:left;cursor:pointer;transition:border-color .16s ease,box-shadow .16s ease,transform .16s ease}.option:hover,.option:focus-visible{border-color:var(--gold);box-shadow:0 12px 28px rgba(15,23,42,.08);transform:translateY(-1px);outline:none}.option strong{font-size:17px;font-weight:900;line-height:1.25}.option small{color:var(--muted);font-size:14px;line-height:1.4}
-    .text-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:24px}.field{display:grid;gap:7px}.field label{font-weight:900}.field input{width:100%;min-height:52px;padding:12px 14px;border:1px solid #d7cdb8;border-radius:4px;background:#fff}.field input:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(169,130,18,.14);outline:none}.nav-row{display:flex;gap:12px;align-items:center;margin-top:28px}.processing{text-align:center;place-items:center}.loader{width:min(420px,100%);height:14px;margin:20px auto 0;border-radius:999px;background:#efe7d5;overflow:hidden}.loader span{display:block;width:46%;height:100%;border-radius:inherit;background:var(--gold);animation:load 1.15s ease-in-out infinite alternate}@keyframes load{from{transform:translateX(-70%)}to{transform:translateX(145%)}}
-    .results{align-content:start}.result-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px;align-items:start}.panel{padding:24px;border:1px solid var(--line);border-radius:8px;background:#fff}.fit-card{background:var(--black);color:#fff}.fit-card .eyebrow{color:#f3d982}.recommendation{margin-top:18px;padding:16px;border-left:5px solid var(--gold);background:var(--cream);color:var(--black)}.chart{height:170px;display:grid;align-items:end;padding:14px;border:1px solid var(--line);border-radius:8px;background:linear-gradient(180deg,#fff 0%,var(--cream) 100%)}.chart svg{width:100%;height:100%;display:block}
-    .metric-grid,.price-grid,.trust-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px}.metric,.price-card,.trust-card{padding:16px;border:1px solid var(--line);border-radius:8px;background:#fff}.metric strong,.price-card strong{display:block;color:var(--gold-dark);font-size:24px;font-weight:900}.metric small,.price-card small,.trust-card p{color:var(--muted);line-height:1.45}.section{margin-top:28px}.offer{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:center;background:var(--cream)}.price{padding:22px;border:1px solid var(--line);border-radius:8px;background:#fff;text-align:center}.price strong{display:block;color:var(--black);font-size:34px;font-weight:900}.fine-print{margin:14px 0 0;color:var(--muted);font-size:13px;line-height:1.5}.error{margin-top:12px;color:#7a1f16;font-weight:900}
-    .modal{position:fixed;inset:0;z-index:10;display:none;place-items:center;padding:20px;background:rgba(21,26,31,.68)}.modal.is-open{display:grid}.modal-card{position:relative;width:min(520px,100%);padding:28px;border:2px solid var(--gold);border-radius:8px;background:#fff;box-shadow:var(--shadow)}.modal-close{position:absolute;top:12px;right:12px;width:40px;height:40px;border:1px solid var(--gold);border-radius:999px;background:#fff;color:var(--gold-dark);font-size:24px;font-weight:900;line-height:1;cursor:pointer}.modal-close:hover,.modal-close:focus-visible{background:var(--cream);outline:3px solid rgba(169,130,18,.28);outline-offset:2px}.modal-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:20px}
-    @media (max-width:840px){.hero-grid,.result-grid,.offer,.text-grid{grid-template-columns:1fr}.options,.metric-grid,.price-grid,.trust-grid{grid-template-columns:1fr}.screen{min-height:auto}.brand{align-items:flex-start;flex-direction:column}.brand span{text-align:left}}
+    :root{
+      --black:#151a1f;--black-2:#20262c;--gold:#a98212;--gold-2:#c79c22;--gold-dark:#735907;
+      --cream:#fffaf0;--cream-2:#f7efe0;--line:#eadfca;--muted:#5f6872;--white:#fff;
+      --danger:#a13724;--ok:#526d35;--shadow:0 28px 78px rgba(15,23,42,.18)
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Roboto,Arial,sans-serif;color:var(--black);background:
+      linear-gradient(90deg,rgba(169,130,18,.075) 1px,transparent 1px),
+      linear-gradient(180deg,rgba(169,130,18,.06) 1px,transparent 1px),#fbfaf6;background-size:44px 44px}
+    button,input{font:inherit}
+    .page{min-height:100vh;display:grid;place-items:center;padding:24px}
+    .shell{position:relative;width:min(1180px,100%);min-height:min(820px,calc(100vh - 48px));border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.97);box-shadow:var(--shadow);overflow:hidden}
+    .shell::before{content:"";position:absolute;inset:0 0 auto;height:5px;background:linear-gradient(90deg,var(--gold),#f3d982,var(--gold-dark));z-index:2}
+    .brand{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px clamp(20px,4vw,48px);border-bottom:1px solid rgba(255,255,255,.08);background:var(--black);color:var(--white)}
+    .brand img{width:190px;max-width:52vw;height:auto}.brand span{color:#f3d982;font-size:13px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;text-align:right}
+    .screen{display:none;min-height:690px;padding:clamp(28px,5vw,68px)}
+    .screen.is-active{display:grid;align-content:center;animation:screen-in .38s cubic-bezier(.2,.8,.2,1) both}
+    @keyframes screen-in{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
+    .eyebrow{margin:0 0 12px;color:var(--gold);font-size:13px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+    h1,h2,h3,p{margin-top:0}h1{max-width:880px;margin-bottom:18px;font-size:clamp(42px,7vw,78px);line-height:.96;font-weight:900;letter-spacing:0}
+    h2{margin-bottom:12px;font-size:clamp(30px,5vw,50px);line-height:1.05;font-weight:900;letter-spacing:0}h3{margin-bottom:10px;font-size:22px;line-height:1.2;font-weight:900}
+    .lead{max-width:760px;margin-bottom:28px;color:#39424c;font-size:20px;line-height:1.55}
+    .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 355px;gap:34px;align-items:end}
+    .hero-proof{position:relative;padding:24px;border:1px solid var(--line);border-radius:8px;background:var(--cream);overflow:hidden}
+    .hero-proof::after{content:"";position:absolute;right:-34px;top:-34px;width:110px;height:110px;border:18px solid rgba(169,130,18,.15);border-radius:50%}
+    .hero-proof strong{display:block;margin-bottom:8px;font-size:30px;font-weight:900}.hero-proof small{position:relative;color:var(--muted);font-size:14px;line-height:1.45}
+    .btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:54px;padding:14px 24px;border:1px solid var(--gold);border-radius:4px;background:var(--gold);color:#fff;font-weight:900;text-decoration:none;cursor:pointer;box-shadow:0 12px 26px rgba(169,130,18,.26);transition:transform .16s ease,box-shadow .16s ease,background .16s ease,outline-color .16s ease}
+    .btn:hover,.btn:focus-visible{background:var(--gold-dark);outline:3px solid rgba(169,130,18,.28);outline-offset:3px;transform:translateY(-1px);box-shadow:0 16px 34px rgba(169,130,18,.34)}
+    .btn:active{transform:scale(.975)}.btn--ghost{background:#fff;color:var(--gold-dark);box-shadow:none}.btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+    .quiz-layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:28px;align-items:start}
+    .progress-wrap{margin-bottom:26px}.progress-meta{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px;color:var(--muted);font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+    .progress{height:11px;border-radius:999px;background:#efe7d5;overflow:hidden}.progress span{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--gold),#e0ba55);transition:width .44s cubic-bezier(.2,.8,.2,1)}
+    .question{max-width:820px}.question.is-changing{animation:question-in .34s ease both}@keyframes question-in{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+    .options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:26px}
+    .option{min-height:88px;display:grid;align-content:center;gap:5px;padding:18px;border:2px solid #e5decf;border-radius:8px;background:#fff;color:var(--black);text-align:left;cursor:pointer;transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease,background .18s ease}
+    .option:hover,.option:focus-visible{border-color:var(--gold);box-shadow:0 14px 30px rgba(15,23,42,.09);transform:translateY(-2px);outline:none;background:#fffdf7}.option:active{transform:scale(.985)}
+    .option strong{font-size:17px;font-weight:900;line-height:1.25}.option small{color:var(--muted);font-size:14px;line-height:1.4}
+    .nav-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:28px}.error{margin-top:12px;color:#7a1f16;font-weight:900}
+    .live-panel{position:sticky;top:18px;padding:20px;border:1px solid var(--line);border-radius:8px;background:linear-gradient(180deg,#fff,var(--cream));box-shadow:0 14px 40px rgba(15,23,42,.07)}
+    .mini-chart{height:170px;margin:14px 0 16px;border:1px solid var(--line);border-radius:8px;background:#fff;overflow:hidden}.mini-chart svg{width:100%;height:100%;display:block}
+    .income-line{stroke-dasharray:410;stroke-dashoffset:410;transition:stroke-dashoffset .75s ease}.income-area{opacity:.16;transform-origin:bottom;transition:opacity .5s ease}
+    .baseline{stroke:var(--danger);stroke-width:4;stroke-dasharray:7 8}.target-zone{fill:rgba(82,109,53,.12)}
+    .live-metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px}.live-metrics div{padding:12px;border:1px solid var(--line);border-radius:8px;background:#fff}.live-metrics strong{display:block;color:var(--gold-dark);font-size:22px;font-weight:900}.live-metrics small{color:var(--muted);font-size:12px;line-height:1.35}
+    .picker-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px;max-width:700px}
+    .wheel{height:210px;overflow:auto;scroll-snap-type:y mandatory;border:1px solid var(--line);border-radius:8px;background:linear-gradient(180deg,#fff,#fffaf0);box-shadow:inset 0 52px 34px rgba(255,250,240,.92),inset 0 -52px 34px rgba(255,250,240,.92)}
+    .wheel::before,.wheel::after{content:"";display:block;height:78px}.wheel button{width:100%;height:52px;border:0;background:transparent;color:#616975;font-weight:800;scroll-snap-align:center;cursor:pointer;transition:transform .15s ease,color .15s ease}.wheel button.is-selected{color:var(--black);transform:scale(1.18);font-weight:900}.wheel-label{margin:0 0 8px;font-weight:900}
+    .text-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:24px}.field{display:grid;gap:7px}.field label{font-weight:900}.field input{width:100%;min-height:54px;padding:12px 14px;border:1px solid #d7cdb8;border-radius:4px;background:#fff}.field input:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(169,130,18,.14);outline:none}
+    .processing{text-align:center;place-items:center}.process-card{width:min(640px,100%);padding:34px;border:1px solid var(--line);border-radius:8px;background:#fff;box-shadow:0 18px 50px rgba(15,23,42,.08)}
+    .ring{width:124px;height:124px;margin:4px auto 22px;border-radius:50%;background:conic-gradient(var(--gold) var(--process,0%),#efe7d5 0);display:grid;place-items:center;transition:background .2s linear}.ring::before{content:"";position:absolute;width:92px;height:92px;border-radius:50%;background:#fff}.ring span{position:relative;font-size:26px;font-weight:900;color:var(--gold-dark)}
+    .process-text{min-height:28px;color:var(--muted);font-weight:900}
+    .results{align-content:start}.result-grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:24px;align-items:start}
+    .panel{padding:24px;border:1px solid var(--line);border-radius:8px;background:#fff}.fit-card{background:var(--black);color:#fff}.fit-card .eyebrow{color:#f3d982}.fit-card p{color:#f7efe0}
+    .recommendation{margin-top:18px;padding:16px;border-left:5px solid var(--gold);background:var(--cream);color:var(--black)}.recommendation p{color:#39424c}
+    .section{margin-top:28px}.metric-grid,.scenario-grid,.trust-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px}.metric,.scenario,.trust-card{padding:16px;border:1px solid var(--line);border-radius:8px;background:#fff}.metric strong,.scenario strong{display:block;color:var(--gold-dark);font-size:24px;font-weight:900}.metric small,.scenario small,.trust-card p{color:var(--muted);line-height:1.45}
+    .story{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px;align-items:center;background:var(--cream)}.day-card{display:grid;gap:10px}.day-row{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:#fff}.day-row strong{color:var(--gold-dark)}
+    .offer{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:20px;align-items:center;background:var(--cream)}.price{padding:24px;border:1px solid var(--line);border-radius:8px;background:#fff;text-align:center}.price strong{display:block;color:var(--black);font-size:38px;font-weight:900}.price span{font-weight:900;color:var(--gold-dark)}.fine-print{margin:14px 0 0;color:var(--muted);font-size:13px;line-height:1.5}
+    .modal{position:fixed;inset:0;z-index:10;display:none;place-items:center;padding:20px;background:rgba(21,26,31,.68)}.modal.is-open{display:grid}.modal-card{position:relative;width:min(520px,100%);padding:28px;border:2px solid var(--gold);border-radius:8px;background:#fff;box-shadow:var(--shadow);animation:modal-in .24s ease both}@keyframes modal-in{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+    .modal-close{position:absolute;top:12px;right:12px;width:40px;height:40px;border:1px solid var(--gold);border-radius:999px;background:#fff;color:var(--gold-dark);font-size:24px;font-weight:900;line-height:1;cursor:pointer}.modal-close:hover,.modal-close:focus-visible{background:var(--cream);outline:3px solid rgba(169,130,18,.28);outline-offset:2px}.modal-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:20px}
+    @media (max-width:900px){.hero-grid,.quiz-layout,.result-grid,.offer,.story,.text-grid{grid-template-columns:1fr}.options,.metric-grid,.scenario-grid,.trust-grid{grid-template-columns:1fr}.screen{min-height:auto}.brand{align-items:flex-start;flex-direction:column}.brand span{text-align:left}.live-panel{position:relative;top:auto}.picker-wrap{grid-template-columns:1fr 1fr 1fr}}
+    @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
   </style>
 </head>
 <body>
   <main class="page">
     <div class="shell">
-      <header class="brand"><img src="../img/logo-nala-association.webp" alt="NALA North American Locksmith Association"><span>Career fit quiz</span></header>
-      <section class="screen is-active" data-screen="hero"><div class="hero-grid"><div><p class="eyebrow">Locksmith career decision engine</p><h1>See if locksmithing is the right career for you</h1><p class="lead">Answer a few practical questions. You will get a personalized direction, a time-based income planning range, and the next step if you want to train with NALA.</p><button class="btn" type="button" data-start>Start Quiz</button></div><aside class="hero-proof"><strong>3 minutes</strong><small>Built around schedule, income goals, work style, urgency, and trade readiness. No generic career fluff.</small></aside></div></section>
-      <section class="screen" data-screen="quiz"><div class="progress-wrap"><div class="progress-meta"><span data-step-label>Question 1 of 10</span><span data-progress-percent>10%</span></div><div class="progress"><span data-progress-bar></span></div></div><div class="question" data-question></div></section>
-      <section class="screen processing" data-screen="processing"><div><p class="eyebrow">Analyzing your answers</p><h2>Building your personalized plan...</h2><p class="lead">Matching your time, goals, and work style to a realistic locksmith starting path.</p><div class="loader" aria-hidden="true"><span></span></div></div></section>
+      <header class="brand">
+        <img src="../img/logo-nala-association.webp" alt="NALA North American Locksmith Association">
+        <span>Career decision engine</span>
+      </header>
+
+      <section class="screen is-active" data-screen="hero">
+        <div class="hero-grid">
+          <div>
+            <p class="eyebrow">Locksmith career decision engine</p>
+            <h1>See if locksmithing is the right career for you</h1>
+            <p class="lead">Answer a few practical questions. Your income projection updates as you go, then NALA builds a personalized starting plan.</p>
+            <button class="btn" type="button" data-start>Start My Assessment</button>
+          </div>
+          <aside class="hero-proof">
+            <strong>Live projection</strong>
+            <small>Built around schedule, income goals, urgency, background fit, and trade readiness. This is not a generic quiz.</small>
+          </aside>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="quiz">
+        <div class="quiz-layout">
+          <div>
+            <div class="progress-wrap">
+              <div class="progress-meta"><span data-step-label>Step 1 of 12</span><span data-progress-percent>8%</span></div>
+              <div class="progress"><span data-progress-bar></span></div>
+            </div>
+            <div class="question" data-question></div>
+          </div>
+          <aside class="live-panel" aria-live="polite">
+            <p class="eyebrow">Live income projection</p>
+            <h3 data-live-title>Building your starting range</h3>
+            <div class="mini-chart">
+              <svg viewBox="0 0 320 170" role="img" aria-label="Live locksmith income projection">
+                <rect class="target-zone" x="0" y="10" width="320" height="58" rx="0"></rect>
+                <line class="baseline" x1="26" y1="136" x2="296" y2="136"></line>
+                <path class="income-area" data-chart-area d="M26 136 C88 130 118 112 150 95 C196 70 232 50 296 26 L296 150 L26 150 Z" fill="#526d35"></path>
+                <path class="income-line" data-chart-line d="M26 136 C88 130 118 112 150 95 C196 70 232 50 296 26" fill="none" stroke="#526d35" stroke-width="8" stroke-linecap="round"></path>
+                <circle cx="26" cy="136" r="7" fill="#a13724"></circle>
+                <circle data-chart-end cx="296" cy="26" r="8" fill="#526d35"></circle>
+              </svg>
+            </div>
+            <div class="live-metrics">
+              <div><strong data-live-hours>8 hrs</strong><small>available weekly</small></div>
+              <div><strong data-live-monthly>$2.7k-$6.4k</strong><small>planning range</small></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="screen processing" data-screen="processing">
+        <div class="process-card">
+          <p class="eyebrow">Analyzing your answers</p>
+          <div class="ring" data-ring><span data-process-percent>0%</span></div>
+          <h2>Building your personalized plan</h2>
+          <p class="process-text" data-process-text>Analyzing your answers...</p>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="blocked">
+        <div>
+          <p class="eyebrow">Assessment result</p>
+          <h2>At this time, this program may not be the right fit</h2>
+          <p class="lead" data-block-message>NALA training is designed for adults who can responsibly pursue locksmith/security work.</p>
+          <a class="btn btn--ghost" href="../">Return to NALA</a>
+        </div>
+      </section>
+
       <section class="screen results" data-screen="results">
-        <div class="result-grid"><section class="panel fit-card"><p class="eyebrow">Your result</p><h2>You are a strong fit for the locksmith profession</h2><p data-result-summary>Based on your answers, you show strong potential to succeed.</p><div class="recommendation"><h3 data-direction-title>Recommended starting direction</h3><p data-direction-reason></p></div></section><aside class="panel"><h3>Your time-based estimate</h3><div class="chart" aria-label="Estimated monthly growth curve"><svg viewBox="0 0 320 160" role="img"><path d="M24 132 C84 126 108 106 142 88 C184 66 210 60 296 24" fill="none" stroke="#a98212" stroke-width="8" stroke-linecap="round"/><path d="M24 132 C84 126 108 106 142 88 C184 66 210 60 296 24 L296 144 L24 144 Z" fill="#a98212" opacity=".12"/><circle cx="24" cy="132" r="7" fill="#151a1f"/><circle cx="142" cy="88" r="7" fill="#151a1f"/><circle cx="296" cy="24" r="7" fill="#151a1f"/></svg></div><p class="fine-print">Planning examples only. Actual income depends on skill, demand, licensing, tools, expenses, and consistency.</p></aside></div>
-        <section class="section panel"><p class="eyebrow">Income planning</p><h2>What your available time could turn into</h2><div class="metric-grid"><div class="metric"><strong data-hours>8 hrs</strong><small>Available per week</small></div><div class="metric"><strong data-visits>5</strong><small>Target paid visits per week after practice</small></div><div class="metric"><strong data-monthly>$4,000</strong><small>Example monthly gross service revenue</small></div></div><div class="price-grid"><div class="price-card"><strong>$125+</strong><small>Simple service-call planning example</small></div><div class="price-card"><strong>$185</strong><small>Target blended ticket used for your estimate</small></div><div class="price-card"><strong>4.33x</strong><small>Weeks per month used for monthly planning</small></div></div></section>
-        <section class="section panel"><p class="eyebrow">A few months from now</p><h2>Imagine having a real skill people call for when they need help now</h2><p class="lead">Locksmithing can become a new income stream, a flexible side business, or the start of a full trade path. The key is learning the work properly, practicing, and choosing services that match your schedule.</p></section>
-        <section class="section panel offer"><div><p class="eyebrow">Your personalized training plan is ready</p><h2>Start with NALA training</h2><p class="lead">Build the fundamentals, understand the business side, and move toward paid locksmith services with a structured path.</p><button class="btn" type="button" data-send-plan>Start My Training</button><p class="error" data-error hidden></p></div><div class="price"><strong>$62.40/month</strong><span>for 24 months</span><p class="fine-print">Payment options may include card, pay-in-4, and financing depending on checkout availability.</p></div></section>
-        <section class="section"><div class="trust-grid"><div class="trust-card"><h3>Structured training</h3><p>Designed for beginners who need a clear path, not random videos.</p></div><div class="trust-card"><h3>Business readiness</h3><p>Includes pricing, customer communication, and launch preparation.</p></div><div class="trust-card"><h3>Real-world focus</h3><p>Built around services people actually request from local locksmiths.</p></div></div></section>
+        <div class="result-grid">
+          <section class="panel fit-card">
+            <p class="eyebrow">Your result</p>
+            <h2>You are a strong fit for the locksmith profession</h2>
+            <p data-result-summary>Based on your answers, you show strong potential to succeed.</p>
+            <div class="recommendation">
+              <h3>You show potential across multiple service paths</h3>
+              <p data-direction-reason>Most people like you start with practical, high-demand local services first.</p>
+            </div>
+          </section>
+          <aside class="panel">
+            <p class="eyebrow">Transformation map</p>
+            <h3>From current position to target zone</h3>
+            <div class="mini-chart">
+              <svg viewBox="0 0 320 170" role="img" aria-label="Projected locksmith income growth">
+                <rect class="target-zone" x="0" y="8" width="320" height="62"></rect>
+                <line class="baseline" x1="26" y1="138" x2="296" y2="138"></line>
+                <path class="income-area" data-result-area d="M26 138 C86 130 116 110 150 92 C196 66 232 48 296 24 L296 150 L26 150 Z" fill="#526d35"></path>
+                <path class="income-line" data-result-line d="M26 138 C86 130 116 110 150 92 C196 66 232 48 296 24" fill="none" stroke="#526d35" stroke-width="8" stroke-linecap="round"></path>
+                <circle cx="26" cy="138" r="7" fill="#a13724"></circle>
+                <circle cx="296" cy="24" r="8" fill="#526d35"></circle>
+              </svg>
+            </div>
+            <p class="fine-print">Planning examples only. Actual results depend on skill, licensing, tools, expenses, demand, and consistency.</p>
+          </aside>
+        </div>
+
+        <section class="section panel">
+          <p class="eyebrow">Income planning</p>
+          <h2>What part-time effort could turn into</h2>
+          <p class="lead">A simple locksmith day can be easier to imagine than a big career leap: a few short service calls, a clear customer problem, and a skill people urgently need.</p>
+          <div class="metric-grid">
+            <div class="metric"><strong data-hours>8 hrs</strong><small>available each week</small></div>
+            <div class="metric"><strong data-visits>5</strong><small>target paid visits per week after practice</small></div>
+            <div class="metric"><strong data-monthly>$2,700-$6,400</strong><small>example monthly gross planning range</small></div>
+          </div>
+          <div class="scenario-grid">
+            <div class="scenario"><strong>$125+</strong><small>simple call planning example</small></div>
+            <div class="scenario"><strong>2 calls/day</strong><small>part-time day-in-the-life scenario</small></div>
+            <div class="scenario"><strong>10-20 min</strong><small>some jobs can be short once trained</small></div>
+          </div>
+        </section>
+
+        <section class="section panel story">
+          <div>
+            <p class="eyebrow">Day in the life</p>
+            <h2>A simple service day can feel realistic</h2>
+            <p class="lead">Imagine having a skill people urgently need. No boss standing over you. No fixed schedule. Real demand, local customers, and a practical service you can build around your life.</p>
+          </div>
+          <div class="day-card">
+            <div class="day-row"><span>Morning call</span><strong>~$150</strong></div>
+            <div class="day-row"><span>Evening call</span><strong>~$150</strong></div>
+            <div class="day-row"><span>Example day</span><strong>$300</strong></div>
+          </div>
+        </section>
+
+        <section class="section panel offer">
+          <div>
+            <p class="eyebrow">Your personalized plan is ready to start</p>
+            <h2>Start My Training</h2>
+            <p class="lead">Step-by-step training, real service skills, and a path designed to help you start earning as you learn.</p>
+            <button class="btn" type="button" data-send-plan>Start My Training</button>
+            <p class="error" data-error hidden></p>
+          </div>
+          <div class="price">
+            <strong>$62.40/month</strong>
+            <span>for 24 months</span>
+            <p class="fine-print">Payment options may include card, pay-in-4, and financing depending on checkout availability.</p>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="trust-grid">
+            <div class="trust-card"><h3>Structured training</h3><p>Designed for beginners who need a clear path, not random videos.</p></div>
+            <div class="trust-card"><h3>Business readiness</h3><p>Includes pricing, customer communication, and launch preparation.</p></div>
+            <div class="trust-card"><h3>Real-world focus</h3><p>Built around services people actually request from local locksmiths.</p></div>
+          </div>
+        </section>
       </section>
     </div>
   </main>
-  <div class="modal" data-modal role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-card"><button class="modal-close" type="button" data-close-modal aria-label="Close">x</button><p class="eyebrow">Email sent</p><h2 id="modal-title">Your personalized plan is in your inbox</h2><p>Close this message and we will take you to the NALA training options.</p><div class="modal-actions"><button class="btn" type="button" data-close-modal>Continue</button></div></div></div>
+
+  <div class="modal" data-modal role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <button class="modal-close" type="button" data-close-modal aria-label="Close">x</button>
+      <p class="eyebrow">Email sent</p>
+      <h2 id="modal-title">Your personalized plan is in your inbox</h2>
+      <p>Close this message and we will take you to the NALA training options.</p>
+      <div class="modal-actions"><button class="btn" type="button" data-close-modal>Continue</button></div>
+    </div>
+  </div>
+
   <script>
     const buyUrl = new URL('/repo_deploy/?scroll=buy#home', location.origin).href;
-    const state = { step: 0, answers: {}, result: null };
+    const state = {
+      step: 0,
+      answers: {},
+      result: null,
+      birth: { day: 1, month: 1, year: 1991 },
+      name: '',
+      email: '',
+      city: ''
+    };
     const questions = [
-      {id:'goal',eyebrow:'Goal',title:'What do you want locksmithing to do for you?',options:[['side-income','Create extra income','A practical skill you can build around your current life.'],['career-change','Change careers','Move toward a trade with real customer demand.'],['business','Start a business','Build toward local service calls and repeat customers.'],['skill','Learn a valuable skill','Start with competence and decide where to take it.']]},
-      {id:'identity',eyebrow:'Identity',title:'Which best describes you?',options:[['male','Male','Used only to personalize your quiz record.'],['female','Female','Used only to personalize your quiz record.'],['other','Other','Used only to personalize your quiz record.'],['prefer-not','Prefer not to say','That is completely fine.']]},
-      {id:'age',eyebrow:'Age range',title:'Where are you in life right now?',options:[['18-24','18-24','Starting early and building useful skills.'],['25-34','25-34','Ready to add income or redirect your career.'],['35-49','35-49','Practical, steady, and business-minded.'],['50+','50+','Experience and reliability can be real advantages.']]},
-      {id:'time',eyebrow:'Time available',title:'How much time could you realistically put toward locksmithing each week?',options:[['4','4 hours/week','A small side path. Start with learning and occasional calls.'],['8','8 hours/week','A realistic side-income runway.'],['12','12 hours/week','Enough time to practice and take more consistent calls.'],['20','20+ hours/week','A serious part-time or transition plan.'],['30','30+ hours/week','Full-time career change energy.']]},
-      {id:'currentIncome',eyebrow:'Current income',title:'Do you already have income right now?',options:[['full-time','Yes, full-time income','Locksmithing may start as a side path.'],['part-time','Yes, part-time income','This can be a second income stream.'],['inconsistent','Some, but inconsistent','A trade skill can create more control.'],['none','No steady income','Training and practice should be structured and focused.']]},
-      {id:'incomeGoal',eyebrow:'Income desire',title:'What monthly income goal would feel meaningful?',options:[['500','$500/month','A useful starter goal.'],['1500','$1,500/month','A strong side-income target.'],['3000','$3,000/month','A serious part-time target.'],['5000','$5,000+/month','A business-building target.']]},
-      {id:'urgency',eyebrow:'Urgency',title:'How soon do you want this to start paying off?',options:[['now','As soon as possible','You want a direct plan.'],['30-days','Within 30 days','You are ready to move.'],['3-months','Within 3 months','You want time to train properly.'],['exploring','I am exploring','You need confidence before deciding.']]},
-      {id:'driver',eyebrow:'Lifestyle driver',title:'What is the biggest reason this interests you?',options:[['control','More control over my income','You want options.'],['hands-on','Hands-on work','You prefer practical skills over desk work.'],['respect','A respected trade','You want work people value.'],['freedom','More schedule freedom','You want work that can fit your life.']]},
-      {id:'interest',eyebrow:'Service interest',title:'Which locksmith services sound most interesting?',options:[['automotive','Automotive lockouts and keys','Mobile, urgent, and practical.'],['residential','Residential locks and rekeys','Clear starting path for local calls.'],['commercial','Commercial door locks','Good for repeat business relationships.'],['safe','Safe and specialty work','Technical, patient, higher-skill direction.'],['all','All of the above','You want a broad trade path.']]},
+      {id:'goal',eyebrow:'Goal',title:'What do you want locksmithing to do for you?',options:[
+        ['side-income','Create extra income','A practical skill you can build around your current life.'],
+        ['career-change','Change careers','Move toward a trade with real customer demand.'],
+        ['business','Start a local business','Build toward service calls and repeat customers.'],
+        ['skill','Learn a valuable skill','Start with competence and decide where to take it.']
+      ]},
+      {id:'lifeChange',eyebrow:'Commitment',title:'What would actually change your life?',options:[
+        ['breathing-room','A few hundred dollars more','Breathing room and less pressure.'],
+        ['side-business','A serious side business','Something you can build over time.'],
+        ['new-career','A full career reset','A practical path you can commit to.'],
+        ['control','More control and options','Less dependence on one paycheck or schedule.']
+      ]},
+      {id:'gender',eyebrow:'Profile',title:'Which best describes you?',options:[
+        ['male','Male','Used only to personalize your assessment record.'],
+        ['female','Female','Used only to personalize your assessment record.'],
+        ['other','Other','Used only to personalize your assessment record.'],
+        ['prefer-not','Prefer not to say','That is completely fine.']
+      ]},
+      {id:'age',eyebrow:'Age',title:'Select your date of birth',agePicker:true},
+      {id:'background',eyebrow:'Qualification',title:'Do you have a criminal background that could prevent security or locksmith work?',options:[
+        ['no','No','Continue with the career assessment.'],
+        ['unsure','Not sure','You may need to check your local rules before starting paid work.'],
+        ['yes','Yes','This may affect eligibility for locksmith/security work.']
+      ]},
+      {id:'time',eyebrow:'Available time',title:'How much time could you realistically put toward locksmithing each week?',options:[
+        ['4','4 hours/week','A small side path. Start with learning and occasional calls.'],
+        ['8','8 hours/week','A realistic side-income runway.'],
+        ['12','12 hours/week','Enough time to practice and take more consistent calls.'],
+        ['20','20+ hours/week','A serious part-time or transition plan.'],
+        ['30','30+ hours/week','Full-time career-change energy.']
+      ]},
+      {id:'currentIncome',eyebrow:'Current income',title:'Do you already have income right now?',options:[
+        ['full-time','Yes, full-time income','Locksmithing may start as a side path.'],
+        ['part-time','Yes, part-time income','This can be a second income stream.'],
+        ['inconsistent','Some, but inconsistent','A trade skill can create more control.'],
+        ['none','No steady income','Training and practice should be structured and focused.']
+      ]},
+      {id:'incomeGoal',eyebrow:'Income desire',title:'What monthly income goal would feel meaningful?',options:[
+        ['500','$500/month','A useful starter goal.'],
+        ['1500','$1,500/month','A strong side-income target.'],
+        ['3000','$3,000/month','A serious part-time target.'],
+        ['5000','$5,000+/month','A business-building target.']
+      ]},
+      {id:'urgency',eyebrow:'Urgency',title:'How soon do you want this to start paying off?',options:[
+        ['now','As soon as possible','You want a direct plan.'],
+        ['30-days','Within 30 days','You are ready to move.'],
+        ['3-months','Within 3 months','You want time to train properly.'],
+        ['exploring','I am exploring','You need confidence before deciding.']
+      ]},
+      {id:'driver',eyebrow:'Motivation',title:'What is the biggest reason this interests you?',options:[
+        ['control','More control over my income','You want options.'],
+        ['hands-on','Hands-on work','You prefer practical skills over desk work.'],
+        ['respect','A respected trade','You want work people value.'],
+        ['freedom','More schedule freedom','You want work that can fit your life.']
+      ]},
+      {id:'interest',eyebrow:'Service interest',title:'Which locksmith services sound most interesting?',options:[
+        ['automotive','Automotive lockouts and keys','Mobile, urgent, and practical.'],
+        ['residential','Residential locks and rekeys','Clear starting path for local calls.'],
+        ['commercial','Commercial door locks','Good for repeat business relationships.'],
+        ['safe','Safe and specialty work','Technical, patient, higher-skill direction.'],
+        ['all','All of the above','You want a broad trade path.']
+      ]},
       {id:'lead',eyebrow:'Send your plan',title:'Where should we send your personalized plan?',form:true}
     ];
-    const screens = {hero:document.querySelector('[data-screen="hero"]'),quiz:document.querySelector('[data-screen="quiz"]'),processing:document.querySelector('[data-screen="processing"]'),results:document.querySelector('[data-screen="results"]')};
-    function showScreen(name){Object.values(screens).forEach(s=>s.classList.remove('is-active'));screens[name].classList.add('is-active');}
-    function renderQuestion(){const q=questions[state.step], el=document.querySelector('[data-question]'), pct=Math.round(((state.step+1)/questions.length)*100);document.querySelector('[data-step-label]').textContent=`Question ${state.step+1} of ${questions.length}`;document.querySelector('[data-progress-percent]').textContent=`${pct}%`;document.querySelector('[data-progress-bar]').style.width=`${pct}%`;if(q.form){el.innerHTML=`<p class="eyebrow">${q.eyebrow}</p><h2>${q.title}</h2><p class="lead">We will email the recommendation and income planning range so you can review it later.</p><div class="text-grid"><div class="field"><label for="lead-name">Name</label><input id="lead-name" autocomplete="name" required></div><div class="field"><label for="lead-email">Email</label><input id="lead-email" type="email" autocomplete="email" required></div><div class="field"><label for="lead-city">City or service area</label><input id="lead-city" autocomplete="address-level2" placeholder="e.g. Tampa, FL"></div></div><div class="nav-row"><button class="btn btn--ghost" type="button" data-back>Back</button><button class="btn" type="button" data-finish>See my results</button></div><p class="error" data-form-error hidden></p>`;el.querySelector('[data-back]').addEventListener('click',back);el.querySelector('[data-finish]').addEventListener('click',finishQuiz);return}el.innerHTML=`<p class="eyebrow">${q.eyebrow}</p><h2>${q.title}</h2><div class="options">${q.options.map(o=>`<button class="option" type="button" data-value="${o[0]}"><strong>${o[1]}</strong><small>${o[2]}</small></button>`).join('')}</div><div class="nav-row">${state.step>0?'<button class="btn btn--ghost" type="button" data-back>Back</button>':''}</div>`;el.querySelectorAll('[data-value]').forEach((b,i)=>b.addEventListener('click',()=>{const o=q.options[i];state.answers[q.id]={value:o[0],label:o[1],detail:o[2]};next()}));const backBtn=el.querySelector('[data-back]');if(backBtn)backBtn.addEventListener('click',back)}
-    function next(){state.step+=1;renderQuestion()} function back(){state.step=Math.max(0,state.step-1);renderQuestion()}
-    function finishQuiz(){const name=document.querySelector('#lead-name').value.trim(),email=document.querySelector('#lead-email').value.trim(),city=document.querySelector('#lead-city').value.trim(),error=document.querySelector('[data-form-error]');if(!name||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){error.hidden=false;error.textContent='Enter your name and a valid email to see your result.';return}state.name=name;state.email=email;state.city=city;state.answers.location={value:city,label:city||'Not provided'};showScreen('processing');setTimeout(showResults,2300)}
-    function numericAnswer(id,fallback){const v=Number(state.answers[id]&&state.answers[id].value);return Number.isFinite(v)&&v>0?v:fallback}
-    function direction(){const interest=state.answers.interest&&state.answers.interest.value,goal=state.answers.goal&&state.answers.goal.value;if(interest==='automotive')return['Automotive lockout and key support','Automotive calls can fit evenings, weekends, and mobile service because customers often need help where the vehicle is.'];if(interest==='commercial'||goal==='business')return['Commercial and property service','Commercial work can build repeat relationships with property managers, stores, and offices once your fundamentals are solid.'];if(interest==='safe')return['Safe and specialty locksmith services','Safe work rewards patience and technical focus, and can become a higher-skill specialty after the basics.'];return['Residential rekeys, lockouts, and lock changes','Residential work is usually the clearest first path because the services are easy for customers to understand and request.']}
-    function estimate(){const hours=numericAnswer('time',8),visitsLow=Math.max(1,Math.floor(hours/2.25)),visitsTarget=Math.max(1,Math.floor(hours/1.5));return{hours,visitsLow,visitsTarget,weeklyLow:visitsLow*125,weeklyTarget:visitsTarget*185,monthlyLow:Math.round(visitsLow*125*4.33),monthlyTarget:Math.round(visitsTarget*185*4.33)}} function money(v){return '$'+Number(v||0).toLocaleString('en-US',{maximumFractionDigits:0})}
-    function showResults(){const d=direction(),e=estimate();state.result={direction:d,estimate:e};document.querySelector('[data-result-summary]').textContent=`${state.name}, based on your schedule, goals, and interest level, you show strong potential to succeed if you train properly and take consistent action.`;document.querySelector('[data-direction-title]').textContent=d[0];document.querySelector('[data-direction-reason]').textContent=d[1];document.querySelector('[data-hours]').textContent=`${e.hours} hrs`;document.querySelector('[data-visits]').textContent=`${e.visitsTarget}`;document.querySelector('[data-monthly]').textContent=`${money(e.monthlyLow)}-${money(e.monthlyTarget)}`;showScreen('results')}
-    async function sendPlan(){const button=document.querySelector('[data-send-plan]'),error=document.querySelector('[data-error]');error.hidden=true;button.disabled=true;button.textContent='Sending your plan...';try{const res=await fetch(new URL('../api/locksmith_career_quiz.php',location.href).href,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:state.name,email:state.email,city:state.city,answers:state.answers,result:state.result})});const json=await res.json().catch(()=>({}));if(!res.ok||!json.ok)throw new Error(json.error||'Could not send your plan.');document.querySelector('[data-modal]').classList.add('is-open')}catch(err){error.hidden=false;error.textContent=err.message||'Could not send your plan. Please try again.'}finally{button.disabled=false;button.textContent='Start My Training'}}
-    document.querySelector('[data-start]').addEventListener('click',()=>{state.step=0;renderQuestion();showScreen('quiz')});document.querySelector('[data-send-plan]').addEventListener('click',sendPlan);document.querySelectorAll('[data-close-modal]').forEach(b=>b.addEventListener('click',()=>{sessionStorage.setItem('nalaScrollTarget','buy');location.href=buyUrl}));
+    const screens = {
+      hero: document.querySelector('[data-screen="hero"]'),
+      quiz: document.querySelector('[data-screen="quiz"]'),
+      processing: document.querySelector('[data-screen="processing"]'),
+      blocked: document.querySelector('[data-screen="blocked"]'),
+      results: document.querySelector('[data-screen="results"]')
+    };
+    function showScreen(name){
+      Object.values(screens).forEach(screen => screen.classList.remove('is-active'));
+      screens[name].classList.add('is-active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function text(value){return String(value == null ? '' : value)}
+    function renderQuestion(){
+      const q = questions[state.step];
+      const el = document.querySelector('[data-question]');
+      const pct = Math.round(((state.step + 1) / questions.length) * 100);
+      document.querySelector('[data-step-label]').textContent = `Step ${state.step + 1} of ${questions.length}`;
+      document.querySelector('[data-progress-percent]').textContent = `${pct}%`;
+      document.querySelector('[data-progress-bar]').style.width = `${pct}%`;
+      el.classList.remove('is-changing');
+      void el.offsetWidth;
+      el.classList.add('is-changing');
+      updateLiveProjection();
+      if (q.agePicker) { renderAgePicker(el, q); return; }
+      if (q.form) { renderLeadForm(el, q); return; }
+      el.innerHTML = `<p class="eyebrow">${q.eyebrow}</p><h2>${q.title}</h2><div class="options">${q.options.map(o => `<button class="option" type="button" data-value="${o[0]}"><strong>${o[1]}</strong><small>${o[2]}</small></button>`).join('')}</div><div class="nav-row">${state.step > 0 ? '<button class="btn btn--ghost" type="button" data-back>Back</button>' : ''}</div>`;
+      el.querySelectorAll('[data-value]').forEach((button, index) => button.addEventListener('click', () => {
+        const option = q.options[index];
+        state.answers[q.id] = { value: option[0], label: option[1], detail: option[2] };
+        if (q.id === 'background' && option[0] === 'yes') {
+          block('At this time, this program may not be the right fit. Locksmith/security work can involve trust, access, licensing, and background requirements. Please check your local rules before pursuing paid locksmith work.');
+          return;
+        }
+        next();
+      }));
+      const backBtn = el.querySelector('[data-back]');
+      if (backBtn) backBtn.addEventListener('click', back);
+    }
+    function renderAgePicker(el, q){
+      const years = [];
+      const currentYear = new Date().getFullYear();
+      for (let y = currentYear; y >= currentYear - 90; y--) years.push(y);
+      const months = Array.from({length:12}, (_, i) => i + 1);
+      const days = Array.from({length:31}, (_, i) => i + 1);
+      el.innerHTML = `<p class="eyebrow">${q.eyebrow}</p><h2>${q.title}</h2><p class="lead">Use the scroll wheels. NALA training is designed for adults who can responsibly pursue locksmith/security work.</p><div class="picker-wrap">${wheel('Month', 'month', months)}${wheel('Day', 'day', days)}${wheel('Year', 'year', years)}</div><div class="nav-row"><button class="btn btn--ghost" type="button" data-back>Back</button><button class="btn" type="button" data-age-next>Continue</button></div><p class="error" data-age-error hidden></p>`;
+      el.querySelectorAll('.wheel').forEach(w => {
+        w.addEventListener('click', event => {
+          const button = event.target.closest('button[data-picker-value]');
+          if (!button) return;
+          const key = w.dataset.wheel;
+          state.birth[key] = Number(button.dataset.pickerValue);
+          markWheel(w, state.birth[key]);
+        });
+        markWheel(w, state.birth[w.dataset.wheel]);
+      });
+      el.querySelector('[data-back]').addEventListener('click', back);
+      el.querySelector('[data-age-next]').addEventListener('click', () => {
+        const age = calculateAge(state.birth);
+        if (age < 18) {
+          block('At this time, this program may not be the right fit. NALA training and locksmith/security work are intended for adults 18 or older.');
+          return;
+        }
+        state.answers.age = { value: String(age), label: `${age} years old`, birth: Object.assign({}, state.birth) };
+        next();
+      });
+    }
+    function wheel(label, key, values){
+      return `<div><p class="wheel-label">${label}</p><div class="wheel" data-wheel="${key}">${values.map(value => `<button type="button" data-picker-value="${value}">${key === 'month' ? monthName(value) : value}</button>`).join('')}</div></div>`;
+    }
+    function markWheel(wheel, value){
+      wheel.querySelectorAll('button').forEach(button => {
+        button.classList.toggle('is-selected', Number(button.dataset.pickerValue) === Number(value));
+      });
+      const selected = wheel.querySelector('.is-selected');
+      if (selected) selected.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }
+    function monthName(month){return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][month - 1]}
+    function calculateAge(birth){
+      const today = new Date();
+      let age = today.getFullYear() - birth.year;
+      if ((today.getMonth() + 1) < birth.month || ((today.getMonth() + 1) === birth.month && today.getDate() < birth.day)) age--;
+      return age;
+    }
+    function renderLeadForm(el, q){
+      el.innerHTML = `<p class="eyebrow">${q.eyebrow}</p><h2>${q.title}</h2><p class="lead">We will email the recommendation and income planning range so you can review it later.</p><div class="text-grid"><div class="field"><label for="lead-name">Name</label><input id="lead-name" autocomplete="name" required></div><div class="field"><label for="lead-email">Email</label><input id="lead-email" type="email" autocomplete="email" required></div><div class="field"><label for="lead-city">City or service area</label><input id="lead-city" autocomplete="address-level2" placeholder="e.g. Tampa, FL"></div></div><div class="nav-row"><button class="btn btn--ghost" type="button" data-back>Back</button><button class="btn" type="button" data-finish>See my results</button></div><p class="error" data-form-error hidden></p>`;
+      el.querySelector('[data-back]').addEventListener('click', back);
+      el.querySelector('[data-finish]').addEventListener('click', finishQuiz);
+    }
+    function next(){ state.step += 1; renderQuestion(); }
+    function back(){ state.step = Math.max(0, state.step - 1); renderQuestion(); }
+    function block(message){
+      document.querySelector('[data-block-message]').textContent = message;
+      showScreen('blocked');
+    }
+    function numericAnswer(id, fallback){
+      const answer = state.answers[id];
+      const value = Number(answer && answer.value);
+      return Number.isFinite(value) && value > 0 ? value : fallback;
+    }
+    function estimate(){
+      const hours = numericAnswer('time', 8);
+      const goal = numericAnswer('incomeGoal', 1500);
+      const visitsLow = Math.max(1, Math.floor(hours / 2.25));
+      const visitsTarget = Math.max(2, Math.floor(hours / 1.35));
+      const lowTicket = goal >= 3000 ? 150 : 125;
+      const highTicket = goal >= 5000 ? 220 : 185;
+      return {
+        hours,
+        visitsLow,
+        visitsTarget,
+        monthlyLow: Math.round(visitsLow * lowTicket * 4.33),
+        monthlyTarget: Math.round(visitsTarget * highTicket * 4.33)
+      };
+    }
+    function money(value){return '$' + Number(value || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })}
+    function compactMoney(value){
+      const number = Number(value || 0);
+      return number >= 1000 ? '$' + (number / 1000).toFixed(number >= 10000 ? 0 : 1).replace(/\.0$/, '') + 'k' : money(number);
+    }
+    function updateLiveProjection(){
+      const e = estimate();
+      document.querySelector('[data-live-hours]').textContent = `${e.hours} hrs`;
+      document.querySelector('[data-live-monthly]').textContent = `${compactMoney(e.monthlyLow)}-${compactMoney(e.monthlyTarget)}`;
+      document.documentElement.style.setProperty('--process', '0%');
+      const line = document.querySelector('[data-chart-line]');
+      const end = document.querySelector('[data-chart-end]');
+      const progress = Math.min(1, Math.max(.24, e.monthlyTarget / 6500));
+      if (line) line.style.strokeDashoffset = String(410 - (410 * progress));
+      if (end) end.setAttribute('cy', String(136 - (110 * progress)));
+      const title = document.querySelector('[data-live-title]');
+      if (title) title.textContent = e.monthlyTarget >= 5000 ? 'Target zone is in reach with serious time' : 'Building your starting range';
+    }
+    function direction(){
+      const interest = state.answers.interest && state.answers.interest.value;
+      const goal = state.answers.goal && state.answers.goal.value;
+      if (interest === 'automotive') return 'Most people like you start with automotive lockout and mobile service skills, then add more services over time.';
+      if (interest === 'commercial' || goal === 'business') return 'Most people like you start with residential and commercial basics, then build toward property and business accounts.';
+      if (interest === 'safe') return 'Most people like you start with core lock skills first, then move toward safe and specialty work after the fundamentals.';
+      return 'Most people like you start with residential lockouts, rekeys, and lock changes because those services are easy for customers to understand.';
+    }
+    function finishQuiz(){
+      const name = document.querySelector('#lead-name').value.trim();
+      const email = document.querySelector('#lead-email').value.trim();
+      const city = document.querySelector('#lead-city').value.trim();
+      const error = document.querySelector('[data-form-error]');
+      if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        error.hidden = false;
+        error.textContent = 'Enter your name and a valid email to see your result.';
+        return;
+      }
+      state.name = name; state.email = email; state.city = city;
+      state.answers.location = { value: city, label: city || 'Not provided' };
+      showProcessing();
+    }
+    function showProcessing(){
+      showScreen('processing');
+      const messages = [
+        'Analyzing your answers...',
+        'Matching you with service opportunities...',
+        'Building your income projection...',
+        'Preparing your training path...'
+      ];
+      let pct = 0;
+      const ring = document.querySelector('[data-ring]');
+      const pctEl = document.querySelector('[data-process-percent]');
+      const textEl = document.querySelector('[data-process-text]');
+      const timer = setInterval(() => {
+        pct = Math.min(100, pct + 4);
+        ring.style.setProperty('--process', pct + '%');
+        pctEl.textContent = pct + '%';
+        textEl.textContent = messages[Math.min(messages.length - 1, Math.floor(pct / 28))];
+        if (pct >= 100) {
+          clearInterval(timer);
+          showResults();
+        }
+      }, 70);
+    }
+    function showResults(){
+      const e = estimate();
+      state.result = { direction: direction(), estimate: e };
+      document.querySelector('[data-result-summary]').textContent = `${state.name}, based on your schedule, goals, and urgency, you show strong potential across multiple locksmith service paths if you train properly and take consistent action.`;
+      document.querySelector('[data-direction-reason]').textContent = direction();
+      document.querySelector('[data-hours]').textContent = `${e.hours} hrs`;
+      document.querySelector('[data-visits]').textContent = String(e.visitsTarget);
+      document.querySelector('[data-monthly]').textContent = `${money(e.monthlyLow)}-${money(e.monthlyTarget)}`;
+      showScreen('results');
+      setTimeout(() => {
+        const line = document.querySelector('[data-result-line]');
+        if (line) line.style.strokeDashoffset = '0';
+      }, 120);
+    }
+    async function sendPlan(){
+      const button = document.querySelector('[data-send-plan]');
+      const error = document.querySelector('[data-error]');
+      error.hidden = true;
+      button.disabled = true;
+      button.textContent = 'Sending your plan...';
+      try {
+        const res = await fetch(new URL('../api/locksmith_career_quiz.php', location.href).href, {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({name:state.name,email:state.email,city:state.city,answers:state.answers,result:state.result})
+        });
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok || !json.ok) throw new Error(json.error || 'Could not send your plan.');
+        document.querySelector('[data-modal]').classList.add('is-open');
+      } catch (err) {
+        error.hidden = false;
+        error.textContent = err.message || 'Could not send your plan. Please try again.';
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Start My Training';
+      }
+    }
+    document.querySelector('[data-start]').addEventListener('click', () => { state.step = 0; renderQuestion(); showScreen('quiz'); });
+    document.querySelector('[data-send-plan]').addEventListener('click', sendPlan);
+    document.querySelectorAll('[data-close-modal]').forEach(button => button.addEventListener('click', () => {
+      sessionStorage.setItem('nalaScrollTarget','buy');
+      location.href = buyUrl;
+    }));
+    updateLiveProjection();
   </script>
 </body>
 </html>
