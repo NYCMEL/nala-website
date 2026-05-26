@@ -65,7 +65,7 @@
     .recommendation{margin-top:18px;padding:16px;border-left:5px solid var(--gold);background:var(--cream);color:var(--black)}.recommendation p{color:#39424c}
     .section{margin-top:28px}.metric-grid,.scenario-grid,.trust-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px}.metric,.scenario,.trust-card{padding:16px;border:1px solid var(--line);border-radius:8px;background:#fff}.metric strong,.scenario strong{display:block;color:var(--gold-dark);font-size:24px;font-weight:900}.metric small,.scenario small,.trust-card p{color:var(--muted);line-height:1.45}
     .story{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px;align-items:center;background:var(--cream)}.day-card{display:grid;gap:10px}.day-row{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:#fff}.day-row strong{color:var(--gold-dark)}
-    .offer{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:20px;align-items:center;background:var(--cream)}.price{padding:24px;border:1px solid var(--line);border-radius:8px;background:#fff;text-align:center}.price strong{display:block;color:var(--black);font-size:38px;font-weight:900}.price span{font-weight:900;color:var(--gold-dark)}.fine-print{margin:14px 0 0;color:var(--muted);font-size:13px;line-height:1.5}
+    .offer{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:center;background:var(--cream)}.price{padding:24px;border:1px solid var(--line);border-radius:8px;background:#fff;text-align:left}.price strong{display:block;color:var(--black);font-size:34px;font-weight:900}.price span{font-weight:900;color:var(--gold-dark)}.package-row{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}.package-row:first-child{padding-top:0}.package-row:last-of-type{border-bottom:0}.package-row b{display:block;font-size:16px}.package-row small{display:block;margin-top:4px;color:var(--muted);line-height:1.35}.package-row strong{white-space:nowrap}.fine-print{margin:14px 0 0;color:var(--muted);font-size:13px;line-height:1.5}
     .modal{position:fixed;inset:0;z-index:10;display:none;place-items:center;padding:20px;background:rgba(21,26,31,.68)}.modal.is-open{display:grid}.modal-card{position:relative;width:min(520px,100%);padding:28px;border:2px solid var(--gold);border-radius:8px;background:#fff;box-shadow:var(--shadow);animation:modal-in .24s ease both}@keyframes modal-in{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
     .modal-close{position:absolute;top:12px;right:12px;width:40px;height:40px;border:1px solid var(--gold);border-radius:999px;background:#fff;color:var(--gold-dark);font-size:24px;font-weight:900;line-height:1;cursor:pointer}.modal-close:hover,.modal-close:focus-visible{background:var(--cream);outline:3px solid rgba(169,130,18,.28);outline-offset:2px}.modal-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:20px}
     @media (max-width:900px){.hero-grid,.quiz-layout,.result-grid,.offer,.story,.text-grid{grid-template-columns:1fr}.options,.metric-grid,.scenario-grid,.trust-grid{grid-template-columns:1fr}.screen{min-height:auto}.brand{align-items:flex-start;flex-direction:column}.brand span{text-align:left}.live-panel{position:relative;top:auto}.picker-wrap{grid-template-columns:1fr 1fr 1fr}}
@@ -209,8 +209,14 @@
             <p class="error" data-error hidden></p>
           </div>
           <div class="price">
-            <strong>$62.40/month</strong>
-            <span>for 24 months</span>
+            <div class="package-row">
+              <div><b>NALA course</b><small>Training and certification path.</small></div>
+              <strong>$1,499</strong>
+            </div>
+            <div class="package-row">
+              <div><b>Business in a Box</b><small>Launch package for your locksmith business.</small></div>
+              <strong>$2,499</strong>
+            </div>
             <p class="fine-print">Payment options may include card, pay-in-4, and financing depending on checkout availability.</p>
           </div>
         </section>
