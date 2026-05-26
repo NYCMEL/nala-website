@@ -809,7 +809,10 @@
     }
 
     _requestLogo() {
-      this._publish("mtk-biab:logo-load", { nalaUID: this._businessPageId() });
+      this._publish("mtk-biab:logo-load", {
+        nalaUID: this._businessPageId(),
+        testMode: this._isTestMode()
+      });
     }
 
     _requestGoogleSeoStatus() {
@@ -1615,6 +1618,9 @@
       if (provider.mode === "recraft") {
         return this._text("The logo generator is connected and ready.");
       }
+      if (provider.mode === "test") {
+        return this._text("The test logo generator is connected and ready.");
+      }
       if (provider.mode === "preview") {
         return this._text("Logo generation is not configured yet. Add the image-generation API key before generating logos.");
       }
@@ -1718,6 +1724,7 @@
       const provider = String((option && option.provider) || "").toLowerCase();
       if (provider === "recraft") return "Recraft";
       if (provider === "logotype") return "Logotype.ai";
+      if (provider === "nala") return "Test generator";
       return "";
     }
 
@@ -1843,6 +1850,7 @@
       this.cardOptionsPersisted = false;
       this._publish("mtk-biab:logo-save", {
         nalaUID: this._businessPageId(),
+        testMode: this._isTestMode(),
         logo
       });
     }

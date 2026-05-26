@@ -705,7 +705,8 @@ class _febe {
 
     handleBiabLogoLoad(data) {
 	const uid = (data && data.nalaUID) || this.getBusinessPageId();
-	return this.getBiabJson("/api/business_in_a_box_logo.php?nalaUID=" + encodeURIComponent(uid), this.t("biab.error.generic", "Could not complete that request. Please try again.")).then(json => {
+	const testMode = data && data.testMode ? "&testMode=1" : "";
+	return this.getBiabJson("/api/business_in_a_box_logo.php?nalaUID=" + encodeURIComponent(uid) + testMode, this.t("biab.error.generic", "Could not complete that request. Please try again.")).then(json => {
 	    wc.publish("4-mtk-biab:logo-loaded", {
 		nalaUID: uid,
 		logo: json.logo || null,
@@ -737,6 +738,7 @@ class _febe {
 	const uid = payload.nalaUID || this.getBusinessPageId();
 	return this.postBiabJson("/api/business_in_a_box_logo.php", {
 	    nalaUID: uid,
+	    testMode: !!payload.testMode,
 	    action: "save",
 	    logo: payload.logo || {}
 	}, this.t("biab.logo.saved", "Logo saved. Your business card will use this logo."), this.t("biab.error.generic", "Could not complete that request. Please try again.")).then(json => {
@@ -760,6 +762,7 @@ class _febe {
 	} catch (err) {}
 	return this.postBiabJson("/api/business_in_a_box_logo.php", {
 	    nalaUID: uid,
+	    testMode: true,
 	    action: "reset"
 	}, "", this.t("biab.error.generic", "Could not complete that request. Please try again.")).then(json => {
 	    wc.publish("4-mtk-biab:logo-loaded", {

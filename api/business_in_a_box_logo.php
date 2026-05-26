@@ -142,21 +142,45 @@ function biab_logo_zoviz_base_url() {
     return 'https://api.zoviz.com';
 }
 
-function biab_logo_provider_status($mode = null, $message = '') {
-    $configured = biab_logo_recraft_key() !== '';
+function biab_logo_flag_enabled($value) {
+    if (is_bool($value)) {
+        return $value;
+    }
+    $value = strtolower(trim((string)$value));
+    return in_array($value, array('1', 'true', 'yes', 'on', 'test', 'dev'), true);
+}
+
+function biab_logo_is_test_request($payload = null) {
+    if (is_array($payload) && array_key_exists('testMode', $payload)) {
+        return biab_logo_flag_enabled($payload['testMode']);
+    }
+    if (array_key_exists('testMode', $_GET)) {
+        return biab_logo_flag_enabled($_GET['testMode']);
+    }
+    return false;
+}
+
+function biab_logo_expected_option_provider($payload = null) {
+    return biab_logo_is_test_request($payload) ? 'nala' : 'recraft';
+}
+
+function biab_logo_provider_status($mode = null, $message = '', $payload = null) {
+    $testMode = biab_logo_is_test_request($payload);
+    $configured = $testMode || biab_logo_recraft_key() !== '';
     $logotypeConfigured = biab_logo_logotype_key() !== '' && biab_logo_logotype_endpoint() !== '';
     if ($mode === null) {
-        $mode = $configured ? 'recraft' : 'preview';
+        $mode = $testMode ? 'test' : ($configured ? 'recraft' : 'preview');
     }
     return array(
-        'id' => $mode === 'comparison' ? 'comparison' : 'recraft',
+        'id' => $mode === 'comparison' ? 'comparison' : ($mode === 'test' ? 'nala-test' : 'recraft'),
         'label' => 'Logo Generator',
         'mode' => $mode,
         'configured' => $configured,
-        'recraftConfigured' => $configured,
+        'recraftConfigured' => biab_logo_recraft_key() !== '',
         'logotypeConfigured' => $logotypeConfigured,
         'generatorVersion' => biab_logo_generation_version(),
-        'message' => $message !== '' ? $message : ($configured ? 'Logo generation is configured.' : 'Logo generation is not configured yet.')
+        'message' => $message !== '' ? $message : ($configured ? 'Logo generation is configured.' : 'Logo generation is not configured yet.'),
+        'testMode' => $testMode
     );
 }
 
@@ -164,10 +188,11 @@ function biab_logo_generation_version() {
     return 14;
 }
 
-function biab_logo_options_are_stale($generated) {
+function biab_logo_options_are_stale($generated, $payload = null) {
     if (!is_array($generated)) {
         return false;
     }
+    $expectedProvider = biab_logo_expected_option_provider($payload);
     $provider = is_array($generated['provider'] ?? null) ? $generated['provider'] : array();
     $version = (int)($provider['generatorVersion'] ?? 0);
     if ($version < biab_logo_generation_version()) {
@@ -175,7 +200,7 @@ function biab_logo_options_are_stale($generated) {
     }
     $options = is_array($generated['options'] ?? null) ? $generated['options'] : array();
     foreach ($options as $option) {
-        if (!is_array($option) || ($option['provider'] ?? '') !== 'recraft') {
+        if (!is_array($option) || ($option['provider'] ?? '') !== $expectedProvider) {
             return true;
         }
         if ((int)($option['generationVersion'] ?? 0) < biab_logo_generation_version()) {
@@ -185,11 +210,11 @@ function biab_logo_options_are_stale($generated) {
     return false;
 }
 
-function biab_logo_saved_logo_is_stale($logo) {
+function biab_logo_saved_logo_is_stale($logo, $payload = null) {
     if (!is_array($logo) || !$logo) {
         return false;
     }
-    if (($logo['provider'] ?? '') !== 'recraft') {
+    if (($logo['provider'] ?? '') !== biab_logo_expected_option_provider($payload)) {
         return true;
     }
     return (int)($logo['generationVersion'] ?? 0) < biab_logo_generation_version();
@@ -944,7 +969,10 @@ function biab_logo_generate_curated($payload) {
 
     return array(
         'options' => $logos,
-        'provider' => biab_logo_provider_status('zoviz', 'Generated 6 logo previews.')
+        'provider' => array_merge(biab_logo_provider_status('test', 'Generated 6 test logo options.', $payload), array(
+            'expectedCount' => 6,
+            'testProvider' => true
+        ))
     );
 }
 
@@ -1448,10 +1476,14 @@ function biab_logo_normalize_provider_records($records, $provider, $providerLabe
 }
 
 function biab_logo_generate_provider_options($payload) {
+    if (biab_logo_is_test_request($payload)) {
+        return biab_logo_generate_curated($payload);
+    }
+
     $options = biab_logo_recraft_generate($payload, 6);
     return array(
         'options' => $options,
-        'provider' => array_merge(biab_logo_provider_status('recraft', 'Generated 6 logo options.'), array(
+        'provider' => array_merge(biab_logo_provider_status('recraft', 'Generated 6 logo options.', $payload), array(
             'expectedCount' => 6,
             'fromScratchOnly' => true
         ))
@@ -1459,14 +1491,15 @@ function biab_logo_generate_provider_options($payload) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $requestContext = array('testMode' => $_GET['testMode'] ?? false);
     $uid = biab_logo_uid($_GET['nalaUID'] ?? '');
     $savedLogo = biab_logo_get($uid);
-    if (biab_logo_saved_logo_is_stale($savedLogo)) {
+    if (biab_logo_saved_logo_is_stale($savedLogo, $requestContext)) {
         biab_logo_delete_logo($uid);
         $savedLogo = null;
     }
     $generated = biab_logo_get_options($uid);
-    if ($generated && biab_logo_options_are_stale($generated)) {
+    if ($generated && biab_logo_options_are_stale($generated, $requestContext)) {
         biab_logo_remember_option_signatures($uid, $generated['options'] ?? array());
         biab_logo_delete_options($uid);
         $generated = null;
@@ -1475,7 +1508,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         'ok' => true,
         'logo' => $savedLogo,
         'options' => $generated ? $generated['options'] : array(),
-        'provider' => biab_logo_provider_status()
+        'provider' => biab_logo_provider_status(null, '', $requestContext)
     ));
 }
 
@@ -1496,7 +1529,7 @@ if ($action === 'reset') {
     biab_logo_json_response(200, array(
         'ok' => true,
         'logo' => null,
-        'provider' => biab_logo_provider_status()
+        'provider' => biab_logo_provider_status(null, '', $data)
     ));
 }
 
@@ -1504,7 +1537,7 @@ if ($action === 'save') {
     biab_logo_json_response(200, array(
         'ok' => true,
         'logo' => biab_logo_save($uid, is_array($data['logo'] ?? null) ? $data['logo'] : array()),
-        'provider' => biab_logo_provider_status()
+        'provider' => biab_logo_provider_status(null, '', $data)
     ));
 }
 
@@ -1514,7 +1547,7 @@ if ($action !== 'generate') {
 
 $replaceExisting = !empty($data['replaceExisting']) || !empty($data['force']) || !empty($data['regenerate']);
 $existing = biab_logo_get_options($uid);
-if ($existing && biab_logo_options_are_stale($existing)) {
+if ($existing && biab_logo_options_are_stale($existing, $data)) {
     biab_logo_remember_option_signatures($uid, $existing['options'] ?? array());
     biab_logo_delete_options($uid);
     $existing = null;
