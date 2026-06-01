@@ -19,7 +19,7 @@ window.app.footer = {
 	title: _footerT('footer.contact.title', 'Contact Information'),
 	phone: "",
 	email: "support@nalanetwork.com",
-	address: ["NALA LOCKSMITH HOLDINGS INC", "892 Tranquil Road", "North Tazewell, VA", "24630"]
+	address: ["NALA LOCKSMITH HOLDINGS INC", "P.O. Box 1835", "Bluefield WV 24701"]
     },
     social: {
 	title: _footerT('footer.social.title', 'Social Media'),
