@@ -11,7 +11,7 @@ window.app.footer = {
 	    title: "Contact Information",
 	    links: [
 		{ text: "Email: info@nala.org", event: "contact-email" },
-		{ text: "Address: P.O. Box 1835<br>Bluefield WV 24701", event: "contact-address" }
+		{ text: "Address: P.O. Box 1835<br>Bluefield WV<br>24701", event: "contact-address" }
 	    ]
 	},
 	{

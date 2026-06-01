@@ -1328,7 +1328,7 @@
 
     'curriculum.duration.label': { en: 'Duration:', es: 'Duración:' },
     'curriculum.contact.email':  { en: 'Email: info@nala-locksmith.com',                   es: 'Correo: info@nala-locksmith.com' },
-    'curriculum.contact.addr':   { en: 'Address: P.O. Box 1835, Bluefield WV 24701', es: 'Dirección: P.O. Box 1835, Bluefield WV 24701' },
+    'curriculum.contact.addr':   { en: 'Address: P.O. Box 1835, Bluefield WV, 24701', es: 'Dirección: P.O. Box 1835, Bluefield WV, 24701' },
 
     // ── TOP / SCROLL BUTTON ────────────────────────────────────────
     'top.scrollBtn': { en: 'Scroll to top', es: 'Volver arriba' }
