@@ -120,21 +120,13 @@ if ($next === '' || $next[0] !== '/' || str_starts_with($next, '//')) {
             font-weight: 700;
         }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
-            font-weight: 700;
-        }
-
         .row {
-            display: flex;
-            gap: 10px;
+            display: block;
         }
 
         input {
             min-width: 0;
-            flex: 1;
+            width: 100%;
             height: 44px;
             border: 1px solid #c9d0d3;
             border-radius: 6px;
@@ -142,27 +134,10 @@ if ($next === '' || $next[0] !== '/' || str_starts_with($next, '//')) {
             font: inherit;
         }
 
-        button {
-            height: 44px;
-            border: 0;
-            border-radius: 6px;
-            padding: 0 18px;
-            font: inherit;
-            font-weight: 700;
-            color: #fff;
-            background: var(--gold);
-            cursor: pointer;
-        }
-
         .error {
             margin-top: 12px;
             color: #9b1c1c;
             font-size: 14px;
-        }
-
-        @media (max-width: 520px) {
-            .row { flex-direction: column; }
-            button { width: 100%; }
         }
     </style>
 </head>
@@ -174,10 +149,8 @@ if ($next === '' || $next[0] !== '/' || str_starts_with($next, '//')) {
         <h1>Under construction</h1>
         <form method="post" action="/construction.php" autocomplete="off">
             <input type="hidden" name="next" value="<?php echo htmlspecialchars($next, ENT_QUOTES, 'UTF-8'); ?>">
-            <label for="password">Password</label>
             <div class="row">
-                <input id="password" name="password" type="password" required autofocus>
-                <button type="submit">Enter</button>
+                <input id="password" name="password" type="password" required autofocus aria-label="Password">
             </div>
             <?php if ($error): ?>
                 <div class="error"><?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></div>
