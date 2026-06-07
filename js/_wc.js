@@ -3,7 +3,10 @@ window.wcAPP = window.wcAPP || "NOT-SET";
 window.wcURL = window.wcURL || "";
 
 wc.working   = location.origin != 'http://localhost:3000';
-wc.apiURL    = "https://nala-test.com" || "https://nalanetwork.com";
+wc.siteHost  = String(location.hostname || "").toLowerCase();
+wc.apiURL    = wc.siteHost === "nalanetwork.com" || wc.siteHost.endsWith(".nalanetwork.com")
+    ? "https://nalanetwork.com"
+    : "https://nala-test.com";
 wc.testing   = false;  /* = true SHOULD USE ALL LOCAL CONFIG FILES and others */
 
 // Message storage

@@ -1,0 +1,21 @@
+RewriteEngine On
+
+RewriteRule ^robots\.txt$ robots.php [L]
+
+# Route the public chatbot REST endpoints into the private WordPress install.
+RewriteRule ^wp-json/(mxchat.*)$ chatbot-router.php?wp_json_path=$1 [QSA,L]
+
+# Production construction gate. Staging remains reachable at nala-test.com.
+RewriteCond %{HTTP_HOST} (^|\.)nalanetwork\.com$ [NC]
+RewriteCond %{HTTP_COOKIE} !(^|;\s*)nala_preview=1(;|$) [NC]
+RewriteCond %{REQUEST_URI} !^/construction\.php$ [NC]
+RewriteCond %{REQUEST_URI} !^/robots\.php$ [NC]
+RewriteCond %{REQUEST_URI} !^/chatbot-router\.php$ [NC]
+RewriteCond %{REQUEST_URI} !^/wp-json/mxchat [NC]
+RewriteCond %{REQUEST_URI} !^/api/ [NC]
+RewriteRule ^.*$ construction.php [L]
+
+<IfModule mod_headers.c>
+    SetEnvIfNoCase Host "(^|\.)nala-test\.com$" NALA_STAGING_HOST
+    Header set X-Robots-Tag "noindex, nofollow, noarchive, nosnippet" env=NALA_STAGING_HOST
+</IfModule>

@@ -1075,7 +1075,7 @@ function nala_mxchat_signup_pricing_endpoint(): string
         }
     }
 
-    return 'https://nala-test.com/api/pricing.php';
+    return nala_mxchat_signup_default_public_base_url() . '/api/pricing.php';
 }
 
 function nala_mxchat_signup_format_plan_price($entry): array
@@ -1489,7 +1489,17 @@ function nala_mxchat_signup_endpoint(): string
         }
     }
 
-    return 'https://nala-test.com/api/register.php';
+    return nala_mxchat_signup_default_public_base_url() . '/api/register.php';
+}
+
+function nala_mxchat_signup_default_public_base_url(): string
+{
+    $host = strtolower((string)($_SERVER['HTTP_HOST'] ?? ''));
+    if (nala_mxchat_signup_is_allowed_host($host)) {
+        return 'https://' . $host;
+    }
+
+    return 'https://nalanetwork.com';
 }
 
 function nala_mxchat_signup_current_page_url(): string

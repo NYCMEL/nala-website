@@ -48,8 +48,11 @@ $body = "New NALA contact form message\n\n"
     . "Issue: {$issueLabel}\n\n"
     . "Message:\n{$message}\n";
 
+$host = strtolower(preg_replace('/[^a-z0-9.-]/', '', (string)($_SERVER['HTTP_HOST'] ?? 'nala-test.com')));
+$host = $host !== '' ? $host : 'nala-test.com';
+
 $headers = array(
-    'From: NALA Website <no-reply@nala-test.com>',
+    'From: NALA Website <no-reply@' . $host . '>',
     'Reply-To: ' . $name . ' <' . $email . '>'
 );
 
