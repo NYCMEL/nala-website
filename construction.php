@@ -102,9 +102,10 @@ if ($next === '' || $next[0] !== '/' || str_starts_with($next, '//')) {
             justify-content: center;
             padding: 14px 18px;
             margin-bottom: 28px;
-            background: rgba(255, 255, 255, 0.92);
+            background: #fff4d8;
+            border: 1px solid rgba(184, 137, 36, 0.28);
             border-radius: 8px;
-            box-shadow: 0 14px 32px rgba(31, 37, 40, 0.18);
+            box-shadow: 0 14px 34px rgba(184, 137, 36, 0.28), 0 4px 14px rgba(31, 37, 40, 0.14);
         }
 
         .logo-mark img {
