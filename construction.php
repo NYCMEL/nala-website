@@ -96,11 +96,21 @@ if ($next === '' || $next[0] !== '/' || str_starts_with($next, '//')) {
             box-shadow: 0 18px 60px rgba(31, 37, 40, 0.12);
         }
 
-        img {
+        .logo-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 18px;
+            margin-bottom: 28px;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 8px;
+            box-shadow: 0 14px 32px rgba(31, 37, 40, 0.18);
+        }
+
+        .logo-mark img {
             display: block;
             width: 120px;
             height: auto;
-            margin-bottom: 28px;
         }
 
         h1 {
@@ -108,13 +118,6 @@ if ($next === '' || $next[0] !== '/' || str_starts_with($next, '//')) {
             font-size: clamp(30px, 7vw, 44px);
             line-height: 1.04;
             font-weight: 700;
-        }
-
-        p {
-            margin: 0 0 28px;
-            color: var(--muted);
-            font-size: 17px;
-            line-height: 1.55;
         }
 
         label {
@@ -165,12 +168,13 @@ if ($next === '' || $next[0] !== '/' || str_starts_with($next, '//')) {
 </head>
 <body>
     <main>
-        <img src="/img/logo.png" alt="NALA">
-        <h1>We are updating NALA Network.</h1>
-        <p>The new site is being prepared. Preview access is available for the team.</p>
+        <div class="logo-mark">
+            <img src="/img/logo.png" alt="NALA">
+        </div>
+        <h1>Under construction</h1>
         <form method="post" action="/construction.php" autocomplete="off">
             <input type="hidden" name="next" value="<?php echo htmlspecialchars($next, ENT_QUOTES, 'UTF-8'); ?>">
-            <label for="password">Preview password</label>
+            <label for="password">Password</label>
             <div class="row">
                 <input id="password" name="password" type="password" required autofocus>
                 <button type="submit">Enter</button>
