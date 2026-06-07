@@ -7,7 +7,7 @@ RewriteRule ^wp-json/(mxchat.*)$ chatbot-router.php?wp_json_path=$1 [QSA,L]
 
 # Production construction gate. Staging remains reachable at nala-test.com.
 RewriteCond %{HTTP_HOST} (^|\.)nalanetwork\.com$ [NC]
-RewriteCond %{HTTP_COOKIE} !(^|;\s*)nala_preview=1(;|$) [NC]
+RewriteCond %{HTTP:Cookie} !nala_preview=1 [NC]
 RewriteCond %{REQUEST_URI} !^/construction\.php$ [NC]
 RewriteCond %{REQUEST_URI} !^/robots\.php$ [NC]
 RewriteCond %{REQUEST_URI} !^/chatbot-router\.php$ [NC]

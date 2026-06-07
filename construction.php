@@ -9,11 +9,20 @@ if (!$isProduction) {
     exit;
 }
 
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
+header('X-Robots-Tag: noindex, nofollow, noarchive, nosnippet');
+
+if (($_COOKIE['nala_preview'] ?? '') === '1'
+    && ($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+    header('Content-Type: text/html; charset=UTF-8');
+    readfile(__DIR__ . '/index.html');
+    exit;
+}
+
 $fallbackHash = '$2y$12$h4sH5Qn5nO5sVS2GLSdx8ORB.DqrueSnnP7hQwiXNCR37wL/438ku';
 $passwordHash = getenv('NALA_CONSTRUCTION_PASSWORD_HASH') ?: $fallbackHash;
 $error = '';
-
-header('X-Robots-Tag: noindex, nofollow, noarchive, nosnippet');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = (string)($_POST['password'] ?? '');
@@ -31,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($next === '' || $next[0] !== '/' || str_starts_with($next, '//')) {
             $next = '/';
         }
+        $next .= (str_contains($next, '?') ? '&' : '?') . 'nala_preview=' . time();
 
         header('Location: ' . $next, true, 302);
         exit;
