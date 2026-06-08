@@ -47,7 +47,9 @@
   function buildTabs(config) {
     var tabs = getTabs(config).slice();
     if (!hasBusinessInABox()) {
-      return tabs;
+      return tabs.filter(function (tab) {
+        return tab && tab.id === "privacy";
+      });
     }
 
     orderedBiabSections().forEach(function (section) {
@@ -312,6 +314,41 @@
     ).replace(/[^a-zA-Z0-9_-]/g, "");
   };
 
+  MTKSettings.prototype.guidedSetupStorageKey = function () {
+    return "nala_biab_setup_complete_" + this.businessPageId();
+  };
+
+  MTKSettings.prototype.isGuidedSetupActive = function () {
+    try {
+      return hasBusinessInABox() && window.localStorage.getItem(this.guidedSetupStorageKey()) !== "1";
+    } catch (err) {
+      return hasBusinessInABox();
+    }
+  };
+
+  MTKSettings.prototype.completeGuidedSetup = function () {
+    try {
+      window.localStorage.setItem(this.guidedSetupStorageKey(), "1");
+    } catch (err) {}
+
+    if (window.MTKMsgs && typeof window.MTKMsgs.show === "function") {
+      window.MTKMsgs.show({
+        type: "success",
+        icon: "check_circle",
+        message: "Business in a Box setup is complete. You can keep using the tabs any time.",
+        closable: true,
+        timer: 6
+      });
+    }
+
+    this.renderTabs();
+    this.renderPanel();
+  };
+
+  MTKSettings.prototype.shouldShowStepNav = function () {
+    return this.isGuidedSetupActive() && this.tabs.length > 1;
+  };
+
   MTKSettings.prototype.clientUrlPayload = function () {
     var user = getSessionUser();
     var business = this.formState.business || {};
@@ -440,23 +477,23 @@
       '</div>';
 
     if (Array.isArray(tab.fields) && tab.fields.length) {
-      this.panelEl.innerHTML = header + this.renderForm(tab) + this.renderStepNav(tab);
+      this.panelEl.innerHTML = header + this.renderForm(tab) + (this.shouldShowStepNav(tab) ? this.renderStepNav(tab) : "");
       this.bindForm(tab);
-      this.bindStepNav();
+      if (this.shouldShowStepNav(tab)) this.bindStepNav();
       return;
     }
 
     if (tab.type === "biab") {
-      this.panelEl.innerHTML = header + this.renderBiabTab(tab) + this.renderStepNav(tab);
+      this.panelEl.innerHTML = header + this.renderBiabTab(tab) + (this.shouldShowStepNav(tab) ? this.renderStepNav(tab) : "");
       if (window.MtkBiab && typeof window.MtkBiab.initWhenReady === "function") {
         window.MtkBiab.initWhenReady();
       }
-      this.bindStepNav();
+      if (this.shouldShowStepNav(tab)) this.bindStepNav();
       return;
     }
 
-    this.panelEl.innerHTML = header + '<div class="mtk-settings__empty">This section is ready for fields, cards, or controls.</div>' + this.renderStepNav(tab);
-    this.bindStepNav();
+    this.panelEl.innerHTML = header + '<div class="mtk-settings__empty">This section is ready for fields, cards, or controls.</div>' + (this.shouldShowStepNav(tab) ? this.renderStepNav(tab) : "");
+    if (this.shouldShowStepNav(tab)) this.bindStepNav();
   };
 
   MTKSettings.prototype.renderBiabTab = function (tab) {
@@ -477,8 +514,8 @@
           '<span class="material-icons" aria-hidden="true">chevron_left</span>' +
           '<span>' + escapeHTML(previous ? "Previous: " + (previous.label || previous.title || "Step") : "Previous") + '</span>' +
         '</button>' +
-        '<button class="mtk-settings__step-arrow mtk-settings__step-arrow--next" type="button" data-settings-step-direction="next"' + (next ? "" : " disabled") + '>' +
-          '<span>' + escapeHTML(next ? "Next: " + (next.label || next.title || "Step") : "Done") + '</span>' +
+        '<button class="mtk-settings__step-arrow mtk-settings__step-arrow--next" type="button" data-settings-step-direction="next">' +
+          '<span>' + escapeHTML(next ? "Next: " + (next.label || next.title || "Step") : "Finish setup") + '</span>' +
           '<span class="material-icons" aria-hidden="true">chevron_right</span>' +
         '</button>' +
       '</nav>';
@@ -490,7 +527,11 @@
       return self.renderField(tab, field);
     }).join("");
 
-    var actions = (tab.actions || []).map(function (action) {
+    var actionSource = this.shouldShowStepNav(tab)
+      ? (tab.actions || []).filter(function (action) { return action.variant !== "primary"; })
+      : (tab.actions || []);
+
+    var actions = actionSource.map(function (action) {
       var variant = action.variant === "primary" ? "primary" : "secondary";
       return '' +
         '<button class="mtk-settings__button mtk-settings__button--' + variant + '" type="button" data-action-id="' + escapeHTML(action.id) + '" data-event="' + escapeHTML(action.event) + '">' +
@@ -826,10 +867,47 @@
   MTKSettings.prototype.goAdjacentStep = function (direction) {
     var index = this.tabs.findIndex(function (tab) { return tab.id === this.activeTabId; }, this);
     if (index < 0) return;
+
+    if (direction === "next" && this.isGuidedSetupActive()) {
+      var current = this.tabs[index];
+      var form = this.panelEl.querySelector(".mtk-settings__form");
+      if (form && !this.saveCurrentStep(current, form)) {
+        return;
+      }
+    }
+
     var nextIndex = direction === "previous" ? index - 1 : index + 1;
     var next = this.tabs[nextIndex];
-    if (!next) return;
+    if (!next) {
+      if (direction === "next" && this.isGuidedSetupActive()) {
+        this.completeGuidedSetup();
+      }
+      return;
+    }
     this.setActiveTab(next.id);
+  };
+
+  MTKSettings.prototype.saveCurrentStep = function (tab, form) {
+    if (!tab || !Array.isArray(tab.actions)) return true;
+    var action = null;
+    tab.actions.forEach(function (item) {
+      if (!action && item && item.variant === "primary" && item.event) {
+        action = item;
+      }
+    });
+
+    if (!action) return true;
+    if (!this.validateTab(tab, form)) return false;
+
+    this.publish(action.event, {
+      tabId: tab.id,
+      actionId: action.id,
+      values: this.formState[tab.id],
+      guidedAutoAdvance: true,
+      nextTabLabel: this.nextTabLabel(tab.id)
+    });
+
+    return true;
   };
 
   MTKSettings.prototype.announceSavedAndAdvance = function (tabId) {

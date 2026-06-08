@@ -1,0 +1,41 @@
+<link href="funnel/mtk-funnel.css" rel="stylesheet">
+
+<section class="mtk-funnel" aria-labelledby="mtk-funnel-title">
+    <div class="mtk-funnel__shell">
+        <header class="mtk-funnel__header">
+            <p class="mtk-funnel__eyebrow">Start here</p>
+            <h1 id="mtk-funnel-title">Choose your locksmith path</h1>
+        </header>
+
+        <form class="mtk-funnel__form">
+            <fieldset class="mtk-funnel__step" data-funnel-step="goal">
+                <legend>What do you want first?</legend>
+                <label><input type="radio" name="goal" value="learn" checked> Learn the skill</label>
+                <label><input type="radio" name="goal" value="certify"> Train and certify</label>
+                <label><input type="radio" name="goal" value="business"> Launch a locksmith business</label>
+            </fieldset>
+
+            <fieldset class="mtk-funnel__step" data-funnel-step="experience">
+                <legend>Current experience</legend>
+                <label><input type="radio" name="experience" value="new" checked> New to locksmithing</label>
+                <label><input type="radio" name="experience" value="some"> Some hands-on experience</label>
+                <label><input type="radio" name="experience" value="working"> Already working in the field</label>
+            </fieldset>
+
+            <fieldset class="mtk-funnel__step" data-funnel-step="pace">
+                <legend>Best pace</legend>
+                <label><input type="radio" name="pace" value="preview" checked> Try free lessons first</label>
+                <label><input type="radio" name="pace" value="full"> Get full access now</label>
+                <label><input type="radio" name="pace" value="launch"> Set up the business tools too</label>
+            </fieldset>
+
+            <section class="mtk-funnel__result" aria-live="polite" data-funnel-result>
+                <h2>Free lessons</h2>
+                <p>Start with the free course preview, then upgrade when you are ready for certification and tools.</p>
+                <button type="button" class="btn nala-btn-primary" data-funnel-action>Get Started</button>
+            </section>
+        </form>
+    </div>
+</section>
+
+<script src="funnel/mtk-funnel.js"></script>

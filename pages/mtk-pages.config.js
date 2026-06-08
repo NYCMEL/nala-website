@@ -30,6 +30,12 @@ window.app.pages = [
         "url":   "<wc-include href='contact/index.inc.html' />"
     },
     {
+        "cache": "true",
+        "page":  "funnel",
+        "label": "Start",
+        "url":   "<wc-include href='funnel/index.inc.html' />"
+    },
+    {
         "cache": "false",
         "page":  "dashboard",
         "label": "Dashboard",

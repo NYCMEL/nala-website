@@ -4,48 +4,36 @@
     <section class="mtk-contact__shell">
         <div class="mtk-contact__intro">
             <p class="mtk-contact__eyebrow" data-i18n="nav.contact">Contact</p>
-            <h1 class="mtk-contact__title">How can we help?</h1>
-            <p class="mtk-contact__copy">
-                Send us the details and choose the issue type that best matches what you need.
-            </p>
+            <h1 class="mtk-contact__title">Contact us.</h1>
         </div>
 
         <form class="mtk-contact__form" novalidate>
             <p class="mtk-contact__required-note">Fields marked with an asterisk (*) are required.</p>
+            <div class="mtk-contact__profile-note" data-profile-note hidden></div>
 
-            <label class="mtk-contact__field">
-                <span>Name <strong aria-hidden="true">*</strong></span>
-                <input name="name" type="text" autocomplete="name" required>
-            </label>
-
-            <label class="mtk-contact__field">
-                <span>Email <strong aria-hidden="true">*</strong></span>
-                <input name="email" type="email" autocomplete="email" required>
-            </label>
-
-            <label class="mtk-contact__field">
-                <span>Phone</span>
-                <input name="phone" type="tel" autocomplete="tel">
-            </label>
-
-            <label class="mtk-contact__field">
-                <span>Issue <strong aria-hidden="true">*</strong></span>
-                <select name="issue" required>
-                    <option value="">Choose an issue</option>
-                    <option value="account_login">Account login</option>
-                    <option value="payment_issue">Payment issue</option>
-                    <option value="course_access">Course access</option>
-                    <option value="business_in_a_box">Business in a Box</option>
-                    <option value="website_seo">Website or SEO</option>
-                    <option value="shipping_kit">Shipping or kit</option>
-                    <option value="technical_problem">Technical problem</option>
-                    <option value="other">Other</option>
-                </select>
+            <label class="mtk-contact__field mtk-contact__field--full">
+                <span>Subject <strong aria-hidden="true">*</strong></span>
+                <input name="subject" type="text" required>
             </label>
 
             <label class="mtk-contact__field mtk-contact__field--full">
                 <span>Message <strong aria-hidden="true">*</strong></span>
-                <textarea name="message" rows="6" required></textarea>
+                <div class="mtk-contact__editor" data-contact-editor>
+                    <div class="mtk-contact__toolbar" aria-label="Message formatting">
+                        <button type="button" data-format-command="bold" aria-label="Bold"><strong>B</strong></button>
+                        <button type="button" data-format-command="italic" aria-label="Italic"><em>I</em></button>
+                        <button type="button" data-format-command="insertUnorderedList" aria-label="Bulleted list"><span class="material-icons" aria-hidden="true">format_list_bulleted</span></button>
+                        <button type="button" data-format-command="createLink" aria-label="Add link"><span class="material-icons" aria-hidden="true">link</span></button>
+                        <label class="mtk-contact__image-button" aria-label="Add image">
+                            <span class="material-icons" aria-hidden="true">image</span>
+                            <input type="file" accept="image/*" data-image-input multiple>
+                        </label>
+                    </div>
+                    <div class="mtk-contact__message" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Message" data-message-editor></div>
+                </div>
+                <textarea name="message" rows="6" hidden></textarea>
+                <input name="messageHtml" type="hidden">
+                <div class="mtk-contact__attachments" data-attachments></div>
             </label>
 
             <div class="mtk-contact__actions">

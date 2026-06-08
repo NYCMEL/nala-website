@@ -152,6 +152,10 @@ a:hover {
 #page-content {
   flex: 1 0 auto; }
 
+@media (min-width: 1200px) {
+  .container {
+    max-width: min(1400px, calc(100% - 64px)); } }
+
 #page-footer,
 .app-header {
   flex-shrink: 0; }

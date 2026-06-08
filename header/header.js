@@ -35,6 +35,7 @@ $(document).on("click", function(e) {
 $(document).on("click", "#header-dd-profile", function(e) {
     e.preventDefault();
     $("#nala-user-dd").hide();
+    window.__nalaSettingsTargetTab = "privacy";
     wc.log("mtk-header-settings");
     wc.publish("mtk-header-settings");
 });
@@ -179,6 +180,37 @@ function toggleNavbar() {
     } else {
         initState();
     }
+})();
+
+(function initHeaderUserName() {
+    function readStoredProfile() {
+        try {
+            var settings = JSON.parse(localStorage.getItem("nala_profile_settings") || "{}") || {};
+            return settings.privacy || {};
+        } catch (e) {
+            return {};
+        }
+    }
+
+    function firstName(value) {
+        return String(value || "").trim().split(/\s+/)[0] || "";
+    }
+
+    function render() {
+        var el = document.getElementById("uname");
+        if (!el) return;
+        var profile = readStoredProfile();
+        var user = (window.wc && wc.session && wc.session.user) ? wc.session.user : {};
+        var name = profile.fullName || user.name || user.full_name || user.email || "";
+        el.textContent = firstName(name) || "Profile";
+    }
+
+    document.addEventListener("include:loaded", function () { setTimeout(render, 50); });
+    document.addEventListener("nala:profile-updated", render);
+    window.addEventListener("storage", function (event) {
+        if (event.key === "nala_profile_settings") render();
+    });
+    setTimeout(render, 300);
 })();
 
 // RESTORE ACTIVE HEADER LINK ON RELOAD

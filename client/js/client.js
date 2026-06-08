@@ -827,7 +827,7 @@ class ClientProfile {
 	}
 
 	// Edit view — always show label
-	if (titleEl) titleEl.style.display = 
+	if (titleEl) titleEl.style.display = ''
 
 	// Editable view — MD table + preview placeholder
 	container.innerHTML = `

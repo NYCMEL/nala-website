@@ -85,6 +85,8 @@
     function renderHeroImageCarousel(heroData) {
 	const rhs = document.querySelector("#MTK-hero .MTK-hero-rhs");
 	if (!rhs || !Array.isArray(heroData.images) || !heroData.images.length) return;
+	if (rhs.dataset.carouselRendered === "1") return;
+	rhs.dataset.carouselRendered = "1";
 	const registerLabel = window.i18n ? i18n.t("hero.registerAria") : "Register for NALA";
 
 	rhs.innerHTML = `
@@ -123,13 +125,12 @@
     // Populate hero content and trigger animation
     function initHero(heroData) {
 	wc.log("hero: initHero...")
+	updateHeroText(heroData);
 
 	const lhsTitle = document.querySelector("#MTK-hero .MTK-hero-title");
 	const lhsDesc = document.querySelector("#MTK-hero .MTK-hero-description");
 	const rhsImg = document.querySelector("#MTK-hero .MTK-hero-img");
 
-	if (lhsTitle) lhsTitle.textContent = heroData.title;
-	if (lhsDesc) lhsDesc.textContent = heroData.description;
 	if (rhsImg) rhsImg.src = heroData.image;
 	renderHeroImageCarousel(heroData);
 
@@ -140,6 +141,20 @@
 	}, 100);
     }
 
+    function updateHeroText(heroData) {
+	if (!heroData) return;
+	const lhsTitle = document.querySelector("#MTK-hero .MTK-hero-title");
+	const lhsDesc = document.querySelector("#MTK-hero .MTK-hero-description");
+	const cta = document.querySelector("#MTK-hero [data-i18n='hero.cta']");
+	const watch = document.querySelector("#MTK-hero [data-i18n='hero.watchVideos']");
+	if (lhsTitle) lhsTitle.textContent = heroData.title || "";
+	if (lhsDesc) lhsDesc.textContent = heroData.description || "";
+	if (window.i18n && typeof window.i18n.t === "function") {
+	    if (cta) cta.textContent = window.i18n.t("hero.cta");
+	    if (watch) watch.textContent = window.i18n.t("hero.watchVideos");
+	}
+    }
+
     // Wait for container and hero data before rendering
     waitForElement("#MTK-hero", function(container) {
 	wc.log("hero: waitForElement...", app.hero)
@@ -148,5 +163,13 @@
 	    renderHero(container, heroData);
 	    initHero(heroData);
 	});
+    });
+
+    document.addEventListener("i18n:changed", function () {
+	window.setTimeout(function () {
+	    if (window.app && window.app.hero && window.app.hero[0]) {
+		updateHeroText(window.app.hero[0]);
+	    }
+	}, 0);
     });
 })();

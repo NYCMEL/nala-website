@@ -343,3 +343,33 @@ h1.title::after {
   transition: transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
+
+@media (max-width: 991.98px) {
+  #header .navbar-collapse {
+    padding: 12px 0 4px; }
+  #header .navbar-collapse > .d-flex {
+    width: 100%;
+    display: block !important; }
+  #header .navbar-nav {
+    width: 100%;
+    align-items: stretch !important;
+    gap: 2px; }
+  #header .nav-item {
+    width: 100%; }
+  #header .nav-link {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 2px;
+    text-align: left; }
+  #header .nav-link i,
+  #header .nav-link .material-icons,
+  #header .mtk-header-alerts-wrap {
+    width: 24px;
+    min-width: 24px;
+    text-align: center; }
+  #nala-user-dd {
+    position: static !important;
+    width: 100%;
+    margin-top: 4px; } }

@@ -273,6 +273,30 @@ h1.title::after {
   height: auto;
   border-radius: 4px;
 }
+#MTK-hero .MTK-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+#MTK-hero .MTK-hero-watch-cta {
+  animation: nala-watch-cta-breathe 3.6s ease-in-out infinite;
+}
+@keyframes nala-watch-cta-breathe {
+  0%, 100% {
+    transform: translateY(0);
+    box-shadow: 0 0 0 rgba(169, 130, 18, 0);
+  }
+  45% {
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 5px rgba(169, 130, 18, 0.12);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #MTK-hero .MTK-hero-watch-cta {
+    animation: none;
+  }
+}
 #MTK-hero .MTK-hero-carousel {
   position: relative;
   display: block;

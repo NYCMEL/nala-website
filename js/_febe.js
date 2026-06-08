@@ -458,6 +458,11 @@ class _febe {
 	}
 	settings[tabId] = Object.assign({}, settings[tabId] || {}, values);
 	this.writeStoredSettings(settings);
+	if (tabId === "privacy") {
+	    document.dispatchEvent(new CustomEvent("nala:profile-updated", {
+		detail: { values: settings.privacy || {} }
+	    }));
+	}
 
 	if (!payload.guidedAutoAdvance && window.MTKMsgs && typeof MTKMsgs.show === "function") {
 	    const savedMessages = {

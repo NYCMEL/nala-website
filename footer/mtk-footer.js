@@ -191,6 +191,9 @@
 		    
 		    const platform = this.getAttribute('data-platform');
 		    const url = this.getAttribute('data-url');
+		    if (url && url !== '#') {
+			window.open(url, '_blank', 'noopener');
+		    }
 		    
 		    // Publish navigation event using wc object if available
 		    if (window.wc && typeof window.wc.publish === 'function') {

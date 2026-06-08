@@ -9,7 +9,7 @@ window.mtkSettingsConfig = {
       icon: "account_circle",
       title: "Personal Information",
       description: "Enter the personal contact details NALA should use if we need to reach you. These details are for your account, not for customers.",
-      nextStep: "Fill in your name and email address, then click Save personal information.",
+      nextStep: "Fill in your name and email address, then continue.",
       fields: [
         {
           id: "fullName",
@@ -66,7 +66,7 @@ window.mtkSettingsConfig = {
       icon: "business",
       title: "Business Information",
       description: "Enter the business details customers should see on your website, invoices, business card, and Google setup email.",
-      nextStep: "Fill in the required fields marked with an asterisk, then click Save business information. Next, open Services Offered.",
+      nextStep: "Fill in the required fields marked with an asterisk, then continue to Services Offered.",
       fields: [
         {
           id: "customerFacingBusinessName",
@@ -141,7 +141,7 @@ window.mtkSettingsConfig = {
       icon: "handyman",
       title: "Services Offered",
       description: "Tell customers where you work and which locksmith services you offer.",
-      nextStep: "Enter your service area, check every service you offer, then click Save services offered.",
+      nextStep: "Enter your service area and check every service you offer, then continue.",
       fields: [
         {
           id: "serviceArea",

@@ -87,7 +87,7 @@
 
 	    <div class="col-lg-7">
 		<figure class="biab-home-sample">
-		    <img src="img/home/biab-setup-sample.png" width="100%" alt="Business in a Box guided setup sample" data-i18n-alt="home.biab.imageAlt">
+		    <img src="img/home/biab-setup-sample.png" data-biab-screenshot data-src-en="img/home/biab-setup-sample.png" data-src-es="img/home/biab-setup-sample-es.svg" width="100%" alt="Business in a Box guided setup sample" data-i18n-alt="home.biab.imageAlt">
 		    <figcaption data-i18n="home.biab.caption">Business in a Box setup preview.</figcaption>
 		</figure>
 	    </div>
@@ -244,3 +244,17 @@
      background: transparent;
  }
 </style>
+
+<script>
+ (function () {
+     function updateBiabScreenshot() {
+	 var img = document.querySelector("[data-biab-screenshot]");
+	 if (!img) return;
+	 var lang = window.i18n && typeof window.i18n.getLang === "function" ? window.i18n.getLang() : "en";
+	 img.src = lang === "es" ? img.getAttribute("data-src-es") : img.getAttribute("data-src-en");
+     }
+     document.addEventListener("i18n:changed", updateBiabScreenshot);
+     document.addEventListener("include:loaded", function () { setTimeout(updateBiabScreenshot, 0); });
+     updateBiabScreenshot();
+ }());
+</script>

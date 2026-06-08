@@ -46,6 +46,7 @@
 }
 
 .mtk-contact__required-note,
+.mtk-contact__profile-note,
 .mtk-contact__field--full,
 .mtk-contact__actions {
   grid-column: 1 / -1;
@@ -58,6 +59,26 @@
   background: #fff8e8;
   color: #4b3b0d;
   font-size: 14px;
+}
+
+.mtk-contact__profile-note {
+  margin: 0;
+  padding: 12px;
+  border: 1px solid #eadfca;
+  border-radius: 6px;
+  background: #fffdfa;
+  color: #4b3b0d;
+  font-size: 14px;
+}
+
+.mtk-contact__profile-note button {
+  border: 0;
+  background: transparent;
+  color: #7a5e0c;
+  font-weight: 800;
+  padding: 0;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .mtk-contact__field {
@@ -82,13 +103,97 @@
   background: #fff;
 }
 
+.mtk-contact__editor {
+  border: 1px solid #cfc5a5;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.mtk-contact__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 8px;
+  border-bottom: 1px solid #eadfca;
+  background: #fffaf0;
+}
+
+.mtk-contact__toolbar button,
+.mtk-contact__image-button {
+  width: 36px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d8cba8;
+  border-radius: 5px;
+  background: #fff;
+  color: #241f16;
+  cursor: pointer;
+}
+
+.mtk-contact__toolbar button:hover,
+.mtk-contact__toolbar button:focus-visible,
+.mtk-contact__image-button:hover,
+.mtk-contact__image-button:focus-within {
+  border-color: #a98212;
+  outline: none;
+}
+
+.mtk-contact__image-button input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mtk-contact__message {
+  min-height: 190px;
+  padding: 12px;
+  font-weight: 400;
+  outline: none;
+}
+
+.mtk-contact__message:empty::before {
+  content: "Write your message here...";
+  color: #8b8170;
+}
+
+.mtk-contact__message img {
+  display: block;
+  max-width: min(100%, 420px);
+  height: auto;
+  margin: 10px 0;
+  border-radius: 6px;
+  border: 1px solid #eadfca;
+}
+
+.mtk-contact__attachments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 13px;
+  color: #5d584e;
+  font-weight: 600;
+}
+
+.mtk-contact__attachments span {
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: #f4efe2;
+}
+
 .mtk-contact__field textarea {
   resize: vertical;
 }
 
 .mtk-contact__field input:focus,
 .mtk-contact__field select:focus,
-.mtk-contact__field textarea:focus {
+.mtk-contact__field textarea:focus,
+.mtk-contact__editor:focus-within {
   border-color: #a98212;
   outline: 3px solid rgba(169, 130, 18, 0.22);
 }
