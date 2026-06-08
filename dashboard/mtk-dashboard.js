@@ -350,7 +350,6 @@
             const tools = [
                 { label: 'Default Offerings', icon: 'list_alt' },
                 { label: 'Website Builder', icon: 'language' },
-                { label: 'Logo Generator', icon: 'auto_awesome' },
                 { label: 'Business Card', icon: 'badge' },
                 { label: 'Invoices', icon: 'receipt_long' },
                 { label: 'Customer Reviews', icon: 'reviews' }
@@ -778,6 +777,12 @@
         const biabLockpickTracking = buildKitTrackingConfig('lockpick', lockpickTracking, hasBusiness);
 
         if (hasBusiness) {
+            const lockoutKitCard = lockoutTracking || {
+                icon: 'inventory_2',
+                title: _t('dashboard.gift.title', 'Track your lockout kit'),
+                description: _t('dashboard.gift.pending', 'Your complimentary lockout kit is tied to your Premium purchase. Tracking will appear here after the order is created.'),
+                buttons: []
+            };
             const options = [
                 {
                     id: 'active-premium',
@@ -785,7 +790,6 @@
                     title: _t('dashboard.option.premium.title', 'Premium'),
                     description: _t('dashboard.option.premium.active', 'Your Premium locksmith training access is active.'),
                     price: _t('dashboard.price.active', 'Active'),
-                    kitTracking: lockoutTracking,
                     clickable: false
                 },
                 {
@@ -795,6 +799,15 @@
                     description: _t('dashboard.option.business.active', 'Your Business in a Box package is active.'),
                     price: _t('dashboard.price.active', 'Active'),
                     kitTracking: biabLockpickTracking,
+                    clickable: false
+                },
+                {
+                    id: 'active-lockout-kit',
+                    icon: lockoutKitCard.icon || 'inventory_2',
+                    title: lockoutKitCard.title || _t('dashboard.gift.title', 'Track your lockout kit'),
+                    description: lockoutKitCard.description || _t('dashboard.gift.pending', 'Your complimentary lockout kit is tied to your Premium purchase. Tracking will appear here after the order is created.'),
+                    price: '',
+                    kitTracking: lockoutKitCard.buttons && lockoutKitCard.buttons.length ? lockoutKitCard : null,
                     clickable: false
                 }
             ];
@@ -806,6 +819,7 @@
         }
 
         if (hasPremium) {
+            const lockoutKitCard = lockoutTracking || null;
             const options = [
                 {
                     id: 'active-premium',
@@ -813,9 +827,17 @@
                     title: _t('dashboard.option.premium.title', 'Premium'),
                     description: _t('dashboard.option.premium.active', 'Your Premium locksmith training access is active.'),
                     price: _t('dashboard.price.active', 'Active'),
-                    kitTracking: lockoutTracking,
                     clickable: false
                 },
+                lockoutKitCard ? {
+                    id: 'active-lockout-kit',
+                    icon: lockoutKitCard.icon || 'inventory_2',
+                    title: lockoutKitCard.title || _t('dashboard.gift.title', 'Track your lockout kit'),
+                    description: lockoutKitCard.description || _t('dashboard.gift.pending', 'Your complimentary lockout kit is tied to your Premium purchase. Tracking will appear here after the order is created.'),
+                    price: '',
+                    kitTracking: lockoutKitCard.buttons && lockoutKitCard.buttons.length ? lockoutKitCard : null,
+                    clickable: false
+                } : null,
                 {
                     id: 'business-in-a-box-message',
                     variant: 'message',
@@ -830,7 +852,7 @@
                         }
                     ]
                 }
-            ];
+            ].filter(Boolean);
 
             return {
                 title: _t('dashboard.activeProducts', 'Your active products'),
@@ -868,9 +890,19 @@
         const session = window.wc && wc.session ? wc.session : {};
         const user = session.user || {};
         const dashboard = session.dashboard || {};
+        const profile = user.profile || user.personal_info || session.profile || session.personal_info || {};
+        const profileName = profile.fullName || profile.full_name || [profile.firstName || profile.first_name, profile.lastName || profile.last_name]
+            .filter(Boolean)
+            .join(' ')
+            .trim();
+        const userName = user.fullName || user.full_name || [user.firstName || user.first_name, user.lastName || user.last_name]
+            .filter(Boolean)
+            .join(' ')
+            .trim() || user.name;
+        const fullName = profileName || userName;
 
         try {
-            window.myConfig.user.fullName = user.name || 'User';
+            window.myConfig.user.fullName = fullName || 'User';
             window.myConfig.progress.percentage = Number(dashboard.progress || 0);
             const subscriptions = getDashboardPurchaseOptions();
             window.myConfig.subscriptions.title = subscriptions.title;
