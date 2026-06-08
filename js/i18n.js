@@ -1695,11 +1695,6 @@
       localizeHierarchyVideos(global.window.wc.session.hierarchy.parts);
     }
 
-    if (global.window && global.window.location) {
-      global.window.location.reload();
-      return;
-    }
-
     // 1. Translate the top-level document
     applyDOM();
 
