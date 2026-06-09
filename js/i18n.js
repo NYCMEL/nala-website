@@ -266,10 +266,6 @@
       en: 'Get Started',
       es: 'Comenzar'
     },
-    'hero.watchVideos': {
-      en: 'Watch Videos',
-      es: 'Ver videos'
-    },
     'hero.registerNow': {
       en: 'Register Now',
       es: 'Regístrate ahora'
