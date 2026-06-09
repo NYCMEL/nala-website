@@ -85,6 +85,21 @@
     function ensureWatchAura() {
 	const button = document.querySelector("#MTK-hero .MTK-hero-watch-cta");
 	if (!button) return;
+	const existingText = button.textContent.trim() || (window.i18n && typeof window.i18n.t === "function" ? window.i18n.t("hero.watchVideos") : "Watch Videos");
+
+	let label = button.querySelector(".MTK-hero-watch-label");
+	if (!label) {
+	    label = document.createElement("span");
+	    label.className = "MTK-hero-watch-label";
+	    label.setAttribute("data-i18n", "hero.watchVideos");
+	    Array.from(button.childNodes).forEach((node) => {
+		if (node.nodeType === Node.TEXT_NODE) node.remove();
+	    });
+	    button.insertBefore(label, button.firstChild);
+	}
+	label.textContent = existingText;
+	button.removeAttribute("data-i18n");
+	button.setAttribute("aria-label", existingText);
 
 	let wrap = button.closest(".MTK-hero-watch-wrap");
 	if (!wrap) {
@@ -167,12 +182,14 @@
 	const lhsTitle = document.querySelector("#MTK-hero .MTK-hero-title");
 	const lhsDesc = document.querySelector("#MTK-hero .MTK-hero-description");
 	const cta = document.querySelector("#MTK-hero [data-i18n='hero.cta']");
-	const watch = document.querySelector("#MTK-hero [data-i18n='hero.watchVideos']");
+	const watch = document.querySelector("#MTK-hero .MTK-hero-watch-label") || document.querySelector("#MTK-hero [data-i18n='hero.watchVideos']");
+	const watchButton = document.querySelector("#MTK-hero .MTK-hero-watch-cta");
 	if (lhsTitle) lhsTitle.textContent = heroData.title || "";
 	if (lhsDesc) lhsDesc.textContent = heroData.description || "";
 	if (window.i18n && typeof window.i18n.t === "function") {
 	    if (cta) cta.textContent = window.i18n.t("hero.cta");
 	    if (watch) watch.textContent = window.i18n.t("hero.watchVideos");
+	    if (watchButton) watchButton.setAttribute("aria-label", window.i18n.t("hero.watchVideos"));
 	}
     }
 

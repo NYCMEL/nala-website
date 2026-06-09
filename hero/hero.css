@@ -300,6 +300,16 @@ h1.title::after {
   animation: none !important;
   transform: none !important;
 }
+#MTK-hero .MTK-hero-watch-label {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  animation: none !important;
+  transform: none !important;
+  transition: none !important;
+  line-height: inherit;
+  pointer-events: none;
+}
 #MTK-hero .MTK-hero-watch-aura {
   position: absolute;
   inset: -4px;
