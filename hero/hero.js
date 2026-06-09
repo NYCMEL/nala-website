@@ -82,6 +82,26 @@
 	window.location.hash = 'register';
     }
 
+    function ensureWatchAura() {
+	const button = document.querySelector("#MTK-hero .MTK-hero-watch-cta");
+	if (!button) return;
+
+	let wrap = button.closest(".MTK-hero-watch-wrap");
+	if (!wrap) {
+	    wrap = document.createElement("span");
+	    wrap.className = "MTK-hero-watch-wrap";
+	    button.parentNode.insertBefore(wrap, button);
+	    wrap.appendChild(button);
+	}
+
+	if (!wrap.querySelector(".MTK-hero-watch-aura")) {
+	    const aura = document.createElement("span");
+	    aura.className = "MTK-hero-watch-aura";
+	    aura.setAttribute("aria-hidden", "true");
+	    wrap.appendChild(aura);
+	}
+    }
+
     function renderHeroImageCarousel(heroData) {
 	const rhs = document.querySelector("#MTK-hero .MTK-hero-rhs");
 	if (!rhs || !Array.isArray(heroData.images) || !heroData.images.length) return;
@@ -126,6 +146,7 @@
     function initHero(heroData) {
 	wc.log("hero: initHero...")
 	updateHeroText(heroData);
+	ensureWatchAura();
 
 	const lhsTitle = document.querySelector("#MTK-hero .MTK-hero-title");
 	const lhsDesc = document.querySelector("#MTK-hero .MTK-hero-description");

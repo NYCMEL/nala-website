@@ -279,10 +279,16 @@ h1.title::after {
   gap: 12px;
   align-items: center;
 }
+#MTK-hero .MTK-hero-watch-wrap {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  isolation: isolate;
+  line-height: 0;
+}
 #MTK-hero .MTK-hero-watch-cta {
   position: relative;
-  isolation: isolate;
-  overflow: visible !important;
+  z-index: 1;
   animation: none !important;
   transform: none !important;
   transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
@@ -290,18 +296,21 @@ h1.title::after {
 #MTK-hero .MTK-hero-watch-cta:hover, #MTK-hero .MTK-hero-watch-cta:focus, #MTK-hero .MTK-hero-watch-cta:active {
   transform: none !important;
 }
-#MTK-hero .MTK-hero-watch-cta::after {
-  content: "";
+#MTK-hero .MTK-hero-watch-cta::before, #MTK-hero .MTK-hero-watch-cta::after {
+  animation: none !important;
+  transform: none !important;
+}
+#MTK-hero .MTK-hero-watch-aura {
   position: absolute;
   inset: -4px;
-  z-index: -1;
-  border-radius: inherit;
+  z-index: 0;
+  border-radius: 8px;
   pointer-events: none;
   animation: nala-watch-cta-aura 3.4s ease-in-out infinite;
   transform: none;
   box-shadow: 0 0 0 0 rgba(169, 130, 18, 0.08), 0 0 0 0 rgba(169, 130, 18, 0);
 }
-#MTK-hero .MTK-hero-watch-cta:hover::after, #MTK-hero .MTK-hero-watch-cta:focus::after, #MTK-hero .MTK-hero-watch-cta:active::after {
+#MTK-hero .MTK-hero-watch-wrap:hover .MTK-hero-watch-aura, #MTK-hero .MTK-hero-watch-wrap:focus-within .MTK-hero-watch-aura {
   animation-play-state: paused;
 }
 @keyframes nala-watch-cta-aura {
@@ -319,7 +328,7 @@ h1.title::after {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  #MTK-hero .MTK-hero-watch-cta::after {
+  #MTK-hero .MTK-hero-watch-aura {
     animation: none;
   }
 }
