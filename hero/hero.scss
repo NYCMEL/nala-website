@@ -140,7 +140,7 @@
   }
 
   .MTK-hero-watch-cta {
-    animation: nala-watch-cta-blink 3.2s ease-in-out infinite;
+    animation: nala-watch-cta-aura 3.4s ease-in-out infinite;
 
     &:hover,
     &:focus {
@@ -155,18 +155,22 @@
   }
 }
 
-@keyframes nala-watch-cta-blink {
-  0%, 38%, 100% {
-    background: $color-white;
-    border-color: $color-gold;
-    color: $color-gold;
-    box-shadow: none;
+@keyframes nala-watch-cta-aura {
+  0%, 100% {
+    box-shadow:
+      0 0 0 0 rgba(169, 130, 18, 0.08),
+      0 0 0 0 rgba(169, 130, 18, 0);
   }
 
-  52%, 72% {
-    background: $color-gold;
-    border-color: $color-gold;
-    color: $color-white;
-    box-shadow: 0 0 0 3px rgba(169, 130, 18, 0.16);
+  45% {
+    box-shadow:
+      0 0 0 4px rgba(169, 130, 18, 0.18),
+      0 0 18px 2px rgba(169, 130, 18, 0.2);
+  }
+
+  70% {
+    box-shadow:
+      0 0 0 7px rgba(169, 130, 18, 0.08),
+      0 0 28px 4px rgba(169, 130, 18, 0.12);
   }
 }
