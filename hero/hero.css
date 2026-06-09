@@ -280,17 +280,24 @@ h1.title::after {
   align-items: center;
 }
 #MTK-hero .MTK-hero-watch-cta {
-  animation: nala-watch-cta-breathe 3.6s ease-in-out infinite;
+  animation: nala-watch-cta-blink 3.2s ease-in-out infinite;
 }
-@keyframes nala-watch-cta-breathe {
-  0%, 100% {
-    transform: translateY(0);
-    box-shadow: 0 0 0 rgba(169, 130, 18, 0);
+@keyframes nala-watch-cta-blink {
+  0%, 38%, 100% {
+    background: #ffffff;
+    border-color: #a98212;
+    color: #a98212;
+    box-shadow: none;
   }
-  45% {
-    transform: translateY(-1px);
-    box-shadow: 0 0 0 5px rgba(169, 130, 18, 0.12);
+  52%, 72% {
+    background: #a98212;
+    border-color: #a98212;
+    color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(169, 130, 18, 0.16);
   }
+}
+#MTK-hero .MTK-hero-watch-cta:hover, #MTK-hero .MTK-hero-watch-cta:focus {
+  animation-play-state: paused;
 }
 @media (prefers-reduced-motion: reduce) {
   #MTK-hero .MTK-hero-watch-cta {

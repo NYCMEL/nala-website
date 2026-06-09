@@ -131,4 +131,42 @@
 
     &.active { opacity: 1; transform: translateY(0); }
   }
+
+  .MTK-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .MTK-hero-watch-cta {
+    animation: nala-watch-cta-blink 3.2s ease-in-out infinite;
+
+    &:hover,
+    &:focus {
+      animation-play-state: paused;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .MTK-hero-watch-cta {
+      animation: none;
+    }
+  }
+}
+
+@keyframes nala-watch-cta-blink {
+  0%, 38%, 100% {
+    background: $color-white;
+    border-color: $color-gold;
+    color: $color-gold;
+    box-shadow: none;
+  }
+
+  52%, 72% {
+    background: $color-gold;
+    border-color: $color-gold;
+    color: $color-white;
+    box-shadow: 0 0 0 3px rgba(169, 130, 18, 0.16);
+  }
 }
