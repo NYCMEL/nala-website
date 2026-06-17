@@ -2,7 +2,7 @@ window.bettermeConfig = {
     app: {
 	name: "nala-locksmith-path",
 	brand: "NALA",
-	brandLogo: "assets/nala-logo.png",
+	brandLogo: "assets/nala-logo-black.png",
 	headerTitle: "Path Builder",
 	backLabel: "Go back",
 	backText: "<",
