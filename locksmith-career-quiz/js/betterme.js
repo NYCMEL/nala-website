@@ -45,6 +45,41 @@ class MtkBetterme {
     bind() {
 	this.backBtn.addEventListener("click", this.previous.bind(this));
 	this.continueBtn.addEventListener("click", this.next.bind(this));
+	document.addEventListener("keydown", this.handleKeydown.bind(this), true);
+    }
+
+    handleKeydown(event) {
+	if (event.key !== "Enter" || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || event.isComposing) {
+	    return;
+	}
+
+	const target = event.target;
+	if (target && target.tagName && target.tagName.toLowerCase() === "textarea") {
+	    return;
+	}
+
+	if (target && target.closest && target.closest("[data-betterme-restart]")) {
+	    event.preventDefault();
+	    return;
+	}
+
+	const canContinue = this.footer.classList.contains("is-visible") && !this.continueBtn.disabled;
+	if (canContinue) {
+	    event.preventDefault();
+	    this.next();
+	}
+    }
+
+    renderBrand() {
+	const logo = this.config.app.brandLogo;
+	const label = this.config.app.brand || "";
+
+	if (logo) {
+	    this.brand.innerHTML = `<img class="betterme__brand-logo" src="${this.escape(logo)}" alt="${this.escape(label)}" />`;
+	    return;
+	}
+
+	this.brand.textContent = label;
     }
 
     onMessage(message) {
@@ -74,7 +109,7 @@ class MtkBetterme {
     render() {
 	const screen = this.getScreen();
 
-	this.brand.textContent = this.config.app.brand;
+	this.renderBrand();
 	this.headerTitle.textContent = this.state.current === 0 ? "" : this.config.app.headerTitle;
 	this.backBtn.textContent = this.config.app.backText;
 	this.backBtn.setAttribute("aria-label", this.config.app.backLabel);
@@ -206,30 +241,69 @@ class MtkBetterme {
         <h1 class="betterme__title">${this.escape(screen.title)}</h1>
         ${this.renderDescription(screen)}
         <form class="betterme__form" novalidate>
-          ${(screen.fields || []).map((field) => `
-            <label class="betterme__field">
-              <input
-                class="betterme__field-input"
-                name="${this.escape(field.name)}"
-                type="${this.escape(field.type)}"
-                autocomplete="${this.escape(field.autocomplete || "off")}"
-                placeholder=" "
-                value="${this.escape(current[field.name] || "")}"
-                ${field.required ? "required" : ""}
-              />
-              <span class="betterme__field-label">${this.escape(field.label)}</span>
-            </label>
-          `).join("")}
+          ${(screen.fields || []).map((field) => this.renderField(field, current[field.name] || "")).join("")}
         </form>
       </section>
     `;
 
-	this.main.querySelectorAll(".betterme__field-input").forEach((input) => {
-	    input.addEventListener("input", () => {
+	const form = this.main.querySelector(".betterme__form");
+	if (form) {
+	    form.addEventListener("submit", (event) => {
+		event.preventDefault();
 		this.collectForm(screen);
 		this.updateFooter(screen);
+		if (this.hasValidSelection(screen)) {
+		    this.next();
+		}
 	    });
+	}
+
+	this.main.querySelectorAll(".betterme__field-input").forEach((input) => {
+	    const sync = () => {
+		input.classList.toggle("is-filled", input.value.trim().length > 0);
+		this.collectForm(screen);
+		this.updateFooter(screen);
+	    };
+
+	    input.addEventListener("input", sync);
+	    input.addEventListener("change", sync);
 	});
+    }
+
+    renderField(field, value) {
+	if (field.type === "select") {
+	    const placeholder = field.placeholder || field.label;
+	    return `
+            <label class="betterme__field">
+              <select
+                class="betterme__field-input betterme__field-select ${value ? "is-filled" : ""}"
+                name="${this.escape(field.name)}"
+                ${field.required ? "required" : ""}
+              >
+                <option value="" disabled ${value ? "" : "selected"}>${this.escape(placeholder)}</option>
+                ${(field.options || []).map((option) => `
+                  <option value="${this.escape(option.value)}" ${option.value === value ? "selected" : ""}>${this.escape(option.label)}</option>
+                `).join("")}
+              </select>
+              <span class="betterme__field-label">${this.escape(field.label)}</span>
+            </label>
+          `;
+	}
+
+	return `
+            <label class="betterme__field">
+              <input
+                class="betterme__field-input ${value ? "is-filled" : ""}"
+                name="${this.escape(field.name)}"
+                type="${this.escape(field.type)}"
+                autocomplete="${this.escape(field.autocomplete || "off")}"
+                placeholder=" "
+                value="${this.escape(value)}"
+                ${field.required ? "required" : ""}
+              />
+              <span class="betterme__field-label">${this.escape(field.label)}</span>
+            </label>
+          `;
     }
 
     renderEyebrow(screen) {

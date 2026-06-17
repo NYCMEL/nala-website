@@ -29,7 +29,8 @@ body {
   box-sizing: border-box; }
 
 .betterme button,
-.betterme input {
+.betterme input,
+.betterme select {
   font: inherit; }
 
 .betterme button {
@@ -54,7 +55,17 @@ body {
   line-height: 1;
   font-weight: 700;
   letter-spacing: -1.5px;
-  white-space: nowrap; }
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  min-width: 0; }
+
+.betterme .betterme__brand-logo {
+  width: 166px;
+  max-width: 34vw;
+  max-height: 56px;
+  display: block;
+  object-fit: contain; }
 
 .betterme .betterme__header-title {
   justify-self: center;
@@ -304,8 +315,17 @@ body {
 
 .betterme .betterme__field-input:focus {
   border-color: var(--betterme-primary);
-  background: var(--betterme-white);
+  background-color: var(--betterme-white);
   box-shadow: 0 16px 32px rgba(47, 27, 17, 0.08); }
+
+.betterme .betterme__field-select {
+  appearance: none;
+  padding-right: 48px;
+  cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, var(--betterme-primary) 50%), linear-gradient(135deg, var(--betterme-primary) 50%, transparent 50%);
+  background-position: calc(100% - 25px) 31px, calc(100% - 17px) 31px;
+  background-repeat: no-repeat;
+  background-size: 8px 8px, 8px 8px; }
 
 .betterme .betterme__field-label {
   position: absolute;
@@ -317,7 +337,9 @@ body {
   transition: transform 160ms ease, font-size 160ms ease, color 160ms ease; }
 
 .betterme .betterme__field-input:focus + .betterme__field-label,
-.betterme .betterme__field-input:not(:placeholder-shown) + .betterme__field-label {
+.betterme .betterme__field-input:not(:placeholder-shown) + .betterme__field-label,
+.betterme .betterme__field-input.is-filled + .betterme__field-label,
+.betterme .betterme__field-select + .betterme__field-label {
   transform: translateY(-14px);
   font-size: 12px;
   color: var(--betterme-primary); }
@@ -491,6 +513,9 @@ body {
     height: 48px; }
   .betterme .betterme__brand {
     font-size: 25px; }
+  .betterme .betterme__brand-logo {
+    width: 122px;
+    max-height: 44px; }
   .betterme .betterme__header-title {
     display: none; }
   .betterme .betterme__main {
