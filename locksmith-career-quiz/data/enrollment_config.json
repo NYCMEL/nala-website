@@ -1,0 +1,2664 @@
+{
+  "version": "20260706201843",
+  "generatedAt": "2026-07-06T20:18:43.958200+00:00",
+  "sourceFiles": {
+    "docx": "NALA_Complete_Output_Texts_Blueprints_Overlays_Themes.docx",
+    "xlsx": "NALA_Enrollment_Complete_Scoring_Matrix.xlsx"
+  },
+  "app": {
+    "brand": "NALA",
+    "name": "nala-enrollment-engine",
+    "title": "Enrollment Path Builder",
+    "averageServiceValue": 220,
+    "disclaimer": "All results are educational planning examples, not income guarantees. Actual outcomes depend on training, market demand, licensing rules, tools, customer acquisition, consistency, and local conditions."
+  },
+  "scoreKeys": {
+    "blueprints": [
+      {
+        "key": "BUSINESS",
+        "label": "Business Owner"
+      },
+      {
+        "key": "CAREER_CHANGE",
+        "label": "Career Change"
+      },
+      {
+        "key": "SIDE_INCOME",
+        "label": "Side Income"
+      },
+      {
+        "key": "EMPLOYMENT",
+        "label": "Employment"
+      }
+    ],
+    "overlays": [
+      {
+        "key": "FAST_TRACK",
+        "label": "Fast Track"
+      },
+      {
+        "key": "CONFIDENCE",
+        "label": "Confidence Accelerator"
+      }
+    ],
+    "themes": [
+      {
+        "key": "INCOME",
+        "label": "Financial Growth"
+      },
+      {
+        "key": "OWNERSHIP",
+        "label": "Ownership & Independence"
+      },
+      {
+        "key": "SECURITY",
+        "label": "Security & Stability"
+      },
+      {
+        "key": "FAMILY",
+        "label": "Family Security"
+      },
+      {
+        "key": "FRESH_START",
+        "label": "Fresh Start"
+      },
+      {
+        "key": "MOMENTUM",
+        "label": "Momentum"
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "sourceId": "Q1",
+      "title": "What best describes your current work situation?",
+      "description": "",
+      "type": "single_choice",
+      "required": true,
+      "options": [
+        {
+          "id": "q1_full_time",
+          "sourceId": "q1_full_time",
+          "label": "Full-time employed",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 1,
+            "SIDE_INCOME": 3,
+            "EMPLOYMENT": 1,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 1,
+            "OWNERSHIP": 0,
+            "SECURITY": 1,
+            "FAMILY": 1,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Stable employment means side-income is likely; small career-change and employment signals remain.",
+          "uiCopyEffect": "Mention training can fit around current job."
+        },
+        {
+          "id": "q1_part_time",
+          "sourceId": "q1_part_time",
+          "label": "Part-time employed",
+          "scores": {
+            "BUSINESS": 1,
+            "CAREER_CHANGE": 2,
+            "SIDE_INCOME": 2,
+            "EMPLOYMENT": 2,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 2,
+            "OWNERSHIP": 0,
+            "SECURITY": 1,
+            "FAMILY": 1,
+            "FRESH_START": 1,
+            "MOMENTUM": 0
+          },
+          "rationale": "Part-time status can support transition, better employment, or added income.",
+          "uiCopyEffect": "Keep language flexible; do not overcommit to one path."
+        },
+        {
+          "id": "q1_self_employed",
+          "sourceId": "q1_self_employed",
+          "label": "Self-employed",
+          "scores": {
+            "BUSINESS": 4,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 1,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 2,
+            "OWNERSHIP": 3,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 1
+          },
+          "rationale": "Already independent; strong business ownership signal.",
+          "uiCopyEffect": "Emphasize adding locksmithing as an expandable service/business."
+        },
+        {
+          "id": "q1_between_jobs",
+          "sourceId": "q1_between_jobs",
+          "label": "Between jobs",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 4,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 3,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 2,
+            "OWNERSHIP": 0,
+            "SECURITY": 2,
+            "FAMILY": 1,
+            "FRESH_START": 3,
+            "MOMENTUM": 2
+          },
+          "rationale": "Between jobs strongly suggests career transition and job-seeking.",
+          "uiCopyEffect": "Use respectful fresh-start language; avoid sounding negative."
+        },
+        {
+          "id": "q1_student",
+          "sourceId": "q1_student",
+          "label": "Student",
+          "scores": {
+            "BUSINESS": 1,
+            "CAREER_CHANGE": 2,
+            "SIDE_INCOME": 1,
+            "EMPLOYMENT": 2,
+            "FAST_TRACK": 1,
+            "CONFIDENCE": 0,
+            "INCOME": 1,
+            "OWNERSHIP": 1,
+            "SECURITY": 1,
+            "FAMILY": 0,
+            "FRESH_START": 2,
+            "MOMENTUM": 1
+          },
+          "rationale": "Student likely exploring future career while able to learn.",
+          "uiCopyEffect": "Emphasize early skill-building and practical career options."
+        },
+        {
+          "id": "q1_retired",
+          "sourceId": "q1_retired",
+          "label": "Retired",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 4,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 1,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Retired users are more likely looking for supplemental/flexible income than full career change.",
+          "uiCopyEffect": "Emphasize flexible pace and optional part-time work."
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "sourceId": "Q2",
+      "title": "What made you decide to explore new opportunities today?",
+      "description": "",
+      "type": "single_choice",
+      "required": true,
+      "options": [
+        {
+          "id": "q2_more_money",
+          "sourceId": "q2_more_money",
+          "label": "I want to earn more money",
+          "scores": {
+            "BUSINESS": 2,
+            "CAREER_CHANGE": 1,
+            "SIDE_INCOME": 3,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 4,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 1
+          },
+          "rationale": "Direct income motive; strongest side-income and financial-growth signal.",
+          "uiCopyEffect": "Revenue examples should be prominent."
+        },
+        {
+          "id": "q2_flexibility",
+          "sourceId": "q2_flexibility",
+          "label": "I want more flexibility",
+          "scores": {
+            "BUSINESS": 2,
+            "CAREER_CHANGE": 1,
+            "SIDE_INCOME": 2,
+            "EMPLOYMENT": 1,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 1,
+            "OWNERSHIP": 2,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 1
+          },
+          "rationale": "Flexibility can mean business ownership or side-income.",
+          "uiCopyEffect": "Highlight learning on schedule and flexible work paths."
+        },
+        {
+          "id": "q2_new_career",
+          "sourceId": "q2_new_career",
+          "label": "I want a new career",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 4,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 2,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 1,
+            "OWNERSHIP": 0,
+            "SECURITY": 2,
+            "FAMILY": 0,
+            "FRESH_START": 4,
+            "MOMENTUM": 1
+          },
+          "rationale": "Clear career-change intent.",
+          "uiCopyEffect": "Use fresh-start language."
+        },
+        {
+          "id": "q2_stability",
+          "sourceId": "q2_stability",
+          "label": "I want more stability",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 2,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 4,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 4,
+            "FAMILY": 1,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Stability strongly supports Employment blueprint and security theme.",
+          "uiCopyEffect": "Emphasize in-demand trade and reliable career path."
+        },
+        {
+          "id": "q2_curious",
+          "sourceId": "q2_curious",
+          "label": "I'm curious and exploring",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 1,
+            "SIDE_INCOME": 1,
+            "EMPLOYMENT": 1,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 1,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Low commitment; exploratory mode.",
+          "uiCopyEffect": "Use light, low-pressure language."
+        }
+      ]
+    },
+    {
+      "id": "q3",
+      "sourceId": "Q3",
+      "title": "If nothing changed over the next 12 months, how would you feel?",
+      "description": "",
+      "type": "single_choice",
+      "required": true,
+      "options": [
+        {
+          "id": "q3_devastated",
+          "sourceId": "q3_devastated",
+          "label": "Devastated",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 2,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 1,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 3,
+            "MOMENTUM": 5
+          },
+          "rationale": "Very high urgency and dissatisfaction; be supportive, not alarmist.",
+          "uiCopyEffect": "Increase action-oriented copy while maintaining encouragement."
+        },
+        {
+          "id": "q3_frustrated",
+          "sourceId": "q3_frustrated",
+          "label": "Frustrated",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 2,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 2,
+            "MOMENTUM": 4
+          },
+          "rationale": "High urgency but not extreme.",
+          "uiCopyEffect": "Mention that a clear next step can reduce frustration."
+        },
+        {
+          "id": "q3_disappointed",
+          "sourceId": "q3_disappointed",
+          "label": "Disappointed",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 1,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 1,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 1,
+            "MOMENTUM": 3
+          },
+          "rationale": "Moderate urgency.",
+          "uiCopyEffect": "Use constructive progress language."
+        },
+        {
+          "id": "q3_neutral",
+          "sourceId": "q3_neutral",
+          "label": "Neutral",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "No strong emotional urgency.",
+          "uiCopyEffect": "Keep copy practical and factual."
+        },
+        {
+          "id": "q3_fine",
+          "sourceId": "q3_fine",
+          "label": "Fine",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 1,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "User may not need major transition; side-income/flexible exploration likely.",
+          "uiCopyEffect": "Use low-pressure, opportunity-focused copy."
+        }
+      ]
+    },
+    {
+      "id": "q4",
+      "sourceId": "Q4",
+      "title": "One year from today, what improvement would matter most?",
+      "description": "",
+      "type": "single_choice",
+      "required": true,
+      "options": [
+        {
+          "id": "q4_higher_income",
+          "sourceId": "q4_higher_income",
+          "label": "Higher income",
+          "scores": {
+            "BUSINESS": 1,
+            "CAREER_CHANGE": 1,
+            "SIDE_INCOME": 2,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 4,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 1
+          },
+          "rationale": "Income goal is primary.",
+          "uiCopyEffect": "Move revenue/service-value examples higher."
+        },
+        {
+          "id": "q4_better_schedule",
+          "sourceId": "q4_better_schedule",
+          "label": "A better schedule",
+          "scores": {
+            "BUSINESS": 2,
+            "CAREER_CHANGE": 1,
+            "SIDE_INCOME": 2,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 2,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Schedule control suggests flexible work or independent work.",
+          "uiCopyEffect": "Highlight self-paced learning and flexible work options."
+        },
+        {
+          "id": "q4_less_stress",
+          "sourceId": "q4_less_stress",
+          "label": "Less stress",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 2,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 3,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 1,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 3,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "User wants stability and reduced pressure.",
+          "uiCopyEffect": "Use calmer, less aggressive CTA language."
+        },
+        {
+          "id": "q4_independence",
+          "sourceId": "q4_independence",
+          "label": "More independence",
+          "scores": {
+            "BUSINESS": 4,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 1,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 4,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 1
+          },
+          "rationale": "Independence strongly indicates business ownership.",
+          "uiCopyEffect": "Emphasize control, customers, and growth."
+        },
+        {
+          "id": "q4_job_security",
+          "sourceId": "q4_job_security",
+          "label": "Job security",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 2,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 4,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 4,
+            "FAMILY": 1,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Security points to Employment blueprint.",
+          "uiCopyEffect": "Emphasize stable profession and demand."
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "sourceId": "Q5",
+      "title": "How satisfied are you with your current income/career? (1 = not satisfied, 10 = very satisfied)",
+      "description": "",
+      "type": "single_choice",
+      "required": true,
+      "options": [
+        {
+          "id": "q5_1",
+          "sourceId": "q5_1",
+          "label": "1",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 4,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 2,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 4,
+            "MOMENTUM": 3
+          },
+          "rationale": "Very low satisfaction; strong transition and urgency signal.",
+          "uiCopyEffect": "Use satisfaction level to tune urgency and emotional framing."
+        },
+        {
+          "id": "q5_2",
+          "sourceId": "q5_2",
+          "label": "2",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 4,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 2,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 4,
+            "MOMENTUM": 3
+          },
+          "rationale": "Very low satisfaction; strong transition and urgency signal.",
+          "uiCopyEffect": "Use satisfaction level to tune urgency and emotional framing."
+        },
+        {
+          "id": "q5_3",
+          "sourceId": "q5_3",
+          "label": "3",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 3,
+            "SIDE_INCOME": 1,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 2,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 3,
+            "MOMENTUM": 2
+          },
+          "rationale": "Low satisfaction; likely wants change or income improvement.",
+          "uiCopyEffect": "Use satisfaction level to tune urgency and emotional framing."
+        },
+        {
+          "id": "q5_4",
+          "sourceId": "q5_4",
+          "label": "4",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 3,
+            "SIDE_INCOME": 1,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 2,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 3,
+            "MOMENTUM": 2
+          },
+          "rationale": "Low satisfaction; likely wants change or income improvement.",
+          "uiCopyEffect": "Use satisfaction level to tune urgency and emotional framing."
+        },
+        {
+          "id": "q5_5",
+          "sourceId": "q5_5",
+          "label": "5",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 2,
+            "SIDE_INCOME": 2,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 1,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 1,
+            "MOMENTUM": 1
+          },
+          "rationale": "Moderate satisfaction; user may want improvement rather than full replacement.",
+          "uiCopyEffect": "Use satisfaction level to tune urgency and emotional framing."
+        },
+        {
+          "id": "q5_6",
+          "sourceId": "q5_6",
+          "label": "6",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 2,
+            "SIDE_INCOME": 2,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 1,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 1,
+            "MOMENTUM": 1
+          },
+          "rationale": "Moderate satisfaction; user may want improvement rather than full replacement.",
+          "uiCopyEffect": "Use satisfaction level to tune urgency and emotional framing."
+        },
+        {
+          "id": "q5_7",
+          "sourceId": "q5_7",
+          "label": "7",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 2,
+            "EMPLOYMENT": 1,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 1,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Generally satisfied; side-income or professional skill-building is safer framing.",
+          "uiCopyEffect": "Use satisfaction level to tune urgency and emotional framing."
+        },
+        {
+          "id": "q5_8",
+          "sourceId": "q5_8",
+          "label": "8",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 2,
+            "EMPLOYMENT": 1,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 1,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Generally satisfied; side-income or professional skill-building is safer framing.",
+          "uiCopyEffect": "Use satisfaction level to tune urgency and emotional framing."
+        },
+        {
+          "id": "q5_9",
+          "sourceId": "q5_9",
+          "label": "9",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 1,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "High satisfaction; position NALA as opportunity, not rescue.",
+          "uiCopyEffect": "Use satisfaction level to tune urgency and emotional framing."
+        },
+        {
+          "id": "q5_10",
+          "sourceId": "q5_10",
+          "label": "10",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 1,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "High satisfaction; position NALA as opportunity, not rescue.",
+          "uiCopyEffect": "Use satisfaction level to tune urgency and emotional framing."
+        }
+      ]
+    },
+    {
+      "id": "q6",
+      "sourceId": "Q6",
+      "title": "What monthly income goal would feel meaningful to you?",
+      "description": "",
+      "type": "single_choice",
+      "required": true,
+      "options": [
+        {
+          "id": "q6_4000",
+          "sourceId": "q6_4000",
+          "label": "$4,000/month",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 1,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 1,
+            "OWNERSHIP": 0,
+            "SECURITY": 1,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Modest goal; stable employment may be enough.",
+          "uiCopyEffect": "Use practical career language."
+        },
+        {
+          "id": "q6_6000",
+          "sourceId": "q6_6000",
+          "label": "$6,000/month",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 1,
+            "EMPLOYMENT": 1,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 2,
+            "OWNERSHIP": 0,
+            "SECURITY": 1,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Moderate income goal.",
+          "uiCopyEffect": "Use balanced income and stability language."
+        },
+        {
+          "id": "q6_8000",
+          "sourceId": "q6_8000",
+          "label": "$8,000/month",
+          "scores": {
+            "BUSINESS": 1,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 2,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 3,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Higher goal; side-income and growth framing fit.",
+          "uiCopyEffect": "Show service-value examples."
+        },
+        {
+          "id": "q6_10000",
+          "sourceId": "q6_10000",
+          "label": "$10,000/month",
+          "scores": {
+            "BUSINESS": 2,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 2,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 4,
+            "OWNERSHIP": 1,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Ambitious goal likely requires business or strong volume.",
+          "uiCopyEffect": "Emphasize growth path, not guarantee."
+        },
+        {
+          "id": "q6_12000_plus",
+          "sourceId": "q6_12000_plus",
+          "label": "$12,000+/month",
+          "scores": {
+            "BUSINESS": 3,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 5,
+            "OWNERSHIP": 2,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Very ambitious; business ownership framing strongest.",
+          "uiCopyEffect": "Use careful income-potential wording; avoid guarantees."
+        }
+      ]
+    },
+    {
+      "id": "q7",
+      "sourceId": "Q7",
+      "title": "What appeals most to you about locksmithing?",
+      "description": "",
+      "type": "single_choice",
+      "required": true,
+      "options": [
+        {
+          "id": "q7_helping",
+          "sourceId": "q7_helping",
+          "label": "Helping people",
+          "scores": {
+            "BUSINESS": 1,
+            "CAREER_CHANGE": 1,
+            "SIDE_INCOME": 1,
+            "EMPLOYMENT": 2,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 1,
+            "FAMILY": 3,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Service motive supports employment and family/community framing.",
+          "uiCopyEffect": "Add human-service language."
+        },
+        {
+          "id": "q7_hands_on",
+          "sourceId": "q7_hands_on",
+          "label": "Hands-on work",
+          "scores": {
+            "BUSINESS": 1,
+            "CAREER_CHANGE": 2,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 3,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 2,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Hands-on skill fits stable trade and employment.",
+          "uiCopyEffect": "Emphasize practical skill and certification."
+        },
+        {
+          "id": "q7_business",
+          "sourceId": "q7_business",
+          "label": "Building a business",
+          "scores": {
+            "BUSINESS": 5,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 2,
+            "OWNERSHIP": 4,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 1
+          },
+          "rationale": "Direct business signal.",
+          "uiCopyEffect": "Business copy should dominate."
+        },
+        {
+          "id": "q7_flexible",
+          "sourceId": "q7_flexible",
+          "label": "Flexible schedule",
+          "scores": {
+            "BUSINESS": 2,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 3,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 2,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Flexibility commonly fits side-income or independent work.",
+          "uiCopyEffect": "Emphasize learning/work flexibility."
+        },
+        {
+          "id": "q7_ai_resistant",
+          "sourceId": "q7_ai_resistant",
+          "label": "A valuable AI-resistant skill",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 1,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 4,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 3,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Durable trade/security motive.",
+          "uiCopyEffect": "Use stable future and practical trade language."
+        }
+      ]
+    },
+    {
+      "id": "q8",
+      "sourceId": "Q8",
+      "title": "Have you ever considered owning your own business?",
+      "description": "",
+      "type": "single_choice",
+      "required": true,
+      "options": [
+        {
+          "id": "q8_already",
+          "sourceId": "q8_already",
+          "label": "I already own one",
+          "scores": {
+            "BUSINESS": 5,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 2,
+            "OWNERSHIP": 5,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 2
+          },
+          "rationale": "Very strong entrepreneur signal.",
+          "uiCopyEffect": "Speak to expansion and adding locksmith services."
+        },
+        {
+          "id": "q8_definitely",
+          "sourceId": "q8_definitely",
+          "label": "Yes, definitely",
+          "scores": {
+            "BUSINESS": 4,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 1,
+            "OWNERSHIP": 4,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 2
+          },
+          "rationale": "Strong business intent.",
+          "uiCopyEffect": "Use direct business-owner CTA."
+        },
+        {
+          "id": "q8_maybe",
+          "sourceId": "q8_maybe",
+          "label": "Maybe",
+          "scores": {
+            "BUSINESS": 2,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 1,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 1,
+            "INCOME": 0,
+            "OWNERSHIP": 2,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Open to business but not certain.",
+          "uiCopyEffect": "Introduce business as possible path without pressure."
+        },
+        {
+          "id": "q8_probably_not",
+          "sourceId": "q8_probably_not",
+          "label": "Probably not",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 1,
+            "EMPLOYMENT": 2,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 2,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Prefers not to own business.",
+          "uiCopyEffect": "Avoid entrepreneurship-heavy copy unless other scores dominate."
+        },
+        {
+          "id": "q8_no",
+          "sourceId": "q8_no",
+          "label": "No",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 4,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 3,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Strong non-business preference.",
+          "uiCopyEffect": "Use employment/stability language."
+        }
+      ]
+    },
+    {
+      "id": "q9",
+      "sourceId": "Q9",
+      "title": "How many hours per week could you realistically study?",
+      "description": "",
+      "type": "single_choice",
+      "required": true,
+      "options": [
+        {
+          "id": "q9_2_4",
+          "sourceId": "q9_2_4",
+          "label": "2–4 hours/week",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 2,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 1,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Low availability; side-income/slow pace fits.",
+          "uiCopyEffect": "Show flexible timeline and avoid fast-track."
+        },
+        {
+          "id": "q9_5_8",
+          "sourceId": "q9_5_8",
+          "label": "5–8 hours/week",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 1,
+            "EMPLOYMENT": 1,
+            "FAST_TRACK": 2,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 1
+          },
+          "rationale": "Moderate availability.",
+          "uiCopyEffect": "Recommend standard study pace."
+        },
+        {
+          "id": "q9_8_12",
+          "sourceId": "q9_8_12",
+          "label": "8–12 hours/week",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 1,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 1,
+            "FAST_TRACK": 4,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 2
+          },
+          "rationale": "Strong availability.",
+          "uiCopyEffect": "Consider accelerated timeline if readiness also high."
+        },
+        {
+          "id": "q9_12_plus",
+          "sourceId": "q9_12_plus",
+          "label": "12+ hours/week",
+          "scores": {
+            "BUSINESS": 1,
+            "CAREER_CHANGE": 1,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 5,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 3
+          },
+          "rationale": "High availability; strong fast-track signal.",
+          "uiCopyEffect": "Apply Fast Track if threshold met."
+        }
+      ]
+    },
+    {
+      "id": "q10",
+      "sourceId": "Q10",
+      "title": "What is your biggest concern about getting started?",
+      "description": "",
+      "type": "single_choice",
+      "required": true,
+      "options": [
+        {
+          "id": "q10_time",
+          "sourceId": "q10_time",
+          "label": "Time",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 1,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 1,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Time concern suggests flexible pacing.",
+          "uiCopyEffect": "Emphasize self-paced learning."
+        },
+        {
+          "id": "q10_money",
+          "sourceId": "q10_money",
+          "label": "Money",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 2,
+            "INCOME": 2,
+            "OWNERSHIP": 0,
+            "SECURITY": 1,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Financial hesitation; address ROI without pressure.",
+          "uiCopyEffect": "Add affordability/value reassurance."
+        },
+        {
+          "id": "q10_confidence",
+          "sourceId": "q10_confidence",
+          "label": "Confidence",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 5,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 1,
+            "MOMENTUM": 0
+          },
+          "rationale": "Direct confidence concern.",
+          "uiCopyEffect": "Apply Confidence Accelerator if threshold met."
+        },
+        {
+          "id": "q10_knowledge",
+          "sourceId": "q10_knowledge",
+          "label": "Lack of knowledge",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 4,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 1,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Beginner concern.",
+          "uiCopyEffect": "Explain no prior experience required."
+        },
+        {
+          "id": "q10_start",
+          "sourceId": "q10_start",
+          "label": "Not knowing where to start",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 4,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 1
+          },
+          "rationale": "Needs structure and plan.",
+          "uiCopyEffect": "Emphasize guided path and next milestone."
+        }
+      ]
+    },
+    {
+      "id": "q11",
+      "sourceId": "Q11",
+      "title": "What would help you move forward?",
+      "description": "",
+      "type": "single_choice",
+      "required": true,
+      "options": [
+        {
+          "id": "q11_plan",
+          "sourceId": "q11_plan",
+          "label": "A clear step-by-step plan",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 2,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 1,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 2
+          },
+          "rationale": "Structure reduces friction.",
+          "uiCopyEffect": "Highlight guided curriculum."
+        },
+        {
+          "id": "q11_support",
+          "sourceId": "q11_support",
+          "label": "Support and encouragement",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 4,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 1,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Needs reassurance.",
+          "uiCopyEffect": "Add supportive tone and confidence copy."
+        },
+        {
+          "id": "q11_confidence",
+          "sourceId": "q11_confidence",
+          "label": "More confidence that I can do it",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 5,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 1
+          },
+          "rationale": "Direct confidence need.",
+          "uiCopyEffect": "Confidence Accelerator likely."
+        },
+        {
+          "id": "q11_flexibility",
+          "sourceId": "q11_flexibility",
+          "label": "Flexible learning",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 2,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 1,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Flexibility matters.",
+          "uiCopyEffect": "Emphasize self-paced access."
+        },
+        {
+          "id": "q11_guidance",
+          "sourceId": "q11_guidance",
+          "label": "Expert guidance",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 1,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 3,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 1,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Wants authority/training support.",
+          "uiCopyEffect": "Mention instructor/expert guidance."
+        }
+      ]
+    },
+    {
+      "id": "q12",
+      "sourceId": "Q12",
+      "title": "If you became a locksmith, what would excite you most?",
+      "description": "",
+      "type": "single_choice",
+      "required": true,
+      "options": [
+        {
+          "id": "q12_helping",
+          "sourceId": "q12_helping",
+          "label": "Helping people solve urgent problems",
+          "scores": {
+            "BUSINESS": 1,
+            "CAREER_CHANGE": 1,
+            "SIDE_INCOME": 1,
+            "EMPLOYMENT": 2,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 1,
+            "FAMILY": 2,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Service motive.",
+          "uiCopyEffect": "Use community/helping copy."
+        },
+        {
+          "id": "q12_own_boss",
+          "sourceId": "q12_own_boss",
+          "label": "Being my own boss",
+          "scores": {
+            "BUSINESS": 5,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 5,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 1
+          },
+          "rationale": "Strongest business signal.",
+          "uiCopyEffect": "Business-owner blueprint should likely win if repeated."
+        },
+        {
+          "id": "q12_earning",
+          "sourceId": "q12_earning",
+          "label": "Earning more money",
+          "scores": {
+            "BUSINESS": 2,
+            "CAREER_CHANGE": 1,
+            "SIDE_INCOME": 3,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 4,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Income motive.",
+          "uiCopyEffect": "Financial growth theme likely."
+        },
+        {
+          "id": "q12_flexible_hours",
+          "sourceId": "q12_flexible_hours",
+          "label": "Flexible hours",
+          "scores": {
+            "BUSINESS": 2,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 3,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 2,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Flexible schedule motive.",
+          "uiCopyEffect": "Use side-income/ownership copy depending max blueprint."
+        },
+        {
+          "id": "q12_learning_trade",
+          "sourceId": "q12_learning_trade",
+          "label": "Learning a respected trade",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 3,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 3,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 3,
+            "FAMILY": 0,
+            "FRESH_START": 1,
+            "MOMENTUM": 0
+          },
+          "rationale": "Trade and career stability.",
+          "uiCopyEffect": "Emphasize certification and respected profession."
+        }
+      ]
+    },
+    {
+      "id": "q13",
+      "sourceId": "Q13",
+      "title": "Who would benefit most if your income improved?",
+      "description": "",
+      "type": "single_choice",
+      "required": true,
+      "options": [
+        {
+          "id": "q13_me",
+          "sourceId": "q13_me",
+          "label": "Me",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 1,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 1
+          },
+          "rationale": "Personal improvement motive.",
+          "uiCopyEffect": "Keep benefits personal and direct."
+        },
+        {
+          "id": "q13_spouse",
+          "sourceId": "q13_spouse",
+          "label": "My spouse/partner",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 1,
+            "OWNERSHIP": 0,
+            "SECURITY": 1,
+            "FAMILY": 3,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Family/household benefit.",
+          "uiCopyEffect": "Add family-security sentence."
+        },
+        {
+          "id": "q13_children",
+          "sourceId": "q13_children",
+          "label": "My children",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 1,
+            "OWNERSHIP": 0,
+            "SECURITY": 2,
+            "FAMILY": 4,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Strong family motive.",
+          "uiCopyEffect": "Use family/provider language."
+        },
+        {
+          "id": "q13_family",
+          "sourceId": "q13_family",
+          "label": "My whole family",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 1,
+            "OWNERSHIP": 0,
+            "SECURITY": 2,
+            "FAMILY": 5,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Strongest family-security signal.",
+          "uiCopyEffect": "Family messaging should be prominent."
+        },
+        {
+          "id": "q13_everyone",
+          "sourceId": "q13_everyone",
+          "label": "Everyone around me",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 3,
+            "FRESH_START": 0,
+            "MOMENTUM": 1
+          },
+          "rationale": "Broad responsibility/community motive.",
+          "uiCopyEffect": "Use community/family language."
+        }
+      ]
+    },
+    {
+      "id": "q14",
+      "sourceId": "Q14",
+      "title": "How ready are you to make a change this year? (1 = not ready, 10 = ready now)",
+      "description": "",
+      "type": "single_choice",
+      "required": true,
+      "options": [
+        {
+          "id": "q14_1",
+          "sourceId": "q14_1",
+          "label": "1",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 3,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Low readiness; avoid pressure, add reassurance.",
+          "uiCopyEffect": "Readiness adjusts urgency, CTA helper text, and fast-track overlay."
+        },
+        {
+          "id": "q14_2",
+          "sourceId": "q14_2",
+          "label": "2",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 3,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Low readiness; avoid pressure, add reassurance.",
+          "uiCopyEffect": "Readiness adjusts urgency, CTA helper text, and fast-track overlay."
+        },
+        {
+          "id": "q14_3",
+          "sourceId": "q14_3",
+          "label": "3",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 2,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 1
+          },
+          "rationale": "Some hesitation; needs confidence and clarity.",
+          "uiCopyEffect": "Readiness adjusts urgency, CTA helper text, and fast-track overlay."
+        },
+        {
+          "id": "q14_4",
+          "sourceId": "q14_4",
+          "label": "4",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 2,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 1
+          },
+          "rationale": "Some hesitation; needs confidence and clarity.",
+          "uiCopyEffect": "Readiness adjusts urgency, CTA helper text, and fast-track overlay."
+        },
+        {
+          "id": "q14_5",
+          "sourceId": "q14_5",
+          "label": "5",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 1,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 2
+          },
+          "rationale": "Moderate readiness.",
+          "uiCopyEffect": "Readiness adjusts urgency, CTA helper text, and fast-track overlay."
+        },
+        {
+          "id": "q14_6",
+          "sourceId": "q14_6",
+          "label": "6",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 1,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 2
+          },
+          "rationale": "Moderate readiness.",
+          "uiCopyEffect": "Readiness adjusts urgency, CTA helper text, and fast-track overlay."
+        },
+        {
+          "id": "q14_7",
+          "sourceId": "q14_7",
+          "label": "7",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 3,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 4
+          },
+          "rationale": "High readiness.",
+          "uiCopyEffect": "Readiness adjusts urgency, CTA helper text, and fast-track overlay."
+        },
+        {
+          "id": "q14_8",
+          "sourceId": "q14_8",
+          "label": "8",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 3,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 4
+          },
+          "rationale": "High readiness.",
+          "uiCopyEffect": "Readiness adjusts urgency, CTA helper text, and fast-track overlay."
+        },
+        {
+          "id": "q14_9",
+          "sourceId": "q14_9",
+          "label": "9",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 5,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 5
+          },
+          "rationale": "Very high readiness; fast-track and action-oriented copy fit.",
+          "uiCopyEffect": "Readiness adjusts urgency, CTA helper text, and fast-track overlay."
+        },
+        {
+          "id": "q14_10",
+          "sourceId": "q14_10",
+          "label": "10",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 5,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 5
+          },
+          "rationale": "Very high readiness; fast-track and action-oriented copy fit.",
+          "uiCopyEffect": "Readiness adjusts urgency, CTA helper text, and fast-track overlay."
+        }
+      ]
+    },
+    {
+      "id": "q15",
+      "sourceId": "Q15",
+      "title": "What is your primary objective?",
+      "description": "",
+      "type": "single_choice",
+      "required": true,
+      "options": [
+        {
+          "id": "q15_certified",
+          "sourceId": "q15_certified",
+          "label": "Get certified",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 2,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 3,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 2,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 1
+          },
+          "rationale": "Certification goal supports employment and career path.",
+          "uiCopyEffect": "Mention certification milestone."
+        },
+        {
+          "id": "q15_income",
+          "sourceId": "q15_income",
+          "label": "Start earning income",
+          "scores": {
+            "BUSINESS": 1,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 5,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 4,
+            "OWNERSHIP": 0,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 2
+          },
+          "rationale": "Earning quickly favors Side Income unless business is also high.",
+          "uiCopyEffect": "Use first jobs/service revenue examples."
+        },
+        {
+          "id": "q15_company",
+          "sourceId": "q15_company",
+          "label": "Work for a company",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 1,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 5,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 4,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 0
+          },
+          "rationale": "Direct employment objective.",
+          "uiCopyEffect": "Employment CTA and interview/certification milestone."
+        },
+        {
+          "id": "q15_business",
+          "sourceId": "q15_business",
+          "label": "Start my own business",
+          "scores": {
+            "BUSINESS": 5,
+            "CAREER_CHANGE": 0,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 0,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 2,
+            "OWNERSHIP": 5,
+            "SECURITY": 0,
+            "FAMILY": 0,
+            "FRESH_START": 0,
+            "MOMENTUM": 2
+          },
+          "rationale": "Direct business objective.",
+          "uiCopyEffect": "Business Owner CTA."
+        },
+        {
+          "id": "q15_long_term",
+          "sourceId": "q15_long_term",
+          "label": "Build a long-term career",
+          "scores": {
+            "BUSINESS": 0,
+            "CAREER_CHANGE": 3,
+            "SIDE_INCOME": 0,
+            "EMPLOYMENT": 3,
+            "FAST_TRACK": 0,
+            "CONFIDENCE": 0,
+            "INCOME": 0,
+            "OWNERSHIP": 0,
+            "SECURITY": 4,
+            "FAMILY": 0,
+            "FRESH_START": 2,
+            "MOMENTUM": 0
+          },
+          "rationale": "Career durability goal.",
+          "uiCopyEffect": "Use long-term profession language."
+        }
+      ]
+    }
+  ],
+  "blueprints": [
+    {
+      "id": "business_owner",
+      "name": "Business Owner",
+      "result_title": "Business Owner Blueprint",
+      "subtitle": "You are showing strong signs of an entrepreneurial mindset. Rather than simply looking for another job, you may be a strong fit for building something of your own.",
+      "why_this_blueprint": "Based on your answers, you value independence, flexibility, and the opportunity to control your own income. Locksmithing can provide a practical path to building a local service business that grows with your skill, reliability, and customer base.",
+      "study_pace": "Recommended study pace: 8–12 hours per week.",
+      "timeline": "Estimated timeline: 3–6 months to complete the core training path, depending on consistency and available study time.",
+      "revenue_potential": "Revenue potential example: Many locksmith services are valuable because they solve urgent local problems. For examples on this page, use $220 as the average service value. Do not present this as a guarantee.",
+      "next_milestone": "Next milestone: Complete the core training path, prepare basic tools, and begin planning how to win your first local customers.",
+      "cta_button": "Start Building Your Business",
+      "cta_helper_text": "Build the skills, confidence, and practical foundation to move toward your own locksmith business."
+    },
+    {
+      "id": "career_change",
+      "name": "Career Change",
+      "result_title": "Career Change Blueprint",
+      "subtitle": "You appear ready for a new professional direction. This path is designed for someone who wants to move into a practical, respected trade.",
+      "why_this_blueprint": "Your answers suggest you are looking for a fresh start, better long-term opportunity, and a skill set that can translate into real work. Locksmithing combines hands-on technical training with practical local demand.",
+      "study_pace": "Recommended study pace: 6–10 hours per week.",
+      "timeline": "Estimated timeline: 4–7 months to complete the core training path, depending on your schedule and pace.",
+      "revenue_potential": "Revenue potential example: Locksmithing can lead to employment, independent work, or specialized services. Use $220 as the average service value in examples, while avoiding guaranteed-income claims.",
+      "next_milestone": "Next milestone: Complete the training path, earn your certificate, and prepare for entry-level opportunities or first paid work.",
+      "cta_button": "Start Your New Career",
+      "cta_helper_text": "Begin building a practical trade skill that can support your next chapter."
+    },
+    {
+      "id": "side_income",
+      "name": "Side Income",
+      "result_title": "Side Income Blueprint",
+      "subtitle": "You may not need to replace your current job immediately. Your answers suggest that locksmithing could fit as a flexible second-income path.",
+      "why_this_blueprint": "You seem interested in increasing your income while keeping your current obligations. Locksmithing can be learned gradually and may support weekend, evening, or part-time opportunities as your skill grows.",
+      "study_pace": "Recommended study pace: 3–6 hours per week.",
+      "timeline": "Estimated timeline: 5–8 months to complete the core training path at a lighter weekly pace.",
+      "revenue_potential": "Revenue potential example: Even a small number of service opportunities can create meaningful supplemental income. Use $220 as the average service value in examples, without promising specific earnings.",
+      "next_milestone": "Next milestone: Complete the training path and identify small, realistic ways to begin applying the skill safely and professionally.",
+      "cta_button": "Build Your Second Income",
+      "cta_helper_text": "Learn a practical skill at a manageable pace while keeping your current life stable."
+    },
+    {
+      "id": "employment",
+      "name": "Employment",
+      "result_title": "Employment Blueprint",
+      "subtitle": "Your answers point toward a stable professional path. This blueprint focuses on becoming employable in a practical skilled trade.",
+      "why_this_blueprint": "You appear to value structure, dependability, and a clear professional route. Locksmithing can support employment with locksmith companies, security providers, institutions, and other organizations that need trained technicians.",
+      "study_pace": "Recommended study pace: 5–8 hours per week.",
+      "timeline": "Estimated timeline: 4–6 months to complete the core training path, depending on pace and consistency.",
+      "revenue_potential": "Revenue potential example: Locksmith training can support paid employment or future independent work. Use $220 as the average service value only when showing service examples; do not imply guaranteed earnings.",
+      "next_milestone": "Next milestone: Complete the training path, earn your certificate, and prepare for interviews or supervised entry-level opportunities.",
+      "cta_button": "Start Your Professional Journey",
+      "cta_helper_text": "Build a practical skill set that can support stable employment and long-term professional growth."
+    }
+  ],
+  "overlays": [
+    {
+      "id": "fast_track",
+      "name": "Fast Track",
+      "badge": "Fast Track Candidate",
+      "module_title": "You may be ready to move faster.",
+      "module_body": "Your answers suggest that you have both motivation and enough weekly availability to progress faster than many students. If you keep a steady schedule, you may be able to complete the program on an accelerated timeline.",
+      "global_effect": "Adds badge near match score; moves timeline block higher; uses accelerated pace language; reduces estimated timeline by roughly 20–30%; keeps all income language non-guaranteed.",
+      "blueprintEffects": {
+        "business_owner": "Study pace becomes 10–15 hours/week. Timeline becomes 2–4 months. Add: “Because you have strong availability, you can begin building your business plan while completing training.” CTA helper becomes: “Start now and use your momentum to build the foundation for your locksmith business.”",
+        "career_change": "Study pace becomes 8–12 hours/week. Timeline becomes 3–5 months. Add: “Your readiness suggests this career transition does not need to stay theoretical.” CTA helper becomes: “Use your current momentum to begin your new professional path.”",
+        "side_income": "Study pace becomes 6–10 hours/week. Timeline becomes 3–5 months. Add: “Even if this begins as side income, your available time may let you reach first-income readiness faster.” CTA helper becomes: “Move efficiently toward your first realistic side-income opportunities.”",
+        "employment": "Study pace becomes 8–10 hours/week. Timeline becomes 3–4 months. Add: “Your availability can help you move more quickly toward certificate and interview readiness.” CTA helper becomes: “Start building the credentials and skills employers can take seriously.”"
+      }
+    },
+    {
+      "id": "confidence_accelerator",
+      "name": "Confidence Accelerator",
+      "badge": "Confidence Builder",
+      "module_title": "You are closer than you think.",
+      "module_body": "Many successful locksmiths began with little or no experience. Your answers suggest that the main thing you need is a clear path, patient guidance, and confidence that each step is manageable.",
+      "global_effect": "Adds reassurance module; softens aggressive CTA wording; adds no-prior-experience language; emphasizes step-by-step guidance; does not change the primary blueprint.",
+      "blueprintEffects": {
+        "business_owner": "Add reassurance before business-growth copy: “You do not need to have the whole business figured out today.” Tone becomes ambitious but safer. CTA helper becomes: “Step one is learning the skill; the business can be built one step at a time.”",
+        "career_change": "Add reassurance after the why section: “Changing careers can feel big, but the process becomes much easier when it is broken into clear steps.” CTA helper becomes: “No previous locksmithing experience is required to begin.”",
+        "side_income": "Add reassurance near timeline: “You can learn gradually without risking your current job or schedule.” CTA helper becomes: “Start small, learn steadily, and build confidence before taking paid work.”",
+        "employment": "Add reassurance near certification section: “Employability starts with training, practice, and a clear next milestone.” CTA helper becomes: “We will guide you from beginner to professional preparation step by step.”"
+      }
+    }
+  ],
+  "themes": [
+    {
+      "id": "financial_growth",
+      "name": "Financial Growth",
+      "global_effect": "Revenue examples move higher on the page. Copy emphasizes improving income potential. Must include “average service value of $220” only as an example, not a promise.",
+      "blueprintEffects": {
+        "business_owner": "CTA helper: “You are ready to start building the foundation of your locksmith business.” Add next step: “Begin the first module today.”",
+        "career_change": "CTA helper: “You are ready to take the first step toward your new career.” Add next step: “Start with the first training milestone.”",
+        "side_income": "CTA helper: “You are ready to start moving toward your first side-income opportunity.” Add next step: “Begin learning the core skills.”",
+        "employment": "CTA helper: “You are ready to begin preparing for professional locksmith opportunities.” Add next step: “Start the training path.”"
+      }
+    },
+    {
+      "id": "ownership_and_independence",
+      "name": "Ownership & Independence",
+      "global_effect": "Copy emphasizes control, autonomy, local customer relationships, and long-term optionality.",
+      "blueprintEffects": {
+        "business_owner": "Make ownership the central story. Add: “You are not just learning a trade; you are preparing for a path where you can own the customer relationship.”",
+        "career_change": "Frame the career change as gaining more control. Add: “Even if you begin with employment, this skill can give you more future options.”",
+        "side_income": "Frame side income as optional independence. Add: “This can start small and remain flexible, without forcing an immediate leap.”",
+        "employment": "Use carefully: “Stable employment can be the first step toward more professional independence later.” Do not overemphasize business if Employment won."
+      }
+    },
+    {
+      "id": "security_and_stability",
+      "name": "Security & Stability",
+      "global_effect": "Copy emphasizes reliable skills, practical demand, professional credibility, and lower-risk planning."
+    },
+    {
+      "id": "family_security",
+      "name": "Family Security",
+      "global_effect": "Adds a family-focused paragraph after “Why This Blueprint?” and softens income language toward responsibility and provision."
+    },
+    {
+      "id": "fresh_start",
+      "name": "Fresh Start",
+      "global_effect": "Copy frames NALA as a new chapter and a clear next step. Use hopeful language without implying the current life is a failure."
+    },
+    {
+      "id": "momentum",
+      "name": "Momentum",
+      "global_effect": "CTA helper becomes more direct. Page uses action verbs: begin, start, build, complete, prepare. Avoid hype."
+    }
+  ],
+  "rules": {
+    "rule_engine": [
+      {
+        "Section": "Primary Blueprint",
+        "Rule / Specification": "Sum BUSINESS, CAREER_CHANGE, SIDE_INCOME and EMPLOYMENT across all selected answers. The highest total becomes the Primary Blueprint."
+      },
+      {
+        "Section": "Tie Breaker 1",
+        "Rule / Specification": "If two or more blueprints tie, choose the tied blueprint that was affected by the most recent selected answer."
+      },
+      {
+        "Section": "Tie Breaker 2",
+        "Rule / Specification": "If still tied, use this order: Business Owner > Career Change > Side Income > Employment."
+      },
+      {
+        "Section": "Fast Track Overlay",
+        "Rule / Specification": "Apply when FAST_TRACK score is 8 or higher. This is an overlay, not a blueprint. It modifies the selected blueprint."
+      },
+      {
+        "Section": "Confidence Accelerator Overlay",
+        "Rule / Specification": "Apply when CONFIDENCE score is 8 or higher. This is an overlay, not a blueprint. It modifies tone and adds reassurance copy."
+      },
+      {
+        "Section": "Messaging Theme",
+        "Rule / Specification": "Sum INCOME, OWNERSHIP, SECURITY, FAMILY, FRESH_START and MOMENTUM. Highest theme controls the primary emotional framing."
+      },
+      {
+        "Section": "Messaging Tie Breaker",
+        "Rule / Specification": "If themes tie, choose the theme most recently affected by an answer. If still tied: INCOME > OWNERSHIP > SECURITY > FRESH_START > FAMILY > MOMENTUM."
+      },
+      {
+        "Section": "Revenue Examples",
+        "Rule / Specification": "Use average service value of $220. Avoid guaranteed income claims."
+      },
+      {
+        "Section": "Missing Logic",
+        "Rule / Specification": "If a user response cannot be mapped, mark Requires Business Logic rather than guessing in production."
+      }
+    ],
+    "score_key": [
+      {
+        "Score": "BUSINESS",
+        "Type": "Blueprint",
+        "Meaning": "User wants independence, ownership, or business growth.",
+        "Dashboard Role": "Can select Business Owner Blueprint."
+      },
+      {
+        "Score": "CAREER_CHANGE",
+        "Type": "Blueprint",
+        "Meaning": "User wants a new career or major transition.",
+        "Dashboard Role": "Can select Career Change Blueprint."
+      },
+      {
+        "Score": "SIDE_INCOME",
+        "Type": "Blueprint",
+        "Meaning": "User wants extra income without full immediate career replacement.",
+        "Dashboard Role": "Can select Side Income Blueprint."
+      },
+      {
+        "Score": "EMPLOYMENT",
+        "Type": "Blueprint",
+        "Meaning": "User wants stable professional employment.",
+        "Dashboard Role": "Can select Employment Blueprint."
+      },
+      {
+        "Score": "FAST_TRACK",
+        "Type": "Overlay",
+        "Meaning": "User has time/readiness for accelerated progress.",
+        "Dashboard Role": "Adds Fast Track badge and accelerated timeline."
+      },
+      {
+        "Score": "CONFIDENCE",
+        "Type": "Overlay",
+        "Meaning": "User needs reassurance or beginner support.",
+        "Dashboard Role": "Adds Confidence Accelerator content and supportive tone."
+      },
+      {
+        "Score": "INCOME",
+        "Type": "Theme",
+        "Meaning": "Financial growth motivation.",
+        "Dashboard Role": "Raises revenue examples and income language."
+      },
+      {
+        "Score": "OWNERSHIP",
+        "Type": "Theme",
+        "Meaning": "Independence/control motivation.",
+        "Dashboard Role": "Emphasizes business ownership and autonomy."
+      },
+      {
+        "Score": "SECURITY",
+        "Type": "Theme",
+        "Meaning": "Stability/job-security motivation.",
+        "Dashboard Role": "Emphasizes dependable career demand."
+      },
+      {
+        "Score": "FAMILY",
+        "Type": "Theme",
+        "Meaning": "Providing for family/loved ones.",
+        "Dashboard Role": "Adds family-security language."
+      },
+      {
+        "Score": "FRESH_START",
+        "Type": "Theme",
+        "Meaning": "New beginning/career transition motivation.",
+        "Dashboard Role": "Frames as new chapter."
+      },
+      {
+        "Score": "MOMENTUM",
+        "Type": "Theme",
+        "Meaning": "User is ready for action.",
+        "Dashboard Role": "Makes CTA more direct and action-oriented."
+      }
+    ],
+    "thresholds": [
+      {
+        "Item": "Business Owner Blueprint",
+        "Threshold / Selection": "Highest among blueprint scores",
+        "Effect": "Use Business Owner base text and CTA."
+      },
+      {
+        "Item": "Career Change Blueprint",
+        "Threshold / Selection": "Highest among blueprint scores",
+        "Effect": "Use Career Change base text and CTA."
+      },
+      {
+        "Item": "Side Income Blueprint",
+        "Threshold / Selection": "Highest among blueprint scores",
+        "Effect": "Use Side Income base text and CTA."
+      },
+      {
+        "Item": "Employment Blueprint",
+        "Threshold / Selection": "Highest among blueprint scores",
+        "Effect": "Use Employment base text and CTA."
+      },
+      {
+        "Item": "Fast Track Overlay",
+        "Threshold / Selection": "FAST_TRACK >= 8",
+        "Effect": "Apply accelerated timeline, badge, faster study pace, and strong action copy."
+      },
+      {
+        "Item": "Confidence Accelerator Overlay",
+        "Threshold / Selection": "CONFIDENCE >= 8",
+        "Effect": "Apply reassurance section, beginner language, lower-pressure CTA helper text."
+      },
+      {
+        "Item": "Financial Growth Theme",
+        "Threshold / Selection": "Highest theme score = INCOME",
+        "Effect": "Emphasize earning potential and $220 average service value examples."
+      },
+      {
+        "Item": "Ownership & Independence Theme",
+        "Threshold / Selection": "Highest theme score = OWNERSHIP",
+        "Effect": "Emphasize control, freedom, business ownership, customers."
+      },
+      {
+        "Item": "Security & Stability Theme",
+        "Threshold / Selection": "Highest theme score = SECURITY",
+        "Effect": "Emphasize dependability, professional credibility, in-demand trade."
+      },
+      {
+        "Item": "Family Security Theme",
+        "Threshold / Selection": "Highest theme score = FAMILY",
+        "Effect": "Emphasize providing for spouse/children/family."
+      },
+      {
+        "Item": "Fresh Start Theme",
+        "Threshold / Selection": "Highest theme score = FRESH_START",
+        "Effect": "Emphasize new chapter, transition, turning point."
+      },
+      {
+        "Item": "Momentum Theme",
+        "Threshold / Selection": "Highest theme score = MOMENTUM",
+        "Effect": "Emphasize readiness and next action now."
+      }
+    ]
+  },
+  "documentTables": [
+    {
+      "id": "table_1",
+      "headers": [
+        "Step",
+        "Rule",
+        "Output"
+      ],
+      "rows": [
+        [
+          "1",
+          "Select the Primary Blueprint with the highest score.",
+          "One of: Business Owner, Career Change, Side Income, Employment."
+        ],
+        [
+          "2",
+          "Apply Fast Track if FAST_TRACK >= 8.",
+          "Adds badge, accelerated pace, shorter timeline language, and stronger action copy."
+        ],
+        [
+          "3",
+          "Apply Confidence Accelerator if CONFIDENCE >= 8.",
+          "Adds reassurance module and softens CTA helper text."
+        ],
+        [
+          "4",
+          "Select the highest Messaging Theme.",
+          "One of: Financial Growth, Ownership & Independence, Security & Stability, Family Security, Fresh Start, Momentum."
+        ],
+        [
+          "5",
+          "Render dashboard in this order.",
+          "Blueprint header; match explanation; overlay badges; why section; timeline/study pace; revenue example; next milestone; CTA."
+        ],
+        [
+          "6",
+          "Tie rule for themes.",
+          "Most recently affected theme wins. If still tied: Financial Growth > Ownership > Security > Fresh Start > Family > Momentum."
+        ]
+      ]
+    },
+    {
+      "id": "table_2",
+      "headers": [
+        "Blueprint",
+        "Fast Track exact effect"
+      ],
+      "rows": [
+        [
+          "Business Owner",
+          "Study pace becomes 10–15 hours/week. Timeline becomes 2–4 months. Add: “Because you have strong availability, you can begin building your business plan while completing training.” CTA helper becomes: “Start now and use your momentum to build the foundation for your locksmith business.”"
+        ],
+        [
+          "Career Change",
+          "Study pace becomes 8–12 hours/week. Timeline becomes 3–5 months. Add: “Your readiness suggests this career transition does not need to stay theoretical.” CTA helper becomes: “Use your current momentum to begin your new professional path.”"
+        ],
+        [
+          "Side Income",
+          "Study pace becomes 6–10 hours/week. Timeline becomes 3–5 months. Add: “Even if this begins as side income, your available time may let you reach first-income readiness faster.” CTA helper becomes: “Move efficiently toward your first realistic side-income opportunities.”"
+        ],
+        [
+          "Employment",
+          "Study pace becomes 8–10 hours/week. Timeline becomes 3–4 months. Add: “Your availability can help you move more quickly toward certificate and interview readiness.” CTA helper becomes: “Start building the credentials and skills employers can take seriously.”"
+        ]
+      ]
+    },
+    {
+      "id": "table_3",
+      "headers": [
+        "Blueprint",
+        "Confidence Accelerator exact effect"
+      ],
+      "rows": [
+        [
+          "Business Owner",
+          "Add reassurance before business-growth copy: “You do not need to have the whole business figured out today.” Tone becomes ambitious but safer. CTA helper becomes: “Step one is learning the skill; the business can be built one step at a time.”"
+        ],
+        [
+          "Career Change",
+          "Add reassurance after the why section: “Changing careers can feel big, but the process becomes much easier when it is broken into clear steps.” CTA helper becomes: “No previous locksmithing experience is required to begin.”"
+        ],
+        [
+          "Side Income",
+          "Add reassurance near timeline: “You can learn gradually without risking your current job or schedule.” CTA helper becomes: “Start small, learn steadily, and build confidence before taking paid work.”"
+        ],
+        [
+          "Employment",
+          "Add reassurance near certification section: “Employability starts with training, practice, and a clear next milestone.” CTA helper becomes: “We will guide you from beginner to professional preparation step by step.”"
+        ]
+      ]
+    },
+    {
+      "id": "table_4",
+      "headers": [
+        "Blueprint",
+        "Exact Theme Effect"
+      ],
+      "rows": [
+        [
+          "Business Owner",
+          "Headline modifier: “Build skills that can support your own income-producing locksmith business.” Add revenue sentence: “As an owner, your growth depends on service quality, response time, customer trust, and repeatable local marketing.”"
+        ],
+        [
+          "Career Change",
+          "Headline modifier: “A new trade skill can become a new financial direction.” Add revenue sentence: “This path can support employment, independent work, or later specialization.”"
+        ],
+        [
+          "Side Income",
+          "Headline modifier: “Turn a practical skill into possible extra monthly income.” Add revenue sentence: “Even a few service opportunities per month can matter; examples use $220 average service value.”"
+        ],
+        [
+          "Employment",
+          "Headline modifier: “Build employable skills that can improve your earning options.” Add revenue sentence: “Employment income depends on employer, location, experience, and reliability.”"
+        ]
+      ]
+    },
+    {
+      "id": "table_5",
+      "headers": [
+        "Blueprint",
+        "Exact Theme Effect"
+      ],
+      "rows": [
+        [
+          "Business Owner",
+          "Make ownership the central story. Add: “You are not just learning a trade; you are preparing for a path where you can own the customer relationship.”"
+        ],
+        [
+          "Career Change",
+          "Frame the career change as gaining more control. Add: “Even if you begin with employment, this skill can give you more future options.”"
+        ],
+        [
+          "Side Income",
+          "Frame side income as optional independence. Add: “This can start small and remain flexible, without forcing an immediate leap.”"
+        ],
+        [
+          "Employment",
+          "Use carefully: “Stable employment can be the first step toward more professional independence later.” Do not overemphasize business if Employment won."
+        ]
+      ]
+    },
+    {
+      "id": "table_6",
+      "headers": [
+        "Blueprint",
+        "Exact Theme Effect"
+      ],
+      "rows": [
+        [
+          "Business Owner",
+          "Temper entrepreneurial copy with stability. Add: “A strong business is built on reliable service, steady systems, and trust.”"
+        ],
+        [
+          "Career Change",
+          "Emphasize practical transition. Add: “This is not a vague career idea; it is a concrete trade path with defined skills.”"
+        ],
+        [
+          "Side Income",
+          "Emphasize safe pacing. Add: “You can add this skill without disrupting your current responsibilities.”"
+        ],
+        [
+          "Employment",
+          "Make stability the central story. Add: “This blueprint is built around job readiness, professionalism, and dependable trade skills.”"
+        ]
+      ]
+    },
+    {
+      "id": "table_7",
+      "headers": [
+        "Blueprint",
+        "Exact Theme Effect"
+      ],
+      "rows": [
+        [
+          "Business Owner",
+          "Add: “Building your own business may also be about creating more stability and opportunity for the people who depend on you.”"
+        ],
+        [
+          "Career Change",
+          "Add: “A career change is not only personal; it can be a step toward a stronger foundation for your family.”"
+        ],
+        [
+          "Side Income",
+          "Add: “Extra income can relieve pressure at home without forcing a sudden life change.”"
+        ],
+        [
+          "Employment",
+          "Add: “Stable employment can help create predictability for your household and the people counting on you.”"
+        ]
+      ]
+    },
+    {
+      "id": "table_8",
+      "headers": [
+        "Blueprint",
+        "Exact Theme Effect"
+      ],
+      "rows": [
+        [
+          "Business Owner",
+          "Add: “This may be the beginning of building something under your own name.”"
+        ],
+        [
+          "Career Change",
+          "Make fresh start the central story. Add: “Your answers suggest that the next chapter should be practical, structured, and real.”"
+        ],
+        [
+          "Side Income",
+          "Add: “You do not need to change everything overnight; this can be a gradual new beginning.”"
+        ],
+        [
+          "Employment",
+          "Add: “A new professional path can begin with one concrete skill and one clear milestone.”"
+        ]
+      ]
+    },
+    {
+      "id": "table_9",
+      "headers": [
+        "Blueprint",
+        "Exact Theme Effect"
+      ],
+      "rows": [
+        [
+          "Business Owner",
+          "CTA helper: “You are ready to start building the foundation of your locksmith business.” Add next step: “Begin the first module today.”"
+        ],
+        [
+          "Career Change",
+          "CTA helper: “You are ready to take the first step toward your new career.” Add next step: “Start with the first training milestone.”"
+        ],
+        [
+          "Side Income",
+          "CTA helper: “You are ready to start moving toward your first side-income opportunity.” Add next step: “Begin learning the core skills.”"
+        ],
+        [
+          "Employment",
+          "CTA helper: “You are ready to begin preparing for professional locksmith opportunities.” Add next step: “Start the training path.”"
+        ]
+      ]
+    },
+    {
+      "id": "table_10",
+      "headers": [
+        "Case",
+        "How to render"
+      ],
+      "rows": [
+        [
+          "Blueprint + Theme",
+          "Use the base blueprint text, then replace/add the theme-specific headline modifier, paragraph, revenue emphasis, or CTA helper text defined above."
+        ],
+        [
+          "Blueprint + Fast Track",
+          "Apply Fast Track modifications to study pace and timeline before applying theme copy. Theme may adjust wording but should not undo accelerated timeline."
+        ],
+        [
+          "Blueprint + Confidence",
+          "Insert Confidence module after “Why This Blueprint?” and soften CTA helper text. Theme can add additional emphasis but should not remove reassurance."
+        ],
+        [
+          "Blueprint + Fast Track + Confidence",
+          "Show both badges. Timeline uses Fast Track. Tone includes Confidence reassurance. CTA helper combines action + support, e.g. “You are ready to begin, and we will guide you step by step.”"
+        ],
+        [
+          "Multiple themes tied",
+          "Use tie rules from scoring workbook. Only one primary theme renders, but secondary theme can be logged for future testing."
+        ]
+      ]
+    },
+    {
+      "id": "table_11",
+      "headers": [
+        "Field",
+        "Source",
+        "Notes"
+      ],
+      "rows": [
+        [
+          "result_title",
+          "Selected Blueprint + optional Theme modifier",
+          "Example: Business Owner Blueprint or Your Business Owner Blueprint for Financial Growth."
+        ],
+        [
+          "subtitle",
+          "Selected Blueprint, then theme adjustment",
+          "One concise paragraph."
+        ],
+        [
+          "match_score",
+          "Computed/display layer",
+          "Placeholder acceptable; do not claim scientific accuracy."
+        ],
+        [
+          "badges",
+          "Overlay rules",
+          "Fast Track Candidate and/or Confidence Builder."
+        ],
+        [
+          "why_this_blueprint",
+          "Base blueprint + theme paragraph",
+          "Explain why without discouraging."
+        ],
+        [
+          "study_pace",
+          "Base blueprint, modified by Fast Track",
+          "Use weekly hours."
+        ],
+        [
+          "timeline",
+          "Base blueprint, modified by Fast Track",
+          "Use ranges only."
+        ],
+        [
+          "revenue_potential",
+          "Base blueprint + Financial Growth theme if selected",
+          "Use $220 average service value; no guarantees."
+        ],
+        [
+          "next_milestone",
+          "Blueprint + Momentum theme if selected",
+          "Practical next action."
+        ],
+        [
+          "cta_button",
+          "Blueprint CTA",
+          "CTA button is blueprint-driven unless future business logic says otherwise."
+        ],
+        [
+          "cta_helper",
+          "Blueprint helper modified by overlay/theme",
+          "Confidence softens; Momentum strengthens."
+        ]
+      ]
+    }
+  ],
+  "sourceMeta": {
+    "workbook": {
+      "fileName": "NALA_Enrollment_Complete_Scoring_Matrix.xlsx",
+      "sheetNames": [
+        "Scoring Matrix",
+        "Rule Engine",
+        "Score Key",
+        "Thresholds"
+      ]
+    },
+    "document": {
+      "fileName": "NALA_Complete_Output_Texts_Blueprints_Overlays_Themes.docx",
+      "paragraphCount": 82,
+      "tableCount": 11
+    }
+  }
+}
