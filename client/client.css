@@ -127,7 +127,7 @@ html {
 }
 
 body {
-  font-family: var(--client-body-font, "Roboto", Arial, sans-serif);
+  font-family: "Roboto", Arial, sans-serif;
   font-size: 16px;
   line-height: 1.6;
   color: #212121;
@@ -180,6 +180,11 @@ a:hover {
   flex: 1 0 auto;
 }
 
+@media (min-width: 1200px) {
+  .container {
+    max-width: min(1400px, 100% - 64px);
+  }
+}
 #page-footer,
 .app-header {
   flex-shrink: 0;
@@ -199,6 +204,38 @@ a:hover {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.nala-btn-primary {
+  background-color: #a98212;
+  border-color: #a98212;
+  color: #ffffff;
+}
+.nala-btn-primary:hover, .nala-btn-primary:focus {
+  background-color: #7a5e0c;
+  border-color: #7a5e0c;
+  color: #ffffff;
+}
+.nala-btn-primary:active {
+  background-color: #4a3a08;
+  border-color: #4a3a08;
+  color: #ffffff;
+}
+
+.nala-btn-outline-primary {
+  background-color: transparent;
+  border-color: #a98212;
+  color: #a98212;
+}
+.nala-btn-outline-primary:hover, .nala-btn-outline-primary:focus {
+  background-color: #a98212;
+  border-color: #a98212;
+  color: #ffffff;
+}
+.nala-btn-outline-primary:active {
+  background-color: #7a5e0c;
+  border-color: #7a5e0c;
+  color: #ffffff;
 }
 
 h1 {
@@ -234,7 +271,7 @@ h1.title::after {
 }
 
 body {
-  font-family: "Roboto", Arial, sans-serif;
+  font-family: var(--client-body-font, Roboto, Arial, sans-serif);
   color: #212121;
   background-color: #f5f5f5;
   line-height: 1.6;
@@ -246,7 +283,7 @@ body {
   padding: 24px;
   background-color: #ffffff;
   min-height: 100vh;
-  font-family: var(--client-body-font, "Roboto", Arial, sans-serif);
+  font-family: var(--client-body-font, Roboto, Arial, sans-serif);
 }
 
 .breadcrumb {
@@ -317,18 +354,11 @@ body {
 }
 
 .client-name {
-  font-family: var(--client-heading-font, "Roboto", Arial, sans-serif);
+  font-family: var(--client-heading-font, Roboto, Arial, sans-serif);
   font-size: 32px;
   font-weight: 500;
   margin-bottom: 12px;
   color: #212121;
-}
-
-.client-section-title,
-.client-sidebar-title,
-.client-cta h3,
-.client-business-profile__title {
-  font-family: var(--client-heading-font, "Roboto", Arial, sans-serif);
 }
 
 .client-rating {
@@ -718,6 +748,13 @@ body {
 }
 .btn-primary:active {
   transform: translateY(0);
+}
+
+.client-section-title,
+.client-sidebar-title,
+.client-cta h3,
+.client-business-profile__title {
+  font-family: var(--client-heading-font, Roboto, Arial, sans-serif);
 }
 
 .client-sidebar .contact-card .btn-primary.btn-estimate {

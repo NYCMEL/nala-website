@@ -127,7 +127,7 @@ html {
 }
 
 body {
-  font-family: var(--client-body-font, "Roboto", Arial, sans-serif);
+  font-family: "Roboto", Arial, sans-serif;
   font-size: 16px;
   line-height: 1.6;
   color: #212121;
@@ -141,7 +141,7 @@ body {
 
 a {
   color: #a98212;
-  text-decoration: underline;
+  text-decoration: none;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 a:hover {
@@ -180,6 +180,11 @@ a:hover {
   flex: 1 0 auto;
 }
 
+@media (min-width: 1200px) {
+  .container {
+    max-width: min(1400px, 100% - 64px);
+  }
+}
 #page-footer,
 .app-header {
   flex-shrink: 0;
@@ -199,6 +204,38 @@ a:hover {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.nala-btn-primary {
+  background-color: #a98212;
+  border-color: #a98212;
+  color: #ffffff;
+}
+.nala-btn-primary:hover, .nala-btn-primary:focus {
+  background-color: #7a5e0c;
+  border-color: #7a5e0c;
+  color: #ffffff;
+}
+.nala-btn-primary:active {
+  background-color: #4a3a08;
+  border-color: #4a3a08;
+  color: #ffffff;
+}
+
+.nala-btn-outline-primary {
+  background-color: transparent;
+  border-color: #a98212;
+  color: #a98212;
+}
+.nala-btn-outline-primary:hover, .nala-btn-outline-primary:focus {
+  background-color: #a98212;
+  border-color: #a98212;
+  color: #ffffff;
+}
+.nala-btn-outline-primary:active {
+  background-color: #7a5e0c;
+  border-color: #7a5e0c;
+  color: #ffffff;
 }
 
 h1 {
@@ -234,7 +271,7 @@ h1.title::after {
 }
 
 body {
-  font-family: "Roboto", Arial, sans-serif;
+  font-family: var(--client-body-font, Roboto, Arial, sans-serif);
   color: #212121;
   background-color: #f5f5f5;
   line-height: 1.6;
@@ -253,7 +290,7 @@ body {
   background-color: #ffffff;
   min-height: 100vh;
   box-sizing: border-box;
-  font-family: var(--client-body-font, "Roboto", Arial, sans-serif);
+  font-family: var(--client-body-font, Roboto, Arial, sans-serif);
 }
 
 .breadcrumb {
@@ -324,18 +361,11 @@ body {
 }
 
 .client-name {
-  font-family: var(--client-heading-font, "Roboto", Arial, sans-serif);
+  font-family: var(--client-heading-font, Roboto, Arial, sans-serif);
   font-size: 32px;
   font-weight: 500;
   margin-bottom: 12px;
   color: #212121;
-}
-
-.client-section-title,
-.client-sidebar-title,
-.client-cta h3,
-.client-business-profile__title {
-  font-family: var(--client-heading-font, "Roboto", Arial, sans-serif);
 }
 
 .client-rating {
@@ -361,7 +391,6 @@ body {
 .client-rating .review-count {
   color: #757575;
   font-size: 14px;
-  text-decoration: underline;
 }
 
 .client-badges {
@@ -409,6 +438,13 @@ body {
 }
 .btn-share .material-icons {
   font-size: 20px;
+}
+
+.client-section-title,
+.client-sidebar-title,
+.client-cta h3,
+.client-business-profile__title {
+  font-family: var(--client-heading-font, Roboto, Arial, sans-serif);
 }
 
 .client-stats {
@@ -653,7 +689,7 @@ body {
 .contact-card .link-details {
   display: inline-block;
   color: #a98212;
-  text-decoration: underline;
+  text-decoration: none;
   font-size: 14px;
   margin-bottom: 16px;
   transition: color var(--client-motion-fast), transform var(--client-motion-fast);
@@ -665,11 +701,11 @@ body {
 .contact-card .btn-estimate {
   width: 100%;
   margin-bottom: 16px;
-  background-color: #a98212;
-  color: #ffffff;
+  background-color: var(--client-surface);
+  color: var(--client-accent);
 }
 .contact-card .btn-estimate:hover {
-  background-color: #7a5e0c;
+  background-color: color-mix(in srgb, var(--client-surface), #ffffff 12%);
 }
 .contact-card .online-status {
   display: flex;
@@ -747,58 +783,13 @@ body {
 }
 
 .client-sidebar .contact-card .btn-primary.btn-estimate {
-  background: #a98212 !important;
-  background-color: #a98212 !important;
-  color: #ffffff !important;
+  background: var(--client-surface) !important;
+  background-color: var(--client-surface) !important;
+  color: var(--client-accent) !important;
 }
 .client-sidebar .contact-card .btn-primary.btn-estimate:hover {
-  background: #7a5e0c !important;
-  background-color: #7a5e0c !important;
-}
-
-.client-contact-links {
-  display: grid;
-  gap: 10px;
-  margin: 4px 0 16px;
-}
-
-.client-contact-links a,
-.client-business-profile__row a {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: #7a5e0c;
-  text-decoration: underline;
-  overflow-wrap: anywhere;
-}
-
-.client-contact-links .material-icons,
-.client-business-profile__row .material-icons {
-  font-size: 20px;
-  color: #a98212;
-  flex: 0 0 auto;
-}
-
-.client-business-profile {
-  display: grid;
-  gap: 12px;
-}
-
-.client-business-profile__row {
-  display: grid;
-  grid-template-columns: 24px minmax(90px, 150px) minmax(0, 1fr);
-  gap: 8px 10px;
-  align-items: start;
-  color: #4a4439;
-}
-
-.client-business-profile__row span:last-child {
-  overflow-wrap: anywhere;
-}
-
-.client-reviews__empty {
-  color: #757575;
-  font-style: italic;
+  background: color-mix(in srgb, var(--client-surface), #ffffff 12%) !important;
+  background-color: color-mix(in srgb, var(--client-surface), #ffffff 12%) !important;
 }
 
 @media (max-width: 768px) {

@@ -1,22 +1,20 @@
 @charset "UTF-8";
 .mtk-request {
   display: block;
-  /* ✅ HORIZONTAL RADIO */
-  /* Phone times */
-  /* Button */ }
-
+}
 .mtk-request .modal-dialog {
   max-width: 480px;
-  margin: auto; }
-
+  margin: auto;
+}
 @media (max-width: 768px) {
   .mtk-request .modal-dialog {
-    max-width: 95%; } }
-
+    max-width: 95%;
+  }
+}
 .mtk-request .md-field {
   position: relative;
-  margin-bottom: 20px; }
-
+  margin-bottom: 20px;
+}
 .mtk-request .md-field input,
 .mtk-request .md-field textarea,
 .mtk-request .md-field select {
@@ -25,8 +23,8 @@
   border-bottom: 2px solid #ccc;
   padding: 10px 0 6px;
   background: transparent;
-  outline: none; }
-
+  outline: none;
+}
 .mtk-request .md-field label {
   position: absolute;
   top: 10px;
@@ -34,55 +32,56 @@
   font-size: 14px;
   color: #777;
   transition: 0.2s;
-  pointer-events: none; }
-
+  pointer-events: none;
+}
 .mtk-request .md-field.active label,
 .mtk-request .md-field input:focus + label,
 .mtk-request .md-field textarea:focus + label,
 .mtk-request .md-field select:focus + label {
   top: -10px;
   font-size: 12px;
-  color: #a98212; }
-
+  color: #a98212;
+}
+.mtk-request {
+  /* ✅ HORIZONTAL RADIO */
+}
 .mtk-request .contact-group {
-  margin: 20px 0; }
-
+  margin: 20px 0;
+}
 .mtk-request .group-label {
   font-size: 13px;
   color: #777;
-  margin-bottom: 10px; }
-
+  margin-bottom: 10px;
+}
 .mtk-request .radio-group {
   display: flex;
-  flex-direction: row;
-  /* 🔥 horizontal */
-  flex-wrap: wrap;
-  /* wrap on smaller screens */
+  flex-direction: row; /* 🔥 horizontal */
+  flex-wrap: wrap; /* wrap on smaller screens */
   gap: 24px;
-  align-items: center; }
-
+  align-items: center;
+}
 .mtk-request .radio-item {
   display: flex;
   align-items: center;
   cursor: pointer;
   gap: 8px;
   font-size: 14px;
-  white-space: nowrap; }
-
+  white-space: nowrap;
+}
 .mtk-request .radio-item input {
-  display: none; }
-
+  display: none;
+}
 .mtk-request .radio-custom {
   width: 18px;
   height: 18px;
   border: 2px solid #777;
   border-radius: 50%;
   position: relative;
-  flex-shrink: 0; }
-
+  flex-shrink: 0;
+}
 .mtk-request .radio-item input:checked + .radio-custom {
-  border-color: #a98212; }
-
+  border-color: #a98212;
+}
 .mtk-request .radio-item input:checked + .radio-custom::after {
   content: "";
   width: 10px;
@@ -91,36 +90,45 @@
   border-radius: 50%;
   position: absolute;
   top: 2px;
-  left: 2px; }
-
+  left: 2px;
+}
+.mtk-request {
+  /* Phone times */
+}
 .mtk-request .phone-times {
-  display: none; }
-
+  display: none;
+}
 .mtk-request .phone-times.active {
-  display: block; }
-
+  display: block;
+}
+.mtk-request {
+  /* Button */
+}
 .mtk-request .submit-wrap {
   text-align: right;
-  margin-top: 10px; }
-
+  margin-top: 10px;
+}
 .mtk-request .submit-btn {
   padding: 10px 24px;
   border-radius: 24px;
-  width: auto; }
-
+  width: auto;
+}
 .mtk-request :focus {
   outline: 2px solid #a98212;
-  outline-offset: 2px; }
-
+  outline-offset: 2px;
+}
 .mtk-request .modal-dialog {
-  max-width: 480px; }
-
+  max-width: 480px;
+}
 @media (max-width: 768px) {
   .mtk-request .modal-dialog {
-    max-width: 95%; } }
+    max-width: 95%;
+  }
+}
 
 .mtk-request .md-field input::placeholder,
 .mtk-request .md-field textarea::placeholder {
   font-size: 12px;
   font-style: italic;
-  color: #bbb; }
+  color: #bbb;
+}
