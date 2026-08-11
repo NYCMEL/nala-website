@@ -1,5 +1,17 @@
 /* NALA Luxury Dark Theme */
 
+	 @function mixed-calc($value1, $operator, $value2) {
+	     @return calc(#{$value1} #{$operator} #{$value2});
+	 }
+
+	 // Usage
+	 // width: mixed-calc(100%, "-", 20px);
+	 //height: mixed-calc(100%, "-", 64px);
+
+	 @function css-min($values...) {
+	     @return unquote("min(#{$values})");
+	 }
+
 @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap");
 
 $black: #090909;
