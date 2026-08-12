@@ -214,3 +214,4 @@ h1.title::after {
 @media (max-width: 768px) {
   #_stats ._stats-item ._stats-value {
     font-size: 2.4rem; } }
+html[data-theme="dark"] #_stats{background-color:var(--nala-surface-alt)!important;color:var(--nala-text)!important}html[data-theme="dark"] #_stats ._stats-item{background-color:var(--nala-surface)!important;border-color:var(--nala-border)!important}html[data-theme="dark"] #_stats ._stats-value{color:#d5ad32!important}html[data-theme="dark"] #_stats ._stats-label{color:var(--nala-text-secondary)!important}

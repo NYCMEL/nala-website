@@ -7,6 +7,10 @@
 	<!-- MEL ADDED THIS -->
 	<base href="/repo_deploy/">
 
+	<script>
+	 (function(){var h=location.hostname.toLowerCase();var b=document.createElement("base");b.href=(h==="nala-test.com"||h.endsWith(".nala-test.com"))?"/repo_deploy/":"/";document.head.appendChild(b);}());
+	</script>
+
 	<link rel="icon" href="img/cropped-favicon-32x32.png" sizes="32x32">
 	<link rel="icon" href="img/cropped-favicon-192x192.png" sizes="192x192">
 	<link rel="apple-touch-icon" href="img/cropped-favicon-180x180.png">
@@ -27,12 +31,12 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 	<link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 	
 	<!-- APPLICATION SPECIFIC STYLES -->
-	<link href="css/fonts/font-awesome.css" rel="stylesheet">
 	<link href="css/fonts/fonts.css" rel="stylesheet">
 	<link href="css/nala.css" rel="stylesheet">
-	<link href="css/nala-theme.css" rel="stylesheet">
+	<script src="js/theme.js"></script>
 
 	<script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
@@ -63,18 +67,18 @@
 	    
 	    <script src="alerts/mtk-alerts.config.js"></script>
 	    <script>
-	    window.mtkAlertsBadgeUpdate = function() {
-		try {
-		    var cfg = window.MTKAlertsConfig;
-		    if (!cfg || !Array.isArray(cfg.alerts)) return;
-		    var n = cfg.alerts.filter(function(a) { return !a.read && !a.archived; }).length;
-		    var badge = document.getElementById('mtk-unread-count');
-		    var bell  = document.querySelector('#mtk-header-messages .mtk-header-alerts-icon');
-		    if (badge) { badge.textContent = n; badge.hidden = (n === 0); }
-		    if (bell)  { bell.style.color = n > 0 ? '#FFD700' : '#9e9e9e'; }
-		} catch(e) {}
-	    };
-	    document.addEventListener('include:loaded', window.mtkAlertsBadgeUpdate);
+	     window.mtkAlertsBadgeUpdate = function() {
+		 try {
+		     var cfg = window.MTKAlertsConfig;
+		     if (!cfg || !Array.isArray(cfg.alerts)) return;
+		     var n = cfg.alerts.filter(function(a) { return !a.read && !a.archived; }).length;
+		     var badge = document.getElementById('mtk-unread-count');
+		     var bell  = document.querySelector('#mtk-header-messages .mtk-header-alerts-icon');
+		     if (badge) { badge.textContent = n; badge.hidden = (n === 0); }
+		     if (bell)  { bell.style.color = n > 0 ? '#FFD700' : '#9e9e9e'; }
+		 } catch(e) {}
+	     };
+	     document.addEventListener('include:loaded', window.mtkAlertsBadgeUpdate);
 	    </script>
 	    <script src="pages/mtk-pages.config.js"></script>
 	    <script src="pages/mtk-pages.js"></script>
@@ -85,11 +89,11 @@
 
 	<script src="js/mxchat-language-bridge.js"></script>
 	<script>
-	(function () {
-	    if (window.nalaMxChatBridge && typeof window.nalaMxChatBridge.load === "function") {
-		window.nalaMxChatBridge.load(window.nalaMxChatBridge.currentLang());
-	    }
-	}());
+	 (function () {
+	     if (window.nalaMxChatBridge && typeof window.nalaMxChatBridge.load === "function") {
+		 window.nalaMxChatBridge.load(window.nalaMxChatBridge.currentLang());
+	     }
+	 }());
 	</script>
 	<script src="js/mxchat-layout-overrides.js"></script>
 

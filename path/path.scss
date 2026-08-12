@@ -113,3 +113,57 @@
     &:hover { background-color: $color-blue-path-dark; transform: translateY(-1px); }
   }
 }
+
+// Dark mode overrides
+html[data-theme="dark"] .mtk-path {
+  background-color: var(--nala-page-bg);
+  color: var(--nala-text);
+
+  h1, h2, h3, h4, h5, h6,
+  p, span, strong, li {
+    color: var(--nala-text);
+  }
+
+  p.lead,
+  .period,
+  .total-price,
+  .mtk-path__description {
+    color: var(--nala-text-secondary) !important;
+  }
+
+  .mtk-card {
+    background-color: var(--nala-surface);
+    color: var(--nala-text);
+    border-color: var(--nala-border);
+    box-shadow: 0 8px 24px var(--nala-shadow);
+  }
+
+  .mtk-card:hover {
+    box-shadow: 0 12px 28px var(--nala-shadow);
+  }
+
+  .included-bonus,
+  .included-bonus strong,
+  .included-bonus__text,
+  li {
+    color: var(--nala-text) !important;
+  }
+
+  .included-bonus .material-icons {
+    color: var(--nala-text) !important;
+  }
+
+  .discount-note {
+    background: #3b321b;
+    color: #f2cf69 !important;
+  }
+
+  .check {
+    color: #d2a91d !important;
+  }
+
+  .btn-path,
+  .mtk-badge {
+    color: #ffffff !important;
+  }
+}

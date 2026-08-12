@@ -400,3 +400,7 @@ h1.title::after {
   opacity: 1;
   transform: translateY(0);
 }
+html[data-theme="dark"] #MTK-hero{background-color:var(--nala-page-bg)!important;color:var(--nala-text)!important}html[data-theme="dark"] #MTK-hero .MTK-hero-card,html[data-theme="dark"] #MTK-hero .MTK-hero-title,html[data-theme="dark"] #MTK-hero .MTK-hero-description{color:var(--nala-text)!important}html[data-theme="dark"] #MTK-hero .MTK-hero-carousel{border:1px solid var(--nala-border)}
+
+/* Runtime dark-theme override. Keep the hero fully dark with readable content. */
+html[data-theme="dark"] body #page-content #MTK-hero{background-color:#171717!important;background-image:none!important;color:#f5f5f5!important}html[data-theme="dark"] body #page-content #MTK-hero .MTK-hero-card,html[data-theme="dark"] body #page-content #MTK-hero .MTK-hero-title,html[data-theme="dark"] body #page-content #MTK-hero .MTK-hero-description{color:#f5f5f5!important;opacity:1!important}html[data-theme="dark"] body #page-content #MTK-hero .MTK-hero-description{color:#d6d6d6!important}
