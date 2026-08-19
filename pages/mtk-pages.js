@@ -222,6 +222,13 @@ class Pages extends HTMLElement {
         // SHOW THE PAGE
         target.style.display = "block";
 
+        // Keep public pages in a consistent dark theme without affecting private app pages.
+        if (document.body) {
+            const darkPublicPages = ["home", "news", "contact", "register"];
+            document.body.classList.toggle("nala-public-dark", darkPublicPages.includes(page));
+            document.body.setAttribute("data-nala-page", page);
+        }
+
         // SCROLL TO TOP
         window.scrollTo(0, 0);
 

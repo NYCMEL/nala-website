@@ -29,17 +29,3 @@
     }
   }
 }
-
-// Dark mode
-html[data-theme="dark"] #_stats {
-  background-color: var(--nala-surface-alt) !important;
-  color: var(--nala-text) !important;
-
-  ._stats-item {
-    background-color: var(--nala-surface) !important;
-    border-color: var(--nala-border) !important;
-  }
-
-  ._stats-value { color: #d5ad32 !important; }
-  ._stats-label { color: var(--nala-text-secondary) !important; }
-}

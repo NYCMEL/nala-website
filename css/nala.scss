@@ -1,3 +1,15 @@
+@function css-min($values...) {
+  @return unquote("min(#{$values})");
+}
+
+@function css-max($values...) {
+  @return unquote("max(#{$values})");
+}
+
+@function css-clamp($minimum, $preferred, $maximum) {
+  @return unquote("clamp(#{$minimum}, #{$preferred}, #{$maximum})");
+}
+
 // ============================================================
 //  nala.scss
 //  Extracted design tokens, fonts, colors & common styles
@@ -665,8 +677,7 @@ a {
 
 @media (min-width: 1200px) {
   .container {
-      max-width: calc(100% - 64px);
-      width: 1400px;
+    max-width: min(1400px, calc(100% - 64px));
   }
 }
 
@@ -770,199 +781,5 @@ h1.title {
 
 ::placeholder {
   color: var(--nala-placeholder) !important;
-}
-
-// ────────────────────────────────────────────────────────────
-//  COLOR MODE — light / dark
-//  Runtime theme tokens. Components can adopt these variables
-//  incrementally without changing the existing SCSS token API.
-// ────────────────────────────────────────────────────────────
-
-:root,
-html[data-theme="light"] {
-  color-scheme: light;
-  --nala-page-bg: #ffffff;
-  --nala-surface: #ffffff;
-  --nala-surface-alt: #faf7f0;
-  --nala-surface-muted: #f5f5f5;
-  --nala-text: #212121;
-  --nala-text-secondary: #6b7280;
-  --nala-border: #e0e0e0;
-  --nala-divider: rgba(0, 0, 0, 0.12);
-  --nala-input-bg: #ffffff;
-  --nala-header-bg: #1e1e1e;
-  --nala-header-text: rgba(255, 255, 255, 0.96);
-  --nala-shadow: rgba(0, 0, 0, 0.16);
-  --nala-placeholder: #757575;
-}
-
-html[data-theme="dark"] {
-  color-scheme: dark;
-  --nala-page-bg: #121212;
-  --nala-surface: #1e1e1e;
-  --nala-surface-alt: #242424;
-  --nala-surface-muted: #2b2b2b;
-  --nala-text: #f5f5f5;
-  --nala-text-secondary: #bdbdbd;
-  --nala-border: #424242;
-  --nala-divider: rgba(255, 255, 255, 0.14);
-  --nala-input-bg: #242424;
-  --nala-header-bg: #0d0d0d;
-  --nala-header-text: rgba(255, 255, 255, 0.96);
-  --nala-shadow: rgba(0, 0, 0, 0.55);
-  --nala-placeholder: #a9a9a9;
-}
-
-html,
-body {
-  background-color: var(--nala-page-bg);
-  color: var(--nala-text);
-}
-
-body,
-#page-content,
-.mtk-pages,
-.mtk-pages__content,
-main,
-section {
-  transition: background-color $duration-short $ease-standard,
-              color $duration-short $ease-standard,
-              border-color $duration-short $ease-standard;
-}
-
-html[data-theme="dark"] {
-  body,
-  #page-content,
-  .mtk-pages,
-  .mtk-pages__content,
-  .bg-white {
-    background-color: var(--nala-page-bg) !important;
-    color: var(--nala-text);
-  }
-
-  .bg-light {
-    background-color: var(--nala-surface-alt) !important;
-  }
-
-  .text-dark,
-  .text-body,
-  .text-black {
-    color: var(--nala-text) !important;
-  }
-
-  .text-muted,
-  .text-secondary {
-    color: var(--nala-text-secondary) !important;
-  }
-
-  .card,
-  .modal-content,
-  .dropdown-menu,
-  .list-group-item,
-  .accordion-item,
-  .offcanvas,
-  .toast,
-  .course-card,
-  table,
-  .table {
-    background-color: var(--nala-surface);
-    color: var(--nala-text);
-    border-color: var(--nala-border);
-  }
-
-  .dropdown-item,
-  .dropdown-item-text,
-  .accordion-button,
-  .table,
-  .table > :not(caption) > * > * {
-    color: var(--nala-text);
-    border-color: var(--nala-border);
-  }
-
-  .dropdown-item:hover,
-  .dropdown-item:focus,
-  .accordion-button:not(.collapsed) {
-    background-color: var(--nala-surface-muted);
-    color: var(--nala-text);
-  }
-
-  input,
-  select,
-  textarea,
-  .form-control,
-  .form-select,
-  .input-group-text {
-    background-color: var(--nala-input-bg);
-    color: var(--nala-text);
-    border-color: var(--nala-border);
-  }
-
-  input:disabled,
-  select:disabled,
-  textarea:disabled,
-  .form-control:disabled,
-  .form-control[readonly] {
-    background-color: var(--nala-surface-muted);
-    color: var(--nala-text-secondary);
-  }
-
-  hr,
-  .dropdown-divider {
-    border-color: var(--nala-divider);
-  }
-
-  a:not(.btn):not(.nav-link):not(.dropdown-item) {
-    color: #d8b85b;
-  }
-}
-
-/* Dark mode home-page contrast fixes */
-html[data-theme="dark"] #business-in-a-box { background: var(--nala-page-bg) !important; color: var(--nala-text) !important; }
-html[data-theme="dark"] .biab-home-copy, html[data-theme="dark"] .biab-home-sample { background: var(--nala-surface) !important; border-color: var(--nala-border) !important; color: var(--nala-text) !important; }
-html[data-theme="dark"] .biab-home-copy h2, html[data-theme="dark"] .biab-home-copy ul, html[data-theme="dark"] .biab-home-benefits strong { color: var(--nala-text) !important; }
-html[data-theme="dark"] .biab-home-copy p, html[data-theme="dark"] .biab-home-benefits small, html[data-theme="dark"] .biab-home-sample figcaption { color: var(--nala-text-secondary) !important; }
-html[data-theme="dark"] .biab-home-benefits div { background: var(--nala-surface-alt) !important; border-color: var(--nala-border) !important; }
-html[data-theme="dark"] .biab-home-sample img { border-color: var(--nala-border) !important; }
-html[data-theme="dark"] #page-content .title { color: var(--nala-text) !important; }
-html[data-theme="dark"] #page-content .card { background: var(--nala-surface) !important; color: var(--nala-text) !important; border-color: var(--nala-border) !important; }
-
-/* Dark mode: Courses / Included in the Program */
-html[data-theme="dark"] .mtk-courses {
-  background: var(--nala-page-bg) !important;
-  color: var(--nala-text) !important;
-
-  h1, h2, .course-title { color: var(--nala-text) !important; }
-
-  .mtk-description,
-  .course-description,
-  .course-features li { color: var(--nala-text-secondary) !important; }
-
-  .course-card {
-    background: var(--nala-surface) !important;
-    color: var(--nala-text) !important;
-    border-color: var(--nala-border) !important;
-  }
-
-  .course-level {
-    background: #f4ead2 !important;
-    color: #6f5200 !important;
-  }
-
-  .course-features li::before { color: #d8ad24 !important; }
-}
-
-// Dark mode: stats only
-html[data-theme="dark"] #_stats {
-  background: var(--nala-surface-alt) !important;
-  border-block-color: var(--nala-border) !important;
-
-  ._stats-item {
-    background: var(--nala-surface) !important;
-    border-color: var(--nala-border) !important;
-    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28) !important;
-  }
-
-  ._stats-value { color: #d5ad32 !important; }
-  ._stats-label { color: var(--nala-text-secondary) !important; }
 }
 

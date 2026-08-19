@@ -373,4 +373,3 @@ h1.title::after {
     position: static !important;
     width: 100%;
     margin-top: 4px; } }
-.nala-theme-toggle{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 36px;padding:0;border:1px solid rgba(255,255,255,.35);border-radius:0;background:transparent;color:rgba(255,255,255,.92);cursor:pointer;transition:background-color .2s ease,border-color .2s ease,color .2s ease}.nala-theme-toggle:hover,.nala-theme-toggle:focus-visible{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.7);color:#fff;outline:none}.nala-theme-toggle:focus-visible{box-shadow:0 0 0 3px rgba(198,149,45,.35)}html[data-theme=dark] #header.navbar{background-color:var(--nala-header-bg)!important}

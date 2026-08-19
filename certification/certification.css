@@ -324,32 +324,3 @@ h1.title::after {
     height: 36px;
     font-size: 20px; }
 }
-
-/* Dark mode: certification path */
-html[data-theme="dark"] .mtk-certification--path {
-  background: var(--nala-surface) !important;
-  color: var(--nala-text) !important;
-  border-color: var(--nala-border) !important;
-  box-shadow: 0 18px 45px rgba(0,0,0,.35) !important;
-}
-html[data-theme="dark"] .mtk-certification--path .title,
-html[data-theme="dark"] .mtk-certification__step strong {
-  color: var(--nala-text) !important;
-}
-html[data-theme="dark"] .mtk-certification__lead,
-html[data-theme="dark"] .mtk-certification__step p,
-html[data-theme="dark"] .mtk-certification__sample figcaption {
-  color: var(--nala-text-secondary) !important;
-}
-html[data-theme="dark"] .mtk-certification__eyebrow {
-  background: #3a3119 !important;
-  color: #e4c45c !important;
-}
-html[data-theme="dark"] .mtk-certification__step {
-  background: var(--nala-surface-alt) !important;
-  border-color: var(--nala-border) !important;
-}
-html[data-theme="dark"] .mtk-certification__sample img {
-  border-color: var(--nala-border) !important;
-  box-shadow: 0 20px 45px rgba(0,0,0,.35) !important;
-}
