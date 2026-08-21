@@ -1,468 +1,385 @@
-window.bettermeConfig = {
-    app: {
-	name: "nala-locksmith-path",
-	brand: "NALA",
-	brandLogo: "assets/nala-logo-black.png",
-	headerTitle: "Path Builder",
-	backLabel: "Go back",
-	backText: "<",
-	menuLabel: "Open menu",
-	continueText: "CONTINUE",
-	completedTitle: "Your locksmith income path is ready",
-	completedText: "Review your personalized path below.",
-	restartText: "START OVER",
-	disclaimer: "Example revenue only. Actual results depend on market, effort, sales execution, licensing rules, demand, and other local factors."
+window.NALA_V4_CONFIG = {
+  version: "4.0.0",
+  storageKey: "nala_personal_roadmap_v4",
+  checkoutUrl: "../#register",
+  analyticsNamespace: "nala_v4",
+  app: {
+    title: "NALA Personal Roadmap",
+    chapter: "Career Advisor",
+    continueLabel: "Continue",
+    insightLabel: "Did you know?"
+  },
+  screens: [
+    {
+      id: "01",
+      type: "welcome",
+      chapter: "Your next chapter",
+      title: "Your future may be closer than you think.",
+      description: "Answer 18 short questions and discover whether locksmithing could become your next opportunity.",
+      supporting: "This experience takes about 3 minutes and is designed to provide a personalized assessment based on your answers.",
+      action: "Start My Assessment",
+      secondary: "No commitment. Just a few questions."
     },
-    result: {
-	eyebrow: "Personalized recommendation",
-	pathTitle: "Your Recommended Path",
-	whyTitle: "Why We Recommended This",
-	scheduleTitle: "Personalized Schedule",
-	timelineTitle: "Training Timeline",
-	servicesTitle: "Recommended Starter Services",
-	revenueTitle: "Revenue Scenario",
-	visionTitle: "12-Month Vision",
-	nextTitle: "Next Step",
-	revenuePrefix: "Based on your availability and market:",
-	revenueSuffix: "Approximate example gross service revenue:",
-	notGuaranteed: "Not guaranteed.",
-	ctaLabels: {
-	    training: "Start Training",
-	    biab: "Explore BIAB",
-	    advisor: "Schedule Advisor Call"
-	}
+    {
+      id: "02",
+      type: "dob",
+      chapter: "Getting to know you",
+      step: "Question 1 of 18",
+      key: "dob_eligibility",
+      title: "What is your date of birth?",
+      description: "We use this only to confirm eligibility and personalize your assessment.",
+      adultMessage: "Age eligibility confirmed.",
+      minorMessage: "This program is currently available for adults aged 18 and over.",
+      minorAction: "Return Home"
     },
-    screens: [
-	{
-	    type: 3,
-	    key: "intro",
-	    icon: "N",
-	    title: "Find your fastest realistic path to locksmith income.",
-	    paragraphs: [
-		"Answer a few questions and NALA will recommend the path that best matches your time, market, goals, and launch readiness.",
-		"This is not about whether you can become a locksmith. It is about the safest and most realistic path for you to start generating income."
-	    ]
-	},
-	{
-	    type: 1,
-	    key: "age",
-	    inputType: "radio",
-	    title: "What is your age range?",
-	    description: "This helps us tailor timing, launch readiness, and risk.",
-	    options: [
-		{ label: "Under 16", value: "under_16" },
-		{ label: "16-17", value: "16_17" },
-		{ label: "18-24", value: "18_24" },
-		{ label: "25-34", value: "25_34" },
-		{ label: "35-44", value: "35_44" },
-		{ label: "45-54", value: "45_54" },
-		{ label: "55+", value: "55_plus" }
-	    ]
-	},
-	{
-	    type: 4,
-	    key: "location",
-	    title: "Where would you start?",
-	    description: "Select the state where you would study, train, or begin offering services.",
-	    fields: [
-		{
-		    label: "State",
-		    name: "state",
-		    type: "select",
-		    placeholder: "Select a state",
-		    required: true,
-		    options: [
-			{ label: "Alabama", value: "Alabama" },
-			{ label: "Alaska", value: "Alaska" },
-			{ label: "Arizona", value: "Arizona" },
-			{ label: "Arkansas", value: "Arkansas" },
-			{ label: "California", value: "California" },
-			{ label: "Colorado", value: "Colorado" },
-			{ label: "Connecticut", value: "Connecticut" },
-			{ label: "Delaware", value: "Delaware" },
-			{ label: "District of Columbia", value: "District of Columbia" },
-			{ label: "Florida", value: "Florida" },
-			{ label: "Georgia", value: "Georgia" },
-			{ label: "Hawaii", value: "Hawaii" },
-			{ label: "Idaho", value: "Idaho" },
-			{ label: "Illinois", value: "Illinois" },
-			{ label: "Indiana", value: "Indiana" },
-			{ label: "Iowa", value: "Iowa" },
-			{ label: "Kansas", value: "Kansas" },
-			{ label: "Kentucky", value: "Kentucky" },
-			{ label: "Louisiana", value: "Louisiana" },
-			{ label: "Maine", value: "Maine" },
-			{ label: "Maryland", value: "Maryland" },
-			{ label: "Massachusetts", value: "Massachusetts" },
-			{ label: "Michigan", value: "Michigan" },
-			{ label: "Minnesota", value: "Minnesota" },
-			{ label: "Mississippi", value: "Mississippi" },
-			{ label: "Missouri", value: "Missouri" },
-			{ label: "Montana", value: "Montana" },
-			{ label: "Nebraska", value: "Nebraska" },
-			{ label: "Nevada", value: "Nevada" },
-			{ label: "New Hampshire", value: "New Hampshire" },
-			{ label: "New Jersey", value: "New Jersey" },
-			{ label: "New Mexico", value: "New Mexico" },
-			{ label: "New York", value: "New York" },
-			{ label: "North Carolina", value: "North Carolina" },
-			{ label: "North Dakota", value: "North Dakota" },
-			{ label: "Ohio", value: "Ohio" },
-			{ label: "Oklahoma", value: "Oklahoma" },
-			{ label: "Oregon", value: "Oregon" },
-			{ label: "Pennsylvania", value: "Pennsylvania" },
-			{ label: "Rhode Island", value: "Rhode Island" },
-			{ label: "South Carolina", value: "South Carolina" },
-			{ label: "South Dakota", value: "South Dakota" },
-			{ label: "Tennessee", value: "Tennessee" },
-			{ label: "Texas", value: "Texas" },
-			{ label: "Utah", value: "Utah" },
-			{ label: "Vermont", value: "Vermont" },
-			{ label: "Virginia", value: "Virginia" },
-			{ label: "Washington", value: "Washington" },
-			{ label: "West Virginia", value: "West Virginia" },
-			{ label: "Wisconsin", value: "Wisconsin" },
-			{ label: "Wyoming", value: "Wyoming" }
-		    ]
-		}
-	    ]
-	},
-	{
-	    type: 1,
-	    key: "marketType",
-	    inputType: "radio",
-	    title: "Which market best describes your area?",
-	    description: "Market size changes the example revenue assumptions.",
-	    options: [
-		{ label: "Major Metro", value: "major_metro" },
-		{ label: "Large Suburb", value: "large_suburb" },
-		{ label: "Mid-Size City", value: "mid_size_city" },
-		{ label: "Small Town", value: "small_town" },
-		{ label: "Rural", value: "rural" }
-	    ]
-	},
-	{
-	    type: 1,
-	    key: "familyStatus",
-	    inputType: "radio",
-	    title: "What is your family situation?",
-	    description: "We use this to keep the recommendation realistic.",
-	    options: [
-		{ label: "Single", value: "single" },
-		{ label: "Married", value: "married" },
-		{ label: "Married with children", value: "married_children" },
-		{ label: "Single parent", value: "single_parent" }
-	    ]
-	},
-	{
-	    type: 1,
-	    key: "employmentStatus",
-	    inputType: "radio",
-	    title: "What is your current employment status?",
-	    description: "Your path should fit your real schedule.",
-	    options: [
-		{ label: "Full-time", value: "full_time" },
-		{ label: "Part-time", value: "part_time" },
-		{ label: "Self-employed", value: "self_employed" },
-		{ label: "Unemployed", value: "unemployed" },
-		{ label: "Retired", value: "retired" }
-	    ]
-	},
-	{
-	    type: 1,
-	    key: "incomePressure",
-	    inputType: "radio",
-	    title: "How important is extra income right now?",
-	    description: "This helps us decide whether to recommend a fast-track path.",
-	    options: [
-		{ label: "Nice to have", value: "nice_to_have" },
-		{ label: "Helpful", value: "helpful" },
-		{ label: "Important", value: "important" },
-		{ label: "Extremely important", value: "extremely_important" }
-	    ]
-	},
-	{
-	    type: 1,
-	    key: "mainGoal",
-	    inputType: "radio",
-	    title: "What is your main goal?",
-	    description: "Choose the outcome that feels most accurate.",
-	    options: [
-		{ label: "Extra income", value: "extra_income" },
-		{ label: "Career change", value: "career_change" },
-		{ label: "Start business", value: "start_business" },
-		{ label: "Learn a trade", value: "learn_trade" },
-		{ label: "Long-term career", value: "long_term_career" }
-	    ]
-	},
-	{
-	    type: 1,
-	    key: "desiredIncome",
-	    inputType: "radio",
-	    title: "How much additional monthly income would you like?",
-	    description: "We use this only for example scenarios, not guarantees.",
-	    options: [
-		{ label: "$500", value: "500" },
-		{ label: "$1,000", value: "1000" },
-		{ label: "$2,500", value: "2500" },
-		{ label: "$5,000", value: "5000" },
-		{ label: "$10,000+", value: "10000_plus" }
-	    ]
-	},
-	{
-	    type: 1,
-	    key: "threeYearGoal",
-	    inputType: "radio",
-	    title: "Where would you like to be in three years?",
-	    description: "This separates side-income paths from company-building paths.",
-	    options: [
-		{ label: "Extra income only", value: "extra_income_only" },
-		{ label: "Full-time locksmith", value: "full_time_locksmith" },
-		{ label: "Own a business", value: "own_business" },
-		{ label: "Manage technicians", value: "manage_technicians" },
-		{ label: "Not sure", value: "not_sure" }
-	    ]
-	},
-	{
-	    type: 1,
-	    key: "studyHours",
-	    inputType: "radio",
-	    title: "How many hours per week can you study?",
-	    description: "This determines your training timeline.",
-	    options: [
-		{ label: "2-4", value: "2_4" },
-		{ label: "5-8", value: "5_8" },
-		{ label: "9-12", value: "9_12" },
-		{ label: "13-20", value: "13_20" },
-		{ label: "20+", value: "20_plus" }
-	    ]
-	},
-	{
-	    type: 1,
-	    key: "workHours",
-	    inputType: "radio",
-	    title: "How many hours per week could you work?",
-	    description: "This sets the job-per-week assumption.",
-	    options: [
-		{ label: "3-5", value: "3_5" },
-		{ label: "6-10", value: "6_10" },
-		{ label: "11-20", value: "11_20" },
-		{ label: "21-30", value: "21_30" },
-		{ label: "Full-time", value: "full_time" }
-	    ]
-	},
-	{
-	    type: 1,
-	    key: "studySchedule",
-	    inputType: "radio",
-	    title: "When would you prefer to study?",
-	    description: "We will build a simple weekly schedule around this.",
-	    options: [
-		{ label: "Evenings", value: "evenings" },
-		{ label: "Mornings", value: "mornings" },
-		{ label: "Weekends", value: "weekends" },
-		{ label: "Flexible", value: "flexible" }
-	    ]
-	},
-	{
-	    type: 1,
-	    key: "workStyle",
-	    inputType: "radio",
-	    title: "What work style sounds best?",
-	    description: "The path changes if you want a side hustle versus a company.",
-	    options: [
-		{ label: "Evenings only", value: "evenings_only" },
-		{ label: "Weekends only", value: "weekends_only" },
-		{ label: "Side hustle", value: "side_hustle" },
-		{ label: "Full-time", value: "full_time" },
-		{ label: "Build a company", value: "build_company" }
-	    ]
-	},
-	{
-	    type: 1,
-	    key: "businessExperience",
-	    inputType: "radio",
-	    title: "Do you have previous business experience?",
-	    description: "This helps decide whether BIAB should be recommended early.",
-	    options: [
-		{ label: "None", value: "none" },
-		{ label: "Side hustle", value: "side_hustle" },
-		{ label: "One business", value: "one_business" },
-		{ label: "Multiple businesses", value: "multiple_businesses" }
-	    ]
-	},
-	{
-	    type: 1,
-	    key: "customerComfort",
-	    inputType: "radio",
-	    title: "How comfortable are you with customers?",
-	    description: "Locksmith income usually depends on trust, communication, and service.",
-	    options: [
-		{ label: "Very comfortable", value: "very_comfortable" },
-		{ label: "Somewhat", value: "somewhat" },
-		{ label: "Not comfortable", value: "not_comfortable" }
-	    ]
-	},
-	{
-	    type: 1,
-	    key: "toolComfort",
-	    inputType: "radio",
-	    title: "How comfortable are you with tools?",
-	    description: "No experience is required, but comfort level changes the pace.",
-	    options: [
-		{ label: "Comfortable", value: "comfortable" },
-		{ label: "Somewhat", value: "somewhat" },
-		{ label: "Willing to learn", value: "willing_to_learn" },
-		{ label: "Not comfortable", value: "not_comfortable" }
-	    ]
-	},
-	{
-	    type: 1,
-	    key: "transportation",
-	    inputType: "radio",
-	    title: "What is your transportation situation?",
-	    description: "Reliable transportation affects the safest starter plan.",
-	    options: [
-		{ label: "Reliable transportation", value: "reliable" },
-		{ label: "Working on it", value: "working_on_it" },
-		{ label: "No transportation", value: "none" }
-	    ]
-	},
-	{
-	    type: 1,
-	    key: "travelRadius",
-	    inputType: "radio",
-	    title: "How far could you travel for jobs?",
-	    description: "Radius changes the example revenue scenario.",
-	    options: [
-		{ label: "10 miles", value: "10" },
-		{ label: "25 miles", value: "25" },
-		{ label: "50 miles", value: "50" },
-		{ label: "75+ miles", value: "75_plus" }
-	    ]
-	},
-	{
-	    type: 1,
-	    key: "serviceInterest",
-	    inputType: "radio",
-	    title: "Which locksmithing area interests you most?",
-	    description: "We will recommend starter services around this interest.",
-	    options: [
-		{ label: "Residential", value: "residential" },
-		{ label: "Automotive", value: "automotive" },
-		{ label: "Commercial", value: "commercial" },
-		{ label: "Business Setup", value: "business_setup" },
-		{ label: "All of the Above", value: "all" }
-	    ]
-	}
-    ],
-    engine: {
-	marketMultipliers: {
-	    major_metro: 1.25,
-	    large_suburb: 1.15,
-	    mid_size_city: 1,
-	    small_town: 0.9,
-	    rural: 0.8
-	},
-	radiusMultipliers: {
-	    "10": 0.8,
-	    "25": 1,
-	    "50": 1.15,
-	    "75_plus": 1.25
-	},
-	timelines: {
-	    "2_4": "16-24 weeks",
-	    "5_8": "10-16 weeks",
-	    "9_12": "8-12 weeks",
-	    "13_20": "6-8 weeks",
-	    "20_plus": "4-6 weeks"
-	},
-	jobBands: {
-	    "3_5": { label: "1-3 jobs/week", low: 1, high: 3 },
-	    "6_10": { label: "3-6 jobs/week", low: 3, high: 6 },
-	    "11_20": { label: "5-10 jobs/week", low: 5, high: 10 },
-	    "21_30": { label: "10-15 jobs/week", low: 10, high: 15 },
-	    "full_time": { label: "15-25 jobs/week", low: 15, high: 25 }
-	},
-	averageTickets: {
-	    starter: 100,
-	    standard: 125,
-	    strong: 150
-	},
-	services: {
-	    residential: ["Residential lockouts", "Rekeys", "Lock replacement"],
-	    automotive: ["Automotive lockouts", "Basic access services", "Residential lockouts"],
-	    commercial: ["Residential lockouts", "Rekeys", "Commercial basics after training"],
-	    business_setup: ["Residential starter jobs", "Customer intake workflow", "Business-In-A-Box launch setup"],
-	    all: ["Residential lockouts", "Rekeys", "Automotive basics", "Commercial later-stage services"]
-	},
-	schedules: {
-	    evenings: ["Monday: 60 minutes study", "Wednesday: 90 minutes study", "Saturday: 2-hour practice block"],
-	    mornings: ["Tuesday: 60 minutes study", "Thursday: 90 minutes study", "Saturday: 2-hour practice block"],
-	    weekends: ["Saturday: 2-hour lesson block", "Sunday: 2-hour practice block", "One weekday: 45-minute review"],
-	    flexible: ["Two 60-minute study blocks", "One 90-minute practice block", "One weekend review block"]
-	},
-	personas: {
-	    student_builder: {
-		name: "Student Builder",
-		path: "Learn Now, Launch Later",
-		vision: "Build skills first, then prepare to launch when age, licensing, and transportation are ready.",
-		nextStep: "training"
-	    },
-	    recent_graduate: {
-		name: "Recent Graduate",
-		path: "Accelerated Launch Path",
-		vision: "Use higher availability to build trade competence and move toward early income opportunities.",
-		nextStep: "training"
-	    },
-	    side_hustle_builder: {
-		name: "Side Hustle Builder",
-		path: "Evening Income Builder",
-		vision: "Build a meaningful second income stream around evenings or weekends.",
-		nextStep: "training"
-	    },
-	    family_provider: {
-		name: "Family Provider",
-		path: "Family-Friendly Side Business",
-		vision: "Build reliable supplemental income without overloading family schedule constraints.",
-		nextStep: "advisor"
-	    },
-	    career_transition: {
-		name: "Career Transition",
-		path: "Career Transition Roadmap",
-		vision: "Build toward replacing your current income with a structured trade path.",
-		nextStep: "advisor"
-	    },
-	    entrepreneur: {
-		name: "Entrepreneur",
-		path: "Business Launch Path",
-		vision: "Launch a local service business with training, offer structure, and operating support.",
-		nextStep: "biab"
-	    },
-	    fast_starter: {
-		name: "Fast Starter",
-		path: "Fast-Track Income Plan",
-		vision: "Focus on the shortest practical path to starter services and advisor-supported execution.",
-		nextStep: "advisor"
-	    },
-	    independence_seeker: {
-		name: "Independence Seeker",
-		path: "Solo Operator Plan",
-		vision: "Use locksmithing to build a more independent local service income path.",
-		nextStep: "training"
-	    },
-	    retiree: {
-		name: "Retiree",
-		path: "Flexible Supplemental Income",
-		vision: "Build a flexible service path around lighter hours and practical local demand.",
-		nextStep: "training"
-	    },
-	    scale_builder: {
-		name: "Scale Builder",
-		path: "Scale Builder Roadmap",
-		vision: "Position yourself to hire technicians and expand into a local service company.",
-		nextStep: "biab"
-	    }
-	}
+    {
+      id: "03",
+      type: "guidedChoice",
+      chapter: "Your starting point",
+      step: "Question 2 of 18",
+      key: "employment_status",
+      selectionEvent: "employment_selected",
+      title: "Which option best describes your current situation?",
+      description: "There are no right or wrong answers. We simply want to personalize your experience.",
+      insight: "Thousands of people begin learning a new profession every year—not because they have to, but because they want more freedom, flexibility, and options for the future.",
+      options: [
+        { value: "full_time", label: "I work full-time", flag: "employed_full_time", response: "Great. Many of our students started while working full-time." },
+        { value: "part_time", label: "I work part-time", flag: "employed_part_time", response: "That can give you extra flexibility while learning." },
+        { value: "self_employed", label: "I'm self-employed", flag: "self_employed", response: "Many business owners choose to add another valuable skill to their toolkit." },
+        { value: "retired", label: "I'm retired", flag: "retired", response: "Many people discover that retirement is the perfect time to learn something new and stay active." },
+        { value: "between_jobs", label: "I'm currently between jobs", flag: "between_jobs", response: "Sometimes an unexpected change becomes the beginning of a completely new opportunity." },
+        { value: "other", label: "Other", flag: "employment_other", response: "Thank you. We'll personalize the rest of your experience accordingly." }
+      ]
+    },
+    {
+      id: "04",
+      type: "guidedChoice",
+      chapter: "What matters most",
+      step: "Question 3 of 18",
+      key: "primary_motivation",
+      selectionEvent: "motivation_selected",
+      title: "If you could improve just ONE thing in your life right now... what would it be?",
+      description: "Choose the answer that feels most true for you today.",
+      insight: "Many people who successfully change careers don't start because they know exactly what they want... they start because they know something has to change.",
+      options: [
+        { value: "money", label: "Earn more money", flag: "money", response: "Money matters. There is absolutely nothing wrong with wanting to earn more. The real question is how to do it wisely and build something that lasts." },
+        { value: "freedom", label: "Have more freedom and control over my time", flag: "freedom", response: "More freedom often starts with having more choices." },
+        { value: "security", label: "Build a more secure future", flag: "security", response: "Building a practical skill today can create more confidence about tomorrow." },
+        { value: "family", label: "Create a better life for my family", flag: "family", response: "Wanting a better future for your family is one of the strongest motivations anyone can have." },
+        { value: "growth", label: "Learn a valuable new skill", flag: "growth", response: "The best investment is often the one you make in yourself." },
+        { value: "new_beginning", label: "Start a completely new chapter in my life", flag: "new_beginning", response: "Every great story has a chapter where someone decides to start again." }
+      ]
+    },
+    {
+      id: "05",
+      type: "guidedChoice",
+      chapter: "Fear of change",
+      step: "Question 4 of 18",
+      key: "change_concern",
+      selectionEvent: "concern_selected",
+      title: "What's your biggest concern about making a change?",
+      description: "Choose the answer that feels most true for you.",
+      insight: "The biggest obstacle for most people isn't ability—it's uncertainty.",
+      options: [
+        { value: "time", label: "I don't have enough time.", flag: "time", response: "Many of our students thought they didn't have time—until they discovered they only needed a realistic plan." },
+        { value: "wrong_direction", label: "I'm afraid of investing my time and energy in the wrong direction.", flag: "fear_wrong_decision", response: "That's completely understandable. The important thing isn't avoiding every mistake—it's making informed decisions." },
+        { value: "experience", label: "I don't have any experience in this field.", flag: "experience", response: "Everyone starts somewhere. Experience comes after taking the first step—not before." },
+        { value: "confidence", label: "I'm not sure I'm capable of succeeding.", flag: "self_confidence", response: "Most people underestimate what they're capable of before they begin." },
+        { value: "age", label: "I think I may be too old to start over.", flag: "age", response: "Many successful careers begin much later than people expect." },
+        { value: "overwhelming", label: "Making a big life decision feels overwhelming.", flag: "fear_change", response: "Big decisions feel smaller when they're taken one step at a time." }
+      ]
+    },
+    {
+      id: "06",
+      type: "guidedChoice",
+      chapter: "Learning readiness",
+      step: "Question 5 of 18",
+      key: "learning_readiness",
+      selectionEvent: "answer_selected",
+      title: "When you decide to learn something important, what usually helps you stay committed?",
+      description: "Choose the answer that feels most true for you.",
+      insight: "Successful learners rarely study more—they study consistently.",
+      options: [
+        { value: "structure", label: "Having a clear step-by-step plan.", flag: "structure", weight: 9, response: "A clear plan often makes big goals feel much easier to achieve." },
+        { value: "self_paced", label: "Being able to learn at my own pace.", flag: "self_paced", weight: 10, response: "Learning at your own pace allows many people to stay consistent over time." },
+        { value: "goal_oriented", label: "Knowing exactly what I'll achieve by the end.", flag: "goal_oriented", weight: 8, response: "Knowing where you're going makes every step more meaningful." },
+        { value: "progress", label: "Seeing real progress along the way.", flag: "progress", weight: 8, response: "Small wins create lasting motivation." },
+        { value: "support", label: "Knowing that support is available whenever I need it.", flag: "support", weight: 9, response: "Knowing you're not alone often makes all the difference." },
+        { value: "flexible", label: "Being able to fit learning into my daily routine.", flag: "flexible", weight: 10, response: "Learning becomes much easier when it fits your lifestyle—not the other way around." }
+      ]
+    },
+    {
+      id: "07",
+      type: "guidedChoice",
+      chapter: "Personal strengths",
+      step: "Question 6 of 18",
+      key: "personal_strength",
+      selectionEvent: "answer_selected",
+      title: "Which of these statements describes you best?",
+      description: "Choose the statement that feels most like you.",
+      insight: "The profession you choose is important—but your mindset is often even more important.",
+      options: [
+        { value: "persistence", label: "When I decide to do something, I usually don't give up.", flag: "persistence", weight: 10, response: "Persistence is one of the strongest predictors of long-term success." },
+        { value: "problem_solver", label: "I always try to find a solution instead of giving up.", flag: "problem_solver", weight: 10, response: "People who focus on solutions often overcome challenges faster than they expect." },
+        { value: "commitment", label: "I'm willing to work hard when I know the goal is worth it.", flag: "commitment", weight: 9, response: "Working hard toward a meaningful goal is a powerful advantage." },
+        { value: "growth", label: "I enjoy improving myself and learning new things.", flag: "growth", weight: 9, response: "People who enjoy learning often continue growing throughout their lives." },
+        { value: "responsibility", label: "People can usually count on me when something is important.", flag: "responsibility", weight: 10, response: "Responsibility and consistency are qualities that open many doors." },
+        { value: "future_mindset", label: "I believe the right decision can completely change a person's future.", flag: "future_mindset", weight: 8, response: "Many life-changing journeys begin with one thoughtful decision." }
+      ]
+    },
+    {
+      id: "08",
+      type: "factsChoice",
+      chapter: "Facts first",
+      step: "Question 7 of 18",
+      key: "market_understanding",
+      selectionEvent: "market_understanding_selected",
+      title: "Before choosing a new profession, what's the first thing you would want to know?",
+      response: "That's exactly the question we believe everyone should ask first.",
+      facts: [
+        { value: "≈18,000", label: "Locksmiths in the United States", source: "Based on U.S. Bureau of Labor Statistics" },
+        { value: "Millions", label: "of locksmith service requests every year" },
+        { value: "AAA", label: "alone handles a very large number of vehicle lockout assistance requests every year" }
+      ],
+      question: "After seeing these numbers... what stands out to you the most?",
+      options: [
+        { value: "demand", label: "I didn't realize the demand was this high.", flag: "demand", weight: 8 },
+        { value: "low_supply", label: "I didn't realize there were so few locksmiths.", flag: "low_supply", weight: 10 },
+        { value: "opportunity", label: "I'm beginning to understand why people see this profession as an opportunity.", flag: "opportunity", weight: 10 },
+        { value: "local_interest", label: "I'd like to understand what the opportunity looks like in my area.", flag: "local_interest", weight: 10 }
+      ],
+      dynamicResponse: "That's exactly the right question. Every local market is different, and understanding your area is one of the smartest steps before making any career decision.",
+      insight: "Successful professionals don't choose careers based on assumptions. They look at demand first."
+    },
+    {
+      id: "09",
+      type: "discovery",
+      chapter: "It starts at home",
+      step: "Step 8 of 18",
+      key: "residential_guess",
+      selectionEvent: "market_guess_selected",
+      title: "Every profession starts with understanding the market.",
+      description: "Let's start with residential homes.",
+      question: "If you had to guess... How many housing units are there in the United States?",
+      options: [
+        { value: "72m", label: "Around 72 million" },
+        { value: "96m", label: "Around 96 million" },
+        { value: "118m", label: "Around 118 million" }
+      ],
+      revealValue: "145M+",
+      revealLabel: "Housing Units",
+      source: "According to U.S. Census Bureau data",
+      meaning: "Even the highest estimate was lower than the actual number. Every home has doors. Every door has locks. And every lock will eventually need service, replacement or maintenance.",
+      insight: "Big markets aren't built from one customer. They're built from millions of everyday situations.",
+      transition: "Homes are only one part of the picture. Let's look at another market."
+    },
+    {
+      id: "10",
+      type: "discovery",
+      chapter: "Vehicle market",
+      step: "Question 9 of 18",
+      key: "vehicle_guess",
+      selectionEvent: "market_guess_selected",
+      question: "If you had to guess... How many registered vehicles are there in the United States?",
+      options: [
+        { value: "65m", label: "65M" },
+        { value: "120m", label: "120M" },
+        { value: "180m", label: "180M" }
+      ],
+      revealValue: "289M+",
+      revealLabel: "registered vehicles",
+      source: "Source: Federal Highway Administration",
+      meaning: "Every vehicle represents multiple access systems."
+    },
+    {
+      id: "11",
+      type: "discovery",
+      chapter: "Hotels",
+      step: "Question 10 of 18",
+      key: "hotel_guess",
+      selectionEvent: "market_guess_selected",
+      question: "If you had to guess... How many hotel rooms are there in the United States?",
+      options: [
+        { value: "900k", label: "900K" },
+        { value: "2_4m", label: "2.4M" },
+        { value: "3_8m", label: "3.8M" }
+      ],
+      revealValue: "5.7M+",
+      revealLabel: "hotel rooms",
+      source: "Source: American Hotel & Lodging Association",
+      meaning: "Hotels constantly manage access."
+    },
+    {
+      id: "12",
+      type: "discovery",
+      chapter: "Commercial & institutions",
+      step: "Question 11 of 18",
+      key: "commercial_guess",
+      selectionEvent: "market_guess_selected",
+      question: "If you had to guess... How many commercial buildings are there in the United States?",
+      options: [
+        { value: "800k", label: "800K" },
+        { value: "2_1m", label: "2.1M" },
+        { value: "3_7m", label: "3.7M" }
+      ],
+      revealValue: "5.9M+",
+      revealLabel: "commercial buildings",
+      source: "Source: U.S. Energy Information Administration (CBECS)",
+      meaning: "Commercial buildings and institutions continually manage secure access."
+    },
+    {
+      id: "13",
+      type: "bigPicture",
+      chapter: "The big picture",
+      title: "YOU SEE A CITY.",
+      secondTitle: "WE SEE AN ECONOMY.",
+      action: "Continue"
+    },
+    {
+      id: "14",
+      type: "confidence",
+      chapter: "Confidence building",
+      step: "Step 13 of 20",
+      key: "starting_challenge",
+      selectionEvent: "confidence_answer_selected",
+      title: "Every professional starts somewhere.",
+      question: "What do you think was the biggest challenge for most locksmiths when they first started?",
+      description: "Imagine they were standing exactly where you are today. What do you think challenged them the most?",
+      options: [
+        { value: "technical_skills", label: "Learning the technical skills." },
+        { value: "no_experience", label: "Starting without any previous experience." },
+        { value: "time", label: "Finding enough time to learn." },
+        { value: "belief", label: "Believing they could actually do it." },
+        { value: "fit", label: "Honestly... I think many of them felt it was the right profession for them." }
+      ],
+      revealIntro: "After helping thousands of students begin this journey... We discovered something surprising.",
+      revealTitle: "Most people don't start with experience. They start with one simple tool. A screwdriver.",
+      revealSupporting: "Everything else is learned step by step with the right guidance.",
+      insight: "Every expert you meet today was once holding a screwdriver for the very first time.",
+      closing: "Just... a screwdriver."
+    },
+    {
+      id: "15",
+      type: "modernLearning",
+      chapter: "Modern learning",
+      step: "Step 14 of 20",
+      key: "learning_experience",
+      selectionEvent: "learning_preference_selected",
+      title: "If you had to guess... Which learning experience feels more natural in today's world?",
+      description: "Choose the answer that feels most realistic to you.",
+      options: [
+        { value: "classroom", label: "Learning in a classroom at fixed times." },
+        { value: "manuals", label: "Learning mainly from books and printed manuals." },
+        { value: "home", label: "Learning from home, at your own pace, whenever it fits your schedule." },
+        { value: "replay", label: "Being able to replay lessons until you feel completely confident." },
+        { value: "flexibility", label: "Everyone learns differently, but flexibility matters more than ever." }
+      ],
+      revealTitle: "The world has already changed.",
+      changes: ["Movies moved to streaming.", "Banking moved to our phones.", "Even our wallets became digital.", "Professional learning changed too."],
+      future: "Welcome to 2028.",
+      insight: "Learning no longer has to fit your life. Modern learning fits around your life.",
+      caption: "Some things belong in the past."
+    },
+    {
+      id: "16",
+      type: "meaning",
+      chapter: "Your future",
+      step: "Step 15 of 20",
+      key: "service_call_feeling",
+      selectionEvent: "future_feeling_selected",
+      title: "Imagine this...",
+      description: "A family you've never met is waiting for someone they can trust. A few minutes later... they're smiling because you showed up.",
+      question: "How do you think you would feel after helping a family like this?",
+      options: [
+        { value: "proud", label: "Proud." },
+        { value: "relieved", label: "Relieved." },
+        { value: "confident", label: "More confident than ever." },
+        { value: "ready", label: "Ready for the next service call." },
+        { value: "all", label: "All of the above." }
+      ],
+      reveal: "The first service call rarely changes your life overnight. But it often changes the way you see yourself.",
+      closing: "Not a bad feeling… Helping a family… And getting paid on your way home.",
+      insight: "The best careers create value for others... And a better future for you."
+    },
+    {
+      id: "17",
+      type: "roadmapSetup",
+      chapter: "Your Personal Roadmap",
+      step: "Step 16 of 20",
+      key: "preferred_work_path",
+      selectionEvent: "work_path_selected",
+      title: "Earlier, you shared what matters most to you. Now let's build your Personal Roadmap.",
+      description: "Your roadmap isn't based on guesses. It's built using your answers together with real industry data.",
+      dataCards: [
+        { icon: "vehicle", label: "Average Vehicle Unlock", lines: ["≈ 6–9 min", "≈ $280–350"] },
+        { icon: "home", label: "Average House Lockout", lines: ["Average industry pricing"] },
+        { icon: "chart", label: "Industry Demand", lines: ["AAA", "BLS", "Current market averages"] },
+        { icon: "clock", label: "Your Preferred Work Path", lines: ["Choose what fits your life"] }
+      ],
+      question: "Once you've completed the program... Which work path feels right for you?",
+      options: [
+        { value: "side", label: "Side Income", detail: "5–10 hours/week", tone: "green" },
+        { value: "balanced", label: "Balanced", detail: "10–20 hours/week", tone: "blue" },
+        { value: "full", label: "Full Time", detail: "20+ hours/week", tone: "violet" }
+      ],
+      action: "Build My Personal Roadmap"
+    },
+    {
+      id: "18",
+      type: "roadmap",
+      chapter: "Your Personal Roadmap",
+      title: "Building Your Personal Roadmap...",
+      loadingSteps: ["Reviewing your goals...", "Matching your preferred work path...", "Comparing current industry data...", "Creating your roadmap..."],
+      revealTitle: "Your Personal Roadmap",
+      basis: ["Your goals", "Your preferred work path", "Average industry pricing", "Current market demand"],
+      disclaimer: "This roadmap is an estimate based on your selections and current market averages. It is designed to help you plan your journey and is not a guarantee of results.",
+      averageNote: "This roadmap represents a realistic average—not a ceiling.",
+      beyondNote: "Many professional locksmiths build beyond these numbers through consistency, experience and reputation.",
+      closing: "Every big journey begins with a single decision.",
+      action: "Continue"
+    },
+    {
+      id: "19",
+      type: "brandReveal",
+      chapter: "NALA",
+      title: "Your future is already waiting.",
+      secondTitle: "We're just here to help you unlock it.",
+      description: "Thousands of small decisions can change a life. Sometimes, all it takes is making the first one.",
+      support: "From your first lesson... To your first real service call... We'll be with you every step of the way.",
+      action: "Continue",
+      transition: "Ready?"
+    },
+    {
+      id: "20",
+      type: "final",
+      chapter: "Your decision",
+      title: "You've come this far for a reason.",
+      description: "Your future won't be decided by what you read today... It will be decided by what you choose to do next.",
+      roadmapReady: "Your Personal Roadmap is ready.",
+      included: ["Professional Online Training", "Step-by-Step Learning Platform", "Professional Certificate", "Professional Starter Kit", "Lifetime Access to Future Updates", "Community Support"],
+      action: "Yes, I'm Ready.",
+      closing: "One decision. A lifetime of possibilities.",
+      assurances: ["Secure Checkout", "Flexible Payment Options", "Learn at Your Own Pace"]
     }
+  ],
+  roadmap: {
+    averageServiceValue: 280,
+    paths: {
+      side: {
+        label: "Side Income",
+        hours: "5–10 hours/week",
+        monthlyCalls: [1, 1, 2, 2, 3, 3, 4, 5, 6, 7, 8, 9]
+      },
+      balanced: {
+        label: "Balanced",
+        hours: "10–20 hours/week",
+        monthlyCalls: [1, 2, 3, 4, 6, 8, 10, 12, 14, 16, 17, 18]
+      },
+      full: {
+        label: "Full Time",
+        hours: "20+ hours/week",
+        monthlyCalls: [2, 3, 5, 7, 10, 13, 16, 19, 22, 24, 26, 27]
+      }
+    }
+  }
 };

@@ -1,18 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>NALA Locksmith Path Builder</title>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#f7f3eb">
+    <meta name="description" content="A guided NALA career assessment for people exploring professional locksmithing.">
+    <title>NALA Personal Roadmap</title>
+    <link rel="stylesheet" href="scss/styles.css?v=4.0.0">
+  </head>
+  <body>
+    <div class="advisor" data-advisor>
+      <header class="advisor__header">
+        <button class="icon-button advisor__back" type="button" data-back aria-label="Go to the previous screen">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg>
+        </button>
 
-	<link rel="stylesheet" href="scss/styles.css" />
-    </head>
+        <div class="advisor__brand" data-brand aria-label="North American Locksmith Association">
+          <span class="advisor__symbol" aria-hidden="true"></span>
+          <img class="advisor__full-logo" src="assets/nala-logo-black.png" alt="NALA — North American Locksmith Association">
+        </div>
 
-    <body>
-	<wc-include href="partials/betterme.html"></wc-include>
-	
-	<script src="js/wc.js"></script>
-	<script src="js/betterme.config.js"></script>
-	<script src="js/betterme.js"></script>
-    </body>
+        <p class="advisor__chapter" data-chapter>Career Advisor</p>
+        <span class="advisor__header-spacer" aria-hidden="true"></span>
+      </header>
+
+      <div class="advisor__progress" role="progressbar" aria-label="Assessment progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <span data-progress></span>
+      </div>
+
+      <main class="advisor__main" data-main aria-live="polite"></main>
+    </div>
+
+    <script src="js/betterme.config.js?v=4.0.0"></script>
+    <script src="js/betterme.js?v=4.0.0"></script>
+  </body>
 </html>
