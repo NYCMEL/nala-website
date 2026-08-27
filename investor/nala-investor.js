@@ -1,1 +1,25 @@
-(function(){'use strict';function load(){if(document.querySelector('style[data-nala-investor-scss]'))return;fetch('nala-investor.scss',{cache:'no-cache'}).then(function(r){return r.ok?r.text():''}).then(function(s){if(!s)return;var st=document.createElement('style');st.setAttribute('data-nala-investor-scss','nala-investor.scss');st.textContent=s;document.head.appendChild(st)}).catch(function(){})}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',load,{once:true})}else{load()}}());
+(function() {
+    'use strict';
+
+    function load() {
+        if (document.querySelector('style[data-nala-investor-scss]')) return;
+        fetch('nala-investor.scss', {
+            cache: 'no-cache'
+        }).then(function(r) {
+            return r.ok ? r.text() : ''
+        }).then(function(s) {
+            if (!s) return;
+            var st = document.createElement('style');
+            st.setAttribute('data-nala-investor-scss', 'nala-investor.scss');
+            st.textContent = s;
+            document.head.appendChild(st)
+        }).catch(function() {})
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', load, {
+            once: true
+        })
+    } else {
+        load()
+    }
+}());
