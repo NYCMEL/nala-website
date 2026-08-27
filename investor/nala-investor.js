@@ -15,6 +15,7 @@
             document.head.appendChild(st)
         }).catch(function() {})
     }
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', load, {
             once: true
