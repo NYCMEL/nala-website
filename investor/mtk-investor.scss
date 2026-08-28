@@ -563,3 +563,247 @@
     }
   }
 }
+
+
+/* NALA reference header/footer/principles overrides */
+.mtk-investor {
+  .mtk-investor__header,
+  .mtk-investor__footer {
+    position: relative;
+    min-height: 112px;
+    padding: 0;
+    border: 0;
+    background-color: #20252a;
+    background-image: url("header.png");
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: auto 112px;
+    box-shadow: none;
+  }
+
+  .mtk-investor__header > .container,
+  .mtk-investor__footer > .container {
+    width: 100%;
+    max-width: none;
+    min-height: 112px;
+    padding-right: clamp(32px, 5vw, 80px);
+    padding-left: clamp(32px, 5vw, 80px);
+  }
+
+  .mtk-investor__header-inner,
+  .mtk-investor__footer-inner {
+    position: relative;
+    display: flex !important;
+    width: 100%;
+    min-height: 112px;
+    align-items: center !important;
+    margin: 0;
+  }
+
+  .mtk-investor__header-inner > [data-region="brand"] {
+    display: block;
+    flex: 0 0 390px;
+    width: 390px;
+    max-width: 390px;
+    padding: 0;
+    margin: 0 auto 0 0;
+  }
+
+  .mtk-investor__header-inner > [data-region="brand"] > * {
+    @include sr-only;
+  }
+
+  .mtk-investor__header-inner > .col-md-8 {
+    position: absolute !important;
+    top: 50% !important;
+    right: 0 !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: auto !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transform: translateY(-50%);
+  }
+
+  .mtk-investor__nav,
+  .mtk-investor__footer-nav {
+    display: flex;
+    min-height: 0;
+    align-items: center;
+    justify-content: flex-end;
+    gap: clamp(24px, 2.4vw, 42px);
+    padding: 0;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .mtk-investor__nav-button,
+  .mtk-investor__footer-nav-button {
+    position: relative;
+    border: 0;
+    background: transparent;
+    color: $color-footer-text;
+    padding: $spacing-sm 0 $spacing-md;
+    font-family: $font-primary;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: $transition-color;
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background: $color-primary-light;
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform $duration-short $ease-standard;
+    }
+
+    &:hover,
+    &:focus-visible {
+      color: $color-primary-light;
+    }
+
+    &:hover::after,
+    &:focus-visible::after {
+      transform: scaleX(1);
+    }
+  }
+
+  .mtk-investor__nav-button:first-child,
+  .mtk-investor__footer-nav-button:first-child {
+    color: $color-primary-light;
+
+    &::after { transform: scaleX(1); }
+  }
+
+  .mtk-investor__footer-inner {
+    padding: 0;
+  }
+
+  .mtk-investor__footer-logo-space {
+    flex: 0 0 390px;
+    width: 390px;
+    margin-right: auto;
+  }
+
+  .mtk-investor__footer-nav {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+  }
+
+  .mtk-investor__principles {
+    padding: 0;
+    background: linear-gradient(90deg, #172029 0%, #20272d 50%, #172029 100%);
+    color: $color-white;
+  }
+
+  .mtk-investor__principles > .container {
+    max-width: 1320px;
+    padding-top: $spacing-2xl;
+    padding-bottom: $spacing-2xl;
+  }
+
+  .mtk-investor__principle {
+    position: relative;
+    display: flex;
+    min-height: 118px;
+    align-items: flex-start;
+    gap: $spacing-xl;
+    padding: $spacing-sm $spacing-2xl;
+  }
+
+  .mtk-investor__principle:not(:first-child)::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 1px;
+    background: rgba($color-primary-light, 0.38);
+  }
+
+  .mtk-investor__principle-icon {
+    display: inline-flex;
+    flex: 0 0 52px;
+    justify-content: center;
+    color: #f1bd38;
+  }
+
+  .mtk-investor__principle-icon .mtk-investor__material-icon {
+    font-size: 46px;
+  }
+
+  .mtk-investor__principle-title {
+    margin: 2px 0 $spacing-md;
+    color: #f1bd38;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+  }
+
+  .mtk-investor__principle-copy {
+    max-width: 220px;
+    margin: 0;
+    color: $color-footer-text;
+    font-size: $font-size-sm;
+    line-height: $line-height-loose;
+  }
+
+  @media (max-width: $bp-lg) {
+    .mtk-investor__nav,
+    .mtk-investor__footer-nav { gap: $spacing-lg; }
+    .mtk-investor__nav-button,
+    .mtk-investor__footer-nav-button { font-size: $font-size-xs; }
+  }
+
+  @media (max-width: $bp-md) {
+    .mtk-investor__header,
+    .mtk-investor__footer {
+      min-height: 154px;
+      background-size: auto 88px;
+      background-position: 18px 10px;
+    }
+
+    .mtk-investor__header > .container,
+    .mtk-investor__footer > .container,
+    .mtk-investor__header-inner,
+    .mtk-investor__footer-inner { min-height: 154px; }
+
+    .mtk-investor__header-inner > [data-region="brand"],
+    .mtk-investor__footer-logo-space { display: none; }
+
+    .mtk-investor__header-inner > .col-md-8,
+    .mtk-investor__footer-nav {
+      top: auto !important;
+      right: 0 !important;
+      bottom: $spacing-md !important;
+      left: 0 !important;
+      width: 100% !important;
+      transform: none;
+    }
+
+    .mtk-investor__nav,
+    .mtk-investor__footer-nav {
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: $spacing-sm $spacing-lg;
+      white-space: normal;
+    }
+
+    .mtk-investor__principle { min-height: auto; padding: $spacing-xl; }
+    .mtk-investor__principle:not(:first-child)::before {
+      top: 0; right: $spacing-xl; bottom: auto; left: $spacing-xl;
+      width: auto; height: 1px;
+    }
+    .mtk-investor__principle-copy { max-width: none; }
+  }
+}

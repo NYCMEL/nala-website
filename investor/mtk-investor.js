@@ -22,6 +22,7 @@ class MtkInvestor {
     this.renderHero();
     this.renderOverview();
     this.renderMetrics();
+    this.renderPrinciples();
     this.renderStrategy();
     this.renderHighlights();
     this.renderUpdates();
@@ -141,6 +142,29 @@ class MtkInvestor {
     `;
   }
 
+  renderPrinciples() {
+    const region = this.getRegion("principles");
+    const { principles } = this.config;
+
+    region.innerHTML = `
+      <div class="container">
+        <div class="row g-0 mtk-investor__principles-grid">
+          ${principles.items.map((item) => `
+            <article class="col-12 col-md-6 col-xl-3 mtk-investor__principle">
+              <span class="mtk-investor__principle-icon" aria-hidden="true">
+                <span class="mtk-investor__material-icon">${this.escapeHtml(item.icon)}</span>
+              </span>
+              <div class="mtk-investor__principle-content">
+                <h2 class="mtk-investor__principle-title">${this.escapeHtml(item.title)}</h2>
+                <p class="mtk-investor__principle-copy">${this.escapeHtml(item.text)}</p>
+              </div>
+            </article>
+          `).join("")}
+        </div>
+      </div>
+    `;
+  }
+
   renderStrategy() {
     const region = this.getRegion("strategy");
     const { strategy } = this.config;
@@ -250,17 +274,24 @@ class MtkInvestor {
 
   renderFooter() {
     const region = this.getRegion("footer");
-    const { brand } = this.config;
 
     region.innerHTML = `
       <div class="container">
-        <div class="row align-items-center g-2">
-          <div class="col-12 col-md-6">
-            <span class="mtk-investor__footer-brand">${this.escapeHtml(brand.name)}</span>
-          </div>
-          <div class="col-12 col-md-6 text-md-end">
-            <span>${this.escapeHtml(brand.tagline)}</span>
-          </div>
+        <div class="mtk-investor__footer-inner">
+          <div class="mtk-investor__footer-logo-space" aria-hidden="true"></div>
+          <nav class="mtk-investor__footer-nav" aria-label="Investor footer navigation">
+            ${this.config.navigation.map((item) => `
+              <button
+                class="mtk-investor__footer-nav-button"
+                type="button"
+                data-event="${this.config.events.publish.nav}"
+                data-action="navigate"
+                data-target="${this.escapeAttribute(item.target)}"
+              >
+                ${this.escapeHtml(item.label)}
+              </button>
+            `).join("")}
+          </nav>
         </div>
       </div>
     `;
@@ -288,6 +319,7 @@ class MtkInvestor {
     this.getRegion("hero").setAttribute("aria-label", accessibility.heroLabel);
     this.getRegion("overview").setAttribute("aria-label", accessibility.overviewLabel);
     this.getRegion("metrics").setAttribute("aria-label", accessibility.metricsLabel);
+    this.getRegion("principles").setAttribute("aria-label", accessibility.principlesLabel);
     this.getRegion("strategy").setAttribute("aria-label", accessibility.strategyLabel);
     this.getRegion("updates").setAttribute("aria-label", accessibility.updatesLabel);
     this.getRegion("closing").setAttribute("aria-label", accessibility.closingLabel);

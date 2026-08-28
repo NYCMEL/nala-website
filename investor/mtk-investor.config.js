@@ -6,9 +6,11 @@ window.MTK_INVESTOR_CONFIG = Object.freeze({
   },
   "navigation": [
     { "label": "Overview", "target": "overview" },
-    { "label": "Highlights", "target": "highlights" },
-    { "label": "Strategy", "target": "strategy" },
-    { "label": "Updates", "target": "updates" }
+    { "label": "Financials", "target": "highlights" },
+    { "label": "Governance", "target": "principles" },
+    { "label": "News", "target": "updates" },
+    { "label": "Resources", "target": "updates" },
+    { "label": "Contact", "target": "closing" }
   ],
   "hero": {
     "kicker": "NALA Investor Relations",
@@ -67,6 +69,30 @@ window.MTK_INVESTOR_CONFIG = Object.freeze({
       "action": "markets"
     }
   ],
+  "principles": {
+    "items": [
+      {
+        "title": "Our Mission",
+        "text": "Advance the locksmith profession through education, advocacy, and community.",
+        "icon": "track_changes"
+      },
+      {
+        "title": "Our Vision",
+        "text": "Be the global leader in security standards, innovation, and professional development.",
+        "icon": "visibility"
+      },
+      {
+        "title": "Our Values",
+        "text": "Integrity, excellence, inclusion, and service drive everything we do.",
+        "icon": "diamond"
+      },
+      {
+        "title": "For Investors",
+        "text": "We are committed to creating sustainable value and long-term impact.",
+        "icon": "handshake"
+      }
+    ]
+  },
   "strategy": {
     "eyebrow": "Investment thesis",
     "title": "Four priorities guide the business",
@@ -168,6 +194,7 @@ window.MTK_INVESTOR_CONFIG = Object.freeze({
     "heroLabel": "NALA investor overview",
     "overviewLabel": "Investor overview",
     "metricsLabel": "Investor highlights",
+    "principlesLabel": "NALA mission, vision, values, and investor commitment",
     "strategyLabel": "Investment priorities",
     "updatesLabel": "Investor updates",
     "closingLabel": "Investor relations contact"
