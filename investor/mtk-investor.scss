@@ -1991,3 +1991,53 @@
     }
   }
 }
+
+
+/* Hero globe: smaller and more transparent, matching reference */
+.mtk-investor {
+  .mtk-investor__hero {
+    position: relative !important;
+    overflow: hidden !important;
+    background-image: none !important;
+  }
+
+  .mtk-investor__hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image: var(--mtk-investor-hero-background);
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: auto 72%;
+    opacity: .34;
+    pointer-events: none;
+  }
+
+  .mtk-investor__hero > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (max-width: $bp-md) {
+    .mtk-investor__hero::before {
+      background-position: 115% center;
+      background-size: auto 54%;
+      opacity: .22;
+    }
+  }
+}
+
+
+/* Hero background image removed */
+.mtk-investor {
+  .mtk-investor__hero {
+    background-image: none !important;
+  }
+
+  .mtk-investor__hero::before {
+    content: none !important;
+    display: none !important;
+    background-image: none !important;
+  }
+}
