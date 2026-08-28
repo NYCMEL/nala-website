@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Investor information for NALA Network.">
+  <meta name="robots" content="index,follow">
+  <title>NALA Investor Relations</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="mtk-investor.css">
+</head>
+
+<body>
+  <mtk-investor class="mtk-investor">
+    <header class="mtk-investor__header" data-region="header"></header>
+
+    <main class="mtk-investor__main" data-region="main">
+      <section class="mtk-investor__hero" data-region="hero"></section>
+      <section class="mtk-investor__section" data-section="overview" data-region="overview"></section>
+      <section class="mtk-investor__section mtk-investor__section--soft" data-section="highlights" data-region="metrics"></section>
+      <section class="mtk-investor__principles" data-section="principles" data-region="principles"></section>
+      <section class="mtk-investor__section" data-section="strategy" data-region="strategy"></section>
+      <section class="mtk-investor__section mtk-investor__section--gold" data-region="highlights"></section>
+      <section class="mtk-investor__section mtk-investor__section--soft" data-section="updates" data-region="updates"></section>
+      <section class="mtk-investor__section mtk-investor__closing" data-region="closing"></section>
+    </main>
+
+    <section class="mtk-investor__latest-news" data-region="latest-news"></section>
+
+    <footer class="mtk-investor__footer" data-region="footer"></footer>
+    <div class="mtk-investor__to-top-region" data-region="to-top"></div>
+    <div class="mtk-investor__status" data-region="status" aria-live="polite" aria-atomic="true"></div>
+  </mtk-investor>
+
+  <script src="mtk-investor.config.js"></script>
+  <script>
+    window.MTK_INVESTOR_CONFIG.closing.email = "ydalin@nalanetwork.com";
+    window.wc = {
+      log: () => {},
+      publish: (name, detail) => {
+        document.dispatchEvent(new CustomEvent(name, { detail }));
+      },
+      subscribe: (name, callback) => {
+        document.addEventListener(name, (event) => callback(name, event.detail));
+      }
+    };
+
+    document.addEventListener("mtk-investor:contact", () => {
+      window.location.href = "mailto:ydalin@nalanetwork.com?subject=NALA%20Investor%20Information";
+    });
+  </script>
+  <script src="mtk-investor.js"></script>
+  <script>
+    (() => {
+      const source = new URLSearchParams(window.location.search).get("src");
+      if (!["yehoshua-card", "ofir-card"].includes(source)) return;
+
+      fetch("track.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `src=${encodeURIComponent(source)}`,
+        credentials: "same-origin",
+        keepalive: true
+      }).catch(() => {});
+    })();
+  </script>
+</body>
+</html>
