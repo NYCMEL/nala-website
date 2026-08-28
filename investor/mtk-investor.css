@@ -1695,3 +1695,16 @@
   display: none !important;
   background-image: none !important;
 }
+
+
+/* Keep section headings visible below the sticky investor header */
+.mtk-investor > main > section,
+.mtk-investor > .mtk-investor__latest-news {
+  scroll-margin-top: 140px !important;
+}
+@media (max-width: 768px) {
+  .mtk-investor > main > section,
+  .mtk-investor > .mtk-investor__latest-news {
+    scroll-margin-top: 96px !important;
+  }
+}

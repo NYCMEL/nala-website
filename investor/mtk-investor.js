@@ -554,6 +554,24 @@ class MtkInvestor {
     });
   }
 
+
+  scrollToTarget(target) {
+    if (!target) {
+      return;
+    }
+
+    const header = this.root.querySelector(".mtk-investor__header");
+    const headerHeight = header ? header.getBoundingClientRect().height : 0;
+    const extraGap = 16;
+    const targetTop = target.getBoundingClientRect().top + window.scrollY;
+    const top = Math.max(0, targetTop - headerHeight - extraGap);
+
+    window.scrollTo({
+      top,
+      behavior: "smooth"
+    });
+  }
+
   closeMobileMenus() {
     const menu = this.config.mobileMenu;
 
