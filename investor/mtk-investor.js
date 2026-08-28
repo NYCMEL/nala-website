@@ -4,6 +4,8 @@ class MtkInvestor {
     this.config = config;
     this.onMessage = this.onMessage.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
+    this.handleResize = this.handleResize.bind(this);
   }
 
   init() {
@@ -13,10 +15,14 @@ class MtkInvestor {
 
     this.render();
     this.bindEvents();
+    window.addEventListener("scroll", this.handleScroll, { passive: true });
+    window.addEventListener("resize", this.handleResize, { passive: true });
+    this.handleScroll();
     this.subscribe();
   }
 
   render() {
+    this.renderMobileToggle();
     this.renderBrand();
     this.renderNavigation();
     this.renderHero();
@@ -28,7 +34,32 @@ class MtkInvestor {
     this.renderUpdates();
     this.renderClosing();
     this.renderFooter();
+    this.renderToTop();
     this.applyAccessibilityLabels();
+    this.closeMobileMenus();
+  }
+
+
+  renderMobileToggle() {
+    const region = this.getRegion("header-toggle");
+    const menu = this.config.mobileMenu;
+
+    if (!region || !menu) {
+      return;
+    }
+
+    region.innerHTML = `
+      <button
+        class="mtk-investor__menu-toggle"
+        type="button"
+        data-event="${this.config.events.publish.nav}"
+        data-action="toggle-menu"
+        aria-expanded="false"
+        aria-label="${this.escapeAttribute(menu.openLabel)}"
+      >
+        <span class="mtk-investor__menu-toggle-icon" aria-hidden="true">${this.escapeHtml(menu.iconOpen)}</span>
+      </button>
+    `;
   }
 
   renderBrand() {
@@ -42,12 +73,13 @@ class MtkInvestor {
         data-event="${this.config.events.publish.nav}"
         data-action="brand-home"
         data-target="overview"
+        aria-label="${this.escapeAttribute(`${brand.name} ${brand.eyebrow}`)}"
       >
-        <span class="mtk-investor__brand-mark" aria-hidden="true">${this.escapeHtml(brand.name.slice(0, 1))}</span>
-        <span class="mtk-investor__brand-copy">
-          <span class="mtk-investor__brand-name">${this.escapeHtml(brand.name)}</span>
-          <span class="mtk-investor__brand-eyebrow">${this.escapeHtml(brand.eyebrow)}</span>
-        </span>
+        <img
+          class="mtk-investor__logo"
+          src="${this.escapeAttribute(brand.logo)}"
+          alt="${this.escapeAttribute(brand.logoAlt)}"
+        >
       </button>
     `;
   }
@@ -274,11 +306,37 @@ class MtkInvestor {
 
   renderFooter() {
     const region = this.getRegion("footer");
+    const { brand, mobileMenu } = this.config;
 
     region.innerHTML = `
       <div class="container">
-        <div class="mtk-investor__footer-inner">
-          <div class="mtk-investor__footer-logo-space" aria-hidden="true"></div>
+        <div class="mtk-investor__chrome-inner">
+          <div class="mtk-investor__mobile-toggle mtk-investor__footer-mobile-toggle">
+            <button
+              class="mtk-investor__menu-toggle"
+              type="button"
+              data-event="${this.config.events.publish.nav}"
+              data-action="toggle-footer-menu"
+              aria-expanded="false"
+              aria-label="${this.escapeAttribute(mobileMenu.openLabel)}"
+            >
+              <span class="mtk-investor__menu-toggle-icon" aria-hidden="true">${this.escapeHtml(mobileMenu.iconOpen)}</span>
+            </button>
+          </div>
+          <button
+            class="mtk-investor__brand mtk-investor__footer-brand-button"
+            type="button"
+            data-event="${this.config.events.publish.nav}"
+            data-action="brand-home"
+            data-target="overview"
+            aria-label="${this.escapeAttribute(`${brand.name} ${brand.eyebrow}`)}"
+          >
+            <img
+              class="mtk-investor__logo"
+              src="${this.escapeAttribute(brand.logo)}"
+              alt="${this.escapeAttribute(brand.logoAlt)}"
+            >
+          </button>
           <nav class="mtk-investor__footer-nav" aria-label="Investor footer navigation">
             ${this.config.navigation.map((item) => `
               <button
@@ -295,6 +353,46 @@ class MtkInvestor {
         </div>
       </div>
     `;
+  }
+
+  renderToTop() {
+    const region = this.getRegion("to-top");
+    const toTop = this.config.toTop;
+
+    if (!region || !toTop) {
+      return;
+    }
+
+    region.innerHTML = `
+      <button
+        class="mtk-investor__to-top"
+        type="button"
+        data-event="${this.escapeAttribute(toTop.event)}"
+        data-action="${this.escapeAttribute(toTop.action)}"
+        aria-label="${this.escapeAttribute(toTop.label)}"
+        title="${this.escapeAttribute(toTop.label)}"
+      >
+        <span class="mtk-investor__to-top-icon" aria-hidden="true">${this.escapeHtml(toTop.icon)}</span>
+      </button>
+    `;
+  }
+
+
+  handleResize() {
+    if (window.innerWidth > 768) {
+      this.closeMobileMenus();
+    }
+  }
+
+  handleScroll() {
+    const button = this.root.querySelector(".mtk-investor__to-top");
+    const showAfter = Number((this.config.toTop && this.config.toTop.showAfter) || 320);
+
+    if (!button) {
+      return;
+    }
+
+    button.classList.toggle("mtk-investor__to-top--visible", window.scrollY > showAfter);
   }
 
   renderActionButton(action, variant) {
@@ -344,11 +442,56 @@ class MtkInvestor {
       label: trigger.textContent.trim()
     };
 
+    if (detail.action === "toggle-menu" || detail.action === "toggle-footer-menu") {
+      const isFooter = detail.action === "toggle-footer-menu";
+      const nav = this.root.querySelector(isFooter ? ".mtk-investor__footer-nav" : ".mtk-investor__nav");
+      const icon = trigger.querySelector(".mtk-investor__menu-toggle-icon");
+      const menu = this.config.mobileMenu;
+      const isOpen = trigger.getAttribute("aria-expanded") === "true";
+      const willOpen = !isOpen;
+
+      trigger.setAttribute("aria-expanded", String(willOpen));
+      trigger.setAttribute("aria-label", willOpen ? menu.closeLabel : menu.openLabel);
+
+      if (icon) {
+        icon.textContent = willOpen ? menu.iconClose : menu.iconOpen;
+      }
+
+      if (nav) {
+        nav.classList.toggle("mtk-investor__mobile-menu-open", willOpen);
+      }
+
+      return;
+    }
+
     if (detail.target) {
       this.scrollToSection(detail.target);
     }
 
     this.publish(eventName, detail);
+    this.closeMobileMenus();
+
+    if (detail.action === "to-top") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
+
+  closeMobileMenus() {
+    const menu = this.config.mobileMenu;
+
+    this.root.querySelectorAll(".mtk-investor__menu-toggle").forEach((toggle) => {
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.setAttribute("aria-label", menu.openLabel);
+      const icon = toggle.querySelector(".mtk-investor__menu-toggle-icon");
+      if (icon) {
+        icon.textContent = menu.iconOpen;
+      }
+    });
+
+    this.root.querySelectorAll(".mtk-investor__nav, .mtk-investor__footer-nav").forEach((nav) => {
+      nav.classList.remove("mtk-investor__mobile-menu-open");
+    });
   }
 
   publish(eventName, detail) {

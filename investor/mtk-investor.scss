@@ -24,7 +24,6 @@
     min-height: 116px;
     border: 0;
     background-color: #212529;
-    background-image: url("header.png");
     background-repeat: no-repeat;
     background-position: left top;
     background-size: 2048px 116px;
@@ -574,7 +573,6 @@
     padding: 0;
     border: 0;
     background-color: #20252a;
-    background-image: url("header.png");
     background-repeat: no-repeat;
     background-position: left top;
     background-size: auto 112px;
@@ -817,7 +815,6 @@
     padding: 0;
     border: 0;
     background-color: #20252a;
-    background-image: url("header.png");
     background-repeat: no-repeat;
     background-position: left top;
     background-size: auto 112px;
@@ -913,7 +910,6 @@
 .mtk-investor {
   .mtk-investor__header {
     min-height:112px !important; height:112px !important; padding:0 !important;
-    background-color:#20252a !important; background-image:url("header.png") !important;
     background-repeat:no-repeat !important; background-position:left top !important; background-size:auto 112px !important;
     .mtk-investor__footer-inner { position:relative !important; display:flex !important; min-height:112px !important; height:112px !important; align-items:center !important; }
     .mtk-investor__footer-logo-space { display:block !important; flex:0 0 390px !important; width:390px !important; max-width:390px !important; margin-right:auto !important; }
@@ -976,6 +972,604 @@
       min-height: auto;
       padding-top: 0 !important;
       padding-bottom: 48px;
+    }
+  }
+}
+
+/* Final investor chrome: real NALA logo, no header artwork */
+.mtk-investor {
+  .mtk-investor__header,
+  .mtk-investor__footer {
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 104px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    background: #20252a !important;
+    box-shadow: none !important;
+  }
+
+  .mtk-investor__header {
+    position: sticky !important;
+    top: 0;
+    z-index: $z-sticky;
+  }
+
+  .mtk-investor__header > .container,
+  .mtk-investor__footer > .container {
+    width: 100% !important;
+    max-width: 1440px !important;
+    min-height: 104px !important;
+    padding-right: clamp(24px, 4.5vw, 72px) !important;
+    padding-left: clamp(24px, 4.5vw, 72px) !important;
+    margin: 0 auto !important;
+  }
+
+  .mtk-investor__chrome-inner {
+    display: flex !important;
+    width: 100% !important;
+    min-height: 104px !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: $spacing-2xl !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .mtk-investor__chrome-brand {
+    display: flex !important;
+    min-width: 0 !important;
+    align-items: center !important;
+  }
+
+  .mtk-investor__brand,
+  .mtk-investor__footer-brand-button {
+    position: static !important;
+    display: inline-flex !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    align-items: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: normal !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    cursor: pointer;
+  }
+
+  .mtk-investor__logo {
+    display: block !important;
+    width: auto !important;
+    height: 70px !important;
+    max-width: min(330px, 34vw) !important;
+    object-fit: contain !important;
+  }
+
+  .mtk-investor__nav,
+  .mtk-investor__footer-nav {
+    position: static !important;
+    display: flex !important;
+    width: auto !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    flex-wrap: nowrap !important;
+    gap: clamp(18px, 2vw, 34px) !important;
+    padding: 0 !important;
+    margin: 0 0 0 auto !important;
+    white-space: nowrap !important;
+    transform: none !important;
+  }
+
+  .mtk-investor__nav-button,
+  .mtk-investor__footer-nav-button {
+    position: relative !important;
+    width: auto !important;
+    padding: $spacing-sm 0 $spacing-md !important;
+    margin: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: $color-footer-text !important;
+    font-family: $font-primary !important;
+    font-size: $font-size-sm !important;
+    font-weight: $font-weight-semibold !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0.02em !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    cursor: pointer;
+  }
+
+  .mtk-investor__nav-button::after,
+  .mtk-investor__footer-nav-button::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: $color-primary-light;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform $duration-short $ease-standard;
+  }
+
+  .mtk-investor__nav-button:hover,
+  .mtk-investor__nav-button:focus-visible,
+  .mtk-investor__footer-nav-button:hover,
+  .mtk-investor__footer-nav-button:focus-visible,
+  .mtk-investor__nav-button:first-child,
+  .mtk-investor__footer-nav-button:first-child {
+    color: $color-primary-light !important;
+  }
+
+  .mtk-investor__nav-button:hover::after,
+  .mtk-investor__nav-button:focus-visible::after,
+  .mtk-investor__footer-nav-button:hover::after,
+  .mtk-investor__footer-nav-button:focus-visible::after,
+  .mtk-investor__nav-button:first-child::after,
+  .mtk-investor__footer-nav-button:first-child::after {
+    transform: scaleX(1);
+  }
+
+  .mtk-investor__main,
+  .mtk-investor__hero {
+    margin-top: 0 !important;
+  }
+
+  @media (max-width: $bp-lg) {
+    .mtk-investor__header > .container,
+    .mtk-investor__footer > .container {
+      padding-right: $spacing-xl !important;
+      padding-left: $spacing-xl !important;
+    }
+
+    .mtk-investor__logo {
+      height: 58px !important;
+      max-width: 260px !important;
+    }
+
+    .mtk-investor__nav,
+    .mtk-investor__footer-nav {
+      gap: $spacing-lg !important;
+    }
+
+    .mtk-investor__nav-button,
+    .mtk-investor__footer-nav-button {
+      font-size: $font-size-xs !important;
+    }
+  }
+
+  @media (max-width: $bp-md) {
+    .mtk-investor__header,
+    .mtk-investor__footer {
+      position: relative !important;
+      min-height: 0 !important;
+    }
+
+    .mtk-investor__header > .container,
+    .mtk-investor__footer > .container {
+      min-height: 0 !important;
+      padding: $spacing-lg !important;
+    }
+
+    .mtk-investor__chrome-inner {
+      min-height: 0 !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: $spacing-lg !important;
+    }
+
+    .mtk-investor__chrome-brand {
+      width: 100% !important;
+      justify-content: center !important;
+    }
+
+    .mtk-investor__logo {
+      height: 62px !important;
+      max-width: min(290px, 78vw) !important;
+    }
+
+    .mtk-investor__nav,
+    .mtk-investor__footer-nav {
+      display: grid !important;
+      width: 100% !important;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      gap: $spacing-sm $spacing-md !important;
+      margin: 0 !important;
+      white-space: normal !important;
+    }
+
+    .mtk-investor__nav-button,
+    .mtk-investor__footer-nav-button {
+      width: 100% !important;
+      padding: 7px 2px 9px !important;
+      font-size: 11px !important;
+      line-height: 1.15 !important;
+    }
+
+    .mtk-investor__hero-inner {
+      padding-top: $spacing-2xl !important;
+    }
+  }
+
+  @media (max-width: $bp-xs) {
+    .mtk-investor__header > .container,
+    .mtk-investor__footer > .container {
+      padding-right: $spacing-md !important;
+      padding-left: $spacing-md !important;
+    }
+
+    .mtk-investor__logo {
+      height: 56px !important;
+      max-width: 82vw !important;
+    }
+
+    .mtk-investor__nav,
+    .mtk-investor__footer-nav {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: $spacing-xs $spacing-sm !important;
+    }
+
+    .mtk-investor__nav-button,
+    .mtk-investor__footer-nav-button {
+      font-size: 10px !important;
+    }
+  }
+}
+
+
+/* Logo stays left at every breakpoint + scroll To-Top control */
+.mtk-investor {
+  .mtk-investor__chrome-inner {
+    align-items: center !important;
+  }
+
+  .mtk-investor__chrome-brand {
+    width: auto !important;
+    align-self: stretch !important;
+    justify-content: flex-start !important;
+  }
+
+  .mtk-investor__brand,
+  .mtk-investor__footer-brand-button {
+    justify-content: flex-start !important;
+  }
+
+  .mtk-investor__logo {
+    margin-right: auto !important;
+    margin-left: 0 !important;
+  }
+
+  .mtk-investor__to-top {
+    position: fixed;
+    right: $spacing-xl;
+    bottom: $spacing-xl;
+    z-index: $z-overlay;
+    display: inline-flex;
+    width: 48px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid rgba($color-primary-light, 0.45);
+    border-radius: $radius-circle;
+    background: $color-dark-bg;
+    color: $color-primary-light;
+    box-shadow: $shadow-elev3;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY($spacing-md);
+    transition:
+      opacity $duration-short $ease-standard,
+      transform $duration-short $ease-standard,
+      background-color $duration-short $ease-standard,
+      color $duration-short $ease-standard;
+    cursor: pointer;
+    @include focus-ring($color-primary-light, 3px);
+
+    &:hover {
+      background: $color-primary-light;
+      color: $color-dark-bg;
+    }
+  }
+
+  .mtk-investor__to-top--visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .mtk-investor__to-top-icon {
+    @include material-icon(24px);
+  }
+
+  @media (max-width: $bp-md) {
+    .mtk-investor__chrome-inner {
+      align-items: stretch !important;
+    }
+
+    .mtk-investor__chrome-brand {
+      width: 100% !important;
+      justify-content: flex-start !important;
+    }
+
+    .mtk-investor__brand,
+    .mtk-investor__footer-brand-button {
+      width: auto !important;
+      align-self: flex-start !important;
+      justify-content: flex-start !important;
+    }
+
+    .mtk-investor__logo {
+      margin-right: auto !important;
+      margin-left: 0 !important;
+    }
+
+    .mtk-investor__nav,
+    .mtk-investor__footer-nav {
+      justify-items: start !important;
+    }
+
+    .mtk-investor__nav-button,
+    .mtk-investor__footer-nav-button {
+      text-align: left !important;
+    }
+
+    .mtk-investor__to-top {
+      right: $spacing-lg;
+      bottom: $spacing-lg;
+      width: 44px;
+      height: 44px;
+    }
+  }
+}
+
+
+/* Mobile header/footer hamburger navigation */
+.mtk-investor {
+  .mtk-investor__mobile-toggle {
+    display: none;
+  }
+
+  .mtk-investor__menu-toggle {
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: $color-footer-text;
+    cursor: pointer;
+    @include focus-ring($color-primary-light, 2px);
+  }
+
+  .mtk-investor__menu-toggle-icon {
+    @include material-icon(28px);
+  }
+
+  @media (max-width: $bp-md) {
+    .mtk-investor__header > .container,
+    .mtk-investor__footer > .container {
+      padding: $spacing-md $spacing-lg !important;
+    }
+
+    .mtk-investor__chrome-inner {
+      display: grid !important;
+      grid-template-columns: 44px minmax(0, 1fr) !important;
+      grid-template-areas:
+        "toggle brand"
+        "nav nav" !important;
+      align-items: center !important;
+      gap: $spacing-sm $spacing-md !important;
+    }
+
+    .mtk-investor__mobile-toggle {
+      grid-area: toggle;
+      display: flex !important;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .mtk-investor__chrome-brand,
+    .mtk-investor__footer-brand-button {
+      grid-area: brand;
+      width: auto !important;
+      justify-content: flex-start !important;
+      align-self: center !important;
+    }
+
+    .mtk-investor__brand,
+    .mtk-investor__footer-brand-button {
+      justify-self: start !important;
+    }
+
+    .mtk-investor__logo {
+      height: 54px !important;
+      max-width: min(250px, 68vw) !important;
+      margin: 0 !important;
+    }
+
+    .mtk-investor__nav,
+    .mtk-investor__footer-nav {
+      grid-area: nav;
+      display: none !important;
+      width: 100% !important;
+      grid-template-columns: 1fr !important;
+      gap: 0 !important;
+      padding: $spacing-sm 0 0 !important;
+      margin: 0 !important;
+      border-top: 1px solid $color-footer-divider;
+    }
+
+    .mtk-investor__nav.mtk-investor__mobile-menu-open,
+    .mtk-investor__footer-nav.mtk-investor__mobile-menu-open {
+      display: grid !important;
+    }
+
+    .mtk-investor__nav-button,
+    .mtk-investor__footer-nav-button {
+      width: 100% !important;
+      padding: $spacing-md $spacing-xs !important;
+      border-bottom: 1px solid $color-footer-divider !important;
+      text-align: left !important;
+    }
+
+    .mtk-investor__nav-button::after,
+    .mtk-investor__footer-nav-button::after {
+      display: none !important;
+    }
+  }
+}
+
+
+/* Definitive mobile menu state */
+.mtk-investor {
+  @media (max-width: $bp-md) {
+    .mtk-investor__nav,
+    .mtk-investor__footer-nav {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      max-height: 0 !important;
+      overflow: hidden !important;
+      pointer-events: none !important;
+    }
+
+    .mtk-investor__nav.mtk-investor__mobile-menu-open,
+    .mtk-investor__footer-nav.mtk-investor__mobile-menu-open {
+      display: grid !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      max-height: 500px !important;
+      overflow: visible !important;
+      pointer-events: auto !important;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .mtk-investor__nav,
+    .mtk-investor__footer-nav {
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      max-height: none !important;
+      overflow: visible !important;
+      pointer-events: auto !important;
+    }
+
+    .mtk-investor__mobile-toggle {
+      display: none !important;
+    }
+  }
+}
+
+
+/* Header and footer use identical mobile chrome */
+.mtk-investor {
+  @media (max-width: $bp-md) {
+    .mtk-investor__header,
+    .mtk-investor__footer {
+      min-height: 78px !important;
+      background: $color-dark-bg !important;
+    }
+
+    .mtk-investor__header > .container,
+    .mtk-investor__footer > .container {
+      min-height: 78px !important;
+      padding: $spacing-sm $spacing-md !important;
+    }
+
+    .mtk-investor__header .mtk-investor__chrome-inner,
+    .mtk-investor__footer .mtk-investor__chrome-inner {
+      display: grid !important;
+      min-height: 62px !important;
+      grid-template-columns: 44px minmax(0, 1fr) !important;
+      grid-template-areas:
+        "toggle brand"
+        "nav nav" !important;
+      align-items: center !important;
+      gap: $spacing-xs $spacing-sm !important;
+    }
+
+    .mtk-investor__header .mtk-investor__mobile-toggle,
+    .mtk-investor__footer .mtk-investor__mobile-toggle {
+      grid-area: toggle !important;
+      display: flex !important;
+      width: 44px !important;
+      height: 44px !important;
+      align-items: center !important;
+      justify-content: center !important;
+      align-self: center !important;
+      justify-self: start !important;
+    }
+
+    /* Header has one extra brand wrapper. Remove it from layout. */
+    .mtk-investor__header .mtk-investor__chrome-brand {
+      display: contents !important;
+    }
+
+    .mtk-investor__header .mtk-investor__brand,
+    .mtk-investor__footer .mtk-investor__footer-brand-button {
+      grid-area: brand !important;
+      display: inline-flex !important;
+      width: auto !important;
+      height: auto !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      align-self: center !important;
+      justify-self: start !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    .mtk-investor__header .mtk-investor__logo,
+    .mtk-investor__footer .mtk-investor__logo {
+      display: block !important;
+      width: auto !important;
+      height: 54px !important;
+      max-width: min(230px, 66vw) !important;
+      margin: 0 !important;
+      object-fit: contain !important;
+    }
+
+    .mtk-investor__header .mtk-investor__nav,
+    .mtk-investor__footer .mtk-investor__footer-nav {
+      grid-area: nav !important;
+      display: none !important;
+      visibility: hidden !important;
+      width: 100% !important;
+      max-height: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      overflow: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      border-top: 1px solid $color-footer-divider !important;
+    }
+
+    .mtk-investor__header .mtk-investor__nav.mtk-investor__mobile-menu-open,
+    .mtk-investor__footer .mtk-investor__footer-nav.mtk-investor__mobile-menu-open {
+      display: grid !important;
+      visibility: visible !important;
+      grid-template-columns: 1fr !important;
+      max-height: 500px !important;
+      padding-top: $spacing-sm !important;
+      overflow: visible !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
     }
   }
 }

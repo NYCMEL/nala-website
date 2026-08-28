@@ -2,6 +2,8 @@ window.MTK_INVESTOR_CONFIG = Object.freeze({
   "brand": {
     "name": "NALA",
     "eyebrow": "Investor Relations",
+    "logo": "img/logo-nala-association.webp",
+    "logoAlt": "NALA North American Locksmith Association",
     "tagline": "Building durable value through disciplined growth"
   },
   "navigation": [
@@ -188,6 +190,19 @@ window.MTK_INVESTOR_CONFIG = Object.freeze({
       "mtk-investor:metric",
       "mtk-investor:contact"
     ]
+  },
+  "mobileMenu": {
+    "openLabel": "Open investor navigation",
+    "closeLabel": "Close investor navigation",
+    "iconOpen": "menu",
+    "iconClose": "close"
+  },
+  "toTop": {
+    "icon": "vertical_align_top",
+    "label": "Back to top",
+    "showAfter": 320,
+    "event": "mtk-investor:nav",
+    "action": "to-top"
   },
   "accessibility": {
     "navigationLabel": "Investor page navigation",
