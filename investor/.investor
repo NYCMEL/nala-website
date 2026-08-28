@@ -27,7 +27,7 @@ Restrictions:
 - No frameworks.
 - No external libraries.
 - Vanilla Javascript
-- Use styles, colors, fonts etc from css/nala.scss file
+- Use styles, colors, fonts etc from css/nala.scss file from https://github.com/NYCMEL/nala-website/tree/08.12.2026
 
 Accessibility:
 - Use semantic HTML.
