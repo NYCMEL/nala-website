@@ -1,0 +1,507 @@
+@use "nala" as nala;
+
+.mtk-investor {
+  display: block;
+  font-family: nala.$font-primary;
+  color: nala.$color-text-primary;
+  background: nala.$color-bg-lighter;
+  line-height: nala.$line-height-base;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  a,
+  button {
+    @include nala.focus-ring(nala.$color-primary, 3px);
+  }
+
+  .mtk-investor__header {
+    position: sticky;
+    top: 0;
+    z-index: nala.$z-sticky;
+    border-bottom: 1px solid nala.$color-divider;
+    background: rgba(nala.$color-white, 0.96);
+    backdrop-filter: blur(12px);
+  }
+
+  .mtk-investor__header-inner {
+    min-height: 72px;
+  }
+
+  .mtk-investor__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: nala.$spacing-md;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: nala.$color-text-primary;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .mtk-investor__brand-mark {
+    display: inline-grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border-radius: nala.$radius-circle;
+    background: nala.$color-primary;
+    color: nala.$color-white;
+    box-shadow: nala.$shadow-elev1;
+    font-size: nala.$font-size-sm;
+    font-weight: nala.$font-weight-bold;
+    letter-spacing: 0.04em;
+  }
+
+  .mtk-investor__brand-copy {
+    display: grid;
+    gap: 1px;
+  }
+
+  .mtk-investor__brand-name {
+    font-size: nala.$font-size-lg;
+    font-weight: nala.$font-weight-bold;
+    line-height: nala.$line-height-tight;
+  }
+
+  .mtk-investor__brand-eyebrow {
+    color: nala.$color-text-secondary;
+    font-size: nala.$font-size-xs;
+    font-weight: nala.$font-weight-medium;
+  }
+
+  .mtk-investor__nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: nala.$spacing-xs;
+  }
+
+  .mtk-investor__nav-button {
+    border: 0;
+    border-radius: nala.$radius-xs;
+    padding: nala.$spacing-sm nala.$spacing-md;
+    background: transparent;
+    color: nala.$color-text-primary;
+    font: inherit;
+    font-size: nala.$font-size-base;
+    font-weight: nala.$font-weight-medium;
+    cursor: pointer;
+    transition: nala.$transition-color;
+
+    &:hover {
+      background: nala.$color-hero-bg;
+      color: nala.$color-primary-dark;
+    }
+  }
+
+  .mtk-investor__hero {
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 88% 18%, rgba(nala.$color-carousel-accent, 0.24), transparent 28rem),
+      linear-gradient(135deg, nala.$color-hero-bg 0%, nala.$color-white 68%);
+    border-bottom: 1px solid nala.$color-divider;
+  }
+
+  .mtk-investor__hero-inner {
+    min-height: 620px;
+    padding-top: nala.$spacing-3xl;
+    padding-bottom: nala.$spacing-3xl;
+  }
+
+  .mtk-investor__eyebrow {
+    margin: 0 0 nala.$spacing-md;
+    color: nala.$color-primary-dark;
+    font-size: nala.$font-size-sm;
+    font-weight: nala.$font-weight-bold;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .mtk-investor__hero-title {
+    max-width: 820px;
+    margin: 0;
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
+    font-weight: nala.$font-weight-bold;
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+  }
+
+  .mtk-investor__hero-summary {
+    max-width: 680px;
+    margin: nala.$spacing-xl 0 0;
+    color: nala.$color-text-secondary-alt;
+    font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+    line-height: nala.$line-height-loose;
+  }
+
+  .mtk-investor__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: nala.$spacing-md;
+    margin-top: nala.$spacing-2xl;
+  }
+
+  .mtk-investor__button {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    gap: nala.$spacing-sm;
+    border: 1px solid transparent;
+    border-radius: nala.$radius-xs;
+    padding: 0 nala.$spacing-xl;
+    font: inherit;
+    font-weight: nala.$font-weight-semibold;
+    cursor: pointer;
+    transition:
+      background-color nala.$duration-short nala.$ease-standard,
+      color nala.$duration-short nala.$ease-standard,
+      border-color nala.$duration-short nala.$ease-standard,
+      box-shadow nala.$duration-short nala.$ease-standard,
+      transform nala.$duration-short nala.$ease-standard;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: nala.$shadow-elev2;
+    }
+  }
+
+  .mtk-investor__button--primary {
+    background: nala.$color-primary;
+    color: nala.$color-white;
+
+    &:hover {
+      background: nala.$color-primary-dark;
+    }
+  }
+
+  .mtk-investor__button--secondary {
+    border-color: nala.$color-primary;
+    background: nala.$color-white;
+    color: nala.$color-primary-dark;
+
+    &:hover {
+      background: nala.$color-hero-bg;
+    }
+  }
+
+  .mtk-investor__material-icon {
+    @include nala.material-icon(20px);
+  }
+
+  .mtk-investor__hero-panel {
+    position: relative;
+    padding: nala.$spacing-2xl;
+    border: 1px solid rgba(nala.$color-primary, 0.2);
+    border-radius: nala.$radius-lg;
+    background: rgba(nala.$color-white, 0.88);
+    box-shadow: nala.$shadow-lg;
+  }
+
+  .mtk-investor__hero-panel::before {
+    content: "";
+    position: absolute;
+    inset: nala.$spacing-lg auto nala.$spacing-lg 0;
+    width: 4px;
+    border-radius: 0 nala.$radius-pill nala.$radius-pill 0;
+    background: nala.$color-primary;
+  }
+
+  .mtk-investor__hero-panel-label {
+    margin: 0 0 nala.$spacing-sm;
+    color: nala.$color-text-secondary;
+    font-size: nala.$font-size-sm;
+    font-weight: nala.$font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .mtk-investor__hero-panel-value {
+    margin: 0;
+    color: nala.$color-primary-darker;
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    font-weight: nala.$font-weight-bold;
+    line-height: 1;
+  }
+
+  .mtk-investor__hero-panel-copy {
+    margin: nala.$spacing-md 0 0;
+    color: nala.$color-text-secondary-alt;
+  }
+
+  .mtk-investor__section {
+    padding: 88px 0;
+  }
+
+  .mtk-investor__section--soft {
+    background: nala.$color-bg-page;
+  }
+
+  .mtk-investor__section--gold {
+    background: nala.$color-ready-bg;
+    color: nala.$color-white;
+
+    .mtk-investor__eyebrow {
+      color: nala.$color-primary-light;
+    }
+
+    .mtk-investor__section-title,
+    .mtk-investor__section-copy {
+      color: nala.$color-white;
+    }
+  }
+
+  .mtk-investor__section-title {
+    max-width: 780px;
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: nala.$line-height-tight;
+    letter-spacing: -0.035em;
+  }
+
+  .mtk-investor__section-copy {
+    max-width: 720px;
+    margin: nala.$spacing-lg 0 0;
+    color: nala.$color-text-secondary-alt;
+    font-size: nala.$font-size-lg;
+    line-height: nala.$line-height-loose;
+  }
+
+  .mtk-investor__metric-grid,
+  .mtk-investor__strategy-grid,
+  .mtk-investor__updates-grid {
+    margin-top: nala.$spacing-3xl;
+  }
+
+  .mtk-investor__metric {
+    width: 100%;
+    height: 100%;
+    min-height: 210px;
+    padding: nala.$spacing-xl;
+    border: 1px solid nala.$color-border;
+    border-radius: nala.$radius-sm;
+    background: nala.$color-white;
+    color: nala.$color-text-primary;
+    text-align: left;
+    box-shadow: nala.$shadow-elev1;
+    cursor: pointer;
+    transition:
+      transform nala.$duration-short nala.$ease-standard,
+      box-shadow nala.$duration-short nala.$ease-standard,
+      border-color nala.$duration-short nala.$ease-standard;
+
+    &:hover {
+      transform: translateY(-3px);
+      border-color: rgba(nala.$color-primary, 0.48);
+      box-shadow: nala.$shadow-elev3;
+    }
+  }
+
+  .mtk-investor__metric-icon {
+    display: inline-grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border-radius: nala.$radius-circle;
+    background: nala.$color-hero-bg;
+    color: nala.$color-primary-dark;
+  }
+
+  .mtk-investor__metric-value {
+    display: block;
+    margin-top: nala.$spacing-xl;
+    color: nala.$color-primary-dark;
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: nala.$font-weight-bold;
+    line-height: 1;
+  }
+
+  .mtk-investor__metric-label {
+    display: block;
+    margin-top: nala.$spacing-sm;
+    color: nala.$color-text-primary;
+    font-weight: nala.$font-weight-semibold;
+  }
+
+  .mtk-investor__metric-detail {
+    display: block;
+    margin-top: nala.$spacing-sm;
+    color: nala.$color-text-secondary;
+    font-size: nala.$font-size-sm;
+    line-height: nala.$line-height-loose;
+  }
+
+  .mtk-investor__strategy-item {
+    height: 100%;
+    padding: nala.$spacing-xl 0;
+    border-top: 1px solid nala.$color-divider;
+  }
+
+  .mtk-investor__strategy-number {
+    color: nala.$color-primary;
+    font-size: nala.$font-size-sm;
+    font-weight: nala.$font-weight-bold;
+    letter-spacing: 0.12em;
+  }
+
+  .mtk-investor__strategy-icon {
+    display: inline-flex;
+    margin-top: nala.$spacing-lg;
+    color: nala.$color-primary-dark;
+  }
+
+  .mtk-investor__strategy-title {
+    margin: nala.$spacing-lg 0 0;
+    font-size: nala.$font-size-2xl;
+    font-weight: nala.$font-weight-bold;
+  }
+
+  .mtk-investor__strategy-copy {
+    margin: nala.$spacing-md 0 0;
+    color: nala.$color-text-secondary-alt;
+    line-height: nala.$line-height-loose;
+  }
+
+  .mtk-investor__highlight-list {
+    display: grid;
+    gap: nala.$spacing-lg;
+    margin: nala.$spacing-2xl 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mtk-investor__highlight-item {
+    display: flex;
+    align-items: flex-start;
+    gap: nala.$spacing-md;
+    font-size: nala.$font-size-lg;
+  }
+
+  .mtk-investor__highlight-item .mtk-investor__material-icon {
+    margin-top: 2px;
+    color: nala.$color-primary-light;
+  }
+
+  .mtk-investor__update-card {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    min-height: 260px;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid nala.$color-border;
+    border-radius: nala.$radius-sm;
+    padding: nala.$spacing-xl;
+    background: nala.$color-white;
+    color: nala.$color-text-primary;
+    text-align: left;
+    box-shadow: nala.$shadow-elev1;
+    cursor: pointer;
+    transition:
+      transform nala.$duration-short nala.$ease-standard,
+      box-shadow nala.$duration-short nala.$ease-standard;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: nala.$shadow-elev3;
+    }
+  }
+
+  .mtk-investor__update-top {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: nala.$spacing-md;
+  }
+
+  .mtk-investor__update-date {
+    color: nala.$color-primary-dark;
+    font-size: nala.$font-size-sm;
+    font-weight: nala.$font-weight-bold;
+  }
+
+  .mtk-investor__update-title {
+    margin: nala.$spacing-xl 0 0;
+    font-size: nala.$font-size-2xl;
+    font-weight: nala.$font-weight-bold;
+  }
+
+  .mtk-investor__update-copy {
+    margin: nala.$spacing-md 0 0;
+    color: nala.$color-text-secondary;
+    line-height: nala.$line-height-loose;
+  }
+
+  .mtk-investor__update-arrow {
+    margin-top: auto;
+    padding-top: nala.$spacing-xl;
+    color: nala.$color-primary-dark;
+  }
+
+  .mtk-investor__closing {
+    border-top: 1px solid nala.$color-divider;
+    background: nala.$color-white;
+  }
+
+  .mtk-investor__footer {
+    padding: nala.$spacing-xl 0;
+    background: nala.$color-dark-bg;
+    color: nala.$color-footer-muted;
+    font-size: nala.$font-size-sm;
+  }
+
+  .mtk-investor__footer-brand {
+    color: nala.$color-footer-text;
+    font-weight: nala.$font-weight-bold;
+  }
+
+  .mtk-investor__status {
+    @include nala.sr-only;
+  }
+
+  @media (max-width: nala.$bp-md) {
+    .mtk-investor__header {
+      position: static;
+    }
+
+    .mtk-investor__header-inner {
+      padding-top: nala.$spacing-md;
+      padding-bottom: nala.$spacing-md;
+    }
+
+    .mtk-investor__nav {
+      justify-content: flex-start;
+      margin-top: nala.$spacing-md;
+    }
+
+    .mtk-investor__hero-inner {
+      min-height: auto;
+      padding-top: 72px;
+      padding-bottom: 72px;
+    }
+
+    .mtk-investor__section {
+      padding: 64px 0;
+    }
+
+    .mtk-investor__hero-panel {
+      margin-top: nala.$spacing-2xl;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto;
+      transition-duration: 0.01ms;
+      animation-duration: 0.01ms;
+      animation-iteration-count: 1;
+    }
+  }
+}
