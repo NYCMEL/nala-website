@@ -19,81 +19,108 @@
     position: sticky;
     top: 0;
     z-index: $z-sticky;
-    border-bottom: 1px solid $color-divider;
-    background: rgba($color-white, 0.96);
-    backdrop-filter: blur(12px);
+    width: 100%;
+    height: 116px;
+    min-height: 116px;
+    border: 0;
+    background-color: #212529;
+    background-image: url("header.png");
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: 2048px 116px;
+  }
+
+  .mtk-investor__header > .container {
+    position: relative;
+    height: 116px;
+    min-height: 116px;
   }
 
   .mtk-investor__header-inner {
-    min-height: 72px;
+    position: relative;
+    height: 116px;
+    min-height: 116px;
+    margin: 0;
   }
 
-  .mtk-investor__brand {
-    display: inline-flex;
-    align-items: center;
-    gap: $spacing-md;
+  .mtk-investor__header [data-region="brand"] {
+    position: relative;
+    width: auto;
+    height: auto;
+    min-height: 116px;
+    padding-left: calc(var(--bs-gutter-x) * 0.5);
+    padding-right: calc(var(--bs-gutter-x) * 0.5);
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
     border: 0;
+  }
+
+  .mtk-investor__header .mtk-investor__brand {
+    @include sr-only;
+  }
+
+  .mtk-investor__header [data-region="navigation"] {
+    display: block;
+  }
+
+  .mtk-investor__header-inner > .col-md-8 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    max-width: calc(100% - 430px);
     padding: 0;
-    background: transparent;
-    color: $color-text-primary;
-    font: inherit;
-    text-align: left;
-    cursor: pointer;
-  }
-
-  .mtk-investor__brand-mark {
-    display: inline-grid;
-    width: 38px;
-    height: 38px;
-    place-items: center;
-    border-radius: $radius-circle;
-    background: $color-primary;
-    color: $color-white;
-    box-shadow: $shadow-elev1;
-    font-size: $font-size-sm;
-    font-weight: $font-weight-bold;
-    letter-spacing: 0.04em;
-  }
-
-  .mtk-investor__brand-copy {
-    display: grid;
-    gap: 1px;
-  }
-
-  .mtk-investor__brand-name {
-    font-size: $font-size-lg;
-    font-weight: $font-weight-bold;
-    line-height: $line-height-tight;
-  }
-
-  .mtk-investor__brand-eyebrow {
-    color: $color-text-secondary;
-    font-size: $font-size-xs;
-    font-weight: $font-weight-medium;
   }
 
   .mtk-investor__nav {
     display: flex;
-    flex-wrap: wrap;
+    height: 116px;
+    min-height: 116px;
+    align-items: center;
     justify-content: flex-end;
-    gap: $spacing-xs;
+    gap: $spacing-xl;
+    margin: 0;
+    white-space: nowrap;
   }
 
   .mtk-investor__nav-button {
+    position: relative;
     border: 0;
-    border-radius: $radius-xs;
-    padding: $spacing-sm $spacing-md;
     background: transparent;
-    color: $color-text-primary;
-    font: inherit;
-    font-size: $font-size-base;
-    font-weight: $font-weight-medium;
+    color: $color-footer-text;
+    padding: $spacing-sm 0;
+    font-family: $font-primary;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    letter-spacing: 0.035em;
+    text-transform: uppercase;
     cursor: pointer;
     transition: $transition-color;
 
-    &:hover {
-      background: $color-hero-bg;
-      color: $color-primary-dark;
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background: $color-primary-light;
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform $duration-short $ease-standard;
+    }
+
+    &:hover,
+    &:focus-visible {
+      color: $color-primary-light;
+    }
+
+    &:hover::after,
+    &:focus-visible::after {
+      transform: scaleX(1);
     }
   }
 
@@ -473,9 +500,41 @@
       padding-bottom: $spacing-md;
     }
 
+    .mtk-investor__header {
+      height: auto;
+      min-height: 116px;
+      background-size: auto 116px;
+    }
+
+    .mtk-investor__header > .container,
+    .mtk-investor__header-inner {
+      height: auto;
+      min-height: 116px;
+    }
+
+    .mtk-investor__header-inner > .col-md-8 {
+      position: relative;
+      top: auto;
+      right: auto;
+      bottom: auto;
+      width: 100%;
+      max-width: none;
+      padding: 0;
+    }
+
     .mtk-investor__nav {
-      justify-content: flex-start;
-      margin-top: $spacing-md;
+      height: auto;
+      min-height: auto;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: $spacing-md $spacing-lg;
+      padding: $spacing-lg 0;
+      margin: 0;
+      white-space: normal;
+    }
+
+    .mtk-investor__nav-button {
+      font-size: $font-size-xs;
     }
 
     .mtk-investor__hero-inner {
