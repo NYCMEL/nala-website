@@ -345,13 +345,12 @@ class MtkInvestor {
     });
   }
 
-  onMessage(message) {
+  onMessage(message, data) {
     const status = this.getRegion("status");
-    const eventName = message && message.event ? message.event : "mtk-investor event";
-    status.textContent = `${eventName} received.`;
+    status.textContent = `${message || "mtk-investor event"} received.`;
 
     if (window.wc && typeof window.wc.log === "function") {
-      window.wc.log("[mtk-investor] message received", message);
+      window.wc.log("[mtk-investor] message received", message, data);
     }
   }
 
@@ -383,11 +382,24 @@ class MtkInvestor {
 
 (function initializeMtkInvestor() {
   const selector = "mtk-investor.mtk-investor";
+  let observer = null;
+  let retryTimer = null;
+
+  const log = (...args) => {
+    if (window.wc && typeof window.wc.log === "function") {
+      window.wc.log(...args);
+    } else {
+      console.log(...args);
+    }
+  };
+
+  const findRoot = () => document.querySelector(selector);
 
   const start = () => {
-    const root = document.querySelector(selector);
+    const root = findRoot();
+    const config = window.MTK_INVESTOR_CONFIG;
 
-    if (!root || !window.MTK_INVESTOR_CONFIG) {
+    if (!root || !config) {
       return false;
     }
 
@@ -396,26 +408,75 @@ class MtkInvestor {
     }
 
     root.dataset.initialized = "true";
-    const investor = new MtkInvestor(root, window.MTK_INVESTOR_CONFIG);
+    const investor = new MtkInvestor(root, config);
     investor.init();
     root.mtkInvestor = investor;
+    log("[mtk-investor] initialized");
     return true;
   };
 
-  if (start()) {
-    return;
-  }
-
-  const observer = new MutationObserver(() => {
-    if (start()) {
+  const stopWatching = () => {
+    if (observer) {
       observer.disconnect();
+      observer = null;
     }
-  });
 
+    if (retryTimer) {
+      window.clearInterval(retryTimer);
+      retryTimer = null;
+    }
+  };
+
+  const tryStart = () => {
+    if (start()) {
+      stopWatching();
+      return true;
+    }
+    return false;
+  };
+
+  const loadIncludeFallback = async () => {
+    const include = document.querySelector('wc-include[href="mtk-investor.html"]');
+
+    if (!include || include.querySelector(selector) || customElements.get("wc-include")) {
+      return;
+    }
+
+    try {
+      const response = await /* removed: _wc.js owns wc-include */.getAttribute("href"), { cache: "no-cache" });
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+      include.innerHTML = await response.text();
+      include.dispatchEvent(new CustomEvent("include:loaded", {
+        detail: { href: include.getAttribute("href"), include },
+        bubbles: true,
+        composed: true
+      }));
+      tryStart();
+    } catch (error) {
+      console.error("[mtk-investor] unable to load component HTML", error);
+    }
+  };
+
+  document.addEventListener("include:loaded", tryStart);
+  document.addEventListener("mtk-investor:config-ready", tryStart);
+
+  observer = new MutationObserver(tryStart);
   observer.observe(document.documentElement, {
     childList: true,
     subtree: true
   });
 
-  document.addEventListener("DOMContentLoaded", start, { once: true });
+  retryTimer = window.setInterval(tryStart, 100);
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      loadIncludeFallback();
+      tryStart();
+    }, { once: true });
+  } else {
+    loadIncludeFallback();
+    tryStart();
+  }
 })();

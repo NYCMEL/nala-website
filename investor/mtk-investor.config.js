@@ -173,3 +173,5 @@ window.MTK_INVESTOR_CONFIG = Object.freeze({
     "closingLabel": "Investor relations contact"
   }
 });
+
+document.dispatchEvent(new CustomEvent("mtk-investor:config-ready"));
