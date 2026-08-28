@@ -435,29 +435,6 @@ class MtkInvestor {
     return false;
   };
 
-  const loadIncludeFallback = async () => {
-    const include = document.querySelector('wc-include[href="mtk-investor.html"]');
-
-    if (!include || include.querySelector(selector) || customElements.get("wc-include")) {
-      return;
-    }
-
-    try {
-      const response = await /* removed: _wc.js owns wc-include */.getAttribute("href"), { cache: "no-cache" });
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-      include.innerHTML = await response.text();
-      include.dispatchEvent(new CustomEvent("include:loaded", {
-        detail: { href: include.getAttribute("href"), include },
-        bubbles: true,
-        composed: true
-      }));
-      tryStart();
-    } catch (error) {
-      console.error("[mtk-investor] unable to load component HTML", error);
-    }
-  };
 
   document.addEventListener("include:loaded", tryStart);
   document.addEventListener("mtk-investor:config-ready", tryStart);
@@ -472,11 +449,9 @@ class MtkInvestor {
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {
-      loadIncludeFallback();
       tryStart();
     }, { once: true });
   } else {
-    loadIncludeFallback();
     tryStart();
   }
 })();
