@@ -1331,3 +1331,323 @@
     pointer-events: auto !important;
   }
 }
+
+
+/* Unified header/footer chrome + hero globe + compact metrics */
+.mtk-investor .mtk-investor__header,
+.mtk-investor .mtk-investor__footer { background: #1e1e1e !important; }
+.mtk-investor .mtk-investor__header .mtk-investor__chrome-inner,
+.mtk-investor .mtk-investor__footer .mtk-investor__chrome-inner {
+  display:flex !important; min-height:104px !important; align-items:center !important;
+  justify-content:space-between !important; gap:32px !important;
+}
+.mtk-investor .mtk-investor__header .mtk-investor__brand,
+.mtk-investor .mtk-investor__footer .mtk-investor__brand {
+  display:inline-flex !important; align-items:center !important; justify-content:flex-start !important;
+  padding:0 !important; margin:0 !important;
+}
+.mtk-investor .mtk-investor__nav-button:first-child,
+.mtk-investor .mtk-investor__footer-nav-button:first-child { color:rgba(255,255,255,.96) !important; }
+.mtk-investor .mtk-investor__nav-button:first-child::after,
+.mtk-investor .mtk-investor__footer-nav-button:first-child::after { transform:scaleX(0) !important; }
+.mtk-investor .mtk-investor__nav-button--active,
+.mtk-investor .mtk-investor__nav-button--active:first-child { color:#c6952d !important; }
+.mtk-investor .mtk-investor__nav-button--active::after,
+.mtk-investor .mtk-investor__nav-button--active:first-child::after { transform:scaleX(1) !important; }
+.mtk-investor .mtk-investor__hero {
+  background-image:url("globe-background.png") !important; background-repeat:no-repeat !important;
+  background-position:right center !important; background-size:auto 100% !important; background-color:#fff !important;
+}
+.mtk-investor .mtk-investor__section--soft[data-section="highlights"] { padding-top:0 !important; }
+.mtk-investor .mtk-investor__section--soft[data-section="highlights"] .mtk-investor__metric-grid { margin-top:0 !important; }
+@media (max-width:768px) {
+  .mtk-investor .mtk-investor__header,
+  .mtk-investor .mtk-investor__footer { min-height:78px !important; }
+  .mtk-investor .mtk-investor__header > .container,
+  .mtk-investor .mtk-investor__footer > .container { min-height:78px !important; padding:8px 12px !important; }
+  .mtk-investor .mtk-investor__header .mtk-investor__chrome-inner,
+  .mtk-investor .mtk-investor__footer .mtk-investor__chrome-inner {
+    display:grid !important; min-height:62px !important; grid-template-columns:44px minmax(0,1fr) !important;
+    grid-template-areas:"toggle brand" "nav nav" !important; align-items:center !important; gap:4px 8px !important;
+  }
+  .mtk-investor .mtk-investor__header .mtk-investor__mobile-toggle,
+  .mtk-investor .mtk-investor__footer .mtk-investor__mobile-toggle {
+    grid-area:toggle !important; display:flex !important; width:44px !important; height:44px !important;
+    align-items:center !important; justify-content:center !important;
+  }
+  .mtk-investor .mtk-investor__header .mtk-investor__brand,
+  .mtk-investor .mtk-investor__footer .mtk-investor__brand {
+    grid-area:brand !important; justify-self:start !important; align-self:center !important;
+  }
+  .mtk-investor .mtk-investor__header .mtk-investor__logo,
+  .mtk-investor .mtk-investor__footer .mtk-investor__logo {
+    height:54px !important; max-width:min(230px,66vw) !important; margin:0 !important;
+  }
+  .mtk-investor .mtk-investor__header .mtk-investor__nav,
+  .mtk-investor .mtk-investor__footer .mtk-investor__footer-nav {
+    grid-area:nav !important; display:none !important; visibility:hidden !important; width:100% !important;
+    max-height:0 !important; padding:0 !important; margin:0 !important; overflow:hidden !important;
+    opacity:0 !important; pointer-events:none !important; border-top:1px solid rgba(255,255,255,.12) !important;
+  }
+  .mtk-investor .mtk-investor__header .mtk-investor__nav.mtk-investor__mobile-menu-open,
+  .mtk-investor .mtk-investor__footer .mtk-investor__footer-nav.mtk-investor__mobile-menu-open {
+    display:grid !important; visibility:visible !important; grid-template-columns:1fr !important;
+    max-height:500px !important; padding-top:8px !important; overflow:visible !important;
+    opacity:1 !important; pointer-events:auto !important;
+  }
+  .mtk-investor .mtk-investor__hero { background-position:66% center !important; background-size:auto 100% !important; }
+}
+
+
+/* FINAL mobile chrome reset */
+@media (max-width: 768px) {
+  .mtk-investor .mtk-investor__header,
+  .mtk-investor .mtk-investor__footer {
+    position: relative !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: #1e1e1e !important;
+  }
+  .mtk-investor .mtk-investor__header > .container,
+  .mtk-investor .mtk-investor__footer > .container {
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 8px 12px !important;
+    overflow: visible !important;
+  }
+  .mtk-investor .mtk-investor__header .mtk-investor__chrome-inner,
+  .mtk-investor .mtk-investor__footer .mtk-investor__chrome-inner {
+    position: static !important;
+    display: grid !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    grid-template-columns: 44px minmax(0,1fr) !important;
+    grid-template-rows: auto auto !important;
+    grid-template-areas: "toggle brand" "nav nav" !important;
+    align-items: center !important;
+    gap: 4px 8px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+  .mtk-investor .mtk-investor__header .mtk-investor__mobile-toggle,
+  .mtk-investor .mtk-investor__footer .mtk-investor__mobile-toggle {
+    position: static !important;
+    grid-area: toggle !important;
+    display: flex !important;
+    width: 44px !important;
+    height: 44px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+  }
+  .mtk-investor .mtk-investor__header .mtk-investor__brand,
+  .mtk-investor .mtk-investor__footer .mtk-investor__brand {
+    position: static !important;
+    grid-area: brand !important;
+    display: inline-flex !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    justify-self: start !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .mtk-investor .mtk-investor__header .mtk-investor__logo,
+  .mtk-investor .mtk-investor__footer .mtk-investor__logo {
+    display: block !important;
+    width: auto !important;
+    height: 54px !important;
+    max-width: min(230px,66vw) !important;
+    margin: 0 !important;
+    object-fit: contain !important;
+  }
+  .mtk-investor .mtk-investor__header .mtk-investor__nav,
+  .mtk-investor .mtk-investor__footer .mtk-investor__footer-nav {
+    position: static !important;
+    inset: auto !important;
+    grid-area: nav !important;
+    display: none !important;
+    visibility: hidden !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: none !important;
+    border-top: 0 !important;
+  }
+  .mtk-investor .mtk-investor__header .mtk-investor__nav.mtk-investor__mobile-menu-open,
+  .mtk-investor .mtk-investor__footer .mtk-investor__footer-nav.mtk-investor__mobile-menu-open {
+    display: grid !important;
+    visibility: visible !important;
+    max-height: none !important;
+    padding-top: 8px !important;
+    margin-top: 4px !important;
+    overflow: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    border-top: 1px solid rgba(255,255,255,.12) !important;
+  }
+}
+
+/* Latest News */
+.mtk-investor .mtk-investor__latest-news {
+  padding: 48px 0;
+  background: #fff;
+  border-top: 1px solid rgba(0,0,0,.12);
+}
+.mtk-investor .mtk-investor__latest-news-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.mtk-investor .mtk-investor__latest-news-title {
+  margin: 0;
+  color: #212121;
+  font-size: 24px;
+  font-weight: 700;
+}
+.mtk-investor .mtk-investor__latest-news-view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  background: transparent;
+  color: #a98212;
+  font: inherit;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.mtk-investor .mtk-investor__latest-news-view-all:focus-visible,
+.mtk-investor .mtk-investor__latest-news-link:focus-visible {
+  outline: 3px solid rgba(169,130,18,.35);
+  outline-offset: 2px;
+}
+.mtk-investor .mtk-investor__latest-news-view-all-icon,
+.mtk-investor .mtk-investor__latest-news-link span,
+.mtk-investor .mtk-investor__latest-news-media-icon {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  user-select: none;
+}
+.mtk-investor .mtk-investor__latest-news-view-all-icon,
+.mtk-investor .mtk-investor__latest-news-link span { font-size: 22px; }
+.mtk-investor .mtk-investor__latest-news-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 24px;
+}
+.mtk-investor .mtk-investor__latest-news-card {
+  display: grid;
+  grid-template-columns: minmax(140px,34%) 1fr;
+  min-height: 176px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+.mtk-investor .mtk-investor__latest-news-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #faf7f0;
+  color: #a98212;
+}
+.mtk-investor .mtk-investor__latest-news-media-icon { font-size: 52px; }
+.mtk-investor .mtk-investor__latest-news-content {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+.mtk-investor .mtk-investor__latest-news-date {
+  margin: 0 0 8px;
+  color: #757575;
+  font-size: 13px;
+}
+.mtk-investor .mtk-investor__latest-news-card-title {
+  margin: 0;
+  color: #212121;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.mtk-investor .mtk-investor__latest-news-link {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: #a98212;
+  cursor: pointer;
+}
+@media (max-width: 968px) {
+  .mtk-investor .mtk-investor__latest-news-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .mtk-investor .mtk-investor__latest-news { padding: 32px 0; }
+  .mtk-investor .mtk-investor__latest-news-heading { align-items: flex-start; }
+  .mtk-investor .mtk-investor__latest-news-card {
+    grid-template-columns: 92px 1fr;
+    min-height: 140px;
+  }
+}
+
+
+/* Final hero globe placement */
+.mtk-investor .mtk-investor__hero {
+  background-position:right center !important;
+  background-size:auto 100% !important;
+}
+@media (max-width:768px) {
+  .mtk-investor .mtk-investor__hero {
+    background-position:66% center !important;
+    background-size:auto 100% !important;
+  }
+}
+
+
+/* Uniform vertical spacing for every content section */
+.mtk-investor > main > section,
+.mtk-investor > .mtk-investor__latest-news {
+  padding-top: 48px !important;
+  padding-bottom: 48px !important;
+}
+@media (max-width: 768px) {
+  .mtk-investor > main > section,
+  .mtk-investor > .mtk-investor__latest-news {
+    padding-top: 32px !important;
+    padding-bottom: 32px !important;
+  }
+}

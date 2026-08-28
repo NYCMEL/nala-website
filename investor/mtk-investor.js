@@ -22,9 +22,7 @@ class MtkInvestor {
   }
 
   render() {
-    this.renderMobileToggle();
-    this.renderBrand();
-    this.renderNavigation();
+    this.renderHeader();
     this.renderHero();
     this.renderOverview();
     this.renderMetrics();
@@ -33,12 +31,73 @@ class MtkInvestor {
     this.renderHighlights();
     this.renderUpdates();
     this.renderClosing();
+    this.renderLatestNews();
     this.renderFooter();
     this.renderToTop();
+    this.setActiveNavigation("overview");
     this.applyAccessibilityLabels();
     this.closeMobileMenus();
   }
 
+
+  renderHeader() {
+    this.renderChrome(this.getRegion("header"), false);
+  }
+
+  renderChrome(region, isFooter = false) {
+    const { brand, mobileMenu } = this.config;
+    const navigationClass = isFooter ? "mtk-investor__footer-nav" : "mtk-investor__nav";
+    const navButtonClass = isFooter ? "mtk-investor__footer-nav-button" : "mtk-investor__nav-button";
+    const toggleAction = isFooter ? "toggle-footer-menu" : "toggle-menu";
+    const navRegion = isFooter ? "" : ' data-region="navigation"';
+    const navLabel = isFooter ? "Investor footer navigation" : this.config.accessibility.navigationLabel;
+
+    region.innerHTML = `
+      <div class="container">
+        <div class="mtk-investor__chrome-inner">
+          <div class="mtk-investor__mobile-toggle">
+            <button
+              class="mtk-investor__menu-toggle"
+              type="button"
+              data-event="${this.config.events.publish.nav}"
+              data-action="${toggleAction}"
+              aria-expanded="false"
+              aria-label="${this.escapeAttribute(mobileMenu.openLabel)}"
+            >
+              <span class="mtk-investor__menu-toggle-icon" aria-hidden="true">${this.escapeHtml(mobileMenu.iconOpen)}</span>
+            </button>
+          </div>
+          <button
+            class="mtk-investor__brand"
+            type="button"
+            data-event="${this.config.events.publish.nav}"
+            data-action="brand-home"
+            data-target="overview"
+            aria-label="${this.escapeAttribute(`${brand.name} ${brand.eyebrow}`)}"
+          >
+            <img
+              class="mtk-investor__logo"
+              src="${this.escapeAttribute(brand.logo)}"
+              alt="${this.escapeAttribute(brand.logoAlt)}"
+            >
+          </button>
+          <nav class="${navigationClass}"${navRegion} aria-label="${this.escapeAttribute(navLabel)}">
+            ${this.config.navigation.map((item) => `
+              <button
+                class="${navButtonClass}"
+                type="button"
+                data-event="${this.config.events.publish.nav}"
+                data-action="navigate"
+                data-target="${this.escapeAttribute(item.target)}"
+              >
+                ${this.escapeHtml(item.label)}
+              </button>
+            `).join("")}
+          </nav>
+        </div>
+      </div>
+    `;
+  }
 
   renderMobileToggle() {
     const region = this.getRegion("header-toggle");
@@ -304,55 +363,58 @@ class MtkInvestor {
     `;
   }
 
-  renderFooter() {
-    const region = this.getRegion("footer");
-    const { brand, mobileMenu } = this.config;
+
+  renderLatestNews() {
+    const region = this.getRegion("latest-news");
+    const news = this.config.latestNews;
+
+    if (!region || !news) {
+      return;
+    }
 
     region.innerHTML = `
       <div class="container">
-        <div class="mtk-investor__chrome-inner">
-          <div class="mtk-investor__mobile-toggle mtk-investor__footer-mobile-toggle">
-            <button
-              class="mtk-investor__menu-toggle"
-              type="button"
-              data-event="${this.config.events.publish.nav}"
-              data-action="toggle-footer-menu"
-              aria-expanded="false"
-              aria-label="${this.escapeAttribute(mobileMenu.openLabel)}"
-            >
-              <span class="mtk-investor__menu-toggle-icon" aria-hidden="true">${this.escapeHtml(mobileMenu.iconOpen)}</span>
-            </button>
-          </div>
+        <div class="mtk-investor__latest-news-heading">
+          <h2 class="mtk-investor__latest-news-title">${this.escapeHtml(news.title)}</h2>
           <button
-            class="mtk-investor__brand mtk-investor__footer-brand-button"
+            class="mtk-investor__latest-news-view-all"
             type="button"
-            data-event="${this.config.events.publish.nav}"
-            data-action="brand-home"
-            data-target="overview"
-            aria-label="${this.escapeAttribute(`${brand.name} ${brand.eyebrow}`)}"
+            data-event="${this.escapeAttribute(news.event)}"
+            data-action="${this.escapeAttribute(news.action)}"
           >
-            <img
-              class="mtk-investor__logo"
-              src="${this.escapeAttribute(brand.logo)}"
-              alt="${this.escapeAttribute(brand.logoAlt)}"
-            >
+            <span>${this.escapeHtml(news.viewAllLabel)}</span>
+            <span class="mtk-investor__latest-news-view-all-icon" aria-hidden="true">${this.escapeHtml(news.viewAllIcon)}</span>
           </button>
-          <nav class="mtk-investor__footer-nav" aria-label="Investor footer navigation">
-            ${this.config.navigation.map((item) => `
-              <button
-                class="mtk-investor__footer-nav-button"
-                type="button"
-                data-event="${this.config.events.publish.nav}"
-                data-action="navigate"
-                data-target="${this.escapeAttribute(item.target)}"
-              >
-                ${this.escapeHtml(item.label)}
-              </button>
-            `).join("")}
-          </nav>
+        </div>
+
+        <div class="mtk-investor__latest-news-grid">
+          ${news.items.map((item) => `
+            <article class="mtk-investor__latest-news-card">
+              <div class="mtk-investor__latest-news-media" aria-hidden="true">
+                <span class="mtk-investor__latest-news-media-icon">${this.escapeHtml(item.icon)}</span>
+              </div>
+              <div class="mtk-investor__latest-news-content">
+                <p class="mtk-investor__latest-news-date">${this.escapeHtml(item.date)}</p>
+                <h3 class="mtk-investor__latest-news-card-title">${this.escapeHtml(item.title)}</h3>
+                <button
+                  class="mtk-investor__latest-news-link"
+                  type="button"
+                  data-event="${this.escapeAttribute(item.event)}"
+                  data-action="${this.escapeAttribute(item.action)}"
+                  aria-label="${this.escapeAttribute(item.title)}"
+                >
+                  <span aria-hidden="true">arrow_forward</span>
+                </button>
+              </div>
+            </article>
+          `).join("")}
         </div>
       </div>
     `;
+  }
+
+  renderFooter() {
+    this.renderChrome(this.getRegion("footer"), true);
   }
 
   renderToTop() {
@@ -466,6 +528,9 @@ class MtkInvestor {
 
     if (detail.target) {
       this.scrollToSection(detail.target);
+      if (detail.action === "navigate" || detail.action === "brand-home") {
+        this.setActiveNavigation(detail.target);
+      }
     }
 
     this.publish(eventName, detail);
@@ -476,6 +541,18 @@ class MtkInvestor {
     }
   }
 
+
+  setActiveNavigation(target) {
+    this.root.querySelectorAll(".mtk-investor__nav-button, .mtk-investor__footer-nav-button").forEach((button) => {
+      const active = button.dataset.target === target;
+      button.classList.toggle("mtk-investor__nav-button--active", active);
+      if (active) {
+        button.setAttribute("aria-current", "page");
+      } else {
+        button.removeAttribute("aria-current");
+      }
+    });
+  }
 
   closeMobileMenus() {
     const menu = this.config.mobileMenu;

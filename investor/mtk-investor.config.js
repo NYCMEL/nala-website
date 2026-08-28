@@ -191,6 +191,36 @@ window.MTK_INVESTOR_CONFIG = Object.freeze({
       "mtk-investor:contact"
     ]
   },
+  "latestNews": {
+    "title": "Latest News",
+    "viewAllLabel": "View all news",
+    "viewAllIcon": "arrow_forward",
+    "event": "mtk-investor:nav",
+    "action": "view-all-news",
+    "items": [
+      {
+        "date": "May 10, 2024",
+        "title": "NALA Reports Strong Q1 2024 Results",
+        "icon": "business",
+        "event": "mtk-investor:cta",
+        "action": "news-q1-results"
+      },
+      {
+        "date": "April 22, 2024",
+        "title": "NALA Annual Conference 2024 Highlights",
+        "icon": "groups",
+        "event": "mtk-investor:cta",
+        "action": "news-conference"
+      },
+      {
+        "date": "March 15, 2024",
+        "title": "Investing in the Future of Security",
+        "icon": "lock",
+        "event": "mtk-investor:cta",
+        "action": "news-security"
+      }
+    ]
+  },
   "mobileMenu": {
     "openLabel": "Open investor navigation",
     "closeLabel": "Close investor navigation",

@@ -1573,3 +1573,421 @@
     }
   }
 }
+
+
+/* Unified header/footer chrome + hero globe + compact metrics */
+.mtk-investor {
+  .mtk-investor__header,
+  .mtk-investor__footer {
+    background: $color-dark-bg !important;
+  }
+
+  .mtk-investor__header .mtk-investor__chrome-inner,
+  .mtk-investor__footer .mtk-investor__chrome-inner {
+    display: flex !important;
+    min-height: 104px !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: $spacing-2xl !important;
+  }
+
+  .mtk-investor__header .mtk-investor__brand,
+  .mtk-investor__footer .mtk-investor__brand {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .mtk-investor__nav-button:first-child,
+  .mtk-investor__footer-nav-button:first-child {
+    color: $color-footer-text !important;
+  }
+
+  .mtk-investor__nav-button:first-child::after,
+  .mtk-investor__footer-nav-button:first-child::after {
+    transform: scaleX(0) !important;
+  }
+
+  .mtk-investor__nav-button--active,
+  .mtk-investor__nav-button--active:first-child {
+    color: $color-primary-light !important;
+  }
+
+  .mtk-investor__nav-button--active::after,
+  .mtk-investor__nav-button--active:first-child::after {
+    transform: scaleX(1) !important;
+  }
+
+  .mtk-investor__hero {
+    background-image: url("globe-background.png") !important;
+    background-repeat: no-repeat !important;
+    background-position: right center !important;
+    background-size: auto 100% !important;
+    background-color: $color-white !important;
+  }
+
+  .mtk-investor__section--soft[data-section="highlights"] {
+    padding-top: 0 !important;
+  }
+
+  .mtk-investor__section--soft[data-section="highlights"] .mtk-investor__metric-grid {
+    margin-top: 0 !important;
+  }
+
+  @media (max-width: $bp-md) {
+    .mtk-investor__header,
+    .mtk-investor__footer {
+      min-height: 78px !important;
+    }
+
+    .mtk-investor__header > .container,
+    .mtk-investor__footer > .container {
+      min-height: 78px !important;
+      padding: $spacing-sm $spacing-md !important;
+    }
+
+    .mtk-investor__header .mtk-investor__chrome-inner,
+    .mtk-investor__footer .mtk-investor__chrome-inner {
+      display: grid !important;
+      min-height: 62px !important;
+      grid-template-columns: 44px minmax(0, 1fr) !important;
+      grid-template-areas: "toggle brand" "nav nav" !important;
+      align-items: center !important;
+      gap: $spacing-xs $spacing-sm !important;
+    }
+
+    .mtk-investor__header .mtk-investor__mobile-toggle,
+    .mtk-investor__footer .mtk-investor__mobile-toggle {
+      grid-area: toggle !important;
+      display: flex !important;
+      width: 44px !important;
+      height: 44px !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .mtk-investor__header .mtk-investor__brand,
+    .mtk-investor__footer .mtk-investor__brand {
+      grid-area: brand !important;
+      justify-self: start !important;
+      align-self: center !important;
+    }
+
+    .mtk-investor__header .mtk-investor__logo,
+    .mtk-investor__footer .mtk-investor__logo {
+      height: 54px !important;
+      max-width: min(230px, 66vw) !important;
+      margin: 0 !important;
+    }
+
+    .mtk-investor__header .mtk-investor__nav,
+    .mtk-investor__footer .mtk-investor__footer-nav {
+      grid-area: nav !important;
+      display: none !important;
+      visibility: hidden !important;
+      width: 100% !important;
+      max-height: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      overflow: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      border-top: 1px solid $color-footer-divider !important;
+    }
+
+    .mtk-investor__header .mtk-investor__nav.mtk-investor__mobile-menu-open,
+    .mtk-investor__footer .mtk-investor__footer-nav.mtk-investor__mobile-menu-open {
+      display: grid !important;
+      visibility: visible !important;
+      grid-template-columns: 1fr !important;
+      max-height: 500px !important;
+      padding-top: $spacing-sm !important;
+      overflow: visible !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
+
+    .mtk-investor__hero {
+      background-position: 68% center !important;
+      background-size: auto 100% !important;
+    }
+  }
+}
+
+
+/* FINAL mobile chrome reset: header/footer stay compact closed and grow only when opened */
+.mtk-investor {
+  @media (max-width: $bp-md) {
+    .mtk-investor__header,
+    .mtk-investor__footer {
+      position: relative !important;
+      height: auto !important;
+      min-height: 0 !important;
+      padding: 0 !important;
+      overflow: visible !important;
+      background: $color-dark-bg !important;
+    }
+
+    .mtk-investor__header > .container,
+    .mtk-investor__footer > .container {
+      height: auto !important;
+      min-height: 0 !important;
+      padding: $spacing-sm $spacing-md !important;
+      overflow: visible !important;
+    }
+
+    .mtk-investor__header .mtk-investor__chrome-inner,
+    .mtk-investor__footer .mtk-investor__chrome-inner {
+      position: static !important;
+      display: grid !important;
+      width: 100% !important;
+      height: auto !important;
+      min-height: 0 !important;
+      grid-template-columns: 44px minmax(0, 1fr) !important;
+      grid-template-rows: auto auto !important;
+      grid-template-areas:
+        "toggle brand"
+        "nav nav" !important;
+      align-items: center !important;
+      gap: $spacing-xs $spacing-sm !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      overflow: visible !important;
+    }
+
+    .mtk-investor__header .mtk-investor__mobile-toggle,
+    .mtk-investor__footer .mtk-investor__mobile-toggle {
+      position: static !important;
+      grid-area: toggle !important;
+      display: flex !important;
+      width: 44px !important;
+      height: 44px !important;
+      align-items: center !important;
+      justify-content: center !important;
+      margin: 0 !important;
+    }
+
+    .mtk-investor__header .mtk-investor__brand,
+    .mtk-investor__footer .mtk-investor__brand {
+      position: static !important;
+      grid-area: brand !important;
+      display: inline-flex !important;
+      width: auto !important;
+      height: auto !important;
+      min-height: 0 !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      justify-self: start !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    .mtk-investor__header .mtk-investor__logo,
+    .mtk-investor__footer .mtk-investor__logo {
+      display: block !important;
+      width: auto !important;
+      height: 54px !important;
+      max-width: min(230px, 66vw) !important;
+      margin: 0 !important;
+      object-fit: contain !important;
+    }
+
+    .mtk-investor__header .mtk-investor__nav,
+    .mtk-investor__footer .mtk-investor__footer-nav {
+      position: static !important;
+      inset: auto !important;
+      grid-area: nav !important;
+      display: none !important;
+      visibility: hidden !important;
+      width: 100% !important;
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: 0 !important;
+      grid-template-columns: 1fr !important;
+      gap: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      overflow: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      transform: none !important;
+      border-top: 0 !important;
+    }
+
+    .mtk-investor__header .mtk-investor__nav.mtk-investor__mobile-menu-open,
+    .mtk-investor__footer .mtk-investor__footer-nav.mtk-investor__mobile-menu-open {
+      display: grid !important;
+      visibility: visible !important;
+      max-height: none !important;
+      padding-top: $spacing-sm !important;
+      margin-top: $spacing-xs !important;
+      overflow: visible !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      border-top: 1px solid $color-footer-divider !important;
+    }
+  }
+
+  /* Latest News */
+  .mtk-investor__latest-news {
+    padding: $spacing-3xl 0;
+    background: $color-bg-lighter;
+    border-top: 1px solid $color-divider;
+  }
+
+  .mtk-investor__latest-news-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-xl;
+    margin-bottom: $spacing-xl;
+  }
+
+  .mtk-investor__latest-news-title {
+    margin: 0;
+    color: $color-text-primary;
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+  }
+
+  .mtk-investor__latest-news-view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    border: 0;
+    background: transparent;
+    color: $color-primary;
+    font: inherit;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    cursor: pointer;
+    @include focus-ring($color-primary, 2px);
+  }
+
+  .mtk-investor__latest-news-view-all-icon,
+  .mtk-investor__latest-news-link span,
+  .mtk-investor__latest-news-media-icon {
+    @include material-icon(22px);
+  }
+
+  .mtk-investor__latest-news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: $spacing-xl;
+  }
+
+  .mtk-investor__latest-news-card {
+    display: grid;
+    grid-template-columns: minmax(140px, 34%) 1fr;
+    min-height: 176px;
+    overflow: hidden;
+    border: 1px solid $color-border;
+    border-radius: $radius-sm;
+    background: $color-white;
+    box-shadow: $shadow-card;
+  }
+
+  .mtk-investor__latest-news-media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $color-bg-page;
+    color: $color-primary;
+  }
+
+  .mtk-investor__latest-news-media-icon {
+    font-size: 52px;
+  }
+
+  .mtk-investor__latest-news-content {
+    display: flex;
+    flex-direction: column;
+    padding: $spacing-lg;
+  }
+
+  .mtk-investor__latest-news-date {
+    margin: 0 0 $spacing-sm;
+    color: $color-text-secondary;
+    font-size: $font-size-sm;
+  }
+
+  .mtk-investor__latest-news-card-title {
+    margin: 0;
+    color: $color-text-primary;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    line-height: $line-height-base;
+  }
+
+  .mtk-investor__latest-news-link {
+    display: inline-flex;
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto;
+    margin-left: auto;
+    border: 0;
+    background: transparent;
+    color: $color-primary;
+    cursor: pointer;
+    @include focus-ring($color-primary, 2px);
+  }
+
+  @media (max-width: $bp-lg) {
+    .mtk-investor__latest-news-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: $bp-md) {
+    .mtk-investor__latest-news {
+      padding: $spacing-2xl 0;
+    }
+
+    .mtk-investor__latest-news-heading {
+      align-items: flex-start;
+    }
+
+    .mtk-investor__latest-news-card {
+      grid-template-columns: 92px 1fr;
+      min-height: 140px;
+    }
+  }
+}
+
+
+/* Final hero globe placement */
+.mtk-investor {
+  .mtk-investor__hero {
+    background-position: right center !important;
+    background-size: auto 100% !important;
+  }
+
+  @media (max-width: $bp-md) {
+    .mtk-investor__hero {
+      background-position: 66% center !important;
+      background-size: auto 100% !important;
+    }
+  }
+}
+
+
+/* Uniform vertical spacing for every content section */
+.mtk-investor {
+  > main > section,
+  > .mtk-investor__latest-news {
+    padding-top: $spacing-3xl !important;
+    padding-bottom: $spacing-3xl !important;
+  }
+
+  @media (max-width: $bp-md) {
+    > main > section,
+    > .mtk-investor__latest-news {
+      padding-top: $spacing-2xl !important;
+      padding-bottom: $spacing-2xl !important;
+    }
+  }
+}
