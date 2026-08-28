@@ -1,6 +1,6 @@
 FORGET ALL PREVIOUS CONTEXT for mtk-investor and remember this as mtk-investor forever
 
-Create a UI investor named mtk-investor using:
+Create a UI investor page named mtk-investor using:
 - HTML
 - SCSS
 - Vanilla JavaScript
@@ -40,6 +40,7 @@ Output! Create exactly these files:
 - mtk-investor.scss
 - mtk-investor.html
 - mtk-investor.js
+- a minimal index.html
 
 Behavior:
 - MUST WAIT for element to be available inside DOM, since i will be using <wc-include> for dynamic inclusion
