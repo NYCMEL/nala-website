@@ -46,4 +46,5 @@ Behavior:
 - all published (wc.publish) messages should be logged using wc.log to console before being published
 
 What I want:
-- EXPLAIN WHAT YOU WANT THIS PROMPT TO DO
+- a one page NALA investor Landing page
+
