@@ -1708,3 +1708,31 @@
     scroll-margin-top: 96px !important;
   }
 }
+
+
+/* Email navigation item */
+.mtk-investor .mtk-investor__nav-button,
+.mtk-investor .mtk-investor__footer-nav-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.mtk-investor .mtk-investor__nav-icon {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  user-select: none;
+  flex: 0 0 auto;
+}

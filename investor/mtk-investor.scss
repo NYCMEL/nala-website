@@ -2057,3 +2057,19 @@
     }
   }
 }
+
+
+/* Email navigation item */
+.mtk-investor {
+  .mtk-investor__nav-button,
+  .mtk-investor__footer-nav-button {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+
+  .mtk-investor__nav-icon {
+    @include material-icon(18px);
+    flex: 0 0 auto;
+  }
+}

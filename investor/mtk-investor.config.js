@@ -12,7 +12,7 @@ window.MTK_INVESTOR_CONFIG = Object.freeze({
     { "label": "Governance", "target": "principles" },
     { "label": "News", "target": "updates" },
     { "label": "Resources", "target": "updates" },
-    { "label": "Contact", "target": "closing" }
+    { "label": "Contact", "icon": "email", "type": "email", "target": "closing" }
   ],
   "hero": {
     "kicker": "NALA Investor Relations",

@@ -87,10 +87,11 @@ class MtkInvestor {
                 class="${navButtonClass}"
                 type="button"
                 data-event="${this.config.events.publish.nav}"
-                data-action="navigate"
+                data-action="${item.type === "email" ? "email" : "navigate"}"
                 data-target="${this.escapeAttribute(item.target)}"
               >
-                ${this.escapeHtml(item.label)}
+                ${item.icon ? `<span class="mtk-investor__nav-icon" aria-hidden="true">${this.escapeHtml(item.icon)}</span>` : ""}
+                <span>${this.escapeHtml(item.label)}</span>
               </button>
             `).join("")}
           </nav>
@@ -153,7 +154,8 @@ class MtkInvestor {
         data-action="navigate"
         data-target="${this.escapeAttribute(item.target)}"
       >
-        ${this.escapeHtml(item.label)}
+        ${item.icon ? `<span class="mtk-investor__nav-icon" aria-hidden="true">${this.escapeHtml(item.icon)}</span>` : ""}
+                <span>${this.escapeHtml(item.label)}</span>
       </button>
     `).join("");
   }
@@ -503,6 +505,23 @@ class MtkInvestor {
       target: trigger.dataset.target || "",
       label: trigger.textContent.trim()
     };
+
+    if (detail.action === "email") {
+      const contact = this.config.closing || {};
+      const email =
+        contact.email ||
+        contact.emailAddress ||
+        contact.contactEmail ||
+        "investorrelations@nala.org";
+
+      this.publish(eventName, {
+        ...detail,
+        email
+      });
+      this.closeMobileMenus();
+      window.location.href = `mailto:${email}`;
+      return;
+    }
 
     if (detail.action === "toggle-menu" || detail.action === "toggle-footer-menu") {
       const isFooter = detail.action === "toggle-footer-menu";
