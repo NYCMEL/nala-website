@@ -920,3 +920,62 @@
     .mtk-investor__footer-nav { position:absolute !important; top:50% !important; right:0 !important; bottom:auto !important; left:auto !important; display:flex !important; width:auto !important; align-items:center !important; justify-content:flex-end !important; gap:clamp(24px,2.4vw,42px) !important; padding:0 !important; margin:0 !important; white-space:nowrap !important; transform:translateY(-50%) !important; }
   }
 }
+
+/* FINAL MOBILE HEADER FIX */
+.mtk-investor {
+  @media (max-width: 768px) {
+    .mtk-investor__header {
+      height: 184px !important;
+      min-height: 184px !important;
+      background-position: center 10px !important;
+      background-size: auto 82px !important;
+    }
+
+    .mtk-investor__header > .container,
+    .mtk-investor__header-inner,
+    .mtk-investor__header .mtk-investor__footer-inner {
+      height: 184px !important;
+      min-height: 184px !important;
+      padding: 0 18px !important;
+    }
+
+    .mtk-investor__header-logo-space,
+    .mtk-investor__header .mtk-investor__footer-logo-space {
+      display: none !important;
+    }
+
+    .mtk-investor__header .mtk-investor__nav,
+    .mtk-investor__header .mtk-investor__footer-nav {
+      position: absolute !important;
+      top: auto !important;
+      right: 18px !important;
+      bottom: 14px !important;
+      left: 18px !important;
+      display: grid !important;
+      width: auto !important;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      gap: 8px 14px !important;
+      align-items: center !important;
+      justify-items: center !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      white-space: normal !important;
+      transform: none !important;
+    }
+
+    .mtk-investor__header .mtk-investor__nav-button,
+    .mtk-investor__header .mtk-investor__footer-nav-button {
+      width: 100%;
+      padding: 6px 2px 8px;
+      font-size: 11px;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    .mtk-investor__hero-inner {
+      min-height: auto;
+      padding-top: 0 !important;
+      padding-bottom: 48px;
+    }
+  }
+}
