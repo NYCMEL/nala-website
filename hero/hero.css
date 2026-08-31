@@ -235,7 +235,7 @@ h1.title::after {
   width: 100%;
 }
 #MTK-hero .MTK-hero-shell {
-  background: #e0e6fa;
+  background: linear-gradient(135deg, #08111f 0%, #101820 52%, #2a220f 100%);
   padding: 25px;
 }
 #MTK-hero .MTK-hero-shell--background {
@@ -248,7 +248,7 @@ h1.title::after {
   background-repeat: no-repeat;
 }
 #MTK-hero .MTK-hero-shell--ofir {
-  background-image: linear-gradient(90deg, rgba(5, 10, 20, 0.72) 0%, rgba(5, 10, 20, 0.5) 36%, rgba(5, 10, 20, 0.12) 62%), url("../img/homepage-ofir/nala-ofir-image-01.jpg");
+  background-image: linear-gradient(90deg, rgba(5, 10, 20, 0.72) 0%, rgba(5, 10, 20, 0.5) 36%, rgba(5, 10, 20, 0.12) 62%), url("../img/homepage-ofir-wed-0819/nala-ofir-wed-0819-image-01.jpg");
   background-position: 70% center;
 }
 #MTK-hero .MTK-hero-shell--background .MTK-hero-card {
@@ -280,10 +280,12 @@ h1.title::after {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
+  color: #ffffff;
 }
 #MTK-hero .MTK-hero-lhs .MTK-hero-card .MTK-hero-description {
   font-size: 1.2rem;
   line-height: 1.5;
+  color: #f3f6fb;
 }
 #MTK-hero .MTK-hero-rhs {
   display: flex;
@@ -294,7 +296,8 @@ h1.title::after {
 #MTK-hero .MTK-hero-rhs .MTK-hero-img {
   max-width: 100%;
   height: auto;
-  border-radius: 4px;
+  border-radius: 8px;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.26);
 }
 #MTK-hero .MTK-hero-actions {
   display: flex;
@@ -411,7 +414,7 @@ h1.title::after {
     background-position: 68% center;
   }
   #MTK-hero .MTK-hero-shell--ofir {
-    background-image: linear-gradient(180deg, rgba(5, 10, 20, 0.84) 0%, rgba(5, 10, 20, 0.58) 45%, rgba(5, 10, 20, 0.22) 100%), url("../img/homepage-ofir/nala-ofir-image-01.jpg");
+    background-image: linear-gradient(180deg, rgba(5, 10, 20, 0.84) 0%, rgba(5, 10, 20, 0.58) 45%, rgba(5, 10, 20, 0.22) 100%), url("../img/homepage-ofir-wed-0819/nala-ofir-wed-0819-image-01.jpg");
   }
   #MTK-hero .MTK-hero-lhs {
     order: 2;

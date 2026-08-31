@@ -5,8 +5,8 @@ window.app.hero = [
 	title:       (window.i18n ? window.i18n.t('hero.title')       : 'Master the art of professional locksmithing'),
 	description: (window.i18n ? window.i18n.t('hero.description') : 'Join thousands of students learning modern security technology with bilingual courses, hands-on training, and industry-recognized certifications.'),
 	cta:         (window.i18n ? window.i18n.t('hero.cta')         : 'Get Started'),
-	image: "img/homepage-ofir/nala-ofir-image-01.jpg",
-	backgroundImage: "img/homepage-ofir/nala-ofir-image-01.jpg",
+	image: "img/homepage-ofir-wed-0819/nala-ofir-wed-0819-image-01.jpg",
+	backgroundImage: "",
 	backgroundPosition: "70% center",
 	images: [],
 
