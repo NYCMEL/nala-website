@@ -5,8 +5,9 @@ window.app.hero = [
 	title:       (window.i18n ? window.i18n.t('hero.title')       : 'Master the art of professional locksmithing'),
 	description: (window.i18n ? window.i18n.t('hero.description') : 'Join thousands of students learning modern security technology with bilingual courses, hands-on training, and industry-recognized certifications.'),
 	cta:         (window.i18n ? window.i18n.t('hero.cta')         : 'Get Started'),
-	image: "./img/hero.png",
+	image: "img/homepage-chatgpt/nala-home-image-01.jpg",
 	images: [
+	    { src: "img/homepage-chatgpt/nala-home-image-01.jpg", alt: "NALA technician demonstrating a smart lock", position: "center center", fit: "cover" },
 	    { src: "img/home/hero-i-banner-preview.jpg", alt: "NALA locksmith training banner", position: "center center", fit: "cover" },
 	    { src: "img/home/hero-a-door-hardware.jpg", alt: "Locksmith working on bright door hardware", position: "center center" },
 	    { src: "img/home/hero-b-key-wall-student.jpg", alt: "Locksmith student learning with key blanks", position: "center center" },
