@@ -38,8 +38,16 @@
 
 	// Only inject if container is empty
 	if (!container.innerHTML.trim()) {
+	    const hasBackground = !!heroData.backgroundImage;
+	    const shellClass = hasBackground ? "MTK-hero-shell MTK-hero-shell--background" : "MTK-hero-shell";
+	    const shellStyle = hasBackground
+		? `--nala-hero-bg: url('${heroData.backgroundImage}'); --nala-hero-position: ${heroData.backgroundPosition || '70% center'};`
+		: "";
+	    const heroImage = hasBackground
+		? ""
+		: `<img class="MTK-hero-img img-fluid animate-fade-up" src="${heroData.image}" alt="Hero Image">`;
 	    container.innerHTML = `
-<div style="background:#e0e6fa!important;padding:25px;">
+<div class="${shellClass}" style="${shellStyle}">
     <div class="container">
 	<div class="row align-items-center MTK-hero-row">
             <div class="MTK-hero-lhs col-md-${heroData.lhsCol}">
@@ -53,7 +61,7 @@
             </div>
 
             <div class="MTK-hero-rhs col-md-${heroData.rhsCol} text-center">
-		<img class="MTK-hero-img img-fluid animate-fade-up" src="${heroData.image}" alt="Hero Image">
+		${heroImage}
             </div>
 
 	</div>

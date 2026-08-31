@@ -232,9 +232,32 @@ h1.title::after {
 #MTK-hero {
   z-index: 1;
   background-color: #fbf4e5 !important;
-  padding-top: 50px !important;
-  padding-bottom: 50px !important;
   width: 100%;
+}
+#MTK-hero .MTK-hero-shell {
+  background: #e0e6fa;
+  padding: 25px;
+}
+#MTK-hero .MTK-hero-shell--background {
+  min-height: clamp(650px, 72vh, 800px);
+  display: flex;
+  align-items: center;
+  background-image: linear-gradient(90deg, rgba(5, 10, 20, 0.72) 0%, rgba(5, 10, 20, 0.5) 36%, rgba(5, 10, 20, 0.12) 62%), var(--nala-hero-bg);
+  background-size: cover;
+  background-position: var(--nala-hero-position, 70% center);
+  background-repeat: no-repeat;
+}
+#MTK-hero .MTK-hero-shell--ofir {
+  background-image: linear-gradient(90deg, rgba(5, 10, 20, 0.72) 0%, rgba(5, 10, 20, 0.5) 36%, rgba(5, 10, 20, 0.12) 62%), url("../img/homepage-ofir/nala-ofir-image-01.png");
+  background-position: 70% center;
+}
+#MTK-hero .MTK-hero-shell--background .MTK-hero-card {
+  max-width: 580px;
+}
+#MTK-hero .MTK-hero-shell--background .MTK-hero-title,
+#MTK-hero .MTK-hero-shell--background .MTK-hero-description {
+  color: #ffffff;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.48);
 }
 #MTK-hero .MTK-hero-row {
   display: flex;
@@ -382,6 +405,14 @@ h1.title::after {
   object-position: center center;
 }
 @media (max-width: 767px) {
+  #MTK-hero .MTK-hero-shell--background {
+    min-height: 660px;
+    background-image: linear-gradient(180deg, rgba(5, 10, 20, 0.84) 0%, rgba(5, 10, 20, 0.58) 45%, rgba(5, 10, 20, 0.22) 100%), var(--nala-hero-bg);
+    background-position: 68% center;
+  }
+  #MTK-hero .MTK-hero-shell--ofir {
+    background-image: linear-gradient(180deg, rgba(5, 10, 20, 0.84) 0%, rgba(5, 10, 20, 0.58) 45%, rgba(5, 10, 20, 0.22) 100%), url("../img/homepage-ofir/nala-ofir-image-01.png");
+  }
   #MTK-hero .MTK-hero-lhs {
     order: 2;
     text-align: center;
