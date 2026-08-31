@@ -33,37 +33,18 @@
     <div class="mtk-investor__status" data-region="status" aria-live="polite" aria-atomic="true"></div>
   </mtk-investor>
 
-  <script src="mtk-investor.config.js"></script>
   <script>
-    window.MTK_INVESTOR_CONFIG.closing.email = "ydalin@nalanetwork.com";
-    window.wc = {
+    window.wc = window.wc || {
       log: () => {},
-      publish: (name, detail) => {
-        document.dispatchEvent(new CustomEvent(name, { detail }));
-      },
-      subscribe: (name, callback) => {
-        document.addEventListener(name, (event) => callback(name, event.detail));
-      }
+      publish: (name, detail) => document.dispatchEvent(new CustomEvent(name, { detail })),
+      subscribe: (name, callback) => document.addEventListener(name, (event) => callback(name, event.detail))
     };
 
     document.addEventListener("mtk-investor:contact", () => {
       window.location.href = "mailto:ydalin@nalanetwork.com?subject=NALA%20Investor%20Information";
     });
   </script>
+  <script src="mtk-investor.config.js"></script>
   <script src="mtk-investor.js"></script>
-  <script>
-    (() => {
-      const source = new URLSearchParams(window.location.search).get("src");
-      if (!["yehoshua-card", "ofir-card"].includes(source)) return;
-
-      fetch("track.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `src=${encodeURIComponent(source)}`,
-        credentials: "same-origin",
-        keepalive: true
-      }).catch(() => {});
-    })();
-  </script>
 </body>
 </html>

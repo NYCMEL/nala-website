@@ -1,3 +1,15 @@
+@function css-min($values...) {
+  @return unquote("min(#{$values})");
+}
+
+@function css-max($values...) {
+  @return unquote("max(#{$values})");
+}
+
+@function css-clamp($minimum, $preferred, $maximum) {
+  @return unquote("clamp(#{$minimum}, #{$preferred}, #{$maximum})");
+}
+
 // ============================================================
 //  nala.scss
 //  Extracted design tokens, fonts, colors & common styles
@@ -770,3 +782,4 @@ h1.title {
 ::placeholder {
   color: var(--nala-placeholder) !important;
 }
+

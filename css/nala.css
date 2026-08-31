@@ -501,3 +501,354 @@ h1.title::after {
     min-height: auto;
   }
 }
+
+/* Requested dark mode: Home route and shared public sections */
+#MTK-hero { background:#0d1117 !important; color:#f5f7fa !important; }
+#MTK-hero::before { background:repeating-linear-gradient(135deg,rgba(212,168,45,.07) 0 1px,transparent 1px 24px) !important; }
+#MTK-hero .MTK-hero-title,#MTK-hero .MTK-hero-description,#MTK-hero h1,#MTK-hero h2,#MTK-hero p { color:#f5f7fa !important; }
+#_stats { background:#11161d !important; border-color:#2b313a !important; }
+#_stats ._stats-item { background:#171c24 !important; border-color:#303741 !important; box-shadow:none !important; }
+#_stats ._stats-label,#_stats p { color:#d5dae1 !important; }
+#carousel,.carousel-card,.mtk-carousel { background:#0d1117 !important; color:#f5f7fa !important; }
+.carousel-card { border-color:#303741 !important; }
+.carousel-card h2,.carousel-card p { color:#f5f7fa !important; }
+#MTK-courses,.mtk-courses { background:#0d1117 !important; color:#f5f7fa !important; }
+.mtk-courses h1,.mtk-courses h2,.mtk-courses h3,.mtk-courses p,.mtk-courses .mtk-description { color:#f5f7fa !important; }
+.mtk-courses .course-card { background:#171c24 !important; border-color:#303741 !important; color:#f5f7fa !important; }
+.mtk-courses .course-card *:not(.material-icons):not(.btn):not(button) { color:#f5f7fa !important; }
+#MTK-path,.mtk-path { background:#0d1117 !important; color:#f5f7fa !important; }
+.mtk-path h1,.mtk-path h2,.mtk-path h3,.mtk-path p,.mtk-path .mtk-description { color:#f5f7fa !important; }
+.mtk-path .mtk-card { background:#171c24 !important; border-color:#303741 !important; color:#f5f7fa !important; }
+#business-in-a-box { background:#0d1117 !important; color:#f5f7fa !important; }
+#business-in-a-box h1,#business-in-a-box h2,#business-in-a-box p,#business-in-a-box li,#business-in-a-box strong,#business-in-a-box small { color:#f5f7fa !important; }
+#business-in-a-box .biab-home-copy { background:#171c24 !important; border-color:#303741 !important; }
+#business-in-a-box .biab-home-benefits div { background:#11161d !important; border-color:#303741 !important; }
+#business-in-a-box .biab-home-sample { background:#171c24 !important; border-color:#303741 !important; }
+.mtk-certification,.mtk-certification--path { background:#0d1117 !important; color:#f5f7fa !important; border-color:#303741 !important; }
+.mtk-certification h1,.mtk-certification h2,.mtk-certification h3,.mtk-certification h4,.mtk-certification p,.mtk-certification strong,.mtk-certification figcaption { color:#f5f7fa !important; }
+.mtk-certification__step,.mtk-certification__sample { background:#171c24 !important; border-color:#303741 !important; }
+.mtk-ready { background:#11161d !important; color:#f5f7fa !important; }
+.mtk-ready * { color:#f5f7fa !important; }
+
+
+/* NALA PUBLIC DARK MODE - FINAL ROUTE-SCOPED OVERRIDES */
+body.nala-public-dark,
+body.nala-public-dark #page-content,
+body.nala-public-dark mtk-pages,
+body.nala-public-dark .mtk-pages__page.home,
+body.nala-public-dark .mtk-pages__page.news,
+body.nala-public-dark .mtk-pages__page.contact,
+body.nala-public-dark .mtk-pages__page.register {
+  background: #0b0f14 !important;
+  color: #f4f6f8 !important;
+}
+
+body.nala-public-dark .mtk-pages__page.home > div,
+body.nala-public-dark .mtk-pages__page.home > div.mt-5,
+body.nala-public-dark .mtk-pages__page.home > div.pt-5,
+body.nala-public-dark .mtk-pages__page.home > div.pb-5 {
+  background-color: #0b0f14 !important;
+}
+
+/* HOME: hero */
+body.nala-public-dark .home #MTK-hero {
+  background: #0d1117 !important;
+  color: #f4f6f8 !important;
+}
+body.nala-public-dark .home #MTK-hero::before {
+  background: repeating-linear-gradient(135deg, rgba(212,168,45,.06) 0 1px, transparent 1px 24px) !important;
+}
+body.nala-public-dark .home #MTK-hero .MTK-hero-title,
+body.nala-public-dark .home #MTK-hero .MTK-hero-description,
+body.nala-public-dark .home #MTK-hero h1,
+body.nala-public-dark .home #MTK-hero h2,
+body.nala-public-dark .home #MTK-hero p {
+  color: #f4f6f8 !important;
+}
+body.nala-public-dark .home #MTK-hero .MTK-hero-card { background: transparent !important; }
+
+/* HOME: stats */
+body.nala-public-dark .home #_stats {
+  background: #11161d !important;
+  border-color: #2d343e !important;
+  box-shadow: none !important;
+}
+body.nala-public-dark .home #_stats ._stats-item {
+  background: #171c24 !important;
+  border: 1px solid #303741 !important;
+  box-shadow: none !important;
+}
+body.nala-public-dark .home #_stats ._stats-label { color: #d7dce2 !important; }
+body.nala-public-dark .home #_stats ._stats-value { color: #d4aa2f !important; }
+
+/* HOME: carousel / Paths to Success */
+body.nala-public-dark .home #carousel,
+body.nala-public-dark .home #carousel > .p-4,
+body.nala-public-dark .home #carousel .container,
+body.nala-public-dark .home .mtk-carousel {
+  background: #0b0f14 !important;
+  color: #f4f6f8 !important;
+}
+body.nala-public-dark .home #carousel h1,
+body.nala-public-dark .home #carousel h2,
+body.nala-public-dark .home #carousel h3,
+body.nala-public-dark .home #carousel h4,
+body.nala-public-dark .home #carousel p { color: #f4f6f8 !important; }
+body.nala-public-dark .home .mtk-carousel-viewport,
+body.nala-public-dark .home .mtk-carousel-card,
+body.nala-public-dark .home .carousel-card,
+body.nala-public-dark .home .mtk-carousel-slide {
+  background: #171c24 !important;
+  color: #f4f6f8 !important;
+  border-color: #303741 !important;
+}
+
+/* HOME: training / benefit cards */
+body.nala-public-dark .home .card {
+  background: #171c24 !important;
+  color: #f4f6f8 !important;
+  border-color: #303741 !important;
+  box-shadow: none !important;
+}
+body.nala-public-dark .home .card .card-title,
+body.nala-public-dark .home .card .card-text,
+body.nala-public-dark .home .card h1,
+body.nala-public-dark .home .card h2,
+body.nala-public-dark .home .card h3,
+body.nala-public-dark .home .card h4,
+body.nala-public-dark .home .card h5,
+body.nala-public-dark .home .card p { color: #f4f6f8 !important; }
+
+/* HOME: Why Choose Our Program */
+body.nala-public-dark .home #MTK-tile-1,
+body.nala-public-dark .home #MTK-tile-2,
+body.nala-public-dark .home #MTK-tile-3,
+body.nala-public-dark .home [id^="MTK-tile-"] .tile,
+body.nala-public-dark .home [id^="MTK-tile-"] .mtk-tile {
+  color: #f4f6f8 !important;
+}
+body.nala-public-dark .home h1.title,
+body.nala-public-dark .home h6 { color: #f4f6f8 !important; }
+
+/* HOME: Included in the Program */
+body.nala-public-dark .home #MTK-courses,
+body.nala-public-dark .home .mtk-courses,
+body.nala-public-dark .home #MTK-courses > .container {
+  background: #0b0f14 !important;
+  color: #f4f6f8 !important;
+}
+body.nala-public-dark .home #MTK-courses h1,
+body.nala-public-dark .home #MTK-courses h2,
+body.nala-public-dark .home #MTK-courses h3,
+body.nala-public-dark .home #MTK-courses p,
+body.nala-public-dark .home #MTK-courses .mtk-description,
+body.nala-public-dark .home #MTK-courses .course-title,
+body.nala-public-dark .home #MTK-courses .course-description,
+body.nala-public-dark .home #MTK-courses .course-features,
+body.nala-public-dark .home #MTK-courses .course-features li {
+  color: #f4f6f8 !important;
+}
+body.nala-public-dark .home #MTK-courses .course-card {
+  background: #171c24 !important;
+  color: #f4f6f8 !important;
+  border-color: #303741 !important;
+  box-shadow: none !important;
+}
+body.nala-public-dark .home #MTK-courses .course-level {
+  background: #262d37 !important;
+  color: #e8c45e !important;
+}
+
+/* HOME: Choose Your Training Package */
+body.nala-public-dark .home #MTK-path,
+body.nala-public-dark .home .mtk-path,
+body.nala-public-dark .home #MTK-path > .container {
+  background: #0b0f14 !important;
+  color: #f4f6f8 !important;
+}
+body.nala-public-dark .home #MTK-path h1,
+body.nala-public-dark .home #MTK-path h2,
+body.nala-public-dark .home #MTK-path h3,
+body.nala-public-dark .home #MTK-path h4,
+body.nala-public-dark .home #MTK-path p,
+body.nala-public-dark .home #MTK-path li,
+body.nala-public-dark .home #MTK-path .lead,
+body.nala-public-dark .home #MTK-path .price,
+body.nala-public-dark .home #MTK-path .period,
+body.nala-public-dark .home #MTK-path .total-price,
+body.nala-public-dark .home #MTK-path .mtk-path__description {
+  color: #f4f6f8 !important;
+}
+body.nala-public-dark .home #MTK-path .mtk-card {
+  background: #171c24 !important;
+  color: #f4f6f8 !important;
+  border-color: #303741 !important;
+  box-shadow: none !important;
+}
+body.nala-public-dark .home #MTK-path .included-bonus,
+body.nala-public-dark .home #MTK-path .discount-note {
+  background: #202630 !important;
+  color: #f4f6f8 !important;
+  border-color: #3b4450 !important;
+}
+
+/* HOME: Business in a Box */
+body.nala-public-dark .home #business-in-a-box {
+  background: #0b0f14 !important;
+  color: #f4f6f8 !important;
+}
+body.nala-public-dark .home #business-in-a-box .biab-home-copy,
+body.nala-public-dark .home #business-in-a-box .biab-home-sample {
+  background: #171c24 !important;
+  border-color: #303741 !important;
+  box-shadow: none !important;
+}
+body.nala-public-dark .home #business-in-a-box .biab-home-benefits > div {
+  background: #11161d !important;
+  border-color: #303741 !important;
+  box-shadow: none !important;
+}
+body.nala-public-dark .home #business-in-a-box h1,
+body.nala-public-dark .home #business-in-a-box h2,
+body.nala-public-dark .home #business-in-a-box p,
+body.nala-public-dark .home #business-in-a-box li,
+body.nala-public-dark .home #business-in-a-box strong,
+body.nala-public-dark .home #business-in-a-box small,
+body.nala-public-dark .home #business-in-a-box figcaption { color: #f4f6f8 !important; }
+body.nala-public-dark .home #business-in-a-box .biab-home-eyebrow { color: #e8c45e !important; background:#202630 !important; }
+body.nala-public-dark .home #business-in-a-box .biab-home-sample img { background:#f7f3e8 !important; }
+
+/* HOME: certification */
+body.nala-public-dark .home #mtk-certification-content,
+body.nala-public-dark .home #mtk-certification-locked,
+body.nala-public-dark .home .mtk-certification,
+body.nala-public-dark .home .mtk-certification--path {
+  background: #0b0f14 !important;
+  color: #f4f6f8 !important;
+  border-color: #303741 !important;
+  box-shadow: none !important;
+}
+body.nala-public-dark .home .mtk-certification__copy,
+body.nala-public-dark .home .mtk-certification__steps,
+body.nala-public-dark .home .mtk-certification__sample {
+  background: #171c24 !important;
+  color: #f4f6f8 !important;
+  border-color: #303741 !important;
+  box-shadow: none !important;
+}
+body.nala-public-dark .home .mtk-certification__step {
+  background: #11161d !important;
+  color: #f4f6f8 !important;
+  border-color: #303741 !important;
+}
+body.nala-public-dark .home .mtk-certification h1,
+body.nala-public-dark .home .mtk-certification h2,
+body.nala-public-dark .home .mtk-certification h3,
+body.nala-public-dark .home .mtk-certification h4,
+body.nala-public-dark .home .mtk-certification p,
+body.nala-public-dark .home .mtk-certification strong,
+body.nala-public-dark .home .mtk-certification figcaption { color: #f4f6f8 !important; }
+body.nala-public-dark .home .mtk-certification__sample img { background:#f7f3e8 !important; }
+
+/* HOME: ready CTA */
+body.nala-public-dark .home .mtk-ready,
+body.nala-public-dark .home #mtk-ready {
+  background: #11161d !important;
+  color: #f4f6f8 !important;
+  border-top: 1px solid #303741 !important;
+}
+body.nala-public-dark .home .mtk-ready-title,
+body.nala-public-dark .home .mtk-ready-desc { color: #f4f6f8 !important; }
+
+/* NEWS / ABOUT */
+body.nala-public-dark .news .news-page,
+body.nala-public-dark .news .about-page {
+  background: #0b0f14 !important;
+  color: #f4f6f8 !important;
+}
+body.nala-public-dark .news .news-header,
+body.nala-public-dark .news .about-section {
+  background: #171c24 !important;
+  color: #f4f6f8 !important;
+  border-color: #303741 !important;
+  box-shadow: none !important;
+}
+body.nala-public-dark .news .about-section__header { border-color:#303741 !important; }
+body.nala-public-dark .news .news-title,
+body.nala-public-dark .news .news-subtitle,
+body.nala-public-dark .news h1,
+body.nala-public-dark .news h2,
+body.nala-public-dark .news h3,
+body.nala-public-dark .news h4,
+body.nala-public-dark .news p,
+body.nala-public-dark .news .about-featured-video__caption { color:#f4f6f8 !important; }
+body.nala-public-dark .news .about-video-card,
+body.nala-public-dark .news .news-card,
+body.nala-public-dark .news .news-item,
+body.nala-public-dark .news article {
+  background:#11161d !important;
+  color:#f4f6f8 !important;
+  border-color:#303741 !important;
+}
+body.nala-public-dark .news .about-video-thumb { background:#0b0f14 !important; border-color:#303741 !important; }
+
+/* CONTACT */
+body.nala-public-dark .contact,
+body.nala-public-dark .contact mtk-contact,
+body.nala-public-dark .contact .mtk-contact,
+body.nala-public-dark .contact .mtk-contact__shell {
+  background:#0b0f14 !important;
+  color:#f4f6f8 !important;
+}
+body.nala-public-dark .contact .mtk-contact__form {
+  background:#171c24 !important;
+  color:#f4f6f8 !important;
+  border-color:#303741 !important;
+  box-shadow:none !important;
+}
+body.nala-public-dark .contact .mtk-contact__title,
+body.nala-public-dark .contact .mtk-contact__eyebrow,
+body.nala-public-dark .contact .mtk-contact__required-note,
+body.nala-public-dark .contact .mtk-contact__field > span,
+body.nala-public-dark .contact .mtk-contact__status { color:#f4f6f8 !important; }
+body.nala-public-dark .contact input,
+body.nala-public-dark .contact textarea,
+body.nala-public-dark .contact .mtk-contact__editor,
+body.nala-public-dark .contact .mtk-contact__message,
+body.nala-public-dark .contact .mtk-contact__toolbar {
+  background:#11161d !important;
+  color:#f4f6f8 !important;
+  border-color:#3a424d !important;
+}
+body.nala-public-dark .contact .mtk-contact__toolbar button,
+body.nala-public-dark .contact .mtk-contact__image-button,
+body.nala-public-dark .contact .mtk-contact__attachments > * {
+  background:#202630 !important;
+  color:#f4f6f8 !important;
+  border-color:#3a424d !important;
+}
+
+/* REGISTER */
+body.nala-public-dark .register { background:#0b0f14 !important; color:#f4f6f8 !important; }
+body.nala-public-dark .register #mtk-register {
+  background:#171c24 !important;
+  color:#f4f6f8 !important;
+  border-color:#303741 !important;
+  box-shadow:none !important;
+}
+body.nala-public-dark .register #mtk-register .form-title,
+body.nala-public-dark .register #mtk-register label,
+body.nala-public-dark .register #mtk-register .helper,
+body.nala-public-dark .register #mtk-register .md-checkbox label { color:#f4f6f8 !important; }
+body.nala-public-dark .register #mtk-register input[type="text"],
+body.nala-public-dark .register #mtk-register input[type="email"],
+body.nala-public-dark .register #mtk-register input[type="tel"],
+body.nala-public-dark .register #mtk-register input[type="password"] {
+  background:#11161d !important;
+  color:#f4f6f8 !important;
+  border-color:#3a424d !important;
+}
+body.nala-public-dark .register #mtk-register a { color:#e8c45e !important; }
+body.nala-public-dark .register #mtk-register input::placeholder,
+body.nala-public-dark .contact input::placeholder,
+body.nala-public-dark .contact textarea::placeholder { color:#9aa3ad !important; opacity:1 !important; }

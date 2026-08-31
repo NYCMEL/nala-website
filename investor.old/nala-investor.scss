@@ -1,0 +1,59 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
+
+html{scroll-behavior:smooth}
+body{margin:0;background:#f7f5f2;color:#211a16;font-family:"IBM Plex Sans",Arial,sans-serif}
+*,*::before,*::after{box-sizing:border-box}
+a{color:inherit}
+.nala-investor{--bg:#f7f5f2;--surface:#fff;--text:#211a16;--muted:#746a62;--primary:#3b2115;--soft:#eee6df;--border:#ded6cf;--accent:#6750a4;min-height:100vh;background:var(--bg)}
+.nala-investor__nav{position:sticky;top:0;z-index:20;min-height:76px;padding:0 5vw;border-bottom:1px solid rgba(222,214,207,.8);background:rgba(247,245,242,.94);backdrop-filter:blur(18px);display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:32px}
+.nala-investor__brand{font-size:1.45rem;font-weight:700;letter-spacing:-.05em;text-decoration:none}
+.nala-investor__nav-links{display:flex;justify-content:center;gap:28px}
+.nala-investor__nav-links a{color:var(--muted);font-size:.95rem;font-weight:500;text-decoration:none}
+.nala-investor__hero{min-height:720px;padding:96px 7vw 72px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(340px,.8fr);gap:72px;align-items:center}
+.nala-investor__eyebrow{margin:0 0 16px;color:var(--accent);font-size:.82rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.nala-investor__hero h1{margin:0;max-width:880px;font-size:clamp(3.2rem,7vw,6.8rem);line-height:.95;font-weight:500;letter-spacing:-.065em}
+.nala-investor__lead{max-width:680px;margin:30px 0 0;color:var(--muted);font-size:clamp(1.12rem,2vw,1.45rem);line-height:1.55}
+.nala-investor__hero-actions{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap}
+.nala-investor__button{min-height:52px;padding:0 24px;border:1px solid transparent;border-radius:26px;display:inline-flex;align-items:center;justify-content:center;font-size:.98rem;font-weight:600;text-decoration:none}
+.nala-investor__button--primary,.nala-investor__button--small{background:var(--primary);color:#fff}
+.nala-investor__button--secondary{border-color:var(--border);background:var(--surface)}
+.nala-investor__button--small{min-height:42px;padding:0 18px}
+.nala-investor__hero-card{padding:40px;border:1px solid var(--border);border-radius:28px;background:var(--surface);box-shadow:0 24px 80px rgba(59,33,21,.09)}
+.nala-investor__hero-card-label{margin:0 0 12px;color:var(--muted);font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.nala-investor__hero-card h2{margin:0 0 16px;font-size:2rem;line-height:1.08;font-weight:500;letter-spacing:-.04em}
+.nala-investor__hero-card>p:last-of-type{color:var(--muted);line-height:1.6}
+.nala-investor__mini-grid{margin-top:30px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.nala-investor__mini-grid div{min-height:108px;padding:18px;border-radius:18px;background:var(--soft);display:grid;align-content:space-between}
+.nala-investor__mini-grid span{color:var(--muted);font-size:.9rem}
+.nala-investor__stats{margin:0 5vw;padding:30px 2vw;border-top:1px solid var(--border);border-bottom:1px solid var(--border);display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.nala-investor__stats article{display:grid;gap:6px}
+.nala-investor__stats strong{font-size:clamp(2rem,4vw,3.6rem);font-weight:500;letter-spacing:-.05em}
+.nala-investor__stats span{color:var(--muted);font-size:.9rem}
+.nala-investor__section{padding:110px 7vw}
+.nala-investor__section-heading{max-width:780px;margin-bottom:48px}
+.nala-investor__section-heading h2,.nala-investor__section--split h2,.nala-investor__cta h2{margin:0;font-size:clamp(2.5rem,5vw,4.8rem);line-height:1;font-weight:400;letter-spacing:-.055em}
+.nala-investor__cards{display:grid;gap:18px}
+.nala-investor__cards--3{grid-template-columns:repeat(3,1fr)}
+.nala-investor__cards--4{grid-template-columns:repeat(4,1fr)}
+.nala-investor__card{min-height:250px;padding:30px;border:1px solid var(--border);border-radius:22px;background:var(--surface)}
+.nala-investor__card>span{display:block;margin-bottom:54px;color:var(--accent);font-size:.86rem;font-weight:700}
+.nala-investor__card h3{margin:0 0 12px;font-size:1.45rem;font-weight:500}
+.nala-investor__card p{margin:0;color:var(--muted);line-height:1.6}
+.nala-investor__section--split{background:var(--primary);color:#fff;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.nala-investor__section--split .nala-investor__eyebrow{color:#d4c6ff}
+.nala-investor__funnel{display:grid;gap:10px}
+.nala-investor__funnel div{min-height:64px;padding:0 20px;border-radius:14px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between}
+.nala-investor__funnel span{color:rgba(255,255,255,.74)}
+.nala-investor__timeline{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border)}
+.nala-investor__timeline article{padding:28px 26px 0 0}
+.nala-investor__timeline span{color:var(--accent);font-size:.84rem;font-weight:700}
+.nala-investor__timeline h3{margin:18px 0 10px;font-size:1.45rem;font-weight:500}
+.nala-investor__timeline p{margin:0;color:var(--muted);line-height:1.6}
+.nala-investor__cta{padding:120px 7vw;text-align:center}
+.nala-investor__cta h2{max-width:900px;margin:0 auto}
+.nala-investor__cta>p{max-width:700px;margin:24px auto 0;color:var(--muted);line-height:1.65}
+.nala-investor__cta .nala-investor__hero-actions{justify-content:center}
+.nala-investor__footer{min-height:90px;padding:0 5vw;border-top:1px solid var(--border);color:var(--muted);display:flex;align-items:center;justify-content:space-between;gap:20px;font-size:.9rem}
+@media(max-width:960px){.nala-investor__nav{grid-template-columns:1fr auto}.nala-investor__nav-links{display:none}.nala-investor__hero{grid-template-columns:1fr;min-height:auto}.nala-investor__stats,.nala-investor__cards--4,.nala-investor__timeline{grid-template-columns:repeat(2,1fr)}.nala-investor__cards--3{grid-template-columns:1fr}.nala-investor__section--split{grid-template-columns:1fr}}
+@media(max-width:640px){.nala-investor__nav{min-height:66px;padding:0 18px}.nala-investor__button--small{display:none}.nala-investor__hero,.nala-investor__section,.nala-investor__cta{padding-left:18px;padding-right:18px}.nala-investor__hero{padding-top:54px}.nala-investor__stats{margin:0 18px;grid-template-columns:1fr 1fr}.nala-investor__cards--4,.nala-investor__timeline{grid-template-columns:1fr}.nala-investor__footer{padding:22px 18px;flex-direction:column;align-items:flex-start}}

@@ -1,0 +1,382 @@
+Create/update a UI investor page named mtk-investor.
+
+TECHNOLOGY
+- HTML
+- SCSS
+- Generated CSS from the SCSS file
+- Vanilla JavaScript
+- Bootstrap 5 for layout only
+- Modern Material Design
+- Google Material Icons
+- jQuery may be loaded by index.html, but mtk-investor itself should use Vanilla JavaScript
+- Use the existing js/_wc.js from:
+  https://github.com/NYCMEL/nala-website/blob/main/js/_wc.js
+- Do NOT create a replacement include system.
+- Do NOT use frameworks.
+
+NALA STYLING
+- Use styles, colors, fonts, spacing, shadows, breakpoints, etc. from:
+  css/nala.scss
+- Use the version from branch:
+  08.12.2026
+- Repository:
+  NYCMEL/nala-website
+- Keep the visual design consistent with the NALA brand.
+- Primary dark header/footer with NALA gold accents.
+- Use the real NALA logo:
+  logo-nala-association.webp
+- NEVER use header.png.
+- Do NOT generate any images.
+
+COMPONENT
+The investor page must be wrapped in:
+
+<mtk-investor class="mtk-investor">
+
+The root CSS class must be:
+
+.mtk-investor
+
+All component styles MUST be scoped underneath:
+
+.mtk-investor
+
+Do not create global component styles.
+
+Do not use IDs.
+
+JAVASCRIPT
+- Always create a JavaScript class named MtkInvestor.
+- Initialize MtkInvestor inside mtk-investor.js itself.
+- Do not require inline JavaScript.
+- mtk-investor may be dynamically inserted using <wc-include>.
+- The JavaScript MUST wait until the mtk-investor element exists in the DOM before initialization.
+- It must work correctly when loaded dynamically.
+- Prevent duplicate initialization.
+- MutationObserver may be used to detect dynamically inserted content.
+
+WC EVENTS
+- Publish component click events using wc.publish.
+- Before EVERY wc.publish call, log the message using wc.log.
+- Subscribe to all four mtk-investor events using wc.subscribe.
+- Create an onMessage function.
+- Pass onMessage to wc.subscribe.
+
+The four component events are:
+
+mtk-investor:cta
+mtk-investor:nav
+mtk-investor:metric
+mtk-investor:contact
+
+DATA
+The entire investor page must be JSON driven.
+
+ALL:
+- labels
+- navigation
+- headings
+- paragraphs
+- metrics
+- buttons
+- icons
+- news
+- investment information
+- mission information
+- footer information
+- links
+- accessibility labels
+- event configuration
+
+must come from:
+
+mtk-investor.config.js
+
+Do not hardcode displayed business content in mtk-investor.js or mtk-investor.html.
+
+HEADER
+Create a NALA investor header.
+
+Desktop:
+- Dark NALA background.
+- Real NALA logo positioned on the LEFT.
+- Logo must remain left aligned.
+- Navigation positioned on the right.
+- Navigation:
+  OVERVIEW
+  FINANCIALS
+  GOVERNANCE
+  NEWS
+  RESOURCES
+  CONTACT
+- CONTACT must contain a Material email icon.
+- CONTACT must behave as an email link.
+- Do not display the word "Email".
+- Only one navigation item may appear selected at a time.
+- Overview is selected initially.
+- When another navigation item is clicked, remove the selected state from Overview.
+- Selected navigation uses the NALA gold color and underline.
+- Menu clicks must smoothly scroll to the appropriate section.
+- Scrolling must compensate for the header height.
+- Section headings must NEVER disappear underneath the header.
+
+Mobile:
+- Header must use the same visual structure and behavior as the mobile footer.
+- Compact dark bar.
+- Hamburger icon on the LEFT.
+- NALA logo immediately to the RIGHT of the hamburger.
+- Logo remains left aligned.
+- Navigation must NOT display when the page initially loads.
+- Clicking the hamburger opens the navigation.
+- Hamburger changes to close icon when open.
+- Clicking it again closes navigation.
+- Clicking a navigation item closes the navigation.
+- No large blank area may appear underneath the logo.
+- Header height must be auto and compact when menu is closed.
+- Header expands only when the menu is open.
+- Navigation appears below the hamburger/logo row.
+- Mobile header and footer menu behavior must be identical.
+
+FOOTER
+- Footer should visually match the header.
+- Dark NALA background.
+- Real NALA logo.
+- Same navigation:
+  OVERVIEW
+  FINANCIALS
+  GOVERNANCE
+  NEWS
+  RESOURCES
+  CONTACT
+- CONTACT includes Material email icon and acts as an email link.
+- Desktop navigation should be visible.
+- Mobile navigation must be inside a hamburger.
+- Hamburger must be LEFT of the logo.
+- Footer mobile menu must initially be closed.
+- Header and footer mobile menus must use the same layout and behavior.
+
+HERO
+Create a strong investor landing-page hero.
+
+Do NOT use a globe background image.
+
+Do NOT generate a globe image.
+
+Do NOT generate any images.
+
+Use a clean NALA-branded background.
+
+Hero content should include investor-focused:
+- eyebrow
+- large headline
+- supporting copy
+- primary CTA
+- secondary CTA
+
+AT A GLANCE
+Include an investor overview section.
+
+Include four JSON-driven metric cards.
+
+Example structure:
+- metric icon
+- metric value
+- metric title
+- supporting text
+
+All values must be configurable.
+
+MISSION / VISION / VALUES / INVESTORS
+Include the dark NALA information band containing:
+
+OUR MISSION
+OUR VISION
+OUR VALUES
+FOR INVESTORS
+
+Each item should include:
+- Material icon
+- heading
+- description
+
+Desktop:
+Display horizontally.
+
+Mobile:
+Stack cleanly vertically.
+
+INVESTMENT THESIS
+Include:
+
+INVESTMENT THESIS
+Four priorities guide the business
+
+Include four configurable priorities such as:
+01 Grow the core
+02 Scale efficiently
+03 Invest selectively
+04 Compound trust
+
+Each includes:
+- number
+- Material icon
+- title
+- description
+
+INVESTOR HIGHLIGHTS
+Include a dark/gold investor highlights section.
+
+Example heading:
+
+Designed for clarity, not noise
+
+Include configurable investor benefits/features.
+
+LATEST UPDATES / INVESTOR INFORMATION
+Include investor information cards such as:
+
+Quarterly results
+Annual report
+Investor events
+
+Each card should contain:
+- period/status
+- Material icon
+- heading
+- description
+- action
+
+STAY INFORMED
+Include:
+
+Follow NALA's investor story
+
+Include supporting investor-relations text and an Investor Relations CTA.
+
+LATEST NEWS
+Add a Latest News section near the bottom of the page.
+
+Heading:
+
+Latest News
+
+Include:
+
+VIEW ALL NEWS →
+
+Display three configurable news cards.
+
+Each news card contains:
+- date
+- title
+- visual/icon area
+- action
+
+The Latest News section must be JSON driven.
+
+Do NOT generate news images.
+
+Material icons may be used if actual existing image assets are not provided.
+
+SECTION SPACING
+Use consistent vertical spacing across ALL main content sections.
+
+Desktop:
+48px top
+48px bottom
+
+Mobile:
+32px top
+32px bottom
+
+Do not allow individual sections to introduce large unexplained vertical gaps.
+
+TO-TOP
+Add a To-Top Material icon/button.
+
+- Hidden near the top of the page.
+- Appears after the user scrolls.
+- Clicking it smoothly scrolls to the top.
+- Keyboard accessible.
+- Visible focus state.
+
+ACCESSIBILITY
+- Semantic HTML5.
+- ADA/WCAG compliant.
+- Keyboard accessible.
+- Visible focus states.
+- Appropriate aria-label attributes.
+- aria-expanded on hamburger buttons.
+- aria-live where appropriate.
+- Decorative icons should use aria-hidden.
+- Sufficient color contrast.
+- No IDs.
+
+SCSS
+- All source styles go in:
+  mtk-investor.scss
+- Scope everything underneath:
+  .mtk-investor
+- Use NALA variables/tokens from css/nala.scss.
+- Also generate:
+  mtk-investor.css
+- CSS must reflect the current SCSS.
+- Do not leave CSS out of the ZIP.
+
+HTML
+- No inline CSS.
+- No inline JavaScript.
+- Semantic HTML.
+- No iframes.
+- No IDs.
+
+INDEX.HTML
+Create index.html exactly using this integration pattern:
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NALA Investor Relations</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="investor/mtk-investor.css">
+
+  <script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
+</head>
+
+<body>
+    <wc-include href="investor/mtk-investor.html"></wc-include>
+
+    <script src="js/_wc.js"></script>
+    <script src="investor/mtk-investor.config.js"></script>
+    <script src="investor/mtk-investor.js"></script>
+</body>
+</html>
+
+OUTPUT
+Create the complete working project and package it as:
+
+x.zip
+
+The investor files must include:
+
+investor/mtk-investor.config.js
+investor/mtk-investor.scss
+investor/mtk-investor.css
+investor/mtk-investor.html
+investor/mtk-investor.js
+
+Also include:
+
+index.html
+
+Do not show source code in the ChatGPT response.
+Do not show partial files.
+Do not show previews.
+Do not provide patches or diffs.
+Always provide complete replacement files.
+Do not modify unrelated functionality.
+Do not generate images.
+Deliver the completed project as x.zip.
