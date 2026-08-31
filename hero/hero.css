@@ -248,7 +248,7 @@ h1.title::after {
   background-repeat: no-repeat;
 }
 #MTK-hero .MTK-hero-shell--ofir {
-  background-image: linear-gradient(90deg, rgba(5, 10, 20, 0.72) 0%, rgba(5, 10, 20, 0.5) 36%, rgba(5, 10, 20, 0.12) 62%), url("../img/homepage-ofir/nala-ofir-image-01.png");
+  background-image: linear-gradient(90deg, rgba(5, 10, 20, 0.72) 0%, rgba(5, 10, 20, 0.5) 36%, rgba(5, 10, 20, 0.12) 62%), url("../img/homepage-ofir/nala-ofir-image-01.jpg");
   background-position: 70% center;
 }
 #MTK-hero .MTK-hero-shell--background .MTK-hero-card {
@@ -411,7 +411,7 @@ h1.title::after {
     background-position: 68% center;
   }
   #MTK-hero .MTK-hero-shell--ofir {
-    background-image: linear-gradient(180deg, rgba(5, 10, 20, 0.84) 0%, rgba(5, 10, 20, 0.58) 45%, rgba(5, 10, 20, 0.22) 100%), url("../img/homepage-ofir/nala-ofir-image-01.png");
+    background-image: linear-gradient(180deg, rgba(5, 10, 20, 0.84) 0%, rgba(5, 10, 20, 0.58) 45%, rgba(5, 10, 20, 0.22) 100%), url("../img/homepage-ofir/nala-ofir-image-01.jpg");
   }
   #MTK-hero .MTK-hero-lhs {
     order: 2;
