@@ -392,12 +392,56 @@
       es: 'Imagen de tecnología moderna de cerrajería de NALA con cerradura inteligente, manos usando un cilindro, llave automotriz, dispositivo de acceso y letrero de marca NALA'
     },
     'home.ofirImage.careerFitAlt': {
-      en: 'NALA men and women career opportunity visual reading a career path for everyone, men and women welcome, flexible schedule, be your own boss, high income potential, real skills, real career, no experience needed, we teach you, and you build your future',
-      es: 'Imagen de oportunidad profesional de NALA para hombres y mujeres con el texto un camino profesional para todos, hombres y mujeres bienvenidos, horario flexible, sé tu propio jefe, alto potencial de ingresos, habilidades reales, carrera real, no se necesita experiencia, te enseñamos y tú construyes tu futuro'
+      en: 'NALA men and women locksmith career visual with trainees, smart locks, a cylinder lock, keys, and NALA branding',
+      es: 'Imagen de carrera de cerrajería de NALA para hombres y mujeres con estudiantes, cerraduras inteligentes, cilindro de cerradura, llaves y marca NALA'
     },
     'home.ofirImage.finalVisionAlt': {
       en: 'NALA final vision and closing CTA visual showing a locksmith beside a smart lock, NALA branding, city skyline, sunset, and professional tool pouch',
       es: 'Imagen final de visión y llamado a la acción de NALA que muestra a un cerrajero junto a una cerradura inteligente, marca NALA, horizonte de ciudad, atardecer y bolsa profesional de herramientas'
+    },
+    'home.careerFit.eyebrow': {
+      en: 'Career path',
+      es: 'Camino profesional'
+    },
+    'home.careerFit.heading': {
+      en: 'A career path for everyone.',
+      es: 'Un camino profesional para todos.'
+    },
+    'home.careerFit.body': {
+      en: 'NALA is designed for people who want a practical trade, flexible work, and a clear path into locksmith services without needing previous experience.',
+      es: 'NALA está diseñado para personas que quieren un oficio práctico, trabajo flexible y un camino claro hacia los servicios de cerrajería sin necesitar experiencia previa.'
+    },
+    'home.careerFit.benefitInclusive': {
+      en: 'Men & women welcome',
+      es: 'Hombres y mujeres bienvenidos'
+    },
+    'home.careerFit.benefitSchedule': {
+      en: 'Flexible schedule',
+      es: 'Horario flexible'
+    },
+    'home.careerFit.benefitBoss': {
+      en: 'Be your own boss',
+      es: 'Sé tu propio jefe'
+    },
+    'home.careerFit.benefitIncome': {
+      en: 'High income potential',
+      es: 'Alto potencial de ingresos'
+    },
+    'home.careerFit.benefitSkills': {
+      en: 'Real skills',
+      es: 'Habilidades reales'
+    },
+    'home.careerFit.benefitCareer': {
+      en: 'Real career',
+      es: 'Carrera real'
+    },
+    'home.careerFit.note': {
+      en: 'No experience needed. We teach you. You build your future.',
+      es: 'No se necesita experiencia. Te enseñamos. Tú construyes tu futuro.'
+    },
+    'home.careerFit.cta': {
+      en: 'Start your future',
+      es: 'Empieza tu futuro'
     },
 
     // ── STATS ─────────────────────────────────────────────────────

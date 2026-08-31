@@ -176,12 +176,41 @@
 </section>
 
 <!-- CAREER FIT VISUAL -->
-<section class="nala-story-section nala-story-section--center">
+<section class="nala-story-section nala-story-section--right nala-career-fit-section">
     <div class="container">
-	<div class="nala-story-wide">
-	    <figure class="nala-story-figure">
-		<img src="img/homepage-ofir-wed-0819/nala-ofir-wed-0819-image-08.jpg" alt="NALA men and women career opportunity visual reading a career path for everyone, men and women welcome, flexible schedule, be your own boss, high income potential, real skills, real career, no experience needed, we teach you, and you build your future" data-i18n-alt="home.ofirImage.careerFitAlt">
-	    </figure>
+	<div class="row align-items-center g-4">
+	    <div class="col-lg-7">
+		<figure class="nala-story-figure">
+		    <img src="img/homepage-ofir-wed-0819/nala-ofir-wed-0819-image-08.jpg" alt="NALA men and women locksmith career visual with trainees, smart locks, a cylinder lock, keys, and NALA branding" data-i18n-alt="home.ofirImage.careerFitAlt">
+		</figure>
+	    </div>
+	    <div class="col-lg-5">
+		<p class="nala-story-eyebrow" data-i18n="home.careerFit.eyebrow">Career path</p>
+		<h2 data-i18n="home.careerFit.heading">A career path for everyone.</h2>
+		<p data-i18n="home.careerFit.body">NALA is designed for people who want a practical trade, flexible work, and a clear path into locksmith services without needing previous experience.</p>
+		<div class="nala-career-benefits" aria-label="NALA career path benefits">
+		    <div>
+			<span class="material-icons" aria-hidden="true">groups</span>
+			<strong data-i18n="home.careerFit.benefitInclusive">Men &amp; women welcome</strong>
+		    </div>
+		    <div>
+			<span class="material-icons" aria-hidden="true">event_available</span>
+			<strong data-i18n="home.careerFit.benefitSchedule">Flexible schedule</strong>
+			<small data-i18n="home.careerFit.benefitBoss">Be your own boss</small>
+		    </div>
+		    <div>
+			<span class="material-icons" aria-hidden="true">trending_up</span>
+			<strong data-i18n="home.careerFit.benefitIncome">High income potential</strong>
+		    </div>
+		    <div>
+			<span class="material-icons" aria-hidden="true">verified_user</span>
+			<strong data-i18n="home.careerFit.benefitSkills">Real skills</strong>
+			<small data-i18n="home.careerFit.benefitCareer">Real career</small>
+		    </div>
+		</div>
+		<p class="nala-career-note" data-i18n="home.careerFit.note">No experience needed. We teach you. You build your future.</p>
+		<button type="button" class="btn nala-btn-primary" data-i18n="home.careerFit.cta" onclick="if (typeof nalaShowRegister === 'function') { nalaShowRegister(); } else if (wc.pages && typeof wc.pages.show === 'function') { wc.pages.show('register'); } return false;">Start your future</button>
+	    </div>
 	</div>
     </div>
 </section>
@@ -265,6 +294,68 @@
  .nala-story-wide {
      max-width: 1120px;
      margin: 0 auto;
+ }
+
+ .nala-career-benefits {
+     display: grid;
+     grid-template-columns: repeat(2, minmax(0, 1fr));
+     gap: 12px;
+     margin: 22px 0 18px;
+ }
+
+ .nala-career-benefits div {
+     display: grid;
+     grid-template-columns: 34px minmax(0, 1fr);
+     grid-template-areas:
+	 "icon title"
+	 "icon body";
+     column-gap: 12px;
+     row-gap: 2px;
+     align-items: start;
+     padding: 13px;
+     border: 1px solid #d8e4ef;
+     border-radius: 8px;
+     background: #f8fbfd;
+ }
+
+ .nala-career-benefits .material-icons {
+     grid-area: icon;
+     width: 34px;
+     height: 34px;
+     border-radius: 50%;
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     background: #1f2428;
+     color: #f2c75c;
+     font-size: 19px;
+ }
+
+ .nala-career-benefits strong {
+     grid-area: title;
+     color: #202124;
+     font-size: 14px;
+     line-height: 1.25;
+     text-transform: uppercase;
+ }
+
+ .nala-career-benefits small {
+     grid-area: body;
+     color: #5f6368;
+     font-size: 12px;
+     line-height: 1.35;
+ }
+
+ .nala-career-note {
+     margin-bottom: 22px !important;
+     color: #1f2937 !important;
+     font-weight: 700;
+ }
+
+ @media (max-width: 520px) {
+     .nala-career-benefits {
+	 grid-template-columns: 1fr;
+     }
  }
 
  @media (max-width: 991.98px) {
