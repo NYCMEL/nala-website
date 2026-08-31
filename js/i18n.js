@@ -364,8 +364,36 @@
       es: 'Vista previa de configuración de Negocio en una Caja.'
     },
     'home.biab.imageAlt': {
-      en: 'Business in a Box guided setup sample',
-      es: 'Muestra de configuración guiada de Negocio en una Caja'
+      en: 'NALA Business in a Box visual with branded locksmith tools, smart lock technology, a laptop, and mobile app business infrastructure',
+      es: 'Imagen de NALA Business in a Box con herramientas de cerrajería de marca, tecnología de cerradura inteligente, laptop e infraestructura de negocio en una aplicación móvil'
+    },
+    'home.ofirImage.heroAlt': {
+      en: 'NALA smart lock system visual with access control, secure connection, and activity log labels',
+      es: 'Imagen del sistema de cerradura inteligente de NALA con etiquetas de control de acceso, conexión segura y registro de actividad'
+    },
+    'home.ofirImage.onlineTrainingAlt': {
+      en: 'NALA online training visual with locksmith tools, a smart lock, laptop, mobile app, and the words train, certify, succeed',
+      es: 'Imagen de capacitación en línea de NALA con herramientas de cerrajería, cerradura inteligente, laptop, aplicación móvil y las palabras capacitar, certificar y triunfar'
+    },
+    'home.ofirImage.curriculumAlt': {
+      en: 'NALA course visual reading one profession, complete mastery, with premium cylinders, automotive, residential locks, key duplication, and home safes',
+      es: 'Imagen del curso de NALA con el texto una profesión, dominio completo, con cilindros premium, automotriz, cerraduras residenciales, duplicación de llaves y cajas fuertes para el hogar'
+    },
+    'home.ofirImage.paymentAlt': {
+      en: 'NALA locksmith payment visual reading learn, earn, build your future, with payment received for four hundred eighty-five dollars',
+      es: 'Imagen de pago de cerrajería de NALA con el texto aprende, gana, construye tu futuro, y pago recibido por cuatrocientos ochenta y cinco dólares'
+    },
+    'home.ofirImage.incomeAlt': {
+      en: 'NALA service call visual showing payment received and average service call text: three hundred fifty dollars plus, sixteen minutes average service time, three calls per day potential, and six thousand dollars plus potential monthly income',
+      es: 'Imagen de llamada de servicio de NALA que muestra pago recibido y texto de llamada promedio: más de trescientos cincuenta dólares, dieciséis minutos de tiempo promedio, potencial de tres llamadas por día y más de seis mil dólares de ingreso mensual potencial'
+    },
+    'home.ofirImage.futureAlt': {
+      en: 'NALA career visual reading build a career, build your future, real skills, real freedom, real income, with professional training, growing demand, financial freedom, and expand to new trades',
+      es: 'Imagen de carrera de NALA con el texto construye una carrera, construye tu futuro, habilidades reales, libertad real, ingresos reales, con capacitación profesional, demanda creciente, libertad financiera y expansión a nuevos oficios'
+    },
+    'home.ofirImage.careerFitAlt': {
+      en: 'NALA career freedom visual reading one profession, endless possibilities, real skills, real income, real freedom, plus high demand, stable income, flexible schedule, for everyone, and we train you',
+      es: 'Imagen de libertad profesional de NALA con el texto una profesión, posibilidades infinitas, habilidades reales, ingresos reales, libertad real, además de alta demanda, ingreso estable, horario flexible, para todos y te capacitamos'
     },
 
     // ── STATS ─────────────────────────────────────────────────────
