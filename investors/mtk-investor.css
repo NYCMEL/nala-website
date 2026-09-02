@@ -197,22 +197,22 @@
   background: #fbf4e5;
 }
 .mtk-investor .mtk-investor__material-icon {
-  font-family:'Material Icons';
-  font-weight:normal;
-  font-style:normal;
   font-size:20px;
   line-height:1;
-  letter-spacing:normal;
-  text-transform:none;
-  display:inline-block;
-  white-space:nowrap;
-  word-wrap:normal;
-  direction:ltr;
-  -webkit-font-feature-settings:'liga';
-  font-feature-settings:'liga';
-  -webkit-font-smoothing:antialiased;
-  text-rendering:optimizeLegibility;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
   user-select:none;
+}
+.mtk-investor .mtk-investor__icon-svg {
+  display:block;
+  width:1em;
+  height:1em;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
 .mtk-investor .mtk-investor__hero-panel {
   position: relative;
@@ -1541,20 +1541,10 @@
 .mtk-investor .mtk-investor__latest-news-view-all-icon,
 .mtk-investor .mtk-investor__latest-news-link span,
 .mtk-investor .mtk-investor__latest-news-media-icon {
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
   line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  display: inline-block;
-  white-space: nowrap;
-  word-wrap: normal;
-  direction: ltr;
-  -webkit-font-feature-settings: 'liga';
-  font-feature-settings: 'liga';
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   user-select: none;
 }
 .mtk-investor .mtk-investor__latest-news-view-all-icon,
@@ -1718,21 +1708,11 @@
   gap: 4px;
 }
 .mtk-investor .mtk-investor__nav-icon {
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
   font-size: 18px;
   line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  display: inline-block;
-  white-space: nowrap;
-  word-wrap: normal;
-  direction: ltr;
-  -webkit-font-feature-settings: 'liga';
-  font-feature-settings: 'liga';
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   user-select: none;
   flex: 0 0 auto;
 }
